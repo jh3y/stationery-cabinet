@@ -44,7 +44,7 @@ module.exports = {
   paths: {
     base: env,
     sources: {
-      markup   : 'src/**/*.jade',
+      markup   : 'src/**/*.{jade,pug}',
       overwatch: env + '**/*.{html,js,css}',
       scripts  : 'src/**/*.js',
       styles   : 'src/**/*.styl'

@@ -13,10 +13,18 @@ var gulp      = require('gulp'),
   },
   /* markup:compile */
   compile = function() {
+    /*
+      Get list of pens here...
+    */
+    opts.pug.data.pens = ['a', 'b', 'c'];
+    console.log(opts.wrap.markup);
+    const i = plugins.filter(['*', '!src/index.pug'], {restore: true});
     return gulp.src(src.markup)
       .pipe(plugins.plumber())
       .pipe(plugins.pug(opts.pug))
+      .pipe(i)
       .pipe(plugins.wrap(opts.wrap.markup))
+      .pipe(i.restore)
       .pipe(gulp.dest(dest.html));
   },
   /* markup:watch */
