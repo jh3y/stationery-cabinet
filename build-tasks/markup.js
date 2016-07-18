@@ -17,8 +17,7 @@ var gulp      = require('gulp'),
       Get list of pens here...
     */
     opts.pug.data.pens = ['a', 'b', 'c'];
-    console.log(opts.wrap.markup);
-    const i = plugins.filter(['*', '!src/index.pug'], {restore: true});
+    const i = plugins.filter(['**', '!src/index.*'], {restore: true});
     return gulp.src(src.markup)
       .pipe(plugins.plumber())
       .pipe(plugins.pug(opts.pug))
