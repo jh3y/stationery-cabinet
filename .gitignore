@@ -5,5 +5,3 @@ node_modules/
 tmp/
 
 DEPLOY_OPTIONS.js
-
-deploy/
