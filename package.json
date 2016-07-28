@@ -1,0 +1,27 @@
+{
+  "name": "pen-case",
+  "version": "0.0.0",
+  "description": "local CodePen development set up",
+  "devDependencies": {
+    "autoprefixer": "^6.0.3",
+    "babel-cli": "^6.10.1",
+    "babel-preset-es2015": "^6.9.0",
+    "browser-sync": "^2.9.11",
+    "pug-cli": "^1.0.0-alpha6",
+    "postcss-cli": "^2.3.2",
+    "stylus": "^0.53.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jh3y/pen-case.git"
+  },
+  "author": "jh3y <jh3y@users.noreply.github.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jh3y/pen-case/issues"
+  },
+  "homepage": "https://github.com/jh3y/pen-case",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

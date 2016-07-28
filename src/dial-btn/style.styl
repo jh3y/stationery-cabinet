@@ -1,0 +1,208 @@
+$ns          = dial-btn
+$containerEl = container
+$optionMod   = option
+$activeMod   = active
+
+/**
+  * Number of options plays an important part in having variations of content
+  * but retaining the correct behaviour with regards to correct projection
+  * angles.
+  *
+  * Instances where we don't care about calculating the position we can just
+  * refer to an upper bound limit and cover the cases.
+*/
+$noOfOptionsLimit = 5
+
+$btnSize       = 40px
+$subBtnSize    = 30px
+$layoutRadius  = 45px
+$transitionSpd = .25s
+$transitionStp = .1s
+
+
+/**
+  * Get true position based on area of circle we want to use.
+  * Default is to use full circle but could you use top, bottom, left, right
+  * halves or even quadrants based on the angle range we use.
+  *
+  * Given start and endpoints dictate the range in which we can project
+  * positions.
+*/
+getPosition($options, $idx, $start, $end)
+  $range = $end - $start
+  if ($range < 360 && $options > 1)
+    $options = $options - 1
+  $angle = $start + ($range / ($options)) * ($idx - 1)
+  xPos = $layoutRadius * cos($angle * (PI / 180))
+  if $start > $end
+    xPos = -(xPos)
+  yPos = $layoutRadius * sin($angle * (PI / 180))
+  (xPos yPos)
+
+generatePositions($start, $end)
+  for num in (1..$noOfOptionsLimit)
+    &[data-options=\'{num}\']
+      .{$ns}--{$activeMod} ~ .{$ns}--{$optionMod}
+        for opt in (1..(num + 1))
+          &:nth-of-type({opt})
+            $idx = opt - 1
+            $range = get($ranges, full)
+            $pos = getPosition(num, $idx, $start, $end)
+            transform translate($pos[0], $pos[1])
+
+.{$ns}
+  border-radius $btnSize
+  border        none
+  z-index       $noOfOptionsLimit + 2
+  position      absolute
+  top           0
+  left          0
+  height        $btnSize
+  width         $btnSize
+
+  &--{$optionMod}
+    position      absolute
+    height        $subBtnSize
+    width         $subBtnSize
+    border-radius $subBtnSize
+    top           50%
+    left          50%
+    margin-left   -($subBtnSize / 2)
+    margin-top    -($subBtnSize / 2)
+    transform     translate(0, 0)
+    transition    transform $transitionSpd ease 0s
+
+
+    /**
+      * Increase the loop because first button is the primary
+    */
+    for num in 2..($noOfOptionsLimit + 1)
+      &:nth-of-type({num})
+        z-index          num
+        transition-delay (num * $transitionStp)
+
+
+
+  /**
+    * Use modifiers to define ranges for our positions
+    *
+    * NOTE: 0 Actually starts at 3 o'clock so to get for example
+    * left-sided half circle do 90 - 270
+    *
+    * IMPORTANT NOTE: You'll seriously want to reduce the amount of ranges
+    * if you were to use this in prod because the amount of generated CSS is
+    * large to cover all scenarios
+  */
+
+  $ranges = {
+    full: {
+      start: 0,
+      end: 360
+    },
+    half: {
+      start: 0,
+      end: 180
+    },
+    left-half: {
+      start: 90,
+      end: 270
+    },
+    right-half: {
+      start: 270,
+      end: 90
+    },
+    bottom-half: {
+      start: 0,
+      end: 180
+    },
+    top-half: {
+      start: 180,
+      end: 360
+    },
+    top-left: {
+      start: 180,
+      end: 270
+    },
+    top-right: {
+      start: 270,
+      end: 360
+    },
+    bottom-left: {
+      start: 90,
+      end: 180
+    },
+    bottom-right: {
+      start: 0,
+      end: 90
+    }
+  }
+
+  &__{$containerEl}
+    display          inline-block
+    position         relative
+    height           $btnSize
+    width            $btnSize
+    border-radius    $btnSize
+
+    /**
+      * Generate the various styles and mutations
+    */
+    for $mod, $idx in $ranges
+      &--{$mod}
+        $start = $ranges[$mod].start
+        $end   = $ranges[$mod].end
+        generatePositions($start, $end)
+
+/**
+  * Themeing
+*/
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+body
+  background-color #222222
+  color            #fafafa
+  text-align       center
+
+.loading-bay
+  width         200px
+  height        200px
+  border        2px solid silver
+  border-radius 20px
+  position      relative
+  display       inline-block
+  margin        10px
+  background-color #333
+
+.dial-btn__container
+  position    absolute
+  top         50%
+  left        50%
+  margin-left -($btnSize / 2)
+  margin-top  -($btnSize / 2)
+
+
+.dial-btn
+  font-size   24px
+  i
+    transition transform .25s ease 0s
+    transform rotate(0deg)
+
+  &--active
+    i
+      transform rotate(45deg)
+
+  &--option
+    font-size  18px
+    font-weight normal
+    i
+      font-size 18px
+      line-height 18px
+
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
