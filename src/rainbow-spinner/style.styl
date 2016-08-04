@@ -1,0 +1,148 @@
+
+
+/**
+  * Variables
+*/
+$baySize       = 200px
+$spinSize      = 30px
+$bandSize      = 5px
+$cloudSize     = 16px
+$holderSize    = 150px
+$backdropColor = #333333
+$violet        = #bf55ec
+$indigo        = #663399
+$blue          = #19b5fe
+$green         = #2ecc71
+$yellow        = #f9bf3b
+$orange        = #f89406
+$red           = #f22613
+$cloudColor    = #ffffff
+$colorSet      = $violet $indigo $blue $green $yellow $orange $red
+$coverSize     = $spinSize + (((length($colorSet)) * $bandSize) * 2) + 2px
+
+generateRainbow()
+  $shadows = ()
+  for $color in (0..(length($colorSet) - 1))
+    $props = 0 0 0 (($color + 1) * $bandSize) $colorSet[$color]
+    push($shadows, join(' ', $props))
+  (unquote(join(',', $shadows)))
+
+@keyframes rotate
+  to
+    transform rotate(360deg)
+@keyframes rotateH
+  to
+    transform rotate(540deg)
+
+@keyframes fadeIn
+  to
+    opacity 1
+
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+body
+  background-color #111
+  color            #fafafa
+  text-align       center
+
+.loading-bay
+  width         $baySize
+  height        $baySize
+  display       inline-block
+  border        2px solid silver
+  border-radius 50px
+  position      relative
+  margin        10px
+
+.rainbow
+  height    100%
+  width     100%
+  animation rotate 1.5s infinite
+
+  &__holder
+    height           $holderSize
+    width            $holderSize
+    border-radius    $holderSize
+    background-color $backdropColor
+    position         absolute
+    top              50%
+    left             50%
+    margin-left      -($holderSize / 2)
+    margin-top       -($holderSize / 2)
+    transform        rotate(180deg)
+    animation        rotateH 3s infinite linear
+
+    &--no-spin
+      animation none
+
+    &:after
+      content          ''
+      height           $cloudSize
+      width            $cloudSize
+      border-radius    $cloudSize
+      background-color transparent
+      position         absolute
+      margin-left      -($cloudSize / 2)
+      margin-top       -($cloudSize / 2)
+      display          inline-block
+      transform        rotate(180deg)
+      left             50%
+      top              50%
+      z-index          2
+      box-shadow -($cloudSize) 0 0 0 $cloudColor,
+        -(1.5 * $cloudSize) 2px 0 0 $cloudColor,
+        -(1.5 * $cloudSize) -2px 0 0 $cloudColor,
+        -(2 * $cloudSize) 0 0 0 $cloudColor,
+        -(2 * $cloudSize) 4px 0 0 $cloudColor,
+        -(2 * $cloudSize) -4px 0 0 $cloudColor,
+        -(2.5 * $cloudSize) 2px 0 0 $cloudColor,
+        -(2.5 * $cloudSize) -2px 0 0 $cloudColor,
+        -(3 * $cloudSize) 0 0 0 $cloudColor,
+        $cloudSize 0 0 0 $cloudColor,
+        (1.5 * $cloudSize) 2px 0 0 $cloudColor,
+        (1.5 * $cloudSize) -2px 0 0 $cloudColor,
+        (2 * $cloudSize) 4px 0 0 $cloudColor,
+        (2 * $cloudSize) 0px 0 0 $cloudColor,
+        (2 * $cloudSize) -4px 0 0 $cloudColor,
+        (2.5 * $cloudSize) 2px 0 0 $cloudColor,
+        (2.5 * $cloudSize) -2px 0 0 $cloudColor,
+        (3 * $cloudSize) 0 0 0 $cloudColor
+
+    &:before
+      height           ($holderSize / 2)
+      width            $holderSize
+      border-radius    $holderSize $holderSize 0 0
+      background-color $backdropColor
+      content          ''
+      position         absolute
+      z-index          2
+      left             0
+
+  &:before
+    content          ''
+    height           $spinSize
+    width            $spinSize
+    display          inline-block
+    position         absolute
+    top              50%
+    left             50%
+    margin-top       -($spinSize / 2)
+    margin-left      -($spinSize / 2)
+    border-radius    $spinSize
+    background-color $backdropColor
+    box-shadow       generateRainbow()
+
+  &:after
+    content          ''
+    height           ($coverSize / 2)
+    width            $coverSize
+    display          inline-block
+    position         absolute
+    top              50%
+    left             50%
+    margin-top       -($coverSize / 2)
+    margin-left      -($coverSize / 2)
+    border-radius    $coverSize $coverSize 0 0
+    background-color $backdropColor

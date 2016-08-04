@@ -1,0 +1,133 @@
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+body
+  background-color #e74c3c
+  color            #fafafa
+  text-align       center
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
+
+
+
+$clockSize = 200px
+
+.clock
+  height   $clockSize
+  width    $clockSize
+  position fixed
+  top      50%
+  left     50%
+  margin-left -($clockSize / 2)
+  margin-top  -($clockSize / 2)
+  border-radius $clockSize
+  background-color #fafafa
+  border 8px solid #111
+
+  for $second in (0..59)
+    &[start-seconds=\"{$second}\"]
+      .clock-seconds
+        transform rotate(((360 / 60) * $second)deg)
+    &[start-minutes=\"{$second}\"]
+      .clock-minutes
+        transform rotate(((360 / 60) * $second)deg)
+
+  for $hour in (0..12)
+    &[start-hours=\"{$hour}\"]
+      .clock-hours
+        transform rotate(((360 / 12) * $hour)deg)
+
+.clock-seconds
+  display block
+  position absolute
+  top 0
+  left 0
+  height  100%
+  width   100%
+  z-index 3
+
+  &__hand
+    &:before
+      content ''
+      position absolute
+      bottom -10px
+      left 50%
+      height 20px
+      width  20px
+      background-color purple
+      margin-left -10px
+      border-radius 100%
+
+    position absolute
+    display block
+    height  (($clockSize / 2) - 20)
+    width   8px
+    background-color purple
+    left 50%
+    top 50%
+    margin-left -4px
+    transform-origin bottom center
+    margin-top -(($clockSize / 2) - 20)
+    /* A full rotation will be 1 minute */
+    animation rotate (1 * 60s) steps(60) infinite
+
+
+
+.clock-minutes
+  display block
+  position absolute
+  top 0
+  left 0
+  height  100%
+  width   100%
+  z-index 2
+
+  &__hand
+    position absolute
+    display block
+    height  (($clockSize / 2) - 20)
+    width   8px
+    background-color blue
+    left 50%
+    top 50%
+    margin-left -4px
+    transform-origin bottom center
+    margin-top -(($clockSize / 2) - 20)
+    /* A full rotation will be 60 minutes */
+    animation rotate (60 * 60s) linear infinite
+
+.clock-hours
+  display block
+  position absolute
+  top 0
+  left 0
+  height  100%
+  width   100%
+  z-index 1
+
+  &__hand
+    position absolute
+    display block
+    height  (($clockSize / 2) - 20)
+    width   8px
+    background-color green
+    left 50%
+    top 50%
+    margin-left -4px
+    transform-origin bottom center
+    margin-top -(($clockSize / 2) - 20)
+    /* A full rotation is 720 minutes */
+    animation rotate (720 * 60s) linear infinite
+
+
+
+@keyframes rotate
+  from
+    transform rotate(0deg)
+  to
+    transform rotate(360deg)

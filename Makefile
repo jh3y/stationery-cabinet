@@ -12,9 +12,11 @@ SRC_BASE = src
 SCRIPT_FILE = script.js
 STYLE_FILE = style.styl
 MARKUP_FILE = index.pug
+README_FILE = README.md
 MARKUP_DEV_FILE = dev.pug
 DEPLOY_OPTS_FILE = DEPLOY_OPTIONS.js
 
+BOILERPLATE_README = boilerplate/readme.boilerplate.md
 BOILERPLATE_MARKUP = boilerplate/markup.boilerplate.pug
 BOILERPLATE_DEV_MARKUP = boilerplate/develop.boilerplate.pug
 BOILERPLATE_SCRIPT = boilerplate/script.boilerplate.js
@@ -27,6 +29,7 @@ POSTCSS_OPTS = --use autoprefixer -d $(OUTPUT_DIR)/ $(OUTPUT_DIR)/*.css
 
 SCRIPT_SRC = $(SRC_BASE)/$(PEN)/$(SCRIPT_FILE)
 MARKUP_SRC = $(SRC_BASE)/$(PEN)/$(MARKUP_FILE)
+README_SRC = $(SRC_BASE)/$(PEN)/$(README_FILE)
 MARKUP_COMPILE_SRC = $(SRC_BASE)/$(PEN)/
 MARKUP_DEV_SRC = $(SRC_BASE)/$(PEN)/$(MARKUP_DEV_FILE)
 STYLE_SRC  = $(SRC_BASE)/$(PEN)/$(STYLE_FILE)
@@ -87,6 +90,7 @@ deploy: checkForPen build ## generates POST page for pushing to Codepen
 
 create: checkForPen ## creates new source for pens by passing PEN variable
 	mkdir -pv $(SRC_BASE)/$(PEN)
+	cat $(BOILERPLATE_README) > $(README_SRC)
 	cat $(BOILERPLATE_DEV_MARKUP) > $(MARKUP_SRC)
 	cat $(BOILERPLATE_MARKUP) > $(MARKUP_DEV_SRC)
 	cat $(BOILERPLATE_SCRIPT) > $(SCRIPT_SRC)
