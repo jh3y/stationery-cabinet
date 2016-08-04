@@ -1,9 +1,9 @@
 - var $icons = ['insert_comment', 'account_circle', 'directions', 'help', 'find_in_page']
 link(href="https://fonts.googleapis.com/icon?family=Material+Icons",rel="stylesheet")
 h1 CSS generated dial buttons
-each $val, $index in {'full': 5, 'half': 4, 'left-half': 3, 'right-half': 5, 'bottom-half': 3, 'top-half': 4, 'top-left': 3, 'top-right': 2, 'bottom-left': 3, 'bottom-right': 3}
-  .loading-bay
-    .dial-btn__container(class=`dial-btn__container--${$index}`, data-options= $val)
+each $val, $style in {'full': 5, 'half': 4, 'left-half': 3, 'right-half': 5, 'bottom-half': 3, 'top-half': 4, 'top-left': 3, 'top-right': 2, 'bottom-left': 3, 'bottom-right': 3}
+  .loading-bay(class=`loading-bay--${$style}`)
+    .dial-btn__container(class=`dial-btn__container--${$style}`, data-options= $val)
       button.dial-btn
         i.material-icons add
       - var n = 1

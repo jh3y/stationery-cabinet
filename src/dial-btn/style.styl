@@ -21,6 +21,60 @@ $transitionStp = .1s
 
 
 /**
+  * Use modifiers to define ranges for our positions
+  *
+  * NOTE: 0 Actually starts at 3 o'clock so to get for example
+  * left-sided half circle do 90 - 270
+  *
+  * IMPORTANT NOTE: You'll seriously want to reduce the amount of ranges
+  * if you were to use this in prod because the amount of generated CSS is
+  * large to cover all scenarios
+*/
+$ranges = {
+  full: {
+    start: 0,
+    end: 360
+  },
+  half: {
+    start: 0,
+    end: 180
+  },
+  left-half: {
+    start: 90,
+    end: 270
+  },
+  right-half: {
+    start: 270,
+    end: 90
+  },
+  bottom-half: {
+    start: 0,
+    end: 180
+  },
+  top-half: {
+    start: 180,
+    end: 360
+  },
+  top-left: {
+    start: 180,
+    end: 270
+  },
+  top-right: {
+    start: 270,
+    end: 360
+  },
+  bottom-left: {
+    start: 90,
+    end: 180
+  },
+  bottom-right: {
+    start: 0,
+    end: 90
+  }
+}
+
+
+/**
   * Get true position based on area of circle we want to use.
   * Default is to use full circle but could you use top, bottom, left, right
   * halves or even quadrants based on the angle range we use.
@@ -81,62 +135,6 @@ generatePositions($start, $end)
         z-index          num
         transition-delay (num * $transitionStp)
 
-
-
-  /**
-    * Use modifiers to define ranges for our positions
-    *
-    * NOTE: 0 Actually starts at 3 o'clock so to get for example
-    * left-sided half circle do 90 - 270
-    *
-    * IMPORTANT NOTE: You'll seriously want to reduce the amount of ranges
-    * if you were to use this in prod because the amount of generated CSS is
-    * large to cover all scenarios
-  */
-
-  $ranges = {
-    full: {
-      start: 0,
-      end: 360
-    },
-    half: {
-      start: 0,
-      end: 180
-    },
-    left-half: {
-      start: 90,
-      end: 270
-    },
-    right-half: {
-      start: 270,
-      end: 90
-    },
-    bottom-half: {
-      start: 0,
-      end: 180
-    },
-    top-half: {
-      start: 180,
-      end: 360
-    },
-    top-left: {
-      start: 180,
-      end: 270
-    },
-    top-right: {
-      start: 270,
-      end: 360
-    },
-    bottom-left: {
-      start: 90,
-      end: 180
-    },
-    bottom-right: {
-      start: 0,
-      end: 90
-    }
-  }
-
   &__{$containerEl}
     display          inline-block
     position         relative
@@ -147,7 +145,7 @@ generatePositions($start, $end)
     /**
       * Generate the various styles and mutations
     */
-    for $mod, $idx in $ranges
+    for $mod in $ranges
       &--{$mod}
         $start = $ranges[$mod].start
         $end   = $ranges[$mod].end
@@ -166,14 +164,24 @@ body
   text-align       center
 
 .loading-bay
-  width         200px
-  height        200px
-  border        2px solid silver
-  border-radius 20px
-  position      relative
-  display       inline-block
-  margin        10px
+  width            200px
+  height           200px
+  border           2px solid silver
+  border-radius    20px
+  position         relative
+  display          inline-block
+  margin           10px
+  overflow         hidden
   background-color #333
+
+  &:before
+    display block
+    position absolute
+    top 0
+    left 0
+    color white
+    font-size 18px
+    padding 5px
 
 .dial-btn__container
   position    absolute
@@ -184,7 +192,13 @@ body
 
 
 .dial-btn
-  font-size   24px
+  outline   0
+  cursor    pointer
+  font-size 24px
+
+  &:not(.dial-btn--option)
+    color #fafafa
+
   i
     transition transform .25s ease 0s
     transform rotate(0deg)
@@ -199,6 +213,21 @@ body
     i
       font-size 18px
       line-height 18px
+
+$colors = #f44336 #FF5722 #FFC107 #4CAF50 #009688 #00BCD4 #2196F3 #3F51B5 #673AB7 #E91E63
+
+for $style in $ranges
+  .loading-bay
+    &--{$style}
+      &:before
+        content $style
+
+for $demo in (1..10)
+  .loading-bay
+    &:nth-of-type({$demo})
+      &:before
+      .dial-btn:not(.dial-btn--option)
+        background-color $colors[$demo - 1]
 
 
 @keyframes fadeIn
