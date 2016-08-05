@@ -1,23 +1,39 @@
 *
   box-sizing border-box
-  animation  fadeIn .5s
 
 body
   background-color #e74c3c
   color            #fafafa
   text-align       center
 
-@keyframes fadeIn
-  from
-    opacity 0
-  to
-    opacity 1
-
-
+$ns      = watch
+$seconds = watch-seconds
+$minutes = watch-minutes
+$hours   = watch-hours
+$handMod = hand
 
 $clockSize = 200px
 
-.clock
+getPosition(angle)
+  $layoutRadius = ($clockSize / 2) - 15
+  xPos = $layoutRadius * cos(angle * (PI / 180))
+  yPos = $layoutRadius * sin(angle * (PI / 180))
+  (xPos yPos)
+
+genShadows()
+  $shadows = ()
+  for $indicator in (1..12)
+    $angle       = (360 / 12) * ($indicator - 1)
+    $xy          = getPosition($angle)
+    $dots        = $numberOfDots
+    $scale       = 0
+    if $indicator == 1 || $indicator == 4 || $indicator == 7 || $indicator == 10
+      $scale = 2px
+    $shadowProps = $xy 0 $scale grey
+    push($shadows, join(' ', $shadowProps))
+  (unquote(join(',', $shadows)))
+
+.{$ns}
   height   $clockSize
   width    $clockSize
   position fixed
@@ -25,106 +41,141 @@ $clockSize = 200px
   left     50%
   margin-left -($clockSize / 2)
   margin-top  -($clockSize / 2)
-  border-radius $clockSize
-  background-color #fafafa
-  border 8px solid #111
+
+  &__face
+    &:before
+      content ''
+      height 4px
+      width 4px
+      display block
+      position absolute
+      top 50%
+      left 50%
+      border-radius 4px
+      margin-left -2px
+      margin-top -2px
+      background-color blue
+      box-shadow genShadows()
+
+    height 100%
+    width  100%
+    border-radius $clockSize
+    background-color #fafafa
+    border 8px solid #111
+
+  &__dial
+    position absolute
+    left 100%
+    background-color grey
+    height 40px
+    width 20px
+    top 50%
+    margin-top -20px
+    margin-left -10px
+    z-index -1
+
+  &__strap
+    position absolute
+    width 50%
+    height 150%
+    background-color #000
+    top 50%
+    left 50%
+    margin-left -25%
+    margin-top -75%
+    z-index -1
 
   for $second in (0..59)
     &[start-seconds=\"{$second}\"]
-      .clock-seconds
+      .{$seconds}
         transform rotate(((360 / 60) * $second)deg)
+      if $second > 0
+        $offset = 60 - $second
+        .{$minutes}__{$handMod}
+          animation-delay ($offset * 1s)
+    $minute = $second
+    if $minute > 0
+      $minute = $minute + 1
     &[start-minutes=\"{$second}\"]
-      .clock-minutes
-        transform rotate(((360 / 60) * $second)deg)
+      .{$minutes}
+        transform rotate(((360 / 60) * $minute)deg)
 
   for $hour in (0..12)
     &[start-hours=\"{$hour}\"]
-      .clock-hours
+      .{$hours}
         transform rotate(((360 / 12) * $hour)deg)
 
-.clock-seconds
+.{$seconds}
+.{$minutes}
+.{$hours}
   display block
   position absolute
   top 0
   left 0
   height  100%
   width   100%
-  z-index 3
 
-  &__hand
+  &__{$handMod}
+    position absolute
+    display block
+    height  (($clockSize / 2) - 20)
+    width   8px
+    left 50%
+    top 50%
+    margin-left -4px
+    transform-origin bottom center
+    margin-top -(($clockSize / 2) - 20)
+    background-color #000
+    border-radius 5px 5px 5px 5px
+
     &:before
+      background-color #000
       content ''
       position absolute
-      bottom -10px
+      bottom -8px
       left 50%
-      height 20px
-      width  20px
-      background-color purple
-      margin-left -10px
+      height 16px
+      width  16px
+      margin-left -8px
       border-radius 100%
 
-    position absolute
-    display block
-    height  (($clockSize / 2) - 20)
-    width   8px
-    background-color purple
-    left 50%
-    top 50%
-    margin-left -4px
-    transform-origin bottom center
-    margin-top -(($clockSize / 2) - 20)
+
+
+
+.{$seconds}
+  z-index 3
+
+  &__{$handMod}
+    background-color red
+    width 2px
+    margin-left -1px
+    &:before
+      background-color red
+      content ''
+      position absolute
+      bottom -5px
+      left 50%
+      height 10px
+      width  10px
+      margin-left -5px
+      border-radius 100%
     /* A full rotation will be 1 minute */
-    animation rotate (1 * 60s) steps(60) infinite
+    animation rotate (1 * 60s) linear infinite
 
-
-
-.clock-minutes
-  display block
-  position absolute
-  top 0
-  left 0
-  height  100%
-  width   100%
+.{$minutes}
   z-index 2
 
-  &__hand
-    position absolute
-    display block
-    height  (($clockSize / 2) - 20)
-    width   8px
-    background-color blue
-    left 50%
-    top 50%
-    margin-left -4px
-    transform-origin bottom center
-    margin-top -(($clockSize / 2) - 20)
+  &__{$handMod}
     /* A full rotation will be 60 minutes */
-    animation rotate (60 * 60s) linear infinite
+    animation rotate (60 * 60s) steps(60) infinite
 
-.clock-hours
-  display block
-  position absolute
-  top 0
-  left 0
-  height  100%
-  width   100%
+.{$hours}
   z-index 1
-
-  &__hand
-    position absolute
-    display block
-    height  (($clockSize / 2) - 20)
-    width   8px
-    background-color green
-    left 50%
-    top 50%
-    margin-left -4px
-    transform-origin bottom center
-    margin-top -(($clockSize / 2) - 20)
+  &__{$handMod}
+    height (($clockSize / 2) - 40)
+    margin-top -(($clockSize / 2) - 40)
     /* A full rotation is 720 minutes */
-    animation rotate (720 * 60s) linear infinite
-
-
+    animation rotate (720 * 60s) steps(12) infinite
 
 @keyframes rotate
   from
