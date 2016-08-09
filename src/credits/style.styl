@@ -1,0 +1,45 @@
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+body
+  background-color #000
+  color            #fafafa
+  text-align       center
+  padding          0
+  margin           0
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
+
+.title
+  height           20vh
+  line-height      20vh
+  width            100%
+  background-color red
+  position         absolute
+  top              50%
+  margin-top       -5vh
+  animation        creditSlide 3s
+  transform-origin right
+  animation-fill-mode forwards
+
+// Go up then to the side, scale up, slide out right then rotate off of left
+// to slide out left then introduce a final bar slide in from right giving an
+// almost zig-zag effect
+
+@keyframes creditSlide
+  0%
+    height 5vh
+    transform translateY(100vh) translateX(-50%) rotate(-90deg)
+  30%
+    height 5vh
+    transform translateX(-50%) rotate(-90deg)
+  70%
+    height 20vh
+    transform translateX(0) rotate(0deg)
+  100%
+    transform translateX(100%)

@@ -1,0 +1,200 @@
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+body
+  background-color #333
+  text-align       center
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
+
+
+
+$digitWidth  = 35px
+$digitHeight = 70px
+$digitStroke = 3px
+$digitFill   = $digitWidth * .6
+$digitPadding = $digitHeight * 0.05
+
+$digitColor = #e74c3c
+
+
+$watchSize = 250px
+.watch
+  height $watchSize
+  width  $watchSize
+  background-color #000
+  border-radius $watchSize
+  border 8px solid silver
+  position absolute
+  top 50%
+  left 50%
+  margin-top -($watchSize / 2)
+  margin-left -($watchSize / 2)
+
+.watch__time
+  width 100%
+  height $digitHeight
+  position absolute
+  top 50%
+  left 0
+  margin-top -($digitHeight / 2)
+
+.watch__strap
+  height $watchSize * 1.5
+  width  ($watchSize / 2)
+  background-color grey
+  position absolute
+  top 50%
+  left 50%
+  margin-left -($watchSize / 4)
+  margin-top -($watchSize * .75)
+  z-index -1
+
+.watch__seconds
+.watch__hours
+.watch__minutes
+  display inline-block
+  height  100%
+
+.watch__hours
+  position relative
+  &:after
+    content ''
+    height  5px
+    width   5px
+    background-color $digitColor
+    display block
+    top 30%
+    position absolute
+    left 100%
+    box-shadow 0 20px 0 0 $digitColor
+
+.watch__seconds .digit
+  transform skewX(-6deg) scale(.5)
+  margin -8px
+
+.digit
+  height           $digitHeight
+  width            $digitWidth
+  display          inline-block
+  margin           2px
+  position         relative
+  transform        skewX(-6deg)
+
+
+
+  /* Use before as the horizontal lines and after as the vertical */
+  &:before
+    content          ''
+    height           $digitStroke
+    width            $digitFill
+    display          block
+    position         absolute
+    border-radius    $digitStroke
+    top              $digitPadding
+    left             50%
+    margin-left      -($digitFill / 2)
+
+  $verticalHeight = (($digitHeight - ((2 * $digitPadding) + ($digitStroke))) / 2)
+  $verticalWidth = ($digitWidth - ((2 * $digitPadding) + $digitStroke))
+  &:after
+    content          ''
+    width            $digitStroke
+    height           $verticalHeight
+    border-radius    $digitStroke
+    position         absolute
+    top              $digitPadding + ($digitStroke / 2)
+    left             $digitPadding
+
+
+  $hBottom = 0 ($verticalHeight * 2) 0 0 $digitColor
+  $hMiddle = 0 $verticalHeight 0 0 $digitColor
+
+  $vRight = $verticalWidth 0 0 $digitColor
+  $vLeftBottom = 0 $verticalHeight 0 $digitColor
+  $vRightBottom = $verticalWidth $verticalHeight 0 $digitColor
+
+  &[data-digit=\'0\']
+    &:before
+    &:after
+      background-color $digitColor
+
+    &:before
+      box-shadow $hBottom
+
+    &:after
+      box-shadow $vRight, $vLeftBottom, $vRightBottom
+
+  &[data-digit=\'1\']
+    &:after
+      box-shadow $vRight, $vRightBottom
+
+  &[data-digit=\'2\']
+    &:before
+      background-color $digitColor
+      box-shadow $hMiddle, $hBottom
+    &:after
+      box-shadow $vRight, $vLeftBottom
+
+  &[data-digit=\'3\']
+    &:before
+      background-color $digitColor
+      box-shadow $hMiddle, $hBottom
+    &:after
+      box-shadow $vRight, $vRightBottom
+
+  &[data-digit=\'4\']
+    &:before
+      box-shadow $hMiddle
+    &:after
+      background-color $digitColor
+      box-shadow $vRight, $vRightBottom
+
+  &[data-digit=\'5\']
+    &:before
+      background-color $digitColor
+      box-shadow $hMiddle, $hBottom
+    &:after
+      background-color $digitColor
+      box-shadow $vRightBottom
+
+  &[data-digit=\'6\']
+    &:before
+      background-color $digitColor
+      box-shadow $hMiddle, $hBottom
+    &:after
+      background-color $digitColor
+      box-shadow $vRightBottom, $vLeftBottom
+
+  &[data-digit=\'7\']
+    &:before
+      background-color $digitColor
+    &:after
+      box-shadow $vRight, $vRightBottom
+
+  &[data-digit=\'8\']
+    &:before
+    &:after
+      background-color $digitColor
+
+    &:before
+      box-shadow $hBottom,
+        $hMiddle
+
+    &:after
+      box-shadow $vRight,
+        $vLeftBottom,
+        $vRightBottom
+
+  &[data-digit=\'9\']
+    &:before
+      background-color $digitColor
+      box-shadow $hMiddle, $hBottom
+    &:after
+      background-color $digitColor
+      box-shadow $vRight, $vRightBottom

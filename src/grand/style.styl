@@ -1,0 +1,201 @@
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+body
+  background-color #333
+  text-align       center
+
+getPosition(angle)
+  $layoutRadius = ($clockHeadSize / 2) - 15
+  xPos = $layoutRadius * cos(angle * (PI / 180))
+  yPos = $layoutRadius * sin(angle * (PI / 180))
+  (xPos yPos)
+
+genShadows()
+  $shadows = ()
+  for $indicator in (1..12)
+    $angle       = (360 / 12) * ($indicator - 1)
+    $xy          = getPosition($angle)
+    $dots        = $numberOfDots
+    $scale       = 0
+    if $indicator == 1 || $indicator == 4 || $indicator == 7 || $indicator == 10
+      $scale = 1px
+    $shadowProps = $xy 0 $scale grey
+    push($shadows, join(' ', $shadowProps))
+  (unquote(join(',', $shadows)))
+
+
+
+$clockColor    = #c0392b
+$handColor     = #000
+$faceColor     = #ecf0f1
+$cabinetColor  = #222
+$pendulumColor = #f39c12
+$clockHeight   = 200px
+$clockWidth    = $clockHeight / 4
+$clockHeadSize = 100px
+$clockFootSize = 20px
+
+$ns   = clock
+$head = head
+$face = face
+$cabinet = cabinet
+
+.{$ns}
+  height           $clockHeight
+  width            $clockWidth
+  background-color $clockColor
+  position         absolute
+  top              50%
+  left             50%
+  margin-left      -($clockWidth / 2)
+  margin-top       -($clockHeight / 2)
+
+  &:before
+  &:after
+    content  ''
+    border   ($clockFootSize / 2) solid $clockColor
+    display  block
+    position absolute
+    bottom   0
+
+  &:before
+    right             100%
+    border-top-color  transparent
+    border-left-color transparent
+
+  &:after
+    left               100%
+    border-top-color   transparent
+    border-right-color transparent
+
+
+  for $minute in (0..59)
+    &[start-minutes=\"{$minute}\"]
+      .clock__minutes
+        transform rotate(((360 / 60) * $minute)deg)
+
+  for $hour in (0..12)
+    &[start-hours=\"{$hour}\"]
+      .{$hours}
+        transform rotate(((360 / 12) * $hour)deg)
+
+  &__{$face}
+    background-color $faceColor
+    height           100%
+    width            100%
+    border-radius    100%
+    border           10px solid $clockColor
+
+    &:after
+      content ''
+      height 2px
+      width 2px
+      display block
+      position absolute
+      top 50%
+      left 50%
+      border-radius 2px
+      margin-left -1px
+      margin-top -1px
+      box-shadow genShadows()
+
+  &__{$cabinet}
+    background-color $cabinetColor
+    width            60%
+    position         absolute
+    bottom           $clockFootSize
+    margin-left      -30%
+    left             50%
+    height           $clockHeight - ($clockHeadSize / 2) - $clockFootSize
+    overflow         hidden
+    border-radius    20px 20px 0 0
+
+  &__pendulum
+    width            2px
+    background-color $pendulumColor
+    height           80%
+    left             50%
+    top              -10px
+    margin-left      -1px
+    position         absolute
+    transform-origin top center
+    animation        swing .5s infinite alternate linear
+
+    &:after
+      content          ''
+      height           10px
+      width            10px
+      background-color $pendulumColor
+      border-radius    10px
+      display          block
+      position         absolute
+      bottom           0
+      left             50%
+      margin-left      -5px
+
+  &__hours
+  &__minutes
+    height        100%
+    width         100%
+    border-radius 100%
+    position      absolute
+    top           0
+    left          0
+
+  &__hand
+    height           50%
+    position         absolute
+    width            4px
+    border-radius    4px
+    margin-left      -2px
+    left             50%
+    top              50%
+    background-color black
+    transform-origin bottom center
+
+    &:after
+      content          ''
+      height           10px
+      width            10px
+      border-radius    10px
+      position         absolute
+      bottom           -5px
+      left             50%
+      margin-left      -5px
+      background-color #000
+
+    &--hours
+      height     ($clockHeadSize / 4.5)
+      margin-top -($clockHeadSize / 4.5)
+      animation  rotate (720 * 60s) steps(12) infinite
+
+    &--minutes
+      height     ($clockHeadSize / 3)
+      margin-top -($clockHeadSize / 3)
+      animation  rotate (60 * 60s) steps(60) infinite
+
+  &__{$head}
+    height           $clockHeadSize
+    width            $clockHeadSize
+    border-radius    $clockHeadSize
+    position         absolute
+    top              0
+    left             50%
+    margin-left      -($clockHeadSize / 2)
+    margin-top       -($clockHeadSize / 2)
+    background-color $clockColor
+
+
+@keyframes swing
+  0%
+    transform rotate(2deg)
+  100%
+    transform rotate(-2deg)
+
+@keyframes rotate
+  from
+    transform rotate(0deg)
+  to
+    transform rotate(360deg)
