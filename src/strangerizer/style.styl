@@ -1,0 +1,38 @@
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+body
+  background-color #111
+  text-align       center
+  padding          40px
+  color            #fafafa
+
+.font
+  font-family      'Cochin'
+  font-weight      300
+  color            transparent
+  text-transform   uppercase
+  font-size     40px
+  position      relative
+  display       inline-block
+  /* The magic */
+  -webkit-text-stroke 1px red
+  &--main
+    &:before
+      content  ''
+      position absolute
+      bottom   100%
+      left     0
+      right    0
+      height   5px
+      border   1px solid red
+    span
+      font-size 60px
+
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1

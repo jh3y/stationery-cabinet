@@ -1,60 +1,120 @@
 *
   box-sizing border-box
-  animation  fadeIn .5s
 
 body
   background-color #111
   color            #fefefe
   text-align       center
 
-@keyframes fadeIn
-  from
-    opacity 0
-  to
-    opacity 1
+button
+  opacity 0
+  visibility hidden
+  position fixed
+  top 0
+  right 0
+  bottom 0
+  left 0
+  color white
+  background #111
+  border none
+  outline 0
+  font-size 50px
+  cursor pointer
+  z-index 1
+  width  100%
+
+$toss-speed = 1s
+
+$red = rgba(255, 28, 28, 1)
+$beam = rgba(249, 60, 126, .75)
+$white = rgba(220, 220, 220, 1)
+
+.animated
+  button
+    animation fadeIn 1s 7s
+    animation-fill-mode forwards
+
+  .creature
+    animation catch .5s $toss-speed
+    animation-fill-mode forwards
+
+    &:after
+      animation beam .5s $toss-speed
+
+  .ball
+    animation rotate-and-drop 5s
+    animation-fill-mode forwards
+
+    &__wrapper
+      &--v
+        animation toss-v $toss-speed
+        animation-fill-mode forwards
+      &--h
+        animation toss-h $toss-speed
+        animation-fill-mode forwards
+
+    &__top
+      animation top-r 1s $toss-speed
+
+    &__bottom
+      &:before
+        animation glow 7s $toss-speed
 
 .creature
-  height 150px
+  height 100px
   width  100px
   position absolute
   top 50%
   left 50%
   margin-left -50px
-  margin-top -75px
-  background-color purple
+  margin-top -50px
+  font-size 100px
+  color white
+
+  &:after
+    content ''
+    border-radius 100%
+    width 30vw
+    height 10px
+    display block
+    position absolute
+    top 0
+    left 80%
+    transform-origin bottom left
+    transform rotate(-45deg)
+
 
 .ball
-  animation toss-v 1s
-  animation-fill-mode forwards
 
   &__wrapper
     height 50px
     width  50px
     border-radius 50px
-    transform rotate(0deg)
     position absolute
     top 50%
     left 50%
     margin-top -25px
     margin-left -25px
-    animation toss-h 1s
-    animation-fill-mode forwards
 
   &__top
   &__bottom
     position relative
     height 50%
     width  100%
-    background-color red
+    background-color $red
+    border-radius 25px 25px 0 0
     border-bottom 2px solid #000
+
+  &__top
+    transform-origin bottom right
 
   &__bottom
     &:before
       content ''
       height 10px
-      width 10px
+      width 4px
       border-radius 10px
-      background-color grey
+      background-color $white
       position absolute
       top 0
       left 0
@@ -63,23 +123,135 @@ body
       border 4px solid black
     border-bottom none
     border-top 2px solid #000
-    background-color grey
+    border-radius 0 0 25px 25px
+    background-color $white
 
+/*
+  5% === .25s
+  20% === 1s
+*/
+@keyframes rotate-and-drop
+  0%
+  15%
+    transform-origin center center
+    transform rotate(0deg)
+  20%
+    transform-origin center center
+    transform rotate(-45deg)
+  40%
+    transform rotate(-45deg)
+  50%
+    transform translateY(30vw) rotate(0)
+  60%
+    transform-origin bottom center
+    transform translateY(30vw) rotate(0)
+  62%
+    transform-origin bottom center
+    transform translateY(30vw) rotate(-15deg)
+  64%
+    transform-origin bottom center
+    transform translateY(30vw) rotate(15deg)
+  66%
+    transform-origin bottom center
+    transform translateY(30vw) rotate(-15deg)
+  68%
+    transform-origin bottom center
+    transform translateY(30vw) rotate(15deg)
+  70%
+    transform-origin bottom center
+    transform translateY(30vw) rotate(0)
+  75%
+    transform-origin bottom center
+    transform translateY(30vw) rotate(0)
+  77%
+    transform-origin bottom center
+    transform translateY(30vw) rotate(-15deg)
+  79%
+    transform-origin bottom center
+    transform translateY(30vw) rotate(15deg)
+  81%
+    transform-origin bottom center
+    transform translateY(30vw) rotate(-15deg)
+  83%
+    transform-origin bottom center
+    transform translateY(30vw) rotate(15deg)
+  85%
+    transform-origin bottom center
+    transform translateY(30vw) rotate(0)
+  60%
+    transform-origin bottom center
+    transform translateY(30vw) rotate(0)
+  90%
+    transform-origin bottom center
+    transform translateY(30vw) rotate(-15deg)
+  92%
+    transform-origin bottom center
+    transform translateY(30vw) rotate(15deg)
+  94%
+    transform-origin bottom center
+    transform translateY(30vw) rotate(-15deg)
+  96%
+    transform-origin bottom center
+    transform translateY(30vw) rotate(15deg)
+  98%
+    transform-origin bottom center
+    transform translateY(30vw) rotate(0)
+  100%
+    transform-origin bottom center
+    transform translateY(30vw) rotate(0)
+
+@keyframes glow
+  50%
+    background $red
+
+@keyframes catch
+  0%
+    color white
+  50%
+    color $beam
+  100%
+    color transparent
+
+@keyframes beam
+  0%
+    background transparent
+  50%
+    background $beam
+    box-shadow 0 0 15px 5px $beam
+  100%
+    background transparent
 
 @keyframes toss-v
   0%
     transform translateY(100vh)
-  45%
-    transform translateY(-25vh)
+  35%
+    transform translateY(-15vh)
   75%
-    transform translateY(0)
+    transform translateY(-50px)
   100%
-    transform translateY(-20vw)
+    transform translateY(-30vw)
 
 @keyframes toss-h
   0%
-    transform translateX(-100vw)
+    transform translateX(-50vw)
   75%
     transform translateX(0)
   100%
-    transform translateX(20vw)
+    transform translateX(30vw)
+
+@keyframes top-r
+  0%
+    transform rotate(0deg)
+  20%
+  70%
+    transform rotate(30deg)
+  100%
+    transform rotate(0deg)
+
+@keyframes fadeIn
+  from
+    visibility visible
+    opacity    0
+  to
+    visibility visible
+    opacity    1
