@@ -24,6 +24,7 @@ button
   width  100%
 
 $toss-speed = 1s
+$distance = 150px
 
 $red = rgba(255, 28, 28, 1)
 $beam = rgba(249, 60, 126, .75)
@@ -74,7 +75,7 @@ $white = rgba(220, 220, 220, 1)
   &:after
     content ''
     border-radius 100%
-    width 30vw
+    width $distance
     height 10px
     display block
     position absolute
@@ -99,8 +100,8 @@ $white = rgba(220, 220, 220, 1)
   &__top
   &__bottom
     position relative
-    height 50%
-    width  100%
+    height 25px
+    width  50px
     background-color $red
     border-radius 25px 25px 0 0
     border-bottom 2px solid #000
@@ -130,6 +131,7 @@ $white = rgba(220, 220, 220, 1)
   5% === .25s
   20% === 1s
 */
+$drop = 150px
 @keyframes rotate-and-drop
   0%
   15%
@@ -141,64 +143,64 @@ $white = rgba(220, 220, 220, 1)
   40%
     transform rotate(-45deg)
   50%
-    transform translateY(30vw) rotate(0)
+    transform translateY($drop) rotate(0)
   60%
     transform-origin bottom center
-    transform translateY(30vw) rotate(0)
+    transform translateY($drop) rotate(0)
   62%
     transform-origin bottom center
-    transform translateY(30vw) rotate(-15deg)
+    transform translateY($drop) rotate(-15deg)
   64%
     transform-origin bottom center
-    transform translateY(30vw) rotate(15deg)
+    transform translateY($drop) rotate(15deg)
   66%
     transform-origin bottom center
-    transform translateY(30vw) rotate(-15deg)
+    transform translateY($drop) rotate(-15deg)
   68%
     transform-origin bottom center
-    transform translateY(30vw) rotate(15deg)
+    transform translateY($drop) rotate(15deg)
   70%
     transform-origin bottom center
-    transform translateY(30vw) rotate(0)
+    transform translateY($drop) rotate(0)
   75%
     transform-origin bottom center
-    transform translateY(30vw) rotate(0)
+    transform translateY($drop) rotate(0)
   77%
     transform-origin bottom center
-    transform translateY(30vw) rotate(-15deg)
+    transform translateY($drop) rotate(-15deg)
   79%
     transform-origin bottom center
-    transform translateY(30vw) rotate(15deg)
+    transform translateY($drop) rotate(15deg)
   81%
     transform-origin bottom center
-    transform translateY(30vw) rotate(-15deg)
+    transform translateY($drop) rotate(-15deg)
   83%
     transform-origin bottom center
-    transform translateY(30vw) rotate(15deg)
+    transform translateY($drop) rotate(15deg)
   85%
     transform-origin bottom center
-    transform translateY(30vw) rotate(0)
+    transform translateY($drop) rotate(0)
   60%
     transform-origin bottom center
-    transform translateY(30vw) rotate(0)
+    transform translateY($drop) rotate(0)
   90%
     transform-origin bottom center
-    transform translateY(30vw) rotate(-15deg)
+    transform translateY($drop) rotate(-15deg)
   92%
     transform-origin bottom center
-    transform translateY(30vw) rotate(15deg)
+    transform translateY($drop) rotate(15deg)
   94%
     transform-origin bottom center
-    transform translateY(30vw) rotate(-15deg)
+    transform translateY($drop) rotate(-15deg)
   96%
     transform-origin bottom center
-    transform translateY(30vw) rotate(15deg)
+    transform translateY($drop) rotate(15deg)
   98%
     transform-origin bottom center
-    transform translateY(30vw) rotate(0)
+    transform translateY($drop) rotate(0)
   100%
     transform-origin bottom center
-    transform translateY(30vw) rotate(0)
+    transform translateY($drop) rotate(0)
 
 @keyframes glow
   50%
@@ -221,23 +223,25 @@ $white = rgba(220, 220, 220, 1)
   100%
     background transparent
 
+
+
 @keyframes toss-v
   0%
     transform translateY(100vh)
   35%
-    transform translateY(-15vh)
+    transform translateY(-100px)
   75%
     transform translateY(-50px)
   100%
-    transform translateY(-30vw)
+    transform translateY(-($distance))
 
 @keyframes toss-h
   0%
-    transform translateX(-50vw)
+    transform translateX(-200px)
   75%
     transform translateX(0)
   100%
-    transform translateX(30vw)
+    transform translateX($distance)
 
 @keyframes top-r
   0%
