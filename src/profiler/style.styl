@@ -1,0 +1,173 @@
+*
+  box-sizing border-box
+  margin     0
+  padding    0
+
+html
+  font-family "Lato", "Lucida Grande","Lucida Sans Unicode", Tahoma, Sans-Serif
+  font-size   14px
+  line-height 1.5
+  font-weight 400
+
+  @media(max-width: 550px)
+    font-size 13px
+
+body
+  margin  0
+  padding 0
+
+h1
+  font-family "Telefon Black", Sans-Serif
+  font-size   3rem
+  line-height 1.1
+
+  @media(max-width: 550px)
+    font-size 2.2rem
+
+img
+  max-width 100%
+  height    auto
+
+/**
+  * Button
+*/
+.button
+  font-family "Lato", "Lucida Grande","Lucida Sans Unicode", Tahoma, Sans-Serif
+  position           relative
+  border-radius      3px
+  color              white
+  cursor             pointer
+
+  &:hover
+    color #000
+    background #ffffff
+
+.button-outline
+  background none
+  border     3px solid #ccc
+
+.mini-button
+  font-family  "Lato", "Lucida Grande","Lucida Sans Unicode", Tahoma, Sans-Serif
+  font-size    0.8rem
+  padding      2px 7px
+  margin       0 1px 0 0
+  border-width 1px
+
+/**
+  * Header
+*/
+.main-header
+  background #000
+  height     65px
+
+.group
+
+  &:before
+  &:after
+    content ''
+    display table
+
+  &:after
+    clear   both
+
+.profile-header
+  background      #333
+  background-size cover
+  position        relative
+  text-align      center
+
+  @media(max-width: 550px)
+    padding-top    15px
+    padding-bottom 25px
+
+  &-content
+    position relative
+    z-index  2
+    padding  110px 10px 75px 10px
+
+    @media(max-width: 550px)
+      padding 0
+
+.profile-name
+  text-align center
+  color      #fafafa
+
+  @media(max-width: 550px)
+    text-align left
+    padding    0 0 0 100px
+
+  h1
+    display  inline-block
+    position relative
+    margin   0 0 5px 0
+
+.profile-username
+  color #999
+
+  &-area
+    display inherit
+
+/**
+  * Links and stats
+*/
+.links-and-stats
+  position   relative
+  background #000
+  padding    20px 10px
+
+  @media(max-width 550px)
+    position static
+    padding  15px 10px 10px 10px
+
+.profile-follow
+  display inline-block
+
+.follow-block
+  margin-right 10px
+  color        #8a8a8a
+  cursor       pointer
+
+  &:hover
+    color #ffffff
+
+  & > strong
+    color       #ffffff
+    font-weight normal
+
+.profile-avatar
+  position   absolute
+  left       50%
+  bottom     0
+  transform  translateX(-50%)
+  width      124px
+  height     124px
+  background #ffffff
+  border     5px solid #1e1e1e
+
+  @media(max-width 550px)
+    bottom    auto
+    top       75px
+    left      15px
+    transform none
+    width     70px
+    height    70px
+
+.profile-links
+  float right
+
+  & > a
+    cursor pointer
+
+  & > a:not(.button)
+    margin-right 10px
+    color        #8a8a8a
+
+    &:hover
+      color #ffffff
+
+  @media(max-width 550px)
+    float          none
+    padding-top    10px
+    padding-bottom 5px
+    border-top     3px solid #343436
+    margin-top     10px

@@ -5,15 +5,14 @@ body
   background-color #111
   color            #fefefe
   text-align       center
+  overflow         hidden
 
 button
   opacity 0
   visibility hidden
   position fixed
-  top 0
-  right 0
-  bottom 0
-  left 0
+  top 50%
+  left 50%
   color white
   background #111
   border none
@@ -21,7 +20,10 @@ button
   font-size 50px
   cursor pointer
   z-index 1
-  width  100%
+  height 50px
+  width  50px
+  margin-top -25px
+  margin-left -25px
 
 $toss-speed = 1s
 $distance = 150px
@@ -97,6 +99,9 @@ $white = rgba(220, 220, 220, 1)
     margin-top -25px
     margin-left -25px
 
+    &--v
+      transform translateY(100vh)
+
   &__top
   &__bottom
     position relative
@@ -134,9 +139,10 @@ $white = rgba(220, 220, 220, 1)
 $drop = 150px
 @keyframes rotate-and-drop
   0%
+    transform scale(2)
   15%
     transform-origin center center
-    transform rotate(0deg)
+    transform rotate(0deg) scale(1)
   20%
     transform-origin center center
     transform rotate(-45deg)
