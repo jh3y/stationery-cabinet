@@ -1,173 +1,209 @@
-*
-  box-sizing border-box
-  margin     0
-  padding    0
+@import 'theme.styl'
+@import 'base.styl'
+@import 'header.styl'
+@import 'button.styl'
 
-html
-  font-family "Lato", "Lucida Grande","Lucida Sans Unicode", Tahoma, Sans-Serif
-  font-size   14px
-  line-height 1.5
-  font-weight 400
 
-  @media(max-width: 550px)
-    font-size 13px
 
-body
-  margin  0
-  padding 0
+.group:before,.group:after {
+    content: "";
+    display: table
+}
 
-h1
-  font-family "Telefon Black", Sans-Serif
-  font-size   3rem
-  line-height 1.1
+.group:after {
+    clear: both
+}
 
-  @media(max-width: 550px)
-    font-size 2.2rem
+.badge {
+    font-family: "Lato", "Lucida Grande","Lucida Sans Unicode", Tahoma, Sans-Serif;
+    font-size: 70%;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 1px 3px 1px 3px;
+    color: black !important;
+    border-radius: 3px;
+    position: relative;
+    top: -2px;
+    text-shadow: none !important;
+    white-space: nowrap
+}
 
-img
-  max-width 100%
-  height    auto
+.single-pen .badge {
+    top: 0;
+    left: -3px;
+    font-size: 80%
+}
 
-/**
-  * Button
-*/
-.button
-  font-family "Lato", "Lucida Grande","Lucida Sans Unicode", Tahoma, Sans-Serif
-  position           relative
-  border-radius      3px
-  color              white
-  cursor             pointer
+.badge-pro {
+    background: #fcd000
+}
 
-  &:hover
-    color #000
-    background #ffffff
+.badge-hire {
+    background: #76daff
+}
 
-.button-outline
-  background none
-  border     3px solid #ccc
+.badge-new,.badge-draft {
+    background: #47CF73
+}
 
-.mini-button
-  font-family  "Lato", "Lucida Grande","Lucida Sans Unicode", Tahoma, Sans-Serif
-  font-size    0.8rem
-  padding      2px 7px
-  margin       0 1px 0 0
-  border-width 1px
+.badge-follows {
+    background: #555
+}
 
-/**
-  * Header
-*/
-.main-header
-  background #000
-  height     65px
 
-.group
 
-  &:before
-  &:after
-    content ''
-    display table
+.profile-header {
+    background: #000;
+    background-size: cover;
+    position: relative;
+    text-align: center
+}
 
-  &:after
-    clear   both
+@media (max-width: 550px) {
+    .profile-header {
+        padding-top:15px;
+        padding-bottom: 25px
+    }
+}
 
-.profile-header
-  background      #333
-  background-size cover
-  position        relative
-  text-align      center
+.profile-header-content {
+    position: relative;
+    padding: 110px 10px 75px 10px;
+    z-index: 2
+}
 
-  @media(max-width: 550px)
-    padding-top    15px
-    padding-bottom 25px
+@media (max-width: 550px) {
+    .profile-header-content {
+        padding:0
+    }
+}
 
-  &-content
-    position relative
-    z-index  2
-    padding  110px 10px 75px 10px
 
-    @media(max-width: 550px)
-      padding 0
+.links-and-stats {
+    position: relative;
+    background: black;
+    padding: 20px 10px
+}
 
-.profile-name
-  text-align center
-  color      #fafafa
+@media (max-width: 550px) {
+    .links-and-stats {
+        position:static;
+        padding: 15px 10px 10px 10px
+    }
+}
 
-  @media(max-width: 550px)
-    text-align left
-    padding    0 0 0 100px
+.profile-links {
+    float: right
+}
 
-  h1
-    display  inline-block
-    position relative
-    margin   0 0 5px 0
+.profile-links>a:not(.button) {
+    margin-right: 10px;
+    color: #9A9A9C
+}
 
-.profile-username
-  color #999
+.profile-links>a:not(.button):hover,.profile-links>a:not(.button):active {
+    color: white
+}
 
-  &-area
-    display inherit
+@media (max-width: 550px) {
+    .profile-links {
+        float:none;
+        padding-top: 10px;
+        padding-bottom: 5px;
+        border-top: 3px solid #343436;
+        margin-top: 10px
+    }
+}
 
-/**
-  * Links and stats
-*/
-.links-and-stats
-  position   relative
-  background #000
-  padding    20px 10px
+.profile-follow {
+    display: inline-block
+}
 
-  @media(max-width 550px)
-    position static
-    padding  15px 10px 10px 10px
+.follow-block {
+    margin-right: 10px;
+    color: #8A8A8A
+}
 
-.profile-follow
-  display inline-block
+.follow-block>strong {
+    color: white;
+    font-weight: normal
+}
 
-.follow-block
-  margin-right 10px
-  color        #8a8a8a
-  cursor       pointer
+.follow-block .icon {
+    position: relative;
+    top: 3px
+}
 
-  &:hover
-    color #ffffff
+.profile-avatar {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    width: 124px;
+    height: 124px;
+    border: 5px solid #1E1E1E;
+    background: white
+}
 
-  & > strong
-    color       #ffffff
-    font-weight normal
+@media (max-width: 550px) {
+    .profile-avatar {
+        bottom:auto;
+        top: 75px;
+        left: 15px;
+        -webkit-transform: none;
+        transform: none;
+        width: 70px;
+        height: 70px
+    }
+}
 
-.profile-avatar
-  position   absolute
-  left       50%
-  bottom     0
-  transform  translateX(-50%)
-  width      124px
-  height     124px
-  background #ffffff
-  border     5px solid #1e1e1e
 
-  @media(max-width 550px)
-    bottom    auto
-    top       75px
-    left      15px
-    transform none
-    width     70px
-    height    70px
+.edit-profile-link {
+    position: absolute;
+    top: 20px;
+    right: 20px
+}
 
-.profile-links
-  float right
+@media (max-width: 550px) {
+    .edit-profile-link {
+        display:none
+    }
+}
 
-  & > a
-    cursor pointer
+.profile-name {
+    text-align: center
+}
 
-  & > a:not(.button)
-    margin-right 10px
-    color        #8a8a8a
+.profile-name h1 {
+    display: inline-block;
+    margin: 0 0 5px 0;
+    position: relative
+}
 
-    &:hover
-      color #ffffff
+@media (max-width: 550px) {
+    .profile-name {
+        text-align:left;
+        padding: 0 0 0 100px
+    }
+}
 
-  @media(max-width 550px)
-    float          none
-    padding-top    10px
-    padding-bottom 5px
-    border-top     3px solid #343436
-    margin-top     10px
+.profile-username-area .badge {
+    position: relative;
+    top: 0;
+    margin-left: 5px
+}
+
+.profile-username {
+    color: #999
+}
+
+.profile-badges {
+    font-weight: bold;
+    margin: 0 0 0 10px;
+    font-size: 1.2rem;
+    position: absolute;
+    left: 100%;
+    top: 10px;
+    white-space: nowrap
+}

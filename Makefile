@@ -24,7 +24,7 @@ BOILERPLATE_STYLE = boilerplate/style.boilerplate.styl
 
 SCRIPT_DEST = $(OUTPUT_DIR)/script.js
 
-POSTCSS_OPTS = --use autoprefixer -d $(OUTPUT_DIR)/ $(OUTPUT_DIR)/*.css
+POSTCSS_OPTS = --use autoprefixer $(OUTPUT_DIR)/style.css -d $(OUTPUT_DIR)
 
 
 SCRIPT_SRC = $(SRC_BASE)/$(PEN)/$(SCRIPT_FILE)
