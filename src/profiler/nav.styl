@@ -1,0 +1,48 @@
+/**
+  * Nav
+  *
+  * Basic nav styles
+*/
+
+.profile-nav
+  margin 0
+
+  @media (max-width 550px)
+    margin 0 0 10px 0
+
+  &-2
+    background #252527
+    padding    10px
+    border-top 5px solid #545456
+    margin     0 0 20px 0
+
+    a
+      font-size 1rem
+
+    @media (max-width 550px)
+      padding 0
+      border  0
+
+
+
+.explore-tabs
+  margin      0 0 12px 0
+  position    relative
+  font-size   0
+  white-space nowrap
+
+  a
+  span
+    font-size 1.1rem
+    display   inline-block
+    outline   0
+    color     #999
+    padding   3px 14px 5px 0
+
+  a.active
+    color       white
+    font-weight 700
+
+  a:hover
+  a:active
+    color #eee

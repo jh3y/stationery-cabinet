@@ -1,7 +1,130 @@
 /**
   * Header
+  *
+  * Contains profile avatar, header image, user stats and links
 */
 .main-header
   background    black
   border-bottom 1px solid #222
   height        65px
+
+
+.profile-header
+  background      #444
+  background-size cover
+  position        relative
+  text-align      center
+
+  @media (max-width 550px)
+    padding-top    15px
+    padding-bottom 25px
+
+  &-content
+    position relative
+    padding  110px 10px 75px 10px
+    z-index  2
+
+    @media (max-width 550px)
+      padding 0
+
+
+.links-and-stats
+  position   relative
+  background black
+  padding    20px 10px
+
+  @media (max-width 550px)
+    position static
+    padding  15px 10px 10px 10px
+
+.profile-links
+  float right
+
+  & > a:not(.button)
+    margin-right 10px
+    color        #9A9A9C
+
+    &:hover
+    &:active
+      color #ffffff
+
+  @media (max-width 550px)
+    float          none
+    padding-top    10px
+    padding-bottom 5px
+    border-top     3px solid #343436
+    margin-top     10px
+
+
+
+.profile-follow
+  display inline-block
+
+.follow-block
+  margin-right 10px
+  color        #8A8A8A
+
+  & > strong
+    color       white
+    font-weight normal
+
+  .icon
+    position relative
+    top      3px
+
+.profile-avatar
+  position   absolute
+  left       50%
+  bottom     0
+  transform  translateX(-50%)
+  width      124px
+  height     124px
+  border     5px solid #1E1E1E
+  background white
+
+  @media (max-width 550px)
+    bottom    auto
+    top       75px
+    left      15px
+    transform none
+    width     70px
+    height    70px
+
+
+.edit-profile-link
+  position absolute
+  top      20px
+  right    20px
+
+  @media (max-width 550px)
+    display none
+
+.profile-name
+  text-align center
+
+  h1
+    display  inline-block
+    margin   0 0 5px 0
+    position relative
+
+  @media (max-width 550px)
+    text-align left
+    padding    0 0 0 100px
+
+
+.profile-username
+  color #999
+
+  .badge
+    position    relative
+    top         0
+    margin-left 5px
+
+.profile-badges
+    font-weight bold
+    margin      0 0 0 10px
+    font-size   1.2rem
+    position    absolute
+    left        100%
+    top         10px
+    white-space nowrap

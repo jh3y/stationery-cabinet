@@ -1,0 +1,30 @@
+.single-pen.featured-pen.no-user-line.group
+  svg(style="display: none")
+    symbol#placeholder(viewBox="0 0 100 100")
+      circle(cx="50", cy="50", r="40")
+  .iframe-wrap
+    a.cover-link
+    iframe
+    .meta-overlay
+      p.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      .pen-actions
+        a.button.mini-button.button-dark + Add to Collection
+        a.button.mini-button.button-dark × Delete
+  .meta
+    h3.pen-title Some awesome pen
+    .user-and-stats
+      .stats
+        a.single-stat.views
+          | 9999
+          svg.icon-eye(width='17px', height='12px')
+            use(xlink:href='#placeholder')
+        a.single-stat.comments
+          | 9999
+          svg.icon-comment(width='12px', height='12px')
+            use(xlink:href='#placeholder')
+        a.single-stat.loves.loved-0
+          span.count
+            | 9999
+          svg.icon-heart(width='12px', height='12px')
+            use(xlink:href='#placeholder')

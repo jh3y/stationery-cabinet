@@ -1,28 +1,55 @@
 /**
-  * Button
+  * Buttons
+  *
+  * Buttons such as Hire Me button and Edit Profile button
 */
-.button {
-    font-family: "Lato", "Lucida Grande","Lucida Sans Unicode", Tahoma, Sans-Serif;
-    color: white;
-    cursor: pointer;
-}
+.button
+  font-family     "Lato", "Lucida Grande","Lucida Sans Unicode", Tahoma, Sans-Serif
+  color           white
+  cursor          pointer
+  appearance      none
+  font-size       1rem
+  text-shadow     none
+  line-height     1.2
+  display         inline-block
+  border          0
+  outline         0
+  padding         10px 16px
+  margin          0 10px 0 0
+  position        relative
+  border-radius   3px
+  border          3px solid transparent
+  text-decoration none !important
+  text-align      center
+  font-weight     normal !important
 
-.button-outline {
-    background: none;
-    border: 3px solid #ccc
-}
+  &.yellow
+    background #fcd000
+    color      #111
+    &:hover
+      background #c9a600
+
+.button-outline
+  background none
+  border     3px solid #ccc
 
 .button-outline:hover
-.button-outline:focus {
-    background: white;
-    border-color: white;
-    color: black
-}
+.button-outline:focus
+  background   white
+  border-color white
+  color        black
 
-.mini-button {
-    font-family: "Lato", "Lucida Grande","Lucida Sans Unicode", Tahoma, Sans-Serif;
-    font-size: 0.8rem;
-    padding: 2px 7px;
-    margin: 0 1px 0 0;
-    border-width: 1px
-}
+.mini-button
+  font-family  "Lato", "Lucida Grande","Lucida Sans Unicode", Tahoma, Sans-Serif
+  font-size    0.8rem
+  padding      2px 7px
+  margin       0 1px 0 0
+  border-width 1px
+  display      inline
+
+.button-dark
+  background #111
+
+.button-dark:hover
+.button-dark:focus
+  background #1e1e1e
