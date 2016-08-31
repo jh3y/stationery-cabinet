@@ -20,128 +20,88 @@ img
   max-width 100%
   height    auto
 
-@font-face {
-    font-family: "Telefon Black";
-    src: url(https://assets.codepen.io/assets/telefon/black/3f32b1c9-8e26-465e-ae02-ff82a378b670-3-cd99c2d06a9fd53639f9fbd036cf8bc2.woff) format("woff"),url(https://assets.codepen.io/assets/telefon/black/3f32b1c9-8e26-465e-ae02-ff82a378b670-3-a89336f5956fb9c2b4d3425102671df8.woff2) format("woff2")
-}
+@font-face
+  font-family "Telefon Black"
+  src url(https://assets.codepen.io/assets/telefon/black/3f32b1c9-8e26-465e-ae02-ff82a378b670-3-cd99c2d06a9fd53639f9fbd036cf8bc2.woff) format("woff"),url(https://assets.codepen.io/assets/telefon/black/3f32b1c9-8e26-465e-ae02-ff82a378b670-3-a89336f5956fb9c2b4d3425102671df8.woff2) format("woff2")
 
-@font-face {
-    font-family: "Telefon";
-    src: url(https://assets.codepen.io/assets/telefon/bold/af889c53-1ee3-4868-8fdc-2b310d587b50-3-b689630919091c150376bc36bb9ce8d2.woff) format("woff"),url(https://assets.codepen.io/assets/telefon/bold/af889c53-1ee3-4868-8fdc-2b310d587b50-3-5c6e85a72097918f74ecfc94407a5492.woff2) format("woff2")
-}
+@font-face
+    font-family "Telefon"
+    src url(https://assets.codepen.io/assets/telefon/bold/af889c53-1ee3-4868-8fdc-2b310d587b50-3-b689630919091c150376bc36bb9ce8d2.woff) format("woff"),url(https://assets.codepen.io/assets/telefon/bold/af889c53-1ee3-4868-8fdc-2b310d587b50-3-5c6e85a72097918f74ecfc94407a5492.woff2) format("woff2")
 
-html {
-    font-family: "Lato", "Lucida Grande","Lucida Sans Unicode", Tahoma, Sans-Serif;
-    line-height: 1.5;
-    font-size: 15px;
-    font-weight: 400
-}
+html
+  font-family "Lato", "Lucida Grande","Lucida Sans Unicode", Tahoma, Sans-Serif
+  line-height 1.5
+  font-size   15px
+  font-weight 400
 
-@media (max-width: 830px) {
-    html {
-        font-size:14px
-    }
-}
+  @media (max-width 830px)
+    font-size 14px
 
-@media (max-width: 550px) {
-    html {
-        font-size:13px
-    }
-}
+  @media (max-width 550px)
+    font-size 13px
 
-body {
-    color: white
-}
 
-h1,h2,h3,h4,h5,h6 {
-    line-height: 1.2;
-    margin: 0 0 10px 0;
-    font-weight: normal
-}
+body
+  color white
 
-h2,h3,h4,h5,h6 {
-    font-family: "Lato", "Lucida Grande","Lucida Sans Unicode", Tahoma, Sans-Serif
-}
+h1
+h2
+h3
+h4
+h5
+h6
+  line-height 1.2
+  margin      0 0 10px 0
+  font-weight normal
 
-h1,.h1 {
-    font-family: "Telefon Black", Sans-Serif;
-    line-height: 1.1;
-    font-size: 3.0rem
-}
+h2
+h3
+h4
+h5
+h6
+  font-family "Lato", "Lucida Grande","Lucida Sans Unicode", Tahoma, Sans-Serif
 
-h3,.h3 {
-    font-size: 1.4rem;
-    font-weight: bold
-}
+h1
+  font-family "Telefon Black", Sans-Serif
+  line-height 1.1
+  font-size   3.0rem
 
-@media (max-width: 550px) {
-    h1,.h1 {
-        font-size:2.2rem
-    }
-}
+  @media (max-width 550px)
+    font-size 2.2rem
 
-h2,.h2 {
-    font-family: "Telefon", Sans-Serif;
-    font-size: 1.8rem
-}
+h2
+  font-family "Telefon", Sans-Serif
+  font-size   1.8rem
 
-h3,.h3 {
-    font-size: 1.4rem;
-    font-weight: bold
-}
+h3
+  font-size   1.4rem
+  font-weight bold
 
-h4,.h4 {
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-transform: uppercase
-}
+h4
+  font-size      1.2rem
+  font-weight    bold
+  text-transform uppercase
 
-h5,.h5 {
-    font-weight: bold;
-    text-transform: uppercase
-}
+h5
+  font-weight    bold
+  text-transform uppercase
 
-p,pre,blockquote {
-    margin: 0 0 1em 0
-}
+p
+pre
+blockquote
+  margin: 0 0 1em 0
 
-p:empty,pre:empty,blockquote:empty {
-    display: none
-}
+a
+  text-decoration none
+  color           #76daff
 
-a {
-    text-decoration: none;
-    color: #76daff
-}
+a:hover
+a:focus
+a:active
+  cursor pointer
+  color  white
 
-a:hover,a:focus,a:active {
-    cursor: pointer;
-    color: white
-}
-
-time {
-    color: #ccc;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-size: 80%
-}
-
-blockquote {
-    padding: 1em;
-    border-left: 2px solid #76daff;
-    background: rgba(0,0,0,0.05)
-}
-
-blockquote p:last-child {
-    margin: 0
-}
-
-body {
-    overflow-x: hidden;
-    overflow-y: auto;
-    background: #191919
-}
-
-body {
-    background: #343338
-}
+body
+  overflow-x hidden
+  overflow-y auto
+  background #343338
