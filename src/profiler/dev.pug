@@ -1,6 +1,6 @@
 .content
-  section
-    h1.section__title Profile styling starter pack 😎
+  section(style="text-align: center")
+    h1.section__title(style="padding: 20px") Profile styling starter pack 😎
     .section__content
       p Did you know that you can style your CodePen profile? You can!
       p.
@@ -10,30 +10,128 @@
       p.
         To get started, fork this pen, style and extend accordingly and then link the fork to your profile. That's it! Enjoy!
   section
-    h1.section__title Profile header
-    .section__content
-      include header.pug
+    h1.section__title(style="text-align: center; padding: 20px; text-decoration: underline") Profile header
+    .section__content(style="position: relative")
+      header.main-header
+      header#profile-header.profile-header.group
+        .profile-header-content
+          #profile-name.profile-name
+            h1#profile-name-header
+              | Username
+              span#profile-badges.profile-badges
+                a#profile-badge-pro.badge.badge-pro PRO
+            #profile-username-area.profile-username-area
+              span#profile-username.profile-username @username
+              span#profile-badge-follows.badge.badge-follows Follows You
+      #links-and-stats.links-and-stats
+        #profile-follow.profile-follow
+          a#profile-followers.follow-block
+            strong#followers-count 999
+            span Followers
+          a#profile-following.follow-block
+            strong#following-count 999
+            span Following
+          a#follow-this-user.button.mini-button.button-outline.follow-user-button Follow
+        img#profile-image.profile-avatar
+        #profile-links.profile-links
+          a Link 1
+          a Link 2
+          a Link 3
+          a.button.button-outline.mini-button Hire Me
+
   section
-    h1.section__title Location and bio
-    .section__content
-      include bio.pug
+    h1.section__title(style="padding: 20px; text-align: center; text-decoration: underline") Location and bio
+    .section__content(style="position: relative")
+      .profile-location-and-bio
+        .profile-location Some awesome location
+        .profile-bio.
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
   section
-    h1.section__title Footer
-    .section__content
-      include footer.pug
+    h1.section__title(style="padding: 20px; text-align: center; text-decoration: underline") Pen
+    .section__content(style="position: relative")
+      .single-pen.featured-pen.no-user-line.group
+        svg(style="display: none")
+          symbol#placeholder(viewBox="0 0 100 100")
+            circle(cx="50", cy="50", r="40")
+        .iframe-wrap
+          a.cover-link
+          iframe
+          .meta-overlay
+            p.
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            .pen-actions
+              a.button.mini-button.button-dark + Add to Collection
+              a.button.mini-button.button-dark × Delete
+        .meta
+          h3.pen-title Some awesome pen
+          .user-and-stats
+            .stats
+              a.single-stat.views
+                | 9999
+                svg.icon-eye(width='17px', height='12px')
+                  use(xlink:href='#placeholder')
+              a.single-stat.comments
+                | 9999
+                svg.icon-comment(width='12px', height='12px')
+                  use(xlink:href='#placeholder')
+              a.single-stat.loves.loved-0
+                span.count
+                  | 9999
+                svg.icon-heart(width='12px', height='12px')
+                  use(xlink:href='#placeholder')
   section
-    h1.section__title Buttons
-    .section__content
-      include button.pug
+    h1.section__title(style="padding: 20px; text-align: center; text-decoration: underline") Footer
+    .section__content(style="position: relative")
+      footer.link-footer
+        .width-wrapper
+          for cat in ['1', '2', '3', '4']
+            nav.link-footer-links
+              strong= 'Category' + cat
+              for val in ['1', '2', '3', '4']
+                a= 'Link' + val
   section
-    h1.section__title Nav
-    .section__content
-      include nav.pug
+    h1.section__title(style="padding: 20px; text-align: center; text-decoration: underline") Buttons
+    .section__content(style="position: relative")
+      a.button.button-outline Edit Profile
+      a.button Submit
+
   section
-    h1.section__title Promo
-    .section__content
-      include promo.pug
+    h1.section__title(style="padding: 20px; text-align: center; text-decoration: underline") Nav
+    .section__content(style="position: relative")
+      nav.explore-tabs.profile-nav.profile-nav-1
+        .width-wrapper
+          a.active Link 1
+          for link in ['Link 2', 'Link 3']
+            a= link
+      nav.explore-tabs.profile-nav.profile-nav-2
+        a.active Link 1
+        for link in ['Link 2', 'Link 3', 'Link 4']
+          a= link
+
   section
-    h1.section__title Pen
-    .section__content
-      include pen.pug
+    h1.section__title(style="padding: 20px; text-align: center; text-decoration: underline") Promo
+    .section__content(style="position: relative")
+      footer.promo-footer
+        .width-wrapper
+          .flex-grid-thirds
+            .footer-chunk
+              h3
+                | Title
+                span.badge.badge-pro Badge
+              p.
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              p
+                a.button.yellow Button
+              p
+                a Link 1
+                br
+                a Link 2
+            .footer-chunk
+              h3 Title
+              p.
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              p
+                a Link 1
+                br
+                a Link 2
