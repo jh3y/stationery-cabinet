@@ -6,10 +6,18 @@ body
   background-color #616161
   overflow         hidden
 
+button
+  cursor pointer
+
 @keyframes fadeIn
   to
     opacity 1
 
+@keyframes rotate
+  from
+    transform rotate(-90deg)
+  to
+    transform rotate(270deg)
 
 /**
 * Functions
@@ -31,6 +39,12 @@ ring-transformation(child, amount, radius)
           if (even(child))
             $rotation = -((360 / amount) * (amount - (num - 1)))
           transform translate($pos[0], $pos[1]) rotate($rotation * 1deg)
+
+$animationDuration = 5s
+.animate .ring
+  animation rotate $animationDuration infinite linear
+  &:nth-of-type(odd)
+    animation rotate $animationDuration infinite reverse linear
 
 .ring
   height 4px
