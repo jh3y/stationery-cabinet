@@ -1,0 +1,11 @@
+mixin ring(amount)
+  - var n = 0
+  .ring
+    while n < amount
+      .ring__element
+      - n++
+
+- var r = 1
+  while r < 15
+    +ring((r * 12) + 2)
+    - r++
