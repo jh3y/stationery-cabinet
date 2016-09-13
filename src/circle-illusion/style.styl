@@ -28,6 +28,8 @@ ring-transformation(child, amount, radius)
         $pos   = getPosition($angle, radius)
         &:nth-child({num})
           $rotation = (360 / amount) * (num + 1)
+          if (even(child))
+            $rotation = -((360 / amount) * (amount - (num - 1)))
           transform translate($pos[0], $pos[1]) rotate($rotation * 1deg)
 
 .ring
@@ -38,7 +40,7 @@ ring-transformation(child, amount, radius)
   left 50%
   margin-left -4px
   margin-top  -4px
-  transform rotate(10deg)
+  transform rotate(-90deg)
 
   &__element
     height 20px
@@ -52,5 +54,5 @@ ring-transformation(child, amount, radius)
     &:nth-child(odd)
       border 4px solid #111
 
-  for ring in 1..15
+  for ring in 1..5
     ring-transformation(ring, (ring * 12) + 2, (ring * 50) + 10px)
