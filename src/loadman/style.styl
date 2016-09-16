@@ -1,10 +1,91 @@
+$black        = #111
+$blue         = blue
+$yellow       = yellow
+$white        = $white
+$chomp-angle  = 45
+$chomp-speed  = .25s
+$track-height = 20px
+$track-length = 350px
+$load-size    = 5 * $track-height
+
+/**
+  * Funny enough, the actual element represents the moving track.
+  *
+  * We use it's pseudo elements to create our head pieces.
+*/
+.load-man
+  height     $track-height
+  position   absolute
+  top        50%
+  left       50%
+  width      $track-length
+  margin-top -5px
+  background repeating-linear-gradient(90deg, white, white 5%, transparent 5%, transparent 35%)
+  animation  travel 2s infinite linear
+
+  /**
+    * Our pseudo elements create the head pieces
+    *
+    * They are near identical minus subtle differences in animation and border
+    * styling
+  */
+  &:before
+  &:after
+    content ''
+    position absolute
+    left 0
+    top 50%
+    border ($load-size / 2) solid $yellow
+    border-radius 100%
+    margin-top -($load-size / 2)
+  /**
+  * The top head piece
+  */
+  &:before
+    border-left-color   transparent
+    border-bottom-color transparent
+    animation           chomp $chomp-speed infinite linear
+  /**
+    * The bottom head piece
+  */
+  &:after
+    border-top-color   transparent
+    border-right-color transparent
+    animation          chomp-b $chomp-speed infinite linear
+
+
+@keyframes travel
+  from
+    background-position 0 0
+  to
+    background-position -($track-length) 0
+
+@keyframes chomp
+  0%
+    transform rotate($chomp-angle * -1deg)
+  50%
+    transform rotate(($chomp-angle * 2) * -1deg)
+  100%
+    transform rotate($chomp-angle * -1deg)
+
+@keyframes chomp-b
+  0%
+    transform rotate($chomp-angle * -1deg)
+  50%
+    transform rotate(0deg)
+  100%
+    transform rotate($chomp-angle * -1deg)
+
+/**
+  * Base styling
+*/
 *
   box-sizing border-box
   animation  fadeIn .5s
 
 body
-  background-color #111
-  border           4px solid blue
+  background-color $black
+  border           15px solid $blue
   text-align       center
 
 @keyframes fadeIn
@@ -12,71 +93,3 @@ body
     opacity 0
   to
     opacity 1
-
-$size = 50px
-
-.loadman
-  height $size
-  width  $size
-  position absolute
-  top      50%
-  left     50%
-  margin-left -($size / 2)
-  margin-top  -($size / 2)
-  transform rotate(45deg)
-
-  &:before
-  &:after
-    border ($size/2) solid yellow
-    position absolute
-    left 0
-    content ''
-    border-radius 100%
-
-  &:before
-    top 0
-    border-right-color transparent
-    border-bottom-color transparent
-    animation chomp .25s infinite linear
-  &:after
-    bottom 0
-    border-left-color transparent
-    border-top-color  transparent
-    border-right-color yellow
-    border-bottom-color yellow
-    animation chomp-b .25s infinite linear
-
-$chomp-angle = 45
-
-@keyframes chomp
-  0%
-    transform rotate(0deg)
-  50%
-    transform rotate($chomp-angle * -1deg)
-  100%
-    transform rotate(0deg)
-
-@keyframes chomp-b
-  0%
-    transform rotate(0deg)
-  50%
-    transform rotate($chomp-angle * 1deg)
-  100%
-    transform rotate(0deg)
-
-
-.track
-  height 10px
-  position absolute
-  top 50%
-  left 50%
-  width 200px
-  margin-top -5px
-  background repeating-linear-gradient(90deg, white, white 5%, transparent 5%, transparent 35%)
-  animation travel 2s infinite linear
-
-@keyframes travel
-  from
-    background-position 0 0
-  to
-    background-position -200px 0
