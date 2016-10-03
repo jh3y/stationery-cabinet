@@ -1,0 +1,174 @@
+/**
+  * style variables
+*/
+$noOfSlides            = 5
+$carouselHeight        = 300px
+$carouselWidth         = 400px
+$carouselIndicatorSize = 15px
+$carouselControlSize   = 30px
+$slideTransition       = .5s
+
+@keyframes carousel-show-slide
+  from
+    opacity 0
+  to
+    opacity 1
+
+/**
+  * Control & indicator mixin
+*/
+.carousel
+  height     $carouselHeight
+  width      $carouselWidth
+  overflow   hidden
+  text-align center
+  position   relative
+  padding    0
+
+  &__controls
+  &__slide
+  &__activator
+    display none
+
+  /**
+  * Where the magic happens
+  */
+  for num in $noOfSlides..1
+    &__activator:nth-of-type({num})
+      &:checked ~ .carousel__track
+        transform translateX(-((num - 1) * 100%))
+      &:checked ~ .carousel__slide:nth-of-type({num})
+        animation carousel-show-slide $slideTransition
+        display block
+      &:checked ~ .carousel__controls:nth-of-type({num})
+        display block
+      &:checked ~ .carousel__indicators .carousel__indicator:nth-of-type({num})
+        opacity 1
+
+  /**
+    * Control element - right/left arrows
+  */
+  &__control
+    height       $carouselControlSize
+    width        $carouselControlSize
+    margin-top   -($carouselControlSize / 2)
+    top          50%
+    position     absolute
+    display      block
+    cursor       pointer
+    border-width 5px 5px 0 0
+    border-style solid
+    border-color #fafafa
+    opacity      .35
+    outline      0
+    z-index      3
+
+    &:hover
+      opacity 1
+
+    &--forward
+      left      10px
+      transform rotate(-135deg)
+
+    &--backward
+      right     10px
+      transform rotate(45deg)
+
+  /**
+    * Element for holding slide indicators
+  */
+  &__indicators
+    position   absolute
+    bottom     20px
+    width      100%
+    text-align center
+
+  /**
+    * Indicator for indicating active slide
+  */
+  &__indicator
+    height        $carouselIndicatorSize
+    width         $carouselIndicatorSize
+    border-radius 100%
+    display       inline-block
+    z-index       2
+    cursor        pointer
+    opacity       .35
+    margin        0 2.5px 0 2.5px
+    &:hover
+      opacity     .75
+
+  /**
+    * Create rules for when slides are contained within a track
+  */
+  &__track
+    position absolute
+    top      0
+    right    0
+    bottom   0
+    left     0
+    transition transform $slideTransition ease 0s
+
+    .carousel__slide
+      display    block
+      for num in (1..$noOfSlides)
+        &:nth-of-type({num})
+          transform translateX((num - 1) * 100%)
+
+  &__slide
+    height     100%
+    right      0
+    position   absolute
+    overflow-y auto
+    top        0
+    left       0
+
+/**
+  * Theming
+*/
+*
+  box-sizing border-box
+
+body
+   background-color #111
+   text-align       center
+   color white
+
+.carousel-container
+  display       inline-block
+
+.my-carousel
+  border-radius 10px
+  border        2px solid silver
+  margin        30px
+
+.carousel__slide
+  border-radius 10px
+  overflow      hidden
+
+h1
+  font-size   50px
+  line-height 50px
+  color       #fafafa
+  position    absolute
+  top         50%
+  width       100%
+  text-align  center
+  margin-top  -25px
+
+h2
+h3
+  color #fafafa
+
+h3
+  font-size 50px
+
+.carousel__indicator
+  background-color #fafafa
+
+for num in (1..$noOfSlides)
+  .carousel__slide:nth-of-type({num})
+    // multiply to get better quality pics
+    background-image url('https://unsplash.it/' + (num * 3) + '00?random')
+    background-size cover
+    background-position center

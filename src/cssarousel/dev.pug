@@ -1,0 +1,34 @@
+h3 Pure CSS carousels
+.carousel-container
+  h2 fade in/out
+  ul.carousel.my-carousel
+    - var panels = [1, 2, 3, 4, 5]
+    each val in panels
+      input.carousel__activator(type="radio", id=val, name='activator' checked=(val == 1))
+    each val in panels
+      .carousel__controls
+        label.carousel__control.carousel__control--backward(for= val % panels.length + 1 )
+        label.carousel__control.carousel__control--forward(for= panels[(((val - 1) % panels.length) - 1 + panels.length) % panels.length])
+    each val in panels
+      li.carousel__slide
+        h1= val
+    .carousel__indicators
+      each val in panels
+        label.carousel__indicator(for=val)
+.carousel-container
+  h2 slider
+  ul.carousel.my-carousel.carousel--translate
+    - var panels = [6, 7, 8, 9, 10]
+    each val in panels
+      input.carousel__activator(type="radio", name="carousel", id=val, checked=(val == 6))
+    each val in panels
+      .carousel__controls
+        label.carousel__control.carousel__control--forward(for= panels[(((val - 1) % panels.length) - 1 + panels.length) % panels.length])
+        label.carousel__control.carousel__control--backward(for= panels[val % panels.length])
+    .carousel__track
+      each val in panels
+        .carousel__slide
+          h1= val
+    .carousel__indicators
+      each val in panels
+        label.carousel__indicator(for=val)
