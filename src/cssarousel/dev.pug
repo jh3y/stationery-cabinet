@@ -17,7 +17,7 @@ h3 Pure CSS carousels
         label.carousel__indicator(for=val)
 .carousel-container
   h2 slider
-  ul.carousel.my-carousel.carousel--translate
+  .carousel.my-carousel.carousel--translate
     - var panels = [6, 7, 8, 9, 10]
     each val in panels
       input.carousel__activator(type="radio", name="carousel", id=val, checked=(val == 6))

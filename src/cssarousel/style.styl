@@ -24,9 +24,10 @@ $slideTransition       = .5s
   text-align center
   position   relative
   padding    0
+  list-style none
 
+  // &__slide
   &__controls
-  &__slide
   &__activator
     display none
 
@@ -39,7 +40,9 @@ $slideTransition       = .5s
         transform translateX(-((num - 1) * 100%))
       &:checked ~ .carousel__slide:nth-of-type({num})
         animation carousel-show-slide $slideTransition
-        display block
+        top 0
+        left 0
+        right 0
       &:checked ~ .carousel__controls:nth-of-type({num})
         display block
       &:checked ~ .carousel__indicators .carousel__indicator:nth-of-type({num})
@@ -107,21 +110,23 @@ $slideTransition       = .5s
     right    0
     bottom   0
     left     0
+    padding  0
+    margin   0
     transition transform $slideTransition ease 0s
 
     .carousel__slide
-      display    block
+      display block
+      top     0
+      left    0
+      right   0
       for num in (1..$noOfSlides)
         &:nth-of-type({num})
           transform translateX((num - 1) * 100%)
 
   &__slide
     height     100%
-    right      0
     position   absolute
     overflow-y auto
-    top        0
-    left       0
 
 /**
   * Theming
@@ -138,12 +143,11 @@ body
   display       inline-block
 
 .my-carousel
-  border-radius 10px
+  border-radius 5px
   border        2px solid silver
   margin        30px
 
 .carousel__slide
-  border-radius 10px
   overflow      hidden
 
 h1
