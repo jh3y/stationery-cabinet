@@ -34,7 +34,7 @@ $slideTransition       = .5s
   /**
   * Where the magic happens
   */
-  for num in $noOfSlides..1
+  for num in 1..$noOfSlides
     &__activator:nth-of-type({num})
       &:checked ~ .carousel__track
         transform translateX(-((num - 1) * 100%))
@@ -69,11 +69,11 @@ $slideTransition       = .5s
     &:hover
       opacity 1
 
-    &--forward
+    &--backward
       left      10px
       transform rotate(-135deg)
 
-    &--backward
+    &--forward
       right     10px
       transform rotate(45deg)
 
@@ -172,7 +172,12 @@ h3
 
 for num in (1..$noOfSlides)
   .carousel__slide:nth-of-type({num})
+  .carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type({num})
     // multiply to get better quality pics
     background-image url('https://unsplash.it/' + (num * 3) + '00?random')
     background-size cover
     background-position center
+
+.carousel--thumb .carousel__indicators .carousel__indicator
+  height 30px
+  width  30px

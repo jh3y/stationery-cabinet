@@ -2,13 +2,13 @@ h3 Pure CSS carousels
 .carousel-container
   h2 fade in/out
   ul.carousel.my-carousel
-    - var panels = [1, 2, 3, 4, 5]
+    - var panels = ['A', 'B', 'C', 'D', 'E']
     each val in panels
-      input.carousel__activator(type="radio", id=val, name='activator' checked=(val == 1))
-    each val in panels
+      input.carousel__activator(type="radio", id=val, name='activator' checked=(val == panels[0]))
+    each val, idx in panels
       .carousel__controls
-        label.carousel__control.carousel__control--backward(for= val % panels.length + 1 )
-        label.carousel__control.carousel__control--forward(for= panels[(((val - 1) % panels.length) - 1 + panels.length) % panels.length])
+        label.carousel__control.carousel__control--backward(for=`${(idx == 0) ? panels[panels.length - 1] : panels[idx - 1]}` )
+        label.carousel__control.carousel__control--forward(for= `${(idx == panels.length - 1) ? panels[0] : panels[idx + 1]}`)
     each val in panels
       li.carousel__slide
         h1= val
@@ -18,17 +18,33 @@ h3 Pure CSS carousels
 .carousel-container
   h2 slider
   .carousel.my-carousel.carousel--translate
-    - var panels = [6, 7, 8, 9, 10]
+    - var panels = ['F', 'G', 'H', 'I', 'J']
     each val in panels
-      input.carousel__activator(type="radio", name="carousel", id=val, checked=(val == 6))
-    each val in panels
+      input.carousel__activator(type="radio", name="carousel", id=val, checked=(val == panels[0]))
+    each val, idx in panels
       .carousel__controls
-        label.carousel__control.carousel__control--forward(for= panels[(((val - 1) % panels.length) - 1 + panels.length) % panels.length])
-        label.carousel__control.carousel__control--backward(for= panels[val % panels.length])
+        label.carousel__control.carousel__control--backward(for=`${(idx == 0) ? panels[panels.length - 1] : panels[idx - 1]}` )
+        label.carousel__control.carousel__control--forward(for= `${(idx == panels.length - 1) ? panels[0] : panels[idx + 1]}`)
     .carousel__track
       each val in panels
         .carousel__slide
           h1= val
+    .carousel__indicators
+      each val in panels
+        label.carousel__indicator(for=val)
+.carousel-container
+  h2 thumbnail indicators
+  ul.carousel.my-carousel.carousel--thumb
+    - var panels = ['K', 'L', 'M', 'N', 'O']
+    each val in panels
+      input.carousel__activator(type="radio", id=val, name='thumb' checked=(val == panels[0]))
+    each val, idx in panels
+      .carousel__controls
+        label.carousel__control.carousel__control--backward(for=`${(idx == 0) ? panels[panels.length - 1] : panels[idx - 1]}` )
+        label.carousel__control.carousel__control--forward(for= `${(idx == panels.length - 1) ? panels[0] : panels[idx + 1]}`)
+    each val in panels
+      li.carousel__slide
+        h1= val
     .carousel__indicators
       each val in panels
         label.carousel__indicator(for=val)
