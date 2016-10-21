@@ -1,0 +1,59 @@
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+body
+  background-color grey
+  color            #fafafa
+  text-align       center
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
+
+.sliding-name
+  font-size   36px
+  position    relative
+  line-height 36px
+  display     inline-block
+  position    absolute
+  margin      0
+  top         50%
+  left        50%
+  transform   translateX(-50%) translateY(-50%)
+  overflow     hidden
+
+  span
+    width     100%
+    height    100%
+    color     black
+    padding   20px
+    display   block
+    transform translateX(-110%)
+    animation slideIn .8s 2.1s ease-out forwards
+
+  &:before
+  &:after
+    content    ''
+    width      100%
+    height     100%
+    position   absolute
+    top        0
+    left       0
+    background red
+    z-index    0
+    transform  translateX(-150%)
+
+  &:before
+    background red
+    animation slideIn .5s 1.6s ease-in forwards
+  &:after
+    background black
+    animation slideIn 1s .55s ease-in forwards
+    z-index -1
+
+@keyframes slideIn
+  to
+    transform translateX(0)
