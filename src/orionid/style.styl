@@ -2,11 +2,6 @@
   box-sizing border-box
   animation  fadeIn .5s
 
-body
-  background-color #e74c3c
-  color            #fafafa
-  text-align       center
-
 random(a, b)
   return math(math(0, 'random') * (b - a + 1) + a, 'floor')
 
@@ -79,4 +74,4 @@ for $shard in 0..10
 
 
 body
-  background #111
+  background radial-gradient(ellipse farthest-corner at 10vw 95vw, #111 0%, #222 50%, #111 95%)
