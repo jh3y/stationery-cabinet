@@ -1,0 +1,77 @@
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+random(a, b)
+  return math(math(0, 'random') * (b - a + 1) + a, 'floor')
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
+
+@keyframes shower
+  0%
+    transform rotate(30deg) scaleY(0)
+    opacity 0
+  65%
+    transform rotate(30deg) scaleY(1)
+    opacity 1
+  100%
+    transform rotate(30deg) scaleY(1) translateY(500%)
+    opacity 0
+
+$shard-width = 2px
+$shard-length = 60px
+$shard-color  = #fff
+
+.shard
+  border $shard-width solid transparent
+  border-bottom $shard-length solid $shard-color
+  position absolute
+  transform-origin top right
+  animation shower .5s
+  opacity 0
+
+  &:after
+    content ''
+    position absolute
+    top $shard-length - $shard-width
+    left 50%
+    height $shard-width * 2px
+    width $shard-width * 2px
+    border-radius 100%
+    background $shard-color
+    transform translateX(-50%)
+    box-shadow  0 0 15px 0 $shard-color
+
+.star
+  display inline-block
+  border-radius 100%
+  background-color yellow
+  position absolute
+  opacity .5
+
+for $star in 0..20
+  .star:nth-child({$star})
+    $size = random(1, 4) * 1px
+    $x    = random(0, 100) * 1vw
+    $y    = random(0, 100) * 1vh
+    height $size
+    width  $size
+    left $x
+    top $y
+
+for $shard in 0..10
+  .shard:nth-child({$shard})
+    $x    = random(0, 100) * 1vw
+    $y    = random(0, 100) * 1vh
+    left $x
+    top $y
+    $delay = random(5, 25) * 1s
+    animation-delay $delay
+
+
+body
+  background radial-gradient(ellipse farthest-corner at 10vw 95vw, #111 0%, #222 50%, #111 95%)
