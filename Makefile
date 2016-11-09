@@ -74,7 +74,7 @@ build: checkForPen ## build sources
 	make compile-script && make compile-style && make compile-markup
 
 serve: checkForPen build ## sets up browser-sync local static server with livereload
-	$(BS) start --port 1987 --files $(OUTPUT_DIR)/ --server $(OUTPUT_DIR)
+	$(BS) start --port 1987 --files $(OUTPUT_DIR)/ --server $(OUTPUT_DIR) --no-online
 
 develop: checkForPen ## run development task for given PEN "make develop PEN=A"
 	make serve & make watch

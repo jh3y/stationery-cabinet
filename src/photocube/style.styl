@@ -1,0 +1,132 @@
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+body
+  background-color #111
+  color            #fafafa
+  text-align       center
+
+$wrapper-size = 50vh
+$size = $wrapper-size * .5
+
+@keyframes axial-spin
+  from
+    transform rotateX(0deg) rotateY(0deg)
+  to
+    transform rotateX(360deg) rotateY(720deg)
+
+.photo-cube__control
+  z-index 2
+
+  &:nth-of-type(1)
+    &:checked ~ .photo-cube
+      transform rotateX(0deg) rotateY(0deg)
+
+  &:nth-of-type(6)
+    &:checked ~ .photo-cube
+      transform rotateX(90deg) rotateY(0deg)
+
+  &:nth-of-type(3)
+    &:checked ~ .photo-cube
+      transform rotateX(180deg) rotateY(0deg)
+
+  &:nth-of-type(5)
+    &:checked ~ .photo-cube
+      transform rotateX(270deg) rotateY(0deg)
+
+  &:nth-of-type(4)
+    &:checked ~ .photo-cube
+      transform rotateX(360deg) rotateY(90deg)
+
+  &:nth-of-type(2)
+    &:checked ~ .photo-cube
+      transform rotateX(360deg) rotateY(-90deg)
+
+
+.content
+  position absolute
+  transform scale(0.25)
+  top 50%
+  left 50%
+  height $wrapper-size
+  width $wrapper-size
+  margin-left -($wrapper-size / 2)
+  margin-top -($wrapper-size / 2)
+  &:hover
+    transition all .25s ease 0s
+    transform scale(1)
+    .photo-cube__wrapper
+      transform rotate(0deg)
+      animation none
+      transition all .25s ease 0s
+
+.photo-cube__wrapper
+  transform-style preserve-3d
+  animation axial-spin 10s infinite linear
+
+.photo-cube
+  transition all .5s ease 0s
+  border 1px solid red
+  height $size
+  width  $size
+  position absolute
+  top 50%
+  left 50%
+  margin-left -($size / 2)
+  margin-top -($size / 2)
+  transform-style preserve-3d
+
+  &__wrapper
+    height $wrapper-size
+    width  $wrapper-size
+    border 1px solid white
+    position absolute
+    top 50%
+    left 50%
+    margin-left -($wrapper-size / 2)
+    margin-top -($wrapper-size / 2)
+
+  &__panel
+    height 100%
+    width  100%
+    position absolute
+    top 0
+    left 0
+
+  &__panel:nth-of-type(3)
+    background red
+    transform translateZ(-($size / 2)) rotateY(180deg) rotate(180deg)
+
+  &__panel:nth-of-type(2)
+    background orange
+    transform rotateY(-270deg) translateX($size / 2)
+    transform-origin top right
+
+  &__panel:nth-of-type(1)
+    background indigo
+    transform translateZ($size / 2)
+
+  &__panel:nth-of-type(4)
+    background green
+    transform rotateY(270deg) translateX(-($size / 2))
+    transform-origin center left
+
+  &__panel:nth-of-type(5)
+    background green
+    transform rotateX(90deg) translateY(-($size / 2))
+    transform-origin top center
+
+  &__panel:nth-of-type(6)
+    background red
+    transform-origin bottom center
+    transform rotateX(-90deg) translateY($size / 2)
+
+
+
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
