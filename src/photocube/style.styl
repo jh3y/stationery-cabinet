@@ -12,12 +12,21 @@ $size = $wrapper-size * .5
 
 @keyframes axial-spin
   from
-    transform rotateX(0deg) rotateY(0deg)
+    transform rotateX(45deg) rotateY(45deg)
   to
-    transform rotateX(360deg) rotateY(720deg)
+    transform rotateX(405deg) rotateY(765deg)
+
+@keyframes entrance
+  from
+    transform rotateX(45deg) rotateY(45deg)
 
 .photo-cube__control
   z-index 2
+
+  for $idx in (1..6)
+    &:nth-of-type({$idx})
+      &:checked ~ .photo-cube__indicators .photo-cube__indicator:nth-of-type({$idx})
+        opacity 1
 
   &:nth-of-type(1)
     &:checked ~ .photo-cube
@@ -51,6 +60,7 @@ $size = $wrapper-size * .5
   left 50%
   height $wrapper-size
   width $wrapper-size
+  transition all .25s ease 0s
   margin-left -($wrapper-size / 2)
   margin-top -($wrapper-size / 2)
   &:hover
@@ -58,16 +68,40 @@ $size = $wrapper-size * .5
     transform scale(1)
     .photo-cube__wrapper
       transform rotate(0deg)
-      animation none
+      animation entrance .25s ease
       transition all .25s ease 0s
+
+    .photo-cube__indicators
+      opacity 1
+
+    .photo-cube__control
+      for $idx in (1..6)
+        &:nth-of-type({$idx})
+          &:checked ~ .photo-cube__actions--right .photo-cube__action:nth-of-type({$idx})
+          // &:checked ~ .photo-cube__actions--top .photo-cube__action:nth-of-type({$idx})
+          &:checked ~ .photo-cube__actions--left .photo-cube__action:nth-of-type({$idx})
+          // &:checked ~ .photo-cube__actions--bottom .photo-cube__action:nth-of-type({$idx})
+            transition all .25s ease 0s
+            visibility visible
+            opacity .5
+            &:hover
+              opacity 1
 
 .photo-cube__wrapper
   transform-style preserve-3d
   animation axial-spin 10s infinite linear
+  transform scale(0.2)
+  transition all .25s ease 0s
+  height $wrapper-size
+  width  $wrapper-size
+  border 1px solid white
+  position absolute
+  top 50%
+  left 50%
+  margin-left -($wrapper-size / 2)
+  margin-top -($wrapper-size / 2)
 
 .photo-cube
-  transition all .5s ease 0s
-  border 1px solid red
   height $size
   width  $size
   position absolute
@@ -76,16 +110,9 @@ $size = $wrapper-size * .5
   margin-left -($size / 2)
   margin-top -($size / 2)
   transform-style preserve-3d
+  transition all .25s ease 0s
+  transform rotateX(45deg) rotateY(45deg)
 
-  &__wrapper
-    height $wrapper-size
-    width  $wrapper-size
-    border 1px solid white
-    position absolute
-    top 50%
-    left 50%
-    margin-left -($wrapper-size / 2)
-    margin-top -($wrapper-size / 2)
 
   &__panel
     height 100%
@@ -122,6 +149,62 @@ $size = $wrapper-size * .5
     transform-origin bottom center
     transform rotateX(-90deg) translateY($size / 2)
 
+  &__indicators
+    position absolute
+    // top 100%
+    bottom 0
+    padding 25px
+    left 0
+    right 0
+    opacity 0
+    transition all .25s ease 0s
+
+  &__control
+    display none
+
+  &__actions
+    // &--bottom
+    //   .photo-cube__action
+    //     left 50%
+    //     bottom 0
+    //     transform translateX(-50%)
+    &--left
+      .photo-cube__action
+        top 50%
+        left 0
+        transform translateY(-50%)
+    &--right
+      .photo-cube__action
+        top 50%
+        right 0
+        transform translateY(-50%)
+    // &--top
+    //   .photo-cube__action
+    //     left 50%
+    //     top 0
+    //     transform translateX(-50%)
+
+  &__action
+    position absolute
+    height 40px
+    width 40px
+    background-color white
+    z-index 3
+    visibility hidden
+    // transition all .25s ease 0s
+    opacity 0
+
+
+
+  &__indicator
+    height 14px
+    width 14px
+    border-radius 100%
+    background-color white
+    display inline-block
+    background white
+    opacity .5
+    cursor pointer
 
 
 
