@@ -1,14 +1,11 @@
-*
-  box-sizing border-box
-  animation  fadeIn .5s
-
-body
-  background-color #111
-  color            #fafafa
-  text-align       center
-
+$body-color   = #111
 $wrapper-size = 50vh
+$off-opacity  = .1
+$transition   = .25s
 $size = $wrapper-size * .5
+$retreat-scale = .25
+$control-color = #2eec71
+$colors = #f22613 #f9690e #e9d460 #00b16a #be90d4 #8e44ad
 
 @keyframes axial-spin
   from
@@ -20,6 +17,10 @@ $size = $wrapper-size * .5
   from
     transform rotateX(45deg) rotateY(45deg)
 
+
+/**
+  * How each control dictates the rotation of the cube
+*/
 .photo-cube__control
   z-index 2
 
@@ -54,22 +55,23 @@ $size = $wrapper-size * .5
 
 
 .content
-  position absolute
-  transform scale(0.25)
-  top 50%
-  left 50%
   height $wrapper-size
-  width $wrapper-size
-  transition all .25s ease 0s
+  left 50%
   margin-left -($wrapper-size / 2)
   margin-top -($wrapper-size / 2)
+  position absolute
+  top 50%
+  transform scale($retreat-scale)
+  transition all $transition ease 0s
+  width $wrapper-size
   &:hover
-    transition all .25s ease 0s
     transform scale(1)
+    transition all $transition ease 0s
+
     .photo-cube__wrapper
+      animation entrance $transition ease
       transform rotate(0deg)
-      animation entrance .25s ease
-      transition all .25s ease 0s
+      transition all $transition ease 0s
 
     .photo-cube__indicators
       opacity 1
@@ -77,139 +79,160 @@ $size = $wrapper-size * .5
     .photo-cube__control
       for $idx in (1..6)
         &:nth-of-type({$idx})
+          &:checked ~ .photo-cube .photo-cube__panel:nth-of-type({$idx})
+            opacity 1
+
           &:checked ~ .photo-cube__actions--right .photo-cube__action:nth-of-type({$idx})
-          // &:checked ~ .photo-cube__actions--top .photo-cube__action:nth-of-type({$idx})
           &:checked ~ .photo-cube__actions--left .photo-cube__action:nth-of-type({$idx})
-          // &:checked ~ .photo-cube__actions--bottom .photo-cube__action:nth-of-type({$idx})
-            transition all .25s ease 0s
+            transition all $transition ease 0s
             visibility visible
-            opacity .5
+            opacity $off-opacity
+
             &:hover
               opacity 1
 
 .photo-cube__wrapper
-  transform-style preserve-3d
   animation axial-spin 10s infinite linear
-  transform scale(0.2)
-  transition all .25s ease 0s
   height $wrapper-size
-  width  $wrapper-size
-  border 1px solid white
-  position absolute
-  top 50%
   left 50%
   margin-left -($wrapper-size / 2)
   margin-top -($wrapper-size / 2)
+  position absolute
+  top 50%
+  transform scale($retreat-scale)
+  transform-style preserve-3d
+  transition all $transition ease 0s
+  width  $wrapper-size
 
 .photo-cube
   height $size
-  width  $size
-  position absolute
-  top 50%
   left 50%
   margin-left -($size / 2)
   margin-top -($size / 2)
-  transform-style preserve-3d
-  transition all .25s ease 0s
+  position absolute
+  top 50%
   transform rotateX(45deg) rotateY(45deg)
+  transform-style preserve-3d
+  transition all $transition ease 0s
+  width  $size
 
 
   &__panel
     height 100%
-    width  100%
-    position absolute
-    top 0
     left 0
+    position absolute
+    opacity $off-opacity * 3
+    top 0
+    transition all $transition ease 0s
+    width  100%
 
   &__panel:nth-of-type(3)
-    background red
+    background $colors[0]
     transform translateZ(-($size / 2)) rotateY(180deg) rotate(180deg)
 
   &__panel:nth-of-type(2)
-    background orange
+    background $colors[1]
     transform rotateY(-270deg) translateX($size / 2)
     transform-origin top right
 
   &__panel:nth-of-type(1)
-    background indigo
+    background $colors[2]
     transform translateZ($size / 2)
 
   &__panel:nth-of-type(4)
-    background green
+    background $colors[3]
     transform rotateY(270deg) translateX(-($size / 2))
     transform-origin center left
 
   &__panel:nth-of-type(5)
-    background green
+    background $colors[4]
     transform rotateX(90deg) translateY(-($size / 2))
     transform-origin top center
 
   &__panel:nth-of-type(6)
-    background red
+    background $colors[5]
     transform-origin bottom center
     transform rotateX(-90deg) translateY($size / 2)
 
   &__indicators
-    position absolute
-    // top 100%
     bottom 0
-    padding 25px
     left 0
-    right 0
     opacity 0
-    transition all .25s ease 0s
+    padding 25px
+    position absolute
+    right 0
+    transition all $transition ease 0s
 
   &__control
     display none
 
   &__actions
-    // &--bottom
-    //   .photo-cube__action
-    //     left 50%
-    //     bottom 0
-    //     transform translateX(-50%)
     &--left
       .photo-cube__action
-        top 50%
         left 0
+        top 50%
         transform translateY(-50%)
+
+        &:before
+          transform translate(-40%, -50%) rotate(135deg)
+
     &--right
       .photo-cube__action
-        top 50%
         right 0
+        top 50%
         transform translateY(-50%)
-    // &--top
-    //   .photo-cube__action
-    //     left 50%
-    //     top 0
-    //     transform translateX(-50%)
 
   &__action
-    position absolute
+    background-color $control-color
+    border-radius 100%
+    cursor pointer
     height 40px
-    width 40px
-    background-color white
-    z-index 3
-    visibility hidden
-    // transition all .25s ease 0s
     opacity 0
+    position absolute
+    visibility hidden
+    width 40px
+    z-index 3
 
-
+    &:before
+      border-bottom solid 4px $body-color
+      border-right solid 4px $body-color
+      content ''
+      display block
+      height 25%
+      left 50%
+      position absolute
+      top 50%
+      transform translate(-70%, -50%) rotate(-45deg)
+      width 25%
 
   &__indicator
-    height 14px
-    width 14px
+    background $control-color
+    background-color $control-color
     border-radius 100%
-    background-color white
-    display inline-block
-    background white
-    opacity .5
     cursor pointer
-
-
+    display inline-block
+    height 14px
+    margin 4px
+    opacity $off-opacity
+    width 14px
 
 @keyframes fadeIn
   from
     opacity 0
   to
     opacity 1
+
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+body
+  background-color $body-color
+  text-align       center
+
+for $panel in (1..6)
+  .photo-cube__panel:nth-of-type({$panel})
+      // multiply to get better quality pics
+      background-image url('https://unsplash.it/' + ($panel * 3) + '00?random')
+      background-size cover
+      background-position center
