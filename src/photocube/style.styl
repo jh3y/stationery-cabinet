@@ -1,10 +1,10 @@
 $body-color   = #111
-$wrapper-size = 50vh
-$off-opacity  = .1
-$transition   = .25s
+$wrapper-size = 300px
+$off-opacity  = .15
+$transition   = .5s
 $size = $wrapper-size * .5
 $retreat-scale = .25
-$control-color = #2eec71
+$control-color = #fafafa
 $colors = #f22613 #f9690e #e9d460 #00b16a #be90d4 #8e44ad
 
 @keyframes axial-spin
@@ -84,9 +84,8 @@ $colors = #f22613 #f9690e #e9d460 #00b16a #be90d4 #8e44ad
 
           &:checked ~ .photo-cube__actions--right .photo-cube__action:nth-of-type({$idx})
           &:checked ~ .photo-cube__actions--left .photo-cube__action:nth-of-type({$idx})
-            transition all $transition ease 0s
-            visibility visible
-            opacity $off-opacity
+            transition opacity $transition ease 0s
+            display block
 
             &:hover
               opacity 1
@@ -183,13 +182,15 @@ $colors = #f22613 #f9690e #e9d460 #00b16a #be90d4 #8e44ad
         transform translateY(-50%)
 
   &__action
+    animation none
     background-color $control-color
     border-radius 100%
     cursor pointer
     height 40px
-    opacity 0
+    display none
+    opacity $off-opacity
     position absolute
-    visibility hidden
+    transition opacity $transition ease 0s
     width 40px
     z-index 3
 
@@ -230,9 +231,11 @@ body
   background-color $body-color
   text-align       center
 
+$photos = 'https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/FHTED9EQ3B.jpg' 'https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/RM97YA77HX.jpg' 'https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/MRXXRJ47PH.jpg' 'https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/JHPVE3XLUE.jpg' 'https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/330ED98119.jpg' 'https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/I4HKV8YZYF.jpg'
+
 for $panel in (1..6)
   .photo-cube__panel:nth-of-type({$panel})
-      // multiply to get better quality pics
-      background-image url('https://unsplash.it/' + ($panel * 3) + '00?random')
+      $photo = $photos[$panel - 1]
+      background-image url($photo)
       background-size cover
       background-position center
