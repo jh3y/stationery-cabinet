@@ -17,6 +17,18 @@ $colors = #f22613 #f9690e #e9d460 #00b16a #be90d4 #8e44ad
   from
     transform rotateX(45deg) rotateY(45deg)
 
+/**
+  * Accessibility styles for our screen reader list of images
+*/
+.content
+  overflow hidden
+
+.photo-cube--accessible
+  left 100%
+  list-style none
+  opacity 0
+  position fixed
+  top 0
 
 /**
   * How each control dictates the rotation of the cube
@@ -181,22 +193,23 @@ $colors = #f22613 #f9690e #e9d460 #00b16a #be90d4 #8e44ad
         top 50%
         transform translateY(-50%)
 
+  $action-size = 20px
   &__action
     animation none
     background-color $control-color
     border-radius 100%
     cursor pointer
-    height 40px
+    height $action-size
     display none
     opacity $off-opacity
     position absolute
     transition opacity $transition ease 0s
-    width 40px
+    width $action-size
     z-index 3
 
     &:before
-      border-bottom solid 4px $body-color
-      border-right solid 4px $body-color
+      border-bottom solid 2px $body-color
+      border-right solid 2px $body-color
       content ''
       display block
       height 25%
@@ -206,16 +219,17 @@ $colors = #f22613 #f9690e #e9d460 #00b16a #be90d4 #8e44ad
       transform translate(-70%, -50%) rotate(-45deg)
       width 25%
 
+  $indicator-size = 10px
   &__indicator
     background $control-color
     background-color $control-color
     border-radius 100%
     cursor pointer
     display inline-block
-    height 14px
-    margin 4px
+    height $indicator-size
+    margin 2px
     opacity $off-opacity
-    width 14px
+    width $indicator-size
 
 @keyframes fadeIn
   from
@@ -230,6 +244,7 @@ $colors = #f22613 #f9690e #e9d460 #00b16a #be90d4 #8e44ad
 body
   background-color $body-color
   text-align       center
+  color            $control-color
 
 $photos = 'https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/FHTED9EQ3B.jpg' 'https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/RM97YA77HX.jpg' 'https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/MRXXRJ47PH.jpg' 'https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/JHPVE3XLUE.jpg' 'https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/330ED98119.jpg' 'https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/I4HKV8YZYF.jpg'
 
