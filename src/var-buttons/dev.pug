@@ -1,0 +1,7 @@
+h1 Rainbow buttons
+.rainbow-buttons
+  for $color in ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet']
+    button(style=`--color: ${$color}`)= $color
+h1 And your own custom color?
+button.custom Custom
+input(type='text', placeholder='Input any valid color value')
