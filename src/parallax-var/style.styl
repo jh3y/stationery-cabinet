@@ -1,21 +1,24 @@
 :root
-  --clientX 0
-  --clientY 0
+  --X 0
+  --Y 0
 
 *
   box-sizing border-box
   animation  fadeIn .5s
 
-$translationX = calc(((var(--offsetX) / var(--clientX)) - 0.5) * var(--scale) * 1px)
-$translationY = calc(((var(--offsetY) / var(--clientY)) - 0.5) * var(--scale) * 1px)
+$translationX = calc((var(--X)) * var(--scaleX) * 1px)
+$translationY = calc((var(--Y)) * var(--scaleY) * 1px)
+
 
 body
-  background-color #e74c3c
+  background-color #111
   color            #fafafa
-  text-align       center
   display flex
   align-items center
   justify-content center
+  overflow hidden
+  height 100vh
+  width 100vw
 
 @keyframes fadeIn
   from
@@ -23,18 +26,23 @@ body
   to
     opacity 1
 
-
-// At 50% it should be normal so .5 Y/X
-
+h2
+  @media(max-width: 768px)
+    font-size 16px
 
 h1
-  font-size 106px
+  font-size 110px
   margin 4px
   display inline-block
 
+  @media(max-width: 768px)
+    transition all .25s ease 0s
+    font-size 60px
+
   &:nth-of-type(1)
     color red
-    --scale 40
+    --scaleX 40
+    --scaleY -40
     --translateX $translationX
     --translateY $translationY
     transform translate(var(--translateX), var(--translateY))
@@ -42,7 +50,8 @@ h1
 
   &:nth-of-type(2)
     color orange
-    --scale 50
+    --scaleX -50
+    --scaleY 50
     --translateX $translationX
     --translateY $translationY
     transform translate(var(--translateX), var(--translateY))
@@ -50,8 +59,17 @@ h1
 
   &:nth-of-type(3)
     color green
-    --scale -30
+    --scaleX 30
+    --scaleY 30
     --translateX $translationX
     --translateY $translationY
     transform translate(var(--translateX), var(--translateY))
     z-index 1
+
+  &:nth-of-type(4)
+    z-index 4
+    --scaleX -50
+    --scaleY -50
+    --translateX $translationX
+    --translateY $translationY
+    transform translate(var(--translateX), var(--translateY))
