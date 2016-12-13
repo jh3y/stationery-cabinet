@@ -1,0 +1,32 @@
+:root
+  --panel-activator 0
+  --active-panel 1
+
+*
+  box-sizing border-box
+
+.var-carousel
+  .var-carousel__panels
+
+    .panel
+      margin 50px
+    .panel
+      for num in (1..3)
+        &:nth-of-type({num})
+          --panel-activator num //changes nothing as we have this via num anyway
+          // Here we can scope the --panel-activator? --active-panel? num?
+          display block
+          border 1px solid white
+
+
+
+body
+  background-color #e74c3c
+  color            #fafafa
+  text-align       center
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1

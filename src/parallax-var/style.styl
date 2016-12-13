@@ -1,0 +1,57 @@
+:root
+  --clientX 0
+  --clientY 0
+
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+$translationX = calc(((var(--offsetX) / var(--clientX)) - 0.5) * var(--scale) * 1px)
+$translationY = calc(((var(--offsetY) / var(--clientY)) - 0.5) * var(--scale) * 1px)
+
+body
+  background-color #e74c3c
+  color            #fafafa
+  text-align       center
+  display flex
+  align-items center
+  justify-content center
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
+
+
+// At 50% it should be normal so .5 Y/X
+
+
+h1
+  font-size 106px
+  margin 4px
+  display inline-block
+
+  &:nth-of-type(1)
+    color red
+    --scale 40
+    --translateX $translationX
+    --translateY $translationY
+    transform translate(var(--translateX), var(--translateY))
+    z-index 3
+
+  &:nth-of-type(2)
+    color orange
+    --scale 50
+    --translateX $translationX
+    --translateY $translationY
+    transform translate(var(--translateX), var(--translateY))
+    z-index 2
+
+  &:nth-of-type(3)
+    color green
+    --scale -30
+    --translateX $translationX
+    --translateY $translationY
+    transform translate(var(--translateX), var(--translateY))
+    z-index 1
