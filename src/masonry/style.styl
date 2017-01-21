@@ -52,9 +52,11 @@ $config = {
 
 .dw-panel
   flex       1 0 auto
+  order      1
   overflow   hidden
   padding    4px
   transition all .25s ease 0s
+  width      100%
 
   &[style] .dw-panel__content
     height 100%
@@ -80,13 +82,13 @@ $config = {
 */
 .dw-panel
   &--sm
-    height 100px
+    height 175px
 
   &--md
-    height 150px
+    height 250px
 
   &--lg
-    height 200px
+    height 400px
 
   &__content
     background    red
