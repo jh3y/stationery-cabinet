@@ -1,0 +1,9 @@
+- var sizes = ['sm', 'md', 'lg']
+.dw
+  - var n = 0
+  while n < 16
+    - var size = Math.floor(Math.random() * 3 + 1)
+    .dw-panel(class=`dw-panel--${sizes[size - 1]}`)
+      .dw-panel__content
+        h1= n
+    - n++

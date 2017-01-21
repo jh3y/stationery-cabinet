@@ -1,0 +1,110 @@
+/**
+  * Theming
+*/
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+body
+  margin           0
+  padding          0
+
+h1
+  margin     0
+  text-align center
+
+.dw-panel__content
+  display flex
+  align-items center
+  justify-content center
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
+
+/**
+  * Masonry CSS
+*/
+$config = {
+  items: 16,
+  responses: {
+    breakpoints: {
+      sm: 430px
+      md: 768px
+      lg: 992px
+      xl: 1500px
+    },
+    cols: {
+      sm: 1,
+      md: 2,
+      lg: 3,
+      xl: 4,
+    }
+  }
+}
+
+.dw
+  display   flex
+  flex-flow column wrap
+  max-width 100%
+
+.dw-panel
+  flex       1 0 auto
+  overflow   hidden
+  padding    4px
+  transition all .25s ease 0s
+
+  &[style] .dw-panel__content
+    height 100%
+
+  for $breakpoint, $value in $config.responses.breakpoints
+
+    define('$cols', $config.responses.cols[$breakpoint])
+
+    @media(min-width $value)
+      width (100% / $cols * 1%)
+
+      for $panel in (1..$config.items)
+        &:nth-child({$panel})
+          $newOrder = $panel % $cols
+          if $newOrder == 0
+            $newOrder = $cols
+          order $newOrder
+
+
+
+/**
+  * Masonry theming
+*/
+.dw-panel
+  &--sm
+    height 100px
+
+  &--md
+    height 150px
+
+  &--lg
+    height 200px
+
+  &__content
+    background    red
+    color         white
+    border-radius 10px
+    padding       10px
+    height 100%
+
+  transform scale(0)
+  animation scaleIn .25s cubic-bezier(.64, .57, .67, 1)
+  animation-fill-mode forwards
+
+  for $panel in (1..$config.items)
+    &:nth-child({$panel})
+      animation-delay ($panel * .15s)
+
+@keyframes scaleIn
+  from
+    transform scale(0)
+  to
+    transform scale(1)
