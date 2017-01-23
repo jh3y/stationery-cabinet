@@ -6,73 +6,92 @@
     PAD     : 'dw-pad',
   }
 
-  let heights
-  let maxHeight
-  let fillers
-  const container = document.querySelector(`.${CLASSES.DRIVEWAY}`)
-  const panels    = document.querySelectorAll(`.${CLASSES.PANEL}`)
-
-  /**
-    * Pad out layout "columns" with padding elements that make widths equal
-  */
-  const pad = () => {
-    heights.map((height, idx) => {
-      if (height < maxHeight) {
-        const pad        = document.createElement('div')
-        pad.className    = CLASSES.PAD
-        pad.style.height = `${maxHeight - height}px`
-        pad.style.order  = idx + 1
-        container.appendChild(pad)
+  class Masonry {
+    constructor(el) {
+      this.state = {
+        container: el,
+        panels: el.querySelectorAll(`.${CLASSES.PANEL}`),
       }
-    })
-  }
-
-  /**
-    * Iterate through panels and work out the height of the layout
-  */
-  const populateHeights = () => {
-    panels.forEach((panel, idx) => {
+      this.layout()
+    }
+    /**
+      * Reset the layout by removing padding elements, resetting heights
+      * reference and removing the container inline style
+    */
+    __reset() {
       const {
-        order,
-        height,
-      } = getComputedStyle(panel)
-      heights[order - 1] += parseInt(height, 10)
-    })
+        container,
+      } = this.state
+      this.state.heights = []
+      const fillers = container.querySelectorAll(`.${CLASSES.PAD}`)
+      fillers.forEach((filler) => filler.remove())
+      container.removeAttribute('style')
+    }
+    /**
+      * Iterate through panels and work out the height of the layout
+    */
+    __populateHeights() {
+      const {
+        panels,
+        heights,
+      } = this.state
+      panels.forEach((panel, idx) => {
+        const {
+          order,
+          height,
+        } = getComputedStyle(panel)
+        if (!heights[order - 1]) heights[order - 1] = 0
+        heights[order - 1] += parseInt(height, 10)
+      })
+      return heights
+    }
+    /**
+      * Set the layout height based on referencing the content cumulative height
+      * This probably doesn't need its own function but felt right to be nice
+      * and neat
+    */
+    __setLayout() {
+      const {
+        heights,
+        container,
+      } = this.state
+      this.state.maxHeight = Math.max(...heights)
+      container.style.height = `${this.state.maxHeight}px`
+    }
+    /**
+      * Pad out layout "columns" with padding elements that make heights equal
+    */
+    __pad() {
+      const {
+        heights,
+        maxHeight,
+        container,
+      } = this.state
+      heights.map((height, idx) => {
+        if (height < maxHeight && height > 0) {
+          const pad        = document.createElement('div')
+          pad.className    = CLASSES.PAD
+          pad.style.height = `${maxHeight - height}px`
+          pad.style.order  = idx + 1
+          container.appendChild(pad)
+        }
+      })
+    }
+    /**
+      * Resets and lays out elements
+    */
+    layout() {
+      this.__reset()
+      this.__populateHeights()
+      this.__setLayout()
+      this.__pad()
+    }
   }
 
-  /**
-    * Set the layout height based on referencing the content cumulative height
-    * This probably doesn't need its own function but felt right to be nice
-    * and neat
-  */
-  const setLayout = () => {
-    maxHeight = Math.max(...heights)
-    container.style.height = `${maxHeight}px`
-  }
-
-  /**
-    * Reset the layout by removing padding elements, resetting heights
-    * reference and removing the container inline style
-  */
-  const reset = () => {
-    fillers = document.querySelectorAll(`.${CLASSES.PAD}`)
-    heights = [0, 0, 0, 0]
-    fillers.forEach((filler) => filler.remove())
-    container.removeAttribute('style')
-  }
-
-  const layout = () => {
-    reset()
-    populateHeights()
-    setLayout()
-    pad()
-  }
-
-  layout()
-
+  window.myMasonry = new Masonry(document.querySelector(`.${CLASSES.DRIVEWAY}`))
   /**
     * To make responsive, onResize layout again
-    * NOTE:: For better performance, please debounce layout()
+    * NOTE:: For better performance, please debounce this!
   */
-  window.addEventListener('resize', layout)
+  window.addEventListener('resize', () => myMasonry.layout())
 })()

@@ -1,30 +1,4 @@
 /**
-  * Theming
-*/
-*
-  box-sizing border-box
-  animation  fadeIn .5s
-
-body
-  margin           0
-  padding          0
-
-h1
-  margin     0
-  text-align center
-
-.dw-panel__content
-  display flex
-  align-items center
-  justify-content center
-
-@keyframes fadeIn
-  from
-    opacity 0
-  to
-    opacity 1
-
-/**
   * Masonry CSS
 */
 $config = {
@@ -78,24 +52,40 @@ $config = {
 
 
 /**
-  * Masonry theming
+  * Theming
 */
+$generateRandomColor()
+  // Define hexidecimal range
+  $hex = 0 1 2 3 4 5 6 7 8 9 'A' 'B' 'C' 'D' 'E' 'F'
+  // get random number between 0 and $hex length
+  $random()
+    return floor(math(0, 'random')*((length($hex) - 1) - 0 + 1) + 0)
+  $result = '#'
+  for $key in (0..5)
+    push($result, $hex[$random()])
+  return unquote(join('', $result))
+
+*
+  box-sizing border-box
+
+body
+  margin           0
+  padding          0
+
+h1
+  font-size  42px
+  margin     0
+  text-align center
+
 .dw-panel
-  &--sm
-    height 175px
-
-  &--md
-    height 250px
-
-  &--lg
-    height 400px
-
   &__content
-    background    red
-    color         white
-    border-radius 10px
-    padding       10px
-    height 100%
+    align-items     center
+    border-radius   10px
+    color           white
+    display         flex
+    justify-content center
+    min-height      150px
+    padding         10px
 
   transform scale(0)
   animation scaleIn .25s cubic-bezier(.64, .57, .67, 1)
@@ -103,6 +93,8 @@ $config = {
 
   for $panel in (1..$config.items)
     &:nth-child({$panel})
+      .dw-panel__content
+        background $generateRandomColor()
       animation-delay ($panel * .15s)
 
 @keyframes scaleIn
