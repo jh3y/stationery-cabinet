@@ -1,9 +1,9 @@
 (function() {
   // Classname reference
   const CLASSES = {
-    DRIVEWAY: 'dw',
-    PANEL   : 'dw-panel',
-    PAD     : 'dw-pad',
+    MASONRY: 'masonry',
+    PANEL  : 'masonry-panel',
+    PAD    : 'masonry-pad',
   }
 
   class Masonry {
@@ -88,7 +88,7 @@
     }
   }
 
-  window.myMasonry = new Masonry(document.querySelector(`.${CLASSES.DRIVEWAY}`))
+  window.myMasonry = new Masonry(document.querySelector(`.${CLASSES.MASONRY}`))
   /**
     * To make responsive, onResize layout again
     * NOTE:: For better performance, please debounce this!
