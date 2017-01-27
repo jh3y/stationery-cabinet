@@ -1,0 +1,50 @@
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+body
+  background-color #e74c3c
+  color            #fafafa
+  text-align       center
+  display          flex
+  justify-content  center
+  align-items      center
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
+
+:root
+  --defaultImageSize 300
+  --defaultMagnifySize 200
+  --defaultMagnification 3
+
+
+[magnify]
+  /**
+    * Take these as default
+  */
+  --clientX 0
+  --clientY 0
+  /***/
+  background url(http://unsplash.com/photos/LfGqCrLmhp0/download?force=true)
+  background-position 0 0
+  background-size cover
+  height calc(var(--defaultImageSize) * 1px)
+  position relative
+  width calc(var(--defaultImageSize) * 1px)
+
+  &:after
+    background url(http://unsplash.com/photos/LfGqCrLmhp0/download?force=true)
+    background-position calc(((var(--clientX) / var(--defaultImageSize)) * 100) * 1%) calc(((var(--clientY) / var(--defaultImageSize)) * 100) * 1%)
+    background-size calc((var(--defaultMagnifySize) * var(--defaultMagnification)) * 1px) calc((var(--defaultMagnifySize) * var(--defaultMagnification)) * 1px)
+    border 1px solid black
+    content ''
+    height calc(var(--defaultMagnifySize) * 1px)
+    left 0
+    margin-left -75%
+    position absolute
+    top 0
+    width  calc(var(--defaultMagnifySize) * 1px)
