@@ -1,8 +1,8 @@
-.dw
+.masonry
   - var n = 0
   while n < 16
     - var size = Math.floor(Math.random() * 450 + 1)
-    .dw-panel
-      .dw-panel__content(style=`height: ${size}px`)
+    .masonry-panel
+      .masonry-panel__content(style=`height: ${size}px`)
         h1= n
     - n++
