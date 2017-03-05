@@ -1,0 +1,263 @@
+$travel     = 50px
+$fontSize   = 25px
+$wordLength = 13
+$animationDuration = .5s
+$animationInterval = .1s
+
+.cascading-text
+  position relative
+  padding  $fontSize
+
+  &__replay
+    line-height $fontSize
+    font-size 12px
+    color #ffffff
+    cursor pointer
+    position absolute
+    left 100%
+    animation fadeIn .75s
+    padding 5px
+    opacity 0.5
+    transition transform .25s
+
+    &:hover
+      opacity 1 !important
+      transform translateY(-10%)
+
+  &[data-animated] .cascading-text__replay
+    display none
+
+  /**
+   * [data-animated] is merely used as a trigger
+   * attribute for replay purposes. If you were going
+   * to use cascading text effects on a site, just let
+   * them play once on entry
+  */
+  &--enter[data-animated]
+    .cascading-text__letter
+      opacity        0
+      transform      translateY($travel * -1)
+      animation-name enter
+
+  &--fade[data-animated]
+    .cascading-text__letter
+      opacity        0
+      animation-name fade
+
+  &--flip[data-animated]
+    .cascading-text__letter
+      transform      rotateY(180deg)
+      animation-name flip
+
+  &--scale[data-animated]
+    .cascading-text__letter
+      transform      scale(0)
+      animation-name scale
+
+  &--turn[data-animated]
+    .cascading-text__letter
+      transform-origin bottom
+      transform rotateY(90deg)
+      animation-name turn
+
+  &--fold[data-animated]
+    .cascading-text__letter
+      transform-origin bottom
+      transform rotateX(90deg)
+      animation-name fold
+
+  &--bulge[data-animated]
+    .cascading-text__letter
+      animation-name bulge
+
+  &--swap[data-animated]
+    .cascading-text__letter
+      for $i in (1..$wordLength)
+        &:nth-of-type({$i})
+          if ($i % 2 eq 0)
+            transform translateX(-15px)
+            animation-name swap-right
+          else
+            transform translateX(15px)
+            animation-name swap-left
+
+  &--slide[data-animated]
+    .cascading-text__letter
+      animation-name slide
+      opacity        0
+      transform      translateX($travel * -1px)
+
+      for $i in (1..$wordLength)
+        &:nth-of-type({$i})
+          animation-delay $animationInterval * ($wordLength - $i)
+
+  &--far[data-animated]
+    perspective 1000px
+    .cascading-text__letter
+      opacity 0
+      transform translateX(-25px) translateY(-20px) translateZ(-800px)
+      animation-name far
+
+  &--teeth[data-animated]
+    .cascading-text__letter
+      opacity 0
+      for $i in (1..$wordLength)
+        &:nth-of-type({$i})
+          if ($i % 2 eq 0)
+            transform translateY(-100%)
+            animation-name enter
+          else
+            transform translateY(100%)
+            animation-name enter-bottom
+
+  &--random[data-animated]
+    random()
+      return floor(math(0, 'random')*(250 - 25 + 1) + 25)
+    .cascading-text__letter
+
+      for $i in (1..$wordLength)
+        animation-name random
+        &:nth-of-type({$i})
+          $x = random()
+          $y = random()
+          if ($x % 2 eq 1)
+            $x = $x * -1
+          if ($y % 2 eq 1)
+            $y = $y * -1
+
+          transform translateX($x * 1%) translateY($y * 1%)
+  &__letter
+    font-size       $fontSize
+    line-height     $fontSize
+    display         inline-block
+    transform-style preserve-3d
+
+    for $i in (1..$wordLength)
+      &:nth-of-type({$i})
+        animation-delay $animationInterval * $i
+
+    animation-duration  $animationDuration
+    animation-fill-mode forwards
+
+@keyframes enter
+  0%
+    opacity   0
+    transform translateY($travel * -1)
+  25%
+    opacity   1
+  100%
+    opacity   1
+    transform translateY(0px)
+
+@keyframes enter-bottom
+  0%
+    opacity   0
+    transform translateY($travel)
+  25%
+    opacity   1
+  100%
+    opacity   1
+    transform translateY(0px)
+
+
+@keyframes fade
+  from
+    opacity 0
+  to
+    opacity 1
+
+@keyframes flip
+  from
+    transform rotateY(180deg)
+  to
+    transform rotateY(0deg)
+
+@keyframes slide
+  0%
+    opacity 0
+    transform translateX($travel * -1px)
+  25%
+    opacity 1
+  100%
+    opacity 1
+    transform translateX(0)
+
+@keyframes scale
+  from
+    transform scale(0)
+  to
+    transform scale(1)
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity .5
+
+@keyframes turn
+  to
+    transform rotateY(0)
+
+@keyframes fold
+  to
+    transform rotateX(0)
+
+@keyframes bulge
+  25%
+    transform scale(1.5)
+
+@keyframes swap-right
+  25%
+    transform translateX(-15px) translateY(-100%)
+  75%
+    transform translateX(0) translateY(-100%)
+  100%
+    transform translateX(0) translateY(0)
+
+@keyframes swap-left
+  25%
+    transform translateX(15px) translateY(100%)
+  75%
+    transform translateX(0) translateY(100%)
+  100%
+    transform translateX(0) translateY(0)
+
+@keyframes far
+  25%
+    opacity 1
+  100%
+    opacity 1
+    transform translateY(0) translateZ(0) translateX(0)
+
+@keyframes random
+  25%
+    opacity 1
+  100%
+    opacity 1
+    transform translateX(0) translateY(0)
+
+/**
+  * Theme
+*/
+*
+  box-sizing border-box
+
+body
+  background      #111111
+  display         flex
+  align-items     center
+  flex-direction  column
+  justify-content center
+  flex-wrap       wrap
+  flex            1
+  height          100vh
+  width           100vw
+
+.cascading-text
+  text-align center
+
+.tx--red
+  color #e74c3c
+
+.tx--white
+  color #ffffff

@@ -1,0 +1,10 @@
+- var word = 'pendeveloper'
+- var colorSplit = 3
+each val in ['random', 'enter', 'swap', 'fade', 'flip', 'slide', 'scale', 'turn', 'fold', 'bulge', 'far', 'teeth']
+    .cascading-text(data-animated, class=`cascading-text--${val}`)
+      .cascading-text__replay replay?
+      each val, index in word.split('')
+        if index < colorSplit
+          .cascading-text__letter.tx--white= val
+        else
+          .cascading-text__letter.tx--red= val
