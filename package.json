@@ -7,9 +7,9 @@
     "babel-cli": "^6.10.1",
     "babel-preset-es2015": "^6.9.0",
     "browser-sync": "^2.9.11",
-    "pug-cli": "^1.0.0-alpha6",
     "postcss-cli": "^2.3.2",
-    "stylus": "^0.53.0"
+    "pug-cli": "^1.0.0-alpha6",
+    "stylus": "^0.54.5"
   },
   "repository": {
     "type": "git",

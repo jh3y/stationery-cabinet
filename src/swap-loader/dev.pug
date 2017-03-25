@@ -1,23 +1,9 @@
-.container
-  .loader.loader--in-and-out
-    div
-    div
-    div
-    div
-    div
-
-.container
-  .loader.loader--out-from-behind
-    div
-    div
-    div
-    div
-    div
-
-.container
-  .loader.loader--lines
-    div
-    div
-    div
-    div
-    div
+for style in ['in-and-out', 'out-from-behind', 'swap', 'dip', 'scale-out', 'fan-out', 'lines-fade', 'lines-fade-2']
+  .container
+    .loader__wrapper
+      .loader(class=`loader--${style}`)
+        div
+        div
+        div
+        div
+        div

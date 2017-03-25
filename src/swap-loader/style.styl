@@ -1,71 +1,228 @@
-$colors = red orange yellow green white indigo violet
+/**
+  * Variables for sizing, colors etc.
+*/
 $children = 5
+$dotSize  = 20px
+/**
+  * Mixin for element styles
+*/
+dot()
+  div
+    background-color white
+    border-radius    100%
+    height           $dotSize
+    left             50%
+    position         absolute
+    margin-left      -($dotSize / 2)
+    margin-top       -($dotSize / 2)
+    top              50%
+    width            $dotSize
+    {block}
 
-genInAndOut($num, $id)
+
+scaleOut($num, $id, $travel)
+  @keyframes $id
+    0%, 10%
+      transform scale(0) rotate((360 / $children * $num) * 1deg) translateY(0%)
+    20%, 80%
+      transform scale(1) rotate((360 / $children * $num) * 1deg) translateY($travel)
+    90%, 100%
+      transform scale(0) rotate((360 / $children * $num) * 1deg) translateY(0%)
+
+  animation unquote($id) 4s ($num * .2s) infinite
+
+fanOut($num, $id, $travel)
+  @keyframes $id
+    10%, 80%
+      transform rotate((360 / $children * $num) * 1deg) translateY($travel)
+    90%, 100%
+      transform rotate((360 / $children * $num) * 1deg) translateY(0)
+
+  animation unquote($id) 4s ($num * .1s) infinite
+
+
+@keyframes fadeInAndOut
+  0%, 25%, 100%
+    opacity 0
+  30%, 70%
+    opacity 1
+
+@keyframes fadeInAndOut2
+  0%, 25%, 75%, 100%
+    opacity 0
+  30%, 70%
+    opacity 1
+
+fadeInAndOut($num, $id, $travel)
+  opacity 0
+  transform rotate((360 / $children * $num) * 1deg) translateY($travel)
+  animation fadeInAndOut 3s ($num * .2s) infinite
+
+fadeInAndOut2($num, $id, $travel)
+  opacity 0
+  transform rotate((360 / $children * $num) * 1deg) translateY($travel)
+  animation fadeInAndOut2 3s ($num * .2s) infinite
+
+
+
+/**
+  * In and out style loader. Items go in and out from the center.
+*/
+inAndOut($num, $id)
   @keyframes $id
     0%, 10%, 90%, 100%
       transform rotate((360 / $children * $num) * 1deg)
-    20%, 80%
-      transform rotate((360 / $children * $num) * 1deg) translateY(200%)
+    14%, 86%
+      transform rotate((360 / $children * $num) * 1deg) translateY(150%)
 
-  transform rotate((360 / $children * $num) * 1deg)
-  animation unquote($id) 4s ($num * .1s) infinite
+  animation unquote($id) 6s ($num * .2s) infinite
 
 .loader
-
-  &--out-from-behind:after
-    content ''
-    height 40px
-    width 40px
-    background-color white
-    display block
-    border-radius 100%
-    position absolute
-    top 50%
-    left 50%
-    transform translate(-50%, -50%)
-    z-index $children
-
-    div
-      animation-duration 2s
-
   &--in-and-out
-  &--out-from-behind
     animation rotate 4s infinite linear
 
-    div
-      position absolute
-      top 0
-      left 0
-      width 100%
-      height 100%
-      border-radius 100%
-
-    for $child in (1..$children)
-      div:nth-of-type({$child})
-        background-color $colors[$child - 1]
-        z-index 5 - $child
-        genInAndOut($child, 'load--' + $child)
-
-  &--lines
-    animation rotate 4s infinite linear
-
-    div
-      border-radius 25%
-      position absolute
-      top 50%
-      left 50%
-      margin-left -25%
-      margin-top -75%
-      width 50%
-      height 150%
-
+    +dot()
       for $child in (1..$children)
         &:nth-of-type({$child})
-          background-color $colors[$child - 1]
           z-index 5 - $child
-          genInAndOut($child, 'load--' + $child)
+          inAndOut($child, 'in-and-out--' + $child)
+/**
+  * Out from behind is the same as in and out style but we have a shield
+*/
+@keyframes rotateShield
+  0%, 50%
+    transform rotate(0deg)
+  65%, 100%
+    transform rotate(360deg)
 
+outFromBehind($num, $id)
+  @keyframes $id
+    0%, 15%, 85%, 100%
+      transform rotate((360 / $children * $num) * 1deg)
+    20%, 80%
+      transform rotate((360 / $children * $num) * 1deg) translateY(175%)
+
+  animation unquote($id) 4s ($num * .2s) infinite
+
+.loader
+  &__wrapper
+    animation rotate 6s infinite linear
+  &--out-from-behind
+    animation rotateShield 4s infinite
+    &:after
+      background-color white
+      border-radius    100%
+      content          ''
+      display          block
+      height           30px
+      left             50%
+      position         absolute
+      top              50%
+      transform        translate(-50%, -50%)
+      width            30px
+      z-index          $children
+
+    +dot()
+      background-color white
+      for $child in (1..$children)
+        &:nth-of-type({$child})
+          transform rotate((360 / $children * $child) * 1deg)
+          outFromBehind($child, 'out-from-behind--' + $child)
+
+/**
+  * Swap out
+*/
+swap($num, $id)
+  @keyframes $id
+    0%, 44%, 58%, 100%
+      transform rotate((360 / $children * $num) * 1deg) translateY(150%)
+    48%, 54%
+      transform rotate((360 / $children * $num) * 1deg)
+  transform rotate((360 / $children * $num) * 1deg) translateY(150%)
+  animation unquote($id) 4s ($num * .2s) infinite
+
+.loader
+  &--swap
+    animation rotate 4s infinite linear
+
+    +dot()
+      for $child in (1..$children)
+        &:nth-of-type({$child})
+          swap($child, 'swap--' + $child)
+
+/**
+  * Dip
+*/
+dip($num, $id)
+  @keyframes $id
+    15%, 85%
+      transform rotate((360 / $children * $num) * 1deg) scale(0.5)
+    0%, 25%, 75%, 100%
+      transform rotate((360 / $children * $num) * 1deg) translateY(150%)
+  animation unquote($id) 2s ($num * .2s) infinite
+
+.loader
+  &--dip
+    animation rotate 8s infinite linear
+
+    +dot()
+      for $child in (1..$children)
+        &:nth-of-type({$child})
+          dip($child, 'dip--' + $child)
+
+
+
+
+
+
+
+
+
+
+
+
+
+  &--scale-out
+    animation rotate 6s infinite linear
+
+    +dot()
+      background-color white
+      for $x in (1..$children)
+        &:nth-of-type({$x})
+
+          z-index 5 - $x
+          scaleOut($x, 'through--' + $x, 150%)
+
+  &--lines-fade
+    animation rotate 4s infinite linear
+
+    +dot()
+      background-color white
+      for $child in (1..$children)
+        &:nth-of-type({$child})
+          z-index 5 - $child
+          fadeInAndOut($child, 'fade-in-and-out--' + $child, 100%)
+
+  &--lines-fade-2
+    animation rotate 4s infinite linear
+
+    +dot()
+      background-color white
+      for $child in (1..$children)
+        &:nth-of-type({$child})
+          z-index 5 - $child
+          fadeInAndOut2($child, 'fade-in-and-out2--' + $child, 100%)
+
+
+  &--fan-out
+    animation rotate 8s infinite linear
+
+    +dot()
+      background-color white
+      for $child in (1..$children)
+        &:nth-of-type({$child})
+          z-index 5 - $child
+          fanOut($child, 'fan--' + $child, 150%)
 
 /**
   * Theming
@@ -89,6 +246,7 @@ body
   width         200px
 
 .loader
+.loader__wrapper
   height      20px
   left        50%
   margin-left -10px
