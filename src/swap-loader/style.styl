@@ -68,10 +68,14 @@ inAndOut($num, $id)
   * Out from behind is the same as in and out style but we have a shield
 */
 @keyframes rotateShield
-  0%, 50%
+  0%
     transform rotate(0deg)
-  65%, 100%
-    transform rotate(360deg)
+  45%
+    transform rotate(80deg)
+  55%
+    transform rotate(640deg)
+  100%
+    transform rotate(720deg)
 
 outFromBehind($num, $id)
   @keyframes $id
@@ -82,30 +86,20 @@ outFromBehind($num, $id)
 
   animation unquote($id) 4s ($num * .2s) infinite
 
-.loader
-  &__wrapper
-    animation rotate 6s infinite linear
-  &--out-from-behind
-    animation rotateShield 4s infinite
-    &:after
-      background-color white
-      border-radius    100%
-      content          ''
-      display          block
-      height           30px
-      left             50%
-      position         absolute
-      top              50%
-      transform        translate(-50%, -50%)
-      width            30px
-      z-index          $children
 
-    +dot()
-      background-color white
-      for $child in (1..$children)
-        &:nth-of-type({$child})
-          transform rotate((360 / $children * $child) * 1deg)
-          outFromBehind($child, 'out-from-behind--' + $child)
+genLoad(name, wrapped)
+  .loader
+    &--{name}
+      animation rotate 5s infinite linear
+      +dot()
+        for $child in (1..$children)
+          &:nth-of-type({$child})
+            transform rotate((360 / $children * $child) * 1deg)
+            outFromBehind($child, 'out-from-behind--' + $child)
+      { block }
+
++genLoad('out-from-behind', true)
+  animation rotateShield 4s 1s infinite linear
 
 /**
   * Swap out
@@ -211,12 +205,16 @@ fanOut($num, $id, $travel)
   @keyframes $id
     0%, 10%
       transform rotate(0deg) translateY(0)
-    20%, 70%
+    20%, 80%
       transform rotate((360 / $children * $num) * 1deg) translateY($travel)
     90%, 100%
       transform rotate(360deg) translateY(0)
 
   animation unquote($id) 4s ($num * .1s) infinite
+
+map = {
+  'fanOut': fanOut,
+}
 
 .loader
   &--fan-out
