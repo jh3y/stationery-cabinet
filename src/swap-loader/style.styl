@@ -87,19 +87,37 @@ outFromBehind($num, $id)
   animation unquote($id) 4s ($num * .2s) infinite
 
 
-genLoad(name, wrapped)
+genLoad(name)
   .loader
     &--{name}
       animation rotate 5s infinite linear
       +dot()
         for $child in (1..$children)
           &:nth-of-type({$child})
-            transform rotate((360 / $children * $child) * 1deg)
             outFromBehind($child, 'out-from-behind--' + $child)
       { block }
 
-+genLoad('out-from-behind', true)
++genLoad('out-from-behind')
   animation rotateShield 4s 1s infinite linear
+
+
+mexicanWave($num, $id)
+  @keyframes $id
+    0%, 45%, 55%, 100%
+      transform rotate((360 / $children * $num) * 1deg) translateY(150%) scale(1)
+    50%
+      transform rotate((360 / $children * $num) * 1deg) translateY(150%) scale(1.5)
+  transform rotate((360 / $children * $num) * 1deg) translateY(150%) scale(1)
+  animation unquote($id) 2s ($num * .2s) infinite
+
+.loader
+  &--mexican-wave
+    animation rotate 5s infinite linear
+    +dot()
+      for $child in (1..$children)
+        &:nth-of-type({$child})
+          mexicanWave($child, 'mexican-wave--' + $child)
+
 
 /**
   * Swap out
