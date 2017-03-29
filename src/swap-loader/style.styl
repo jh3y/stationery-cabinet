@@ -4,7 +4,7 @@
 $children = 5
 $dotSize  = 20px
 /**
-  * Mixin for element styles
+  * Mixin for dot styles
 */
 dot()
   div
@@ -19,6 +19,39 @@ dot()
     width            $dotSize
     {block}
 
+/**
+  * Mixin for generating loader styles for a given named loader
+*/
+
+spinMap = {
+  outFromBehind: 'out-from-behind',
+  mexicanWave: 'mexican-wave',
+  fanOut: 'fan-out',
+  scaleOut: 'scale-out',
+  dip: 'dip',
+  fadeInAndOut: 'fade-in-and-out',
+  fadeInAndOut2: 'fade-in-and-out-2',
+  inAndOut: 'in-and-out',
+  swap: 'swap',
+}
+
+invoke(num, id, fn)
+  fn(num, id)
+
+.loader
+  animation rotate 5s infinite linear
+  dot()
+
+genLoad(name)
+  .loader
+    &--{spinMap[name]}
+      for $child in (1..$children)
+        div:nth-of-type({$child})
+          invoke($child, spinMap[name] + $child, lookup(name))
+      { block }
+
+
+
 @keyframes fadeInAndOut
   0%, 25%, 100%
     opacity 0
@@ -31,16 +64,18 @@ dot()
   30%, 70%
     opacity 1
 
-fadeInAndOut($num, $id, $travel)
+fadeInAndOut($num, $id)
   opacity 0
-  transform rotate((360 / $children * $num) * 1deg) translateY($travel)
+  transform rotate((360 / $children * $num) * 1deg) translateY(150%)
   animation fadeInAndOut 3s ($num * .2s) infinite
 
-fadeInAndOut2($num, $id, $travel)
+fadeInAndOut2($num, $id)
   opacity 0
-  transform rotate((360 / $children * $num) * 1deg) translateY($travel)
+  transform rotate((360 / $children * $num) * 1deg) translateY(150%)
   animation fadeInAndOut2 3s ($num * .2s) infinite
 
+genLoad('fadeInAndOut')
+genLoad('fadeInAndOut2')
 
 
 /**
@@ -49,21 +84,13 @@ fadeInAndOut2($num, $id, $travel)
 inAndOut($num, $id)
   @keyframes $id
     0%, 10%, 90%, 100%
-      transform rotate((360 / $children * $num) * 1deg)
+      transform rotate((360 / $children * $num) * 1deg) translateY(0)
     14%, 86%
       transform rotate((360 / $children * $num) * 1deg) translateY(150%)
 
   animation unquote($id) 6s ($num * .2s) infinite
 
-.loader
-  &--in-and-out
-    animation rotate 4s infinite linear
-
-    +dot()
-      for $child in (1..$children)
-        &:nth-of-type({$child})
-          z-index 5 - $child
-          inAndOut($child, 'in-and-out--' + $child)
+genLoad('inAndOut')
 /**
   * Out from behind is the same as in and out style but we have a shield
 */
@@ -72,7 +99,7 @@ inAndOut($num, $id)
     transform rotate(0deg)
   45%
     transform rotate(80deg)
-  55%
+  50%
     transform rotate(640deg)
   100%
     transform rotate(720deg)
@@ -80,27 +107,18 @@ inAndOut($num, $id)
 outFromBehind($num, $id)
   @keyframes $id
     0%, 15%, 85%, 100%
-      transform rotate((360 / $children * $num) * 1deg)
+      transform rotate((360 / $children * $num) * 1deg) translateY(0) scale(0)
     20%, 80%
-      transform rotate((360 / $children * $num) * 1deg) translateY(175%)
+      transform rotate((360 / $children * $num) * 1deg) translateY(175%) scale(1)
 
   animation unquote($id) 4s ($num * .2s) infinite
 
-
-genLoad(name)
-  .loader
-    &--{name}
-      animation rotate 5s infinite linear
-      +dot()
-        for $child in (1..$children)
-          &:nth-of-type({$child})
-            outFromBehind($child, 'out-from-behind--' + $child)
-      { block }
-
-+genLoad('out-from-behind')
++genLoad('outFromBehind')
   animation rotateShield 4s 1s infinite linear
 
-
+/**
+  * Mexican wave loader
+*/
 mexicanWave($num, $id)
   @keyframes $id
     0%, 45%, 55%, 100%
@@ -110,13 +128,7 @@ mexicanWave($num, $id)
   transform rotate((360 / $children * $num) * 1deg) translateY(150%) scale(1)
   animation unquote($id) 2s ($num * .2s) infinite
 
-.loader
-  &--mexican-wave
-    animation rotate 5s infinite linear
-    +dot()
-      for $child in (1..$children)
-        &:nth-of-type({$child})
-          mexicanWave($child, 'mexican-wave--' + $child)
+genLoad('mexicanWave')
 
 
 /**
@@ -131,15 +143,7 @@ swap($num, $id)
   transform rotate((360 / $children * $num) * 1deg) translateY(150%)
   animation unquote($id) 4s ($num * .2s) infinite
 
-.loader
-  &--swap
-    animation rotate 4s infinite linear
-
-    +dot()
-      for $child in (1..$children)
-        &:nth-of-type({$child})
-          swap($child, 'swap--' + $child)
-
+genLoad('swap')
 /**
   * Dip
 */
@@ -152,15 +156,7 @@ dip($num, $id)
   transform rotate((360 / $children * $num) * 1deg) translateY(150%)
   animation unquote($id) 3s ($num * .3s) infinite
 
-.loader
-  &--dip
-    animation rotate 8s infinite linear
-
-    +dot()
-      for $child in (1..$children)
-        &:nth-of-type({$child})
-          dip($child, 'dip--' + $child)
-
+genLoad('dip')
 
 
 
@@ -183,66 +179,23 @@ scaleOut($num, $id)
   transform rotate((360 / $children * $num) * 1deg) translateY(175%)
   animation unquote($id) 4s ($num * .2s) infinite
 
-.loader
-  &--scale-out
-    animation rotate 8s infinite linear
-
-    +dot()
-      background-color white
-      for $x in (1..$children)
-        &:nth-of-type({$x})
-
-          z-index 5 - $x
-          scaleOut($x, 'scale-out--' + $x)
-
-  &--lines-fade
-    animation rotate 4s infinite linear
-
-    +dot()
-      background-color white
-      for $child in (1..$children)
-        &:nth-of-type({$child})
-          z-index 5 - $child
-          fadeInAndOut($child, 'fade-in-and-out--' + $child, 100%)
-
-  &--lines-fade-2
-    animation rotate 4s infinite linear
-
-    +dot()
-      background-color white
-      for $child in (1..$children)
-        &:nth-of-type({$child})
-          z-index 5 - $child
-          fadeInAndOut2($child, 'fade-in-and-out2--' + $child, 100%)
-
-
+genLoad('scaleOut')
 
 /**
   * Fanning out effect so dots fan out and then fan back in continuosly
 */
-fanOut($num, $id, $travel)
+fanOut($num, $id)
   @keyframes $id
     0%, 10%
-      transform rotate(0deg) translateY(0)
+      transform rotate(0deg) translateY(0) scale(0)
     20%, 80%
-      transform rotate((360 / $children * $num) * 1deg) translateY($travel)
+      transform rotate((360 / $children * $num) * 1deg) translateY(150%) scale(1)
     90%, 100%
-      transform rotate(360deg) translateY(0)
+      transform rotate(360deg) translateY(0) scale(0)
 
   animation unquote($id) 4s ($num * .1s) infinite
 
-map = {
-  'fanOut': fanOut,
-}
-
-.loader
-  &--fan-out
-    animation rotate 8s infinite linear
-
-    +dot()
-      for $child in (1..$children)
-        &:nth-of-type({$child})
-          fanOut($child, 'fan--' + $child, 150%)
+genLoad('fanOut')
 
 /**
   * Theming
