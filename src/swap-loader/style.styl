@@ -33,6 +33,7 @@ spinMap = {
   fadeInAndOut2: 'fade-in-and-out-2',
   inAndOut: 'in-and-out',
   swap: 'swap',
+  dive: 'dive',
 }
 
 invoke(num, id, fn)
@@ -88,7 +89,7 @@ inAndOut($num, $id)
     14%, 86%
       transform rotate((360 / $children * $num) * 1deg) translateY(150%)
 
-  animation unquote($id) 6s ($num * .2s) infinite
+  animation unquote($id) 4s ($num * .2s) infinite
 
 genLoad('inAndOut')
 /**
@@ -100,9 +101,9 @@ genLoad('inAndOut')
   45%
     transform rotate(80deg)
   50%
-    transform rotate(640deg)
+    transform rotate(240deg)
   100%
-    transform rotate(720deg)
+    transform rotate(360deg)
 
 outFromBehind($num, $id)
   @keyframes $id
@@ -158,14 +159,6 @@ dip($num, $id)
 
 genLoad('dip')
 
-
-
-
-
-
-
-
-
 /**
   * Scale in and out
 */
@@ -196,6 +189,23 @@ fanOut($num, $id)
   animation unquote($id) 4s ($num * .1s) infinite
 
 genLoad('fanOut')
+
+
+/**
+  * Dive style, out then jump and in
+*/
+dive($num, $id)
+  @keyframes $id
+    0%, 28%, 80%, 100%
+      transform rotate((360 / $children * $num) * 1deg) scale(0) translateY(0)
+    30%, 70%
+      transform rotate((360 / $children * $num) * 1deg) scale(1) translateY(150%)
+    72%
+      transform rotate((360 / $children * $num) * 1deg) scale(1) translateY(250%)
+
+  animation unquote($id) 5s ($num * .4s) infinite
+
+genLoad('dive')
 
 /**
   * Theming
