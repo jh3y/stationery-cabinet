@@ -4,8 +4,16 @@
 
 const RAF = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame || function (cb) { setTimeout(cb, 1000 / 60) }
 
-
 const BLOCK_SIZE = 10
+let RATE_OF_CHANGE = 0.5
+
+const $input = document.querySelector('input')
+$input.value = RATE_OF_CHANGE * 100
+
+$input.addEventListener('input', () => {
+  RATE_OF_CHANGE = $input.value / 100
+})
+
 
 class Block {
   constructor({X, Y}) {
@@ -75,7 +83,7 @@ class ColorWall {
 
     for (const idx in this.__POOL) {
       const block = this.__POOL[idx]
-      if (Math.random() > 0.98) {
+      if (Math.random() > RATE_OF_CHANGE) {
         block.update()
       }
       CONTEXT.drawImage(block.__CANVAS, block.__POSITION.X, block.__POSITION.Y)
@@ -108,4 +116,4 @@ const render = () => {
   RAF(render)
 }
 
-RAF(() => render())
+RAF(render)
