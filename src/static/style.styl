@@ -1,0 +1,30 @@
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+body
+  align-items      center
+  background-color #111
+  display          flex
+  color            #fafafa
+  justify-content  center
+  margin           0
+  padding          0
+  text-align       center
+
+canvas
+  height           250
+  width            250
+  animation        pulse 30s infinite ease
+
+@keyframes pulse
+  0%, 100%
+    transform rotate(45deg) scale(.5)
+  50%
+    transform rotate(45deg) scale(1)
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
