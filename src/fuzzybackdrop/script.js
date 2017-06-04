@@ -6,6 +6,7 @@ const RAF = window.requestAnimationFrame || window.webkitRequestAnimationFrame |
 /**
   * Initialize a canvas
 */
+const BODY   = document.body
 const HEIGHT = window.innerHeight / 1
 const WIDTH = window.innerWidth / 1
 const TOTAL = HEIGHT * WIDTH
@@ -31,13 +32,12 @@ for (let pixel = 0; pixel < TOTAL; pixel++) {
   CONTEXT.fillRect(X, Y, 1, 1)
 }
 
-document.body.style.background = `url(${CANVAS.toDataURL()})`
+BODY.style.background = `url(${CANVAS.toDataURL()})`
 
 const update = () => {
-  document.body.style.backgroundPosition = `
-    ${Math.floor(Math.random() * WIDTH)} ${Math.floor(Math.random() * HEIGHT)}
-  `
-
+  const X = Math.floor(Math.random() * WIDTH)
+  const Y = Math.floor(Math.random() * HEIGHT)
+  BODY.style.backgroundPosition = `${X}px ${Y}px`
   RAF(update)
 }
 RAF(update)
@@ -55,5 +55,5 @@ const move = (e) => {
   }
 }
 
-document.body.addEventListener('mousemove', move)
+BODY.addEventListener('mousemove', move)
 window.ondevicemotion = move
