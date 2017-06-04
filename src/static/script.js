@@ -6,6 +6,7 @@ const RAF = window.requestAnimationFrame || window.webkitRequestAnimationFrame |
 
 const BLOCK_SIZE = 10
 let RATE_OF_CHANGE = 0.5
+const SIZE = 150
 
 const $input = document.querySelector('input')
 $input.value = RATE_OF_CHANGE * 100
@@ -93,20 +94,20 @@ class ColorWall {
   }
 }
 
+/**
+  * This is the actual canvas.
+*/
+const $canvas = document.querySelector('canvas')
+$canvas.height = SIZE
+$canvas.width = SIZE
+const $context = $canvas.getContext('2d')
+$context.save()
 
 const render = () => {
-  /**
-    * This is the actual canvas.
-  */
-  const $canvas = document.querySelector('canvas')
-  $canvas.height = 250
-  $canvas.width = 250
-  const $context = $canvas.getContext('2d')
-  $context.save()
   $context.clearRect(0, 0, $canvas.width, $canvas.height)
 
   if (!$canvas.__COLORWALL) {
-    $canvas.__COLORWALL = new ColorWall({height: 250, width: 250})
+    $canvas.__COLORWALL = new ColorWall({height: SIZE, width: SIZE})
   }
 
   $context.drawImage($canvas.__COLORWALL.generateImage(), 0, 0)
