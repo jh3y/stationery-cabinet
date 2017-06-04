@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+:root
+  --translateX 0
+  --translateY 0
+
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+body
+  font-family      'Roboto', sans-serif
+  display          flex
+  text-align       center
+  margin           0
+  align-items      center
+  justify-content  center
+
+.channel
+  color     green
+  font-size 40px
+  position  absolute
+  top       20px
+  right     20px
+  margin    0
+  padding   0
+
+.fourofour
+  margin    0
+  padding   0
+  font-size 175px
+  opacity   .15
+  --X       calc(var(--translateX) * -100px)
+  --Y       calc(var(--translateY) * -150px)
+  transform translate(var(--X), var(--Y))
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
