@@ -17,6 +17,7 @@ const CANVAS = document.querySelector('canvas')
 CANVAS.style.background = '#111'
 CANVAS.style.height = HEIGHT
 CANVAS.style.width  = WIDTH
+CANVAS.style.borderRadius = HEIGHT / 2
 CANVAS.height       = HEIGHT
 CANVAS.width        = WIDTH
 
