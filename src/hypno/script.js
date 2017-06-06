@@ -7,8 +7,9 @@ const RAF = window.requestAnimationFrame || window.webkitRequestAnimationFrame |
 /**
   * Create some sizing variables
 */
-const DEFAULT_SIZE = 500
-const SIZE = Math.min(window.innerWidth, DEFAULT_SIZE)
+const DEFAULT_SIZE = 300
+const WINDOW_LIMIT = Math.min(window.innerWidth - 20, window.innerHeight - 20)
+const SIZE = Math.min(WINDOW_LIMIT, DEFAULT_SIZE)
 let PLAY = 150
 let X = -(PLAY / 2)
 let Y = -(PLAY / 2)
