@@ -1,0 +1,13 @@
+.container
+  .bear-container
+    canvas#left
+    canvas#right
+    include bear.svg
+  .controls
+    .controls--volume.controls__set
+      i.fa.fa-volume-up
+      i.fa.fa-volume-off
+      input#volume(type='range', min="0", max="1", step="any", value="0.1")
+    .controls--psych.controls__set
+      input#psych(type='checkbox')
+      label(for='psych') Psychedelic mode?

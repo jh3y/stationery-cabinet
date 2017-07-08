@@ -1,0 +1,81 @@
+*
+  box-sizing border-box
+
+body
+  margin 0
+  background-color #111
+
+.container
+  color            #ffffff
+  text-align       center
+  display          flex
+  flex-direction   column
+  align-items      center
+  justify-content  center
+  min-height       100vh
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
+
+canvas
+  border-radius 100%
+  position absolute
+
+.bear-container
+  position relative
+
+#left
+  height 40px
+  width  40px
+  top    70px
+  left   84px
+
+#right
+  height 50px
+  width  50px
+  top    63px
+  left   128px
+
+button
+  background-color transparent
+  border-radius    100%
+  height           40px
+  width            40px
+  opacity          0.5
+  transition       opacity .25s ease 0s
+  position         absolute
+  top           20px
+  right         20px
+
+  &:hover
+    opacity 1
+
+i
+  color #FFF
+  font-size 20px !important
+
+.controls
+  transform translateY(-20px)
+
+  &__set
+    padding-bottom 5px
+
+  &--volume
+    position relative
+    display flex
+    flex-direction column
+
+    .fa
+      position absolute
+      &.fa-volume-off
+        left 0
+        transform translateX(-125%) translateY(-15%)
+      &.fa-volume-up
+        right 0
+        transform translateX(125%) translateY(-15%)
+
+#bear
+  height 360px
