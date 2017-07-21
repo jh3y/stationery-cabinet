@@ -1,0 +1,91 @@
+*
+  box-sizing border-box
+
+body
+  align-items      center
+  background-color #111
+  color            #fafafa
+  display          flex
+  flex-direction   column
+  height           100vh
+  justify-content  center
+  text-align       center
+
+  @media(min-width 768px)
+    flex-direction row
+
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
+
+$img-size = 150px
+$img-overlay-opacity = .4
+$green  = rgba(46, 204, 113, $img-overlay-opacity)
+$yellow = rgba(243, 156, 18, $img-overlay-opacity)
+$red    = rgba(217, 30, 24, $img-overlay-opacity)
+$purple = rgba(102, 51, 153, $img-overlay-opacity)
+
+.img
+  border-radius   100%
+  color           #fafafa
+  display         flex
+  flex            0 0 $img-size
+  height          $img-size
+  justify-content center
+  overflow        hidden
+  position        relative
+  width           $img-size
+
+  img
+    height 100%
+
+  &__overlay
+    align-items      center
+    bottom           0
+    display          flex
+    justify-content  center
+    left             0
+    opacity          0
+    position         absolute
+    right            0
+    top              0
+    transition       opacity .25s
+    z-index          1
+
+    &:hover
+      opacity 1
+
+
+/**
+  * Theming
+*/
+span
+  bottom      0
+  font-size   24px
+  left        0
+  line-height $img-size
+  position    absolute
+  right       0
+  top         0
+
+.img
+  animation fadeIn .5s
+  border 4px solid silver
+  margin 20px
+  &__overlay
+    background-color $green
+    background linear-gradient(65deg, $green, $yellow)
+    color #fafafa
+    font-size 24px
+    &--green
+      background linear-gradient(65deg, $green, $purple 60%)
+      background-color $green
+    &--yellow
+      background linear-gradient(65deg, $yellow, $purple 60%)
+      background-color $yellow
+    &--red
+      background linear-gradient(65deg, $red, $purple 60%)
+      background-color $red
