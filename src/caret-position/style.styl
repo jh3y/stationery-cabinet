@@ -1,0 +1,40 @@
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+body
+  background-color #e74c3c
+  color            #fafafa
+  text-align       center
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
+
+textarea
+  height 150px
+
+.input
+  outline 0
+  border 0
+  text-align left
+  border-radius 0px
+  line-height 16px
+  font-size 16px
+  padding 10px 12px
+  width   150px
+  position relative
+  &__wrapper
+    display inline-block
+    position relative
+  &__marker
+    height 16px
+    width  10px
+    background-color blue
+    position absolute
+    display none
+    z-index 9999
+    &--visible
+      display block
