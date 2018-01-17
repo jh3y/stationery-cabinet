@@ -30,11 +30,14 @@ textarea
     display inline-block
     position relative
   &__marker
-    height 16px
-    width  10px
+    font-size 10px
+    width  auto
     background-color blue
     position absolute
     display none
     z-index 9999
+    white-space nowrap
+    padding 4px
+    transform translateY(-50%)
     &--visible
       display block

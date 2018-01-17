@@ -2,12 +2,17 @@
 
 const getPositionInput = document.querySelector('.get-position-input .input')
 const getPositionTextArea = document.querySelector('.get-position-textarea .input')
+const getSelectionTextArea = document.querySelector('.get-selection-textarea .input')
+const getSelectionInput = document.querySelector('.get-selection-input .input')
 
-const getCoordinatesForCaret = (e) => {
+
+// This is the main function for grabbing the actual position for where a marker should be placed.
+// This is before taking into account any scroll position or element padding
+const getEndCoordinates = (e, selectionPoint) => {
   // grab the element that has the input listener
   const input = e.currentTarget
   // get the current caret position with selectionEnd, this tells us at which index of the content we are currently at
-  const caretPosition = input.selectionEnd
+  const caretPosition = selectionPoint
   // create a dummy element that will be a clone of our input
   const div = document.createElement('div')
   // create a marker element that will get it's position from
@@ -44,9 +49,7 @@ const getCoordinatesForCaret = (e) => {
     top,
     left,
   }
-
 }
-
 
 const showPositionMarker = (e) => {
   const marker = e.currentTarget.parentElement.querySelector('.input__marker')
@@ -66,7 +69,7 @@ const showPositionMarker = (e) => {
     const {
       top,
       left,
-    } = getCoordinatesForCaret(e)
+    } = getEndCoordinates(e, e.currentTarget.selectionEnd)
     // grab the right padding
     const padding = parseInt(getComputedStyle(e.currentTarget).paddingRight, 10)
     const {
@@ -74,25 +77,60 @@ const showPositionMarker = (e) => {
       paddingBottom,
       lineHeight,
     } = getComputedStyle(e.currentTarget)
-    if (e.currentTarget.scrollLeft) {
-      marker.style.left = Math.min(e.currentTarget.offsetWidth - padding, left - e.currentTarget.scrollLeft)
-    } else {
-      marker.style.left = Math.min(left, e.currentTarget.offsetWidth - padding)
-    }
-    // console.info(e.currentTarget.scrollTop, e.currentTarget.scrollHeight)
-    if (e.currentTarget.scrollHeight > e.currentTarget.offsetHeight) {
-      const a = top - e.currentTarget.scrollTop
-      const b = e.currentTarget.offsetHeight - parseInt(lineHeight, 10)
-      marker.style.top = Math.min(a, b)
-    } else {
-      marker.style.top = Math.min(top, e.currentTarget.offsetHeight - parseInt(lineHeight, 10))
+    marker.style.left = Math.min(left - e.currentTarget.scrollLeft, e.currentTarget.offsetWidth - padding)
+    marker.style.top = Math.min(top - e.currentTarget.scrollTop, e.currentTarget.offsetHeight - parseInt(lineHeight, 10))
+  }
+}
+
+const getSelectionArea = (e) => {
+  const marker = e.currentTarget.parentElement.querySelector('.input__marker')
+  const {
+    selectionStart,
+    selectionEnd,
+  } = e.currentTarget
+  const processClick = (evt) => {
+    if (e !== evt && evt.target !== e.target) {
+      marker.classList.remove('input__marker--visible')
+      marker.__IS_SHOWING = false
+      document.removeEventListener('click', processClick)
     }
   }
+  if (selectionStart === selectionEnd) {
+    if (marker.__IS_SHOWING) {
+      marker.__IS_SHOWING = false
+      marker.classList.remove('input__marker--visible')
+      document.removeEventListener('click', processClick)
+    }
+    return
+  }
+  const {
+    top: startTop,
+    left: startLeft,
+  } = getEndCoordinates(e, selectionStart)
+  const {
+    top: endTop,
+    left: endLeft,
+  } = getEndCoordinates(e, selectionEnd)
+  if (!marker.__IS_SHOWING && selectionStart !== selectionEnd) {
+    document.addEventListener('click', processClick)
+    marker.__IS_SHOWING = true
+    marker.classList.add('input__marker--visible')
+  }
+  if (marker.__IS_SHOWING) {
+    // startTop will always be the smallest value and we will always put the marker at the top of the selection so
+    marker.style.top = startTop - e.currentTarget.scrollTop
+    // as for the left marker
+    // if startTop doesn't equal endTop then we have a multiline selection
+    // therefore the middle will be the furthest point possible right minus the start halved and added to the start, mouthful
+    const endPoint = (startTop !== endTop) ? e.currentTarget.offsetWidth - parseInt(getComputedStyle(e.currentTarget).paddingRight, 10) : endLeft
+    const newLeft = ((endPoint - startLeft) / 2) + startLeft
+    marker.style.left = newLeft - e.currentTarget.scrollLeft
+  }
+
 }
 getPositionInput.addEventListener('input', showPositionMarker)
 getPositionInput.addEventListener('click', showPositionMarker)
-
 getPositionTextArea.addEventListener('input', showPositionMarker)
 getPositionTextArea.addEventListener('click', showPositionMarker)
-
-
+getSelectionTextArea.addEventListener('mouseup', getSelectionArea)
+getSelectionInput.addEventListener('mouseup', getSelectionArea)
