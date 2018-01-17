@@ -20,7 +20,7 @@ textarea
   outline 0
   border 0
   text-align left
-  border-radius 0px
+  border-radius 4px
   line-height 16px
   font-size 16px
   padding 10px 12px
@@ -30,14 +30,37 @@ textarea
     display inline-block
     position relative
   &__marker
+    $marker-color = black
     font-size 10px
     width  auto
-    background-color blue
+    background-color $marker-color
     position absolute
-    display none
+    border-radius 4px
     z-index 9999
     white-space nowrap
-    padding 4px
-    transform translateY(-50%)
+    padding 4px 6px
+    transform translate(5%, -70%)
+    display none
+    transition top .1s ease 0s, left .1s ease 0s
+    box-shadow 0 2px 5px lighten($marker-color, 30%)
+    &:after
+      content ''
+      height 10px
+      width  15px
+      position absolute
+      background-color $marker-color
+      z-index -1
+    &--position
+      &:after
+        left 0
+        bottom 0
+        transform translate(-10%, 10%) rotate(-15deg) skewX(-40deg)
+    &--selection
+      transform translate(-50%, -100%)
+      &:after
+        left 50%
+        bottom 0
+        transform translate(-50%, 0) rotate(45deg)
+
     &--visible
       display block
