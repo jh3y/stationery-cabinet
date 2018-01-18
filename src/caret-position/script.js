@@ -191,9 +191,17 @@ const showCustomUI = (e) => {
   } = e
   // grab properties of input that we are interested in
   const {
+    offsetHeight,
+    offsetWidth,
+    scrollLeft,
+    scrollTop,
     selectionStart,
     value,
   } = input
+  const {
+    paddingRight,
+    lineHeight,
+  } = getComputedStyle(input)
   // grab the marker for the input
   const marker = input.parentElement.querySelector(`.${CLASSES.marker}`)
   // create a function that will handle clicking off of the input and hide the marker
@@ -287,8 +295,14 @@ const showCustomUI = (e) => {
       filterList()
       // update position
       const { x, y } = getCaretXY(input, selectionStart)
-      marker.style.top = y
-      marker.style.left = x
+      marker.style.left = Math.min(
+        x - scrollLeft,
+        offsetWidth - parseInt(paddingRight, 10)
+      )
+      marker.style.top = Math.min(
+        y - scrollTop,
+        offsetHeight - parseInt(lineHeight, 10)
+      )
     }
   }
 
