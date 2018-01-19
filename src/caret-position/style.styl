@@ -29,6 +29,14 @@ textarea
 .demo-input
   margin 10px auto
 
+.use-cases
+  display flex
+  align-items center
+  justify-content center
+  flex-wrap wrap
+  .use-case
+    margin 0 15px
+
 .custom-suggestions
   $active-color = #19b5fe
   cursor pointer
@@ -59,15 +67,12 @@ textarea
   &::placeholder
     color lighten($color, 80%)
     text-align center
-  &__wrapper
-    display inline-block
-    position relative
   &__marker
     $marker-color = #111
     background-color $marker-color
     border-radius 4px
     box-shadow 0 2px 5px lighten($marker-color, 30%)
-    display none
+    display block
     font-size 12px
     padding 4px 6px
     position absolute
@@ -98,5 +103,3 @@ textarea
       transform translate($font-size, $line-height)
       &:after
         display none
-    &--visible
-      display block

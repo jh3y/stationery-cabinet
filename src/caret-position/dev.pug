@@ -1,34 +1,21 @@
-h1 Where's the caret? 🧐
-p.
-  Ever needed to determine the caret position? It's useful to know when you want to show custom UI at the exact location a user is interacting with a form.<br/>
-  Common use cases are UI using typeaheads and content highlighting within WYSIWYG environments.
-p.
-  Experiment with the elements below!
-h2 Show caret position on input and click
-.demo-input
-  .input__wrapper.get-position-input
-    .input__marker.input__marker--position Here's the caret!
-    input.input(id='positionInput', placeholder='Interact with me')
-.demo-input
-  .input__wrapper.get-position-textarea
-    .input__marker.input__marker--position Here's the caret!
-    textarea.input(id='positionTextarea', placeholder='Interact with me')
-h2 Show a marker for selection range on mouseup
-.demo-input
-  .input__wrapper.get-selection-input
-    .input__marker.input__marker--selection Here's what you selected!
-    input.input(placeholder='Interact with me', value='Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur doloremque amet deserunt laboriosam aliquid! Error iusto fuga sint esse voluptatum, beatae harum explicabo omnis a tenetur, sequi modi odio ipsa?')
-.demo-input
-  .input__wrapper.get-selection-textarea
-    .input__marker.input__marker--selection Here's what you selected!
-    textarea.input(placeholder='Interact with me').
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, necessitatibus natus. Optio pariatur amet aut quibusdam iure velit sequi corporis saepe ab ipsa, libero, sed, enim aspernatur alias voluptatem! Rem.
-h2 Show custom UI based on input
-.demo-input
-  .input__wrapper.show-custom-ui-input
-    .input__marker.input__marker--custom
-    input.input(placeholder='The special character is #')
-.demo-input
-  .input__wrapper.show-custom-ui-textarea
-    .input__marker.input__marker--custom
-    textarea.input(placeholder='The special character is #')
+h1 Where's the text cursor? 🧐
+.use-cases
+  .use-case
+    h2 Click and type around
+    .demo-input
+      input.get-position-input.input(placeholder='Interact with me')
+    .demo-input
+      textarea.get-position-textarea.input(placeholder='Interact with me')
+  .use-case
+    h2 Select some content
+    .demo-input
+      input.get-selection-input.input(placeholder='Interact with me', value='Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur doloremque amet deserunt laboriosam aliquid! Error iusto fuga sint esse voluptatum, beatae harum explicabo omnis a tenetur, sequi modi odio ipsa?')
+    .demo-input
+      textarea.get-selection-textarea.input(placeholder='Interact with me').
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, necessitatibus natus. Optio pariatur amet aut quibusdam iure velit sequi corporis saepe ab ipsa, libero, sed, enim aspernatur alias voluptatem! Rem.
+  .use-case
+    h2 Trigger custom UI
+    .demo-input
+      input.show-custom-ui-input.input(placeholder='Type a #')
+    .demo-input
+      textarea.show-custom-ui-textarea.input(placeholder='Type a #')
