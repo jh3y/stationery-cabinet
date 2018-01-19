@@ -1,24 +1,58 @@
 *
   box-sizing border-box
-  animation  fadeIn .5s
-  transition all .5s ease 0s
 
 body
   background-color #2eec71
   color            #fafafa
   text-align       center
 
-@keyframes fadeIn
-  from
-    opacity 0
-  to
-    opacity 1
+@keyframes move
+  0%, 100%
+    transform translate(0, 0)
+  25%
+    transform translate(35%, 65%)
+  50%
+    transform translate(55%, 25%)
+
+@keyframes move-flipped
+  0%, 100%
+    transform rotateY(180deg) translate(0, 0)
+  25%
+    transform rotateY(180deg) translate(35%, 65%)
+  50%
+    transform rotateY(180deg) translate(55%, 25%)
+
+@keyframes nod
+  0, 100%
+    transform translateY(0)
+  50%
+    transform translateY(25%)
+
+.container
+  display inline-flex
+  align-items center
+  flex-direction column
+  position relative
 
 random(ceiling)
-  return floor(math(0, 'random')*ceiling)
+  return floor(math(1, 'random')*ceiling)
+
+label
+  font-size 2.5rem
+
+.dogmoji
+  font-size 2.5rem
+  position absolute
+  right 15px
+  transform translateY(0)
 
 .let-the-dogs-out
+  border-radius 50%
+  height 3rem
+  width  3rem
   &:checked
+    & ~ .dogmoji
+      animation nod .15s infinite
     & ~ .yard
       .kennel
         display contents
@@ -63,23 +97,7 @@ random(ceiling)
       margin 2rem
       font-size 2rem
 
-      for dog in (1..16)
+      for dog in (1..17)
         &:nth-child({dog})
-          animation-duration random(50) .1s
-          animation-delay random(30) * .1s
-
-@keyframes move
-  0%, 100%
-    transform translate(0, 0)
-  25%
-    transform translate(35%, 65%)
-  50%
-    transform translate(55%, 25%)
-
-@keyframes move-flipped
-  0%, 100%
-    transform rotateY(180deg) translate(0, 0)
-  25%
-    transform rotateY(180deg) translate(35%, 65%)
-  50%
-    transform rotateY(180deg) translate(55%, 25%)
+          animation-duration random(10) * .1s
+          animation-delay random(10) * .1s

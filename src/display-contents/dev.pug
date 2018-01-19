@@ -1,9 +1,11 @@
-label(for='let-the-dogs-out') Let the dogs out? 🐶
-input.let-the-dogs-out(type='checkbox', id='let-the-dogs-out')
-.yard
-  .kennel
-    .door
-    - for(let i = 0; i < 16; i++)
-      - let doge = Math.random() > 0.5 ? '🐕' : '🐩'
-      .dog= doge
+.container
+  label(for='let-the-dogs-out') Let the dogs out?
+  input.let-the-dogs-out(type='checkbox', id='let-the-dogs-out')
+  .dogmoji 🐶
+  .yard
+    .kennel
+      .door
+      - for(let i = 0; i < 16; i++)
+        - let doge = Math.random() > 0.5 ? '🐕' : '🐩'
+        .dog= doge
 
