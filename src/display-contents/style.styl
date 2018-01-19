@@ -1,0 +1,89 @@
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+  transition all .5s ease 0s
+
+body
+  background-color #e74c3c
+  color            #fafafa
+  text-align       center
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
+
+random(ceiling)
+  return floor(math(0, 'random')*ceiling)
+
+.let-the-dogs-out
+  &:checked
+    & ~ .yard
+      .kennel
+        display contents
+        background-color black
+        .door
+          display none
+        .dog
+          animation-iteration-count infinite
+          for dog in (1..20)
+            &:nth-child({dog})
+              if random(10) < 5
+                animation-name move
+              else
+                animation-name move-flipped
+
+
+.yard
+  background-color brown
+  height 400px
+  width  400px
+  display flex
+  flex-direction row
+  flex-wrap wrap
+  justify-content center
+  align-items center
+
+  .kennel
+    background-color blue
+    display block
+    flex-basis 100px
+    flex-direction row
+    height 100px
+    overflow hidden
+
+    .door
+      height 100%
+      width  100%
+      background-color black
+
+    .dog
+      display flex
+      align-items center
+      height 2rem
+      margin 2rem
+      flex 0 1 0
+      background-color red
+      font-size 2rem
+
+      for dog in (1..16)
+        &:nth-child({dog})
+          animation-duration random(50) .1s
+          animation-delay random(30) * .1s
+
+@keyframes move
+  0%, 100%
+    transform translate(0, 0)
+  25%
+    transform translate(35%, 65%)
+  50%
+    transform translate(55%, 25%)
+
+@keyframes move-flipped
+  0%, 100%
+    transform rotateY(180deg) translate(0, 0)
+  25%
+    transform rotateY(180deg) translate(35%, 65%)
+  50%
+    transform rotateY(180deg) translate(55%, 25%)
