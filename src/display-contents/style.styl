@@ -4,7 +4,7 @@
   transition all .5s ease 0s
 
 body
-  background-color #e74c3c
+  background-color #2eec71
   color            #fafafa
   text-align       center
 
@@ -22,7 +22,6 @@ random(ceiling)
     & ~ .yard
       .kennel
         display contents
-        background-color black
         .door
           display none
         .dog
@@ -36,7 +35,9 @@ random(ceiling)
 
 
 .yard
-  background-color brown
+  border 4px solid silver
+  border-radius 5px
+  background-color grey
   height 400px
   width  400px
   display flex
@@ -46,10 +47,8 @@ random(ceiling)
   align-items center
 
   .kennel
-    background-color blue
     display block
     flex-basis 100px
-    flex-direction row
     height 100px
     overflow hidden
 
@@ -60,11 +59,8 @@ random(ceiling)
 
     .dog
       display flex
-      align-items center
       height 2rem
       margin 2rem
-      flex 0 1 0
-      background-color red
       font-size 2rem
 
       for dog in (1..16)
