@@ -1,11 +1,21 @@
 .container
   label(for='let-the-dogs-out') Let the dogs out?
   input.let-the-dogs-out(type='checkbox', id='let-the-dogs-out')
+  label.no-firefox Unfortunately, not in this browser 😭<br/> You'll need to use Firefox to set them free!
+
   .dogmoji 🐶
   .yard
     .kennel
-      .door
-      - for(let i = 0; i < 16; i++)
+      .kennel__front
+        .kennel__frame
+          .kennel__door
+            .dogs
+              .dog 🐶
+              .dog 🐶
+              .dog 🐶
+        .kennel__roof.kennel__roof--left
+        .kennel__roof.kennel__roof--right
+      - for(let i = 0; i < 15; i++)
         - let doge = Math.random() > 0.5 ? '🐕' : '🐩'
         .dog= doge
 
