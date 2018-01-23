@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css?family=Lato')
+
+*
+  box-sizing border-box
+  transition all .5s ease
+
+body
+  align-items      center
+  background-color #111
+  display          flex
+  font-family      'Lato', sans-serif
+  justify-content  center
+  overflow hidden
+  margin 0
+  padding 0
+
+$animation-speed = 2
+$inner-length    = 7
+$outer-length    = 7
+$base-size       = 2.5vh
+$primary-color   = white
+$secondary-color = black
+
+:root
+  --animation-speed $animation-speed
+  --base-size $base-size
+  --inner-primary-color $primary-color
+  --inner-secondary-color $secondary-color
+  --inner-length $inner-length
+  --outer-primary-color $primary-color
+  --outer-secondary-color $secondary-color
+  --outer-length $outer-length
+
+
+.circle
+  border-radius 50%
+  height        100%
+  position      absolute
+  width         100%
+
+.inner
+  height      calc(var(--inner-length) * var(--base-size))
+  left        50%
+  margin-left calc((var(--inner-length) * var(--base-size)) / -2)
+  position    absolute
+  width       calc(var(--inner-length) * var(--base-size))
+
+  for $circle in (1..$inner-length)
+    & > .circle:nth-child({$circle})
+      if ($circle % 2 < 1)
+        background-color var(--inner-primary-color)
+      else
+        background-color var(--inner-secondary-color)
+      transform scale($circle / $inner-length)
+      if ($circle == 1)
+        transform-origin center calc((var(--inner-length) * var(--base-size)) - (var(--base-size) * 0.25))
+      else
+        transform-origin bottom center
+      z-index ($inner-length + $outer-length) - ($circle - 1)
+
+.outer
+  animation rotate calc(var(--animation-speed) * 1s) infinite linear
+  position relative
+  height calc((var(--inner-length) + var(--outer-length)) * var(--base-size))
+  width calc((var(--inner-length) + var(--outer-length)) * var(--base-size))
+  for $circle in (1..$inner-length)
+    & > .circle:nth-child({$circle})
+      if ($circle % 2)
+        background-color var(--outer-primary-color)
+      else
+        background-color var(--outer-secondary-color)
+      transform scale((($circle + $inner-length) / $outer-length) / 2)
+      if ($circle == 7)
+        transform-origin var(--base-size) center
+      else
+        transform-origin top center
+      z-index $outer-length - ($circle - 1)
+
+
+@keyframes rotate
+  from
+    transform rotate(0deg)
+  to
+    transform rotate(360deg)
+
+
+// Theme
+.options
+  position absolute
+  top 0
+  left 0
+  z-index 1
+
+  &:checked
+    transform translateX(130px)
+    & ~ .options-menu
+      transform translateX(0%)
+    & ~ .options-label
+      transform translateX(130px)
+
+      span
+        opacity 0
+
+      &:after
+        transform translate(-50%, -50%) rotate(45deg)
+
+      &:before
+        transform translate(-50%, -50%) rotate(-45deg)
+
+[type=checkbox]
+  visibility hidden
+
+.options-label
+  position absolute
+  cursor pointer
+  top 0
+  left 0
+  height 50px
+  width  50px
+
+  span
+    width 65%
+    height 15%
+    background-color white
+    display block
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+
+  &:before
+  &:after
+    content ''
+    width 65%
+    height 15%
+    background-color white
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+
+  &:before
+    transform translate(-50%, -215%)
+
+  &:after
+    transform translate(-50%, 115%)
+
+.options-menu
+  color #fff
+  position absolute
+  top 0
+  left 0
+  transform translateX(-100%)
+  padding 10px
+  width 130px
+
+  &__group
+    margin-bottom 10px
+
+  [type=range]
+    width 100px
+
+  label
+    display block

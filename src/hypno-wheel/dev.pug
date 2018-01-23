@@ -1,0 +1,27 @@
+.outer
+  - for(let o = 0; o < 7; o++)
+    .circle
+  .inner
+    - for(let i = 0; i < 7; i++)
+      .circle
+
+.options-container
+  input.options(type='checkbox', id='menu-btn')
+  label.options-label(for='menu-btn')
+    span
+  .options-menu
+    .options-menu__group
+      label(for='animation-speed') Speed
+      input#animation-speed(type='range', min='0.5', max='10', step='0.5', value='2')
+    .options-menu__group
+      label(for='inner-primary-color') Color one
+      input#inner-primary-color(type='color', value='#ffffff')
+    .options-menu__group
+      label(for='inner-secondary-color') Color two
+      input#inner-secondary-color(type='color', value='#000000')
+    .options-menu__group
+      label(for='outer-primary-color') Color three
+      input#outer-primary-color(type='color', value='#ffffff')
+    .options-menu__group
+      label(for='outer-secondary-color') Color four
+      input#outer-secondary-color(type='color', value='#000000')
