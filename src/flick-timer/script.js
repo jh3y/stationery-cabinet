@@ -8,24 +8,38 @@
  * Flicks per minute is 42336000000
  */
 const flicksPerMilliSecond = 705600
+const flicksPerMinute = 705600000 * 60
 const interval = 50
+const randomQuotes = [
+  `It takes around ${(
+    4 * flicksPerMinute
+  ).toLocaleString()} flicks to boil an egg! 🥚`,
+  `It takes around ${(
+    2 * flicksPerMinute
+  ).toLocaleString()} flicks to brush your teeth! 😬`,
+  `On average, it takes anywhere from ${(
+    100 * flicksPerMilliSecond
+  ).toLocaleString()} to ${(
+    400 * flicksPerMilliSecond
+  ).toLocaleString()} flicks to blink an eye! 👀`,
+]
 const app = new Vue({
   el: '#app',
   data: {
     flickCount: 0,
-    randomQuotes: [
-      `It would take ${((705600000 * 60) * 12).toLocaleString()} flicks to boil an egg!`
-    ]
+    randomQuotes,
+    quoteIndex: Math.floor(Math.random() * randomQuotes.length),
   },
   methods: {
     resetFlickCount: function() {
       this.flickCount = 0
+      this.quoteIndex = Math.floor(Math.random() * randomQuotes.length)
     },
     updateFlickCount: function() {
       this.flickCount += interval * flicksPerMilliSecond
-    }
+    },
   },
   mounted: function() {
     setInterval(this.updateFlickCount, interval)
-  }
+  },
 })
