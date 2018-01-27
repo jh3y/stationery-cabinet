@@ -1,0 +1,9 @@
+- let circle = 0
+mixin createCircle
+  - circle++
+  - if (circle !== 10)
+    .circle(class=`circle--${circle}`)
+      .content
+        +createCircle()
+
++createCircle()

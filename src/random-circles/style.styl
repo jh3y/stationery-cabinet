@@ -1,0 +1,54 @@
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+random(ceiling, basement = 60)
+  return floor(math(1, 'random') * (ceiling - basement) + basement)
+
+randomColor()
+  return rgb(random(255), random(255), random(255))
+
+body
+  background-color #e74c3c
+  color            #fafafa
+  text-align       center
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
+
+
+.circle
+  height 90%
+  width  90%
+  border-radius 50%
+  background-color red
+  max-width 300px
+  max-height 300px
+  position absolute
+  top 0
+  left 50%
+
+for $circle in (1..9)
+  .circle--{$circle}
+    $size = random(90, 60) * 1%
+    height $size
+    width  $size
+    margin-left -($size / 2)
+    z-index $circle
+    overflow hidden
+    animation rotate (random(2, 10) * 1s) infinite linear
+    .content
+      background-color randomColor()
+      border-radius 100%
+      height 100%
+      width 100%
+      transform rotate(random(360) * 1deg)
+
+@keyframes rotate
+  from
+    transform rotate(0deg)
+  to
+    transform rotate(360deg)
