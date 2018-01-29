@@ -8,17 +8,22 @@ random(ceiling)
 
 $end-scale = 0
 $end-position = 60
+$end-rotation = 0
 $speed = 1.5
 :root
   --end-scale $end-scale
   --end-position $end-position
+  --end-rotation $end-rotation
   --speed $speed
 
 html
 body
+  align-items center
   background-color #111
+  display          flex
   font-family      'Lato', sans-serif
   height           100vh
+  justify-content  center
   margin           0
   overflow          hidden
   padding          2rem 0
@@ -56,11 +61,14 @@ label
       color rgb(random(255), random(255), random(255))
       opacity 0
       position absolute
-      transform translateY(calc(var(--end-position) * 1px)) scale(var(--end-scale))
+      transform translateY(calc(var(--end-position) * 1px)) rotate(calc(var(--end-rotation) * 1deg)) scale(var(--end-scale))
   &:nth-child(31)
     z-index 99
+
+.option
+  z-index 1
 
 @keyframes drop
   from
     opacity 1
-    transform translateY(0) scale(1)
+    transform translateY(0) rotate(0deg) scale(1)

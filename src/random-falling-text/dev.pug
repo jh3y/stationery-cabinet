@@ -1,13 +1,16 @@
 #app
   .track
-    .drop-word(v-for='circle in 30') {{value}}
+    .drop-word(v-for='circle in 30', v-html='markup')
     .drop-word(contenteditable='true', v-on:keyup='change', spellcheck='false') {{value}}
+  .option
+    label(for='end-rotation') Rotation
+    input#end-rotation(type='range', max='72000', min='0', step='500', value='0', v-on:input='updateCSS')
+  .option
+    label(for='end-position') Position
+    input#end-position(type='range', max='15000', min='4000', step='500', value='8000', v-on:input='updateCSS')
   .option
     label(for='end-scale') Scale
     input#end-scale(type='range', max='100', min='0', step='5', value='50', v-on:input='updateCSS')
   .option
     label(for='speed') Speed
     input#speed(type='range', max='500', min='10', step='10', value='150', v-on:input='updateCSS')
-  .option
-    label(for='end-position') Position
-    input#end-position(type='range', max='15000', min='4000', step='500', value='8000', v-on:input='updateCSS')
