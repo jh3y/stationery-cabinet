@@ -44,25 +44,29 @@ label
   margin 0 auto 150px auto
   position relative
   text-align center
-  width 80vw
+  max-width 80vw
 
 .drop-word
   color #fafafa
   flex 1
   font-size 2rem
+  animation drop calc(var(--speed) * 1s) infinite linear
+  position absolute
+  left 0
+  top 0
   @media (min-width 768px)
     font-size 4rem
 
   for $circle in (1..30)
     &:nth-child({$circle})
+      opacity 0
+      transform translateY(calc(var(--end-position) * 1px)) rotate(calc(var(--end-rotation) * 1deg)) scale(var(--end-scale))
       --circle: $circle
-      animation drop calc(var(--speed) * 1s) infinite linear
       animation-delay calc((0 - var(--speed) * 1/30 * (var(--circle) - 1)) * 1s)
       color rgb(random(255), random(255), random(255))
-      opacity 0
-      position absolute
-      transform translateY(calc(var(--end-position) * 1px)) rotate(calc(var(--end-rotation) * 1deg)) scale(var(--end-scale))
+
   &:nth-child(31)
+    position relative
     z-index 99
 
 .option
