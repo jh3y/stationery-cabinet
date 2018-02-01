@@ -1,0 +1,97 @@
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+  transition all .5s ease 0s
+
+body
+  background-color #e74c3c
+  color            #fafafa
+  text-align       center
+  display flex
+  align-items center
+  justify-content center
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
+
+
+
+.layer
+  display flex
+  transform rotateX(60deg) rotate(45deg)
+
+  &:hover
+    .cube
+      margin 50px
+
+.cube
+  height 100px
+  width  100px
+  background-color blue
+  margin 0
+  position relative
+
+  &:before
+    content ''
+    height 100%
+    width  100%
+    background-color green
+    display block
+    transform skewY(45deg)
+    position absolute
+    top 50%
+    left 100%
+
+  &:after
+    content ''
+    height 100%
+    width 100%
+    background-color yellow
+    display block
+    position absolute
+    transform skewX(45deg)
+    top 100%
+    left 50%
+
+
+
+
+// .cube
+//   background-color blue
+//   height 100px
+//   position relative
+//   width  100px
+//   transform rotateX(60deg) rotate(45deg)
+
+//   &:after
+//   &:before
+//     // content ''
+//     display block
+//     position absolute
+//     height 100px
+//     width 100px
+//     left 100%
+//     transform-origin center
+
+
+//   &:before
+//     content ''
+//     background-color yellow
+//     left 50%
+//     top 100%
+//     transform skewX(45deg)
+
+//   &:after
+//     content ''
+//     background-color red
+//     left 100%
+//     top 50%
+//     transform skewY(45deg)
+
+// .layer
+//   display flex
+//   flex-wrap wrap
+
