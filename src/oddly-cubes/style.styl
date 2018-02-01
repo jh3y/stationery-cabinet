@@ -17,15 +17,26 @@ body
   to
     opacity 1
 
-
-
-.layer
-  display flex
-  transform rotateX(60deg) rotate(45deg)
+.container
+  transform rotateX(45deg)
 
   &:hover
     .cube
       margin 50px
+
+.layer
+  display flex
+  transform translate(-50%, -50%) rotateX(45deg) rotate(45deg)
+  position absolute
+  &:nth-child(1)
+    top 0
+    z-index 3
+  &:nth-child(2)
+    top 100px
+    z-index 2
+  &:nth-child(3)
+    top 200px
+    z-index 1
 
 .cube
   height 100px
