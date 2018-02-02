@@ -25,11 +25,11 @@ $size     = 100px
   transform rotateX(45deg) translateY(-($size * 3))
 
   &:hover
-    .layer
+    .layer__wrapper
       &:nth-child(1)
-        transform translate(-50%,-(2 * $size)) rotateX(45deg) rotate(45deg)
+        transform translate(-50%,-(2 * $size))
       &:nth-child(3)
-        transform translate(-50%,(2 * $size)) rotateX(45deg) rotate(45deg)
+        transform translate(-50%,(2 * $size))
 
     .column:nth-child(1)
       transform translateX(-($movement))
@@ -45,16 +45,19 @@ $size     = 100px
 
 .layer
   display flex
-  position absolute
-  transform translate(-50%, 0) rotateX(45deg) rotate(45deg)
-  &:nth-child(1)
-    z-index 3
-    transform translate(-50%,-($size)) rotateX(45deg) rotate(45deg)
-  &:nth-child(2)
-    z-index 2
-  &:nth-child(3)
-    z-index 1
-    transform translate(-50%, $size) rotateX(45deg) rotate(45deg)
+  transform rotateX(45deg) rotate(45deg)
+
+  &__wrapper
+    position absolute
+    &:nth-child(1)
+      z-index 3
+      transform translate(-50%,-($size))
+    &:nth-child(2)
+      z-index 2
+      transform translate(-50%, 0)
+    &:nth-child(3)
+      z-index 1
+      transform translate(-50%, $size)
 
 .cube
   height $size
