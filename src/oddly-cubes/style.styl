@@ -1,47 +1,25 @@
 *
   box-sizing border-box
-  animation  fadeIn .5s
-  transition all .5s ease 0s
 
 body
-  background-color #e74c3c
+  align-items      center
+  background-color #111
   color            #fafafa
-  text-align       center
-  display flex
-  align-items center
-  justify-content center
+  display          flex
+  height           100vh
+  justify-content  center
+  overflow          hidden
+  width            100vw
 
-@keyframes fadeIn
-  from
-    opacity 0
-  to
-    opacity 1
+$movement  = 100%
+$size      = 5vh
+$primary   = #68c383
+$secondary = #f03434
+$tertiary  = #913d88
 
-
-$movement = 100%
-$size     = 100px
 .container
   position relative
   transform rotateX(45deg) translateY(-($size * 3))
-
-  &:hover
-    .layer__wrapper
-      &:nth-child(1)
-        transform translate(-50%,-(2 * $size))
-      &:nth-child(3)
-        transform translate(-50%,(2 * $size))
-
-    .column:nth-child(1)
-      transform translateX(-($movement))
-    .column:nth-child(3)
-      transform translateX($movement)
-
-    .column
-      .cube:nth-child(1)
-        transform translateY(-($movement))
-      .cube:nth-child(3)
-        transform translateY($movement)
-
 
 .layer
   display flex
@@ -49,41 +27,33 @@ $size     = 100px
 
   &__wrapper
     position absolute
-    &:nth-child(1)
-      z-index 3
-      transform translate(-50%,-($size))
-    &:nth-child(2)
-      z-index 2
-      transform translate(-50%, 0)
-    &:nth-child(3)
-      z-index 1
-      transform translate(-50%, $size)
+    for $child in (1..3)
+      &:nth-child({$child})
+        transform translate(-50%, (-($size) + (($child - 1) * $size)))
+        z-index 3 - ($child - 1)
 
 .cube
+  background-color $primary
   height $size
-  width  $size
-  background-color blue
-  margin 0
   position relative
+  width  $size
 
   &:before
-    content ''
-    height 100%
-    width  100%
-    background-color green
-    display block
-    transform skewY(45deg)
-    position absolute
-    top 50%
-    left 100%
-
   &:after
     content ''
-    height 100%
-    width 100%
-    background-color yellow
     display block
+    height 105%
     position absolute
-    transform skewX(45deg)
-    top 100%
+    width  105%
+
+  &:before
+    background-color $secondary
+    left 100%
+    top 50%
+    transform skewY(45deg)
+
+  &:after
+    background-color $tertiary
     left 50%
+    top 100%
+    transform skewX(45deg)
