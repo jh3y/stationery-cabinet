@@ -17,30 +17,48 @@ body
   to
     opacity 1
 
+
+$movement = 100%
+$size     = 100px
 .container
-  transform rotateX(45deg)
+  position relative
+  transform rotateX(45deg) translateY(-($size * 3))
 
   &:hover
-    .cube
-      margin 50px
+    .layer
+      &:nth-child(1)
+        transform translate(-50%,-(2 * $size)) rotateX(45deg) rotate(45deg)
+      &:nth-child(3)
+        transform translate(-50%,(2 * $size)) rotateX(45deg) rotate(45deg)
+
+    .column:nth-child(1)
+      transform translateX(-($movement))
+    .column:nth-child(3)
+      transform translateX($movement)
+
+    .column
+      .cube:nth-child(1)
+        transform translateY(-($movement))
+      .cube:nth-child(3)
+        transform translateY($movement)
+
 
 .layer
   display flex
-  transform translate(-50%, -50%) rotateX(45deg) rotate(45deg)
   position absolute
+  transform translate(-50%, 0) rotateX(45deg) rotate(45deg)
   &:nth-child(1)
-    top 0
     z-index 3
+    transform translate(-50%,-($size)) rotateX(45deg) rotate(45deg)
   &:nth-child(2)
-    top 100px
     z-index 2
   &:nth-child(3)
-    top 200px
     z-index 1
+    transform translate(-50%, $size) rotateX(45deg) rotate(45deg)
 
 .cube
-  height 100px
-  width  100px
+  height $size
+  width  $size
   background-color blue
   margin 0
   position relative
@@ -66,43 +84,3 @@ body
     transform skewX(45deg)
     top 100%
     left 50%
-
-
-
-
-// .cube
-//   background-color blue
-//   height 100px
-//   position relative
-//   width  100px
-//   transform rotateX(60deg) rotate(45deg)
-
-//   &:after
-//   &:before
-//     // content ''
-//     display block
-//     position absolute
-//     height 100px
-//     width 100px
-//     left 100%
-//     transform-origin center
-
-
-//   &:before
-//     content ''
-//     background-color yellow
-//     left 50%
-//     top 100%
-//     transform skewX(45deg)
-
-//   &:after
-//     content ''
-//     background-color red
-//     left 100%
-//     top 50%
-//     transform skewY(45deg)
-
-// .layer
-//   display flex
-//   flex-wrap wrap
-
