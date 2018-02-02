@@ -1,0 +1,57 @@
+*
+  box-sizing border-box
+
+body
+  text-align center
+  display flex
+  align-items center
+  justify-content center
+  flex-direction column
+  color #fff
+  background-color #111
+
+
+#app
+  display flex
+
+.logs
+  background-color #fafafa
+  border-radius 5px
+  color #333
+  height 200px
+  width  220px
+  overflow auto
+  text-align left
+  margin 10px
+  padding 10px
+
+
+.actions
+  display flex
+  flex-direction column
+  align-items center
+  justify-content center
+
+
+$debounceColor = #663399
+$throttleColor = #19b5fe
+button
+  &.debounce
+    background-color $debounceColor
+    &:active
+      background-color darken($debounceColor, 10)
+  &.throttle
+    background-color $throttleColor
+    &:active
+      background-color darken($throttleColor, 10)
+  border none
+  color #fff
+  padding 6px 12px
+  width 130px
+  margin 0 0 5px 0
+
+.log__type
+  margin 0 0 0 4px
+  color $throttleColor
+  &--debounce
+    color $debounceColor

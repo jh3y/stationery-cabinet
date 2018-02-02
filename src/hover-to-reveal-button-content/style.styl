@@ -1,0 +1,35 @@
+.scrollr {
+  overflow hidden
+  text-overflow ellipsis
+  white-space nowrap
+  display block
+  &:hover {
+    .scrollr__inner {
+      display block
+      transform translateX(-100%)
+      transition transform 5s
+    }
+  }
+  &__inner {
+    display inline
+  }
+}
+
+*
+  box-sizing border-box
+
+body
+  text-align center
+
+h2
+  margin 20px auto
+  background-color #e74c3c
+  color #fafafa
+  padding 14px 20px
+  width 200px
+
+p
+  max-width 500px
+  margin-left  auto
+  margin-right auto
+

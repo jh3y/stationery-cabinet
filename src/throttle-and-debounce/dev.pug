@@ -1,0 +1,13 @@
+h1 Throttling and debouncing demo
+#app
+  .actions
+    button.debounce(v-on:click='debounceCall') Debounce
+    button.throttle(v-on:click='throttleCall') Throttle
+  .info
+    h2 {{time}}
+    .logs
+      .log(v-if='!logs.length', style="text-align: center") There are currently no invocation logs
+      .log(v-for="log in logs")
+        span.log__time {{log.time}}:
+        span.log__type(v-bind:class="{'log__type--debounce': log.type === 'DEBOUNCE'}") {{log.type}}
+

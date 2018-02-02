@@ -1,0 +1,31 @@
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+$bg = #000
+$fg = rgb(153, 153, 153)
+$cc = #fff
+$lw = 20%
+$bgSize = 100px
+
+body
+  background linear-gradient(90deg, $fg, $fg $lw, transparent $lw, transparent 100%),
+    linear-gradient(180deg, $fg, $fg $lw, $bg $lw, $bg 100%)
+  background-size $bgSize $bgSize
+
+  &:after
+    content ''
+    position fixed
+    top 0
+    right 0
+    bottom 0
+    left 0
+    background radial-gradient(75% 75% at 20px 20px, $cc $lw, transparent $lw)
+    background-size $bgSize $bgSize
+    background-position -10px -10px
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1

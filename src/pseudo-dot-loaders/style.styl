@@ -1,0 +1,104 @@
+$scaleRadius   = 20px
+$size          = 10px
+$numberOfDots  = 7
+
+/* Set primary */
+$dotPrimary           = #fafafa
+$dotPrimaryShadeOne   = darken($dotPrimary, 33%)
+$dotPrimaryShadeTwo   = darken($dotPrimary, 66%)
+$dotPrimaryShadeThree = darken($dotPrimary, 99%)
+
+$dotColors     = $dotPrimary $dotPrimaryShadeThree $dotPrimaryShadeThree $dotPrimaryShadeThree $dotPrimaryShadeThree $dotPrimaryShadeTwo $dotPrimaryShadeOne
+
+$dotSecondary           = #e74c3c
+$dotSecondaryShadeOne   = darken($dotSecondary, 33%)
+$dotSecondaryShadeTwo   = darken($dotSecondary, 66%)
+$dotSecondaryShadeThree = darken($dotSecondary, 99%)
+
+$dotColorsTwo     = $dotSecondary $dotSecondaryShadeThree $dotSecondaryShadeThree $dotSecondaryShadeThree $dotSecondaryShadeThree $dotSecondaryShadeTwo $dotSecondaryShadeOne
+
+$dotTertiary           = #2ecc71
+$dotTertiaryShadeOne   = darken($dotTertiary, 33%)
+$dotTertiaryShadeTwo   = darken($dotTertiary, 66%)
+$dotTertiaryShadeThree = darken($dotTertiary, 99%)
+
+$dotColorsThree     = $dotTertiary $dotTertiaryShadeThree $dotTertiaryShadeThree $dotTertiaryShadeThree $dotTertiaryShadeThree $dotTertiaryShadeTwo $dotTertiaryShadeOne
+
+
+getPosition(angle)
+  xPos = $scaleRadius * cos(angle * (PI / 180))
+  yPos = $scaleRadius * sin(angle * (PI / 180))
+  (xPos yPos)
+
+genShadow($pos, $colorSet)
+  $shadows = ()
+  for $dot in (1..$numberOfDots)
+    $angle       = (360 / $numberOfDots) * ($dot - 1)
+    $xy          = getPosition($angle)
+    $dots        = $numberOfDots
+    $truePos     = $dot + $pos
+    $colorIndex  = $truePos % $dots
+    $shadowProps = $xy 0 0 $colorSet[$colorIndex]
+    push($shadows, join(' ', $shadowProps))
+  (unquote(join(',', $shadows)))
+
+@keyframes load
+  for $per in (0..$numberOfDots)
+    {($per * (100 / $numberOfDots)) * 1%}
+      box-shadow genShadow($per, $dotColors)
+
+@keyframes loadTwo
+  for $per in (0..$numberOfDots)
+    {($per * (100 / $numberOfDots)) * 1%}
+      box-shadow genShadow($per, $dotColorsTwo)
+
+@keyframes loadThree
+  for $per in (0..$numberOfDots)
+    {($per * (100 / $numberOfDots)) * 1%}
+      box-shadow genShadow($per, $dotColorsThree)
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:700');
+
+h1
+  color      #fafafa
+  text-align center
+
+body
+  font-family    'Montserrat', sans-serif
+  background      #6c7a89
+  text-align      center
+
+.loaders
+  height 100px
+  position absolute
+  top 50%
+  margin-top -50px
+  left 50%
+  margin-left -150px
+
+.loader
+  position relative
+  height   100px
+  width    100px
+  display  inline-block
+  float    left
+  &:after
+    content       ''
+    position      absolute
+    border-radius 100%
+    top           50%
+    left          50%
+    height        $size
+    width         $size
+    margin-top    -($size / 2)
+    margin-left   -($size / 2)
+    background    transparent
+  &:nth-of-type(1)
+    &:after
+      animation     load 1s infinite linear reverse
+  &:nth-of-type(2)
+    &:after
+      animation     loadTwo 1s infinite linear reverse
+  &:nth-of-type(3)
+    &:after
+      animation     loadThree 1s infinite linear reverse

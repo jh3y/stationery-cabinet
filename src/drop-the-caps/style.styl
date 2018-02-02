@@ -1,0 +1,104 @@
+*
+  box-sizing border-box
+
+@import url(https://fonts.googleapis.com/css?family=Lato);
+@import url(https://fonts.googleapis.com/css?family=Yesteryear);
+
+body
+  background #111
+  font-family 'Lato', sans-serif
+  overflow hidden
+
+h1
+  text-align center
+  color #fafafa
+
+.drop-the-caps
+  width            400px
+  margin           20px auto
+  text-align       justify
+  background-color #fafafa
+  padding          20px
+  border-radius    15px 0 15px 0
+  box-shadow       -2px 2px 5px 5px #333
+  position         relative
+
+  &:after
+  &:before
+    content          attr(data-cap)
+    height           48px
+    width            48px
+    font-size        44px
+    font-family      'yesteryear'
+    font-weight      bold
+    background-color black
+    color            red
+    position         absolute
+    top              20px
+    left             20px
+    border-radius    4px
+    background-size  1000px 100px
+    background-position 0 0
+    background       linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet, red)
+    text-align       center
+    color            #fafafa
+
+  &:before
+    visibility       hidden
+    animation        spinin 2s
+
+  &:after
+    visibility       hidden
+    z-index          2
+    animation        glimmer 4s infinite linear
+    animation-delay  2s
+  p
+    margin 0
+  p::first-letter
+    font-size      1px
+    float          left
+    display        inline-block
+    background     transparent
+    font-weight    bold
+    color          transparent
+    margin-right   54px
+    margin-top     44px
+
+
+@keyframes glimmer
+  0%
+    visibility visible
+    background-position 0 0
+  100%
+    background-position -1000px 0px
+
+@keyframes spinin
+  0%
+    visibility visible
+    transform translateY(-400px) rotate(30deg)
+  20%
+    transform translateY(-50px) rotate(30deg)
+    transform-origin top left
+  30%
+    transform-origin top left
+    transform translateY(-50px) rotate(45deg)
+  40%
+    transform-origin top left
+    transform translateY(-50px) rotate(30deg)
+  50%
+    transform-origin top left
+    transform translateY(-50px) rotate(45deg)
+  60%
+    transform-origin top left
+    transform translateY(-50px) rotate(30deg)
+  70%
+    transform-origin top left
+    transform translateY(-50px) rotate(45deg)
+  80%
+    transform-origin top left
+    transform translateY(-50px) rotate(30deg)
+  90%
+    transform-origin top left
+    transform translateY(-50px) rotate(45deg)
+  100%
+    visibility visible

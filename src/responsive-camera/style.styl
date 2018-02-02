@@ -1,0 +1,89 @@
+$breakpoint = 798px
+
+.tx--red
+  color #e74c3c
+
+.title
+  color white
+  position absolute
+  width 40px
+  padding 0 20px
+  font-size 1.5em
+  @media(min-width: $breakpoint)
+    padding 0 50px
+    font-size 2em
+
+body
+  background-color #111
+  padding 50px 0
+
+#shutter
+  cursor pointer
+  &:hover
+    circle:last-of-type
+      fill darken(#ff0000, 30%) !important
+
+.booth
+  &--shooting
+    .camera__flash
+      animation flash .35s
+    .photo
+      animation reveal 3s
+
+.camera__flash
+  background-color #fff
+  position absolute
+  top 90px
+  left 50%
+  width 100vw
+  height 100vw
+  margin-top -50vw
+  margin-left -50vw
+  transform scale(0)
+  border-radius 100%
+  opacity .8
+
+ @keyframes flash
+   from
+     transform scale(0)
+   to
+     transform scale(3)
+
+ @keyframes reveal
+   0
+     transform translateY(-100%)
+   35%
+     transform translateY(-100%)
+   70%
+     transform translateY(0)
+     opacity 1
+   100%
+     opacity 0
+     transform translateY(100%)
+
+.camera
+  height 200px
+  width 200px
+  margin 0 auto
+
+  @media(min-width: $breakpoint)
+    height 300px
+    width 300px
+
+.photo
+  transform translateY(-100%)
+
+.photo-wrapper
+  overflow hidden
+  margin 0 auto
+  position absolute
+  left 50%
+  height 160px
+  width 160px
+  top 194px
+  margin-left -80px
+  @media(min-width: $breakpoint)
+    top 265px
+    height 230px
+    width 230px
+    margin-left -115px

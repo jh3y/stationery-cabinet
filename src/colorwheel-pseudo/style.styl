@@ -1,0 +1,47 @@
+$scaleRadius   = 20px
+$size          = 12px
+
+$numberOfDots  = 5
+$dotColors     = #f22613 #19b5fe #9a12b3 #26a65b #f5ab35
+
+
+getPosition(angle)
+  xPos = $scaleRadius * cos(angle * (PI / 180))
+  yPos = $scaleRadius * sin(angle * (PI / 180))
+  (xPos yPos)
+
+genShadow($pos)
+  $shadows = ()
+  for $dot in (1..$numberOfDots)
+    $angle       = (360 / $numberOfDots) * ($dot - 1)
+    $xy          = getPosition($angle)
+    $dots        = $numberOfDots
+    $truePos     = $dot + $pos
+    $colorIndex  = $truePos % $dots
+    $shadowProps = $xy 0 0 $dotColors[$colorIndex]
+    push($shadows, join(' ', $shadowProps))
+  (unquote(join(',', $shadows)))
+
+@keyframes load
+  for $per in (0..$numberOfDots)
+    {($per * (100 / $numberOfDots)) * 1%}
+      color $dotColors[0]
+      box-shadow genShadow($per)
+      if $per == $numberOfDots
+        transform rotate(360deg)
+
+
+body
+  background #111
+  &:after
+    content       ''
+    position      absolute
+    border-radius 100%
+    top           50%
+    left          50%
+    height        $size
+    width         $size
+    margin-top    -($size / 2)
+    margin-left   -($size / 2)
+    background    transparent
+    animation     load 2s infinite linear

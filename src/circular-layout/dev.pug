@@ -1,0 +1,11 @@
+- var n = 0
+  .layout.layout--active
+    while n < 5
+      .layout-module(title="Click me!")
+        .layout-module__close(title="Close section") &times;
+        .layout-module__content
+          .content
+            h1 Some content
+      - n++
+a.follow-me(href="https://codepen.io/jh3y")
+  i.fa.fa-codepen

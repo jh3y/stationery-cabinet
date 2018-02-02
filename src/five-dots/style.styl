@@ -1,0 +1,250 @@
+/**
+  * Variables for sizing, colors etc.
+*/
+$children = 5
+$dotSize  = 20px
+/**
+  * Mixin for dot styles
+*/
+dot()
+  div
+    background-color white
+    border-radius    100%
+    height           $dotSize
+    left             50%
+    position         absolute
+    margin-left      -($dotSize / 2)
+    margin-top       -($dotSize / 2)
+    top              50%
+    width            $dotSize
+    {block}
+
+/**
+  * Mixin for generating loader styles for a given named loader
+*/
+
+spinMap = {
+  outFromBehind: 'out-from-behind',
+  mexicanWave: 'mexican-wave',
+  fanOut: 'fan-out',
+  scaleOut: 'scale-out',
+  dip: 'dip',
+  fadeInAndOut: 'fade-in-and-out',
+  fadeInAndOut2: 'fade-in-and-out-2',
+  inAndOut: 'in-and-out',
+  swap: 'swap',
+  dive: 'dive',
+}
+
+invoke(num, id, fn)
+  fn(num, id)
+
+.loader
+  animation rotate 5s infinite linear
+  dot()
+
+genLoad(name)
+  .loader
+    &--{spinMap[name]}
+      for $child in (1..$children)
+        div:nth-of-type({$child})
+          invoke($child, spinMap[name] + $child, lookup(name))
+      { block }
+
+
+
+@keyframes fadeInAndOut
+  0%, 25%, 100%
+    opacity 0
+  30%, 70%
+    opacity 1
+
+@keyframes fadeInAndOut2
+  0%, 25%, 75%, 100%
+    opacity 0
+  30%, 70%
+    opacity 1
+
+fadeInAndOut($num, $id)
+  opacity 0
+  transform rotate((360 / $children * $num) * 1deg) translateY(150%)
+  animation fadeInAndOut 3s ($num * .2s) infinite
+
+fadeInAndOut2($num, $id)
+  opacity 0
+  transform rotate((360 / $children * $num) * 1deg) translateY(150%)
+  animation fadeInAndOut2 3s ($num * .2s) infinite
+
+genLoad('fadeInAndOut')
+genLoad('fadeInAndOut2')
+
+
+/**
+  * In and out style loader. Items go in and out from the center.
+*/
+inAndOut($num, $id)
+  @keyframes $id
+    0%, 10%, 90%, 100%
+      transform rotate((360 / $children * $num) * 1deg) translateY(0)
+    14%, 86%
+      transform rotate((360 / $children * $num) * 1deg) translateY(150%)
+
+  animation unquote($id) 4s ($num * .2s) infinite
+
+genLoad('inAndOut')
+/**
+  * Out from behind is the same as in and out style but we have a shield
+*/
+@keyframes rotateShield
+  0%
+    transform rotate(0deg)
+  45%
+    transform rotate(80deg)
+  50%
+    transform rotate(240deg)
+  100%
+    transform rotate(360deg)
+
+outFromBehind($num, $id)
+  @keyframes $id
+    0%, 15%, 85%, 100%
+      transform rotate((360 / $children * $num) * 1deg) translateY(0) scale(0)
+    20%, 80%
+      transform rotate((360 / $children * $num) * 1deg) translateY(175%) scale(1)
+
+  animation unquote($id) 4s ($num * .2s) infinite
+
++genLoad('outFromBehind')
+  animation rotateShield 4s 1s infinite linear
+
+/**
+  * Mexican wave loader
+*/
+mexicanWave($num, $id)
+  @keyframes $id
+    0%, 45%, 55%, 100%
+      transform rotate((360 / $children * $num) * 1deg) translateY(150%) scale(1)
+    50%
+      transform rotate((360 / $children * $num) * 1deg) translateY(150%) scale(1.5)
+  transform rotate((360 / $children * $num) * 1deg) translateY(150%) scale(1)
+  animation unquote($id) 2s ($num * .2s) infinite
+
+genLoad('mexicanWave')
+
+
+/**
+  * Swap out
+*/
+swap($num, $id)
+  @keyframes $id
+    0%, 44%, 58%, 100%
+      transform rotate((360 / $children * $num) * 1deg) translateY(150%)
+    48%, 54%
+      transform rotate((360 / $children * $num) * 1deg)
+  transform rotate((360 / $children * $num) * 1deg) translateY(150%)
+  animation unquote($id) 4s ($num * .2s) infinite
+
+genLoad('swap')
+/**
+  * Dip
+*/
+dip($num, $id)
+  @keyframes $id
+    50%
+      transform rotate((360 / $children * $num) * 1deg) scale(0.5)
+    0%, 40%, 60%, 100%
+      transform rotate((360 / $children * $num) * 1deg) translateY(150%)
+  transform rotate((360 / $children * $num) * 1deg) translateY(150%)
+  animation unquote($id) 3s ($num * .3s) infinite
+
+genLoad('dip')
+
+/**
+  * Scale in and out
+*/
+scaleOut($num, $id)
+  @keyframes $id
+    35%, 65%
+      transform scale(0) rotate((360 / $children * $num) * 1deg) translateY(0%)
+    0%, 25%, 75%, 100%
+      transform scale(1) rotate((360 / $children * $num) * 1deg) translateY(175%)
+
+  transform rotate((360 / $children * $num) * 1deg) translateY(175%)
+  animation unquote($id) 4s ($num * .2s) infinite
+
+genLoad('scaleOut')
+
+/**
+  * Fanning out effect so dots fan out and then fan back in continuosly
+*/
+fanOut($num, $id)
+  @keyframes $id
+    0%, 10%
+      transform rotate(0deg) translateY(0) scale(0)
+    20%, 80%
+      transform rotate((360 / $children * $num) * 1deg) translateY(150%) scale(1)
+    90%, 100%
+      transform rotate(360deg) translateY(0) scale(0)
+
+  animation unquote($id) 4s ($num * .1s) infinite
+
+genLoad('fanOut')
+
+
+/**
+  * Dive style, out then jump and in
+*/
+dive($num, $id)
+  @keyframes $id
+    0%, 28%, 80%, 100%
+      transform rotate((360 / $children * $num) * 1deg) scale(0) translateY(0)
+    30%, 70%
+      transform rotate((360 / $children * $num) * 1deg) scale(1) translateY(150%)
+    72%
+      transform rotate((360 / $children * $num) * 1deg) scale(1) translateY(250%)
+
+  animation unquote($id) 5s ($num * .4s) infinite
+
+genLoad('dive')
+
+/**
+  * Theming
+*/
+*
+  box-sizing border-box
+
+h1
+  color #fff
+  text-align center
+
+body
+  background-color #111
+  display flex
+  flex-wrap wrap
+  align-items center
+  justify-content center
+
+.title-container
+  width 200px
+
+.container
+  border        4px solid silver
+  border-radius 6px
+  height        200px
+  margin        10px
+  position      relative
+  width         200px
+
+.loader
+.loader__wrapper
+  height      20px
+  left        50%
+  margin-left -10px
+  margin-top  -10px
+  position    absolute
+  top         50%
+  width       20px
+
+@keyframes rotate
+  to
+    transform rotate(360deg)

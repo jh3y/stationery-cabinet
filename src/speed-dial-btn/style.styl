@@ -1,0 +1,106 @@
+body {
+ text-align: center;
+}
+.mdl-button--fab_flinger-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.mdl-button--fab_flinger-container.is-showing-options > button i {
+  -webkit-transition: -webkit-transform 0.1s linear;
+  transition: transform 0.1s linear;
+  -webkit-transform: translate(-12px, -12px) rotate(45deg);
+  -ms-transform: translate(-12px, -12px) rotate(45deg);
+  transform: translate(-12px, -12px) rotate(45deg);
+}
+
+.mdl-button--fab_flinger-container.is-showing-options .mdl-button--fab_flinger-options {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+  -webkit-flex-direction: column-reverse;
+  -ms-flex-direction: column-reverse;
+  flex-direction: column-reverse;
+}
+
+.mdl-button--fab_flinger-container.is-showing-options .mdl-button--fab_flinger-options button {
+  display: block;
+  -webkit-animation-name: enter;
+  animation-name: enter;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-duration: 0.1s;
+  animation-duration: 0.1s;
+  -webkit-transform-origin: bottom center;
+  -ms-transform-origin: bottom center;
+  transform-origin: bottom center;
+}
+
+.mdl-button--fab_flinger-container.is-showing-options .mdl-button--fab_flinger-options button:nth-of-type(1) {
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
+
+.mdl-button--fab_flinger-container.is-showing-options .mdl-button--fab_flinger-options button:nth-of-type(2) {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+
+.mdl-button--fab_flinger-container.is-showing-options .mdl-button--fab_flinger-options button:nth-of-type(3) {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+
+.mdl-button--fab_flinger-container.is-showing-options .mdl-button--fab_flinger-options button:nth-of-type(4) {
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+
+.mdl-button--fab_flinger-container.is-showing-options .mdl-button--fab_flinger-options button:nth-of-type(5) {
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+}
+
+.mdl-button--fab_flinger-container.is-showing-options .mdl-button--fab_flinger-options button:nth-of-type(6) {
+  -webkit-animation-delay: 0.6s;
+  animation-delay: 0.6s;
+}
+
+.mdl-button--fab_flinger-container .mdl-button--fab_flinger-options {
+  position: absolute;
+  bottom: 100%;
+  margin-bottom: 10px;
+}
+
+.mdl-button--fab_flinger-container .mdl-button--fab_flinger-options button {
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+  display: none;
+}
+
+@-webkit-keyframes enter {
+  from {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+}
+
+@keyframes enter {
+  from {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+}

@@ -1,0 +1,182 @@
+$moduleSize = 10vh
+$noOfModules = 5
+$layoutRadius = 200%
+$swayDuration = 10s
+$moduleTransitionDuration = .25s
+$moduleAnimDuration = .25s
+$contentFadeDuration = .25s
+$colors = #f22613 #f9690e #e9d460 #00b16a #be90d4 #8e44ad
+
+/**
+* Functions
+*/
+getPosition(angle)
+  xPos = $layoutRadius * cos(angle * (PI / 180))
+  yPos = $layoutRadius * sin(angle * (PI / 180))
+  (xPos yPos)
+
+
+.layout
+  position fixed
+  top      0
+  right    0
+  bottom   0
+  left     0
+  overflow hidden
+  &--active
+    animation sway $swayDuration infinite linear
+
+@keyframes sway
+  0%
+    transform rotate(0deg)
+  50%
+    transform rotate(5deg)
+  100%
+    transform rotate(0deg)
+
+.layout-module
+  height        $moduleSize
+  width         $moduleSize
+  display       inline-block
+  position      absolute
+  top           50%
+  left          50%
+  border-radius 100%
+  transform     translate(0, 0)
+  margin-left   -($moduleSize / 2)
+  margin-top    -($moduleSize / 2)
+  text-align    center
+  font-size     45px
+  transition    all $moduleTransitionDuration
+  overflow      hidden
+
+  &:not(&--active)
+    cursor      pointer
+
+    &:hover
+      box-shadow 0px 0px 15px 5px white
+
+  &--active
+    box-shadow 0px 0px 15px 5px white
+    transform  translate(0, 0)
+    z-index    1
+    animation  open $moduleAnimDuration $moduleTransitionDuration normal ease-in forwards
+
+  &--closing
+    animation close $moduleAnimDuration
+
+  &__content
+    height     100vh
+    width      100vw
+    opacity    0
+    visibility hidden
+    transition all $contentFadeDuration ease 0s
+
+    &--active
+      opacity    1
+      visibility visible
+
+  &__close
+    z-index     2
+    position    absolute
+    top         5px
+    right       5px
+    height      40px
+    width       40px
+    font-size   50px
+    line-height 36px
+    transition  all $contentFadeDuration ease 0s
+    opacity     0
+    visibility  hidden
+    color       white
+    cursor      pointer
+
+    &--active
+      opacity    1
+      visibility visible
+
+  &:not(&--active)
+    for num in 1..$noOfModules
+      $angle = (360 / $noOfModules) * num
+      $pos   = getPosition($angle)
+      &:nth-of-type({num})
+        transform translate($pos[0], $pos[1])
+
+@keyframes open
+  to
+    border-radius 0
+    top           0
+    left          0
+    height        100vh
+    width         100vw
+    margin-left   0
+    margin-top    0
+
+@keyframes close
+  from
+    border-radius 0
+    top           0
+    left          0
+    height        100vh
+    width         100vw
+    margin-left   0
+    margin-top    0
+  to
+    border-radius 100%
+    top           50%
+    left          50%
+    height        $moduleSize
+    width         $moduleSize
+    margin-left   -($moduleSize / 2)
+    margin-top    -($moduleSize / 2)
+
+
+/**
+  * Theme
+*/
+*
+  box-sizing border-box
+
+body
+  padding    0
+  margin     0
+  background #111
+
+.layout-module
+  for num in 1..$noOfModules
+    &:nth-of-type({num})
+      $color = $colors[num - 1]
+      background-color    $color
+      background-image    url('https://unsplash.it/' + (num * 3) + '00?random')
+      background-size     cover
+      background-position center
+  &__content
+    display         flex
+    align-items     center
+    justify-content center
+
+    h1
+      background-color white
+      color            #000
+      font-size        24px
+      text-transform   uppercase
+      padding          10px
+      border           4px solid silver
+      border-radius    20px
+
+.follow-me
+  color white
+  text-decoration none
+  text-transform uppercase
+  opacity .5
+  position absolute
+  right 6px
+  bottom 6px
+  font-size 26px
+  padding 6px
+  text-align center
+  transition all .5s ease
+  &:hover
+    opacity 1
+    background white
+    color #111

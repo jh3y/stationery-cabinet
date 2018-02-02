@@ -1,0 +1,17 @@
+h1 ~90% CSS hover text scroll
+p.
+  Inspired by what I saw <a href="https://codepen.io/OfficialAntarctica/pen/eZQKEr?editors=0010" target="_blank">here</a>, I wanted to investigate how far it was possible to get with a pure CSS solution.
+p.
+  The trick to getting the CSS to do the majority of heavy lifting is by looping through our "inner" elements
+  at start up and declaring a width for them so that all we need do is use `translateX(-100%)` on hover. To use the translate method, the "inner" elements just require a set width for their content. This saves us from having to write event driven animation code in our JavaScript.
+
+h2.scrollr
+  .scrollr__inner.
+    Hover me so I can purrrrrrrrrrrrrrrrrrrrrrrrrrrrr away
+
+h2.scrollr
+  .scrollr__inner.
+    Some really long winded text about cats flying into space
+h2.scrollr
+  .scrollr__inner.
+    Some more really long text that really should belong in a &lt;p&gt; tag
