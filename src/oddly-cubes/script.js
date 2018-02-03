@@ -1,13 +1,13 @@
-const grabElements = document.querySelectorAll
-const duration = .5
-const delay = 0.15
-// NOTE:: Using viewport units in CSS for cube size
-const vh = 0.01 * window.innerHeight
 const CLASSES = {
   COLUMN: 'column',
   CUBE: 'cube',
   LAYER: 'layer__wrapper',
 }
+
+const cubeSize = parseFloat(getComputedStyle(document.querySelector(`.${CLASSES.CUBE}`)).height, 10)
+const duration = .5
+const delay = 0.15
+
 
 /**
  * Handle column animations
@@ -86,13 +86,13 @@ const layerTl = new TimelineLite()
 
 const moveFirstLayer = TweenLite.to(firstLayer, duration, {
   x: '-50%',
-  y: `-${10 * vh}`,
+  y: `-${2 * cubeSize}px`,
   delay,
 })
 
 const moveLastLayer = TweenLite.to(lastLayer, duration, {
   x: '-50%',
-  y: `${10 * vh}`,
+  y: `${2 * cubeSize}px`,
   delay,
 })
 
@@ -103,13 +103,13 @@ const layerTlR = new TimelineLite()
 
 layerTlR.add(TweenLite.to(firstLayer, duration, {
   x: '-50%',
-  y: `-${5 * vh}`,
+  y: `-${cubeSize}px`,
   delay,
 }))
 
 layerTlR.add(TweenLite.to(lastLayer, duration, {
   x: '-50%',
-  y: `${5 * vh}`,
+  y: `${cubeSize}px`,
   delay,
 }), 0)
 

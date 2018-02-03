@@ -13,13 +13,16 @@ body
 
 $movement  = 100%
 $size      = 5vh
-$primary   = #68c383
-$secondary = #f03434
-$tertiary  = #913d88
+$primary   = #d91e18
+$secondary = #19b5fe
+$tertiary  = #f39c12
 
 .container
   position relative
   transform rotateX(45deg) translateY(-($size * 3))
+  @media(min-width 768px)
+    $size = 10vh
+    transform rotateX(45deg) translateY(-($size * 3))
 
 .layer
   display flex
@@ -31,29 +34,37 @@ $tertiary  = #913d88
       &:nth-child({$child})
         transform translate(-50%, (-($size) + (($child - 1) * $size)))
         z-index 3 - ($child - 1)
+        @media(min-width: 768px)
+          $size = 10vh
+          transform translate(-50%, (-($size) + (($child - 1) * $size)))
 
 .cube
   background-color $primary
   height $size
   position relative
   width  $size
+  @media(min-width: 768px)
+    $size = 10vh
+    height $size
+    width $size
 
   &:before
   &:after
     content ''
     display block
-    height 105%
+    height 100%
     position absolute
-    width  105%
+    width  100%
 
   &:before
     background-color $secondary
     left 100%
     top 50%
-    transform skewY(45deg)
+    max-width 100px
+    transform skewY(45deg) scale(1.02)
 
   &:after
     background-color $tertiary
     left 50%
     top 100%
-    transform skewX(45deg)
+    transform skewX(45deg) scale(1.02)
