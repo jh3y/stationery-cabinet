@@ -38,11 +38,14 @@ $tertiary  = #f39c12
           $size = 10vh
           transform translate(-50%, (-($size) + (($child - 1) * $size)))
 
+$scale = 1.02
 .cube
   background-color $primary
   height $size
   position relative
+  // transform scale($scale)
   width  $size
+
   @media(min-width: 768px)
     $size = 10vh
     height $size
@@ -60,11 +63,10 @@ $tertiary  = #f39c12
     background-color $secondary
     left 100%
     top 50%
-    max-width 100px
-    transform skewY(45deg) scale(1.02)
+    transform skewY(45deg) scale($scale)
 
   &:after
     background-color $tertiary
     left 50%
     top 100%
-    transform skewX(45deg) scale(1.02)
+    transform skewX(45deg) scale($scale)
