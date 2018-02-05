@@ -12,3 +12,29 @@ body
     opacity 0
   to
     opacity 1
+
+
+.gallery
+  background-color blue
+  height 400px
+  display grid
+  grid-gap 10px
+  grid-template-columns repeat(5, 1fr)
+  grid-template-rows repeat(3, 1fr)
+  grid-template-areas 'left left active right right' 'left left active right right' 'left left active right right'
+  width 400px
+
+  &__item
+    border 1px solid #fff
+    grid-area item
+    grid-row span 1fr
+    grid-column span 1fr
+
+    &:nth-child(even)
+      grid-area left
+
+    &:nth-child(odd)
+      grid-area right
+
+    &--active
+      grid-area active !important
