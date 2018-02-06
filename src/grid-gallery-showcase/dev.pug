@@ -1,4 +1,8 @@
+- for(let c = 0; c < 13; c++)
+  input.gallery__select(type="radio", name='gallery-select', id=c, checked=(c===0))
 .gallery
-  .gallery__item.gallery__item--active
-  - for(let i = 0; i < 12; i++)
-    .gallery__item= i
+  .gallery__filler
+  .gallery__filler
+  - for(let i = 0; i < 13; i++)
+    label.gallery__item(for=i)
+      img(src=`https://source.unsplash.com/random/400x400?bear,cat&v=${Math.floor(20 * Math.random() + i)}`, alt='Something random')
