@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300,900')
+
+$mondrian-black = rgb(7, 9, 8)
+$mondrian-yellow = rgb(248, 217, 45)
+$mondrian-white = rgb(242, 245, 241)
+$mondrian-blue = rgb(11, 84, 164)
+$mondrian-red = rgb(214, 0, 20)
+
+$colors = $mondrian-white $mondrian-yellow $mondrian-white $mondrian-blue $mondrian-white $mondrian-red
+
+$blockSize = 50px
+$height = 6 * $blockSize
+$width = 5 * $blockSize
+
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+body
+html
+  background-color #fff
+  display grid
+  align-content center
+  justify-content center
+  font-family 'Lato', sans-serif
+  text-align       center
+
+.mondrian
+  background-color $mondrian-black
+  border 10px solid $mondrian-black
+  box-shadow 5px 10px 10px #aaa
+  display grid
+  grid-auto-columns $blockSize
+  grid-auto-flow dense
+  grid-auto-rows $blockSize
+  grid-gap 10px
+  grid-template-columns repeat(auto-fit, $blockSize)
+  grid-template-rows repeat(auto-fit, $blockSize)
+  height $height
+  overflow hidden
+  width $width
+
+  &__block
+    animation scaleIn .25s ease 0s
+    background-color $mondrian-white
+
+    for $block in (1..10)
+      &:nth-child({$block})
+        animation-delay $block * 0.15s
+        background-color $color
+        transform scale(0)
+        animation-fill-mode forwards
+
+    for $modifier in (1..3)
+      &[data-row-span=\"{$modifier}\"]
+        grid-row span $modifier
+      &[data-col-span=\"{$modifier}\"]
+        grid-column span $modifier
+
+    for $colorIndex in (1..6)
+      &[data-color-index=\"{$colorIndex}\"]
+        background-color $colors[$colorIndex - 1]
+
+.generate-button
+  cursor pointer
+  padding 4px 12px
+  border-radius 4px
+  font-family 'Lato', sans-serif
+  margin-top 50px
+  background-color #fff
+
+  &:hover
+    background-color darken(#fff, 10%)
+  &:active
+    background-color darken(#fff, 20%)
+
+
+
+@keyframes scaleIn
+  from
+    transform scale(0)
+  to
+    transform scale(1)
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1

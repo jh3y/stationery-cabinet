@@ -1,0 +1,4 @@
+#app
+  .mondrian
+    .mondrian__block(v-for="block in blocks", :data-row-span="block.rowSpan", :data-col-span="block.colSpan", :data-color-index="block.colorIndex")
+  button.generate-button(v-on:click='regenerate') Regenerate
