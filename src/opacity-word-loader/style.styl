@@ -1,0 +1,55 @@
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+body
+  background-color #e74c3c
+  color            #fafafa
+  text-align       center
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
+
+.loader
+  display inline-block
+  position relative
+  font-size 54px
+  &:after
+  &:before
+    content attr(data-load)
+    position absolute
+    left 0
+    top 0
+
+  &:before
+    opacity .1
+
+  &:after
+    color white
+    opacity .9
+    clip-path inset(0 100% 0 0)
+    animation-name load
+    animation-duration 12s
+    animation-fill-mode forwards
+
+$steps = 10
+
+getRandomStep($basement)
+  return min(floor(math(0, 'random') * (100 - $basement + 1) + $basement), 100)
+
+generateProgressSteps()
+  $progress = 0
+  $sums = 0
+  for $step in (0..$steps)
+    $progress = getRandomStep($progress)
+    $sums[$step] = $progress
+  return $sums
+
+@keyframes load
+  for $step in (0..$steps)
+    {($step * (100 / $steps)) * 1%}
+      content generateProgressSteps()
+      clip-path inset(0 (0 * 1%) 0 0)
