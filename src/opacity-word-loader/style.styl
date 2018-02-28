@@ -1,55 +1,82 @@
+@import url('https://fonts.googleapis.com/css?family=Gloria+Hallelujah');
+
 *
   box-sizing border-box
-  animation  fadeIn .5s
 
+html
 body
-  background-color #e74c3c
+  background-color #00e640
   color            #fafafa
-  text-align       center
+  font-family      'Gloria Hallelujah', cursive
+  height 100vh
+  width 100vw
 
-@keyframes fadeIn
-  from
-    opacity 0
-  to
-    opacity 1
+input
+  margin-top 50px
+
+#app
+  height 100%
+  width 100%
+  display          flex
+  flex-direction    column
+  align-items      center
+  justify-content  center
 
 .loader
   display inline-block
   position relative
+  height 54px
   font-size 54px
+  width 250px
+  text-align center
+
+
+  // If you wanted to specify the loaded value, can do by changing a data-attribute
+  for $value in (1..100)
+    &[data-loaded=\'{$value}\']:after
+      clip-path inset(0 ($value * 1%) 0 0)
+
   &:after
   &:before
     content attr(data-load)
     position absolute
-    left 0
-    top 0
+    left 50%
+    top 50%
+    transform translate(-50%, -50%)
 
   &:before
     opacity .1
 
   &:after
     color white
-    opacity .9
+    opacity 1
     clip-path inset(0 100% 0 0)
+
+  &--mocked:after
     animation-name load
-    animation-duration 12s
+    animation-duration 3s
     animation-fill-mode forwards
+    animation-iteration-count infinite
 
-$steps = 10
+$steps = 8
 
-getRandomStep($basement)
-  return min(floor(math(0, 'random') * (100 - $basement + 1) + $basement), 100)
+getRandomStep($basement = 0)
+  return floor(math(0, 'random') * (15 - $basement + 1) + $basement)
 
 generateProgressSteps()
   $progress = 0
   $sums = 0
-  for $step in (0..$steps)
-    $progress = getRandomStep($progress)
-    $sums[$step] = $progress
+  for $step in (1..$steps)
+    $progress += getRandomStep()
+    if ($step == $steps)
+      $progress = 100
+    $sums[$step] = min($progress, 100)
   return $sums
+
+$progressSteps = generateProgressSteps()
 
 @keyframes load
   for $step in (0..$steps)
+    $progress = 100 - $progressSteps[$step]
     {($step * (100 / $steps)) * 1%}
-      content generateProgressSteps()
-      clip-path inset(0 (0 * 1%) 0 0)
+      clip-path inset(0 ($progress * 1%) 0 0)

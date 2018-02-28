@@ -1,1 +1,4 @@
-.loader(data-load='Loading...')
+#app
+  .loader.loader--mocked(v-if='!dirty', data-load='Loading...')
+  .loader(v-if='dirty', :data-loaded='progress', data-load='Loading...')
+  input(type='range', min='0', max='100', step='1', @input='updateLoader')
