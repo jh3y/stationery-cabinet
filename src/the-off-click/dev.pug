@@ -1,0 +1,14 @@
+- const colors = [{name: 'Red', hex: '#e74c3c'}, {name: 'Orange', hex: '#f9690e'}, {name: 'Yellow', hex: '#f9bf3b'}, {name: 'Green', hex: '#2ecc71'}, {name: 'Blue', hex: '#4b77be'}, {name: 'Indigo', hex: '#180c37'}, {name: 'Violet', hex: '#640d6b'}]
+h1.counter 0
+label(for='propagationCheck') create dead zone with stopPropagation
+input(type='checkbox', id='propagationCheck')
+.menu
+  a.menu__button
+    .line
+    .line
+    .line
+  .menu__content
+    h1.menu__title Choose background color
+    ul.menu__colors
+      - for (let color of colors)
+        li.menu__color(style=`--color: ${color.hex}`)= color.name

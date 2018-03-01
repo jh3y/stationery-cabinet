@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css?family=Lato')
+
+*
+  box-sizing border-box
+
+:root
+  --bg-color #e74c3c
+html
+body
+  background-color var(--bg-color)
+  font-family 'Lato', sans-serif
+  margin 0
+  transition background .75s ease 0s
+  text-align center
+
+h1.counter
+  color #fff
+  text-align center
+  font-size 5rem
+
+.menu
+  --translate -100%
+  background-color #fafafa
+  width 200px
+  position fixed
+  top 0
+  left 0
+  height 100vh
+  transform translateX(var(--translate))
+  transition transform 0.25s
+
+  &__button
+    cursor pointer
+    position absolute
+    height 35px
+    left 100%
+    padding 4px
+    top 0
+    width 45px
+
+    .line
+      width 100%
+      height 5px
+      margin 6px auto
+      background-color #fff
+      transition transform .25s, opacity .25s
+
+  &--open
+    --translate 0
+
+  &--open
+    .line:nth-of-type(1)
+      transform rotate(-45deg) translate(-9px, 6px)
+    .line:nth-of-type(2)
+      opacity 0
+    .line:nth-of-type(3)
+      transform rotate(45deg) translate(-8px, -8px)
+
+  &__content
+    padding 10px
+    width 200px
+
+  &__title
+    font-size 1rem
+
+  &__colors
+    list-style none
+    padding 0
+
+  &__color
+    background linear-gradient(160deg, white, white 30%, var(--color))
+    cursor pointer
+    padding 4px
+
+
+
+
