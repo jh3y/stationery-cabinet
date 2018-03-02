@@ -1,0 +1,34 @@
+*
+  box-sizing border-box
+
+body
+  background-color #e74c3c
+
+
+$size = 300px
+$circleSize = $size / 15
+.container
+  background blue
+  height $size
+  position relative
+  width $size
+
+.circle
+  background #fff
+  border-radius 100%
+  height $circleSize
+  width $circleSize
+  margin-left $circleSize
+  position absolute
+  left 0
+  top 0
+
+  // Just create four rows and place them around the square???
+
+  for $circle in (1..49)
+    &:nth-of-type({$circle})
+      $y = 0
+      $x = ($circle % 7) * 200%
+
+      transform translate($x, $y)
+
