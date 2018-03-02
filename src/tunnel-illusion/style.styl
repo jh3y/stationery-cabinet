@@ -1,0 +1,53 @@
+*
+  box-sizing border-box
+
+:root
+  --xOrigin 50
+  --yOrigin 50
+
+body
+  background-color #111
+  display flex
+  align-items center
+  justify-content center
+  height 100vh
+  width 100vw
+
+
+$rings = 20
+$size = 50vh
+
+.tunnel
+  cursor pointer
+  height $size
+  overflow hidden
+  width $size
+
+  &__rings
+  &__ring
+    height 100%
+    width 100%
+
+  &__rings
+    position relative
+    transform-style preserve-3d
+
+  &__ring
+    $bgSize = 200px
+    animation scaleOut 2s infinite linear
+    left 0
+    position absolute
+    top 0
+    transform scale(0)
+    transform-origin calc(var(--xOrigin) * 1%) calc(var(--yOrigin) * 1%)
+
+    for $ring in ($rings..1)
+      &:nth-of-type({$ring})
+        animation-delay ($ring - 1) * .15s
+        background darken(red, $ring * 5%)
+
+@keyframes scaleOut
+  from
+    transform scale(0) translate3d(0, 0, 0)
+  to
+    transform scale(1.25) translate3d(0, 0, -100px)
