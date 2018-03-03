@@ -2,33 +2,88 @@
   box-sizing border-box
 
 body
-  background-color #e74c3c
+  background radial-gradient(rebeccapurple, black)
+  display flex
+  align-items center
+  justify-content center
+  overflow hidden
+  height 100vh
+  width 100vw
 
 
 $size = 300px
 $circleSize = $size / 15
-.container
-  background blue
+
+@keyframes moveBgOne
+  0%
+    background-position center center
+  100%
+    background-position center 200%
+
+@keyframes moveBgTwo
+  0%
+    background-position center center
+  100%
+    background-position center 150%
+
+@keyframes moveBgThree
+  0%
+    background-position center center
+  100%
+    background-position center 120%
+
+.square
   height $size
   position relative
   width $size
 
+.edge
+  display flex
+  position absolute
+  top 0
+
+  &:nth-of-type(2)
+    transform rotate(90deg)
+    transform-origin top left
+    left 100%
+
+  &:nth-of-type(3)
+    top 100%
+    right 0
+    transform-origin top center
+    transform rotate(180deg)
+
+  &:nth-of-type(4)
+    top 100%
+    transform-origin top left
+    transform rotate(270deg)
+
+
 .circle
-  background #fff
+  background-color #fff
+  background repeating-linear-gradient(0deg, black, black 10%, white 10%, white 20%)
+  background-size $circleSize ($circleSize * 2)
   border-radius 100%
   height $circleSize
   width $circleSize
   margin-left $circleSize
-  position absolute
-  left 0
-  top 0
+  animation-duration 1s
+  animation-timing-function linear
+  animation-direction alternate-reverse
+  animation-iteration-count infinite
 
   // Just create four rows and place them around the square???
-
-  for $circle in (1..49)
+  for $circle in (1..7)
     &:nth-of-type({$circle})
-      $y = 0
-      $x = ($circle % 7) * 200%
+      if $circle > 3
+        transform rotate(180deg)
 
-      transform translate($x, $y)
+      if $circle == 1 || $circle == 7
+        animation-name moveBgOne
+
+      if $circle == 2 || $circle == 6
+        animation-name moveBgTwo
+
+      if $circle == 3 || $circle == 5
+        animation-name moveBgThree
 
