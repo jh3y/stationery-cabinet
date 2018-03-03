@@ -1,0 +1,41 @@
+*
+  box-sizing border-box
+
+:root
+  --xOrigin 50
+  --yOrigin 50
+
+body
+  background-color #111
+  display flex
+  align-items center
+  justify-content center
+  height 100vh
+  width 100vw
+
+
+$rectangles = 20
+$size = 40px
+
+.rectangles
+  height $size
+  width $size * 1.5
+  perspective 1000px
+  transform-style preserve-3d
+  transform rotateY(45deg) rotateX(45deg)
+  position relative
+
+.container
+  position relative
+
+.rectangle
+  border 4px solid white
+  position absolute
+  height $size
+  overflow hidden
+  width $size * 1.5
+
+  for $rectangle in (1..20)
+    &:nth-of-type({$rectangle})
+      scale = 1 - ($rectangle * 5 / 100)
+      transform scale(scale) translateZ(-100px - ($rectangle * -5px))
