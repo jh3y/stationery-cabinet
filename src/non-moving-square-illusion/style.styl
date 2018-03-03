@@ -61,17 +61,17 @@ $circleSize = $size / 15
 
 .circle
   background-color #fff
-  background repeating-linear-gradient(0deg, black, black 20%, white 20%, white (20 + 10 + (10 / 3) * 1%), black (20 + 10 + (10 / 3) * 1%))
-  background-size 100% 250%
+  background repeating-linear-gradient(0deg, black, black 15%, white 15%, white 25%, black 25%)
+  background-size 100% 225%
   border-radius 100%
   height $circleSize
   width $circleSize
   margin-left $circleSize
-  animation-duration .75s
+  animation-duration .65s
   animation-timing-function linear
   animation-direction alternate-reverse
   animation-iteration-count infinite
-  background-position 0 65%
+  background-position 0 58%
 
   // Just create four rows and place them around the square???
   for $circle in (1..7)
