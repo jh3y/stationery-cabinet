@@ -8,12 +8,6 @@ $carouselIndicatorSize = 15px
 $carouselControlSize   = 30px
 $slideTransition       = .5s
 
-@keyframes carousel-show-slide
-  from
-    opacity 0
-  to
-    opacity 1
-
 /**
   * Control & indicator mixin
 */
@@ -39,12 +33,15 @@ $slideTransition       = .5s
       &:checked ~ .carousel__track
         transform translateX(-((num - 1) * 100%))
       &:checked ~ .carousel__slide:nth-of-type({num})
-        animation carousel-show-slide $slideTransition
+        transition opacity $slideTransition, transform $slideTransition
         top 0
         left 0
         right 0
+        opacity 1
+        transform scale(1)
       &:checked ~ .carousel__controls:nth-of-type({num})
         display block
+        opacity 1
       &:checked ~ .carousel__indicators .carousel__indicator:nth-of-type({num})
         opacity 1
 
@@ -119,14 +116,20 @@ $slideTransition       = .5s
       top     0
       left    0
       right   0
+      opacity 1
       for num in (1..$noOfSlides)
         &:nth-of-type({num})
           transform translateX((num - 1) * 100%)
+
+  &--scale
+    .carousel__slide
+      transform scale(0)
 
   &__slide
     height     100%
     position   absolute
     overflow-y auto
+    opacity 0
 
 /**
   * Theming
@@ -144,11 +147,15 @@ body
 
 .my-carousel
   border-radius 5px
-  border        2px solid silver
   margin        30px
 
 .carousel__slide
   overflow      hidden
+
+.carousel
+  &--thumb .carousel__indicator
+    height 30px
+    width  30px
 
 h1
   font-size   50px
@@ -177,7 +184,3 @@ for num in (1..$noOfSlides)
     background-image url('https://unsplash.it/' + (num * 3) + '00?random')
     background-size cover
     background-position center
-
-.carousel--thumb .carousel__indicators .carousel__indicator
-  height 30px
-  width  30px

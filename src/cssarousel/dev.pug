@@ -27,7 +27,7 @@ h3 Pure CSS carousels
         label.carousel__control.carousel__control--forward(for= `${(idx == panels.length - 1) ? panels[0] : panels[idx + 1]}`)
     .carousel__track
       each val in panels
-        .carousel__slide
+        li.carousel__slide
           h1= val
     .carousel__indicators
       each val in panels
@@ -38,6 +38,22 @@ h3 Pure CSS carousels
     - var panels = ['K', 'L', 'M', 'N', 'O']
     each val in panels
       input.carousel__activator(type="radio", id=val, name='thumb' checked=(val == panels[0]))
+    each val, idx in panels
+      .carousel__controls
+        label.carousel__control.carousel__control--backward(for=`${(idx == 0) ? panels[panels.length - 1] : panels[idx - 1]}` )
+        label.carousel__control.carousel__control--forward(for= `${(idx == panels.length - 1) ? panels[0] : panels[idx + 1]}`)
+    each val in panels
+      li.carousel__slide
+        h1= val
+    .carousel__indicators
+      each val in panels
+        label.carousel__indicator(for=val)
+.carousel-container
+  h2 scale
+  ul.carousel.my-carousel.carousel--scale
+    - var panels = ['P', 'Q', 'R', 'S', 'T']
+    each val in panels
+      input.carousel__activator(type="radio", id=val, name='scale' checked=(val == panels[0]))
     each val, idx in panels
       .carousel__controls
         label.carousel__control.carousel__control--backward(for=`${(idx == 0) ? panels[panels.length - 1] : panels[idx - 1]}` )
