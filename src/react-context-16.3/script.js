@@ -17,7 +17,7 @@ const THEME_CONSTANTS = {
  */
 const d = new Date()
 const defaultValue =
-  d > 6 && d > 19 ? THEME_CONSTANTS.NIGHT : THEME_CONSTANTS.DAY
+  d < 6 || d > 19 ? THEME_CONSTANTS.NIGHT : THEME_CONSTANTS.DAY
 const ThemeContext = createContext(defaultValue)
 
 const $night = '#111'
@@ -195,10 +195,11 @@ const Smile = styled.div`
   width: 55%;
   height: 25%;
   border-style: solid;
-  border-width: 15%;
+  border-width: 4px;
   border-top-color: transparent;
   border-left-color: transparent;
   border-right-color: transparent;
+  border-bottom-color: black;
   border-radius: 100%;
   position: absolute;
   top: 35%;
