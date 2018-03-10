@@ -1,0 +1,31 @@
+:root
+  --bg #2ecc71
+  --translate 0
+
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+html
+body
+  background-color var(--bg)
+  margin 0
+  padding 0
+
+.swiper
+  color #fafafa
+  display flex
+  justify-content center
+  align-items center
+  height 100vh
+  position absolute
+  transform translateX(calc(var(--translate) * 1px))
+  text-align       center
+  width 100vw
+  transition transform .25s, background .25s
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
