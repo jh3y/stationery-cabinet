@@ -1,0 +1,101 @@
+*
+  box-sizing border-box
+
+body
+  align-items center
+  background radial-gradient(#e74c3c, black)
+  display flex
+  justify-content center
+  height 100vh
+  width 100vw
+  overflow hidden
+
+.image-container
+  background-color #fafafa
+  height 200px
+  width 200px
+  background-size cover
+  background-position center
+
+.rsizable
+  position relative
+  height calc(var(--height, 200) * 1px)
+  width calc(var(--width, 200) * 1px)
+
+  &__ghost
+    border 5px dashed white
+    height calc(var(--height) * 1px)
+    width calc(var(--width) * 1px)
+    position absolute
+    left calc(var(--x) * 1px)
+    top calc(var(--y) * 1px)
+
+  $handleSize = 20px
+  &__handle
+    border-radius 100%
+    height $handleSize
+    width $handleSize
+    background white
+    display inline-block
+    cursor var(--cursor, e)
+    position absolute
+    transform translate(var(--x, 0), var(--y, 0))
+
+    &--n
+    &--s
+      left 50%
+      margin-left -($handleSize / 2)
+
+    &--n
+      top 0
+
+    &--s
+      bottom 0
+
+    &--e
+    &--w
+      top 50%
+      margin-top -($handleSize / 2)
+
+    &--e
+      right 0
+
+    &--w
+      left 0
+
+    &--ne
+      top 0
+      right 0
+
+    &--se
+      bottom 0
+      right 0
+
+    &--nw
+      top 0
+      left 0
+
+    &--sw
+      bottom 0
+      left 0
+
+    &--nw
+    &--n
+    &--ne
+      --y -50%
+
+    &--nw
+    &--w
+    &--sw
+      --x -50%
+
+    &--ne
+    &--e
+    &--se
+      --x 50%
+
+    &--sw
+    &--s
+    &--se
+      --y 50%
+
