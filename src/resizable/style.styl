@@ -30,16 +30,26 @@ body
     left calc(var(--x) * 1px)
     top calc(var(--y) * 1px)
 
-  $handleSize = 20px
+  $handleSize = 50px
   &__handle
     border-radius 100%
     height $handleSize
     width $handleSize
-    background white
     display inline-block
     cursor var(--cursor, e)
     position absolute
     transform translate(var(--x, 0), var(--y, 0))
+
+    &:after
+      border-radius 100%
+      content ''
+      background-color white
+      height $handleSize * 0.4
+      width  $handleSize * 0.4
+      position absolute
+      top 50%
+      left 50%
+      transform translate(-50%, -50%)
 
     &--n
     &--s

@@ -21,10 +21,16 @@ class Resizable {
   }
 
   start = (e) => {
-    const {
+    let {
       pageX: startX,
       pageY: startY,
+      touches,
     } = e
+
+    if (touches && touches.length === 1) {
+      startX = touches[0].pageX
+      startY = touches[0].pageY
+    }
 
     const {
       height,
@@ -33,25 +39,29 @@ class Resizable {
       y,
     } = this.element.getBoundingClientRect()
 
-    this.initial = { height, startX, startY, width}
 
     const resize = (evt) => {
       const direction = e.target.getAttribute('data-rsize-direction')
+      let { pageX: X, pageY: Y, touches } = evt
+      if (touches && touches.length === 1) {
+        X = touches[0].pageX
+        Y = touches[0].pageY
+      }
       for (const d of direction.split('')) {
         switch(d) {
           case 'n':
-            // If position absolute, set top to evt.pageY
-            this.element.style.setProperty('--height', height + (startY - evt.pageY))
+            // If position absolute, set top to Y
+            this.element.style.setProperty('--height', height + (startY - Y))
             break
           case 's':
-            this.element.style.setProperty('--height', height + (evt.pageY - startY))
+            this.element.style.setProperty('--height', height + (Y - startY))
             break
           case 'e':
-            this.element.style.setProperty('--width', width + (evt.pageX - startX))
+            this.element.style.setProperty('--width', width + (X - startX))
             break
           case 'w':
-            // If position absolute, set left to evt.pageY
-            this.element.style.setProperty('--width', width + (startX - evt.pageX))
+            // If position absolute, set left to X
+            this.element.style.setProperty('--width', width + (startX - X))
             break
         }
       }
@@ -60,10 +70,17 @@ class Resizable {
     const end = () => {
       if (this.ghost) this.ghost.remove()
       document.body.removeEventListener('mousemove', resize)
+      document.body.removeEventListener('touchmove', resize)
+      document.body.removeEventListener('mouseup', end)
+      document.body.removeEventListener('touchend', end)
     }
 
     document.body.addEventListener('mousemove', resize)
     document.body.addEventListener('mouseup', end)
+
+    // Add touch support 😉
+    document.body.addEventListener('touchmove', resize)
+    document.body.addEventListener('touchend', end)
 
     if (this.options.ghosting) {
       const ghost = document.createElement('span')
@@ -84,6 +101,7 @@ class Resizable {
     newHandle.style.setProperty('--cursor', `${direction}-resize`)
     this.element.appendChild(newHandle)
     newHandle.addEventListener('mousedown', this.start)
+    newHandle.addEventListener('touchstart', this.start)
   }
 }
 
