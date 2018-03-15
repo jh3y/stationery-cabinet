@@ -21,9 +21,7 @@ class Masonry {
      * NOTE:: For better performance, please debounce this!
      */
     window.addEventListener('resize', _.debounce(layout, 500))
-    const load = imagesLoaded(el, (instance) => {
-      layout()
-    })
+    const load = imagesLoaded(el, () => layout())
     load.on('progress', (instance, image) => {
       // This trick allows us to avoid any floating pixel sizes 👍
       image.img.style.height = image.img.height
