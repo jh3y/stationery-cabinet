@@ -1,0 +1,10 @@
+.masonry
+  - var n = 0
+  while n < 16
+    - var imageHeight = Math.floor(Math.random() * 400 + 200)
+    - var imageIndex = Math.floor(20 * Math.random())
+    - var src = `https://source.unsplash.com/random/400x${imageHeight}?bear,cat&v=${imageIndex}`
+    .masonry-panel
+      .masonry-panel__content
+        img.loading(src=src)
+    - n++

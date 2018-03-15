@@ -130,6 +130,7 @@ class Masonry extends Component {
       image.img.classList.remove('loading')
       // NOTE: Not the cleanest thing to do here but this is a demo 😅
       const parentPanel = image.img.parentNode.parentNode
+      parentPanel.setAttribute('style', `height: ${image.img.height}px`)
       parentPanel.classList.remove(`${CLASSES.PANEL}--loading`)
       this.layout()
     })
@@ -233,7 +234,7 @@ class Masonry extends Component {
   const imageIndex = Math.floor(20 * Math.random())
   const imageWidth = 400
   const imageHeight = Math.floor(Math.random() * imageWidth + 200)
-  return `${unsplashPrefix}${imageHeight}x${imageWidth}?bear,cat&v=${imageIndex}` // return `${unsplashPrefix}?v=${imageIndex}`
+  return `${unsplashPrefix}${imageWidth}x${imageHeight}?bear,cat&v=${imageIndex}`
 }
 const populateImages = () => {
   const images = []

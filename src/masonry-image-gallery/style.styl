@@ -1,0 +1,77 @@
+/**
+  * Masonry CSS
+*/
+$config = {
+  items: 16,
+  responses: {
+    breakpoints: {
+      sm: 430px
+      md: 768px
+      lg: 992px
+      xl: 1500px
+    },
+    cols: {
+      sm: 1,
+      md: 2,
+      lg: 3,
+      xl: 4,
+    }
+  }
+}
+
+.masonry
+  display   flex
+  flex-flow column wrap
+  max-width 100%
+  height 100vh
+
+.masonry-panel
+  order      1
+  overflow    hidden
+  transition all .25s ease 0s
+  width      100%
+
+  for $breakpoint, $value in $config.responses.breakpoints
+
+    define('$cols', $config.responses.cols[$breakpoint])
+
+    @media(min-width $value)
+      width (100% / $cols * 1%)
+
+      for $panel in (1..$config.items)
+        &:nth-child({$panel})
+          $newOrder = $panel % $cols
+          if $newOrder == 0
+            $newOrder = $cols
+          order $newOrder
+
+*
+  box-sizing border-box
+
+body
+  margin           0
+  padding          0
+
+h1
+  font-size  42px
+  margin     0
+  text-align center
+
+img
+  width 100%
+  max-height 500px
+  object-fit cover
+
+  // Add some form of loading animation for the incoming image
+  &.loading
+    background linear-gradient(90deg, white, grey, white)
+    background-size 500% 100%
+    animation load 3s infinite linear
+    margin 4px 4px 0 4px
+    min-height 250px
+
+@keyframes load
+  from
+    background-position 500% 0
+  to
+    background-position 0 0
