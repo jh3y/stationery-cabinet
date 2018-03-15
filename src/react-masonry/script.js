@@ -126,6 +126,7 @@ const MasonryPad = styled.div`
  * className reference
  */
 const CLASSES = {
+  BODY_LOADING: 'masonry-body',
   CONTAINER: 'masonry',
   PANEL: 'masonry-panel',
 }
@@ -147,11 +148,14 @@ class Masonry extends Component {
    * so we don't get float value heights like 450.2876 that can break the layout
    * The window resizing should really be debounced 😅
    * */ componentDidMount = () => {
+     document.body.classList.add(CLASSES.BODY_LOADING)
      const load = imagesLoaded(this.container, (instance) => {
       this.layout()
+      document.body.classList.remove(CLASSES.BODY_LOADING)
       this.setState({
         loading: false,
       })
+
     })
     load.on('progress', (instance, image) => {
       // This trick allows us to avoid any floating pixel sizes 👍
