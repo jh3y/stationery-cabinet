@@ -7,22 +7,6 @@ body
   padding 0
 
 
-.loader
-  position fixed
-  height 50px
-  width 50px
-  border-radius 100%
-  border-width 10px
-  border-color white
-  border-top-color dodgerblue
-  border-bottom-color dodgerblue
-  border-style solid
-  left 50%
-  top 50%
-  margin-left -25px
-  margin-top -25px
-  animation spin 1s infinite linear
-
 .masonry-panel
   max-height 100vh
 
@@ -33,28 +17,31 @@ img
   width 100%
   max-height 500px
   object-fit cover
+  transition transform .25s ease 0s
 
+  &:hover
+    transform scale(1.25)
+
+  // Potential styling for loading images
   // Add some form of loading animation for the incoming image
-  &.loading
-    background linear-gradient(90deg, white, grey, white)
-    background-size 500% 100%
-    animation load 3s infinite linear
-    margin 4px 4px 0 4px
-    min-height 250px
+  // &.loading
+  //   background linear-gradient(90deg, white, grey, white)
+  //   background-size 500% 100%
+  //   animation load 3s infinite linear
+  //   margin 4px 4px 0 4px
+  //   min-height 250px
 
-@keyframes load
-  from
-    background-position 500% 0
+
+// @keyframes load
+//   from
+//     background-position 500% 0
+//   to
+//     background-position 0 0
+
+@keyframes fadeOut
   to
-    background-position 0 0
+    opacity 0
 
 @keyframes spin
   to
     transform rotate(360deg)
-
-.masonry
-  height 100vh
-  width 100vh
-  display flex
-  flex-wrap wrap
-  flex-direction column

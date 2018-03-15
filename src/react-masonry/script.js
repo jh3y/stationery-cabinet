@@ -67,6 +67,37 @@ const MasonryContainer = styled.div`
     css`
       ${generateMedia(p.itemCount, p.config)};
     `};
+  &:before,
+  &:after {
+    content: "";
+    visibility: ${p => p.loadingContent ? 'visible' : 'hidden'};
+  }
+  &:after {
+    position: fixed;
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+    border-width: 10px;
+    border-color: white;
+    border-top-color: rebeccapurple;
+    border-bottom-color: rebeccapurple;
+    border-style: solid;
+    left: 50%;
+    top: 50%;
+    margin-left: -25px;
+    margin-top: -25px;
+    animation: spin 1s infinite linear;
+  }
+  &:before {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #111;
+    ${p => p.loadingContent ? '' : 'animation: fadeOut 1s'}
+    transition: visibility 1s linear;
+  }
 `
 
 /**
@@ -76,7 +107,6 @@ const MasonryContainer = styled.div`
  */
 const MasonryPanel = styled.div`
   overflow: hidden;
-  transition: all 0.25s ease 0s;
 `
 
 const MasonryPanelContent = styled.div`
@@ -96,6 +126,7 @@ const MasonryPad = styled.div`
  * className reference
  */
 const CLASSES = {
+  CONTAINER: 'masonry',
   PANEL: 'masonry-panel',
 }
 
@@ -109,7 +140,6 @@ class Masonry extends Component {
     maxHeight: 0,
     pads: [],
   }
-
   /**
    * Once mounted, invoke imagesLoaded on the container element
    * When images load, layout the container
@@ -117,7 +147,7 @@ class Masonry extends Component {
    * so we don't get float value heights like 450.2876 that can break the layout
    * The window resizing should really be debounced 😅
    * */ componentDidMount = () => {
-    const load = imagesLoaded(this.container, (instance) => {
+     const load = imagesLoaded(this.container, (instance) => {
       this.layout()
       this.setState({
         loading: false,
@@ -127,25 +157,26 @@ class Masonry extends Component {
       // This trick allows us to avoid any floating pixel sizes 👍
       image.img.style.height = image.img.height
       image.img.setAttribute('height', image.img.height)
-      image.img.classList.remove('loading')
+      // image.img.classList.remove('loading')
       // NOTE: Not the cleanest thing to do here but this is a demo 😅
       const parentPanel = image.img.parentNode.parentNode
       parentPanel.setAttribute('style', `height: ${image.img.height}px`)
       parentPanel.classList.remove(`${CLASSES.PANEL}--loading`)
       this.layout()
     })
-    window.addEventListener('resize', _.debounce(this.layout, 500))
+    window.addEventListener('resize', _.debounce(this.layout, 0))
   }
   /**
-   * Wipe the component state and reset it default
-   */ reset = () => {
-    this.setState({
-      heights: [],
-      loading: false,
-      maxHeight: 0,
-      pads: [],
-    })
-  }
+   * Wipe the component state and reset it default, Don't think this is necessary as setState overrides anyway
+   */
+  // reset = () => {
+  //   // this.setState({
+  //   //   heights: [],
+  //   //   loading: false,
+  //   //   maxHeight: 0,
+  //   //   pads: [],
+  //   // })
+  // }
   /**
    * Trick here is to populate an array of column heights based on the panels
    * Referencing the panel order, the column heights are generated
@@ -195,8 +226,7 @@ class Masonry extends Component {
   /**
    * Resets and lays out elements
    */ layout = () => {
-    const { reset, populateHeights, setLayout, pad } = this
-    reset()
+    const { populateHeights, setLayout, pad } = this
     populateHeights()
     setLayout()
     pad()
@@ -208,6 +238,7 @@ class Masonry extends Component {
     return (
       <MasonryContainer
         config={config}
+        className={`${CLASSES.CONTAINER}`}
         itemCount={iterableChildren.length}
         loadingContent={loading}
         height={this.state.maxHeight}
