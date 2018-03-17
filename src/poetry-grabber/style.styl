@@ -7,15 +7,134 @@ body
   background #7ec0ee
   margin 0
   padding 0
-  height 100vh
-  width 100vw
-  overflow hidden
-  display flex
   align-items center
+  width 100vw
+  display flex
+  padding 30px
+  min-height 400px
   justify-content center
+  overflow auto
+  font-family Arial, Helvetica, sans-serif
 
-.loading-title
-  font-size 3rem
+button
+  border 0
+  cursor pointer
+  padding 4px 12px
+  width 120px
+  height 40px
+  font-size 14px
+  font-family Arial, Helvetica, sans-serif
+  color white
+  border-radius 4px
+
+.loading__msg
+  font-size 24px
   font-family 'Gloria Hallelujah', cursive
-  font-weight bold
   color #fafafa
+
+
+.composer
+  box-shadow 5px 5px 15px #000
+  background-color #fafafa
+  overflow hidden
+  display grid
+  grid-template-rows auto 1fr 60px
+  width 300px
+  height 400px
+  font-size 14px
+  @media (min-width 768px)
+    width 600px
+
+  &__label
+    font-size 14px
+    font-weight 400
+
+  &__header
+    display grid
+    grid-template-rows auto 1fr
+    grid-template-columns auto 1fr
+    align-content center
+    justify-content center
+    padding 0 10px 10px
+    color grey
+    border-bottom 1px solid #ccc
+
+  &__to
+  &__subject
+    font-size 14px
+    padding-left 12px
+    font-weight 400
+    color black
+
+  &__to
+    border none
+    background #fafafa
+    font-family Arial, Helvetica, sans-serif
+
+  &__content
+    overflow auto
+    margin 10px 0
+    padding 0 10px
+
+  &__actions
+    height 60px
+    display flex
+    justify-content flex-end
+    padding 0 10px
+    align-items center
+    border-top 1px solid #ccc
+
+  &__line
+    font-size 14px
+    line-height 22px
+    padding 0
+    margin 0
+
+    &:nth-child(1)
+      color grey
+
+  &__send
+    background-color #e74c3c
+
+    &:hover
+      background-color lighten(#e74c3c, 15%)
+
+    &:active
+      background-color darken(#e74c3c, 20%)
+
+.error
+  text-align center
+
+  &__msg
+    font-size 24px
+    font-family 'Gloria Hallelujah', cursive
+    color #fafafa
+
+  &__btn
+    background-color #2eec71
+
+    &:hover
+      background-color lighten(#2eec71, 15%)
+
+    &:active
+      background-color darken(#2eec71, 20%)
+
+.length-warning
+  text-align center
+  &__msg
+    color #fafafa
+    font-size 14px
+
+  &__btn
+    height 25px
+    background-color #c3c3c3
+    font-size 13px
+
+    &:hover
+      background-color lighten(#c3c3c3, 15%)
+
+    &:active
+      background-color darken(#c3c3c3, 20%)
+
+.mail-link
+  display none
