@@ -1,0 +1,5 @@
+- let colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet']
+- let alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('')
+.letters
+  - for (let l = 0; l < alphabet.length; l++)
+    span.funky-letter(class=`funky-letter--${colors[l % colors.length]}`)= alphabet[l]

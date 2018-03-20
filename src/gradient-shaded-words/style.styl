@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css?family=Erica+One')
+
+*
+  box-sizing border-box
+
+body
+html
+  text-align  center
+  background-color #111
+  height 100vh
+  width 100vw
+  display flex
+  justify-content center
+  align-items center
+
+.letters
+  display flex
+  flex-wrap wrap
+  max-width 200px
+  align-items center
+  justify-content center
+
+addBg(c)
+  background linear-gradient(-25deg, c (100 / 3%), lighten(c, 30%) (100 / 3%), lighten(c, 30%) (2 * (100 / 3%)), lighten(c, 60%) (2 * (100 / 3%)))
+  background-size 100% 50px
+  background-position-y 60%
+  -webkit-background-clip text
+  background-clip text
+
+.funky-letter
+  $color = rebeccapurple
+  font-size 4rem
+  font-family 'Erica One', cursive
+  line-height 50px
+  addBg($color)
+  text-transform uppercase
+  color transparent
+  opacity 0
+  animation fadeIn .5s ease 0s
+  animation-fill-mode forwards
+
+  $colors = 'red' 'orange' 'yellow' 'green' 'blue' 'indigo' 'violet'
+  for $color in $colors
+    &--{'' + $color + ''}
+      $color = convert($color)
+      addBg($color)
+
+  $start-delay = 0.5s
+  for letter in (1..26)
+    &:nth-child({letter})
+      animation-delay $start-delay + (letter * .1s)
+
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
