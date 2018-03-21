@@ -1,0 +1,157 @@
+*
+  box-sizing border-box
+
+$white = #fff
+$blue = dodgerblue
+$green = #2eec71
+
+html
+body
+  align-items center
+  background $blue
+  color #aaa
+  display flex
+  justify-content center
+  margin 0
+  flex-direction column
+  padding 0
+  height 100vh
+  width 100vw
+  font-family 'Lato', sans-serif
+  color white
+  overflow hidden
+
+header
+  margin 0
+  padding 20px
+
+button
+  font-size 16px
+  padding 4px 12px
+  border 0
+  color #fff
+  cursor pointer
+  border-radius 4px
+
+  &[disabled]
+    background-color grey
+    color #ccc
+
+footer
+  padding 30px
+  text-align center
+  position fixed
+  bottom 0
+
+a
+  text-decoration none
+  color $green
+
+  &:hover
+    color darken($green, 30%)
+
+input
+  margin-bottom 20px
+  padding 4px 12px
+  max-width 75%
+  border-radius 6px
+  display block
+  margin 0 auto 20px
+
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
+
+.tweets
+  height 100vh
+  width  100vw
+  position relative
+  perspective 500px
+  display flex
+  align-items center
+  justify-content center
+
+.container
+  padding 15px
+  text-align center
+
+.msg
+  color $white
+  font-size 24px
+  font-family 'Lato', sans-serif
+
+.btn
+  background-color $green
+
+  &:hover
+    background-color lighten($green, 15%)
+
+  &:active
+    background-color darken($green, 20%)
+
+.tweet
+  width 300px
+  border-radius 10px
+  color black
+  position absolute
+  left 50%
+  top 50%
+  padding 20px
+  overflow hidden
+  background-color $white
+  transform-style preserve-3d
+  transform translate3d(-50%, -50%, -700px) scale(0.75)
+
+  &:hover
+    color black
+
+.media
+  max-width 100%
+
+.header
+  padding 0
+  display flex
+  flex-direction row
+
+.tweeter
+  display flex
+  flex-direction column
+  justify-content center
+  padding-left 10px
+  font-weight bold
+
+  .handle
+    font-size 12px
+    color $blue
+
+.avatar
+  $avatarSize = 48px
+  background-color grey
+  height $avatarSize
+  width $avatarSize
+  object-fit cover
+  border-radius 100%
+  overflow hidden
+
+.body
+  color black
+  font-size 14px
+  line-height 20px
+  margin 10px auto
+  overflow hidden
+
+  a
+    color $green
+
+  img
+    height 14px
+
+.footer
+  position static
+  padding 5px 0 0 0
+  font-size 13px
+  color #ccc
+  display flex
