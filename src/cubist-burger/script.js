@@ -1,5 +1,5 @@
 // Define some bounds for the animation
-const awayBounds = [2, 5]
+const awayBounds = [1, 2]
 const transitionBounds = [5, 10]
 const getTime = (bounds) => Math.floor(Math.random() * bounds[1] + bounds[0])
 /**
