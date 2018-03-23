@@ -1,0 +1,54 @@
+*
+  box-sizing border-box
+
+
+body
+  background radial-gradient(#fff 25%, #111)
+  height 100vh
+  width 100vw
+  display flex
+  align-items center
+  justify-content center
+  flex-direction column
+  padding 0
+  margin 0
+
+  &:after
+    content ''
+    position fixed
+    top 0
+    right 0
+    bottom 0
+    left 0
+    background-color rgba(0, 0, 0, 0.95)
+    animation lightsOn .5s 2s
+    animation-fill-mode forwards
+
+.canvas
+  background #fafafa
+  width 300px
+  padding 40px
+  box-shadow 4px 4px 10px rgba(0, 0, 0, 0.5)
+
+.burger
+  width 100%
+
+.visitors
+  position absolute
+  bottom 0
+  width 100%
+  max-width 700px
+
+.person
+  width 200px
+  position absolute
+  left 0
+  bottom 0
+  visibility hidden
+
+  &--left
+    left 100px
+
+@keyframes lightsOn
+  to
+    background-color rgba(0, 0, 0, 0)
