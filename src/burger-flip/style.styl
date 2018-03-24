@@ -1,0 +1,109 @@
+$borderWidth = 5px
+$height = 100px
+$width = 200px
+$pattySize = 70px
+$bgColor = #111
+$borderColor = #fff
+$meatColor = #fb9496
+$meatCookedColor = #6d3b12
+$meatCookedLinesColor = #311205
+$transitionDuration = .5s
+$cookingDuration = .25s
+
+*
+  box-sizing border-box
+
+html
+body
+  align-items center
+  background-color $bgColor
+  display flex
+  justify-content center
+  margin 0
+  padding 0
+
+.burger-toggle
+  border $borderWidth solid $borderColor
+  border-radius ($height / 2)
+  height $height
+  overflow hidden
+  position relative
+  width $width
+
+  @media(min-width 768px)
+    $borderWidth = 10px
+    $height = 200px
+    $width = 400px
+    border $borderWidth solid $borderColor
+    border-radius ($height / 2)
+    height $height
+    width $width
+
+  &__checkbox
+    border 0
+    cursor pointer
+    height 100%
+    left 0
+    margin 0
+    opacity 0
+    padding 0
+    position absolute
+    top 0
+    width  100%
+    z-index 3
+
+    &:checked ~ .worktop
+      transform translateX(-50%)
+
+    &:checked ~ .patty
+      transform translateX(140%)
+
+    &:checked ~ .patty .patty__line
+    &:checked ~ .patty .patty__meat
+      transition fill $transitionDuration ($transitionDuration + $cookingDuration)
+
+    &:checked ~ .patty .patty__line
+      fill $meatCookedLinesColor
+
+    &:checked ~ .patty .patty__meat
+      fill $meatCookedColor
+
+.worktop
+  height $height
+  left -($borderWidth * 1px)
+  position absolute
+  top -($borderWidth * 1px)
+  transition transform $transitionDuration
+  width $width * 2
+
+  @media(min-width 768px)
+    $borderWidth = 10px
+    $height = 200px
+    $width = 400px
+    height $height
+    left ($borderWidth * -1px)
+    top ($borderWidth * -1px)
+    width ($width * 2px)
+
+.patty
+  border-radius 100%
+  height $pattySize
+  left ($borderWidth * 2px)
+  overflow hidden
+  position absolute
+  top ($borderWidth * 2px)
+  transition transform $transitionDuration
+
+  @media(min-width 768px)
+    $borderWidth = 10px
+    $height = 200px
+    $pattySize = 140px
+    $width = 400px
+    height $pattySize
+    left ($borderWidth * 2px)
+    top ($borderWidth * 2px)
+
+  &__line
+  &__meat
+    transition fill $transitionDuration
+    fill $meatColor
