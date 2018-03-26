@@ -21,23 +21,39 @@ body
   justify-content center
   margin 0
   padding 0
+  height 100vh
+  width 100vw
 
 .burger-toggle
-  border $borderWidth solid $borderColor
   border-radius ($height / 2)
   height $height
   overflow hidden
+  // Wow. This is an odd one
+  -webkit-mask-image linear-gradient(0deg, #000, #000)
   position relative
   width $width
 
   @media(min-width 768px)
-    $borderWidth = 10px
     $height = 200px
     $width = 400px
-    border $borderWidth solid $borderColor
     border-radius ($height / 2)
     height $height
     width $width
+
+  &__border
+    border-radius ($height / 2)
+    position absolute
+    top 0
+    left 0
+    right 0
+    bottom 0
+    border $borderWidth solid $borderColor
+
+    @media(min-width 768px)
+      $borderWidth = 10px
+      $height = 200px
+      border-radius ($height / 2)
+      border $borderWidth solid $borderColor
 
   &__checkbox
     border 0
@@ -70,38 +86,34 @@ body
 
 .worktop
   height $height
-  left -($borderWidth * 1px)
+  left 0
   position absolute
-  top -($borderWidth * 1px)
+  top 0
   transition transform $transitionDuration
   width $width * 2
 
   @media(min-width 768px)
-    $borderWidth = 10px
     $height = 200px
     $width = 400px
     height $height
-    left ($borderWidth * -1px)
-    top ($borderWidth * -1px)
     width ($width * 2px)
 
 .patty
   border-radius 100%
   height $pattySize
-  left ($borderWidth * 2px)
+  left (($height - $pattySize) / 2px)
   overflow hidden
   position absolute
-  top ($borderWidth * 2px)
+  top (($height - $pattySize) / 2px)
   transition transform $transitionDuration
 
   @media(min-width 768px)
-    $borderWidth = 10px
     $height = 200px
     $pattySize = 140px
     $width = 400px
     height $pattySize
-    left ($borderWidth * 2px)
-    top ($borderWidth * 2px)
+    left (($height - $pattySize) / 2px)
+    top (($height - $pattySize) / 2px)
 
   &__line
   &__meat
