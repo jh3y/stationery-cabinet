@@ -1,0 +1,148 @@
+*
+  box-sizing border-box
+
+body
+  background-color #111
+  text-align       center
+  height 100vh
+  width 100vw
+  display flex
+  align-items center
+  justify-content center
+  overflow hidden
+  margin 0
+  padding 0
+  font-family 'Arial', sans-serif
+  font-size 12px
+
+
+$flapTransition = 0.25s
+$contentTransition = .25s
+$foldTransition = .25s
+$envelopeColor = #cebda6
+$patternGap = 10px
+$borderWhite = $envelopeColor
+$borderRed = #e74c3c
+$borderBlue = dodgerblue
+
+.envelope
+  width 300px
+  height 150px
+  background darken($envelopeColor, 20%)
+  position relative
+
+  &__check
+    height 100%
+    width 100%
+    z-index 10
+    opacity 0
+    position absolute
+    left 0
+    top 0
+    margin 0
+    cursor pointer
+
+    &:checked
+      & ~ .envelope__flap
+        transition transform $flapTransition 0s, z-index 0s $flapTransition
+        transform rotateX(-180deg)
+        z-index 0
+
+      & ~ .envelope__letter
+        transform translateY(-110%)
+        transition transform $contentTransition $flapTransition, z-index 0s ($flapTransition +$contentTransition)
+        z-index 5
+
+        .letter__content:nth-child(2)
+        .letter__content:nth-child(3)
+          transition transform $foldTransition ($flapTransition + $contentTransition)
+          transform rotateX(0deg)
+
+  &__flap
+    $borderWhite = darken($envelopeColor, 10%)
+    position absolute
+    top 0
+    left 0
+    right 0
+    height 75%
+    transition transform $flapTransition ($contentTransition + $foldTransition), z-index 0s ($contentTransition + $foldTransition)
+    transform-origin top center
+    backface-visibility hidden
+    background repeating-linear-gradient(-45deg, $borderWhite, $borderWhite $patternGap, $borderRed $patternGap, $borderRed ($patternGap * 2px), $borderWhite ($patternGap * 2px), $borderWhite ($patternGap * 3px), $borderBlue ($patternGap * 3px), $borderBlue ($patternGap * 4px)) 0 0 / 100% 5px no-repeat,
+      darken($envelopeColor, 10%)
+    z-index 4
+    // clip-path polygon(5% 40%, 30% 100%, 70% 100%, 95% 40%, 100% 0, 0 0)
+    clip-path polygon(5% 40%, 50% 100%, 95% 40%, 100% 0, 0 0)
+
+    &--inside
+      background darken($envelopeColor, 10%)
+      backface-visibility visible
+
+  &__back
+    height 100%
+    width 100%
+    height 100%
+    width 100%
+    position absolute
+    top 0
+    left 0
+    z-index 3
+    background repeating-linear-gradient(-45deg, $borderWhite, $borderWhite $patternGap, $borderRed $patternGap, $borderRed ($patternGap * 2px), $borderWhite ($patternGap * 2px), $borderWhite ($patternGap * 3px), $borderBlue ($patternGap * 3px), $borderBlue ($patternGap * 4px)) 0 100% / 100% 5px no-repeat,
+      repeating-linear-gradient(-45deg, $borderWhite, $borderWhite $patternGap, $borderRed $patternGap, $borderRed ($patternGap * 2px), $borderWhite ($patternGap * 2px), $borderWhite ($patternGap * 3px), $borderBlue ($patternGap * 3px), $borderBlue ($patternGap * 4px)) 0 100% / 5px 100% no-repeat,
+      repeating-linear-gradient(-45deg, $borderWhite, $borderWhite $patternGap, $borderRed $patternGap, $borderRed ($patternGap * 2px), $borderWhite ($patternGap * 2px), $borderWhite ($patternGap * 3px), $borderBlue ($patternGap * 3px), $borderBlue ($patternGap * 4px)) 100% 100% / 5px 100% no-repeat,
+      $envelopeColor
+    clip-path polygon(80% 40%, 100% 0, 100% 100%, 0 100%, 0 0, 20% 40%)
+
+    &:after
+      $borderWhite = darken($envelopeColor, 5%)
+      height 100%
+      width 100%
+      background repeating-linear-gradient(-45deg, $borderWhite, $borderWhite $patternGap, $borderRed $patternGap, $borderRed ($patternGap * 2px), $borderWhite ($patternGap * 2px), $borderWhite ($patternGap * 3px), $borderBlue ($patternGap * 3px), $borderBlue ($patternGap * 4px)) 0 100% / 100% 5px no-repeat,
+        darken($envelopeColor, 5%)
+      content ''
+      position absolute
+      top 0
+      left 0
+      clip-path polygon(70% 10%, 100% 100%, 0 100%, 30% 10%)
+
+  &__letter
+    height 90%
+    width 90%
+    z-index 1
+    position absolute
+    left 5%
+    top 5%
+    transition transform $contentTransition $foldTransition, z-index 0s $foldTransition
+    transform translateY(0)
+
+.letter
+  &__content
+    height 100%
+    width 100%
+    background-color white
+    top 0
+    left 0
+    position absolute
+    padding 14px
+    text-align justify
+
+    &:nth-child(2)
+    &:nth-child(3)
+      transition transform $foldTransition
+      top 100%
+      transform-origin top center
+      transform rotateX(180deg)
+      backface-visibility visible
+      z-index 2
+      border-top 1px solid #eee
+    
+    &:nth-child(3)
+      backface-visibility hidden
+
+.sign-off
+  position absolute
+  bottom 12px
+  right 12px
+  font-size 20px
+  font-family cursive
+  transform skewX(-20deg)
