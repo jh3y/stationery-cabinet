@@ -49,7 +49,7 @@ form
   padding 0 10px 10px
   display flex
   flex-direction column
-  height 100%
+  margin 0
 
   input
   textarea
@@ -76,19 +76,47 @@ button
   justify-content center
   align-items center
 
+.blanket
+  background-color $appAccent
+  z-index 10
+  position absolute
+  top 0
+  right 0
+  bottom 0
+  left 0
+
+  &:after
+    box-sizing border-box
+    content ''
+    height 50px
+    width 50px
+    border 5px solid white
+    border-radius 100%
+    border-left-color transparent
+    border-right-color transparent
+    position absolute
+    top 50%
+    left 50%
+    margin-left -25px
+    margin-top -25px
+    animation rotate .5s infinite linear
+
+
 .mail-screen-content
-  padding 0 0 10px
+  padding 10px
   width 100%
   height 100%
   overflow auto
+  position relative
 
 .icon
   fill $appWhite
+  position absolute
   height 24px
   width 24px
 
   &:hover
-    fill darken($appWhite, 10%)
+    fill darken($appWhite, 2%)
 
 
 #app
@@ -113,7 +141,6 @@ button
   position absolute
   top 0
   left 0
-  padding 60px 10px 10px
   z-index 3
 
   &__setting
@@ -174,15 +201,17 @@ button
 
 .mail-screen-header
   background-color var(--accent)
-  position absolute
-  top 0
-  right 0
-  left 0
+  // position absolute
+  // top 0
+  // right 0
+  // left 0
+  position relative
   height 50px
   display flex
   align-items center
   justify-content flex-end
   overflow hidden
+  width 100%
 
   button:first-child
     position absolute
@@ -191,15 +220,25 @@ button
 /**
   * Message styling
 */
+.mail-message--focus .mail-message__info
+  height auto
+  padding-right 0
+
+  .mail-message__subject
+    white-space pre-wrap
+
+button.mail-message
+  padding 0
+  padding-left 10px
+
+  &:hover
+    background-color darken($appWhite, 2%)
+
 .mail-message
   background-color $appWhite
   height 60px
   width 100%
   border-bottom 1px solid $borderColor
-  display flex
-  align-items center
-  flex-direction row
-  padding 0 10px
 
   &__action
     height 50px
@@ -226,11 +265,6 @@ button
     font-weight 300
     padding-bottom 50px
 
-  &--focus
-    display flex
-    flex-direction column
-    align-items flex-start
-
   &__avatar
     height 34px
     width  34px
@@ -244,15 +278,38 @@ button
     align-items flex-start
     flex 1
     padding-left 10px
+    height 50px
+    justify-content center
+    padding-right 60px
+    position relative
+    overflow hidden
+
+  &__timestamp
+    height 50px
+    width 50px
+    position absolute
+    right 10px
+    top 0
+    font-size 0.75rem
+    display flex
+    align-items center
+    justify-content center
+    color $textColor
 
   &__sender
     font-size 1rem
     font-weight 400
     color $textColor
+
   &__subject
     font-size .75rem
     font-weight 300
     color $textColorSecondary
+    white-space nowrap
+    text-overflow ellipsis
+    overflow hidden
+    width 100%
+    text-align left
 
 
 
@@ -269,6 +326,7 @@ button
   z-index 2
   box-shadow 0 2px 2px #c3c3c3
 
+
 .mail-composer
   height 44px
   width 44px
@@ -279,8 +337,9 @@ button
   right 10px
   transform-origin bottom right
   background-color var(--accent)
+  display flex
+  flex-direction column
   z-index 4
-  padding 60px 10px 0
 
 .mail-open
   height 50px
@@ -312,3 +371,7 @@ button
     opacity 0
   to
     opacity 1
+
+@keyframes rotate
+  to
+    transform rotate(360deg)

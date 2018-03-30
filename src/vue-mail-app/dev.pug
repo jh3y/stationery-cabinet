@@ -1,4 +1,5 @@
 #app
+  .blanket(v-if='!loaded')
   button.mail-open(v-on:click='openInbox', v-if="!messages.length")
     include mail-icon.svg
   .mail-inbox(v-if="messages.length")
@@ -43,6 +44,7 @@
           .mail-message__info
             .mail-message__sender {{activeMessage.from.name}}
             .mail-message__subject {{activeMessage.subject}}
+            .mail-message__timestamp {{activeMessage.received}}
         article.mail-message__message {{activeMessage.message}}
     //- Messages container
     ul.mail-messages.mail-messages--main(v-bind:class="{'mail-messages--load': !mailOpened}")
@@ -52,6 +54,7 @@
           .mail-message__info
             .mail-message__sender {{message.from.name}}
             .mail-message__subject {{message.subject}}
+            .mail-message__timestamp {{message.received}}
     //- Composer section
     button.mail-compose-button(v-on:click='openComposer', v-if="!composerOpen")
         include compose-icon.svg

@@ -2,19 +2,30 @@ const ANIMATION_DURATION = 0.15
 const CLASSES = {
   COMPOSER: 'mail-composer',
   HEADER: 'mail-screen-header',
-  SETTINGS: 'mail-settings'
+  SETTINGS: 'mail-settings',
 }
-const messages = []
+let messages = []
 for (let i = 0; i < 15; i++) {
   messages.push({
     from: {
       avatar: faker.image.avatar(),
-      name: faker.name.findName()
+      name: faker.name.findName(),
     },
+    received: moment(faker.date.recent()),
     subject: faker.company.bs(),
-    message: faker.lorem.paragraphs(Math.floor(Math.random() * 10 + 2))
+    message: faker.lorem.paragraphs(Math.floor(Math.random() * 10 + 2)),
   })
 }
+messages = messages.sort((a, b) => a.received.diff(b.received)).reverse()
+
+for (let message of messages) {
+  if (message.received.isAfter(moment().subtract(5, 'hours'))) {
+    message.received = message.received.format('HH:mm')
+  } else {
+    message.received = message.received.format('D MMM')
+  }
+}
+
 const app = new Vue({
   el: '#app',
   data: {
@@ -32,7 +43,11 @@ const app = new Vue({
     openingSettings: false,
     closingSettings: false,
     settingsOpen: false,
+    loaded: false,
     messages: [],
+  },
+  mounted: function() {
+    this.loaded = true
   },
   updated: function() {
     this.$nextTick(function() {
@@ -65,6 +80,9 @@ const app = new Vue({
         const sender = messageHeader.querySelector('.mail-message__sender')
         const subject = messageHeader.querySelector('.mail-message__subject')
         const avatar = messageHeader.querySelector('.mail-message__avatar')
+        const timestamp = messageHeader.querySelector(
+          '.mail-message__timestamp'
+        )
         const openTl = new TimelineMax({
           onComplete: () => {
             this.messageOpen = true
@@ -78,29 +96,49 @@ const app = new Vue({
               bottom: 0,
               left: 0,
               height: '100%',
-              paddingTop: 50,
             })
           )
-          .add(TweenMax.to(messageHeader, ANIMATION_DURATION, {
-            height: 'auto',
-            paddingTop: 10,
-            marginBottom: 10,
-          }), 0)
-          .add(TweenMax.to(sender, ANIMATION_DURATION, {
-            fontSize: '0.75rem'
-          }), 0)
-          .add(TweenMax.to(subject, ANIMATION_DURATION, {
-            fontSize: '1.25rem',
-            fontWeight: 'bold',
-            color: '#000'
-          }), 0)
-          .add(TweenMax.to(avatar, ANIMATION_DURATION, {
-            height: 50,
-            width: 50,
-          }), 0)
+          .add(
+            TweenMax.to(messageHeader, ANIMATION_DURATION, {
+              height: 'auto',
+              paddingTop: 10,
+              marginBottom: 10,
+            }),
+            0
+          )
+          .add(
+            TweenMax.to(sender, ANIMATION_DURATION, {
+              fontSize: '0.75rem',
+            }),
+            0
+          )
+          .add(
+            TweenMax.to(timestamp, ANIMATION_DURATION, {
+              fontSize: '0.65rem',
+              top: 2,
+              height: '0.65rem',
+            }),
+            0
+          )
+          .add(
+            TweenMax.to(subject, ANIMATION_DURATION, {
+              fontSize: '1.25rem',
+              fontWeight: 'bold',
+              color: '#000',
+            }),
+            0
+          )
+          .add(
+            TweenMax.to(avatar, ANIMATION_DURATION, {
+              height: 50,
+              width: 50,
+            }),
+            0
+          )
           .add(TweenMax.to(fakeOne, ANIMATION_DURATION, { bottom: '100%' }), 0)
           .add(TweenMax.to(fakeTwo, ANIMATION_DURATION, { top: '100%' }), 0)
           .add(TweenMax.from(messageNav, ANIMATION_DURATION, { height: 0 }), 0)
+          .add(TweenMax.to(messageNav, ANIMATION_DURATION, { height: 50 }), 0)
           .add(
             TweenMax.from(messageMessage, ANIMATION_DURATION, { height: 0 }),
             0
