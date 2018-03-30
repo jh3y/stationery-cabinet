@@ -1,0 +1,70 @@
+#app
+  button.mail-open(v-on:click='openInbox', v-if="!messages.length")
+    include mail-icon.svg
+  .mail-inbox(v-if="messages.length")
+    //- Header
+    header.mail-screen-header
+      button.mail-close(v-on:click='closeInbox')
+        include back-icon.svg
+      h1.mail-header__title Inbox
+      button.mail-message__action(v-on:click="openSettings")
+        include gear-icon.svg
+    //- Settings container
+    .mail-settings(v-if="openingSettings || settingsOpen")
+      header.mail-screen-header
+        button.mail-close(v-on:click='closeSettings')
+          include close-icon.svg
+        h1.mail-header__title Settings
+      .mail-screen-content
+        .mail-settings__setting
+          input(type="color", id="theme", :value="theme", v-on:change="updateTheme")
+          label(for="theme") Theme
+    //- Fake message containers
+    ul.fake-messages.fake-messages--top(v-if='activeMessage && !messageOpen', v-bind:style="{bottom: fakeOnePos}")
+      li.mail-message(v-for='(message, idx) in messages.slice(0, activeMessageIndex)') {{message.subject}}
+    ul.fake-messages.fake-messages--bottom(v-if='activeMessage && !messageOpen', v-bind:style="{top: fakeTwoPos}")
+      li.mail-message(v-for='(message, idx) in messages.slice(activeMessageIndex, messages.length)') {{message.subject}}
+    //- Active message container
+    .mail-message.mail-message--focus(v-if="activeMessage", v-bind:class="{'mail-message--opening': activeMessage && !messageOpen, 'mail-message--open': messageOpen}" v-bind:style="{top: messageTop + 'px'}")
+      header.mail-screen-header
+        button.mail-message__action(v-on:click="closeMessage")
+          include back-icon.svg
+        button.mail-message__action
+          include reply-icon.svg
+        button.mail-message__action
+          include star-icon.svg
+        button.mail-message__action
+          include trash-icon.svg
+        button.mail-message__action
+          include warning-icon.svg
+      .mail-screen-content
+        .mail-message__header
+          img.mail-message__avatar(:src="activeMessage.from.avatar")
+          .mail-message__info
+            .mail-message__sender {{activeMessage.from.name}}
+            .mail-message__subject {{activeMessage.subject}}
+        article.mail-message__message {{activeMessage.message}}
+    //- Messages container
+    ul.mail-messages.mail-messages--main(v-bind:class="{'mail-messages--load': !mailOpened}")
+      li(v-for="(message, idx) in messages")
+        button.mail-message(:id="'message--' + idx", v-on:click="openMessage(message, idx)")
+          img.mail-message__avatar(:src="message.from.avatar")
+          .mail-message__info
+            .mail-message__sender {{message.from.name}}
+            .mail-message__subject {{message.subject}}
+    //- Composer section
+    button.mail-compose-button(v-on:click='openComposer', v-if="!composerOpen")
+        include compose-icon.svg
+    .mail-composer(v-if="openingComposer || composerOpen")
+      header.mail-screen-header
+        button.mail-message__action(v-on:click="closeComposer")
+          include close-icon.svg
+        h1.mail-header__title.mail-composer__title Compose
+        button.mail-message__action
+          include paperclip-icon.svg
+        button.mail-message__action
+          include send-icon.svg
+      form.mail-screen-content
+        input(type="text", placeholder="To")
+        input(type="text", placeholder="Subject")
+        textarea(type="text", placeholder="Compose")

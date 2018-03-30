@@ -1,0 +1,314 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400')
+
+$bg = #6c7a89
+$appWhite = #ecf0f1
+$appAccent = #a7dde9
+$textColor = #707070
+$borderColor = lighten(#b5c5c9, 50%)
+$textColorSecondary = #7e7e7e
+$animDuration = .15s
+
+:root
+  --accent $appAccent
+
+*
+  box-sizing border-box
+  outline 0
+
+html
+body
+  align-items      center
+  background-color $bg
+  color $textColor
+  display          flex
+  flex-direction    column
+  font-size        16px
+  font-family 'Lato', sans-serif
+  justify-content  center
+  margin           0
+  overflow          auto
+  padding          0
+  width            100vw
+  min-height       100vh
+
+label
+  color $textColor
+
+input
+label
+  cursor pointer
+
+input[type="color"]
+  height 40px
+  width 40px
+  border 0
+  margin-right 10px
+
+form
+  width 100%
+  padding 0 10px 10px
+  display flex
+  flex-direction column
+  height 100%
+
+  input
+  textarea
+    border-radius 4px
+    border 0
+    margin-bottom 4px
+    padding 4px 12px
+    font-family 'Lato', sans-serif
+    width 100%
+    line-height 30px
+
+    &::placeholder
+      color #c3c3c3
+
+  textarea
+    flex 1
+    resize none
+
+button
+  background-color var(--accent)
+  cursor pointer
+  border 0
+  display flex
+  justify-content center
+  align-items center
+
+.mail-screen-content
+  padding 0 0 10px
+  width 100%
+  height 100%
+  overflow auto
+
+.icon
+  fill $appWhite
+  height 24px
+  width 24px
+
+  &:hover
+    fill darken($appWhite, 10%)
+
+
+#app
+  height 100vh
+  width 100vw
+  position relative
+  background-color var(--accent)
+  overflow hidden
+
+  @media(min-width 768px)
+    height 480px
+    width 320px
+
+.mail-inbox
+  height 100%
+  background-color $appWhite
+
+.mail-settings
+  height 100%
+  width 100%
+  background-color $appWhite
+  position absolute
+  top 0
+  left 0
+  padding 60px 10px 10px
+  z-index 3
+
+  &__setting
+    display flex
+    flex-direction row
+    align-items center
+
+.mail-close
+  position absolute
+  left 0
+  height 50px
+  width 50px
+
+.mail-header__title
+  margin 0
+  padding 0
+  line-height 50px
+  font-size 1.2rem
+  color $appWhite
+  flex 1
+  text-align left
+  padding-left 54px
+
+.mail-messages
+.fake-messages
+  padding 0
+  margin 0
+  list-style none
+  overflow auto
+  position absolute
+  top 50px
+  left 0
+  right 0
+  bottom 0
+  padding-bottom 50px
+
+.fake-messages
+  bottom auto
+  z-index 1
+  top auto
+  padding 0
+
+
+/**
+  * Mail messages should animate on first load
+*/
+.mail-messages--load
+  .mail-message
+    opacity 0
+    animation fadeIn $animDuration ease 0s
+    animation-fill-mode forwards
+
+  for $message in (1..15)
+    li:nth-child({$message})
+      button
+        animation-delay ($message * .1s)
+
+
+.mail-screen-header
+  background-color var(--accent)
+  position absolute
+  top 0
+  right 0
+  left 0
+  height 50px
+  display flex
+  align-items center
+  justify-content flex-end
+  overflow hidden
+
+  button:first-child
+    position absolute
+    left 0
+
+/**
+  * Message styling
+*/
+.mail-message
+  background-color $appWhite
+  height 60px
+  width 100%
+  border-bottom 1px solid $borderColor
+  display flex
+  align-items center
+  flex-direction row
+  padding 0 10px
+
+  &__action
+    height 50px
+    width 50px
+
+  &--opening
+  &--open
+    position absolute
+    z-index 3
+    border 0
+
+
+  &__header
+    display flex
+    flex-direction row
+    align-items center
+    height 60px
+
+  &__content
+    overflow auto
+
+  &__message
+    color $textColorSecondary
+    font-weight 300
+    padding-bottom 50px
+
+  &--focus
+    display flex
+    flex-direction column
+    align-items flex-start
+
+  &__avatar
+    height 34px
+    width  34px
+    background-color var(--accent)
+    border-radius 100%
+    overflow hidden
+
+  &__info
+    display flex
+    flex-direction column
+    align-items flex-start
+    flex 1
+    padding-left 10px
+
+  &__sender
+    font-size 1rem
+    font-weight 400
+    color $textColor
+  &__subject
+    font-size .75rem
+    font-weight 300
+    color $textColorSecondary
+
+
+
+.mail-compose-button
+  height 44px
+  width 44px
+  background-color var(--accent)
+  border-radius 100%
+  border 0
+  cursor pointer
+  bottom 10px
+  right 10px
+  position absolute
+  z-index 2
+  box-shadow 0 2px 2px #c3c3c3
+
+.mail-composer
+  height 44px
+  width 44px
+  border-radius 100%
+  border none
+  position absolute
+  bottom 10px
+  right 10px
+  transform-origin bottom right
+  background-color var(--accent)
+  z-index 4
+  padding 60px 10px 0
+
+.mail-open
+  height 50px
+  width 50px
+  position absolute
+  top 50%
+  left 50%
+  margin-left -25px
+  margin-top -25px
+  border-radius 100%
+  border 5px solid $appWhite
+  animation pulse 4s infinite ease
+  background-color var(--accent)
+
+  .icon:hover
+    fill $appWhite
+
+
+@keyframes pulse
+  0%, 100%
+    transform scale(1)
+    box-shadow 0px 2px 2px black
+  50%
+    transform scale(1.05)
+    box-shadow 0px 4px 4px black
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
