@@ -1,5 +1,5 @@
 const getNumberInRange = (upper, lower = 0, negate = false) => {
-  let result = Math.random() * upper + lower
+  let result = Math.floor(Math.random() * upper + lower)
   if (negate) {
     return (result *= Math.random() > 0.5 ? 1 : -1)
   } else {
@@ -15,8 +15,8 @@ class Particle {
   STATE = {
     active: false,
     life: 0,
-    velocityX: getNumberInRange(1),
-    velocityY: getNumberInRange(1),
+    velocityX: getNumberInRange(3, 1, true),
+    velocityY: getNumberInRange(3, 1, true),
   }
 
   constructor(options) {
@@ -53,8 +53,8 @@ class Particle {
       opacity: 0,
       x: getNumberInRange(window.innerWidth),
       y: getNumberInRange(window.innerHeight),
-      velocityX: getNumberInRange(1, 0, true),
-      velocityY: getNumberInRange(1, 0, true),
+      velocityX: getNumberInRange(3, 1, true),
+      velocityY: getNumberInRange(3, 1, true),
       rotation: getNumberInRange(360),
     })
   }
@@ -103,6 +103,7 @@ class ShootingSVG {
     this.render()
   }
   reset = () => {
+    console.info('invoke')
     this.PARTICLES = []
     this.CANVAS.width = window.innerWidth
     this.CANVAS.height = window.innerHeight

@@ -1,5 +1,5 @@
 const getNumberInRange = (upper, lower = 0, negate = false) => {
-  let result = Math.random() * upper + lower
+  let result = Math.floor(Math.random() * upper + lower)
   if (negate) {
     return (result *= Math.random() > 0.5 ? 1 : -1)
   } else {
@@ -15,8 +15,8 @@ class Star {
   STATE = {
     active: false,
     life: 0,
-    velocityX: getNumberInRange(1, 0, true),
-    velocityY: getNumberInRange(1, 0, true),
+    velocityX: getNumberInRange(3, 1, true),
+    velocityY: getNumberInRange(3, 1, true),
   }
 
   constructor(options) {
@@ -43,8 +43,8 @@ class Star {
       opacity: 0,
       x: Math.floor(getNumberInRange(window.innerWidth, 1)),
       y: Math.floor(getNumberInRange(window.innerHeight, 1)),
-      velocityX: getNumberInRange(1, 0, true),
-      velocityY: getNumberInRange(1, 0, true),
+      velocityX: getNumberInRange(3, 1, true),
+      velocityY: getNumberInRange(3, 1, true),
       rotation: Math.floor(getNumberInRange(360)),
     })
   }
@@ -121,6 +121,7 @@ class StarTrail {
     particleRenderProbability: 0.95,
     amount: 5,
     trippy: false,
+    starColor: '#663399'
   }
 
   PARTICLES = []
@@ -152,6 +153,7 @@ class StarTrail {
       const x = getNumberInRange(window.innerWidth)
       const y = getNumberInRange(window.innerHeight)
       const death = getNumberInRange(particleLife, particleLife / 2)
+      const fillColor = OPTIONS.starColor === 'random' ? `rgb(${Math.floor(getNumberInRange(255))}, ${Math.floor(getNumberInRange(255))}, ${Math.floor(getNumberInRange(255))})` : OPTIONS.starColor
       this.PARTICLES.push(
         new Star({
           size,
@@ -159,6 +161,7 @@ class StarTrail {
           x,
           y,
           death,
+          fillColor,
         })
       )
     }
@@ -197,7 +200,7 @@ class StarTrail {
     requestAnimationFrame(() => this.render())
   }
 }
-const myStars = new StarTrail({ id: 'app', amount: 20 })
+const myStars = new StarTrail({ id: 'app', amount: 20, starColor: 'random' })
 window.addEventListener(
   'resize',
   _.debounce(() => {

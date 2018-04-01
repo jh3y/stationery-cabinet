@@ -1,5 +1,5 @@
 const getNumberInRange = (upper, lower = 0, negate = false) => {
-  let result = Math.random() * upper + lower
+  let result = Math.floor(Math.random() * upper + lower)
   if (negate) {
     return (result *= Math.random() > 0.5 ? 1 : -1)
   } else {
@@ -15,8 +15,8 @@ class Star {
   STATE = {
     active: false,
     life: 0,
-    velocityX: getNumberInRange(1, 0, true),
-    velocityY: getNumberInRange(1, 0, true),
+    velocityX: getNumberInRange(3, 1, true),
+    velocityY: getNumberInRange(3, 1, true),
   }
 
   constructor(options) {
@@ -67,11 +67,11 @@ class Star {
     this.STATE = Object.assign({}, this.STATE, {
       active: false,
       life: 0,
-      x: Math.floor(getNumberInRange(window.innerWidth, 1)),
-      y: Math.floor(getNumberInRange(window.innerHeight, 1)),
-      velocityX: getNumberInRange(1, 0, true),
-      velocityY: getNumberInRange(1, 0, true),
-      rotation: Math.floor(getNumberInRange(360)),
+      x: getNumberInRange(window.innerWidth),
+      y: getNumberInRange(window.innerHeight),
+      velocityX: getNumberInRange(3, 1, true),
+      velocityY: getNumberInRange(3, 1, true),
+      rotation: getNumberInRange(360),
     })
   }
   update = () => {
@@ -92,9 +92,10 @@ class Star {
       newVelocityY *= 1.075
     }
 
+    // want to limit the position updates, just use modulo on the life counter 👍
     this.STATE = Object.assign({}, STATE, {
-      x: x + velocityX,
-      y: y + velocityY,
+      x: life % 2 === 0 ? x + velocityX : x,
+      y: life % 2 === 0 ? y + velocityY : y,
       life: life + 1,
       velocityX: newVelocityX,
       velocityY: newVelocityY,
@@ -108,7 +109,7 @@ class Star {
   }
 }
 
-class SeeingStars {
+class ShootingStars {
   DEFAULTS = {
     particleLife: 300,
     particleRenderProbability: 0.5,
@@ -193,7 +194,7 @@ class SeeingStars {
     requestAnimationFrame(() => this.render())
   }
 }
-const myStars = new SeeingStars({ id: 'app', amount: 20 })
+const myStars = new ShootingStars({ id: 'app', amount: 20 })
 window.addEventListener(
   'resize',
   _.debounce(() => {
