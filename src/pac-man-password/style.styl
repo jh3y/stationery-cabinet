@@ -1,0 +1,48 @@
+*
+  box-sizing border-box
+
+
+html
+body
+  background #111
+  display flex
+  align-items center
+  justify-content center
+
+.pac-input
+  position relative
+
+  // &[data-visible] > input
+  //   transition letter-spacing 5s
+
+  & > input
+    border 8px solid blue
+    border-radius 8px
+    font-size 50px
+    line-height 50px
+    padding 4px 30px 4px 12px
+    letter-spacing 1px
+
+  &__pac
+    cursor pointer
+    position absolute
+    border-radius 100%
+    right 22px
+    height 44px
+    width 44px
+    background red
+    top 50%
+    margin-top -22px
+
+  &__ghost
+    cursor pointer
+    position absolute
+    border-radius 100%
+    right 22px
+    height 44px
+    width 44px
+    background purple
+    top 50%
+    margin-top -22px
+    transform scale(0)
+
