@@ -2,47 +2,133 @@
   box-sizing border-box
 
 
+$bg = #111
+$input = #aaa
+$pac = yellow
+$border = blue
+$entitySize = 30px
+$inputWidth = 300px
+$inputHeight = 50px
+$fontSize = 24px
+$chompSpeed = .25s
+$entityMargin = ($inputHeight - $entitySize) / 2px
+
 html
 body
-  background #111
+  background $bg
   display flex
   align-items center
   justify-content center
+  height 100vh
+  width 100vw
+  font-family 'Arial', sans-serif
 
 .pac-input
   position relative
-
-  // &[data-visible] > input
-  //   transition letter-spacing 5s
+  overflow hidden
+  border 6px solid $border
+  border-radius 8px
 
   & > input
-    border 8px solid blue
-    border-radius 8px
-    font-size 50px
-    line-height 50px
-    padding 4px 30px 4px 12px
+    border 0
+    border-radius 0
+    font-size $fontSize
+    line-height $fontSize
+    padding 6px 45px 6px 12px
     letter-spacing 1px
+    width $inputWidth
+    height $inputHeight
+    background $input
+    background-image none !important
+
+  &__cloak
+    background-color $input
+    width 100%
+    height $entitySize
+    position absolute
+    top $entityMargin
+    left 100%
+    margin-left -(($entitySize / 2px) + $entityMargin)
+
+  &__ghost
+    cursor pointer
+    height $entitySize
+    width 100%
+    position absolute
+    right 105%
+    top $entityMargin
+    width $entitySize
+    border-radius 100% 100% 0 0
+    position absolute
+    z-index 1
+    clip-path polygon(15% 100%, 0 85%, 0 0, 100% 0, 100% 85%, 85% 100%, 66% 85%, 50% 100%, 30% 85%)
+    -webkit-clip-path polygon(15% 100%, 0 85%, 0 0, 100% 0, 100% 85%, 85% 100%, 66% 85%, 50% 100%, 30% 85%)
+
+    &-eyes
+      height 6px
+      width 20px
+      position absolute
+      top 8px
+      left 5px
+
+
+      &:before
+      &:after
+        border-radius 100%
+        content ''
+        height 6px
+        width 6px
+        background radial-gradient(circle at 30% 60%, blue 0, blue 25%, white 25%, white 100%)
+        position absolute
+
+      &:after
+        left 8px
 
   &__pac
     cursor pointer
     position absolute
-    border-radius 100%
-    right 22px
-    height 44px
-    width 44px
-    background red
-    top 50%
-    margin-top -22px
+    top $entityMargin
+    right $entityMargin
+    height $entitySize
+    width $entitySize
+    z-index 1
 
-  &__ghost
-    cursor pointer
-    position absolute
-    border-radius 100%
-    right 22px
-    height 44px
-    width 44px
-    background purple
-    top 50%
-    margin-top -22px
-    transform scale(0)
+    &--chomping
+      &:before
+        animation-name chomp--1
+      &:after
+        animation-name chomp--2
 
+
+    &:before
+    &:after
+      content ''
+      position absolute
+      left 0
+      border-radius 100%
+      border ($entitySize / 2px) solid $pac
+      transform-origin center center
+      animation-duration $chompSpeed
+      animation-timing-function linear
+      animation-iteration-count infinite
+
+    &:before
+      border-left-color transparent
+      border-bottom-color transparent
+
+    &:after
+      border-top-color transparent
+      border-right-color transparent
+      transform rotate(-90deg)
+
+@keyframes chomp--1
+  0%, 100%
+    transform rotate(0deg)
+  50%
+    transform rotate(-45deg)
+
+@keyframes chomp--2
+  0%, 100%
+    transform rotate(-90deg)
+  50%
+    transform rotate(-45deg)
