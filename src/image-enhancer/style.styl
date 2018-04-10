@@ -1,0 +1,88 @@
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+body
+  background-color #111
+  text-align       center
+  display flex
+  height 100vh
+  width 100vw
+  align-items center
+  justify-content center
+
+
+$cells = 100
+$cellsPerRow = 10
+$size = 300px
+$duration = 2s
+
+.image-enhancer
+  cursor pointer
+  height $size
+  width $size
+  position relative
+  overflow hidden
+
+  &--enhancing:before
+    animation flash (($duration / $cellsPerRow) * 1s) steps(2)
+    animation-iteration-count $cellsPerRow
+
+
+  &:before
+    content ''
+    height 100%
+    width 100%
+    display block
+    position absolute
+    z-index 3
+
+  &__dehance
+    position absolute
+    top 0
+    right 0
+    z-index 5
+    width 44px
+    height 44px
+
+  &__selected
+    z-index 2
+
+  &:after
+    $borderWidth = .25
+    $columnWidth = 100 / $cellsPerRow
+    content ''
+    height 100%
+    width 100%
+    display block
+    background repeating-linear-gradient(90deg, blue 0%, blue ($borderWidth * 1%), transparent ($borderWidth * 1%), transparent (($columnWidth - $borderWidth) * 1%), blue (($columnWidth - $borderWidth) * 1%), blue ($columnWidth * 1%)),
+      repeating-linear-gradient(0deg, blue 0%, blue ($borderWidth * 1%), transparent ($borderWidth * 1%), transparent (($columnWidth - $borderWidth) * 1%), blue (($columnWidth - $borderWidth) * 1%), blue ($columnWidth * 1%))
+    z-index 2
+    position absolute
+
+  div
+    background-image url(https://source.unsplash.com/random/1200x1200)
+    background-size $size $size
+    background-repeat no-repeat
+    position absolute
+    height ($size / $cellsPerRow)
+    width ($size / $cellsPerRow)
+
+    for $cell in (1..$cells)
+      &:nth-child({$cell})
+        $div = $cell - 1
+        $divY = $cell - 1
+        $x = $div % $cellsPerRow
+        $y = floor($cell / $cellsPerRow)
+        if ($cell % $cellsPerRow == 0)
+          $y = $y - 1
+
+        background-position (-($x * ($size / $cellsPerRow))) (-($y * ($size / $cellsPerRow)))
+        top $y * (100% / $cellsPerRow)
+        left $x * (100% / $cellsPerRow)
+
+@keyframes flash
+  0%, 24%
+    background-color dodgerblue
+  25%, 100%
+    background-color transparent
