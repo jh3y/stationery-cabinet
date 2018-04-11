@@ -24,9 +24,24 @@ $duration = 2s
   position relative
   overflow hidden
 
-  &--enhancing:before
-    animation flash (($duration / $cellsPerRow) * 1s) steps(2)
-    animation-iteration-count $cellsPerRow
+  &:hover .image-enhancer__indicator
+    display inline-block
+
+  &__indicator
+    display none
+    border 2px solid white
+    z-index 5
+    position absolute
+    height ($size / $cellsPerRow)
+    width ($size / $cellsPerRow)
+    $multiplier = $cellsPerRow * 1%
+    top "calc(var(--y) * %s)" % $multiplier
+    left "calc(var(--x) * %s)" % $multiplier
+
+  &--enhancing
+    &:before
+      animation flash (($duration / $cellsPerRow) * 1s) steps(2)
+      animation-iteration-count $cellsPerRow
 
 
   &:before
@@ -35,15 +50,25 @@ $duration = 2s
     width 100%
     display block
     position absolute
-    z-index 3
+    z-index 5
 
   &__dehance
+    cursor pointer
     position absolute
-    top 0
-    right 0
+    top 8px
+    right 8px
     z-index 5
     width 44px
     height 44px
+    background blue
+    border 0
+
+    &:hover
+      background lighten(blue, 10%)
+
+    &:active
+      background darken(blue, 20%)
+
 
   &__selected
     z-index 2
@@ -57,11 +82,12 @@ $duration = 2s
     display block
     background repeating-linear-gradient(90deg, blue 0%, blue ($borderWidth * 1%), transparent ($borderWidth * 1%), transparent (($columnWidth - $borderWidth) * 1%), blue (($columnWidth - $borderWidth) * 1%), blue ($columnWidth * 1%)),
       repeating-linear-gradient(0deg, blue 0%, blue ($borderWidth * 1%), transparent ($borderWidth * 1%), transparent (($columnWidth - $borderWidth) * 1%), blue (($columnWidth - $borderWidth) * 1%), blue ($columnWidth * 1%))
-    z-index 2
+    z-index 4
     position absolute
 
   div
     background-image url(https://source.unsplash.com/random/1200x1200)
+    // background-image url(https://images.unsplash.com/photo-1503610220663-a45ce52a7137?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=720a1c735948451ad32bf3a72bb2a776&auto=format&fit=crop&w=376&q=80)
     background-size $size $size
     background-repeat no-repeat
     position absolute
