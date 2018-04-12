@@ -1,114 +1,20 @@
 *
   box-sizing border-box
-  animation  fadeIn .5s
 
 body
-  background-color #111
-  text-align       center
+  background linear-gradient(0deg, blue, #111 40%)
   display flex
   height 100vh
   width 100vw
   align-items center
   justify-content center
 
-
-$cells = 100
-$cellsPerRow = 10
-$size = 300px
-$duration = 2s
-
-.image-enhancer
-  cursor pointer
-  height $size
-  width $size
-  position relative
-  overflow hidden
-
-  &:hover .image-enhancer__indicator
-    display inline-block
-
-  &__indicator
-    display none
-    border 2px solid white
-    z-index 5
-    position absolute
-    height ($size / $cellsPerRow)
-    width ($size / $cellsPerRow)
-    $multiplier = $cellsPerRow * 1%
-    top "calc(var(--y) * %s)" % $multiplier
-    left "calc(var(--x) * %s)" % $multiplier
-
-  &--enhancing
-    &:before
-      animation flash (($duration / $cellsPerRow) * 1s) steps(2)
-      animation-iteration-count $cellsPerRow
-
-
-  &:before
-    content ''
-    height 100%
-    width 100%
-    display block
-    position absolute
-    z-index 5
-
-  &__dehance
-    cursor pointer
-    position absolute
-    top 8px
-    right 8px
-    z-index 5
-    width 44px
-    height 44px
-    background blue
-    border 0
-
-    &:hover
-      background lighten(blue, 10%)
-
-    &:active
-      background darken(blue, 20%)
-
-
-  &__selected
-    z-index 2
-
-  &:after
-    $borderWidth = .25
-    $columnWidth = 100 / $cellsPerRow
-    content ''
-    height 100%
-    width 100%
-    display block
-    background repeating-linear-gradient(90deg, blue 0%, blue ($borderWidth * 1%), transparent ($borderWidth * 1%), transparent (($columnWidth - $borderWidth) * 1%), blue (($columnWidth - $borderWidth) * 1%), blue ($columnWidth * 1%)),
-      repeating-linear-gradient(0deg, blue 0%, blue ($borderWidth * 1%), transparent ($borderWidth * 1%), transparent (($columnWidth - $borderWidth) * 1%), blue (($columnWidth - $borderWidth) * 1%), blue ($columnWidth * 1%))
-    z-index 4
-    position absolute
-
-  div
-    background-image url(https://source.unsplash.com/random/1200x1200)
-    // background-image url(https://images.unsplash.com/photo-1503610220663-a45ce52a7137?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=720a1c735948451ad32bf3a72bb2a776&auto=format&fit=crop&w=376&q=80)
-    background-size $size $size
-    background-repeat no-repeat
-    position absolute
-    height ($size / $cellsPerRow)
-    width ($size / $cellsPerRow)
-
-    for $cell in (1..$cells)
-      &:nth-child({$cell})
-        $div = $cell - 1
-        $divY = $cell - 1
-        $x = $div % $cellsPerRow
-        $y = floor($cell / $cellsPerRow)
-        if ($cell % $cellsPerRow == 0)
-          $y = $y - 1
-
-        background-position (-($x * ($size / $cellsPerRow))) (-($y * ($size / $cellsPerRow)))
-        top $y * (100% / $cellsPerRow)
-        left $x * (100% / $cellsPerRow)
-
 @keyframes flash
   0%, 24%
     background-color dodgerblue
   25%, 100%
     background-color transparent
+
+@keyframes load
+  to
+    transform translateY(100000%)
