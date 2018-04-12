@@ -182,6 +182,7 @@ Vue.component('image-enhancer', {
       }
     },
     indicate: function(e) {
+      if (this.LOADING) return
       const pos = this.getCursorPos(e)
       this.$refs.indicator.$el.style.setProperty('--x', pos.x)
       this.$refs.indicator.$el.style.setProperty('--y', pos.y)
@@ -285,14 +286,15 @@ Vue.component('image-enhancer', {
   },
   mounted: function(e) {
     // Small hacky piece for loading of the image 😅
-    const img = document.createElement('img')
-    img.onload = () => {
-      this.LOADING = false
-      img.remove()
-    }
-    img.src = this.src
-    img.style.display = 'none'
-    document.body.appendChild(img)
+    const assetHasLoaded = (src) => new Promise((resolve, reject) => {
+      const img = new Image()
+      img.onload = resolve
+      img.onerror = reject
+      img.src = src
+    })
+    assetHasLoaded(this.src)
+      .then(() => this.LOADING = false)
+      .catch(() => console.error(`There was a problem loading ${this.src}`))
   },
 })
 

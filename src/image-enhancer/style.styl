@@ -18,3 +18,9 @@ body
 @keyframes load
   to
     transform translateY(100000%)
+
+$noOfPanels = 10
+for num in (1..$noOfPanels)
+  .carousel__activator:nth-of-type({num}) ~ .carousel__slide:nth-of-type({num})
+    display block
+    animation showSlide .5s
