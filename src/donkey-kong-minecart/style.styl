@@ -2,13 +2,24 @@
   box-sizing border-box
 
 body
-  background-color #111
-  background radial-gradient(rgb(65, 45, 27), #111)
+  background-color rebeccapurple
   height 100vh
   width 100vw
   display flex
   align-items center
   justify-content center
+
+  &:after
+    content ''
+    position fixed
+    background radial-gradient(circle, transparent, #111 150px)
+    top 0
+    right 0
+    bottom 0
+    left 0
+
+    @media(min-width 768px)
+      background radial-gradient(circle, transparent, #111 300px)
 
 svg
   width 250px
@@ -28,7 +39,7 @@ svg
 
 $trackShine = rgb(76, 73, 69)
 $trackGirder = rgb(26, 20, 21)
-$trackWood = rgb(53, 31, 26)
+$trackWood = #c0392b
 $trackWidth = 300px
 .track
   $trackHeight = 75px
