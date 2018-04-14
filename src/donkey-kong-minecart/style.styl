@@ -1,0 +1,80 @@
+*
+  box-sizing border-box
+
+body
+  background-color #111
+  background radial-gradient(rgb(65, 45, 27), #111)
+  height 100vh
+  width 100vw
+  display flex
+  align-items center
+  justify-content center
+
+svg
+  width 250px
+  z-index 2
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+.minecart
+  &__light
+    animation flicker 4s infinite steps(1)
+.dk
+  &__tie
+    animation flail .1s infinite
+
+
+$trackShine = rgb(76, 73, 69)
+$trackGirder = rgb(26, 20, 21)
+$trackWood = rgb(53, 31, 26)
+$trackWidth = 300px
+.track
+  $trackHeight = 75px
+  $cartWheelSize = 40px
+  width $trackWidth
+  height $trackHeight
+  background linear-gradient(0deg, transparent, transparent ($cartWheelSize * 0.25), $trackGirder ($cartWheelSize * 0.25), $trackGirder ($cartWheelSize * 0.5), $trackShine ($cartWheelSize * 0.5), $trackShine ($cartWheelSize * 0.65), transparent ($cartWheelSize * 0.65), transparent ($trackHeight - ($cartWheelSize * 0.375)), $trackGirder ($trackHeight - ($cartWheelSize * 0.375)), $trackGirder ($trackHeight - ($cartWheelSize * 0.15)), $trackShine ($trackHeight - ($cartWheelSize * 0.15))),
+    repeating-linear-gradient(90deg, $trackWood, $trackWood ($trackWidth * 0.05), transparent ($trackWidth * 0.05), transparent ($trackWidth * 0.2), $trackWood ($trackWidth * 0.2))
+  animation roll .75s infinite linear
+  position absolute
+  transform translateY($trackHeight)
+
+@keyframes flail
+  0%
+    transform translateY(0px)
+  100%
+    transform translateY(1px)
+
+@keyframes roll
+  from
+    background-position 0 0
+  to
+    background-position -($trackWidth * 2) 0
+
+@keyframes keep-rollin
+    from
+      background-position 0 0
+    to
+      background-position -($trackWidth * 4) 0
+
+@keyframes flicker
+  0%, 100%
+    opacity .5
+  95%
+    opacity 0
+
+@media(min-width 768px)
+  svg
+    width 500px
+  .track
+    $trackWidth = 600px
+    $trackHeight = 150px
+    $cartWheelSize = 80px
+    animation-name keep-rollin
+    width $trackWidth
+    height $trackHeight
+    transform translateY($trackHeight)
+    background linear-gradient(0deg, transparent, transparent ($cartWheelSize * 0.25), $trackGirder ($cartWheelSize * 0.25), $trackGirder ($cartWheelSize * 0.5), $trackShine ($cartWheelSize * 0.5), $trackShine ($cartWheelSize * 0.65), transparent ($cartWheelSize * 0.65), transparent ($trackHeight - ($cartWheelSize * 0.375)), $trackGirder ($trackHeight - ($cartWheelSize * 0.375)), $trackGirder ($trackHeight - ($cartWheelSize * 0.15)), $trackShine ($trackHeight - ($cartWheelSize * 0.15))),
+      repeating-linear-gradient(90deg, $trackWood, $trackWood ($trackWidth * 0.05), transparent ($trackWidth * 0.05), transparent ($trackWidth * 0.2), $trackWood ($trackWidth * 0.2))
