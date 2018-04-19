@@ -181,18 +181,22 @@ class App extends Component {
             </footer>
           </div>
         )}
-        {poem &&
-          poem.lines.length > 20 && (
-            <div className="length-warning">
+        {poem && (
+          <div className="length-warning">
+            {poem.lines.length > 20 && (
               <h2 className="length-warning__msg">
                 ⚠️ This poem could be pretty long, you might be waiting a
                 while...
               </h2>
-              <button className={'length-warning__btn'} onClick={getPoem}>
-                Get another one
-              </button>
-            </div>
-          )}
+            )}
+
+            <button
+              className={'length-warning__btn'}
+              onClick={getPoem}>
+              Get another
+            </button>
+          </div>
+        )}
       </Fragment>
     )
   }
