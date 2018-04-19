@@ -1,0 +1,25 @@
+*
+  box-sizing border-box
+
+.slide
+  background-attachment fixed
+  height 100vh
+  width 100vw
+  display flex
+  align-items center
+  justify-content center
+
+  &__inner
+    font-size 150px
+    font-weight bold
+    font-family sans-serif
+    background linear-gradient(0deg, red, blue)
+    background-clip text
+    -webkit-background-clip text
+    color transparent
+
+  for $slide in (1..5)
+    &:nth-of-type({$slide})
+      background-size cover
+      background-repeat no-repeat
+      background-image url('https://picsum.photos/1000x1000/1000x1000/?image=' + ($slide * 5))
