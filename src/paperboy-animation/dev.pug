@@ -1,0 +1,38 @@
+mixin wheel(mod)
+  .wheel(class=`wheel--${mod}`)
+    .wheel__tyre
+      .wheel__rim
+      .wheel__hub
+      .wheel__spokes
+        - for(let s = 0; s < 5; s++)
+          .wheel__spoke
+
+mixin frame
+  .frame
+    .frame__toptube.frame__tube
+    .frame__chainstay.frame__tube
+    .frame__seattube.frame__tube
+    .frame__bottombracket.frame__tube
+    .frame__seatstay.frame__tube
+    .frame__dropout.frame__tube
+    .frame__downtube.frame__tube
+
+mixin forks
+  .forks
+    .forks__steerer
+    .forks__leg
+    .forks__dropout
+
+.bike
+  +wheel('back')
+  +wheel('front')
+  +frame
+  .bike__seat
+  .bike__sprocket
+  .bike__cranks
+    .bike__crank
+  .bike__cranks.bike__cranks--foreground
+    .bike__crank
+  +forks
+  .bike__stem
+  .bike__handlebars

@@ -1,0 +1,294 @@
+*
+  box-sizing border-box
+
+body
+  background-color dodgerblue
+  display flex
+  align-items center
+  justify-content center
+
+
+$size = 160px
+$tubeWidth = 10px
+
+$wheelSize = $size
+$tyreWidth = $wheelSize / 8
+$rimWidth  = $wheelSize / 10
+$hubSize = 25%
+.wheel
+  height $wheelSize
+  width $wheelSize
+  position relative
+
+  &__tyre
+    border $tyreWidth solid black
+    border-radius 100%
+    height 100%
+    width 100%
+    z-index 2
+    position relative
+    animation spin .5s infinite linear
+
+  &__rim
+    border $rimWidth solid grey
+    border-radius 100%
+    height 100%
+    width 100%
+
+  &__hub
+    height $hubSize
+    width $hubSize
+    background grey
+    border-radius 100%
+    position absolute
+    left 50%
+    top 50%
+    transform translate(-50%, -50%)
+
+  &__spokes
+    height 100%
+    width 100%
+    position absolute
+    top 0
+    left 0
+
+  &__spoke
+    position absolute
+    top 50%
+    left 50%
+    height 50%
+    width 10%
+    background grey
+    transform-origin top center
+    for $spoke in (1..5)
+      &:nth-of-type({$spoke})
+        transform translate(-50%, 0%) rotate(($spoke * 72deg))
+
+
+
+// Animations
+@keyframes spin
+  to
+    transform rotate(360deg)
+
+.wheel
+  transform translateX(-60px)
+
+$frameSize = $size
+$bbSize = $frameSize * 0.25
+$chainStayLength = $frameSize * 0.65
+$seattubeLength = $frameSize * 0.5
+
+.frame
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%,-50%)
+  height $bbSize
+  width $bbSize
+  z-index 2
+
+  &__tube
+    background red
+    position absolute
+    height $tubeWidth
+
+  &__toptube
+    width $frameSize
+    transform rotate(-14deg) translate(-5%, -825%)
+    left 50%
+
+    &:after
+      content ''
+      display block
+      position absolute
+      background red
+      width $tubeWidth
+      height ($tubeWidth * 4)
+      top -($tubeWidth * 0.5)
+      right 0px
+
+  &__chainstay
+    width $chainStayLength
+    top 50%
+    transform translate(-90%, -50%)
+
+  &__bottombracket
+    height ($bbSize * 0.75)
+    width ($bbSize * 0.75)
+    border-radius 100%
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    z-index 2
+
+  &__seatstay
+    transform-origin left center
+    z-index 5
+    top 50%
+    transform translate(-($chainStayLength), -50%) rotate(-38deg)
+    width $chainStayLength * 1.2
+
+  &__dropout
+    top 50%
+    transform translate(-($chainStayLength) + 5%, -50%)
+    height ($tubeWidth * 2)
+    width ($tubeWidth * 2)
+    border-radius 100%
+
+  &__downtube
+    width $frameSize
+    left 50%
+    top 50%
+    z-index 5
+    transform-origin left center
+    transform translate(0, -50%) rotate(-36deg)
+
+  &__seattube
+    width $seattubeLength
+    transform-origin left center
+    left 50%
+    transform rotate(-109deg) translate(0%, -50%)
+
+
+.forks
+  position absolute
+  z-index 6
+  height ($tubeWidth * 2)
+  width ($tubeWidth * 2)
+
+  &__steerer
+    height ($tubeWidth * 5)
+    width $tubeWidth
+    background red
+    position absolute
+    bottom ($tubeWidth * 9)
+
+  &__leg
+    background red
+    width $tubeWidth
+    height ($tubeWidth * 9)
+    transform-origin top center
+    transform rotate(1deg) translateY(-1%)
+    position absolute
+    bottom 0
+
+  &__dropout
+    position absolute
+    bottom 0
+    left 0
+    height ($tubeWidth * 2)
+    width ($tubeWidth * 2)
+    background red
+    border-radius 100%
+
+
+$sprocketSize = $size * 0.25
+.bike
+  position relative
+  height 100px
+  width 100px
+
+  &__sprocket
+    border-radius 100%
+    background silver
+    height $sprocketSize
+    width $sprocketSize
+    position absolute
+    z-index 3
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+
+  &__cranks
+    position absolute
+    top 50%
+    left 50%
+    margin-left -($sprocketSize / 2)
+    margin-top -($sprocketSize / 2)
+    background darkgrey
+    z-index 4
+    height $sprocketSize
+    width $sprocketSize
+    border-radius 100%
+    animation spin 1s infinite linear
+
+    &--foreground .bike__crank
+      transform-origin top center
+      transform translate(-50%, 5%) rotate(-180deg)
+
+  &__crank
+    height ($sprocketSize * 1.25)
+    width ($sprocketSize * 0.25)
+    background black
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -5%)
+    border-radius 30% 30% 50% 50%
+
+  &__seat
+    background black
+    position absolute
+    height $size * 0.1
+    width $size * 0.35
+    border-radius 90%
+    top 50%
+    left 50%
+    z-index 3
+    transform translate(-105%, -650%) rotate(-15deg)
+
+    &:after
+      content ''
+      background black
+      height 120%
+      width 55%
+      position absolute
+      border-radius 100%
+
+  &__stem
+    background black
+    position absolute
+    top 50%
+    left 50%
+    height ($tubeWidth * 1.5)
+    width ($tubeWidth * 3)
+    transform translate(380%, -900%) rotate(-12deg)
+    z-index 6
+
+  &__handlebars
+    background red
+    width $tubeWidth
+    height ($tubeWidth * 9)
+    border-radius 0 $tubeWidth $tubeWidth
+    position absolute
+    top 50%
+    left 50%
+    transform translate(1250%, -240%) rotate(-8deg)
+    z-index 7
+    &:after
+      content ''
+      height $tubeWidth * 1.25
+      width $tubeWidth * 1.25
+      background black
+      position absolute
+      border-radius 100%
+      transform translateX(-50%)
+
+
+.wheel
+  position absolute
+  top 50%
+  left 50%
+
+  &--back
+    transform translate(-125%, -50%)
+
+  &--front
+    transform translate(50%, -50%)
+
+.forks
+  position absolute
+  top 50%
+  left 50%
+  transform translate(750%, -50%) rotate(-15deg)
