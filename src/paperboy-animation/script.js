@@ -23,7 +23,7 @@ const THEMES = {
     '--handlebars': '#ff0000',
     '--forks': '#ff0000',
     '--stem': '#000000',
-    '--mags': '#808080',
+    '--mags': '#ffffff',
     '--sprocket': '#c0c0c0',
     '--pedals': '#c0c0c0',
     '--tyres': '#000000',
