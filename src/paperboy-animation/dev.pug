@@ -1,11 +1,12 @@
 mixin wheel(mod)
   .wheel(class=`wheel--${mod}`)
-    .wheel__tyre.bike__tyres
+    .wheel__spin
       .wheel__rim.bike__wheel
       .wheel__hub.bike__wheel
       .wheel__spokes.bike__wheel
         - for(let s = 0; s < 5; s++)
           .wheel__spoke.bike__wheel
+    .wheel__tyre.bike__tyres
 
 mixin frame
   .frame.bike__frame
@@ -24,7 +25,7 @@ mixin forks
     .forks__dropout.bike__forks
 
 input.colorizer(type='color')
-.instruction Click parts of bike to define custom colors 👍
+.instruction Click parts of bike to define custom colors 👍 (Chrome, Firefox)
 .bike
   .bike__cranks
     .bike__crank
