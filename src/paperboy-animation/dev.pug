@@ -1,38 +1,46 @@
 mixin wheel(mod)
   .wheel(class=`wheel--${mod}`)
-    .wheel__tyre
-      .wheel__rim
-      .wheel__hub
-      .wheel__spokes
+    .wheel__tyre.bike__tyres
+      .wheel__rim.bike__wheel
+      .wheel__hub.bike__wheel
+      .wheel__spokes.bike__wheel
         - for(let s = 0; s < 5; s++)
-          .wheel__spoke
+          .wheel__spoke.bike__wheel
 
 mixin frame
-  .frame
-    .frame__toptube.frame__tube
-    .frame__chainstay.frame__tube
-    .frame__seattube.frame__tube
-    .frame__bottombracket.frame__tube
-    .frame__seatstay.frame__tube
-    .frame__dropout.frame__tube
-    .frame__downtube.frame__tube
+  .frame.bike__frame
+    .frame__toptube.frame__tube.bike__frame
+    .frame__chainstay.frame__tube.bike__frame
+    .frame__seattube.frame__tube.bike__frame
+    .frame__bottombracket.frame__tube.bike__frame
+    .frame__seatstay.frame__tube.bike__frame
+    .frame__dropout.frame__tube.bike__frame
+    .frame__downtube.frame__tube.bike__frame
 
 mixin forks
-  .forks
-    .forks__steerer
-    .forks__leg
-    .forks__dropout
+  .forks.bike__forks
+    .forks__steerer.bike__forks
+    .forks__leg.bike__forks
+    .forks__dropout.bike__forks
 
+input.colorizer(type='color')
+.instruction Click parts of bike to define custom colors 👍
 .bike
-  +wheel('back')
-  +wheel('front')
-  +frame
-  .bike__seat
-  .bike__sprocket
   .bike__cranks
     .bike__crank
+  +wheel('back')
+  +wheel('front')
+  +forks
+  +frame
+  .bike__seat
   .bike__cranks.bike__cranks--foreground
     .bike__crank
-  +forks
   .bike__stem
   .bike__handlebars
+  .bike__basket
+  .colorways
+    button.colorways__choice.colorways__choice--default(data-colorway='DEFAULT', title='Set Default colorway')
+    button.colorways__choice.colorways__choice--lemonandlime(data-colorway='LEMONANDLIME', title='Set Lemon & Lime colorway')
+    button.colorways__choice.colorways__choice--stealth(data-colorway='STEALTH', title='Set Stealth colorway')
+    button.colorways__choice.colorways__choice--skyline(data-colorway='SKYLINE', title='Set Skyline colorway')
+    button.colorways__choice.colorways__choice--badbarbie(data-colorway='BADBARBIE', title='Set Bad Barbie colorway')

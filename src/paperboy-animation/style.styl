@@ -1,11 +1,3 @@
-*
-  box-sizing border-box
-
-body
-  background radial-gradient(dodgerblue, #fafafa)
-  display flex
-  align-items center
-  justify-content center
 
 
 $size = 160px
@@ -15,13 +7,30 @@ $wheelSize = $size
 $tyreWidth = $wheelSize / 8
 $rimWidth  = $wheelSize / 10
 $hubSize = 25%
+
+$scale = 1
+
+
+:root
+  --frame red
+  --seat black
+  --handlebars red
+  --forks red
+  --stem black
+  --mags grey
+  --sprocket silver
+  --pedals silver
+  --tyres black
+  --cranks black
+
+
 .wheel
   height $wheelSize
   width $wheelSize
   position relative
 
   &__tyre
-    border $tyreWidth solid black
+    border $tyreWidth solid var(--tyres)
     border-radius 100%
     height 100%
     width 100%
@@ -30,7 +39,7 @@ $hubSize = 25%
     animation spin .5s infinite linear
 
   &__rim
-    border $rimWidth solid grey
+    border $rimWidth solid var(--mags)
     border-radius 100%
     height 100%
     width 100%
@@ -38,7 +47,7 @@ $hubSize = 25%
   &__hub
     height $hubSize
     width $hubSize
-    background grey
+    background var(--mags)
     border-radius 100%
     position absolute
     left 50%
@@ -58,7 +67,7 @@ $hubSize = 25%
     left 50%
     height 50%
     width 10%
-    background grey
+    background var(--mags)
     transform-origin top center
     for $spoke in (1..5)
       &:nth-of-type({$spoke})
@@ -70,9 +79,6 @@ $hubSize = 25%
 @keyframes spin
   to
     transform rotate(360deg)
-
-.wheel
-  transform translateX(-60px)
 
 $frameSize = $size
 $bbSize = $frameSize * 0.25
@@ -86,10 +92,9 @@ $seattubeLength = $frameSize * 0.5
   transform translate(-50%,-50%)
   height $bbSize
   width $bbSize
-  z-index 2
 
   &__tube
-    background red
+    background var(--frame)
     position absolute
     height $tubeWidth
 
@@ -102,11 +107,11 @@ $seattubeLength = $frameSize * 0.5
       content ''
       display block
       position absolute
-      background red
-      width $tubeWidth
+      background var(--frame)
+      width ($tubeWidth * 1.2)
       height ($tubeWidth * 4)
       top -($tubeWidth * 0.5)
-      right 0px
+      right -($tubeWidth * 0.1)
 
   &__chainstay
     width $chainStayLength
@@ -120,11 +125,9 @@ $seattubeLength = $frameSize * 0.5
     top 50%
     left 50%
     transform translate(-50%, -50%)
-    z-index 2
 
   &__seatstay
     transform-origin left center
-    z-index 5
     top 50%
     transform translate(-($chainStayLength), -50%) rotate(-38deg)
     width $chainStayLength * 1.2
@@ -140,7 +143,6 @@ $seattubeLength = $frameSize * 0.5
     width $frameSize
     left 50%
     top 50%
-    z-index 5
     transform-origin left center
     transform translate(0, -50%) rotate(-36deg)
 
@@ -153,19 +155,18 @@ $seattubeLength = $frameSize * 0.5
 
 .forks
   position absolute
-  z-index 6
   height ($tubeWidth * 2)
   width ($tubeWidth * 2)
 
   &__steerer
     height ($tubeWidth * 5)
     width $tubeWidth
-    background red
+    background var(--forks)
     position absolute
     bottom ($tubeWidth * 9)
 
   &__leg
-    background red
+    background var(--forks)
     width $tubeWidth
     height ($tubeWidth * 9)
     transform-origin top center
@@ -179,27 +180,19 @@ $seattubeLength = $frameSize * 0.5
     left 0
     height ($tubeWidth * 2)
     width ($tubeWidth * 2)
-    background red
+    background var(--forks)
     border-radius 100%
 
 
 $sprocketSize = $size * 0.25
 .bike
   position relative
-  height 100px
-  width 100px
-  transform translateX(-50%) scale(1)
+  height 200px
+  width 200px
+  transform translateX(-15%) scale(0.5)
 
-  &__sprocket
-    border-radius 100%
-    background silver
-    height $sprocketSize
-    width $sprocketSize
-    position absolute
-    z-index 3
-    top 50%
-    left 50%
-    transform translate(-50%, -50%)
+  @media(min-width 768px)
+    transform translateX(-25%) scale(1)
 
   &__cranks
     position absolute
@@ -207,8 +200,7 @@ $sprocketSize = $size * 0.25
     left 50%
     margin-left -($sprocketSize / 2)
     margin-top -($sprocketSize / 2)
-    background darkgrey
-    z-index 4
+    background var(--sprocket)
     height $sprocketSize
     width $sprocketSize
     border-radius 100%
@@ -221,44 +213,76 @@ $sprocketSize = $size * 0.25
   &__crank
     height ($sprocketSize * 1.25)
     width ($sprocketSize * 0.25)
-    background black
+    background var(--cranks)
     position absolute
     top 50%
     left 50%
     transform translate(-50%, -5%)
     border-radius 30% 30% 50% 50%
 
+    &:after
+      border-radius 100%
+      content ''
+      height ($sprocketSize * 0.2)
+      width ($sprocketSize * 0.2)
+      background var(--frame)
+      top 100%
+      left 50%
+      position absolute
+      transform translate(-50%, -110%)
+
+    &:before
+      content ''
+      height 20%
+      width 300%
+      background #404040
+      position absolute
+      top 100%
+      left 50%
+      margin-left -150%
+      margin-top -100%
+      animation spin 1s infinite reverse linear
+
+
   &__seat
-    background black
+    background var(--seat)
     position absolute
     height $size * 0.1
-    width $size * 0.35
+    width $size * 0.45
     border-radius 90%
     top 50%
     left 50%
-    z-index 3
-    transform translate(-105%, -650%) rotate(-15deg)
+    transform translate(-95%, -650%) rotate(-20deg)
 
     &:after
       content ''
-      background black
+      background var(--seat)
       height 120%
       width 55%
       position absolute
       border-radius 100%
 
+  // &__basket
+  //   height ($size * 0.4)
+  //   width ($size * 0.6)
+  //   position absolute
+  //   top 50%
+  //   left 50%
+  //   background white
+  //   transform-origin left bottom
+  //   transform translate(145%, -300%) rotate(-6deg)
+
   &__stem
-    background black
+    background var(--stem)
     position absolute
     top 50%
     left 50%
     height ($tubeWidth * 1.5)
     width ($tubeWidth * 3)
     transform translate(380%, -900%) rotate(-12deg)
-    z-index 6
 
   &__handlebars
-    background red
+    background var(--handlebars)
     width $tubeWidth
     height ($tubeWidth * 9)
     border-radius 0 $tubeWidth $tubeWidth
@@ -266,15 +290,15 @@ $sprocketSize = $size * 0.25
     top 50%
     left 50%
     transform translate(1250%, -240%) rotate(-8deg)
-    z-index 7
     &:after
       content ''
       height $tubeWidth * 1.25
-      width $tubeWidth * 1.25
+      width $tubeWidth * 2
       background black
       position absolute
-      border-radius 100%
-      transform translateX(-50%)
+      border-radius $tubeWidth
+      transform-origin right center
+      transform translateX(-55%) rotate(10deg)
 
 
 .wheel
@@ -293,3 +317,73 @@ $sprocketSize = $size * 0.25
   top 50%
   left 50%
   transform translate(750%, -50%) rotate(-15deg)
+
+
+.colorways
+  position absolute
+  top 100%
+  left 50%
+  transform translate(-39%, 0)
+  width 300px
+
+
+  &__choice
+    outline 0
+    cursor pointer
+    height 44px
+    width 44px
+    border 0
+    border-radius 100%
+    margin 4px
+    box-shadow 1px 1px 1px black
+    transition box-shadow .05s ease
+
+    &:hover
+      box-shadow 2px 2px 2px black
+
+    &:active
+      box-shadow 0px 0px 2px black
+
+    &--default
+      background linear-gradient(45deg, #000000 33%, #ff0000 33%, #ff0000 66%, #808080 66%)
+    &--skyline
+      background linear-gradient(45deg, #000000 33%, #3af4f8 33%, #3af4f8 66%, #ffffff 66%)
+    &--badbarbie
+      background linear-gradient(45deg, #000000 33%, #ff00ec 33%, #ff00ec 66%, #000000 66%)
+    &--lemonandlime
+      background linear-gradient(45deg, #ffffff 33%, #00f900 33%, #00f900 66%, #fffb00 66%)
+    &--stealth
+      background linear-gradient(45deg, #6e6e6e 33%, #000000 33%, #000000 66%, #c0c0c0 66%)
+
+.bike__handlebars
+.bike__seat
+.bike__frame
+.bike__stem
+.bike__forks
+.bike__wheel
+.bike__cranks
+.bike__tyres
+.bike__crank
+  cursor pointer
+
+*, *:after, *:before
+  box-sizing border-box
+  transition background .25s ease 0s
+
+body
+  background radial-gradient(dodgerblue, #111)
+  display flex
+  align-items center
+  justify-content center
+  height 100vh
+  width 100vw
+
+input
+  visibility hidden
+
+.instruction
+  position absolute
+  bottom 4px
+  color white
+  font-family 'Arial', sans-serif
+  font-size 14px
