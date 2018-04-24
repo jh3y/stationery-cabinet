@@ -2,7 +2,6 @@
 
 *
   box-sizing border-box
-  animation  fadeIn .5s
 
 body
 html
@@ -13,10 +12,34 @@ html
   justify-content center
 
 .text
-  background linear-gradient(45deg, yellow, green, red)
-  background-clip text
-  display inline-block
-  color transparent
   font-size 5rem
-  -webkit-background-clip text
-  margin 0 auto
+
+  &__wrap
+    font-size 5rem
+    align-items center
+    display flex
+    justify-content center
+    background linear-gradient(45deg, yellow, green, red)
+    background-clip text
+    -webkit-background-clip text
+    color transparent
+
+  &--1
+    background linear-gradient(45deg, yellow, green)
+    background-clip text
+    -webkit-background-clip text
+    color transparent
+
+  &--2
+    background linear-gradient(45deg, green, yellow)
+    background-clip text
+    -webkit-background-clip text
+    color transparent
+    margin-left 20px
+
+.logo
+  height 100px
+  width 100px
+
+  &--hidden
+    display none
