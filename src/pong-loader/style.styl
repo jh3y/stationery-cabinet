@@ -1,0 +1,49 @@
+*
+  box-sizing border-box
+
+body
+  background #e74c3c
+  animation disco 15s infinite linear
+
+@keyframes disco
+  0%, 100%
+    background #e74c3c
+  25%
+    background purple
+  50%
+    background yellow
+  75%
+    background blue
+
+.pong
+  height 300px
+  width 300px
+  background repeating-linear-gradient(180deg, white 0, white 4%, #111 4%, #111 6%, white 6%) 148px 0 / 4px 100% no-repeat, #111
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+  &__ball
+    height 5%
+    width 5%
+    background #fff
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    animation play 5s infinite linear
+
+
+@keyframes play
+  // Start and end point
+  0%, 100%
+    transform translate(-50%, -50%) translate(-900%, 0)
+  // go across and up
+  25%, 75%
+    transform translate(-50%, -50%) translate(900%, -600%)
+  // then back and down
+  50%
+    transform translate(-50%, -50%) translate(-900%, 600%)
+
+
