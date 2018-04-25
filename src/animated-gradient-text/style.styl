@@ -10,36 +10,80 @@ html
   display flex
   align-items center
   justify-content center
+  font-size 10px
+  height 100vh
+  width 100vw
 
 .text
-  font-size 5rem
+  font-size 3rem
+  $gradientOne = rgb(154, 68, 217)
+  $gradientTwo = rgb(62, 202, 95)
+
+  @media(min-width 768px)
+    font-size 8rem
 
   &__wrap
-    font-size 5rem
     align-items center
     display flex
+    position relative
     justify-content center
-    background linear-gradient(45deg, yellow, green, red)
-    background-clip text
-    -webkit-background-clip text
-    color transparent
 
   &--1
-    background linear-gradient(45deg, yellow, green)
+    background linear-gradient(45deg, $gradientOne, $gradientTwo)
     background-clip text
     -webkit-background-clip text
     color transparent
 
   &--2
-    background linear-gradient(45deg, green, yellow)
+    background linear-gradient(45deg, $gradientTwo, $gradientOne)
     background-clip text
     -webkit-background-clip text
     color transparent
-    margin-left 20px
 
 .logo
-  height 100px
-  width 100px
+  height 44px
+  width 44px
+  margin 5px
+
+  @media(min-width 768px)
+    height 72px
+    width 72px
+
+.mute
+  background transparent
+  border 0
+  cursor pointer
+  position fixed
+  right 10px
+  bottom 10px
+
+  &--active
+    &:after
+      content ''
+      height 100%
+      width 50%
+      background #111
+      position absolute
+      left 50%
+      top 0%
+
+  &__icon
+    height 44px
+    width 44px
+
+
+
+.replay
+  background transparent
+  border 0
+  cursor pointer
+  position absolute
+  opacity 0
+  top 100%
+
+  &__icon
+    height 44px
+    width 44px
 
   &--hidden
     display none
