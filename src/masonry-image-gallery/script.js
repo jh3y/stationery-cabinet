@@ -15,23 +15,6 @@ class Masonry {
       heights: [],
     }
     layout()
-    /**
-     * To make responsive, onResize layout again
-     * NOTE:: For better performance, please debounce this!
-     */
-    window.addEventListener('resize', _.debounce(layout, 0))
-    const load = imagesLoaded(el, () => layout())
-    load.on('progress', (instance, image) => {
-      // This trick allows us to avoid any floating pixel sizes 👍
-      image.img.style.height = image.img.height
-      image.img.setAttribute('height', image.img.height)
-      image.img.classList.remove('loading')
-      // NOTE: Not the cleanest thing to do here but this is a demo 😅
-      const parentPanel = image.img.parentNode.parentNode
-      parentPanel.setAttribute('style', `height: ${image.img.height}px`)
-      parentPanel.classList.remove(`${CLASSES.PANEL}--loading`)
-      this.layout()
-    })
   }
   /**
    * Reset the layout by removing padding elements, resetting heights
@@ -79,15 +62,13 @@ class Masonry {
     return config.cols[breakpoint]
   }
   /**
-    * JavaScript method for setting order of each panel based on panels.length and desired number of columns
-  */
+   * JavaScript method for setting order of each panel based on panels.length and desired number of columns
+   */
   __setPanelStyles() {
-    const {
-      panels,
-    } = this
+    const { panels } = this
     const cols = this.__getViewportCols() // There needs to be an internal reference here that checks how many cols for viewport size
     for (let p = 0; p < panels.length; p++) {
-      panels[p].style.order = ((p + 1) % cols === 0) ? cols : (p + 1) % cols
+      panels[p].style.order = (p + 1) % cols === 0 ? cols : (p + 1) % cols
       panels[p].style.width = `${100 / cols}%`
     }
   }
@@ -131,4 +112,27 @@ const masonryConfig = {
     xl: 4,
   },
 }
-window.myMasonry = new Masonry(document.querySelector(`.${CLASSES.MASONRY}`), masonryConfig)
+window.myMasonry = new Masonry(
+  document.querySelector(`.${CLASSES.MASONRY}`),
+  masonryConfig
+)
+
+/**
+ * Here we can make optimizations for responding to loading images and
+ * window resizing
+ *
+ * NOTE:: For better performance, please debounce this!
+ */
+window.addEventListener('resize', _.debounce(myMasonry.layout, 500))
+const load = imagesLoaded(myMasonry.container, () => myMasonry.layout())
+load.on('progress', (instance, image) => {
+  // This trick allows us to avoid any floating pixel sizes 👍
+  image.img.style.height = image.img.height
+  image.img.setAttribute('height', image.img.height)
+  image.img.classList.remove('loading')
+  // NOTE: Not the cleanest thing to do here but this is a demo 😅
+  const parentPanel = image.img.parentNode.parentNode
+  parentPanel.setAttribute('style', `height: ${image.img.height}px`)
+  parentPanel.classList.remove(`${CLASSES.PANEL}--loading`)
+  myMasonry.layout()
+})
