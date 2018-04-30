@@ -6,12 +6,11 @@ const CLASSES = {
 }
 
 class Masonry {
-  constructor(el) {
-    const {
-      layout,
-    } = this
+  constructor(el, config) {
+    const { layout } = this
     this.container = el
-    this.panels = el.querySelectorAll(`.${CLASSES.PANEL}`)
+    this.panels = el.children
+    this.config = config
     this.state = {
       heights: [],
     }
@@ -20,7 +19,7 @@ class Masonry {
      * To make responsive, onResize layout again
      * NOTE:: For better performance, please debounce this!
      */
-    window.addEventListener('resize', _.debounce(layout, 500))
+    window.addEventListener('resize', _.debounce(layout, 0))
     const load = imagesLoaded(el, () => layout())
     load.on('progress', (instance, image) => {
       // This trick allows us to avoid any floating pixel sizes 👍
@@ -37,8 +36,7 @@ class Masonry {
   /**
    * Reset the layout by removing padding elements, resetting heights
    * reference and removing the container inline style
-   */
-  reset = () => {
+   */ reset = () => {
     const { container } = this
     this.state.heights = []
     const fillers = container.querySelectorAll(`.${CLASSES.PAD}`)
@@ -51,8 +49,7 @@ class Masonry {
   }
   /**
    * Iterate through panels and work out the height of the layout
-   */
-  populateHeights = () => {
+   */ populateHeights = () => {
     const { panels, state } = this
     const { heights } = state
     for (let p = 0; p < panels.length; p++) {
@@ -67,29 +64,36 @@ class Masonry {
    * Set the layout height based on referencing the content cumulative height
    * This probably doesn't need its own function but felt right to be nice
    * and neat
-   */
-  setLayout = () => {
+   */ setLayout = () => {
     const { container, state } = this
     const { heights } = state
     this.state.maxHeight = Math.max(...heights)
     container.style.height = `${this.state.maxHeight}px`
   }
-  // /**
-  //   * JavaScript method for setting order of each panel based on panels.length and desired number of columns
-  // */
-  // __setOrders() {
-  //   const {
-  //     panels,
-  //   } = this
-  //   const cols = 3 // There needs to be an internal reference here that checks how many cols for viewport size
-  //   panels.forEach((panel, idx) => {
-  //     panel.style.order = ((idx + 1) % cols === 0) ? cols : (idx + 1) % cols
-  //   })
-  // }
+  __getViewportCols = () => {
+    const { config } = this
+    let breakpoint = 0
+    for (let b of Object.keys(config.breakpoints)) {
+      if (window.innerWidth > config.breakpoints[b]) breakpoint = b
+    }
+    return config.cols[breakpoint]
+  }
+  /**
+    * JavaScript method for setting order of each panel based on panels.length and desired number of columns
+  */
+  __setPanelStyles() {
+    const {
+      panels,
+    } = this
+    const cols = this.__getViewportCols() // There needs to be an internal reference here that checks how many cols for viewport size
+    for (let p = 0; p < panels.length; p++) {
+      panels[p].style.order = ((p + 1) % cols === 0) ? cols : (p + 1) % cols
+      panels[p].style.width = `${100 / cols}%`
+    }
+  }
   /**
    * Pad out layout "columns" with padding elements that make heights equal
-   */
-  pad = () => {
+   */ pad = () => {
     const { container } = this
     const { heights, maxHeight } = this.state
     heights.map((height, idx) => {
@@ -105,13 +109,26 @@ class Masonry {
   }
   /**
    * Resets and lays out elements
-   */
-  layout = () => {
+   */ layout = () => {
     this.reset()
-    // this.__setOrders()
+    this.__setPanelStyles()
     this.populateHeights()
     this.setLayout()
     this.pad()
   }
 }
-window.myMasonry = new Masonry(document.querySelector(`.${CLASSES.MASONRY}`))
+const masonryConfig = {
+  breakpoints: {
+    sm: 430,
+    md: 768,
+    lg: 992,
+    xl: 1500,
+  },
+  cols: {
+    sm: 1,
+    md: 2,
+    lg: 3,
+    xl: 4,
+  },
+}
+window.myMasonry = new Masonry(document.querySelector(`.${CLASSES.MASONRY}`), masonryConfig)
