@@ -60,7 +60,8 @@ const MasonryContainer = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   height: ${p => p.height === 0 ? '100vh' : `${p.height}px`};
-  width: 100vw;
+  width: ${p => p.width ? `${p.width}px` : `${window.innerWidth}px`};
+  overflow: hidden;
   ${p =>
     p.config &&
     p.itemCount &&
@@ -126,7 +127,6 @@ const MasonryPad = styled.div`
  * className reference
  */
 const CLASSES = {
-  BODY_LOADING: 'masonry-body',
   CONTAINER: 'masonry',
   PANEL: 'masonry-panel',
 }
@@ -148,10 +148,8 @@ class Masonry extends Component {
    * so we don't get float value heights like 450.2876 that can break the layout
    * The window resizing should really be debounced 😅
    * */ componentDidMount = () => {
-     document.body.classList.add(CLASSES.BODY_LOADING)
      const load = imagesLoaded(this.container, (instance) => {
       this.layout()
-      document.body.classList.remove(CLASSES.BODY_LOADING)
       this.setState({
         loading: false,
       })
@@ -245,7 +243,7 @@ class Masonry extends Component {
         className={`${CLASSES.CONTAINER}`}
         itemCount={iterableChildren.length}
         loadingContent={loading}
-        height={this.state.maxHeight}
+        height={loading ? window.innerHeight : this.state.maxHeight}
         innerRef={container => (this.container = container)}>
         {iterableChildren.map((child, idx) => (
           <MasonryPanel className={`${CLASSES.PANEL} ${CLASSES.PANEL}--loading`} key={`masonry-panel--${idx}`}>
