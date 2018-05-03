@@ -21,7 +21,10 @@ article
   text-align justify
   columns 2
   font-family 'Lato', sans-serif
-  padding 70px 20px 20px 20px
+  padding 35px 20px 20px 20px
+
+  @media(min-width 768px)
+    padding-top 70px
 
 
 section
@@ -32,39 +35,48 @@ p
   margin 0 0 30px 0
 
 
+$height = 250px
+$font-size = 40px
+
 .header
   &__bg
     filter brightness(15%) grayscale(100%)
     background url($gifSrc)
     background-size cover
     background-position center bottom
-    height 80vh
-    width 100vw
+    height $height
+    width 100%
+
+    @media(min-width 768px)
+      $height = 500px
+      height $height
 
   &__text
-    $font-size = 10vh
-    position absolute
-    left 0%
-    top 0%
-    font-size $font-size
-    line-height $font-size
-    font-weight bold
-    background url($gifSrc)
+    height $height
+    line-height $height
+    width 100%
     font-family 'Corben', cursive
-    background-clip text
-    -webkit-background-clip text
+    font-size $font-size
+    height $height
+    background linear-gradient(45deg, red, blue)
+    background url($gifSrc)
     background-size cover
     background-position center bottom
-    height 80vh
-    width 100vw
+    background-clip text
+    -webkit-background-clip text
     color transparent
-    z-index 2
-    text-align center
-    display flex
-    justify-content center
-    align-items flex-end
-    opacity calc(1 - var(--ratio, 0))
-    padding-bottom calc(30vh - (20vh * var(--ratio, 0)))
     filter brightness(150%) contrast(50%) grayscale(0%)
+    position absolute
+    top 0
+    opacity calc(1 - var(--ratio, 0))
+    line-height calc((1 + var(--ratio)) * 250px)
+
+    @media(min-width 768px)
+      $height = 500px
+      $font-size = 100px
+      height $height
+      line-height calc((1 + var(--ratio)) * 500px)
+      font-size $font-size
+      height $height
 
 

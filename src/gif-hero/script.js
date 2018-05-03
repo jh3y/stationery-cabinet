@@ -3,7 +3,7 @@ const RAF = requestAnimationFrame
 
 let updating = false
 // The threshold at which parallax effect should take place
-const threshold = window.innerHeight * 0.15
+const threshold = window.innerHeight * 0.05
 // Distance that effect should take place across
 const travel = window.innerHeight * 0.15
 

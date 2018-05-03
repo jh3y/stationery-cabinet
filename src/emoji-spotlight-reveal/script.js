@@ -1,9 +1,8 @@
 const spotlight = document.querySelector('.spotlight')
 const crowd = document.querySelector('.crowd')
-const crowdPos = crowd.getBoundingClientRect()
-
+const root = document.documentElement
 const spotlightUpdate = (e) => {
-  const root = document.documentElement
+  const crowdPos = crowd.getBoundingClientRect()
   let {
     pageX: x,
     pageY: y
@@ -29,6 +28,7 @@ const spotlightUpdate = (e) => {
     crowd.children[chosen].classList.add('emoji--chosen')
   }
 }
-
+root.style.setProperty('--x', window.innerWidth / 2)
+root.style.setProperty('--y', window.innerHeight / 2)
 document.addEventListener('touchmove', spotlightUpdate)
 document.addEventListener('mousemove', spotlightUpdate)
