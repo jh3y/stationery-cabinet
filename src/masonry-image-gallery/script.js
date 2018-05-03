@@ -53,7 +53,7 @@ class Masonry {
     this.state.maxHeight = Math.max(...heights)
     container.style.height = `${this.state.maxHeight}px`
   }
-  __getViewportCols = () => {
+  getViewportCols = () => {
     const { config } = this
     let breakpoint = 0
     for (let b of Object.keys(config.breakpoints)) {
@@ -64,9 +64,9 @@ class Masonry {
   /**
    * JavaScript method for setting order of each panel based on panels.length and desired number of columns
    */
-  __setPanelStyles() {
+  setPanelStyles = () => {
     const { panels } = this
-    const cols = this.__getViewportCols() // There needs to be an internal reference here that checks how many cols for viewport size
+    const cols = this.getViewportCols() // There needs to be an internal reference here that checks how many cols for viewport size
     for (let p = 0; p < panels.length; p++) {
       panels[p].style.order = (p + 1) % cols === 0 ? cols : (p + 1) % cols
       panels[p].style.width = `${100 / cols}%`
@@ -92,7 +92,7 @@ class Masonry {
    * Resets and lays out elements
    */ layout = () => {
     this.reset()
-    this.__setPanelStyles()
+    this.setPanelStyles()
     this.populateHeights()
     this.setLayout()
     this.pad()
@@ -123,7 +123,7 @@ window.myMasonry = new Masonry(
  *
  * NOTE:: For better performance, please debounce this!
  */
-window.addEventListener('resize', _.debounce(myMasonry.layout, 500))
+window.addEventListener('resize', myMasonry.layout)
 const load = imagesLoaded(myMasonry.container, () => myMasonry.layout())
 load.on('progress', (instance, image) => {
   // This trick allows us to avoid any floating pixel sizes 👍
