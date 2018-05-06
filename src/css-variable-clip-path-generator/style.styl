@@ -1,0 +1,72 @@
+*
+  box-sizing border-box
+
+:root
+  --border 4
+  --height 300
+  --width 300
+
+body
+  background-color rebeccapurple
+  display flex
+  align-items center
+  justify-content center
+  min-height 100vh
+
+
+.clip
+  height calc((var(--height) + (2 * var(--border))) * 1px)
+  width calc((var(--width) + (2 * var(--border))) * 1px)
+  border calc(var(--border) * 1px) solid white
+  margin 30px
+
+  &__container
+    background dodgerblue
+    height 100%
+    position relative
+    width 100%
+
+  &__mask
+    height 100%
+    width 100%
+    position absolute
+    top 0
+    left 0
+    background red
+
+  &__path
+    color #ffffff
+    position absolute
+    bottom 100%
+    padding 20px
+
+  &__node
+    --x 0
+    --y 0
+    cursor move
+    cursor -webkit-grab
+    height 50px
+    position absolute
+    transform translate(-50%, -50%)
+    width 50px
+    left calc(var(--x) * 1px)
+    top calc(var(--y) * 1px)
+    opacity 0.5
+    z-index 1
+
+
+    &:after
+      background #fff
+      border-radius 100%
+      content ''
+      height 20px
+      left 50%
+      position absolute
+      top 50%
+      transform translate(-50%, -50%)
+      width 20px
+
+    &--moving
+      cursor none
+      &:after
+        background transparent
