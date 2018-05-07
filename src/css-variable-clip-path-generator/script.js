@@ -13,6 +13,11 @@ class ClipPathNode extends Component {
     const { el } = this
     el.addEventListener('mousedown', this.startMove)
     el.addEventListener('touchstart', this.startMove)
+    el.addEventListener('click', this.removeNode)
+  }
+  removeNode = () => {
+    const { id, removing, onRemove } = this.props
+    if (removing && onRemove) onRemove(id)
   }
   getXY = e => {
     let { pageX: x, pageY: y, touches } = e
@@ -27,6 +32,7 @@ class ClipPathNode extends Component {
     }
   }
   startMove = e => {
+    if (this.props.removing) return
     const { x, y } = this.getXY(e)
     const move = e => {
       const { x: oldX, y: oldY } = this.getXY(e)
@@ -38,10 +44,13 @@ class ClipPathNode extends Component {
       } = this.el.parentNode.getBoundingClientRect()
       const x = Math.min(Math.max(0, oldX - left), width)
       const y = Math.min(Math.max(0, oldY - top), height)
-      this.setState({
-        x,
-        y,
-      }, () => this.props.onMove(this))
+      this.setState(
+        {
+          x,
+          y,
+        },
+        () => this.props.onMove(this)
+      )
     }
     const endMove = () => {
       this.setState(
@@ -74,17 +83,30 @@ class ClipPathNode extends Component {
       initMove
     )
   }
+  componentWillReceiveProps = nextProps => {
+    if (nextProps.x !== this.props.x) {
+      this.setState({ x: nextProps.x, y: nextProps.y })
+    }
+  }
   render = () => {
     const { moving, x, y } = this.state
+    const { removing } = this.props
     return (
       <div
-        className={`clip__node ${moving ? 'clip__node--moving' : ''}`}
+        className={`clip__node ${moving ? 'clip__node--moving' : ''} ${
+          removing ? 'clip__node--removing' : ''
+        }`}
         ref={n => (this.el = n)}
         style={{
           '--x': x,
           '--y': y,
-        }}
-      />
+        }}>
+        {removing && (
+          <svg className="clip__node-remove" viewBox="0 0 24 24">
+            <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
+          </svg>
+        )}
+      </div>
     )
   }
 }
@@ -101,20 +123,25 @@ class ClipPath extends Component {
     return `polygon(${path})`
   }
   render = () => {
-    const { nodes } = this.props
+    const { nodes, removalMode, onRemove, onUpdate } = this.props
     const clipPath = this.getClipPath()
     return (
       <div className="clip__container" ref={c => (this.el = c)}>
-        <div className="clip__mask" style={{
-          clipPath
-        }}/>
+        <div
+          className="clip__mask"
+          style={{
+            clipPath,
+          }}
+        />
         {nodes.map((n, idx) => (
           <ClipPathNode
             id={idx}
             key={`clip-node--${idx}`}
             x={n.x}
             y={n.y}
-            onMove={this.props.onUpdate}
+            removing={removalMode}
+            onMove={onUpdate}
+            onRemove={onRemove}
           />
         ))}
         <footer className="clip__path">{`clip-path: ${clipPath}`}</footer>
@@ -122,22 +149,36 @@ class ClipPath extends Component {
     )
   }
 }
+const MODES = {
+  CIRCLE: 'circle',
+  ELLIPSE: 'ellipse',
+  INSET: 'inset',
+  POLYGON: 'polygon',
+}
+const PRESETS = {
+  CIRCLE: [],
+  ELLIPSE: [],
+  INSET: [],
+  POLYGON: [
+    {
+      x: 40,
+      y: 100,
+    },
+    {
+      x: 75,
+      y: 120,
+    },
+    {
+      x: 0,
+      y: 45,
+    },
+  ],
+}
 class App extends Component {
   state = {
-    nodes: [
-      {
-        x: 40,
-        y: 100,
-      },
-      {
-        x: 75,
-        y: 120,
-      },
-      {
-        x: 0,
-        y: 45
-      }
-    ],
+    nodes: PRESETS.CIRCLE,
+    removing: false,
+    mode: MODES.CIRCLE,
   }
   onUpdate = n => {
     const nodes = this.state.nodes.map((o, idx) => {
@@ -155,21 +196,51 @@ class App extends Component {
   }
   addNode = () => {
     this.setState({
-      nodes: [...this.state.nodes, {
-        x: 150,
-        y: 150
-      }]
+      nodes: [
+        ...this.state.nodes,
+        {
+          x: 150,
+          y: 150,
+        },
+      ],
+    })
+  }
+  removeNode = id => {
+    const nodes = this.state.nodes.filter((n, i) => i !== id)
+    this.setState({
+      nodes,
+    })
+  }
+  removeNodes = () => {
+    this.setState({
+      removing: !this.state.removing,
     })
   }
   render = () => {
-    const { onUpdate } = this
-    const { nodes } = this.state
+    const { addNode, onUpdate, removeNode, removeNodes } = this
+    const { mode, nodes, removing } = this.state
     return (
       <Fragment>
         <Container>
-          <ClipPath height={300} nodes={nodes} onUpdate={onUpdate} width={300} />
+          <ClipPath
+            height={300}
+            nodes={nodes}
+            onUpdate={onUpdate}
+            onRemove={removeNode}
+            removalMode={removing}
+            width={300}
+          />
         </Container>
-        <button onClick={this.addNode}>Add Node</button>
+        {mode === MODES.POLYGON && (
+          <Fragment>
+            <button disabled={removing} onClick={addNode}>
+              Add Node
+            </button>
+            <button onClick={removeNodes}>
+              {removing ? 'Done' : 'Remove Nodes'}
+            </button>
+          </Fragment>
+        )}
       </Fragment>
     )
   }

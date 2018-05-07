@@ -66,6 +66,25 @@ body
       transform translate(-50%, -50%)
       width 20px
 
+    &--removing
+      cursor pointer
+      opacity 1
+      &:after
+        content none
+
+    &-remove
+      border 2px solid white
+      background red
+      height 20px
+      width 20px
+      left 50%
+      position absolute
+      top 50%
+      border-radius 100%
+      transform translate(-50%, -50%)
+      path
+        fill #fff
+
     &--moving
       cursor none
       &:after
