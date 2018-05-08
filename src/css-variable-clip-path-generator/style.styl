@@ -1,14 +1,14 @@
 *
   box-sizing border-box
 
-:root
-  --border 4
-  --height 300
-  --width 300
+$size   = 300px
+$border = 4px
 
+html
 body
-  background radial-gradient(circle at 50% 190px, rebeccapurple, #111)
   background rebeccapurple
+  font-family 'Arial', sans-serif
+  font-size 14px
   min-height 100vh
   overflow-x hidden
   padding-top 40px
@@ -19,158 +19,179 @@ label
   cursor pointer
 
 button
-  border-radius 1rem
+label
+  font-size 1rem
+
+button
   border 0
+  border-radius 6px
+  color white
+  cursor pointer
+  min-width 120px
+  padding 12px 12px
 
   &[disabled]
     background grey
     opacity .25
 
-
-.copy
-  background dodgerblue
-  color white
-  padding 8px 24px
-  font-size 1.25rem
-
-.add-node
-  background rgba(0, 255, 0, 0.5)
-  color white
-  padding 4px 12px
-
-.remove-nodes
-  background rgba(255, 0, 0, 0.5)
-  color white
-  padding 4px 12px
-
 #app
-  display flex
   align-items center
+  display flex
   flex-direction column
 
-.mode-option
-  color #fff
-
-  label
-    display flex
-    flex-direction row
-
-  &:hover
-    .mode-option__radio:after
-      background white
-  &__input
-    opacity 0
-    width 0
-    height 0
-    &:checked
-      & ~ label
-        color green
-        .mode-option__radio
-          border-color green
-          &:after
-            background green
-  &__radio
-    height 20px
-    width 20px
-    border-radius 100%
-    border 2px solid white
-    position relative
-
-    &:after
-      content ''
-      background transparent
-      border-radius 100%
-      height 10px
-      width 10px
-      position absolute
-      left 50%
-      top 50%
-      transform translate(-50%, -50%)
-
-.clip
-  height calc((var(--height) + (2 * var(--border))) * 1px)
-  width calc((var(--width) + (2 * var(--border))) * 1px)
-  border calc(var(--border) * 1px) solid white
-  transition all .25s ease 0s
+.clip-path-generator
+  height $size
+  width $size
 
   &__container
-    height 100%
+    border $border solid #fff
+    height $size + (2 * $border)
     position relative
-    width 100%
+    width $size + (2 * $border)
 
-  &__mask
+  &__clipped
+    background url(https://placebear.com/300/300) #2eec71
+    background-size cover
     height 100%
-    width 100%
+    left 0
     position absolute
     top 0
-    left 0
-    background url(https://placebear.com/300/300)
-    background-size cover
+    width 100%
 
-  &__path
-    color #ffffff
-    margin 10px
-    max-width 500px
-    text-align center
+.clip-path-node
+  cursor move
+  cursor -webkit-grab
+  height 50px
+  left calc(var(--x) * 1px)
+  opacity 0.75
+  position absolute
+  top calc(var(--y) * 1px)
+  transform translate(-50%, -50%)
+  transition opacity .15s
+  width 50px
+  z-index 1
 
-    & > div
-      margin-bottom 10px
+  &:hover
+    opacity 1
 
-  &__path-value
+  &:after
+    background #fff
+    border-radius 100%
+    content ''
+    height 20px
+    left 50%
+    position absolute
+    top 50%
+    transform translate(-50%, -50%)
+    width 20px
+
+  &--removing
+    cursor pointer
+    opacity 1
+    &:after
+      content none
+
+  &__remove
+    background #e74c3c
+    border 2px solid white
+    border-radius 100%
+    height 20px
+    left 50%
+    position absolute
+    top 50%
+    transform translate(-50%, -50%)
+    width 20px
+
+    path
+      fill #fff
+
+  &--moving
+    cursor none
+    &:after
+      background transparent
+
+
+.clip-path-options
+  display flex
+  flex-wrap wrap
+  margin-bottom 30px
+  width 200px
+
+.clip-path-option
+  align-items center
+  display flex
+  height 30px
+  width 50%
+
+  &__input
+    height 0
+    opacity 0
+    width 0
+
+    &:checked
+      ~ label
+        color dodgerblue
+        opacity 1
+        .clip-path-option__check
+          border-color dodgerblue
+          &:after
+            background dodgerblue
+
+  &__label
+    align-items center
+    color #fff
+    display flex
+    opacity .35
+
+    &:hover
+      opacity 1
+
+      .clip-path-option__check:after
+        background white
+
+  &__check
+    border 4px solid white
+    border-radius 100%
+    height 24px
+    margin-right 10px
+    position relative
+    width 24px
+
+    &:after
+      background transparent
+      border-radius 100%
+      content ''
+      height 75%
+      left 50%
+      position absolute
+      top 50%
+      transform translate(-50%, -50%)
+      width 75%
+
+.clip-path
+  color #ffffff
+  margin 10px 0 30px 0
+  max-width 500px
+  text-align center
+
+  &__copy
+    background dodgerblue
+    font-size 1.5rem
+    width 200px
+
+  &__value
     background #111
     border-radius 6px
+    margin-bottom 10px
     padding 20px
 
-  &__path-input
+  &__input
     position fixed
     left 100%
 
-  &__node
-    --x 0
-    --y 0
-    cursor move
-    cursor -webkit-grab
-    height 50px
-    position absolute
-    transform translate(-50%, -50%)
-    width 50px
-    left calc(var(--x) * 1px)
-    top calc(var(--y) * 1px)
-    opacity 0.75
-    z-index 1
+.polygon-action
+  background #ecf0f1
+  color #111
 
-
-    &:after
-      background #fff
-      border-radius 100%
-      content ''
-      height 20px
-      left 50%
-      position absolute
-      top 50%
-      transform translate(-50%, -50%)
-      width 20px
-
-    &--removing
-      cursor pointer
-      opacity 1
-      &:after
-        content none
-
-    &-remove
-      border 2px solid white
-      background red
-      height 20px
-      width 20px
-      left 50%
-      position absolute
-      top 50%
-      border-radius 100%
-      transform translate(-50%, -50%)
-      path
-        fill #fff
-
-    &--moving
-      cursor none
-      &:after
-        background transparent
+  &:hover
+    background darken(#ecf0f1, 25%)

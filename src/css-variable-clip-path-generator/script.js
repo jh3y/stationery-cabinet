@@ -153,8 +153,8 @@ class ClipPathNode extends Component {
     const { removing } = this.props
     return (
       <div
-        className={`clip__node ${moving ? 'clip__node--moving' : ''} ${
-          removing ? 'clip__node--removing' : ''
+        className={`clip-path-node ${moving ? 'clip-path-node--moving' : ''} ${
+          removing ? 'clip-path-node--removing' : ''
         }`}
         ref={n => (this.el = n)}
         style={{
@@ -162,7 +162,7 @@ class ClipPathNode extends Component {
           '--y': y,
         }}>
         {removing && (
-          <svg className="clip__node-remove" viewBox="0 0 24 24">
+          <svg className="clip-path-node__remove" viewBox="0 0 24 24">
             <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
           </svg>
         )}
@@ -239,7 +239,7 @@ class ClipPathGenerator extends Component {
   state = {
     removing: false,
     mode: MODES.POLYGON,
-    size: 0,
+    size: SIZE,
     nodes: PRESETS[MODES.POLYGON],
   }
   onUpdate = n => {
@@ -320,11 +320,6 @@ class ClipPathGenerator extends Component {
       removing: !this.state.removing,
     })
   }
-  componentDidMount = () => {
-    this.setState({
-      size: this.el.getBoundingClientRect().width,
-    })
-  }
   switchMode = e => {
     this.setState({
       copied: false,
@@ -348,10 +343,10 @@ class ClipPathGenerator extends Component {
     const clipPath = getClipPath(nodes, size, mode)
     return (
       <Fragment>
-        <div className="clip">
-          <div className="clip__container" ref={c => (this.el = c)}>
+        <div className="clip-path-generator__container">
+          <div className="clip-path-generator" ref={c => (this.el = c)}>
             <div
-              className="clip__mask"
+              className="clip-path-generator__clipped"
               style={{
                 clipPath,
               }}
@@ -381,31 +376,44 @@ class ClipPathGenerator extends Component {
             ))}
           </div>
         </div>
-        <div className="clip__path">
-          <div class='clip__path-value'>{`clip-path: ${clipPath};`}</div>
-          <input className='clip__path-input' readOnly ref={p => this.path = p} value={`clip-path: ${clipPath};`}/>
-          <button className='copy' onClick={this.copy}>
+        <div className="clip-path">
+          <div className="clip-path__value">{`clip-path: ${clipPath};`}</div>
+          <input
+            className="clip-path__input"
+            readOnly
+            ref={p => (this.path = p)}
+            value={`clip-path: ${clipPath};`}
+          />
+          <button className="clip-path__copy button" onClick={this.copy}>
             {copied ? 'Copied 👍' : 'Copy'}
           </button>
         </div>
-        {
-          Object.keys(MODES).map((m, idx) => (
-            <div className='mode-option'>
-              <input className='mode-option__input' type='radio' name='shape' value={m} id={`mode-option--${m}`} onChange={switchMode} checked={m === mode}/>
-              <label for={`mode-option--${m}`}>
-              {m.toLowerCase()}
-              <div className='mode-option__radio'/>
+        <div className="clip-path-options">
+          {Object.keys(MODES).map((m, idx) => (
+            <div key={`clip-path-option--${idx}`} className="clip-path-option">
+              <input
+                className="clip-path-option__input"
+                type="radio"
+                name="shape"
+                value={m}
+                id={`clip-path-option--${m}`}
+                onChange={switchMode}
+                checked={m === mode}
+              />
+              <label className='clip-path-option__label' htmlFor={`clip-path-option--${m}`}>
+                <div className="clip-path-option__check" />
+                {`${m.charAt(0)}${m.toLowerCase().substr(1)}`}
               </label>
             </div>
-          ))
-        }
+          ))}
+        </div>
         {mode === MODES.POLYGON && (
-          <div className="clip__polygon-actions">
-            <button className='add-node' disabled={removing} onClick={addNode}>
+          <div className="polygon-actions">
+            <button className="polygon-action polygon-action--add button" disabled={removing} onClick={addNode}>
               Add Node
             </button>
-            <button className='remove-nodes' onClick={removeNodes}>
-              {removing ? 'Done' : 'Remove Nodes'}
+            <button className="polygon-action--remove polygon-action button" onClick={removeNodes}>
+              {removing ? 'Done' : 'Remove Node'}
             </button>
           </div>
         )}
