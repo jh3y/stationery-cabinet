@@ -1,7 +1,66 @@
 const { Component, Fragment } = React
 const { render } = ReactDOM
 
-const Container = ({ children }) => <div className="clip">{children}</div>
+const getClipPath = (nodes, size, mode) => {
+  let centerX
+  let centerY
+  let path = ''
+  switch (mode) {
+    case MODES.POLYGON:
+      for (let n = 0; n < nodes.length; n++) {
+        const node = nodes[n]
+        path += `${Math.floor(node.x / size * 100)}% ${Math.floor(
+          node.y / size * 100
+        )}%${n === nodes.length - 1 ? '' : `, `}`
+      }
+      break
+    case MODES.INSET:
+      // iterate through nodes TRBL
+      for (let n = 0; n < nodes.length; n++) {
+        switch (n) {
+          case 0:
+            path += `${Math.floor(nodes[n].y / size * 100)}% `
+            break
+          case 1:
+            path += `${100 - Math.floor(nodes[n].x / size * 100)}% `
+            break
+          case 2:
+            path += `${100 - Math.floor(nodes[n].y / size * 100)}% `
+            break
+          case 3:
+            path += `${Math.floor(nodes[n].x / size * 100)}%`
+            break
+        }
+      }
+      break
+    case MODES.ELLIPSE:
+      const xDistance = Math.abs(
+        Math.floor((nodes[1].x - nodes[0].x) / size * 100)
+      )
+      const yDistance = Math.abs(
+        Math.floor((nodes[2].y - nodes[0].y) / size * 100)
+      )
+      path = `${xDistance}% ${yDistance}% at ${Math.floor(
+        nodes[0].x / size * 100
+      )}% ${Math.floor(nodes[0].y / size * 100)}%`
+      break
+    case MODES.CIRCLE:
+      const { x: centerX, y: centerY } = nodes[0]
+      const { x, y } = nodes[1]
+      const distY = y - centerY
+      const distX = x - centerX
+      const distance = Math.floor(
+        Math.sqrt(distX * distX + distY * distY) / size * 100
+      )
+      path = `${distance}% at ${Math.floor(centerX / size * 100)}% ${Math.floor(
+        centerY / size * 100
+      )}%`
+      break
+    default:
+      path = 'No mode selected'
+  }
+  return `${mode.toLowerCase()}(${path})`
+}
 
 class ClipPathNode extends Component {
   state = {
@@ -19,7 +78,7 @@ class ClipPathNode extends Component {
     const { id, removing, onRemove } = this.props
     if (removing && onRemove) onRemove(id)
   }
-  getXY = e => {
+  getPageXY = e => {
     let { pageX: x, pageY: y, touches } = e
     // If a touch move then use the touches property 👍
     if (touches && touches.length === 1) {
@@ -33,21 +92,22 @@ class ClipPathNode extends Component {
   }
   startMove = e => {
     if (this.props.removing) return
-    const { x, y } = this.getXY(e)
+    const { x, y } = this.getPageXY(e)
     const move = e => {
-      const { x: oldX, y: oldY } = this.getXY(e)
+      const { x: oldX, y: oldY } = this.state
+      const { x: pageX, y: pageY } = this.getPageXY(e)
       const {
         height,
         top,
         left,
         width,
       } = this.el.parentNode.getBoundingClientRect()
-      const x = Math.min(Math.max(0, oldX - left), width)
-      const y = Math.min(Math.max(0, oldY - top), height)
+      const x = Math.min(Math.max(0, pageX - left), width)
+      const y = Math.min(Math.max(0, pageY - top), height)
       this.setState(
         {
-          x,
-          y,
+          x: this.props.restrictX ? oldX : x,
+          y: this.props.restrictY ? oldY : y,
         },
         () => this.props.onMove(this)
       )
@@ -84,7 +144,7 @@ class ClipPathNode extends Component {
     )
   }
   componentWillReceiveProps = nextProps => {
-    if (nextProps.x !== this.props.x) {
+    if (nextProps.x !== this.props.x || nextProps.y !== this.props.y) {
       this.setState({ x: nextProps.x, y: nextProps.y })
     }
   }
@@ -110,55 +170,50 @@ class ClipPathNode extends Component {
     )
   }
 }
-class ClipPath extends Component {
-  getClipPath = () => {
-    const { height, nodes, width } = this.props
-    let path = ''
-    for (let n = 0; n < nodes.length; n++) {
-      const node = nodes[n]
-      path += `${Math.floor(node.x / width * 100)}% ${Math.floor(
-        node.y / height * 100
-      )}%${n === nodes.length - 1 ? '' : `, `}`
-    }
-    return `polygon(${path})`
-  }
-  render = () => {
-    const { nodes, removalMode, onRemove, onUpdate } = this.props
-    const clipPath = this.getClipPath()
-    return (
-      <div className="clip__container" ref={c => (this.el = c)}>
-        <div
-          className="clip__mask"
-          style={{
-            clipPath,
-          }}
-        />
-        {nodes.map((n, idx) => (
-          <ClipPathNode
-            id={idx}
-            key={`clip-node--${idx}`}
-            x={n.x}
-            y={n.y}
-            removing={removalMode}
-            onMove={onUpdate}
-            onRemove={onRemove}
-          />
-        ))}
-        <footer className="clip__path">{`clip-path: ${clipPath}`}</footer>
-      </div>
-    )
-  }
-}
-const MODES = {
-  CIRCLE: 'circle',
-  ELLIPSE: 'ellipse',
-  INSET: 'inset',
-  POLYGON: 'polygon',
-}
+const SIZE = 300
 const PRESETS = {
-  CIRCLE: [],
-  ELLIPSE: [],
-  INSET: [],
+  CIRCLE: [
+    {
+      x: SIZE / 2,
+      y: SIZE / 2,
+    },
+    {
+      x: 250,
+      y: 250,
+    },
+  ],
+  ELLIPSE: [
+    {
+      x: SIZE / 2,
+      y: SIZE / 2,
+    },
+    {
+      x: 200,
+      y: SIZE / 2,
+    },
+    {
+      x: SIZE / 2,
+      y: 25,
+    },
+  ],
+  INSET: [
+    {
+      x: SIZE / 2,
+      y: 25,
+    },
+    {
+      x: 275,
+      y: SIZE / 2,
+    },
+    {
+      x: SIZE / 2,
+      y: 275,
+    },
+    {
+      x: 25,
+      y: SIZE / 2,
+    },
+  ],
   POLYGON: [
     {
       x: 40,
@@ -174,11 +229,18 @@ const PRESETS = {
     },
   ],
 }
-class App extends Component {
+const MODES = {
+  CIRCLE: 'CIRCLE',
+  ELLIPSE: 'ELLIPSE',
+  INSET: 'INSET',
+  POLYGON: 'POLYGON',
+}
+class ClipPathGenerator extends Component {
   state = {
-    nodes: PRESETS.CIRCLE,
     removing: false,
-    mode: MODES.CIRCLE,
+    mode: MODES.POLYGON,
+    size: 0,
+    nodes: PRESETS[MODES.POLYGON],
   }
   onUpdate = n => {
     const nodes = this.state.nodes.map((o, idx) => {
@@ -187,15 +249,56 @@ class App extends Component {
           x: n.state.x,
           y: n.state.y,
         })
+      } else if (this.state.mode === MODES.ELLIPSE && n.props.id === 0) {
+        if (idx === 1) {
+          const xMove = n.state.x - this.state.nodes[0].x
+          let newX = o.x + xMove
+          if (newX > 300 || newX < 0) {
+            newX = this.state.nodes[0].x + this.state.nodes[0].x - newX
+          }
+          o = Object.assign({}, o, {
+            y: n.state.y,
+            x: Math.min(300, Math.max(0, newX)),
+          })
+        } else if (idx === 2) {
+          const yMove = n.state.y - this.state.nodes[0].y
+          let newY = o.y + yMove
+          if (newY > 300 || newY < 0) {
+            newY = this.state.nodes[0].y + this.state.nodes[0].y - newY
+          }
+          o = Object.assign({}, o, {
+            x: n.state.x,
+            y: Math.min(300, Math.max(0, newY)),
+          })
+        }
+      } else if (this.state.mode === MODES.CIRCLE && n.props.id === 0) {
+        if (idx === 1) {
+          const xMove = n.state.x - this.state.nodes[0].x
+          let newX = o.x + xMove
+          if (newX > 300 || newX < 0) {
+            newX = this.state.nodes[0].x + this.state.nodes[0].x - newX
+          }
+          const yMove = n.state.y - this.state.nodes[0].y
+          let newY = o.y + yMove
+          if (newY > 300 || newY < 0) {
+            newY = this.state.nodes[0].y + this.state.nodes[0].y - newY
+          }
+          o = Object.assign({}, o, {
+            x: Math.min(300, Math.max(0, newX)),
+            y: Math.min(300, Math.max(0, newY)),
+          })
+        }
       }
       return o
     })
     this.setState({
+      copied: false,
       nodes,
     })
   }
   addNode = () => {
     this.setState({
+      copied: false,
       nodes: [
         ...this.state.nodes,
         {
@@ -213,36 +316,101 @@ class App extends Component {
   }
   removeNodes = () => {
     this.setState({
+      copied: false,
       removing: !this.state.removing,
     })
   }
+  componentDidMount = () => {
+    this.setState({
+      size: this.el.getBoundingClientRect().width,
+    })
+  }
+  switchMode = e => {
+    this.setState({
+      copied: false,
+      mode: MODES[e.target.value.toUpperCase()],
+      nodes: PRESETS[e.target.value.toUpperCase()],
+    })
+  }
+  copy = () => {
+    const path = this.path
+    if (this.path) {
+      this.path.select()
+      document.execCommand('Copy')
+      this.setState({
+        copied: true,
+      })
+    }
+  }
   render = () => {
-    const { addNode, onUpdate, removeNode, removeNodes } = this
-    const { mode, nodes, removing } = this.state
+    const { addNode, switchMode, onUpdate, removeNode, removeNodes } = this
+    const { copied, mode, nodes, removing, size } = this.state
+    const clipPath = getClipPath(nodes, size, mode)
     return (
       <Fragment>
-        <Container>
-          <ClipPath
-            height={300}
-            nodes={nodes}
-            onUpdate={onUpdate}
-            onRemove={removeNode}
-            removalMode={removing}
-            width={300}
-          />
-        </Container>
+        <div className="clip">
+          <div className="clip__container" ref={c => (this.el = c)}>
+            <div
+              className="clip__mask"
+              style={{
+                clipPath,
+              }}
+            />
+            {nodes.map((n, idx) => (
+              <ClipPathNode
+                id={idx}
+                key={`clip-node--${idx}`}
+                x={n.x}
+                y={n.y}
+                removing={removing}
+                onMove={onUpdate}
+                onRemove={removeNode}
+                restrictX={
+                  (mode === MODES.INSET && !(idx % 2)) ||
+                  (mode === MODES.ELLIPSE && idx === 2)
+                    ? true
+                    : false
+                }
+                restrictY={
+                  (mode === MODES.INSET && idx % 2) ||
+                  (mode === MODES.ELLIPSE && idx === 1)
+                    ? true
+                    : false
+                }
+              />
+            ))}
+          </div>
+        </div>
+        <div className="clip__path">
+          <div class='clip__path-value'>{`clip-path: ${clipPath};`}</div>
+          <input className='clip__path-input' readOnly ref={p => this.path = p} value={`clip-path: ${clipPath};`}/>
+          <button className='copy' onClick={this.copy}>
+            {copied ? 'Copied 👍' : 'Copy'}
+          </button>
+        </div>
+        {
+          Object.keys(MODES).map((m, idx) => (
+            <div className='mode-option'>
+              <input className='mode-option__input' type='radio' name='shape' value={m} id={`mode-option--${m}`} onChange={switchMode} checked={m === mode}/>
+              <label for={`mode-option--${m}`}>
+              {m.toLowerCase()}
+              <div className='mode-option__radio'/>
+              </label>
+            </div>
+          ))
+        }
         {mode === MODES.POLYGON && (
-          <Fragment>
-            <button disabled={removing} onClick={addNode}>
+          <div className="clip__polygon-actions">
+            <button className='add-node' disabled={removing} onClick={addNode}>
               Add Node
             </button>
-            <button onClick={removeNodes}>
+            <button className='remove-nodes' onClick={removeNodes}>
               {removing ? 'Done' : 'Remove Nodes'}
             </button>
-          </Fragment>
+          </div>
         )}
       </Fragment>
     )
   }
 }
-render(<App />, document.getElementById('app'))
+render(<ClipPathGenerator />, document.getElementById('app'))
