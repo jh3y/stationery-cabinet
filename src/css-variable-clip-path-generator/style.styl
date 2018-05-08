@@ -6,12 +6,11 @@ $border = 4px
 
 html
 body
-  background rebeccapurple
+  background radial-gradient(circle at 50% 190px, rebeccapurple, #111 )
   font-family 'Arial', sans-serif
   font-size 14px
-  min-height 100vh
   overflow-x hidden
-  padding-top 40px
+  min-height 100vh
 
 button
 input
@@ -31,10 +30,13 @@ button
   padding 12px 12px
 
   &[disabled]
+  &[disabled]:hover
     background grey
+    cursor not-allowed
     opacity .25
 
 #app
+  padding 40px 0
   align-items center
   display flex
   flex-direction column
@@ -57,6 +59,7 @@ button
     position absolute
     top 0
     width 100%
+    clip-path var(--path)
 
 .clip-path-node
   cursor move
@@ -128,6 +131,8 @@ button
     opacity 0
     width 0
 
+
+
     &:checked
       ~ label
         color dodgerblue
@@ -136,6 +141,21 @@ button
           border-color dodgerblue
           &:after
             background dodgerblue
+
+    &[disabled]
+      ~ label
+        cursor not-allowed
+        opacity .25
+
+        &:hover
+          .clip-path-option__check:after
+            background none
+
+    &:checked
+      ~ label:hover .clip-path-option__check:after
+        background dodgerblue
+
+
 
   &__label
     align-items center
@@ -179,6 +199,12 @@ button
     font-size 1.5rem
     width 200px
 
+    &:hover
+      background darken(dodgerblue, 15%)
+
+    &:active
+      background darken(dodgerblue, 25%)
+
   &__value
     background #111
     border-radius 6px
@@ -186,12 +212,33 @@ button
     padding 20px
 
   &__input
-    position fixed
     left 100%
+    position fixed
+
+.polygon-actions
+  display flex
+  width 300px
+  flex-wrap wrap
+  align-items center
+  justify-content center
 
 .polygon-action
   background #ecf0f1
   color #111
+  margin 4px
 
   &:hover
+    background darken(#ecf0f1, 15%)
+
+  &:active
     background darken(#ecf0f1, 25%)
+
+  &--removing
+    background #e74c3c
+    color #fff
+
+    &:hover
+      background darken(#e74c3c, 15%)
+
+    &:active
+      background darken(#e74c3c, 25%)
