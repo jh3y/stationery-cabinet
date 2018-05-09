@@ -1,5 +1,5 @@
 const avenger = document.querySelector('.avenger')
-const classes = ['shield', 'fist', 'hammer', 'helmet']
+const classes = ['shield', 'hammer', 'fist', 'helmet']
 const duration = 1000
 
 let index = 0

@@ -29,24 +29,33 @@ body
   justify-content center
   background red
   border-radius 100%
+  transition background .5s
 
   &__icon
     height 200px
     width 200px
-    transition clip-path .5s, background .5s
+    transition clip-path .5s
 
-  &--fist .avenger__icon
-    background green
-    createClipPath((85 90) (75 55) (89 42) (89 24) (82 22) (80 9) (70 7) (68 10) (66 6) (56 5) (53 8) (51 4) (38 5) (36 9) (34 7) (25 8) (23 12) (17 17) (16 41) (26 54) (20 90))
+  &--fist
+    background #875094
+    .avenger__icon
+      background #a2cd48
+      createClipPath((85 90) (75 55) (89 42) (89 24) (82 22) (80 9) (70 7) (68 10) (66 6) (56 5) (53 8) (51 4) (38 5) (36 9) (34 7) (25 8) (23 12) (17 17) (16 41) (26 54) (20 90))
 
-  &--hammer .avenger__icon
-    background silver
-    createClipPath((45 95) (55 95) (55 40) (60 40) (62.5 42.5) (85 42.5) (85 7.5) (62.5 7.5) (60 5) (40 5) (37.5 7.5) (15 7.5) (15 42.5) (37.5 42.5) (40 40) (45 40) (45 95) (45 95) (45 95) (45 95) (45 95))
+  &--hammer
+    background rgb(160, 15, 32)
+    .avenger__icon
+      background rgb(220, 234, 234)
+      createClipPath((45 95) (55 95) (55 40) (60 40) (62.5 42.5) (85 42.5) (85 7.5) (62.5 7.5) (60 5) (40 5) (37.5 7.5) (15 7.5) (15 42.5) (37.5 42.5) (40 40) (45 40) (45 95) (45 95) (45 95) (45 95) (45 95))
 
-  &--shield .avenger__icon
-    background white
-    createClipPath((79 96) (68 62) (98 40) (61 40) (50 5) (39 40) (2 40) (32 62) (21 96) (50 75) (50 75) (50 75) (50 75) (50 75) (50 75) (50 75) (50 75) (50 75) (50 75) (50 75) (50 75))
+  &--shield
+    background rgb(30, 82, 133)
+    .avenger__icon
+      background white
+      createClipPath((79 96) (79 96) (68 62) (68 62) (98 40) (98 40) (61 40) (61 40) (50 5) (50 5) (39 40) (39 40) (2 40) (2 40) (32 62) (32 62) (21 96) (21 96) (50 75) (50 75) (50 75))
 
-  &--helmet .avenger__icon
-    background orange
-    createClipPath((60 95) (70 75) (72.5 65) (80 60) (80 35) (75 32.5) (74 25) (70 15) (65 10) (50 5) (35 10) (30 15) (26 25) (25 32.5) (20 35) (20 60) (27.5 65) (30 75) (40 95) (40 95) (40 95))
+  &--helmet
+    background #aa0505
+    .avenger__icon
+      background #fbca03
+      createClipPath((60 95) (70 75) (72.5 65) (80 60) (80 35) (75 32.5) (74 25) (70 15) (65 10) (50 5) (35 10) (30 15) (26 25) (25 32.5) (20 35) (20 60) (27.5 65) (30 75) (40 95) (40 95) (40 95))
