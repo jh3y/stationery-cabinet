@@ -1,0 +1,45 @@
+*
+  box-sizing border-box
+
+body
+  align-items center
+  background-color #111
+  display flex
+  justify-content center
+  min-height 100vh
+
+$size = 100px
+$bar = $size / 5
+$gutter = 4px
+
+getRandomNumber(lower, upper)
+  return floor(math(0, 'random') * (upper - lower + 1) + lower)
+
+generateBackground()
+  bg = ()
+  for bar in (0..7)
+    push(bg, (linear-gradient(0deg, #111, #111) (((bar - 3) * $bar)) (getRandomNumber(20, 100) * -1px) \/ ($bar $size)))
+    push(bg, (linear-gradient(0deg, green, yellow, red) (((bar - 3) * $bar) + $gutter) 0 \/ ($bar - (2 * $gutter) $size)))
+  for s in (0..6)
+    shift(bg)
+  unquote(join(',',bg))
+
+.equalizer
+  animation equalize 2s infinite
+  background generateBackground()
+  background-repeat no-repeat
+  height $size
+  overflow hidden
+  width $size
+
+@keyframes equalize
+  for keyframe in (0..9)
+    if (keyframe == 0)
+      0%, 100%
+        background generateBackground()
+        background-repeat no-repeat
+    else
+      {100 * keyframe/10 * 1%}
+        background generateBackground()
+        background-repeat no-repeat
+
