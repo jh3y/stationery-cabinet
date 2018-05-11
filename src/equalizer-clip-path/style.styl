@@ -1,0 +1,44 @@
+*
+  box-sizing border-box
+
+body
+  align-items center
+  background-color #111
+  display flex
+  justify-content center
+  min-height 100vh
+
+$size = 100px
+$bar = $size / 5
+$gutter = 4px
+
+getRandomNumber(lower, upper)
+  return floor(math(0, 'random') * (upper - lower + 1) + lower)
+
+.equalizer
+  align-items center
+  display flex
+  height $size
+  justify-content space-between
+  overflow hidden
+  width $size
+
+  div
+    background linear-gradient(0deg, green, yellow, red)
+    height 100%
+    width $bar - $gutter
+    animation equalize 2s infinite
+    for bar in (1..5)
+      &:nth-child({bar})
+        animation-delay (getRandomNumber(10, 60) / 10) * -1s
+
+
+@keyframes equalize
+  for keyframe in (0..9)
+    if (keyframe == 0)
+      0%, 100%
+        clip-path inset((getRandomNumber(0, 80)* 1%) 0 0 0)
+    else
+      {100 * keyframe/10 * 1%}
+        clip-path inset((getRandomNumber(0, 80) * 1%) 0 0 0)
+
