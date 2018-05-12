@@ -1,0 +1,41 @@
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+body
+  background-color #111
+  display flex
+  align-items center
+  justify-content center
+  min-height 100vh
+
+.dupe
+  background url(https://raw.github.com/jh3y/doodles/master/dontfeelgoodbear.svg?sanitize=true)
+  background-size 300px 400px
+  height 400px
+  width 300px
+
+.bear-grid
+  display grid
+  height 400px
+  width 300px
+  grid-template-rows repeat(var(--rows), 1fr)
+  grid-template-columns repeat(var(--columns), 1fr)
+
+  &__cell
+    background url(https://raw.github.com/jh3y/doodles/master/dontfeelgoodbear.svg?sanitize=true)
+    background-size 300px 400px
+    // Each cell has an XY value that maps out the background-position
+    --cellWidth calc(-300px / var(--columns))
+    --cellHeight calc(-400px / var(--rows))
+    background-position calc(var(--x) * var(--cellWidth)) calc(var(--y) * var(--cellHeight))
+    animation driftAway 4s
+    animation-delay calc(var(--x) * .25s)
+    animation-fill-mode backwards
+    opacity 0
+    transform translate(calc(var(--destinationX) * -1px), calc(var(--destinationY) * -1px)) scale(0)
+
+@keyframes driftAway
+  from
+    transform translate(0, 0) scale(1)
+    opacity 1

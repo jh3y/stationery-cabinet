@@ -1,0 +1,6 @@
+- let columns = 15
+- let rows = 20
+- let cells = columns * rows
+.bear-grid(style=`--cells: ${cells}; --columns: ${columns}; --rows: ${rows}`)
+  - for(let b = 1; b < cells + 1; b++)
+    .bear-grid__cell(style=`--x: ${(b - 1) % columns}; --y: ${b % columns === 0 ? Math.floor(b / columns) - 1 : Math.floor(b / columns)}; --destinationY: ${Math.floor(Math.random() * 500)}; --destinationX: ${Math.floor(Math.random() * 500)};`)
