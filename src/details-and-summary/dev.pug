@@ -1,0 +1,21 @@
+mixin drawer(pos, text)
+  .chest-drawer(class=`chest-drawer--${pos}`)
+    details
+      summary
+    .chest-drawer__structure
+      .chest-drawer__panel.chest-drawer__panel--left
+      .chest-drawer__panel.chest-drawer__panel--right
+      .chest-drawer__panel.chest-drawer__panel--bottom
+      .chest-drawer__panel.chest-drawer__panel--back= text
+
+.chest
+  .chest__panel.chest__panel--back
+  .chest__panel.chest__panel--front
+    .chest__panel.chest__panel--front-frame
+  .chest__panel.chest__panel--top
+  .chest__panel.chest__panel--bottom
+  .chest__panel.chest__panel--left
+  .chest__panel.chest__panel--right
+  +drawer('top', 'CSS')
+  +drawer('middle', 'is')
+  +drawer('bottom', 'Awesome')

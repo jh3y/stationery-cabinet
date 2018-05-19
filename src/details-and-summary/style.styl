@@ -1,0 +1,254 @@
+*
+  box-sizing border-box
+
+body
+  align-items center
+  background-color #f9bf3b
+  display flex
+  justify-content center
+  min-height 100vh
+
+
+$bottomAllowance = 30px
+$drawerMargin = 10px
+$border = 4px
+$color = rgb(50, 50, 50)
+$innerColor = #fff
+
+:root
+  --height 300
+  --width 200
+  --depth 150
+  --drawerSize "calc((var(--height) / 3) - %s)" % (unit($drawerMargin, ''))
+  --drawerHole "calc((var(--height) - ((%s * 4) + (%s + %s))) / 3)" % (unit($drawerMargin, '') unit($drawerMargin, '') unit($bottomAllowance, ''))
+
+.chest
+  height calc(var(--height) * 1px)
+  transform rotateX(-30deg) rotateY(40deg)
+  transform-style preserve-3d
+  width calc(var(--width) * 1px)
+
+  &__panel
+    height 100%
+    position absolute
+    transform-style preserve-3d
+    width 100%
+
+    &:after
+      content ''
+      display block
+      height 100%
+      width 100%
+
+    &--front
+      transform translate3d(0, 0, calc(var(--depth) / 2 * 1px))
+      &:after
+        background lighten($color, 20%)
+        content ''
+        height 4px
+        position absolute
+        top -2px
+        width 100%
+    
+    &--front-frame      
+      border $drawerMargin solid lighten($color, 20%)
+      border-bottom-width $bottomAllowance
+      border-top-width $drawerMargin
+      transform translate3d(0, 0, 0)
+
+      &:before
+        background lighten($color, 20%)
+        content ''
+        height $drawerMargin * 2
+        left 0
+        position absolute
+        top calc(var(--drawerHole) * 1px)
+        width 100%
+
+      &:after
+        background lighten($color, 20%)
+        content ''
+        height $drawerMargin * 2
+        left 0
+        position absolute
+        top "calc(var(--drawerHole) * 2px + %s)" % ($drawerMargin * 2)
+        width 100%
+
+    &--back
+      background lighten($color, 20%)
+      transform translate3d(0, 0, calc(var(--depth) / 2 * -1px))
+      &:after
+        background black
+        transform translate3d(0, 0, 1px)
+
+    &--top
+      background lighten($color, 10%)
+      bottom 100%
+      height calc(var(--depth) * 1px)
+      left 0
+      transform rotateX(90deg) translate3d(0, 50%, 1px)
+      transform-origin bottom
+      transform-style preserve-3d
+
+      &:after
+        background lighten(black, 10%)
+        transform translate3d(0, 0, -1px)
+
+    &--bottom
+      background lighten($color, 10%)
+      height calc(var(--depth) * 1px)
+      left 0
+      top 100%
+      transform translateY(-50%) rotateX(90deg)
+      
+      &:after
+        background lighten(black, 5%)
+        transform translate3d(0, 0, 1px)
+
+    &--right
+      background $color
+      right 0
+      transform translate3d(0, 0, calc(var(--depth) / 2 * 1px)) rotateY(-90deg)
+      transform-origin right center
+      width calc(var(--depth) * 1px)
+
+      &:after
+        background lighten(black, 10%)
+        transform translate3d(0, 0, 1px)
+
+    &--left
+      width calc(var(--depth) * 1px)
+      left 0
+      background $color
+      transform-origin left center
+      transform translate3d(0, -1px, calc(var(--depth) / 2 * 1px)) rotateY(90deg)
+
+      &:after
+        background lighten(black, 10%)
+        transform translate3d(0, 0, 1px)
+
+
+.chest-drawer
+  height calc(var(--drawerSize) * 1px)
+  left 0
+  position absolute
+  top 0
+  transition transform .25s
+  transform-style preserve-3d
+  width 100%
+
+  &--top
+  &--middle
+  &--bottom
+    transform translate3d(0, 0, calc(var(--depth) * 0.51px))
+
+  &--top
+    top ($drawerMargin / 2)
+
+  &--middle
+    top "calc((var(--drawerSize) + %s) * 1px)" % (unit($drawerMargin, ''))
+
+  &--bottom
+    top "calc((var(--drawerSize) * 2 + %s) * 1px)" % (unit($drawerMargin, '') * 1.5)
+
+  details
+  summary
+    background darken($color, 5%)
+    cursor pointer
+    height 100%
+    left 0
+    list-style none
+    position absolute
+    outline 0
+    top 0
+    transition transform .25s
+    transform translate3d(0, 0, 0)
+    width 100%
+
+    &:after
+      background lighten($color, 60%)
+      content ''
+      height 5%
+      left 50%
+      position absolute
+      top 10%
+      transform translate(-50%, 0)
+      width 40%
+
+    &::-webkit-details-marker
+      display none
+  
+  details
+    &:hover
+      &:not([open])
+        transform translate3d(0, 0, calc(var(--depth) * 0.05px))
+
+    &[open]
+    &[open] ~ .chest-drawer__structure
+      transform translate3d(0, 0, calc(var(--depth) * 0.9px))
+
+  &__panel
+    height 100%
+    position absolute
+    transform-style preserve-3d
+    width 100%
+
+    &--left
+      background darken($innerColor, 10%)
+      bottom 0
+      height calc(var(--drawerHole) * 0.65px)
+      left 10px
+      transform translate3d(0, -16px, -2px) rotateY(90deg)
+      transform-origin left
+      width calc(var(--depth) * 1px)
+    
+    &--right
+      background darken($innerColor, 10%)
+      bottom 0
+      height calc(var(--drawerHole) * 0.65px)
+      right 10px
+      transform translate3d(0, -16px, -2px) rotateY(-90deg)
+      transform-origin right
+      width calc((var(--depth) - 3) * 1px)
+
+    &--bottom
+      background $innerColor
+      bottom 18px
+      height calc(var(--depth) * 1px)
+      left $drawerMargin
+      transform rotateX(90deg) translate3d(0, -2px, 0)
+      transform-origin bottom center
+      width "calc(100% - (2px * %s))" % unit($drawerMargin, '')
+
+    &--back
+      align-items center
+      background darken($innerColor, 15%)
+      bottom 16px
+      display flex
+      font-family 'Arial', sans-serif
+      font-size calc(var(--drawerHole) * 0.35px)
+      font-weight bold
+      height calc(var(--drawerHole) * 0.65px)
+      justify-content center
+      left $drawerMargin
+      transform translate3d(0, 0, calc((var(--depth) - 2) * -1px))
+      width "calc(100% - (2px * %s))" % unit($drawerMargin, '')
+
+  &__structure
+    height 100%
+    left 0
+    position absolute
+    top 0
+    transform-style preserve-3d
+    transition transform .25s
+    width 100%
+
+
+.chest-drawer--top .chest-drawer__panel--back
+  color #e74c3c
+
+.chest-drawer--middle .chest-drawer__panel--back
+  color #6bb9f0
+
+.chest-drawer--bottom .chest-drawer__panel--back
+  color #00e640
