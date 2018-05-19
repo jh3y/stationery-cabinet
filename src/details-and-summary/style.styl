@@ -144,12 +144,15 @@ $innerColor = #fff
 
   &--top
     top ($drawerMargin / 2)
+    z-index 3
 
   &--middle
     top "calc((var(--drawerSize) + %s) * 1px)" % (unit($drawerMargin, ''))
+    z-index 2
 
   &--bottom
     top "calc((var(--drawerSize) * 2 + %s) * 1px)" % (unit($drawerMargin, '') * 1.5)
+    z-index 1
 
   details
   summary
