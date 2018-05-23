@@ -1,36 +1,35 @@
-.cash-register
+#app.cash-register
   .cash-register__total-wrap
     .cash-register__total
-      - for (let c = 0; c < 2; c++)
-        .cash-register__loop
-          - for(let c = 0; c < 10; c++)
-            div= c
-      .cash-register__loop .
-      - for (let c = 0; c < 2; c++)
-        .cash-register__loop
+      .cash-register__loop
+        .cash-register__loop-track(v-bind:style="{'--trans': lines}")
           - for(let c = 0; c < 10; c++)
             sup= c
-  .cash-register__receipt-feed
-    .receipt
-  .cash-register__inputs-wrapper
-    .cash-register__inputs
-      button.cash-register-rogue
-      button.cash-register-rogue
-      button.cash-register-rogue
-      button.cash-register-rogue
-      - for(let c = 0; c < 2; c++)
-        div
-          button.cash-register-input
-        div
-          button.cash-register-input
-        div
-          button.cash-register-input
-        div
-          button.cash-register-input
-      .spacer
-      .cash-register__actions
-        button.cash-register-input
-        button.cash-register-input
-        button.cash-regsiter-input
-        button.cash-register-input
+      .cash-register__loop $
+      - for(let i = 0; i < 2; i++)
+        .cash-register__loop
+          .cash-register__loop-track(v-bind:style=`{'--trans': amount[${i}]}`)
+            - for(let c = 0; c < 10; c++)
+              div= c
+      .cash-register__loop .
+      - for(let i = 2; i < 4; i++)
+        .cash-register__loop
+          .cash-register__loop-track(v-bind:style=`{'--trans': amount[${i}]}`)
+            - for(let c = 0; c < 10; c++)
+              sup= c
+  .cash-register__mid
+    .cash-register__receipt-feed
+      .cash-register__receipt
+  .cash-register__keypad-wrap
+    .cash-register__keypad
+      - for(let c = 0; c < 3; c++)
+        button.cash-register-key.cash-register-key--big-dollar(class=`${c === 0 ? 'cash-register-key--top' : ''}`, data-amount-index="0", v-on:click="addToLine")
+        button.cash-register-key.cash-register-key--big-dollar(class=`${c === 0 ? 'cash-register-key--top' : ''}`, data-amount-index="1", v-on:click="addToLine")
+        button.cash-register-key(class=`${c === 0 ? 'cash-register-key--top' : ''}`, data-amount-index="2", v-on:click="addToLine")
+        button.cash-register-key(class=`${c === 0 ? 'cash-register-key--top' : ''}`, data-amount-index="3", v-on:click="addToLine")
+      .cash-register__keypad-spacer
+      .cash-register__keypad-actions
+        button.cash-register-key.cash-register-key--dep(v-on:click="addLine") Dep
+        button.cash-register-key.cash-register-key--sub Sub
+        button.cash-register-key.cash-register-key--tend Tend
   .cash-register__drawer
