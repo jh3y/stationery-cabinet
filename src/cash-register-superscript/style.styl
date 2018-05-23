@@ -3,13 +3,13 @@
 *:after
   box-sizing border-box
 
-$color = grey
+$color = #bfbfbf
 
 body
-  background-color #2eec71
+  align-items center
+  background-color #36d7b7
   font-family 'Arial', sans-serif
   display flex
-  align-items center
   justify-content center
   min-height 100vh
 
@@ -24,8 +24,8 @@ body
     display grid
     grid-template-columns repeat(2, 2fr) repeat(2, 3fr) 1fr repeat(2, 2fr)
     grid-gap 0
-    width 50%
     height 50px
+    width 50%
 
   &__loop-track
     transform translateY(calc(var(--trans) * -100%))
@@ -34,11 +34,11 @@ body
   &__loop
     $font-size = 30px
     background #111
-    overflow hidden
     color #fafafa
-    text-align center
     height $font-size
     line-height $font-size
+    overflow hidden
+    text-align center
 
     div
     sup
@@ -69,10 +69,11 @@ body
     text-transform uppercase
     transform translateY(0)
     width $keyWidth
+    outline 0
 
     &:active
       transform translateY(5px)
-      box-shadow 0 0 0 black
+      box-shadow 0 0 0 transparent
 
     apply-color(c)
       background c
@@ -83,13 +84,13 @@ body
       transform translateY(15px)
 
     &--big-dollar
-      apply-color(orange)
+      apply-color(rgb(254, 194, 135))
     &--dep
-      apply-color(green)
+      apply-color(rgb(96, 178, 78))
     &--sub
-      apply-color(dodgerblue)
+      apply-color(rgb(247, 189, 201))
     &--tend
-      apply-color(pink)
+      apply-color(rgb(92, 195, 228))
       grid-column 1 / -1
       width 100%
 
@@ -123,6 +124,28 @@ body
     background lighten($color, 5%)
     position relative
 
+  &__key
+    height 20px
+    width 20px
+    background lighten($color, 35%)
+    border 2px solid lighten($color, 60%)
+    border-radius 100%
+    position absolute
+    right 20px
+    top 50%
+    transform translate(0, -50%)
+
+    &:after
+      content ''
+      height 2px
+      width 10px
+      position absolute
+      top 50%
+      left 50%
+      background darken($color, 75%)
+      transform translate(-50%, -50%) rotate(-35deg)
+
+
   &__receipt-feed
     background darken($color, 75%)
     content ''
@@ -132,13 +155,52 @@ body
     top 5px
     width 70px
 
+
   &__receipt
     background white
-    bottom 5px
-    height 80px
-    left 10px
+    top 100%
+    left 0
     position absolute
+    transition transform .25s .5s
+    transform translateY(calc(var(--trans) * -16px))
+    width 100%
+    padding 0
+    margin 0
+
+  $receiptItemSize = 16px
+  &__receipt-container
+    bottom 5px
+    position absolute
+    left 10px
     width 50px
+    height (3.5 * $receiptItemSize)
+    overflow hidden
+
+  &__receipt-item
+    $itemColor = #dadfe1
+    height $receiptItemSize
+    width 100%
+    position relative
+
+    &:before
+      content ''
+      position absolute
+      height 8px
+      width 50%
+      top 50%
+      left 5px
+      background $itemColor
+      transform translateY(-50%)
+
+    &:after
+      content ''
+      position absolute
+      height 8px
+      width 20%
+      right 5px
+      top 50%
+      background $itemColor
+      transform translateY(-50%)
 
   &__drawer
     background darken($color, 25%)

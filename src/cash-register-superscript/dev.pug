@@ -1,8 +1,8 @@
-#app.cash-register
+.cash-register
   .cash-register__total-wrap
     .cash-register__total
       .cash-register__loop
-        .cash-register__loop-track(v-bind:style="{'--trans': lines}")
+        .cash-register__loop-track(v-bind:style="{'--trans': lines % 10}")
           - for(let c = 0; c < 10; c++)
             sup= c
       .cash-register__loop $
@@ -19,7 +19,11 @@
               sup= c
   .cash-register__mid
     .cash-register__receipt-feed
-      .cash-register__receipt
+      .cash-register__receipt-container
+        ul.cash-register__receipt(v-bind:style="{'--trans': showLines}")
+          li.cash-register__receipt-item(v-for="l in receiptLines", :class="subbing ? 'subby' : 'hello'")
+    .cash-register__key
+
   .cash-register__keypad-wrap
     .cash-register__keypad
       - for(let c = 0; c < 3; c++)
@@ -29,7 +33,7 @@
         button.cash-register-key(class=`${c === 0 ? 'cash-register-key--top' : ''}`, data-amount-index="3", v-on:click="addToLine")
       .cash-register__keypad-spacer
       .cash-register__keypad-actions
-        button.cash-register-key.cash-register-key--dep(v-on:click="addLine") Dep
-        button.cash-register-key.cash-register-key--sub Sub
+        button.cash-register-key.cash-register-key--dep(v-on:click="addLine") Add
+        button.cash-register-key.cash-register-key--sub(v-on:click='addSub') Sub
         button.cash-register-key.cash-register-key--tend Tend
   .cash-register__drawer
