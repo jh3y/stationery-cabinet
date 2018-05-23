@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:800i')
+
+*
+  box-sizing border-box
+
+html
+body
+  align-items center
+  background #e6001d
+  color white
+  display flex
+  justify-content center
+  flex-direction column
+  font-family 'Nunito Sans', sans-serif
+  font-size 16px
+  min-height 100vh
+
+h1
+  font-size 2rem
+  text-align center
+
+  @media(min-width 768px)
+    font-size 5rem
+
+
+.replay
+  background transparent
+  border 0
+  cursor pointer
+  position absolute
+  right 20px
+  bottom 20px
+  animation fadeIn .5s
+
+  &:active
+    transform translateY(10px)
+
+  &__icon
+    height 44px
+    width 44px
+
+  &--hidden
+    display none
+
+@keyframes fadeIn
+  from
+    opacity 0

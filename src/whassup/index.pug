@@ -1,0 +1,14 @@
+html
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    title Some cool pen
+    meta(name="viewport", content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1.0")
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css')
+    link(rel='stylesheet', href='style.css')
+  body
+    block content
+      include dev.pug
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/plugins/TextPlugin.min.js")
+    script(src="script.js")
