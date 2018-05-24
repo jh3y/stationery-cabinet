@@ -97,6 +97,7 @@ body
 
   &__keypad
     clip-path inset(($keyHeight / 2) 0 0 0)
+    -webkit-clip-path inset(($keyHeight / 2) 0 0 0)
     display grid
     grid-template-columns repeat(4, $keyWidth) auto
     grid-template-rows repeat(3, 1fr)
@@ -202,30 +203,127 @@ body
       background $itemColor
       transform translateY(-50%)
 
+  &__cash
+    align-items center
+    display grid
+    grid-template-columns repeat(10,15px)
+    grid-template-rows 1fr
+    height 100%
+    justify-content center
+    left 50%
+    line-height 50px
+    position absolute
+    top 0
+    transform translate(-50%, -25%)
+    width 100%
+
+  &__float
+    border 10px solid transparent
+    border-bottom 0
+    border-top 0
+    display grid
+    height 100%
+    position absolute
+    grid-template-columns repeat(20,15px)
+    grid-template-rows 1fr
+    overflow-x hidden
+    top 0
+    transform translateY(-25%)
+    width 100%
+
+  $noteDuration = 1s
+  $noteDelay = .2s
+  &__note
+    animation-delay $noteDelay
+    animation-duration $noteDuration
+    animation-fill-mode backwards
+    animation-timing-function cubic-bezier(0,.64,.25,1.01)
+    font-size 2.5rem
+    opacity 0
+    transform-origin center
+    transform translateY(calc(var(--y) * -1px)) rotate(calc(var(--rotation) * 1deg))
+
+    &--float
+      opacity 1
+      transform rotate(90deg)
+
+    &-wrap
+      animation-delay $noteDelay
+      animation-duration $noteDuration
+      animation-fill-mode backwards
+      animation-timing-function cubic-bezier(0,.64,.25,1.01)
+      transform translateX(calc(var(--x) * 5px))
+
   &__drawer
-    background darken($color, 25%)
+    background black
     height 50px
     position relative
     transform translateY(-16px)
 
-    // handle
     &:before
-      background lighten($color, 50%)
-      border-radius 0
+      border 5px solid darken($color, 50%)
       content ''
-      height 5px
-      left 50%
+      height 100%
+      left 0
       position absolute
-      top 50%
-      transform translate(-50%, -50%)
-      width 40px
+      top 0
+      width 100%
 
-    // outline
-    &:after
-      border 4px solid darken($color, 50%)
-      bottom 5px
-      content ''
-      left 5px
-      position absolute
-      right 5px
-      top 5px
+    &--open
+      .cash-register__drawer-front
+        animation open .1s
+        animation-fill-mode forwards
+
+      .cash-register__note
+        animation-name fly
+      .cash-register__note-wrap
+        animation-name fly-x
+
+
+
+    &-front
+      background darken($color, 25%)
+      cursor pointer
+      cursor -webkit-grab
+      height 100%
+      width 100%
+      transform translate(0, 0)
+
+      // handle
+      &:before
+        background lighten($color, 50%)
+        border-radius 0
+        content ''
+        height 5px
+        left 50%
+        position absolute
+        top 50%
+        transform translate(-50%, -50%)
+        width 40px
+
+      // outline
+      &:after
+        border 4px solid darken($color, 50%)
+        bottom 5px
+        content ''
+        left 5px
+        position absolute
+        right 5px
+        top 5px
+
+@keyframes fly
+  0%
+    opacity 1
+    transform translateY(0) rotate(90deg)
+  50%
+    opacity 1
+
+@keyframes fly-x
+  from
+    transform translateX(0)
+
+@keyframes open
+  95%
+    transform translate(0, 30%)
+  100%
+    transform translate(0, 25%)

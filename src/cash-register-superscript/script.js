@@ -1,4 +1,15 @@
 const getRandom = () => Math.floor(Math.random() * 10)
+const createNoteLocations = () => {
+  const loc = []
+  for (let i = 0; i < 10; i++) {
+    loc.push([
+      Math.floor(Math.random() * 100) - 50,
+      Math.floor(Math.random() * 300) + 150,
+      Math.floor(Math.random() * 90) - 90
+    ])
+  }
+  return loc
+}
 const app = new Vue({
   el: '.cash-register',
   data: {
@@ -8,6 +19,8 @@ const app = new Vue({
     showLines: 0,
     amount: [0, 0, 0, 0],
     temp: [0, 0, 0, 0],
+    notes: createNoteLocations(),
+    tending: false,
   },
   methods: {
     addToLine: function(e) {
@@ -28,5 +41,11 @@ const app = new Vue({
     addSub: function() {
       this.addReceiptItem(2)
     },
+    tend: function(e) {
+      if ((this.tending === false && e.target.className.indexOf('front') !== -1) || (this.tending && e.target.className.indexOf('tend') !== -1)) return
+      this.tending = !this.tending
+      if (this.tending === false)
+        this.notes = createNoteLocations()
+    }
   },
 })

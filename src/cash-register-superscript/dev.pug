@@ -35,5 +35,12 @@
       .cash-register__keypad-actions
         button.cash-register-key.cash-register-key--dep(v-on:click="addLine") Add
         button.cash-register-key.cash-register-key--sub(v-on:click='addSub') Sub
-        button.cash-register-key.cash-register-key--tend Tend
-  .cash-register__drawer
+        button.cash-register-key.cash-register-key--tend(v-on:click='tend') Tend
+  .cash-register__drawer(v-bind:class="{'cash-register__drawer--open': tending}")
+    .cash-register__float
+      - for(let n = 0; n < 20; n++)
+        .cash-register__note.cash-register__note--float 💵
+    .cash-register__cash
+      .cash-register__note-wrap(v-for="n in notes", v-bind:style="{'--x': n[0]}")
+        .cash-register__note(v-bind:style="{'--y':n[1], '--rotation': n[2]}") 💵
+    .cash-register__drawer-front(v-on:click='tend')
