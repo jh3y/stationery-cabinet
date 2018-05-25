@@ -25,10 +25,10 @@ body
   width $size
 
   &-duck
-    -webkit-clip-path inset(-100% -100% 25% -100%)
+    -webkit-clip-path inset(-100% -100% 25% 0%)
     animation duck 6s infinite
     background white
-    clip-path inset(-100% -100% 25% -100%)
+    clip-path inset(-100% -100% 25% 0%)
     height 15%
     left 50%
     position absolute
@@ -42,6 +42,8 @@ body
       position absolute
       transform-origin right center
       width 50%
+      top 0
+      left 0
 
     &__head
       background white
