@@ -21,6 +21,7 @@ const app = new Vue({
     temp: [0, 0, 0, 0],
     notes: createNoteLocations(),
     tending: false,
+    registerNoise: new Audio('https://freesound.org/data/previews/184/184438_850742-lq.mp3')
   },
   methods: {
     addToLine: function(e) {
@@ -44,7 +45,12 @@ const app = new Vue({
     tend: function(e) {
       if ((this.tending === false && e.target.className.indexOf('front') !== -1) || (this.tending && e.target.className.indexOf('tend') !== -1)) return
       this.tending = !this.tending
+      if (this.tending) {
+        this.registerNoise.play()
+      }
       if (this.tending === false)
+        this.registerNoise.pause()
+        this.registerNoise.currentTime = 0
         this.notes = createNoteLocations()
     }
   },
