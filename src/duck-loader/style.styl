@@ -1,0 +1,173 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+$bg = #bf55ec
+$size = 300px
+$grass = #2eec71
+$water = #22a7f0
+
+body
+  align-items center
+  background-color $bg
+  display flex
+  justify-content center
+  min-height 100vh
+
+.duck-loader
+  border 10px solid #ffffff
+  border-radius 100%
+  height $size
+  overflow hidden
+  position relative
+  transform-origin preserve-3d
+  width $size
+
+  &-duck
+    -webkit-clip-path inset(-100% -100% 25% -100%)
+    animation duck 6s infinite
+    background white
+    clip-path inset(-100% -100% 25% -100%)
+    height 15%
+    left 50%
+    position absolute
+    top 50%
+    width 30%
+
+    &__wing
+      animation flap 6s infinite
+      background white
+      height 50%
+      position absolute
+      transform-origin right center
+      width 50%
+
+    &__head
+      background white
+      bottom 100%
+      height 100%
+      position absolute
+      right 0
+      width 50%
+
+      &:before
+        background black
+        content ''
+        height 25%
+        left 50%
+        position absolute
+        top 25%
+        width 25%
+
+      &:after
+        content ''
+        background orange
+        height 35%
+        left 100%
+        position absolute
+        top 40%
+        width 50%
+
+
+  &__pond-water
+    $size = 85%
+    background $water
+    border-radius 100%
+    box-shadow inset 10px 8px 0 0 darken($water, 50%)
+    height ($size * 1%)
+    left 50%
+    position absolute
+    transform translate(-30%, -60%)
+    top 50%
+    width ($size * 1.3%)
+
+    &:after
+      background darken($water, 50%)
+      border-radius 100%
+      content ''
+      height 20px
+      left -9px
+      position absolute
+      top 43%
+      width 20px
+
+  &__pond
+    background $grass
+    height 100%
+    width 100%
+
+    &:before
+    &:after
+      content ''
+      background-color $water
+      position absolute
+      left 50%
+      top 50%
+
+    &:after
+      $size = 65%
+      -webkit-clip-path inset(0 50% 0 0)
+      background $water
+      border-radius 100%
+      clip-path inset(0 50% 0 0)
+      height ($size * 1%)
+      position absolute
+      transform translate(-65%, -15%) rotate(15deg)
+      width ($size * 1.5%)
+
+    &:before
+      $size = 75%
+      border-radius 100%
+      box-shadow inset 10px 10px 0 0 darken($water, 50%)
+      height ($size * 1%)
+      transform translate(-70%, -20%)
+      width ($size * 1.5%)
+
+.mute
+  background transparent
+  border 0
+  bottom 10px
+  cursor pointer
+  position fixed
+  right 10px
+
+  &--active
+    &:after
+      background $bg
+      content ''
+      height 100%
+      left 50%
+      position absolute
+      top 0%
+      width 50%
+
+  &__icon
+    height 44px
+    width 44px
+
+
+
+@keyframes duck
+  0%, 85%, 95%, 100%
+    transform translate(-50%, 0) rotateY(0)
+
+  15%
+    transform translate(25%, 0) rotateY(0)
+
+  20%, 25%
+    transform translate(25%, 0) rotateY(180deg)
+
+  40%, 45%
+    transform translate(-50%, 0) rotateY(180deg)
+
+  60%
+    transform translate(-125%, 0) rotateY(180deg)
+  65%, 70%
+    transform translate(-125%, 0) rotateY(0deg)
+
+@keyframes flap
+  0%, 92%, 100%
+    transform rotate(0deg)
+  96%
+    transform rotate(60deg)
