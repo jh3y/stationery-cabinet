@@ -1,0 +1,67 @@
+*
+*:before
+*:after
+  box-sizing border-box
+
+body
+  background-color dodgerblue
+  display flex
+  align-items center
+  justify-content center
+  min-height 100vh
+
+input
+  cursor pointer
+  height 50px
+  width 50px
+  position relative
+  outline 0
+
+  &:after
+  &:before
+    background blue
+    content ''
+    position absolute
+    border 5px solid white
+    height 100%
+    width 100%
+
+  &:checked:after
+    background green
+
+#a:checked
+  &:after
+    background red
+
+  ~ input:checked:not(#a):after
+    background black
+
+
+  ~ #a:checked
+    &:after
+      background rebeccapurple
+
+    ~ .correct#a
+      display block
+
+    ~ [name='third']
+    ~ [name='fourth']
+      display block
+      z-index 1
+
+.correct
+  display none
+  height 50px
+  width 50px
+  border 5px solid white
+
+.winner
+  display none
+
+[name='third']
+[name='fourth']
+  display none
+
+.correct:enabled
+  ~ .winner
+    display block
