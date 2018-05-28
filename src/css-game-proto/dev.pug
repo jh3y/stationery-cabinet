@@ -1,15 +1,25 @@
-.game
-  .first
-    input(type='radio', id='a', name='first')
-    input(type='radio', id='b', name='first')
-    input(type='radio', id='a', name='second')
-    input(type='radio', id='b', name='second')
-    .second
-      input(type='radio', id='a', name='third')
-      input(type='radio', id='b', name='third')
-      input(type='radio', id='a', name='fourth')
-      input(type='radio', id='b', name='fourth')
-
-
-  input.correct#a(type='checkbox', checked)
-  input.correct#b(type='checkbox', checked)
+- const shuffle = (arr) => {
+-  let currentIndex = arr.length, temp, random
+-  while (0 !== currentIndex) {
+-    random = Math.floor(Math.random() * currentIndex)
+-    currentIndex -= 1
+-    temp = arr[currentIndex]
+-    arr[currentIndex] = arr[random]
+-    arr[random] = temp
+-  }
+-  return arr
+- }
+- const cards = 4
+- const x = shuffle([0, 0, 1, 1])
+- const y = shuffle([0, 0, 1, 1])
+mixin pick(no, limit)
+  .p(class=`p-${no}`, style=`${no === 0 ? 'display: block' : ''}`)
+    - for (let c = 0; c < cards; c++)
+      input(class=`c-${c}`, type='radio', id=`c-${c}-${no}`, name=no, data=`${c % (cards / 2)}`, style=`--x: ${x[c]}; --y: ${y[c]};`)
+      span(class=`c-${c}`, data=`${c % (cards / 2)}`, style=`--x: ${x[c]}; --y: ${y[c]};`)
+    - if (no + 1 !== limit)
+      +pick(no + 1, limit)
+    - if (no + 1 === limit)
+      .w 🎉
+.g
+  +pick(0, cards)
