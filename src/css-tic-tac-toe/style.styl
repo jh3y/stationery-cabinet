@@ -1,0 +1,173 @@
+*
+  box-sizing border-box
+
+$bg = #1f3a93
+$naught = #e74c3c
+$cross = #2eec71
+$line = #fafafa
+$size = 300px
+$animDuration = .5s
+
+body
+  align-items center
+  background-color $bg
+  color #fafafa
+  display flex
+  flex-direction column
+  font-family 'Arial', sans-serif
+  justify-content center
+  min-height 100vh
+
+svg
+  height ($size / 3)
+  width ($size / 3)
+
+// hide all inputs from being visible
+input
+  opacity 0
+
+label
+  cursor pointer
+  height ($size / 3)
+  width ($size / 3)
+  z-index 2
+
+// position each cells elements using css variables
+input
+span
+label
+  left "calc(var(--col) * %s)" % ($size / 3)
+  position absolute
+  top "calc(var(--row) * %s)" % ($size / 3)
+
+// give svg elements animation properties
+circle
+path
+  animation-fill-mode forwards
+  animation-name draw
+
+circle
+  animation-duration $animDuration
+  stroke $naught
+
+path
+  animation-duration ($animDuration / 2)
+  stroke $cross
+
+// span displays which player is occupying a cell
+span
+  display none
+  z-index 3
+// only once an input is checked for a cell, show the appropriate span
+input:checked + span
+  display block
+
+.board
+  background green
+  height $size
+  margin-bottom 30px
+  position relative
+  width $size
+
+  &__line
+    height 10px
+    left "calc(var(--x) * %s)" % ($size / 3)
+    position absolute
+    top "calc(var(--y) * %s)" % ($size / 3)
+    width $size
+
+    path
+      stroke $line
+
+    &:nth-of-type(1)
+    &:nth-of-type(2)
+      transform rotate(90deg) translate(-5px, 0)
+      transform-origin left center
+    &:nth-of-type(3)
+    &:nth-of-type(4)
+      transform translate(0, -50%)
+
+    for $line in (1..4)
+      &:nth-of-type({$line}) path
+        animation-delay ($line * ($animDuration / 2))
+
+  &__result
+    background rgba(31, 58, 147, 1)
+    display none
+    height 100%
+    left 0
+    margin 0
+    padding 0
+    position absolute
+    top 0
+    width 100%
+    z-index 4
+    animation fadeBg .5s
+
+.o
+  transform rotateY(180deg) rotate(-35deg)
+
+.x
+  path:nth-of-type(2)
+    animation-delay ($animDuration / 2)
+
+
+// animations
+@keyframes draw
+  to
+    stroke-dashoffset 0
+
+@keyframes fadeBg
+  from
+    background rgba(31, 58, 147, .25)
+
+// there are 9 moves to make alternating between even and odd labels showing
+:checked ~ label:nth-of-type(odd)
+:checked ~ :checked ~ :checked ~ label:nth-of-type(odd)
+:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ label:nth-of-type(odd)
+:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ label:nth-of-type(odd)
+:checked ~ :checked ~ label:nth-of-type(even)
+:checked ~ :checked ~ :checked ~ :checked ~ label:nth-of-type(even)
+:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ label:nth-of-type(even)
+:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ label:nth-of-type(even)
+  z-index 2
+
+:checked ~ label:nth-of-type(even)
+:checked ~ :checked ~ :checked ~ label:nth-of-type(even)
+:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ label:nth-of-type(even)
+:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ label:nth-of-type(even)
+:checked ~ :checked ~ label:nth-of-type(odd)
+:checked ~ :checked ~ :checked ~ :checked ~ label:nth-of-type(odd)
+:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ label:nth-of-type(odd)
+:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ label:nth-of-type(odd)
+  z-index -1
+
+:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked
+  // if the last move is played and there isn't a winner, show a draw
+  ~ .board__result--draw
+    display block
+
+// winning combos
+#x--0:checked ~ #x--1:checked ~ #x--2:checked ~ .board__result--x
+#x--3:checked ~ #x--4:checked ~ #x--5:checked ~ .board__result--x
+#x--6:checked ~ #x--7:checked ~ #x--8:checked ~ .board__result--x
+#x--0:checked ~ #x--3:checked ~ #x--6:checked ~ .board__result--x
+#x--1:checked ~ #x--4:checked ~ #x--7:checked ~ .board__result--x
+#x--2:checked ~ #x--5:checked ~ #x--8:checked ~ .board__result--x
+#x--0:checked ~ #x--4:checked ~ #x--8:checked ~ .board__result--x
+#x--2:checked ~ #x--4:checked ~ #x--6:checked ~ .board__result--x
+#o--0:checked ~ #o--1:checked ~ #o--2:checked ~ .board__result--o
+#o--3:checked ~ #o--4:checked ~ #o--5:checked ~ .board__result--o
+#o--6:checked ~ #o--7:checked ~ #o--8:checked ~ .board__result--o
+#o--0:checked ~ #o--3:checked ~ #o--6:checked ~ .board__result--o
+#o--1:checked ~ #o--4:checked ~ #o--7:checked ~ .board__result--o
+#o--2:checked ~ #o--5:checked ~ #o--8:checked ~ .board__result--o
+#o--0:checked ~ #o--4:checked ~ #o--8:checked ~ .board__result--o
+#o--2:checked ~ #o--4:checked ~ #o--6:checked ~ .board__result--o
+  display block
+  // if there's a winner on the last move, don't show a draw!
+  ~ .board__result--draw
+    display none
+
+
+

@@ -1,0 +1,33 @@
+form
+  .board
+    - for(let g = 1; g < 5; g++)
+      svg.board__line(style=`--x: ${g < 3 ? g : 0}; --y: ${g < 3 ? 0 : g - 2}`)
+        path(d='M 5 5 L 295 5', fill='none', stroke-width='10', stroke-linecap='round', stroke-dasharray='300', stroke-dashoffset='300')
+    - for(let x = 0; x < 9; x++)
+      input(type='checkbox', id=`x--${x}`, style=`--col: ${x % 3}; --row: ${Math.floor(x / 3)}`)
+      span(style=`--col: ${x % 3}; --row: ${Math.floor(x / 3)}`)
+        svg.x
+          path.cross(d='M 20 20 L 80 80', fill='none', stroke-width='10', stroke-linecap='round', stroke-dasharray='100', stroke-dashoffset='100')
+          path.cross(d='M 80 20 L 20 80', fill='none', stroke-width='10', stroke-linecap='round', stroke-dasharray='100', stroke-dashoffset='100')
+      input(type='checkbox', id=`o--${x}`, style=`--col: ${x % 3}; --row: ${Math.floor(x / 3)}`)
+      span(style=`--col: ${x % 3}; --row: ${Math.floor(x / 3)}`)
+        svg.o
+          circle.naught(cx='50', cy='50', r='30', fill='none', stroke-width='10', stroke-dasharray='200', stroke-dashoffset='200', stroke-linecap='round')
+    - for(let y = 0; y < 9; y++)
+      label(for=`x--${y}`, style=`--col: ${y % 3}; --row: ${Math.floor(y / 3)}`)
+      label(for=`o--${y}`, style=`--col: ${y % 3}; --row: ${Math.floor(y / 3)}`)
+    dl.board__result.board__result--x
+      dt Winner
+      dd X Wins
+      button(type='reset') Reset
+    dl.board__result.board__result--o
+      dt Winner
+      dd O Wins
+      button(type='reset') Reset
+    dl.board__result.board__result--draw
+      dt BORE DRAW
+      dd Nobody wins 😭
+      button(type='reset') Reset
+dl
+  dt Rules
+  dd First to three in a row wins!
