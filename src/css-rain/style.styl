@@ -1,0 +1,33 @@
+*
+*:before
+*:after
+  box-sizing border-box
+
+body
+  background-color #111
+  display flex
+  align-items center
+  justify-content center
+
+.rain__drop
+  height 30px
+  animation-delay calc(var(--d) * 1s)
+  position absolute
+  left calc(var(--x) * 1%)
+  top calc((var(--y) + 50) * -1px)
+  animation-name drop
+  animation-timing-function linear
+  animation-iteration-count infinite
+  animation-duration calc(var(--a) * 1s)
+
+  path
+    fill #a1c6cc
+    opacity var(--o)
+    transform scaleY(calc(var(--s) * 1.5))
+
+@keyframes drop
+  75%
+    opacity 1
+  100%
+    transform translateY(95vh)
+    opacity 0
