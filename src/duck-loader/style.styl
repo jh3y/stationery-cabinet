@@ -32,22 +32,29 @@ body
     left 0
     border-radius 150px
     overflow hidden
-    transform translate3d(0, 0, 0) rotate(30deg)
-    span
-      background blue
-      height 4px
-      width 2px
+    transform translate3d(0, 0, 0)
+    .rain__drop
+      height 30px
+      animation-delay calc(var(--d) * 1s)
       position absolute
-      top calc(var(--y) * -1px)
       left calc(var(--x) * 1%)
-      transform rotate(0deg)
-      animation rain .75s infinite linear
+      top calc((var(--y) + 50) * -1px)
+      animation-name drop
+      animation-timing-function linear
+      animation-iteration-count infinite
+      animation-duration calc(var(--a) * 1s)
 
-    @keyframes rain
-      from
-        transform translateY(0)
-      to
-        transform translateY(1200px)
+      path
+        fill #a1c6cc
+        opacity var(--o)
+        transform scaleY(calc(var(--s) * 1.5))
+
+    @keyframes drop
+      75%
+        opacity 1
+      100%
+        transform translateY(95vh)
+        opacity 0
 
   &-duck
     -webkit-clip-path inset(-100% -100% 25% 0%)
