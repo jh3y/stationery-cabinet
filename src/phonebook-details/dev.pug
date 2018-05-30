@@ -1,0 +1,5 @@
+.phonebook.phonebook--loading(v-on:scroll='update')
+  ul.phonebook__contacts
+    li.phonebook__contact(v-for="contact, i in contacts", :class="[i === active ? 'phonebook__contact--active' : '', i === next ? 'phonebook__contact--next' : '', i === prev ? 'phonebook__contact--prev' : '']")
+      img.phonebook__contact-avatar(:src="contact.avatar")
+      .phonebook__contact-name {{contact.name}}
