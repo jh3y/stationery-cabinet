@@ -16,7 +16,8 @@ body
   flex-direction column
   font-family 'Arial', sans-serif
   justify-content center
-  min-height 100vh
+  height 100vh
+  overflow hidden
 
 svg
   height ($size / 3)
@@ -54,6 +55,27 @@ path
   animation-duration ($animDuration / 2)
   stroke $cross
 
+button
+  cursor pointer
+  position absolute
+  bottom 20px
+  padding 8px 24px
+  border-radius 4px
+  border 0
+  background $bg
+  font-size .75rem
+  color #fafafa
+  filter drop-shadow(0 5px 5px black)
+  transition transform .1s, filter .1s
+
+  &:hover
+    filter drop-shadow(0 5px 4px black)
+    transform translateY(1px)
+
+  &:active
+    transform translateY(5px)
+    filter drop-shadow(0 0 0 transparent)
+
 // span displays which player is occupying a cell
 span
   display none
@@ -62,9 +84,15 @@ span
 input:checked + span
   display block
 
+.o
+  transform rotateY(180deg) rotate(-35deg)
+
+.x
+  path:nth-of-type(2)
+    animation-delay ($animDuration / 2)
+
 .board
   height $size
-  margin-bottom 30px
   position relative
   width $size
 
@@ -91,6 +119,8 @@ input:checked + span
         animation-delay ($line * ($animDuration / 2))
 
   &__result
+    animation fadeBg .25s $animDuration
+    animation-fill-mode backwards
     background rgba(31, 58, 147, 1)
     display none
     height 100%
@@ -101,15 +131,71 @@ input:checked + span
     top 0
     width 100%
     z-index 4
-    animation fadeBg .5s
 
-.o
-  transform rotateY(180deg) rotate(-35deg)
+.result
+  &__content
+    align-items center
+    animation flyIn .25s (.25s + $animDuration)
+    animation-fill-mode backwards
+    background #fafafa
+    border-radius 10px
+    color $bg
+    display flex
+    filter drop-shadow(0 10px 10px black)
+    flex-direction column
+    height 100%
+    justify-content center
+    left 0
+    margin 0
+    position absolute
+    top 0
+    width 100%
+    z-index 3
 
-.x
-  path:nth-of-type(2)
-    animation-delay ($animDuration / 2)
+  &__title
+    font-size 1.5rem
+    font-weight bolder
+    text-transform uppercase
 
+  &__details
+    margin 0
+
+  &__shield
+    animation fadeBg .25s $animDuration
+    animation-fill-mode backwards
+    background rgba(31, 58, 147, 1)
+    height 100%
+    left 0
+    position absolute
+    top 0
+    width 100%
+    z-index 2
+
+  &__emoji
+    font-size 5rem
+
+  &__icon
+    path:nth-of-type(1)
+      animation-delay (.5s + $animDuration)
+    path:nth-of-type(2)
+      animation-delay (0.9s + $animDuration)
+
+    circle
+      animation-delay (.5s + $animDuration)
+
+  &__firework-icon
+    animation fly .5s (.5s + $animDuration)
+    animation-fill-mode backwards
+    font-size 2rem
+    height 2rem
+    left 50%
+    margin-left -1rem
+    margin-top -1rem
+    opacity 0
+    position absolute
+    top 50%
+    transform rotate(calc(var(--r) * 1deg)) translateY(calc(var(--y) * -1px))
+    width 2rem
 
 // animations
 @keyframes draw
@@ -118,7 +204,20 @@ input:checked + span
 
 @keyframes fadeBg
   from
-    background rgba(31, 58, 147, .25)
+    background rgba(31, 58, 147, 0)
+
+@keyframes fly
+  0%
+    opacity 0
+    transform translateY(0)
+  5%, 50%
+    opacity 1
+  100%
+    opacity 0
+
+@keyframes flyIn
+  from
+    transform translateY(100%) scale(0)
 
 // there are 9 moves to make alternating between even and odd labels showing
 :checked ~ label:nth-of-type(odd)
@@ -167,6 +266,3 @@ input:checked + span
   // if there's a winner on the last move, don't show a draw!
   ~ .board__result--draw
     display none
-
-
-
