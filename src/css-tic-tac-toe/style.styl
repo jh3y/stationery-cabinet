@@ -2,8 +2,8 @@
   box-sizing border-box
 
 $bg = #1f3a93
-$naught = #e74c3c
-$cross = #2eec71
+$naught = #f62459
+$cross = #36dbd7
 $line = #fafafa
 $size = 300px
 $animDuration = .5s
@@ -79,7 +79,7 @@ button
 // span displays which player is occupying a cell
 span
   display none
-  z-index 3
+  transform translate3d(0, 0, 3px)
 // only once an input is checked for a cell, show the appropriate span
 input:checked + span
   display block
@@ -93,7 +93,11 @@ input:checked + span
 
 .board
   height $size
-  position relative
+  left 50%
+  position absolute
+  top 50%
+  transform translate(-50%, -50%)
+  transform-style preserve-3d
   width $size
 
   &__line
@@ -129,8 +133,8 @@ input:checked + span
     padding 0
     position absolute
     top 0
+    transform translate3d(0, 0, 4px)
     width 100%
-    z-index 4
 
 .result
   &__content
@@ -184,8 +188,9 @@ input:checked + span
       animation-delay (.5s + $animDuration)
 
   &__firework-icon
-    animation fly .5s (.5s + $animDuration)
+    animation fly .75s (.5s + $animDuration)
     animation-fill-mode backwards
+    animation-timing-function cubic-bezier(0,.64,.25,1.01)
     font-size 2rem
     height 2rem
     left 50%
@@ -228,7 +233,7 @@ input:checked + span
 :checked ~ :checked ~ :checked ~ :checked ~ label:nth-of-type(even)
 :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ label:nth-of-type(even)
 :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ label:nth-of-type(even)
-  z-index 2
+  transform translate3d(0, 0, 2px)
 
 :checked ~ label:nth-of-type(even)
 :checked ~ :checked ~ :checked ~ label:nth-of-type(even)
@@ -238,7 +243,7 @@ input:checked + span
 :checked ~ :checked ~ :checked ~ :checked ~ label:nth-of-type(odd)
 :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ label:nth-of-type(odd)
 :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ label:nth-of-type(odd)
-  z-index -1
+  transform translate3d(0, 0, -1px)
 
 :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked
   // if the last move is played and there isn't a winner, show a draw

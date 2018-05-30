@@ -19,7 +19,7 @@
         label(for=`o--${y}`, style=`--col: ${y % 3}; --row: ${Math.floor(y / 3)}`)
       .board__result.board__result--x.result
         dl.result__content
-          dt.result__title We have a winner!
+          dt.result__title Winner!
           dd.result__details
             svg.x.result__icon
               path.cross(d='M 20 20 L 80 80', fill='none', stroke-width='10', stroke-linecap='round', stroke-dasharray='100', stroke-dashoffset='100')
@@ -30,7 +30,7 @@
           .result__firework-icon(style=`--y: ${Math.floor(Math.random() * 300) + 200}; --r: ${Math.floor(Math.random() * 360)}`) 🎉
       .board__result.board__result--o.result
         dl.result__content
-          dt.result__title We have a winner!
+          dt.result__title Winner!
           dd.result__details
             svg.o.result__icon
               circle.naught(cx='50', cy='50', r='30', fill='none', stroke-width='10', stroke-dasharray='200', stroke-dashoffset='200', stroke-linecap='round')
@@ -40,7 +40,7 @@
           .result__firework-icon(style=`--y: ${Math.floor(Math.random() * 300) + 200}; --r: ${Math.floor(Math.random() * 360)}`) 🎉
       .board__result.board__result--draw
         dl.result__content
-          dt.result__title Nobody won!
+          dt.result__title Draw!
           dd.result__details
             .result__emoji 😭
           button.result__reset(type='reset') Play again
