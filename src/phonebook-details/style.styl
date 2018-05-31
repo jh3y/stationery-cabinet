@@ -1,20 +1,14 @@
-*
-  box-sizing border-box
-  animation  fadeIn .5s
+@import url('https://fonts.googleapis.com/css?family=Lato:300,700')
 
-body
-  align-items center
-  background-color #26c281
-  display flex
-  justify-content center
-  min-height 100vh
 
+$primary = #111
+$accent = red
 .phonebook
-  border 1px solid black
   background #fafafa
   width 100vw
   height 100vh
-  overflow auto
+  overflow hidden
+  position relative
 
   @media(min-width 768px)
     height 480px
@@ -24,31 +18,178 @@ body
     *
       opacity 0
 
+  &__header
+    background lighten($primary, 10%)
+    position absolute
+    top 0
+    left 0
+    right 0
+    height 50px
+    filter drop-shadow(0 4px 2px black)
+    z-index 2
+
   &__contacts
     list-style none
-    padding 45vh 0
-    margin 0
+    padding 30vh 0 55vh 0
+    margin 50px 0 0 0
+    overflow auto
+    height 100%
+    -webkit-overflow-scrolling touch
+    background $primary
 
     @media(min-width 768px)
-      padding 190px 0
+      padding (480px * .3) 0 (480px * .55) 0
+
+    &--opening .phonebook__contact
+      transition none
+
+    &--fake
+      position absolute
+      left 0
+      right 0
+      margin 0
+      padding 0
+      background $primary
 
   &__contact
-    border 1px solid grey
     height 50px
     transition height .1s, opacity .1s
     opacity .1
     display flex
     align-items center
+    background $primary
+
+    &-name
+      text-align center
+      width 100%
 
     &-avatar
       height 100%
+      width 50px
+      object-fit cover
+      position relative
 
     &--next
     &--prev
       height 75px
       opacity .75
 
+      .phonebook__contact-avatar
+        width 75px
+
     &--active
-      background red
       height 100px
       opacity 1
+
+      .phonebook__contact-avatar
+        width 100px
+
+    &--open
+      position absolute
+      width 100%
+
+.contact
+  position absolute
+  top 0
+  right 0
+  bottom 0
+  left 0
+  z-index 2
+  color #fafafa
+  background $primary
+
+  &__title
+    position absolute
+    display flex
+    align-items center
+    width 100%
+    background $primary
+
+  &__avatar
+    height 100px
+    width 100px
+    position absolute
+    object-fit cover
+    top 0
+    left 0
+    transform translateY(calc(var(--y) * 1px))
+
+    &--backdrop
+      position absolute
+      top 0
+      left 0
+      right 0
+      opacity .75
+      height calc(var(--y) * 1px)
+      width 100%
+      background red
+      background-size cover
+
+      &:after
+        content ''
+        position absolute
+        top 0
+        right 0
+        bottom 0
+        left 0
+        background $primary
+        opacity .5
+
+  &__name
+    transform translateY(calc(var(--y) * 1px))
+    position absolute
+    left 0
+    right 0
+    top 0
+    width 100%
+    display block
+    background rgba(0, 0, 0, 0)
+    overflow hidden
+    text-overflow ellipsis
+    text-align center
+    white-space nowrap
+    padding-left 100px
+
+  &__close
+    position absolute
+    right 10px
+    top 10px
+    z-index 10
+
+  &__details
+    position absolute
+    top 0
+    left 0
+    right 0
+    bottom 0
+    background $primary
+    opacity 0
+    transform translateY(calc(var(--y) * 1px))
+
+
+/* Base styling */
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+body
+html
+  align-items center
+  background-color #26c281
+  color #fafafa
+  display flex
+  justify-content center
+  min-height 100vh
+  font-family 'Lato', sans-serif
+
+img
+  object-fit cover
+
+  &:after
+    content ''
+    background linear-gradient(45deg, grey, darkgrey, grey)
+    position absolute
+    top 0
+    left 0
+    right 0
+    bottom 0
