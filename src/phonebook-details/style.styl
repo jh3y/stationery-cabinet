@@ -2,138 +2,209 @@
 
 
 $primary = #111
-$accent = red
+$accent = #ff0000
+$text = #fafafa
+$headerHeight = 50px
+$shadowColor = #000
+$deviceHeight = 480px
+$deviceWidth = 320px
+$contactSize = 50px
+$padding = 20px
+
 .phonebook
-  background #fafafa
-  width 100vw
+  background $primary
   height 100vh
   overflow hidden
   position relative
+  width 100vw
 
   @media(min-width 768px)
-    height 480px
-    width 320px
+    height $deviceHeight
+    width $deviceWidth
 
   &--loading
     *
       opacity 0
 
-  &__header
-    background lighten($primary, 10%)
-    position absolute
-    top 0
-    left 0
-    right 0
-    height 50px
-    filter drop-shadow(0 4px 2px black)
-    z-index 2
-
   &__contacts
-    list-style none
-    padding 30vh 0 55vh 0
-    margin 50px 0 0 0
-    overflow auto
-    height 100%
     -webkit-overflow-scrolling touch
     background $primary
+    height 100%
+    list-style none
+    margin $headerHeight 0 0 0
+    overflow auto
+    // padding is a litle bit of a fluke but seems to give the anticipated effect
+    padding 30vh 0 55vh 0
 
     @media(min-width 768px)
-      padding (480px * .3) 0 (480px * .55) 0
+      padding ($deviceHeight * .30) 0 ($deviceHeight * .55) 0
 
+    // disable transition when clicking on a contact so
+    // we don't have to wait before animation takes place
     &--opening .phonebook__contact
       transition none
-
+    // fake static contact reduced contact lists for opening transition
     &--fake
-      position absolute
+      background $primary
       left 0
-      right 0
       margin 0
       padding 0
-      background $primary
+      position absolute
+      right 0
+      z-index 3
 
   &__contact
-    height 50px
-    transition height .1s, opacity .1s
-    opacity .1
-    display flex
     align-items center
     background $primary
+    cursor pointer
+    display flex
+    font-size .75rem
+    height $headerHeight
+    opacity .1
+    padding 0
+    transition background .1s, height .1s, opacity .1s
+
+    &:hover
+      background lighten($primary, 5%)
 
     &-name
+      overflow hidden
+      padding 0 $padding
       text-align center
+      text-overflow ellipsis
+      white-space nowrap
       width 100%
 
     &-avatar
-      height 100%
-      width 50px
-      object-fit cover
+      height $contactSize
+      flex 1 0 $contactSize
       position relative
+      width $contactSize
 
     &--next
     &--prev
-      height 75px
+      height $contactSize * 1.5
+      font-size 1rem
       opacity .75
 
       .phonebook__contact-avatar
-        width 75px
+        height $contactSize * 1.5
+        flex 1 0 ($contactSize * 1.5)
+        width $contactSize * 1.5
 
     &--active
-      height 100px
+      height $contactSize * 2
+      font-size 1.25rem
       opacity 1
 
       .phonebook__contact-avatar
-        width 100px
+        height $contactSize * 2
+        flex 1 0 ($contactSize * 2)
+        width $contactSize * 2
 
-    &--open
-      position absolute
-      width 100%
-
-.contact
-  position absolute
-  top 0
-  right 0
-  bottom 0
+.phonebook-header
+  align-items center
+  background lighten($primary, 10%)
+  display flex
+  filter drop-shadow(0 4px 2px $shadowColor)
+  flex-direction row
+  height $headerHeight
   left 0
-  z-index 2
-  color #fafafa
-  background $primary
+  position absolute
+  right 0
+  top 0
+  z-index 3
 
-  &__title
+  &:after
+    content attr(data-active)
+    color $accent
     position absolute
+    height $headerHeight
+    width $headerHeight
+    top 100%
+    right 0
     display flex
     align-items center
-    width 100%
+    justify-content center
+    font-size 1.25rem
+    text-transform uppercase
+
+  &--fake
+    z-index 5
+
+  &__title
+    flex 1
+    font-size 1rem
+    padding-left $padding
+
+  &__action
+    border 0
+    background transparent
+    cursor pointer
+    height 44px
+    overflow hidden
+    position relative
+    width 44px
+
+    svg
+      height 24px
+      left 50%
+      position absolute
+      top 50%
+      transform translate(-50%, -50%)
+      width 24px
+      z-index 2
+
+      path
+        fill $text
+
+    &:hover
+      background lighten($primary, 15%)
+
+
+.contact
+  background $primary
+  bottom 0
+  left 0
+  position absolute
+  right 0
+  top 0
+  z-index 4
+
+  // mock duplicate of original contact element
+  &__title
     background $primary
+    align-items center
+    display flex
+    height calc(var(--y) * 1px)
+    position absolute
+    width 100%
 
   &__avatar
-    height 100px
-    width 100px
-    position absolute
-    object-fit cover
-    top 0
+    height ($contactSize * 2)
     left 0
+    position absolute
+    top 0
     transform translateY(calc(var(--y) * 1px))
+    width ($contactSize * 2)
 
     &--backdrop
-      position absolute
-      top 0
-      left 0
-      right 0
-      opacity .75
-      height calc(var(--y) * 1px)
-      width 100%
-      background red
       background-size cover
+      height calc(var(--y) * 1px)
+      left 0
+      opacity 0
+      position absolute
+      right 0
+      top 0
+      width 100%
 
       &:after
-        content ''
-        position absolute
-        top 0
-        right 0
         bottom 0
+        content ''
         left 0
-        background $primary
-        opacity .5
+        position absolute
+        right 0
+        top 0
 
   &__name
     transform translateY(calc(var(--y) * 1px))
@@ -148,48 +219,113 @@ $accent = red
     text-overflow ellipsis
     text-align center
     white-space nowrap
-    padding-left 100px
+    line-height 100px
+    padding 0 20px 0 ($contactSize * 2)
 
   &__close
+  &__menu
+    background transparent
+    border 0
+    height 44px
     position absolute
-    right 10px
-    top 10px
-    z-index 10
+    top 6px
+    width 44px
+    z-index 2
+
+  &__close
+    left 6px
+  &__menu
+    right 6px
 
   &__details
-    position absolute
-    top 0
-    left 0
-    right 0
-    bottom 0
     background $primary
+    bottom 0
+    left 0
     opacity 0
+    overflow auto
+    padding $padding
+    position absolute
+    right 0
+    top calc(var(--t) * 1px)
     transform translateY(calc(var(--y) * 1px))
+
+.contact-details
+  display grid
+  grid-template-columns auto 1fr
+  align-items center
+  margin 0
+
+  &__action
+    path
+      fill $accent
+
+  &__detail
+    margin 0
+    overflow hidden
+    padding 0 $padding
+    text-overflow ellipsis
 
 
 /* Base styling */
 *
+*:before
+*:after
   box-sizing border-box
-  animation  fadeIn .5s
 
 body
 html
   align-items center
-  background-color #26c281
-  color #fafafa
+  background linear-gradient(45deg, rebeccapurple 50%, dodgerblue)
+  color $text
   display flex
+  font-family 'Lato', sans-serif
   justify-content center
   min-height 100vh
-  font-family 'Lato', sans-serif
+  overflow-x hidden
+  position relative
+  width 100vw
 
 img
   object-fit cover
 
   &:after
-    content ''
+    bottom 0
     background linear-gradient(45deg, grey, darkgrey, grey)
+    content ''
+    left 0
     position absolute
     top 0
-    left 0
     right 0
-    bottom 0
+
+svg
+  height 24px
+  width 24px
+
+  path
+    fill $text
+
+button
+  background transparent
+  border 0
+  cursor pointer
+  height 44px
+  width 44px
+  &:active
+    .bloom
+      animation bloom .25s
+      animation-fill-mode forwards
+      background $accent
+      border-radius 100%
+      bottom 0
+      left 0
+      opacity .5
+      position absolute
+      right 0
+      top 0
+
+      @keyframes bloom
+        from
+          transform scale(0)
+        to
+          opacity 0.25
+          transform scale(1.5)
