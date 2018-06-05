@@ -20,14 +20,35 @@
         .mail-settings__setting
           input(type="color", id="theme", :value="theme", v-on:change="updateTheme")
           label(for="theme") Theme
-    //- Fake message containers
-    ul.fake-messages.fake-messages--top(v-if='activeMessage && !messageOpen', v-bind:style="{bottom: fakeOnePos}")
-      li.mail-message(v-for='(message, idx) in messages.slice(0, activeMessageIndex)') {{message.subject}}
-    ul.fake-messages.fake-messages--bottom(v-if='activeMessage && !messageOpen', v-bind:style="{top: fakeTwoPos}")
-      li.mail-message(v-for='(message, idx) in messages.slice(activeMessageIndex, messages.length)') {{message.subject}}
     //- Active message container
-    .mail-message.mail-message--focus(v-if="activeMessage", v-bind:class="{'mail-message--opening': activeMessage && !messageOpen, 'mail-message--open': messageOpen}" v-bind:style="{top: messageTop + 'px'}")
-      header.mail-screen-header
+    .mail-container(ref='mailContainer', v-if='activeMessage', v-bind:class="{'mail-message--opening': activeMessage && !messageOpen, 'mail-message--open': messageOpen}")
+      //- Fake Header
+      header.mail-screen-header.mail-screen-header--fake(ref='fakeHeader')
+        button.mail-close(v-on:click='closeInbox')
+          include back-icon.svg
+        h1.mail-header__title Inbox
+        button.mail-message__action(v-on:click="openSettings")
+          include gear-icon.svg
+      //- Fake message containers
+      ul.fake-messages.fake-messages--top(ref='fakeTop', v-if='activeMessage && !messageOpen', v-bind:style="{bottom: fakeOnePos}")
+        li.mail-message(v-for='(message, idx) in messages.slice(activeMessageIndex - 8 > 0 ? activeMessageIndex - 8 : 0, activeMessageIndex)')
+          button.mail-message
+            img.mail-message__avatar(:src="message.from.avatar")
+            .mail-message__info
+              .mail-message__sender {{message.from.name}}
+              .mail-message__subject {{message.subject}}
+              .mail-message__timestamp {{message.received}}
+      ul.fake-messages.fake-messages--bottom(ref='fakeBottom', v-if='activeMessage && !messageOpen', v-bind:style="{top: fakeTwoPos}")
+        li.mail-message(v-for='(message, idx) in messages.slice(activeMessageIndex + 1, activeMessageIndex + 9 < messages.length ? activeMessageIndex + 9 : messages.length)')
+          button.mail-message
+            img.mail-message__avatar(:src="message.from.avatar")
+            .mail-message__info
+              .mail-message__sender {{message.from.name}}
+              .mail-message__subject {{message.subject}}
+              .mail-message__timestamp {{message.received}}
+      //- Actual message content
+      //- Header
+      header.mail-screen-header.mail-container__header
         button.mail-message__action(v-on:click="closeMessage")
           include back-icon.svg
         button.mail-message__action
@@ -38,14 +59,15 @@
           include trash-icon.svg
         button.mail-message__action
           include warning-icon.svg
-      .mail-screen-content
-        .mail-message__header
-          img.mail-message__avatar(:src="activeMessage.from.avatar")
-          .mail-message__info
-            .mail-message__sender {{activeMessage.from.name}}
-            .mail-message__subject {{activeMessage.subject}}
-            .mail-message__timestamp {{activeMessage.received}}
-        article.mail-message__message {{activeMessage.message}}
+      //- Dummy header used to show details but starts as duplicate of message list message
+      .mail-message__header.mail-container__message-header(ref='mailHeader', v-bind:style="{top: messageTop + 'px'}")
+        img.mail-message__avatar(ref='mailAvatar', :src="activeMessage.from.avatar")
+        .mail-message__info
+          .mail-message__sender(ref='mailSender') {{activeMessage.from.name}}
+          .mail-message__subject(ref='mailSubject') {{activeMessage.subject}}
+          .mail-message__timestamp(ref='mailTimestamp') {{activeMessage.received}}
+      //- content
+      article.mail-message__message(ref='mailContent') {{activeMessage.message}}
     //- Messages container
     ul.mail-messages.mail-messages--main(v-bind:class="{'mail-messages--load': !mailOpened}")
       li(v-for="(message, idx) in messages")

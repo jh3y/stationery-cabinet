@@ -18,7 +18,7 @@ $animDuration = .15s
 html
 body
   align-items      center
-  background-color $bg
+  background       linear-gradient(45deg, #f39c12, #913d88)
   color $textColor
   display          flex
   flex-direction    column
@@ -103,7 +103,8 @@ button
 
 
 .mail-screen-content
-  padding 10px
+  // padding 10px
+  padding-left 10px
   width 100%
   height 100%
   overflow auto
@@ -166,6 +167,7 @@ button
 
 .mail-messages
 .fake-messages
+  background $appWhite
   padding 0
   margin 0
   list-style none
@@ -179,7 +181,7 @@ button
 
 .fake-messages
   bottom auto
-  z-index 1
+  z-index 2
   top auto
   padding 0
 
@@ -201,10 +203,6 @@ button
 
 .mail-screen-header
   background-color var(--accent)
-  // position absolute
-  // top 0
-  // right 0
-  // left 0
   position relative
   height 50px
   display flex
@@ -217,15 +215,48 @@ button
     position absolute
     left 0
 
+  &--fake
+    z-index 3
+
 /**
   * Message styling
 */
 .mail-message--focus .mail-message__info
-  height auto
+  height 60px
   padding-right 0
 
   .mail-message__subject
     white-space pre-wrap
+
+.mail-container
+  background $appWhite
+  position absolute
+  top 0
+  right 0
+  bottom 0
+  left 0
+
+  &__header
+    position absolute
+    top 0
+
+  &__message-header
+    padding 10px 0 10px 10px
+    top 0
+
+    .mail-message__avatar
+      height 50px
+      width 50px
+    .mail-message__subject
+      overflow visible
+      white-space initial
+      overflow initial
+      font-weight bolder
+      font-size 1.25rem
+    .mail-message__sender
+      font-size 0.75rem
+    .mail-message__timestamp
+      transform translateY(-20px)
 
 button.mail-message
   padding 0
@@ -238,7 +269,6 @@ button.mail-message
   background-color $appWhite
   height 60px
   width 100%
-  border-bottom 1px solid $borderColor
 
   &__action
     height 50px
@@ -255,7 +285,12 @@ button.mail-message
     display flex
     flex-direction row
     align-items center
-    height 60px
+    min-height 60px
+    position absolute
+    width 100%
+    padding-left 10px
+    background $appWhite
+    top 50px
 
   &__content
     overflow auto
@@ -263,7 +298,11 @@ button.mail-message
   &__message
     color $textColorSecondary
     font-weight 300
-    padding-bottom 50px
+    padding 0 10px 50px 10px
+    opacity 0
+    overflow auto
+    position absolute
+    top 100%
 
   &__avatar
     height 34px
@@ -278,7 +317,7 @@ button.mail-message
     align-items flex-start
     flex 1
     padding-left 10px
-    height 50px
+    min-height 60px
     justify-content center
     padding-right 60px
     position relative
@@ -289,7 +328,7 @@ button.mail-message
     width 50px
     position absolute
     right 10px
-    top 0
+    top 5px
     font-size 0.75rem
     display flex
     align-items center

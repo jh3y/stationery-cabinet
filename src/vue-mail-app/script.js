@@ -1,4 +1,4 @@
-const ANIMATION_DURATION = 0.15
+const ANIMATION_DURATION = 0.25
 const CLASSES = {
   COMPOSER: 'mail-composer',
   HEADER: 'mail-screen-header',
@@ -49,9 +49,10 @@ const app = new Vue({
   mounted: function() {
     this.loaded = true
   },
-  updated: function() {
-    this.$nextTick(function() {
-      if (this.openingComposer) {
+  methods: {
+    openComposer: function() {
+      this.openingComposer = !this.openingComposer
+      this.$nextTick(() => {
         const composer = document.querySelector(`.${CLASSES.COMPOSER}`)
         const composerTl = new TimelineMax({
           onComplete: () => {
@@ -69,96 +70,7 @@ const app = new Vue({
             borderRadius: 0,
           })
         )
-      }
-      if (this.activeMessage && !this.messageOpen) {
-        const el = document.querySelector('.mail-message--opening')
-        const fakeOne = document.querySelector('.fake-messages--top')
-        const fakeTwo = document.querySelector('.fake-messages--bottom')
-        const messageNav = el.querySelector(`.${CLASSES.HEADER}`)
-        const messageMessage = document.querySelector('.mail-message__message')
-        const messageHeader = el.querySelector('.mail-message__header')
-        const sender = messageHeader.querySelector('.mail-message__sender')
-        const subject = messageHeader.querySelector('.mail-message__subject')
-        const avatar = messageHeader.querySelector('.mail-message__avatar')
-        const timestamp = messageHeader.querySelector(
-          '.mail-message__timestamp'
-        )
-        const openTl = new TimelineMax({
-          onComplete: () => {
-            this.messageOpen = true
-          },
-        })
-        openTl
-          .add(
-            TweenMax.to(el, ANIMATION_DURATION, {
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0,
-              height: '100%',
-            })
-          )
-          .add(
-            TweenMax.to(messageHeader, ANIMATION_DURATION, {
-              height: 'auto',
-              paddingTop: 10,
-              marginBottom: 10,
-            }),
-            0
-          )
-          .add(
-            TweenMax.to(sender, ANIMATION_DURATION, {
-              fontSize: '0.75rem',
-            }),
-            0
-          )
-          .add(
-            TweenMax.to(timestamp, ANIMATION_DURATION, {
-              fontSize: '0.65rem',
-              top: 2,
-              height: '0.65rem',
-            }),
-            0
-          )
-          .add(
-            TweenMax.to(subject, ANIMATION_DURATION, {
-              fontSize: '1.25rem',
-              fontWeight: 'bold',
-              color: '#000',
-            }),
-            0
-          )
-          .add(
-            TweenMax.to(avatar, ANIMATION_DURATION, {
-              height: 50,
-              width: 50,
-            }),
-            0
-          )
-          .add(TweenMax.to(fakeOne, ANIMATION_DURATION, { bottom: '100%' }), 0)
-          .add(TweenMax.to(fakeTwo, ANIMATION_DURATION, { top: '100%' }), 0)
-          .add(TweenMax.from(messageNav, ANIMATION_DURATION, { height: 0 }), 0)
-          .add(TweenMax.to(messageNav, ANIMATION_DURATION, { height: 50 }), 0)
-          .add(
-            TweenMax.from(messageMessage, ANIMATION_DURATION, { height: 0 }),
-            0
-          )
-      }
-      if (this.openingSettings) {
-        const el = document.querySelector(`.${CLASSES.SETTINGS}`)
-        TweenMax.from(el, ANIMATION_DURATION, {
-          onComplete: () => {
-            this.openingSettings = false
-            this.settingsOpen = true
-          },
-          x: '100%',
-        })
-      }
-    })
-  },
-  methods: {
-    openComposer: function() {
-      this.openingComposer = !this.openingComposer
+      })
     },
     closeComposer: function() {
       this.closingComposer = !this.closingComposer
@@ -187,8 +99,7 @@ const app = new Vue({
       this.mailOpened = false
     },
     closeMessage: function() {
-      const el = document.querySelector('.mail-message--focus')
-      TweenMax.to(el, ANIMATION_DURATION, {
+      TweenMax.to(this.$refs.mailContainer, ANIMATION_DURATION, {
         onComplete: () => {
           this.activeMessage = null
           this.activeMessageIndex = null
@@ -208,9 +119,91 @@ const app = new Vue({
         el.offsetTop + el.offsetHeight + header.offsetHeight - list.scrollTop
       this.messageTop = el.offsetTop + header.offsetHeight - list.scrollTop
       this.fakeOnePos = list.offsetHeight - el.offsetTop + list.scrollTop
+      this.$nextTick(() => {
+        const el = document.querySelector('.mail-message--opening')
+        const {
+          fakeTop,
+          fakeBottom,
+          fakeHeader,
+          mailHeader,
+          mailAvatar,
+          mailSubject,
+          mailSender,
+          mailTimestamp,
+          mailContainer,
+          mailContent,
+        } = this.$refs
+        const fakeHeaderPos = fakeHeader.getBoundingClientRect()
+        const mailHeaderPos = mailHeader.getBoundingClientRect()
+        const mailContainerPos = mailContainer.getBoundingClientRect()
+        const openTl = new TimelineMax({
+          onComplete: () => {
+            this.messageOpen = true
+          },
+        })
+        openTl
+          // Move fakes out of the way
+          .to(fakeHeader, ANIMATION_DURATION, { y: `-${this.messageTop}px` }, 0)
+          .to(fakeTop, ANIMATION_DURATION, { bottom: '100%' }, 0)
+          .to(fakeBottom, ANIMATION_DURATION, { top: '100%' }, 0)
+          // Move header to top and change sizing
+          .to(
+            mailHeader,
+            ANIMATION_DURATION,
+            { y: `-${this.messageTop - fakeHeaderPos.height}`, paddingTop: 10 },
+            0
+          )
+          .from(
+            mailAvatar,
+            ANIMATION_DURATION,
+            { height: '34px', width: '34px' },
+            0
+          )
+          .from(
+            mailTimestamp,
+            ANIMATION_DURATION,
+            { fontSize: '0.75rem', y: 0 },
+            0
+          )
+          .from(
+            mailSubject,
+            ANIMATION_DURATION,
+            {
+              overflow: 'hidden',
+              fontSize: '0.75rem',
+              fontWeight: '400',
+              color: '#7e7e7e',
+            },
+            0
+          )
+          .from(mailSender, ANIMATION_DURATION, { fontSize: '1rem' }, 0)
+          // Animate in the article
+          .to(
+            mailContent,
+            ANIMATION_DURATION,
+            {
+              height: `${mailContainerPos.height -
+                (mailHeaderPos.height + fakeHeaderPos.height)}px`,
+              opacity: 1,
+              y: `-${mailContainerPos.height -
+                (mailHeaderPos.height + fakeHeaderPos.height)}px`,
+            },
+            0
+          )
+      })
     },
     openSettings: function() {
       this.openingSettings = !this.openingSettings
+      this.$nextTick(() => {
+        const el = document.querySelector(`.${CLASSES.SETTINGS}`)
+        TweenMax.from(el, ANIMATION_DURATION, {
+          onComplete: () => {
+            this.openingSettings = false
+            this.settingsOpen = true
+          },
+          x: '100%',
+        })
+      })
     },
     closeSettings: function() {
       const el = document.querySelector(`.${CLASSES.SETTINGS}`)
