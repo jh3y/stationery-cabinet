@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css?family=Kanit:500');
+*
+  box-sizing border-box
+
+body
+html
+  background radial-gradient(#dcd7d7 85%, #fff)
+  display flex
+  align-items center
+  justify-content center
+  font-family 'Kanit', sans-serif
+  width 100vw
+  min-height 100vh
+  text-transform uppercase
+  font-weight bold
+  letter-spacing .5rem
+
+genShadow(amount = 100)
+  shadow = ()
+  for num in (0..amount)
+    push(shadow,((num * 1px) (num * 1px) 0 rgba(140, 140, 140, 0.15)))
+  shift(shadow)
+  shift(shadow)
+  shift(shadow)
+  shift(shadow)
+  unquote(join(',', shadow))
+
+span
+  font-size 5rem
+  color #dcd7c7
+
+  for l in (1..7)
+    &:nth-of-type({l})
+      animation shadow-entry (1 - ((l - 1) * .1s)) (l * .1s) cubic-bezier(1, 1, 1, 1) both, fill .5s .75s steps(1) forwards
+
+@keyframes shadow-entry
+  50%
+    transform scale(1.25)
+    text-shadow genShadow(150)
+
+@keyframes fill
+  to
+    color #c80002
