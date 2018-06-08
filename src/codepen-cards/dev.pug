@@ -1,0 +1,17 @@
+input(type='radio', name='choice', id='spaces', checked)
+input(type='radio', name='choice', id='tabs')
+mixin card(content, answer, id)
+  .card(class=`${answer ? 'card--answer' : ''} ${id ? `card--${id}` : ''}`)
+    .card__content= content
+    footer.card__footer
+      -if(answer)
+        img(src="http://blog.codepen.io/wp-content/uploads/2012/06/Button-Black-Small.png")
+      -else
+        img(src="http://blog.codepen.io/wp-content/uploads/2012/06/Button-White-Small.png")
+      span Cards Against Developers
+
+label(for='tabs')
+label(for='spaces')
++card('_______ are better than _______.')
++card('Tabs.', true, 'tabs')
++card('Spaces.', true, 'spaces')

@@ -336,4 +336,4 @@ class App extends Component {
   }
 }
 // Render the app 😎
-render(<App />, root)
+render(<App />, document.querySelector('#root'))
