@@ -4,7 +4,7 @@
 
 body
 html
-  background radial-gradient(#dcd7d7, #000 200%)
+  background radial-gradient(#dcd7d7 200%, #000 400%)
   display flex
   align-items center
   justify-content center
@@ -12,29 +12,63 @@ html
   width 100vw
   min-height 100vh
   text-transform uppercase
-  font-weight bold
+  font-weight 300
   letter-spacing .5rem
 
 genShadow(amount = 100)
   shadow = ()
   for num in (0..amount)
-    push(shadow,((num * 1px) (num * 1px) 0 rgba(140, 140, 140, 0.15)))
+    push(shadow,((num * 1px) (num * 1px) 0 rgba(140, 140, 140, 1)))
   shift(shadow)
   shift(shadow)
   shift(shadow)
   shift(shadow)
   unquote(join(',', shadow))
 
+.title
+  position relative
+  display flex
+  justify-content center
+  align-items flex-start
+  display grid
+  grid-template-columns repeat(7, auto)
+
 span
+  color #dcd7d7
   font-size 5rem
-  color #dcd7c7
+  display inline-block
+
+  &:nth-of-type(1)
+  &:nth-of-type(7)
+    font-size 5rem
+    height 3.4rem
+    line-height 3.2rem
+
+  &:nth-of-type(2)
+  &:nth-of-type(6)
+    font-size 4.8rem
+    height 3.2rem
+    line-height 3rem
+
+  &:nth-of-type(3)
+  &:nth-of-type(4)
+    font-size 4.4rem
+    height 3rem
+    line-height 2.8rem
+
+  &:nth-of-type(5)
+    font-size 4.5rem
+    height 3rem
+    line-height 2.7rem
 
   for l in (1..7)
     &:nth-of-type({l})
-      animation shadow-entry (1 - ((l - 1) * .1s)) (l * .1s) cubic-bezier(1, 1, 1, 1) both, fill .5s .75s steps(1) forwards
+      animation shadow-entry (1s - ((l - 1) * .1s)) (.5s + (l * .15s)) ease both, fill .5s 1.2s steps(1) forwards
 
 @keyframes shadow-entry
-  50%
+  0%
+    color #dcd7d7
+  40%, 60%
     transform scale(1.25)
     text-shadow genShadow(150)
 
