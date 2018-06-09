@@ -2,20 +2,20 @@ const { Component, Fragment } = React
 const { render } = ReactDOM
 const styled = styled.default
 const root = document.querySelector('#app')
-
+const MAGIC_NUMBER = 3
 const CardTrack = styled.div`
   height: 300px;
   position: relative;
   width: 200px;
 `
 const getTranslation = ({ pos }) =>
-  `${Math.max(Math.min(pos, 4), -4) * 100}%, 0`
+  `${Math.max(Math.min(pos, MAGIC_NUMBER), -MAGIC_NUMBER) * 100}%, 0`
 const getOpacity = ({ pos }) =>
-  Math.abs(pos) > 4 ? 0 : 1 - Math.abs(pos * 30) / 100
-const getGray = ({ pos }) => (Math.abs(pos) > 4 ? 1 : Math.abs(pos) * 1)
+  Math.abs(pos) > MAGIC_NUMBER ? 0 : 1 - Math.abs(pos * 30) / 100
+const getGray = ({ pos }) => (Math.abs(pos) > MAGIC_NUMBER ? 1 : Math.abs(pos) * 1)
 const getScale = ({ pos }) =>
-  Math.abs(pos) > 4 ? 0 : 1 - Math.abs(pos * 20) / 100
-const getZ = ({ pos }) => (Math.abs(pos) > 4 ? -1 : 4 - Math.abs(pos))
+  Math.abs(pos) > MAGIC_NUMBER ? 0 : 1 - Math.abs(pos * 20) / 100
+const getZ = ({ pos }) => (Math.abs(pos) > MAGIC_NUMBER ? -1 : MAGIC_NUMBER - Math.abs(pos))
 const Container = styled.div`
   border-radius: 6px;
   height: 100%;
@@ -200,9 +200,9 @@ class App extends Component {
             {cards.map((data, idx) => {
               let pos = idx - active
               // Prep for continuous rolling
-              if (active >= amount - 4 && idx <= 4) {
+              if (active >= amount - MAGIC_NUMBER && idx <= MAGIC_NUMBER) {
                 pos = idx + (amount - active)
-              } else if (active <= 4 && idx >= amount - 4) {
+              } else if (active <= MAGIC_NUMBER && idx >= amount - MAGIC_NUMBER) {
                 pos = 0 - (amount - idx + active)
               }
               return <Card {...{ pos }} data={data} key={`card--${idx}`} />
