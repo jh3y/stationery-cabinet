@@ -4,12 +4,14 @@ BABEL = $(MODULES)/babel
 POSTCSS = $(MODULES)/postcss
 PUG = $(MODULES)/pug
 BS = $(MODULES)/browser-sync
+TSC = $(MODULES)/tsc
 
 OUTPUT_DIR = public
 DEPLOY_DIR = tmp
 SRC_BASE = src
 
 SCRIPT_FILE = script.js
+TS_FILE = script.ts
 STYLE_FILE = style.styl
 MARKUP_FILE = index.pug
 README_FILE = README.md
@@ -28,6 +30,7 @@ POSTCSS_OPTS = --use autoprefixer $(OUTPUT_DIR)/style.css -d $(OUTPUT_DIR)
 
 
 SCRIPT_SRC = $(SRC_BASE)/$(PEN)/$(SCRIPT_FILE)
+TS_SRC = $(SRC_BASE)/$(PEN)/$(TS_FILE)
 MARKUP_SRC = $(SRC_BASE)/$(PEN)/$(MARKUP_FILE)
 README_SRC = $(SRC_BASE)/$(PEN)/$(README_FILE)
 MARKUP_COMPILE_SRC = $(SRC_BASE)/$(PEN)/
@@ -51,6 +54,12 @@ compile-script: checkForPen ## compiles scripts
 watch-script: checkForPen compile-script ## watch for script changes and compile
 	$(BABEL) $(SCRIPT_SRC) --watch -o $(SCRIPT_DEST)
 
+compile-typescript: checkForPen ## compiles typescript
+	mkdir -pv $(OUTPUT_DIR)
+	$(TSC) $(TS_SRC) --outFile $(SCRIPT_DEST)
+
+watch-typescript: checkForPen compile-typescript ## watch for typescript changes and compile
+	$(TSC) $(TS_SRC) --watch --outFile $(SCRIPT_DEST)
 
 compile-style: checkForPen ## compiles styles
 	$(STYLUS) $(STYLE_SRC) -o $(OUTPUT_DIR) && $(POSTCSS) $(POSTCSS_OPTS)
@@ -70,14 +79,23 @@ setup: ## set up project for development
 watch: checkForPen ## run development watch
 	make watch-script & make watch-style & make watch-markup
 
+watch-ts: checkForPen ## run development watch for TypeScript
+	make watch-typescript & make watch-style & make watch-markup
+
 build: checkForPen ## build sources
-	make compile-script && make compile-style && make compile-markup
+	make compile-typescript && make compile-style && make compile-markup
+
+build-ts: checkForPen ## build sources
+	make compile-typescript && make compile-style && make compile-markup
 
 serve: checkForPen build ## sets up browser-sync local static server with livereload
 	$(BS) start --port 1987 --files $(OUTPUT_DIR)/ --server $(OUTPUT_DIR) --no-online --debug
 
 develop: checkForPen ## run development task for given PEN "make develop PEN=A"
 	make serve & make watch
+
+develop-ts: checkForPen ## run development task for given PEN "make develop PEN=A"
+	make serve & make watch-ts
 
 cleanup: ## tidy out any generated/deployed files
 	rm -rf public tmp
