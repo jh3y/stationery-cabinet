@@ -25,11 +25,12 @@ const Container = styled.div`
   position: absolute;
   top: 0;
   transform: scale(${p => getScale(p)}) translate(${p => getTranslation(p)});
-  transition: transform 0.5s, filter 0.5s;
+  transition: transform 0.5s, filter 0.5s, z-index 0.5s;
   width: 100%;
   z-index: ${p => getZ(p)};
 `
 const AuthorAvatar = styled.img`
+  background: #87d37c;
   border-radius: 100%;
   height: 60px;
   left: 50%;
@@ -39,14 +40,15 @@ const AuthorAvatar = styled.img`
   width: 60px;
 `
 const Hero = styled.img`
-  height: 60%;
+  background: #db0a5b;
+  height: 70%;
   object-fit: cover;
   width: 100%;
 `
 const getClipPath = ({ pos }) => {
   let path = '100% 50%, 0% 50%'
-  if (pos > 0) path = '100% 40%, 0% 60%'
-  if (pos < 0) path = '100% 60%, 0% 40%'
+  if (pos > 0) path = '100% 30%, 0% 70%'
+  if (pos < 0) path = '100% 70%, 0% 30%'
   return path
 }
 const ContentMark = styled.div`
