@@ -1,0 +1,20 @@
+html
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    title Some cool pen
+    meta(name="viewport", content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1.0")
+    link(rel='stylesheet', href='style.css')
+  body
+    block content
+      include dev.pug
+    script(src="https://unpkg.com/core-js@2.5.7/client/core.min.js")
+    script(src="https://unpkg.com/rxjs@6.2.0/bundles/rxjs.umd.js")
+    script(src="https://cdn.jsdelivr.net/npm/zone.js@0.8.26/dist/zone.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.js")
+    script(src="https://unpkg.com/@angular/compiler@6.0.4/bundles/compiler.umd.js")
+    script(src="https://unpkg.com/@angular/core@6.0.4/bundles/core.umd.js")
+    script(src="https://unpkg.com/@angular/common@6.0.4/bundles/common.umd.js")
+    script(src="https://unpkg.com/@angular/platform-browser@6.0.4/bundles/platform-browser.umd.js")
+    script(src="https://unpkg.com/@angular/platform-browser-dynamic@6.0.4/bundles/platform-browser-dynamic.umd.js")
+    script(src="script.js")
