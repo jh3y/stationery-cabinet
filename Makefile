@@ -56,10 +56,10 @@ watch-script: checkForPen compile-script ## watch for script changes and compile
 
 compile-typescript: checkForPen ## compiles typescript
 	mkdir -pv $(OUTPUT_DIR)
-	$(TSC) $(TS_SRC) --outFile $(SCRIPT_DEST)
+	$(TSC) $(TS_SRC) --outFile $(SCRIPT_DEST) --target ES6 --experimentalDecorators
 
 watch-typescript: checkForPen compile-typescript ## watch for typescript changes and compile
-	$(TSC) $(TS_SRC) --watch --outFile $(SCRIPT_DEST)
+	$(TSC) $(TS_SRC) --watch --outFile $(SCRIPT_DEST) --target ES6 --experimentalDecorators
 
 compile-style: checkForPen ## compiles styles
 	$(STYLUS) $(STYLE_SRC) -o $(OUTPUT_DIR) && $(POSTCSS) $(POSTCSS_OPTS)
