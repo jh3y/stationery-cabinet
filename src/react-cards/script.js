@@ -8,26 +8,79 @@ const CardTrack = styled.div`
   position: relative;
   width: 200px;
 `
-const getTranslation = ({ pos }) =>
-  `${Math.max(Math.min(pos, MAGIC_NUMBER), -MAGIC_NUMBER) * 100}%, 0`
-const getOpacity = ({ pos }) =>
-  Math.abs(pos) > MAGIC_NUMBER ? 0 : 1 - Math.abs(pos * 30) / 100
-const getGray = ({ pos }) => (Math.abs(pos) > MAGIC_NUMBER ? 1 : Math.abs(pos) * 1)
-const getScale = ({ pos }) =>
-  Math.abs(pos) > MAGIC_NUMBER ? 0 : 1 - Math.abs(pos * 20) / 100
-const getZ = ({ pos }) => (Math.abs(pos) > MAGIC_NUMBER ? -1 : MAGIC_NUMBER - Math.abs(pos))
+const getPosRules = () => {
+
+  let result = ''
+  for (let i = 0; i < MAGIC_NUMBER + 1; i++) {
+    if (i === 0) {
+      result += `
+        &[data-pos="0"] {
+          filter: grayscale(0) drop-shadow(10px 10px 10px black);
+          transform: scale(1) translate(0, 0); z-index:${MAGIC_NUMBER + 1};
+        }`
+    } else if (i === 1) {
+      result += `
+        &[data-pos="1"],
+        &[data-pos="-1"] {
+          z-index: 3;
+        }
+        &[data-pos="1"] {
+          transform: scale(0.8) translate(75%, 0);
+        }
+        &[data-pos="-1"] {
+          transform: scale(0.8) translate(-75%, 0);
+        }
+      `
+    } else if (i === 2) {
+      result += `
+        &[data-pos="2"],
+        &[data-pos="-2"] {
+          z-index: 2;
+        }
+        &[data-pos="2"] {
+          transform: scale(0.6) translate(175%, 0);
+        }
+        &[data-pos="-2"] {
+          transform: scale(0.6) translate(-175%, 0);
+        }
+      `
+    } else if (i === 3) {
+      result += `
+        &[data-pos="3"],
+        &[data-pos="-3"] {
+          z-index: 1;
+        }
+        &[data-pos="3"] {
+          transform: scale(0.5) translate(275%, 0);
+        }
+        &[data-pos="-3"] {
+          transform: scale(0.5) translate(-275%, 0);
+        }
+      `
+    }
+  }
+  return result
+}
 const Container = styled.div`
   border-radius: 6px;
   height: 100%;
-  filter: grayscale(${p => getGray(p)}) drop-shadow(2px 2px 10px black);
   left: 0;
   overflow: hidden;
   position: absolute;
   top: 0;
-  transform: scale(${p => getScale(p)}) translate(${p => getTranslation(p)});
+  filter: grayscale(1) drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.15));
+  transform: scale(0) translate(0, 0);
   transition: transform 0.5s, filter 0.5s, z-index 0.5s;
   width: 100%;
-  z-index: ${p => getZ(p)};
+  ${getPosRules()}
+  z-index: -1;
+
+  &[data-gone="true"] .content-mark {
+    clip-path: polygon(100% 70%, 0% 30%, 0% 100%, 100% 100%);
+  }
+  &[data-coming="true"] .content-mark {
+    clip-path: polygon(100% 30%, 0% 70%, 0% 100%, 100% 100%);
+  }
 `
 const AuthorAvatar = styled.img`
   background: #87d37c;
@@ -45,16 +98,10 @@ const Hero = styled.img`
   object-fit: cover;
   width: 100%;
 `
-const getClipPath = ({ pos }) => {
-  let path = '100% 50%, 0% 50%'
-  if (pos > 0) path = '100% 30%, 0% 70%'
-  if (pos < 0) path = '100% 70%, 0% 30%'
-  return path
-}
 const ContentMark = styled.div`
   background-color: ${p => (p.pos === 0 ? '#fafafa' : '#999')};
   bottom: 0;
-  clip-path: polygon(${p => getClipPath(p)}, 0% 100%, 100% 100%);
+  clip-path: polygon(100% 50%, 0% 50%, 0% 100%, 100% 100%);
   height: 100%;
   left: -1px;
   position: absolute;
@@ -138,9 +185,9 @@ class Card extends Component {
   render = () => {
     const { hero, title, author } = this.props.data
     return (
-      <Container {...this.props}>
+      <Container {...this.props} data-pos={this.props.pos} data-gone={this.props.pos < 0} data-coming={this.props.pos > 0}>
         <Hero src={hero} />
-        <ContentMark {...this.props}>
+        <ContentMark className='content-mark' {...this.props}>
           <Content>
             <Title>{title.charAt(0).toUpperCase() + title.slice(1)}</Title>
             <AuthorName {...this.props}>{`${author.firstName} ${
