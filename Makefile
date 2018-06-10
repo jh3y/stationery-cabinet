@@ -83,7 +83,7 @@ watch-ts: checkForPen ## run development watch for TypeScript
 	make watch-typescript & make watch-style & make watch-markup
 
 build: checkForPen ## build sources
-	make compile-typescript && make compile-style && make compile-markup
+	make compile-script && make compile-style && make compile-markup
 
 build-ts: checkForPen ## build sources
 	make compile-typescript && make compile-style && make compile-markup
@@ -91,11 +91,14 @@ build-ts: checkForPen ## build sources
 serve: checkForPen build ## sets up browser-sync local static server with livereload
 	$(BS) start --port 1987 --files $(OUTPUT_DIR)/ --server $(OUTPUT_DIR) --no-online --debug
 
+serve-ts: checkForPen build-ts ## sets up browser-sync local static server with livereload
+	$(BS) start --port 1987 --files $(OUTPUT_DIR)/ --server $(OUTPUT_DIR) --no-online --debug
+
 develop: checkForPen ## run development task for given PEN "make develop PEN=A"
 	make serve & make watch
 
 develop-ts: checkForPen ## run development task for given PEN "make develop PEN=A"
-	make serve & make watch-ts
+	make serve-ts & make watch-ts
 
 cleanup: ## tidy out any generated/deployed files
 	rm -rf public tmp

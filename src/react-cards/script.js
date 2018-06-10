@@ -113,11 +113,11 @@ const Button = styled.button`
   border: 4px solid #fff;
   border-radius: 100%;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   height: 44px;
-  position: absolute;
   left: 50%
+  margin: 30px 20px 0 20px;
   top: 50%;
   transition: background 0.5s;
   width: 44px;
@@ -125,14 +125,11 @@ const Button = styled.button`
   &:hover {
     background: rgba(255, 255, 255, 0.25);
   }
+`
 
-  &:nth-of-type(1) {
-    transform: translate(-150%, 400%);
-  }
-
-  &:nth-of-type(2) {
-    transform: translate(50%, 400%);
-  }
+const Actions = styled.div`
+  display: flex;
+  justify-content: center;
 `
 class Card extends Component {
   static propTypes = {
@@ -209,16 +206,18 @@ class App extends Component {
             })}
           </CardTrack>
         )}
-        <Button onClick={() => this.setState({active: active - 1 >= 0 ? active - 1 : amount - 1})}>
-          <SVG viewBox="0 0 24 24">
-            <path fill="#fff" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
-          </SVG>
-        </Button>
-        <Button onClick={() => this.setState({active: active + 1 > amount - 1 ? 0 : active + 1 })}>
-          <SVG viewBox="0 0 24 24">
-            <path fill="#fff" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
-          </SVG>
-        </Button>
+        <Actions>
+          <Button onClick={() => this.setState({active: active - 1 >= 0 ? active - 1 : amount - 1})}>
+            <SVG viewBox="0 0 24 24">
+              <path fill="#fff" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
+            </SVG>
+          </Button>
+          <Button onClick={() => this.setState({active: active + 1 > amount - 1 ? 0 : active + 1 })}>
+            <SVG viewBox="0 0 24 24">
+              <path fill="#fff" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
+            </SVG>
+          </Button>
+        </Actions>
       </Fragment>
     )
   }
