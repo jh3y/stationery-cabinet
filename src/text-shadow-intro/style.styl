@@ -14,11 +14,13 @@ html
   text-transform uppercase
   font-weight 300
   letter-spacing .5rem
+  perspective 2500px
+  transform-style preserve-3d
 
 genShadow(amount = 100)
   shadow = ()
   for num in (0..amount)
-    push(shadow,((num * 1px) (num * 1px) 0 rgba(140, 140, 140, 1)))
+    push(shadow,(((num + 1) * 2px) ((num) * 3px) 0 rgba(140, 140, 140, 1)))
   shift(shadow)
   shift(shadow)
   shift(shadow)
@@ -63,14 +65,24 @@ span
 
   for l in (1..7)
     &:nth-of-type({l})
-      animation shadow-entry (1s - ((l - 1) * .1s)) (.5s + (l * .15s)) ease both, fill .5s 1.2s steps(1) forwards
+      animation-duration (1s - ((l) * .05s)), .5s
+      animation-delay (.5s + (l * .05s)), 1s
+      animation-fill-mode both, forwards
+      animation-timing-function ease, steps(1)
+
+  &.play
+    animation-name shadow-entry, fill
 
 @keyframes shadow-entry
   0%
     color #dcd7d7
-  40%, 60%
-    transform scale(1.25)
-    text-shadow genShadow(150)
+  50%
+    text-shadow genShadow(40)
+  40%
+    transform translate3d(0, 0, 60px) scale(1.2)
+  60%
+    transform translate3d(0, 0, 60px) scale(1.3)
+    text-shadow genShadow(50)
 
 @keyframes fill
   to
