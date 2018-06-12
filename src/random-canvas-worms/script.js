@@ -2,19 +2,19 @@ const canvas = document.querySelector('canvas')
 const context = canvas.getContext('2d')
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
-
+const floored = (r) => Math.floor(Math.random() * r)
 const UPPER_LIMIT = 5
 const particles = new Array(20).fill().map((p) => {
-  let y = Math.random() * canvas.height
+  let y = floored(canvas.height)
   return {
     x: -10,
     y,
-    vx: Math.floor(Math.random() * UPPER_LIMIT) + 1,
-    vy: -(Math.floor(Math.random() * UPPER_LIMIT) + 1),
+    vx: floored(UPPER_LIMIT) + 1,
+    vy: -(floored(UPPER_LIMIT) + 1),
     travel: 100,
-    size: (Math.random() * (window.innerHeight * 0.01)) + 10,
+    size: (floored(Math.random() * (window.innerHeight * 0.01))) + 10,
     start: y,
-    color: `rgba(${Math.random() * 255},${Math.random() * 255}, ${Math.random() * 255}, ${Math.random()})`
+    color: `rgba(${floored(255)},${floored(255)}, ${floored(255)}, ${Math.random()})`
   }
 })
 let FRAME_COUNT = 0

@@ -3,10 +3,15 @@ const context = canvas.getContext('2d')
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
+requestAnimationFrame = requestAnimationFrame || webkitRequestAnimationFrame
+
 const menu = document.querySelector('.menu')
 const modify = e => {
   OPTIONS[e.target.id] = parseInt(e.target.value, 10)
-  if (e.target.id === 'AMOUNT') particles = genParticles()
+  if (e.target.id === 'AMOUNT') {
+    context.clearRect(0, 0, canvas.width, canvas.height)
+    particles = genParticles()
+  }
 }
 menu.addEventListener('change', modify)
 
@@ -80,17 +85,19 @@ const draw = () => {
     canvas.height = window.innerHeight
     particles = genParticles()
   }
-  context.clearRect(0, 0, canvas.width, canvas.height)
+  // context.restore()
   for (const particle of particles) {
+    context.clearRect(particle.x, particle.y, particle.size, particle.size)
     FRAME_COUNT++
     if (particle.y < canvas.height || particle.startX < 0)
-      particle.x += particle.vx
+    particle.x += particle.vx
     if (particle.x > 0 || particle.startY > canvas.height)
-      particle.y -= particle.vy
+    particle.y -= particle.vy
     if (FRAME_COUNT % 11 === 0 && doIt()) particle.vx = update(particle.vx)
     if (FRAME_COUNT % 13 === 0 && doIt()) particle.vy = update(particle.vy)
-
+    context.restore()
     context.drawImage(particle.c, particle.x, particle.y)
+    // context.save()
     if (particle.x > canvas.width || particle.y < -particle.size)
       reset(particle)
   }
