@@ -23,11 +23,6 @@ const OPTIONS = {
 const UPPER_SIZE = 10
 const LOWER_SIZE = 4
 
-// Add Stats Panel
-const stats = new Stats()
-stats.showPanel()
-menu.appendChild(stats.domElement)
-
 const doIt = () => Math.random() > 0.5
 const update = p =>
   doIt()
@@ -77,7 +72,6 @@ let particles = genParticles()
 let FRAME_COUNT = 0
 
 const draw = () => {
-  stats.begin()
   if (
     canvas.width !== window.innerWidth ||
     canvas.height !== window.innerHeight
@@ -100,7 +94,6 @@ const draw = () => {
     if (particle.x > canvas.width || particle.y < -particle.size)
       reset(particle)
   }
-  stats.end()
   requestAnimationFrame(draw)
 }
 requestAnimationFrame(draw)
