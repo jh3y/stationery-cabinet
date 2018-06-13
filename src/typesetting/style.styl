@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Lato:400,700')
 *
   box-sizing border-box
 
@@ -6,139 +5,245 @@
   --scroll 0
   --content 0
 
+$accent = #8e44ad
+
 html
 body
+  background #fafafa
   padding 0
   margin 0
-  font-family 'Lato', sans-serif
+  font-family 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif
   font-size 16px
 
   &:after
     content ''
     height 4px
-    background red
+    background rgba(142, 68, 173, 0.25)
     position fixed
     top 0
     left 0
     width calc((var(--content)) * 1%)
 
-
+$MIN = 10
+$RATIO = 100 - $MIN
 // Title
 $titleSize = 3rem
 $dateSize = 0.85rem
 $subtitleSize = 1.2rem
 
 getFont($f, $m)
-  "calc((%s + (((%s * %s) - %s)) - ((((%s * %s) - %s)) * (var(--scroll) / 75))) * 1rem)" % ($f $f $m $f $f $m $f)
+  "calc((%s + (((%s * %s) - %s)) - ((((%s * %s) - %s)) * (var(--scroll) / %s))) * 1rem)" % ($f $f $m $f $f $m $f $RATIO)
 
-$title = 2
-$titleFont = getFont($title, 2)
-$sub = 1.2
-$subFont = getFont($sub, 2)
+$title = 1.25
+$titleFont = getFont($title, 1.25)
+$sub = 1
+$subFont = getFont($sub, 1.1)
 $date = 0.65
-$dateFont = getFont($date, 1.5)
+$dateFont = getFont($date, 1.1)
 
 h1
-  color red
+  color $accent
   font-size $titleFont
   top 50vh
 
 // Subtitle
 h2
-  color red
+  color lighten($accent, 30%)
   font-size $subFont
   top "calc(50vh + %s)" % $titleFont
 
 // Date and author
 body > p:nth-of-type(1)
-  color red
+  color lighten($accent, 35%)
   font-size $dateFont
+  padding-top 10px
   top "calc(50vh + %s + %s)" % ($titleFont $subFont)
+
+@media(min-width 768px)
+  $title = 1.75
+  $titleFont = getFont($title, 2)
+  $sub = 1.2
+  $subFont = getFont($sub, 2)
+  $date = 0.65
+  $dateFont = getFont($date, 1.5)
+  h1
+    font-size $titleFont
+
+  // Subtitle
+  h2
+    font-size $subFont
+    top "calc(50vh + %s)" % $titleFont
+
+  // Date and author
+  body > p:nth-of-type(1)
+    font-size $dateFont
+    top "calc(50vh + %s + %s)" % ($titleFont $subFont)
 
 h1
 h2
 body > p:nth-of-type(1)
   position fixed
   margin 0
-  z-index 3
+  z-index 5
   left 50%
-  min-width 45vw
-  width calc((100 - var(--scroll)) * 1vw)
-  text-align center
-  $calc = "calc(((var(--scroll) / 75) * 22.5vh) + ((var(--scroll) / 75) * %s))" % $titleFont
-  transform translate(calc(((var(--scroll) / 75) * -45vw)), $calc) translate(calc((((75 - var(--scroll)) / 75)) * -50%), -50%)
-
-
-img
   width 100vw
-  min-height 25vh
+  text-align left
+  padding-left 5vw
+  $calc = "calc((var(--scroll) / %s) * -45vh)" % $RATIO
+  transform translate(0, $calc) translate(-50%, -50%)
+
+h2
+body > p:nth-of-type(1)
+  $calcOpacity = "calc(1 - ((var(--scroll) / %s) * 1))" % $RATIO
+  $calcY = "calc((var(--scroll) / %s) * -45vh)" % $RATIO
+  left 5vw
+  padding-left 0
+  transform-origin left center
+  opacity $calcOpacity
+  transform translate(0, $calcY) translate(0, -50%) scale($calcOpacity)
+
+blockquote
+  position relative
+  padding 1.25rem 0 1.25rem 1.25rem
+  margin 0
+  &:before
+    content ''
+    position absolute
+    top 0
+    left 0
+    bottom 0
+    width 4px
+    background lighten($accent, 45%)
+  p
+    padding 0
+
+  + p
+    padding-top 0
+
+
+@media(min-width 768px)
+  h1
+  h2
+  body > p:nth-of-type(1)
+    left 50%
+    min-width 45vw
+    width calc((100 - var(--scroll)) * 1vw)
+    $calcX = "calc(((var(--scroll) / %s) * -45vw))" % $RATIO
+    $calcY = "calc(((var(--scroll) / %s) * 22.5vh) + ((var(--scroll) / %s) * %s))" % ($RATIO $RATIO getFont(3, 1))
+    $calcPostX = "calc((((%s - var(--scroll)) / %s)) * -50%)" % ($RATIO $RATIO)
+    text-align center
+    padding-left 0
+    opacity 1
+    transform translate($calcX, $calcY) translate($calcPostX, -50%)
+
+
+body > p:nth-of-type(1)
+  &:after
+    // content ''
+    background lighten($accent, 70%)
+    height 30px
+    width 30px
+    border-radius 5px
+    position fixed
+    top 120%
+    left 50%
+    $calcOpacity = "calc(1 - ((var(--scroll) / %s) * 1))" % $RATIO
+    opacity $calcOpacity
+    clip-path polygon(25% 0%, 25% 60%, 0% 60%, 50% 100%, 100% 60%, 75% 60%, 75% 0%)
+    -webkit-clip-path polygon(25% 0%, 25% 60%, 0% 60%, 50% 100%, 100% 60%, 75% 60%, 75% 0%)
+    transform translate(calc(-50% - 5vw), 0)
+    @media(min-width 768px)
+      transform translate(-50%, 0)
+// Backdrop image
+img
   height calc((100 - var(--scroll)) * 1vh)
+  min-height 10vh
   object-fit cover
-  z-index 1
+  width 100vw
 
   @media(min-width 768px)
+    $calcBorder = "calc((var(--scroll) / %s) * 10px)" % $RATIO
+    border-radius  $calcBorder
     min-height 45vh
     min-width 45vw
     width calc((100 - var(--scroll)) * 1vw)
 
 p:nth-of-type(2)
+  left 0
+  margin 0
+  padding 0
   position fixed
   top 0
-  left 0
-  padding 0
-  margin 0
+  z-index 4
 
   @media(min-width 768px)
-    width calc((100 - var(--scroll)) * 1vw)
-    min-width 45vw
     min-height 45vh
-    transform translate(calc((var(--scroll) / 75) * 5vw), calc((var(--scroll) / 75) * 50vh)) translate(0, calc((var(--scroll) / 75) * -50%))
+    min-width 45vw
+    $calcX = "calc((var(--scroll) / %s) * 5vw)" % $RATIO
+    $calcY = "calc((var(--scroll) / %s) * 50vh)" % $RATIO
+    $calcPostY = "calc((var(--scroll) / %s) * -50%)" % $RATIO
+    transform translate($calcX, $calcY) translate(0, $calcPostY)
+    width calc((100 - var(--scroll)) * 1vw)
 
 
 p:nth-of-type(2):before
 p:nth-of-type(2):after
   @media(min-width 768px)
-    opacity calc(1 - ((var(--scroll) / 75) * 1))
+    $calcOpacity = "calc(1 - ((var(--scroll) / %s) * 1))" % $RATIO
+    opacity $calcOpacity
 
 p:nth-of-type(2):before
+  background linear-gradient(0deg, white, rgba(250, 250, 250, 0.5))
+  bottom -2px
   content ''
-  position absolute
-  top 0
-  right 0
-  bottom 0
   left 0
-  background linear-gradient(0deg, white, rgba(255, 255, 255, 0.5))
+  position absolute
+  right 0
+  top 0
   z-index 2
+
 p:nth-of-type(2):after
+  background linear-gradient(0deg, transparent, #fafafa)
   content ''
   height 10vh
-  width 100vw
-  background linear-gradient(0deg, transparent, white)
+  left 0
   position absolute
   top 100%
-  left 0
+  width 100vw
   z-index 2
 
   @media(min-width 768px)
     display none
 
+// Create the scrolling buffer so the image can move out of the way first
 p:nth-of-type(3)
-  margin-top 120vh
+  margin-top 100vh
+  @media(min-width 768px)
+    margin-top 120vh
 
 body > p:last-of-type
   margin-bottom 20vh
 
-body > p
-body > strong
-body > blockquote
-body > h3
-body > ul
-body > ol
-  margin-left 55vw
-  margin-right 5vw
+body
+  padding 5vw
 
+@media (min-width 768px)
+  body > p
+  body > strong
+  body > blockquote
+  body > h3
+  body > ul
+  body > ol
+    margin-left 50vw
+    margin-right 0vw
+
+
+// Base styling
 h3
+  color lighten($accent, 30%)
   font-weight bolder
+  margin-top 3rem
+  font-size 1.3rem
 
 ul ol
   margin-left 15px
@@ -153,3 +258,11 @@ ol li
   padding 0 0 14px 15px
 ol
   margin-top 15px
+
+p
+  line-height 1.5rem
+  padding-top 2rem
+
+ul + p
+h3 + p
+  padding-top 0

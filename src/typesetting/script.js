@@ -1,5 +1,5 @@
 const ROOT = document.documentElement
-const MIN = 25
+const MIN = 10
 const THRESHOLD = innerHeight * (1.2 - 0.225)
 const update = (e) => {
   const scroll = Math.floor(scrollY / innerHeight * 100)
