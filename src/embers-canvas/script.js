@@ -1,5 +1,6 @@
 const canvas = document.querySelector('canvas')
 const context = canvas.getContext('2d')
+context.globalCompositeOperation = 'soft-light'
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
@@ -11,6 +12,9 @@ const modify = e => {
   if (e.target.id === 'AMOUNT') {
     context.clearRect(0, 0, canvas.width, canvas.height)
     particles = genParticles()
+  }
+  if (e.target.id === 'BLUR') {
+    document.documentElement.style.setProperty('--blur', parseInt(e.target.value, 10))
   }
 }
 menu.addEventListener('change', modify)
@@ -55,6 +59,7 @@ const genParticles = () =>
       : canvas.height + size + floored(canvas.height)
     c.height = size
     c.width = size
+    // ctx.filter = `blur(${Math.random() * size}px)`
     ctx.translate(size / 2, size / 2)
     ctx.rotate(r)
     ctx.translate(-(size / 2), -(size / 2))
@@ -95,7 +100,6 @@ const draw = () => {
     particle.y -= particle.vy
     if (FRAME_COUNT % 11 === 0 && doIt()) particle.vx = update(particle.vx)
     if (FRAME_COUNT % 13 === 0 && doIt()) particle.vy = update(particle.vy)
-    context.restore()
     context.drawImage(particle.c, particle.x, particle.y)
     // context.save()
     if (particle.x > canvas.width || particle.y < -particle.size)
