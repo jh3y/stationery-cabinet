@@ -14,7 +14,10 @@ const modify = e => {
     particles = genParticles()
   }
   if (e.target.id === 'BLUR') {
-    document.documentElement.style.setProperty('--blur', parseInt(e.target.value, 10))
+    document.documentElement.style.setProperty(
+      '--blur',
+      parseInt(e.target.value, 10)
+    )
   }
 }
 menu.addEventListener('change', modify)
@@ -95,9 +98,9 @@ const draw = () => {
     context.clearRect(particle.x, particle.y, particle.size, particle.size)
     FRAME_COUNT++
     if (particle.y < canvas.height || particle.startX < 0)
-    particle.x += particle.vx
+      particle.x += particle.vx
     if (particle.x > 0 || particle.startY > canvas.height)
-    particle.y -= particle.vy
+      particle.y -= particle.vy
     if (FRAME_COUNT % 11 === 0 && doIt()) particle.vx = update(particle.vx)
     if (FRAME_COUNT % 13 === 0 && doIt()) particle.vy = update(particle.vy)
     context.drawImage(particle.c, particle.x, particle.y)
