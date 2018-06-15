@@ -1,0 +1,22 @@
+*
+  box-sizing border-box
+
+:root
+  --blur 1
+
+body
+  background-color #111
+
+canvas
+  height 100vh
+  width 100vw
+  filter blur(calc(var(--blur) * 1px))
+  transition filter .5s ease-out
+
+input
+  cursor pointer
+  position fixed
+  left 50%
+  top 90%
+  transform translate(-50%, 0)
+  z-index 2
