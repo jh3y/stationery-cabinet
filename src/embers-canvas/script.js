@@ -94,9 +94,9 @@ const draw = () => {
     particles = genParticles()
   }
   // context.restore()
+  FRAME_COUNT++
   for (const particle of particles) {
     context.clearRect(particle.x, particle.y, particle.size, particle.size)
-    FRAME_COUNT++
     if (particle.y < canvas.height || particle.startX < 0)
       particle.x += particle.vx
     if (particle.x > 0 || particle.startY > canvas.height)
