@@ -1,0 +1,87 @@
+*
+  box-sizing border-box
+
+$green = #2eec71
+
+body
+  background-color #111
+  min-height 100vh
+  &:after
+    background radial-gradient(transparent, #111)
+    bottom 0
+    content ''
+    left 0
+    position absolute
+    right 0
+    top 0
+
+
+.grid
+  filter blur(2px)
+  &:before
+    background repeating-linear-gradient(0deg, $green 0, $green 2px, transparent 2px, transparent 40px),
+      repeating-linear-gradient(90deg, $green 0, $green 2px, transparent 2px, transparent 40px)
+    content ''
+    height 100vh
+    position absolute
+    top 0
+    width 100vw
+
+.ekg
+  left 50%
+  max-width 300px
+  position absolute
+  top 50%
+  transform translate(-50%, -50%)
+
+  &:nth-of-type(1)
+  &:nth-of-type(3)
+    filter blur(10px)
+
+  @media(min-width 768px)
+    max-width 500px
+
+  path
+    animation draw 1s infinite ease-out forwards
+    stroke $green
+
+  &--novelty
+    display none
+
+    path
+      animation-duration 1.2s
+
+
+label
+  align-items center
+  bottom 20px
+  cursor pointer
+  display flex
+  height 50px
+  justify-content center
+  position fixed
+  right 50px
+  width 50px
+  z-index 2
+
+input
+  cursor pointer
+  margin 4px
+  position fixed
+  bottom 36px
+  right 40px
+  z-index 2
+
+  &:checked ~ .ekg--original
+    display none
+
+  &:checked ~ .ekg--novelty
+    display block
+
+@keyframes draw
+  75%
+    opacity 1
+    stroke-dashoffset 0
+  100%
+    opacity 0
+    stroke-dashoffset 0

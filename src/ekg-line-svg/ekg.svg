@@ -1,0 +1,14 @@
+<svg
+  class="ekg ekg--original"
+  viewBox="0 0 300 195"
+  preserveAspectRatio="xMinYMin">
+  <g
+     transform="translate(-0.13703948,-768.38124)">
+    <path
+       id="ekg"
+       stroke-dasharray="750"
+       stroke-dashoffset="750"
+       d="m 2.8096902,901.62064 27.8352018,0 29.835201,0 c 9.945067,0 32.20852,-29.26009 43.835197,0 l 15.8352,0 13.39911,23.5426 16.58744,-153.5426 19.3139,188.52018 16.07175,-58.52018 28.48543,0 c 9.15882,-23.20628 26.67189,-23.20628 34.48542,0 l 22.48542,0 26.48543,0"
+       style="fill:none;fill-rule:evenodd;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1" />
+  </g>
+</svg>
