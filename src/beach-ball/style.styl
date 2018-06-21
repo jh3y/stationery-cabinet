@@ -1,0 +1,48 @@
+*
+  box-sizing border-box
+
+
+body
+  align-items center
+  background dodgerblue
+  display flex
+  height 100vh
+  justify-content center
+  width 100vw
+
+:root
+  --speed 1
+  --size 200
+
+.spinner
+  border-radius 100%
+  height calc(var(--size) * 1px)
+  overflow hidden
+  width calc(var(--size) * 1px)
+  filter drop-shadow(0 5px 10px rgba(0, 0, 0, .75))
+
+  &__segments
+    height 100%
+    position relative
+    width 100%
+    animation spin calc(var(--speed) * 1s) infinite linear
+
+  $colors = rgb(252, 200, 9) rgb(253, 146, 10) rgb(251, 53, 53) rgb(171, 65, 201) rgb(24, 135, 243) rgb(64, 192, 27)
+  &__segment
+    border-radius 100%
+    height 100%
+    position absolute
+    top 50%
+    transform-origin top
+    width 100%
+
+    for $segment in (1..10)
+      &:nth-of-type({$segment})
+        $deg = ((360 / 6) * $segment) * 1deg
+        $color = $colors[$segment - 1]
+        box-shadow inset 100px -4px 0 $color
+        transform rotate($deg) translate(-46px, -12px)
+
+@keyframes spin
+  to
+    transform rotate(360deg)

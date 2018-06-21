@@ -1,0 +1,50 @@
+*
+  box-sizing border-box
+
+
+body
+  align-items center
+  background #663399
+  display flex
+  height 100vh
+  justify-content center
+  width 100vw
+
+:root
+  --speed 1
+  --size 300
+
+.spinner
+  animation spin calc(var(--speed) * 1s) infinite linear
+  background #111
+  border-radius 100%
+  height calc(var(--size) * 1px)
+  overflow hidden
+  left calc(var(--x) * 1vw)
+  position absolute
+  top calc(var(--y) * 1vh)
+  transform translate(-50%, -50%) rotate(0deg)
+  width calc(var(--size) * 1px)
+
+  div
+    border-radius 100%
+    height 100%
+    position absolute
+    top 50%
+    transform-origin top
+    width 100%
+
+  div:nth-of-type(odd)
+    box-shadow inset calc((var(--size) / 3) * 1px) 0 0 #111
+
+  div:nth-of-type(even)
+    box-shadow inset calc((var(--size) / 3) * 1px) 0 0 #fff
+
+  for $segment in (1..10)
+    div:nth-of-type({$segment})
+      $deg = ((360 / 10) * $segment) * 1deg
+      transform rotate($deg) translate(calc(((var(--size) / 3) / 2) * -1px), calc(((var(--size) / 3) / 10) * -1px))
+
+@keyframes spin
+  to
+    transform translate(-50%, -50%) rotate(360deg)

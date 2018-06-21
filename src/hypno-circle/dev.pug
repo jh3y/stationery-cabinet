@@ -1,0 +1,6 @@
+mixin spinner(size = 300, speed = 1, x = 50, y = 50)
+  .spinner(style=`--size: ${size}; --speed: ${speed}; --x: ${x}; --y: ${y}`)
+    - for (let c = 0; c < 10; c++)
+      div
+- for (let s = 0; s < 25; s++)
+  +spinner(Math.floor(Math.random() * 500) + 100, Math.random() + 0.5, Math.floor(Math.random() * 100), Math.floor(Math.random() * 100))
