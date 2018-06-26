@@ -25,7 +25,7 @@ const fade = () => {
 lastCell.addEventListener('animationend', showReset)
 replay.addEventListener('click', fade)
 
-imageHasLoaded('https://raw.github.com/jh3y/doodles/master/dontfeelgoodbear.svg?sanitize=true')
+imageHasLoaded('https://jh3y-doodles.netlify.com/dontfeelgoodbear.svg')
   .then(() => {
     bearGrid.classList.toggle('bear-grid--fading')
   })
