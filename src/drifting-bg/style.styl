@@ -1,0 +1,105 @@
+*
+  box-sizing border-box
+
+
+$color = rebeccapurple
+$delayInc = 0.15
+$duration = .75
+$rows = 6
+
+:root
+  --bg1 $color
+  --bg2 lighten($color, 40%)
+  --bg3 lighten($color, 60%)
+  --bg4 lighten($color, 80%)
+  --delay $delayInc
+  --duration $duration
+  --rows $rows
+
+
+.loading-screen
+  &__msg
+    position fixed
+    bottom 20px
+    right 20px
+    color #fafafa
+    z-index 10
+    font-size 2.25rem
+    font-family 'Arial', sans-serif
+    font-weight bolder
+
+  &--loading .bg div
+    &:nth-child(1)
+      animation-name drift-right, drift-in
+    &:nth-child(2)
+      animation-name drift-left
+    &:nth-child(3)
+      animation-name drift-right
+
+.bg
+  height calc((100 / var(--rows)) * 1vh)
+  position relative
+  width 100vw
+
+  div
+    animation-duration calc(var(--duration) * 1s)
+    animation-fill-mode forwards
+    animation-timing-function ease
+    height 100%
+    left 0
+    position absolute
+    top 0
+    width 100%
+
+    &:nth-child(1)
+      background var(--bg1)
+      z-index 5
+
+    &:nth-child(2)
+      background var(--bg2)
+      z-index 4
+
+    &:nth-child(3)
+      background var(--bg3)
+      z-index 3
+
+    &:nth-child(4)
+      background var(--bg4)
+      z-index 2
+
+
+.bg
+  for $bg in (1..$rows)
+    &:nth-of-type({$bg}) div
+      // At this point, need to consider when the last row would finish animating before the next set
+      // For example, delay for round 2 is when the last in row one finishes
+      DELAY_LAPSE_DIVIDER = 5
+      A = '(var(--delay) * %s)' % $bg
+      B = '(((var(--delay) * %s) + (var(--duration) / %s)) + %s)' % ($rows DELAY_LAPSE_DIVIDER A)
+      C = '(%s + (var(--delay) * %s) + (var(--duration) / %s))' % (B $rows DELAY_LAPSE_DIVIDER)
+      D = '(%s + (var(--delay) * %s) + (var(--duration) / %s))' % (C $rows DELAY_LAPSE_DIVIDER)
+      delayA = 'calc(%s * 1s)' % A
+      delayB = 'calc(%s * 1s)' % B
+      delayC = 'calc(%s * 1s)' % C
+      delayD = 'calc(%s * 1s)' % D
+      &:nth-child(1)
+        animation-delay delayA, delayD
+      &:nth-child(2)
+        animation-delay delayB
+      &:nth-child(3)
+        animation-delay delayC
+
+
+@keyframes drift-in
+  from
+    transform translate(100%, 0)
+  to
+    transform translate(0%, 0%)
+
+@keyframes drift-right
+  to
+    transform translate(100%, 0)
+
+@keyframes drift-left
+  to
+    transform translate(-100%, 0)
