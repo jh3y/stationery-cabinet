@@ -11,6 +11,9 @@ body
   padding 0
   width 100vw
 
+  &.adding
+    animation party 1.25s infinite linear
+
 h1
   color #fafafa
   display none
@@ -35,3 +38,15 @@ h1
 
   &.showing
     display block
+
+@keyframes party
+  0%
+    background rgb(253, 119, 123)
+  20%
+    background rgb(255, 248, 132)
+  40%
+    background rgb(122, 255, 118)
+  60%
+    background rgb(121, 255, 253)
+  80%
+    background rgb(123, 160, 253)

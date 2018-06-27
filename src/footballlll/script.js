@@ -1,7 +1,7 @@
 const UPPER_VELOCITY = 10
-const LOWER_VELOCITY = 5
-const MAX_SIZE = 50
-const MIN_SIZE = 20
+const LOWER_VELOCITY = 2
+const MAX_SIZE = innerWidth * .05
+const MIN_SIZE = innerWidth * .025
 const MAX_PARTICLES = 1000
 const AMOUNT = 0
 const COLOR = 0xffffff
@@ -42,7 +42,7 @@ class Pitch {
       POS.y = e.touches ? e.changedTouches[0].pageY : e.pageY
     }
     const genBall = (t, x, y) => {
-      const SIZE = floored(MAX_SIZE) + MIN_SIZE
+      const SIZE = floored(innerWidth * 0.05) + (innerWidth * 0.025)
       const p = new PIXI.Sprite(t)
       p.scale.x = p.scale.y = SIZE / 100
       p.vx =
@@ -94,7 +94,9 @@ class Pitch {
       if (!particles.length && !msg.classList.contains('showing')) msg.classList.add('showing')
       if (particles.length && !info.classList.contains('showing')) info.classList.add('showing')
       if (!particles.length && info.classList.contains('showing')) info.classList.remove('showing')
-      info.innerText = `⚽: ${Math.min(MAX_PARTICLES, particles.length)}`
+      if (app._ADDING && !document.body.classList.contains('adding')) document.body.classList.add('adding')
+      if (!app._ADDING && document.body.classList.contains('adding')) document.body.classList.remove('adding')
+      if (app._ADDING) info.innerText = `⚽: ${Math.min(MAX_PARTICLES, particles.length)}`
       if (app._ADDING) addBall(baseTexture)
       for (let i = 0; i < particles.length; i++) {
         const particle = particles[i]
