@@ -1,0 +1,39 @@
+*
+  box-sizing border-box
+
+body
+  background-color #e74c3c
+  color            #fafafa
+  display flex
+  align-items center
+  justify-content center
+
+video
+  width 300px
+  @media(min-width 768px)
+    width auto
+
+.shades
+  left calc(var(--x) * 1px)
+  top calc(var(--y) * 1px)
+  height calc(var(--height) * 1px)
+  width calc(var(--width) * 1px)
+  position absolute
+  display flex
+  justify-content space-between
+
+  &__lens
+    height 100%
+    width 45%
+    background black
+    position relative
+
+    &:nth-of-type(1)
+      &:after
+        content ''
+        position absolute
+        top 0
+        left 100%
+        width calc(var(--width) * 0.25px)
+        height calc(var(--height) * 0.3px)
+        background black
