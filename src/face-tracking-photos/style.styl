@@ -1,39 +1,111 @@
+@import url('https://fonts.googleapis.com/css?family=Special+Elite');
 *
+*:after
   box-sizing border-box
 
+html
 body
-  background-color #e74c3c
-  color            #fafafa
-  display flex
-  align-items center
-  justify-content center
+  color #fafafa
+  overflow-x hidden
+  min-height 100vh
+  width 100vw
 
 video
+  max-width 500px
   width 300px
   @media(min-width 768px)
     width auto
 
+figure
+  display flex
+  flex-direction column
+  margin 0
+
+button
+  border-radius 12px
+  cursor pointer
+  padding 12px 24px
+  border 0
+  font-family 'Arial', sans-serif
+  font-size 1.25rem
+  min-width 250px
+  background #f39c12
+  color #fafafa
+
+figcaption
+  text-transform uppercase
+  font-family 'Special Elite', cursive
+  text-align center
+  font-size 40px
+  padding 20px 0 10px 0
+  margin-bottom 10px
+  height 60px
+
+.app
+  align-items center
+  display flex
+  justify-content center
+  flex-direction column
+  background #4ecdc4
+  padding 2rem 0
+  min-height 100vh
+
+  &--thugging
+    background #bbb
+
+    .mute
+      background transparent
+
+    button
+      background #111
+
+    video
+      filter grayscale(1)
+
+  &__loader
+    content ''
+    height 50px
+    width 50px
+    border-radius 100%
+    border 10px solid white
+    border-left-color #e74c3c
+    border-right-color #e74c3c
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    animation spin 1s infinite
+
+    @keyframes spin
+      40%
+        transform translate(-50%, -50%) rotate(180deg)
+      60%
+        transform translate(-50%, -50%) rotate(180deg) rotateY(180deg)
+      100%
+        transform translate(-50%, -50%) rotate(0deg)
+
+
 .shades
   left calc(var(--x) * 1px)
   top calc(var(--y) * 1px)
-  height calc(var(--height) * 1px)
   width calc(var(--width) * 1px)
   position absolute
-  display flex
-  justify-content space-between
+  transform translate(-15%, -50%)
+  z-index 2
 
-  &__lens
-    height 100%
-    width 45%
-    background black
-    position relative
+  &--off
+    visibility hidden
 
-    &:nth-of-type(1)
-      &:after
-        content ''
-        position absolute
-        top 0
-        left 100%
-        width calc(var(--width) * 0.25px)
-        height calc(var(--height) * 0.3px)
-        background black
+.mute
+  background transparent
+  border 0
+  cursor pointer
+  position fixed
+  right 10px
+  bottom 10px
+  padding 10px
+  min-width 0
+
+  &__icon
+    height 44px
+    width 44px
