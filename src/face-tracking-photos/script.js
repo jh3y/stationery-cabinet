@@ -7,9 +7,20 @@ const app = new Vue({
   },
   methods: {
     processTracking: function(e) {
+      const videoBounds = this.$refs.video.getBoundingClientRect()
+      if (e.data.length === 1 && e.data[0].x < (videoBounds.width / 2)) {
+        const eye = e.data[0]
+        const shadesWidth = eye.width * 2.5
+        const shadesX = eye.x + videoBounds.left
+        const shadesY =
+          eye.y + (eye.height / 2) + videoBounds.top
+        // This is all just what has been working on my own face 😓
+        this.$refs.shades.style.setProperty('--width', shadesWidth * 1.5)
+        this.$refs.shades.style.setProperty('--x', shadesX)
+        this.$refs.shades.style.setProperty('--y', shadesY)
+      }
       if (e.data.length === 2) {
         // which eye is left and which is right?
-        const videoBounds = this.$refs.video.getBoundingClientRect()
         let left
         let right
         if (e.data[0].x < e.data[1].x) {
@@ -19,7 +30,6 @@ const app = new Vue({
           right = e.data[0]
           left = e.data[1]
         }
-        const shadesHeight = left.height
         const shadesWidth = right.x + right.width - left.x
         const shadesX = left.x + videoBounds.left
         const shadesY =

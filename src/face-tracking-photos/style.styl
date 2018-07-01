@@ -29,7 +29,7 @@ button
   font-family 'Arial', sans-serif
   font-size 1.25rem
   min-width 250px
-  background #f39c12
+  background #2eec71
   color #fafafa
 
 figcaption
@@ -46,12 +46,12 @@ figcaption
   display flex
   justify-content center
   flex-direction column
-  background #4ecdc4
+  background linear-gradient(35deg, #4ecdc4 , #663399)
   padding 2rem 0
   min-height 100vh
 
   &--thugging
-    background #bbb
+    background #777
 
     .mute
       background transparent
@@ -68,8 +68,8 @@ figcaption
     width 50px
     border-radius 100%
     border 10px solid white
-    border-left-color #e74c3c
-    border-right-color #e74c3c
+    border-left-color #663399
+    border-right-color #663399
     position absolute
     top 50%
     left 50%
@@ -92,9 +92,12 @@ figcaption
   position absolute
   transform translate(-15%, -50%)
   z-index 2
-
+  max-width 300px
   &--off
     visibility hidden
+
+  @media(min-width 768px)
+    max-width 500px
 
 .mute
   background transparent
