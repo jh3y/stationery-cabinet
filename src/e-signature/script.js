@@ -230,8 +230,7 @@ const makeDraggable = (WrappedComponent, options) => {
       const { dragX: x, dragY: y } = this.state
       return (
         <WrappedComponent
-          onMouseDown={this.onDragStart}
-          onTouchStart={this.onDragStart}
+          onDragStart={this.onDragStart}
           dragX={x}
           dragY={y}
           {...this.props}
@@ -243,6 +242,8 @@ const makeDraggable = (WrappedComponent, options) => {
 
 // Tie it all up!
 const Burger = styled.img.attrs({
+  onMouseDown: p => p.onDragStart,
+  onTouchStart: p => p.onDragStart,
   src:
     'https://images.unsplash.com/photo-1516774266634-15661f692c19?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=300&h=300&fit=crop&ixid=eyJhcHBfaWQiOjF9&s=dba61d07d9356e22c26750ed5ad68c3d',
 })`
@@ -252,9 +253,7 @@ const Burger = styled.img.attrs({
   width: 100px;
   object-fit: cover;
 `
-const DraggableAndResizableBurger = makeDraggable(makeResizable(Burger, {}), {
-  ignore: ['rsizable__handle'],
-})
+const DraggableAndResizableBurger = makeDraggable(makeResizable(Burger, {}))
 // const DraggableAndResizableBurger = makeResizable(makeDraggable(Burger), {})
 class App extends Component {
   render = () => {
