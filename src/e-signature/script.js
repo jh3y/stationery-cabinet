@@ -19,6 +19,94 @@ const getXY = evt => {
 /**
  * Resizable HOC
  */
+const Resizable = styled.div`
+  display: inline-block;
+  position: relative;
+  transform: translate(${p => p.translateX}px, ${p => p.translateY}px);
+  ${p => p.baseStyle};
+`
+const getDirectionStyles = d => {
+  let bottom
+  let top
+  let left
+  let right
+  let x
+  let y
+  switch (d) {
+    case 'n':
+      left = '50%'
+      x = y = -50
+      top = 0
+      break
+    case 's':
+      bottom = 0
+      left = '50%'
+      x = -50
+      y = 50
+      break
+    case 'e':
+      top = '50%'
+      x = 50
+      right = 0
+      y = -50
+      break
+    case 'w':
+      top = '50%'
+      x = -50
+      left = 0
+      y = -50
+      break
+    case 'se':
+      bottom = 0
+      right = 0
+      x = y = 50
+      break
+    case 'sw':
+      x = -50
+      y = 50
+      bottom = 0
+      left = 0
+      break
+    case 'ne':
+      x = 50
+      y = -50
+      top = 0
+      right = 0
+      break
+    case 'nw':
+      x = y = -50
+      top = 0
+      left = 0
+      break
+  }
+  return {
+    '--x': x,
+    '--y': y,
+    bottom,
+    top,
+    left,
+    right,
+  }
+}
+const ResizableHandle = styled.div`
+  height: 50px;
+  width: 50px;
+  display: inline-block;
+  cursor: ${p => p.direction}-resize;
+  position: absolute;
+  transform: translate(calc(var(--x, 0) * 1%), calc(var(--y, 0) * 1%));
+  ${p => getDirectionStyles(p.direction)} &:after {
+    background: #fff;
+    border-radius: 100%;
+    content: '';
+    height: 12px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+  }
+`
 const makeResizable = (WrappedComponent, opts) => {
   const defaultOptions = {
     ghosting: true,
@@ -27,17 +115,19 @@ const makeResizable = (WrappedComponent, opts) => {
   const options = Object.assign({}, defaultOptions, opts)
   return class extends Component {
     state = {
-      handleSize: 10,
       offsetLeft: 0,
       diffLeft: 0,
       diffTop: 0,
       offsetTop: 0,
     }
+    // Take into account if there is any drag applied
+    static defaultProps = {
+      dragX: 0,
+      dragY: 0,
+    }
     componentDidMount = () => {
       const { height, width } = this.__RESIZABLE.getBoundingClientRect()
-      const handleSize = Math.min(Math.max(height / 10, 10), 50)
       this.setState({
-        handleSize,
         height,
         width,
       })
@@ -46,7 +136,7 @@ const makeResizable = (WrappedComponent, opts) => {
       e.preventDefault()
       const { endResize, resize, state } = this
       const { offsetTop, diffTop, diffLeft, offsetLeft } = state
-      console.info('END')
+
       this.setState({
         diffTop: 0,
         offsetTop: offsetTop + diffTop,
@@ -60,36 +150,30 @@ const makeResizable = (WrappedComponent, opts) => {
     }
     resize = e => {
       e.preventDefault()
-      const { direction } = this.state
-      let { pageX: X, pageY: Y, touches } = e
-      if (touches && touches.length === 1) {
-        X = touches[0].pageX
-        Y = touches[0].pageY
-      }
-      const { startHeight, startX, startY, startWidth } = this.state
-      console.info('RESIZING')
+      const { direction, startHeight, startX, startY, startWidth } = this.state
+      const { x, y } = getXY(e)
       // IN HERE, NEED TO ALTER THE TRANSFORM IF APPLICABLE TOO
       // SHOULD WE INSTEAD PASS DOWN THE DRAG ATTRIBUTES?
       if (direction) {
-        let height
-        let width
+        let height = startHeight
+        let width = startWidth
         let { diffLeft, diffTop } = this.state
         for (const d of direction.split('')) {
           switch (d) {
             case 'n':
               // If position absolute, set top to Y
-              diffTop = startY - Y
+              diffTop = startY - y
               height = startHeight + diffTop
               break
             case 's':
-              height = startHeight + (Y - startY)
+              height = startHeight + (y - startY)
               break
             case 'e':
-              width = startWidth + (X - startX)
+              width = startWidth + (x - startX)
               break
             case 'w':
               // If position absolute, set left to X
-              diffLeft = startX - X
+              diffLeft = startX - x
               width = startWidth + diffLeft
               break
           }
@@ -102,26 +186,19 @@ const makeResizable = (WrappedComponent, opts) => {
         })
       }
     }
-    startResize = e => {
+    startResize = (e, direction) => {
       e.preventDefault()
       const { __RESIZABLE, endResize, resize } = this
-      let { pageX: startX, pageY: startY, touches } = e
-
-      if (touches && touches.length === 1) {
-        startX = touches[0].pageX
-        startY = touches[0].pageY
-      }
-
+      const { x: startX, y: startY } = getXY(e)
       const {
         height: startHeight,
         width: startWidth,
       } = __RESIZABLE.getBoundingClientRect()
-      console.info('START')
       document.body.addEventListener('mousemove', resize)
       document.body.addEventListener('touchmove', resize)
       document.body.addEventListener('mouseup', endResize)
       document.body.addEventListener('touchend', endResize)
-      const direction = e.target.getAttribute('data-rsize-direction')
+
       this.setState({
         direction,
         startHeight,
@@ -130,55 +207,42 @@ const makeResizable = (WrappedComponent, opts) => {
         startY,
       })
     }
+
     render = () => {
       const { props, startResize, state } = this
       const { dragX, dragY } = props
-      const {
-        diffLeft,
-        diffTop,
-        handleSize,
-        height,
-        width,
-        offsetTop,
-        offsetLeft,
-      } = state
+      const { diffLeft, diffTop, height, width, offsetTop, offsetLeft } = state
       return (
-        <div
+        <Resizable
           className={'rsizable'}
-          ref={r => (this.__RESIZABLE = r)}
-          style={{
-            transform: `translate(${dragX -
-              (offsetLeft + diffLeft)}px, ${dragY - (offsetTop + diffTop)}px)`,
-          }}>
+          innerRef={r => (this.__RESIZABLE = r)}
+          translateX={dragX - (offsetLeft + diffLeft)}
+          translateY={dragY - (offsetTop + diffTop)}
+          baseStyle={options.style}>
           {options.handles.length &&
             options.handles.map((h, idx) => (
-              <div
-                onMouseDown={startResize}
-                onTouchStart={startResize}
+              <ResizableHandle
+                onMouseDown={e => startResize(e, h)}
+                onTouchStart={e => startResize(e, h)}
                 className={`rsizable__handle rsizable__handle--${h}`}
-                data-rsize-direction={h}
-                size={10}
-                style={{
-                  '--handleSize': handleSize,
-                  '--cursor': `${h}-resize`,
-                }}
+                direction={h}
                 key={`resize-handle--${idx}`}
               />
             ))}
           <WrappedComponent
-            style={{
-              height: `${height}px`,
-              width: `${width}px`,
-            }}
+            resizeHeight={height}
+            resizeWidth={width}
             {...props}
           />
-        </div>
+        </Resizable>
       )
     }
   }
 }
 /**
  * Draggable HOC
+ * Applies mousedown and touchstart event listener
+ * Passes drag props to component
  */
 const makeDraggable = (WrappedComponent, options) => {
   return class extends Component {
@@ -241,23 +305,112 @@ const makeDraggable = (WrappedComponent, options) => {
 }
 
 // Tie it all up!
-const Burger = styled.img.attrs({
+const Bear = styled.img.attrs({
   onMouseDown: p => p.onDragStart,
   onTouchStart: p => p.onDragStart,
-  src:
-    'https://images.unsplash.com/photo-1516774266634-15661f692c19?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=300&h=300&fit=crop&ixid=eyJhcHBfaWQiOjF9&s=dba61d07d9356e22c26750ed5ad68c3d',
+  src: 'https://source.unsplash.com/random/300x300?bear',
 })`
   cursor: move;
   cursor: -webkit-grab;
-  height: 100px;
-  width: 100px;
+  height: ${p => (p.resizeHeight ? p.resizeHeight : 150)}px;
+  width: ${p => (p.resizeWidth ? p.resizeWidth : 150)}px;
   object-fit: cover;
 `
-const DraggableAndResizableBurger = makeDraggable(makeResizable(Burger, {}))
-// const DraggableAndResizableBurger = makeResizable(makeDraggable(Burger), {})
-class App extends Component {
+const DraggableAndResizableBear = makeDraggable(
+  makeResizable(Bear, {
+    style: {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      margin: '-75px 0 0 -75px',
+    },
+  })
+)
+
+const Container = styled.div``
+const Input = styled.svg`
+  background: #fafafa;
+  border-radius: 6px;
+  height: 200px;
+  width: 300px;
+`
+const Action = styled.button``
+class Signature extends Component {
+  static defaultProps = {
+    confirmed: false,
+  }
+  state = {
+    path: '',
+  }
+  startSign = e => {
+    const { INPUT, endSign, sign } = this
+    const { x, y } = getXY(e)
+    const { left, top } = INPUT.getBoundingClientRect()
+    const path = `M ${x - left}, ${y - top} `
+
+    document.body.addEventListener('mousemove', sign)
+    document.body.addEventListener('touchmove', sign)
+    document.body.addEventListener('mouseup', endSign)
+    document.body.addEventListener('touchend', endSign)
+
+    this.setState({
+      path: this.state.path + path,
+    })
+  }
+  sign = e => {
+    const { INPUT } = this
+    const { x, y } = getXY(e)
+    const { left, top } = INPUT.getBoundingClientRect()
+    const path = `L ${x - left}, ${y - top} `
+
+    this.setState({
+      path: this.state.path + path,
+    })
+  }
+  endSign = e => {
+    const { endSign, sign } = this
+    document.body.removeEventListener('mousemove', sign)
+    document.body.removeEventListener('touchmove', sign)
+    document.body.removeEventListener('mouseup', endSign)
+    document.body.removeEventListener('touchend', endSign)
+  }
+  wipe = () => {
+    this.setState({
+      path: ''
+    })
+  }
   render = () => {
-    return <DraggableAndResizableBurger />
+    const { startSign, wipe } = this
+    const { path } = this.state
+    return (
+      <Container>
+        <Input
+          innerRef={i => (this.INPUT = i)}
+          onMouseDown={startSign}
+          onTouchStart={startSign}>
+          <path
+            stroke="#111"
+            strokeWidth="2"
+            strokeLinecap="round"
+            fill="none"
+            d={path}
+          />
+        </Input>
+        <Action>Confirm</Action>
+        <Action onClick={wipe}>Wipe</Action>
+      </Container>
+    )
+  }
+}
+
+class App extends Component {
+  state = {
+    signed: false,
+  }
+  render = () => {
+    const { signed } = this.state
+    if (!signed) return <Signature confirmed={signed} />
+    return <DraggableAndResizableBear />
   }
 }
 ReactDOM.render(<App />, rootNode)
