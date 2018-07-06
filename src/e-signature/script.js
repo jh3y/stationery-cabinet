@@ -3,6 +3,19 @@ const { render } = ReactDOM
 const styled = styled.default
 const rootNode = document.getElementById('app')
 
+// Utility function for grabbing XY coordinates from event
+const getXY = evt => {
+  let { pageX: x, pageY: y, touches } = evt
+  if (touches && touches.length === 1) {
+    x = touches[0].pageX
+    y = touches[0].pageY
+  }
+  return {
+    x,
+    y,
+  }
+}
+
 /**
  * Resizable HOC
  */
@@ -15,54 +28,58 @@ const makeResizable = (WrappedComponent, opts) => {
   return class extends Component {
     state = {
       handleSize: 10,
+      offsetLeft: 0,
+      diffLeft: 0,
+      diffTop: 0,
+      offsetTop: 0,
     }
     componentDidMount = () => {
-      const {height, width} = this.__RESIZABLE.getBoundingClientRect()
-      const handleSize = Math.min(
-        Math.max(height / 10, 10),
-        50
-      )
+      const { height, width } = this.__RESIZABLE.getBoundingClientRect()
+      const handleSize = Math.min(Math.max(height / 10, 10), 50)
       this.setState({
         handleSize,
         height,
-        width
+        width,
       })
     }
     endResize = e => {
-      const {
-        endResize,
-        resize,
-      } = this
+      e.preventDefault()
+      const { endResize, resize, state } = this
+      const { offsetTop, diffTop, diffLeft, offsetLeft } = state
       console.info('END')
+      this.setState({
+        diffTop: 0,
+        offsetTop: offsetTop + diffTop,
+        offsetLeft: offsetLeft + diffLeft,
+        diffLeft: 0,
+      })
       document.body.removeEventListener('mousemove', resize)
       document.body.removeEventListener('touchmove', resize)
       document.body.removeEventListener('mouseup', endResize)
       document.body.removeEventListener('touchend', endResize)
     }
     resize = e => {
-      const {direction} = this.state
+      e.preventDefault()
+      const { direction } = this.state
       let { pageX: X, pageY: Y, touches } = e
       if (touches && touches.length === 1) {
         X = touches[0].pageX
         Y = touches[0].pageY
       }
-      const {
-        startHeight,
-        startX,
-        startY,
-        startWidth,
-      } = this.state
+      const { startHeight, startX, startY, startWidth } = this.state
       console.info('RESIZING')
       // IN HERE, NEED TO ALTER THE TRANSFORM IF APPLICABLE TOO
       // SHOULD WE INSTEAD PASS DOWN THE DRAG ATTRIBUTES?
       if (direction) {
+        let height
+        let width
+        let { diffLeft, diffTop } = this.state
         for (const d of direction.split('')) {
-          let height
-          let width
-          switch(d) {
+          switch (d) {
             case 'n':
               // If position absolute, set top to Y
-              height = startHeight + (startY - Y)
+              diffTop = startY - Y
+              height = startHeight + diffTop
               break
             case 's':
               height = startHeight + (Y - startY)
@@ -72,22 +89,22 @@ const makeResizable = (WrappedComponent, opts) => {
               break
             case 'w':
               // If position absolute, set left to X
-              width = startWidth + (startX - X)
+              diffLeft = startX - X
+              width = startWidth + diffLeft
               break
           }
-          this.setState({
-            height,
-            width
-          })
         }
+        this.setState({
+          diffLeft,
+          diffTop,
+          height,
+          width,
+        })
       }
     }
     startResize = e => {
-      const {
-        __RESIZABLE,
-        endResize,
-        resize,
-      } = this
+      e.preventDefault()
+      const { __RESIZABLE, endResize, resize } = this
       let { pageX: startX, pageY: startY, touches } = e
 
       if (touches && touches.length === 1) {
@@ -95,7 +112,10 @@ const makeResizable = (WrappedComponent, opts) => {
         startY = touches[0].pageY
       }
 
-      const { height: startHeight, width: startWidth } = __RESIZABLE.getBoundingClientRect()
+      const {
+        height: startHeight,
+        width: startWidth,
+      } = __RESIZABLE.getBoundingClientRect()
       console.info('START')
       document.body.addEventListener('mousemove', resize)
       document.body.addEventListener('touchmove', resize)
@@ -112,9 +132,24 @@ const makeResizable = (WrappedComponent, opts) => {
     }
     render = () => {
       const { props, startResize, state } = this
-      const { handleSize, height, width } = state
+      const { dragX, dragY } = props
+      const {
+        diffLeft,
+        diffTop,
+        handleSize,
+        height,
+        width,
+        offsetTop,
+        offsetLeft,
+      } = state
       return (
-        <div className={'rsizable'} ref={r => (this.__RESIZABLE = r)}>
+        <div
+          className={'rsizable'}
+          ref={r => (this.__RESIZABLE = r)}
+          style={{
+            transform: `translate(${dragX -
+              (offsetLeft + diffLeft)}px, ${dragY - (offsetTop + diffTop)}px)`,
+          }}>
           {options.handles.length &&
             options.handles.map((h, idx) => (
               <div
@@ -145,7 +180,7 @@ const makeResizable = (WrappedComponent, opts) => {
 /**
  * Draggable HOC
  */
-const makeDraggable = WrappedComponent => {
+const makeDraggable = (WrappedComponent, options) => {
   return class extends Component {
     state = {
       dragX: 0,
@@ -155,52 +190,52 @@ const makeDraggable = WrappedComponent => {
       startX: undefined,
       startY: undefined,
     }
-    componentDidMount = () => {
-      const { __DRAG_WRAPPER: wrap, onDragStart } = this
-      if (this.__DRAG_WRAPPER) console.info('lets make a dragger')
-      wrap.addEventListener('mousedown', onDragStart)
-    }
+
     onDragStart = e => {
+      const { onDrag, onDragEnd } = this
       e.preventDefault()
-      console.info(e.target, e.currentTarget, this.__DRAG_WRAPPER)
-      if (e.target.hasAttribute('data-rsize-direction')) return
-      const { __DRAG_WRAPPER: wrap, onDrag, onDragEnd } = this
       document.body.addEventListener('mousemove', onDrag)
+      document.body.addEventListener('touchmove', onDrag)
       document.body.addEventListener('mouseup', onDragEnd)
-      const bounds = wrap.getBoundingClientRect()
+      document.body.addEventListener('touchend', onDragEnd)
+      const { x: startX, y: startY } = getXY(e)
+      const bounds = e.target.getBoundingClientRect()
       this.setState({
         x: bounds.left,
         y: bounds.top,
-        startX: e.x,
-        startY: e.y,
+        startX,
+        startY,
         startDragX: this.state.dragX,
         startDragY: this.state.dragY,
       })
     }
+
     onDrag = e => {
       const { startDragX, startDragY, startX, startY } = this.state
+      const { x, y } = getXY(e)
       this.setState({
-        dragX: startDragX + (e.x - startX),
-        dragY: startDragY + (e.y - startY),
+        dragX: startDragX + (x - startX),
+        dragY: startDragY + (y - startY),
       })
     }
+
     onDragEnd = e => {
       const { onDrag, onDragEnd } = this
       document.body.removeEventListener('mousemove', onDrag)
+      document.body.removeEventListener('touchmove', onDrag)
       document.body.removeEventListener('mouseup', onDragEnd)
+      document.body.removeEventListener('touchend', onDragEnd)
     }
     render = () => {
       const { dragX: x, dragY: y } = this.state
       return (
-        <div
-          className={'drggable'}
-          ref={w => (this.__DRAG_WRAPPER = w)}
-          style={{
-            '--dragX': x,
-            '--dragY': y,
-          }}>
-          <WrappedComponent {...this.props} />
-        </div>
+        <WrappedComponent
+          onMouseDown={this.onDragStart}
+          onTouchStart={this.onDragStart}
+          dragX={x}
+          dragY={y}
+          {...this.props}
+        />
       )
     }
   }
@@ -211,11 +246,15 @@ const Burger = styled.img.attrs({
   src:
     'https://images.unsplash.com/photo-1516774266634-15661f692c19?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=300&h=300&fit=crop&ixid=eyJhcHBfaWQiOjF9&s=dba61d07d9356e22c26750ed5ad68c3d',
 })`
+  cursor: move;
+  cursor: -webkit-grab;
   height: 100px;
   width: 100px;
   object-fit: cover;
 `
-const DraggableAndResizableBurger = makeDraggable(makeResizable(Burger, {}))
+const DraggableAndResizableBurger = makeDraggable(makeResizable(Burger, {}), {
+  ignore: ['rsizable__handle'],
+})
 // const DraggableAndResizableBurger = makeResizable(makeDraggable(Burger), {})
 class App extends Component {
   render = () => {
