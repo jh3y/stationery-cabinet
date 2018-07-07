@@ -97,7 +97,7 @@ const ResizableHandle = styled.div`
   position: absolute;
   transform: translate(calc(var(--x, 0) * 1%), calc(var(--y, 0) * 1%));
   ${p => getDirectionStyles(p.direction)} &:after {
-    background: #fff;
+    background: #2eec71;
     border-radius: 100%;
     content: '';
     height: 12px;
@@ -219,7 +219,9 @@ const makeResizable = (WrappedComponent, opts) => {
           innerRef={r => (this.__RESIZABLE = r)}
           translateX={dragX - (offsetLeft + diffLeft)}
           translateY={dragY - (offsetTop + diffTop)}
-          baseStyle={options.style}>
+          baseStyle={Object.assign({}, options.style, {
+            top: innerHeight / 2 + scrollY,
+          })}>
           {options.handles.length &&
             options.handles.map((h, idx) => (
               <ResizableHandle
@@ -305,29 +307,6 @@ const makeDraggable = (WrappedComponent, options) => {
   }
 }
 
-// Tie it all up!
-const Bear = styled.img.attrs({
-  onMouseDown: p => p.onDragStart,
-  onTouchStart: p => p.onDragStart,
-  src: 'https://source.unsplash.com/random/300x300?bear',
-})`
-  cursor: move;
-  cursor: -webkit-grab;
-  height: ${p => (p.resizeHeight ? p.resizeHeight : 150)}px;
-  width: ${p => (p.resizeWidth ? p.resizeWidth : 150)}px;
-  object-fit: cover;
-`
-const DraggableAndResizableBear = makeDraggable(
-  makeResizable(Bear, {
-    style: {
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      margin: '-75px 0 0 -75px',
-    },
-  })
-)
-
 const flyIn = keyframes`
   from {
     transform: translate(-50%, -50%) scale(0);
@@ -336,17 +315,20 @@ const flyIn = keyframes`
 const Container = styled.div`
   display: inline-block;
   position: relative;
-  ${p => !p.confirmed ? `
+  ${p =>
+    !p.confirmed
+      ? `
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(1);
     animation: ${flyIn} .5s .25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     animation-fill-mode: backwards;
-  ` : ``}
+  `
+      : ``};
 `
-const Input = styled.svg`
-  background: #fafafa;
+const SignatureInput = styled.svg`
+  background: ${p => (p.confirmed ? 'transparent' : '#fff')};
   border-radius: 6px;
   height: 200px;
   width: 300px;
@@ -358,7 +340,9 @@ const Action = styled.button`
   justify-content: center;
   padding: 0;
 
-  ${p => p.confirm ? `
+  ${p =>
+    p.confirm
+      ? `
     height: 50px;
     width: 50px;
     border-radius: 100%;
@@ -369,9 +353,8 @@ const Action = styled.button`
       background: #2eec71;
     }
 
-  ` : null}
-
-  ${p =>
+  `
+      : null} ${p =>
     p.wiper
       ? `
           background: none;
@@ -407,13 +390,24 @@ const Icon = styled.svg.attrs({
   height: 24px;
   width: 24px;
 `
+const SignatureContainer = styled.div`
+  position: relative;
+`
+const Placeholder = styled.label`
+  color: #ddd;
+  position: absolute;
+  font-size: 1.5rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`
 class Signature extends Component {
   static defaultProps = {
     confirmed: false,
   }
   state = {
     confirmed: this.props.confirmed,
-    path: '',
+    path: this.props.path || '',
   }
   startSign = e => {
     const { INPUT, endSign, sign } = this
@@ -454,51 +448,269 @@ class Signature extends Component {
   }
   confirm = () => {
     if (confirm('All set?')) {
-      console.info('DO IT')
+      TweenMax.to(this.CONTAINER, 0.25, {
+        delay: 0.25,
+        scale: 0,
+        onComplete: () => {
+          this.setState(
+            {
+              confirmed: true,
+            },
+            () => this.props.onConfirm(this.state.path)
+          )
+        },
+      })
     }
   }
   render = () => {
     const { confirm, startSign, wipe } = this
     const { confirmed, path } = this.state
+
     return (
-      <Container confirmed={confirmed}>
-        <Input
-          innerRef={i => (this.INPUT = i)}
-          onMouseDown={startSign}
-          onTouchStart={startSign}>
-          <path
-            stroke="#111"
-            strokeWidth="2"
-            strokeLinecap="round"
-            fill="none"
-            d={path}
-          />
-        </Input>
-        <Actions>
-          <Action fill="#fff" disabled={path === ''} confirm={true} onClick={confirm}>
-            <Icon>
-              <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
-            </Icon>
-          </Action>
-          <Action fill="#ddd" hover="#444" wiper={true} onClick={wipe}>
-            <Icon>
-              <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
-            </Icon>
-          </Action>
-        </Actions>
+      <Container innerRef={c => (this.CONTAINER = c)} confirmed={confirmed}>
+        <SignatureContainer>
+          {path === '' && <Placeholder>Please Sign</Placeholder>}
+          <SignatureInput
+            confirmed={confirmed}
+            innerRef={i => (this.INPUT = i)}
+            onMouseDown={startSign}
+            onTouchStart={startSign}>
+            <path
+              stroke="#111"
+              strokeWidth="2"
+              strokeLinecap="round"
+              fill="none"
+              d={path}
+            />
+          </SignatureInput>
+        </SignatureContainer>
+        {!confirmed && (
+          <Actions>
+            <Action
+              fill="#fff"
+              disabled={path === ''}
+              confirm={true}
+              onClick={confirm}>
+              <Icon>
+                <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+              </Icon>
+            </Action>
+            <Action fill="#ddd" hover="#444" wiper={true} onClick={wipe}>
+              <Icon>
+                <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+              </Icon>
+            </Action>
+          </Actions>
+        )}
       </Container>
     )
   }
 }
 
+const AppContainer = styled.div`
+  padding: 5vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+const scaleIn = keyframes`
+  from {
+    transform: scale(0);
+  }
+`
+const Document = styled.div`
+  background: #fafafa;
+  max-width: 794px;
+  padding: 30px;
+  position: relative;
+  width: 95vw;
+  animation: ${scaleIn} 0.5s 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation-fill-mode: backwards;
+`
+
+const DocumentTitle = styled.h1`
+  border-radius: 4px;
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 40px;
+`
+const DocumentSection = styled.section`
+  margin-bottom: 30px;
+`
+const DocumentSectionTitle = styled.h3``
+const DocumentSectionContent = styled.ol`
+  margin: 0;
+  padding: 0 0 0 20px;
+`
+const DocumentContent = styled.li`
+  margin-bottom: 30px;
+`
+const Signoff = styled.dl`
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 50px repeat(2, 1fr);
+  min-width: 40%;
+  padding: 50px 0 50px 40%;
+`
+const SignoffDetail = styled.dd`
+  font-weight: bold;
+`
+const SignoffValue = styled.dt``
+const DocumentActions = styled.div`
+  position: fixed;
+  right: 10px;
+  top: 50%;
+  transform: translate(0, -50%);
+  z-index: 2;
+`
+const Sign = styled.button`
+  cursor: pointer;
+  border-radius: 100%;
+  border: 0;
+  height: 50px;
+  width: 50px;
+  background: #89c4f4;
+  margin-bottom: 10px;
+  path {
+    fill: #fff;
+  }
+  &:hover {
+    background: #4b77be;
+  }
+`
+const Stamp = styled.svg.attrs({
+  onMouseDown: p => p.onDragStart,
+  onTouchStart: p => p.onDragStart,
+})`
+  height: ${p => p.resizeHeight}px;
+  width: ${p => p.resizeWidth}px;
+  path {
+    transform: scaleX(${p => p.scaleX}) scaleY(${p => p.scaleY});
+  }
+`
+const sections = []
+for (let s = 0; s < 2; s++) {
+  const points = []
+  const length = Math.floor(Math.random() * 4) + 1
+  for (let p = 0; p < length; p++) {
+    points.push(faker.lorem.paragraph())
+  }
+  sections.push({
+    title: `${s + 1}. ${faker.lorem.sentence(3)}`,
+    points,
+  })
+}
+const content = {
+  title: faker.lorem.sentence(3),
+  intro: faker.lorem.paragraph(),
+  date: new Date().toDateString(),
+  sections,
+}
+
+const Signed = props => {
+  return (
+    <Stamp
+      onMouseDown={props.onDragStart}
+      onTouchStart={props.onDragStart}
+      resizeHeight={props.resizeHeight}
+      resizeWidth={props.resizeWidth}
+      scaleX={props.resizeWidth / 300}
+      scaleY={props.resizeHeight / 200}>
+      <path
+        stroke="#111"
+        strokeWidth="2"
+        strokeLinecap="round"
+        fill="none"
+        d={props.path}
+      />
+    </Stamp>
+  )
+}
+
+const DraggableAndResizableSignature = makeDraggable(
+  makeResizable(Signed, {
+    style: {
+      cursor: 'move',
+      cursor: '-webkit-grab',
+      position: 'absolute',
+      touchAction: 'none',
+      left: '50%',
+      margin: '-100px 0 0 -150px',
+      zIndex: 3,
+    },
+  })
+)
 class App extends Component {
   state = {
-    signed: false,
+    setup: false,
+    signature: undefined,
+    signatures: 0,
+  }
+  addSignature = () => {
+    if (this.state.signature) {
+      this.setState({
+        signatures: this.state.signatures + 1,
+      })
+    }
   }
   render = () => {
-    const { signed } = this.state
-    if (!signed) return <Signature confirmed={signed} />
-    return <DraggableAndResizableBear />
+    const { addSignature } = this
+    const { signature, signatures, setup } = this.state
+    if (!setup)
+      return (
+        <Signature
+          onConfirm={signature => this.setState({ signature, setup: true })}
+          confirmed={setup}
+        />
+      )
+    return (
+      <AppContainer>
+        {new Array(signatures)
+          .fill()
+          .map((s, idx) => (
+            <DraggableAndResizableSignature
+              key={`signature--${idx}`}
+              path={signature}
+            />
+          ))}
+        <DocumentActions>
+          <Sign onClick={addSignature}>
+            <Icon>
+              <path d="M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29" />
+            </Icon>
+          </Sign>
+          <Action fill="#fff" disabled={false} confirm={true}>
+            <Icon>
+              <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+            </Icon>
+          </Action>
+        </DocumentActions>
+        <Document>
+          <DocumentTitle>{content.title}</DocumentTitle>
+          <DocumentSection>{content.intro}</DocumentSection>
+          {content.sections.map((s, idx) => (
+            <DocumentSection key={`document-section--${idx}`}>
+              <DocumentSectionTitle>{s.title}</DocumentSectionTitle>
+              <DocumentSectionContent>
+                {s.points.map((p, idx) => (
+                  <DocumentContent key={`document-section--${idx}`}>
+                    {p}
+                  </DocumentContent>
+                ))}
+              </DocumentSectionContent>
+            </DocumentSection>
+          ))}
+          <Signoff>
+            <SignoffDetail>Signed:</SignoffDetail>
+            <SignoffValue />
+            <SignoffDetail>Name:</SignoffDetail>
+            <SignoffValue />
+            <SignoffDetail>Date:</SignoffDetail>
+            <SignoffValue>{new Date().toDateString()}</SignoffValue>
+          </Signoff>
+        </Document>
+      </AppContainer>
+    )
   }
 }
 ReactDOM.render(<App />, rootNode)
