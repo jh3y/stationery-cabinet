@@ -128,6 +128,7 @@ const makeResizable = (WrappedComponent, opts) => {
     }
     componentDidMount = () => {
       const { height, width } = this.__RESIZABLE.getBoundingClientRect()
+      this.STARTING_TOP = rootNode.offsetHeight / 2 + rootNode.scrollTop
       this.setState({
         height,
         width,
@@ -144,10 +145,10 @@ const makeResizable = (WrappedComponent, opts) => {
         offsetLeft: offsetLeft + diffLeft,
         diffLeft: 0,
       })
-      document.body.removeEventListener('mousemove', resize)
-      document.body.removeEventListener('touchmove', resize)
-      document.body.removeEventListener('mouseup', endResize)
-      document.body.removeEventListener('touchend', endResize)
+      rootNode.removeEventListener('mousemove', resize)
+      rootNode.removeEventListener('touchmove', resize)
+      rootNode.removeEventListener('mouseup', endResize)
+      rootNode.removeEventListener('touchend', endResize)
     }
     resize = e => {
       e.preventDefault()
@@ -195,10 +196,10 @@ const makeResizable = (WrappedComponent, opts) => {
         height: startHeight,
         width: startWidth,
       } = __RESIZABLE.getBoundingClientRect()
-      document.body.addEventListener('mousemove', resize)
-      document.body.addEventListener('touchmove', resize)
-      document.body.addEventListener('mouseup', endResize)
-      document.body.addEventListener('touchend', endResize)
+      rootNode.addEventListener('mousemove', resize)
+      rootNode.addEventListener('touchmove', resize)
+      rootNode.addEventListener('mouseup', endResize)
+      rootNode.addEventListener('touchend', endResize)
 
       this.setState({
         direction,
@@ -220,7 +221,7 @@ const makeResizable = (WrappedComponent, opts) => {
           translateX={dragX - (offsetLeft + diffLeft)}
           translateY={dragY - (offsetTop + diffTop)}
           baseStyle={Object.assign({}, options.style, {
-            top: innerHeight / 2 + scrollY,
+            top: `${this.STARTING_TOP}px`,
           })}>
           {options.handles.length &&
             options.handles.map((h, idx) => (
@@ -261,10 +262,10 @@ const makeDraggable = (WrappedComponent, options) => {
     onDragStart = e => {
       const { onDrag, onDragEnd } = this
       e.preventDefault()
-      document.body.addEventListener('mousemove', onDrag)
-      document.body.addEventListener('touchmove', onDrag)
-      document.body.addEventListener('mouseup', onDragEnd)
-      document.body.addEventListener('touchend', onDragEnd)
+      rootNode.addEventListener('mousemove', onDrag)
+      rootNode.addEventListener('touchmove', onDrag)
+      rootNode.addEventListener('mouseup', onDragEnd)
+      rootNode.addEventListener('touchend', onDragEnd)
       const { x: startX, y: startY } = getXY(e)
       const bounds = e.target.getBoundingClientRect()
       this.setState({
@@ -287,11 +288,12 @@ const makeDraggable = (WrappedComponent, options) => {
     }
 
     onDragEnd = e => {
+      e.preventDefault()
       const { onDrag, onDragEnd } = this
-      document.body.removeEventListener('mousemove', onDrag)
-      document.body.removeEventListener('touchmove', onDrag)
-      document.body.removeEventListener('mouseup', onDragEnd)
-      document.body.removeEventListener('touchend', onDragEnd)
+      rootNode.removeEventListener('mousemove', onDrag, {passive: true})
+      rootNode.removeEventListener('touchmove', onDrag, {passive: true})
+      rootNode.removeEventListener('mouseup', onDragEnd, {passive: true})
+      rootNode.removeEventListener('touchend', onDragEnd, {passive: true})
     }
     render = () => {
       const { dragX: x, dragY: y } = this.state
@@ -415,10 +417,10 @@ class Signature extends Component {
     const { left, top } = INPUT.getBoundingClientRect()
     const path = `M ${x - left}, ${y - top} `
 
-    document.body.addEventListener('mousemove', sign)
-    document.body.addEventListener('touchmove', sign)
-    document.body.addEventListener('mouseup', endSign)
-    document.body.addEventListener('touchend', endSign)
+    rootNode.addEventListener('mousemove', sign)
+    rootNode.addEventListener('touchmove', sign)
+    rootNode.addEventListener('mouseup', endSign)
+    rootNode.addEventListener('touchend', endSign)
 
     this.setState({
       path: this.state.path + path,
@@ -436,10 +438,10 @@ class Signature extends Component {
   }
   endSign = e => {
     const { endSign, sign } = this
-    document.body.removeEventListener('mousemove', sign)
-    document.body.removeEventListener('touchmove', sign)
-    document.body.removeEventListener('mouseup', endSign)
-    document.body.removeEventListener('touchend', endSign)
+    rootNode.removeEventListener('mousemove', sign)
+    rootNode.removeEventListener('touchmove', sign)
+    rootNode.removeEventListener('mouseup', endSign)
+    rootNode.removeEventListener('touchend', endSign)
   }
   wipe = () => {
     this.setState({
@@ -508,7 +510,7 @@ class Signature extends Component {
 }
 
 const AppContainer = styled.div`
-  padding: 5vw;
+  padding: 5%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -523,7 +525,7 @@ const Document = styled.div`
   max-width: 794px;
   padding: 30px;
   position: relative;
-  width: 95vw;
+  width: 95%;
   animation: ${scaleIn} 0.5s 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   animation-fill-mode: backwards;
 `
