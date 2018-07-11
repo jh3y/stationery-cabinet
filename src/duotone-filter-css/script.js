@@ -12,3 +12,4 @@ const updateTone = (e) => {
   choosers[name].style.setProperty('--selectedRotation', e.target.style.getPropertyValue('--angle'))
 }
 document.body.addEventListener('input', updateTone)
+document.body.addEventListener('change', updateTone)
