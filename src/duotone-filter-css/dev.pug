@@ -1,0 +1,14 @@
+.app
+  //- The colors
+  - const colors = ['transparent', '#f22613', '#e74c3c', '#f62459', '#663399', '#9a12b3', '#bf55ec', '#19b5fe', '#1e8bc3', '#1f3a93', '#89c4f4', '#03c9a9', '#26c281', '#16a085', '#2eec71', '#f2784b', '#f89406', '#f9bf3b']
+  .duotone
+  .chooser.chooser--lighten
+    - for (let i = 0; i < colors.length; i++)
+      label.lighten(title='Lighten Tone', class=`${colors[i] === 'transparent' ? 'clear' : ''}`, for=`lighten--${i}`, style=`--bg: ${colors[i]}; --angle: ${(360 / colors.length) * i}`)
+      input(id=`lighten--${i}`, type='radio', value=`${colors[i]}`, name='lighten', style=`--angle: ${(360 / colors.length) * i}`)
+  .chooser.chooser--darken
+    - for (let i = 0; i < colors.length; i++)
+      label.darken(title='Darken Tone', class=`${colors[i] === 'transparent' ? 'clear' : ''}`, for=`darken--${i}`, style=`--bg: ${colors[i]}; --angle: ${(360 / colors.length) * i}`)
+      input(id=`darken--${i}`, type='radio', value=`${colors[i]}`, name='darken', style=`--angle: ${(360 / colors.length) * i}`)
+  svg.indicator(preserveAspectRatio='xMinYMin', viewBox="0 0 24 24")
+    path(d="M7,10L12,15L17,10H7Z")

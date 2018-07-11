@@ -1,0 +1,100 @@
+*
+  box-sizing border-box
+
+body
+  background-color #111
+  background linear-gradient(45deg, #aaa, #111)
+  min-height 100vh
+  overflow hidden
+  overflow-y scroll
+  display flex
+  align-items center
+  justify-content center
+
+$duration = .25s
+$border = 4px
+
+.app
+  width 550px
+  height 550px
+  position relative
+.duotone
+  background url('https://source.unsplash.com/220x220?bear,cat'), linear-gradient(45deg, #111, #aaa)
+  background-size cover
+  border-radius 100%
+  height 220px
+  left 50%
+  overflow hidden
+  position absolute
+  top 50%
+  transform translate(-50%, -50%)
+  width 220px
+
+  &:after
+  &:before
+    bottom 0
+    content ''
+    left 0
+    position absolute
+    right 0
+    top 0
+    transition background $duration $duration
+
+  &:after
+    background var(--lighten)
+    mix-blend-mode lighten
+
+  &:before
+    background var(--darken)
+    mix-blend-mode darken
+
+.indicator
+  height 40px
+  left 50%
+  position absolute
+  top 50%
+  transform translate(-50%, -260px)
+  width 40px
+  path
+    fill #fff
+
+input
+  display none
+
+.chooser
+  position absolute
+  top 50%
+  left 50%
+  transform rotate(calc(((var(--selectedRotation, 0) * -1) - 90) * 1deg))
+  transition transform $duration ease
+
+label
+  background var(--bg)
+  border $border solid #fafafa
+  border-radius 100%
+  cursor pointer
+  height 44px
+  left 50%
+  position absolute
+  top 50%
+  transform translate(-50%, -50%) rotate(calc(var(--angle) * 1deg)) translateX(150px)
+  width 44px
+
+  &.darken
+    transform translate(-50%, -50%) rotate(calc(var(--angle) * 1deg)) translateX(200px)
+
+.clear
+  border-color red
+  border-width $border
+  overflow hidden
+
+  &:after
+    background #f22613
+    content ''
+    height $border
+    left 50%
+    position absolute
+    top 50%
+    transform translate(-50%, -50%) rotate(45deg)
+    width 100%
+
