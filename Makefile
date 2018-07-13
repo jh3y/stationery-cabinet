@@ -5,6 +5,7 @@ POSTCSS = $(MODULES)/postcss
 PUG = $(MODULES)/pug
 BS = $(MODULES)/browser-sync
 TSC = $(MODULES)/tsc
+ESLINT = $(MODULES)/eslint
 
 OUTPUT_DIR = public
 DEPLOY_DIR = tmp
@@ -45,6 +46,9 @@ checkForPen:
 ifndef PEN
 	$(error PEN not set!!!)
 endif
+
+lint: checkForPen ## lints source
+	$(ESLINT) $(SCRIPT_SRC)
 
 # Compile javascript using babel and copy to respective pen folder in public.
 compile-script: checkForPen ## compiles scripts
