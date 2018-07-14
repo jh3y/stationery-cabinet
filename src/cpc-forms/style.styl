@@ -1,0 +1,52 @@
+*
+  box-sizing border-box
+
+body
+  // background linear-gradient(45deg, #2eec71, rebeccapurple),
+  background radial-gradient(circle at 0 0, rgba(0, 255, 0, 0.45), rgba(0, 0, 255, 0.45)),
+    linear-gradient(45deg, rgba(0, 255, 255, 0.5), rgba(255, 0, 0, 0.5))
+  color            #fafafa
+  font-family 'Arial', sans-serif
+
+.signup__field
+  position absolute
+  left 50%
+  top 0
+  opacity 0
+  transform translate(-50%, 0) translate(0, 50vh)
+  transition transform .25s ease
+
+  &--active
+    transform translate(-50%, 0) translate(0, 50vh) translate(0, -25vh)
+    opacity 1
+
+  &--next
+    transform translate(-50%, 0) translate(0, 50vh) rotate(75deg) translate(0, -25vh) scale(0.5)
+    opacity 0.5
+
+  &--prev
+    transform translate(-50%, 0) translate(0, 50vh) rotate(-75deg) translate(0, -25vh) scale(0.5)
+    opacity 0.5
+
+
+.form
+  &--loading
+    & > *
+      display none
+    &:after
+      content ''
+      height 50px
+      width 50px
+      border-radius 100%
+      border-width 10px
+      position absolute
+      border-style solid
+      border-color white transparent
+      animation spin .5s infinite alternate-reverse ease
+      top 50%
+      left 50%
+      transform translate(-50%, -50%) rotate(0deg)
+
+@keyframes spin
+  to
+    transform translate(-50%, -50%) rotate(360deg)

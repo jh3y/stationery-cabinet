@@ -1,0 +1,59 @@
+<form class="form form--loading" action="post" method="post">
+  <h1>Sign Up</h1>
+  <div class="signup__field">
+    <label for="first_name" class="label">First name</label>
+    <input type="text" name="first_name" id="first_name" class="input-field">
+  </div>
+  <div class="signup__field">
+    <label for="last_name" class="label">Last name</label>
+    <input type="text" name="last_name" id="last_name" class="input-field">
+  </div>
+  <div class="signup__field">
+    <label for="email" class="label">Email address</label>
+    <input type="email" name="email" id="email" class="input-field" required>
+  </div>
+  <div class="signup__field">
+    <label for="password" class="label">Password</label>
+    <input type="password" name="password" id="password" class="input-field" required>
+  </div>
+  <div class="signup__field">
+    <label class="label" for="fav_color">What's your favorite color?</label>
+    <div class="select-field">
+      <select name="fav_color" id="fav_color" class="select-field__menu">
+        <option>Please select an option</option>
+        <option value="Red">Red</option>
+        <option value="Orange">Orange</option>
+        <option value="Yellow">Yellow</option>
+        <option value="Green">Green</option>
+        <option value="Blue">Blue</option>
+        <option value="Purple">Purple</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="signup__field">
+    <div class="label">What's your favorite Ninja Turtle?</div>
+
+    <input type="radio" value="leo" id="nt_leo" name="ninja_turtle">
+    <label for="nt_leo">Leo</label>
+
+    <input type="radio" value="leo" id="nt_mikey" name="ninja_turtle">
+    <label for="nt_mikey">Mikey</label>
+
+    <input type="radio" value="donnie" id="nt_donnie" name="ninja_turtle">
+    <label for="nt_donnie">Donnie</label>
+
+    <input type="radio" value="raph" id="nt_raph" name="ninja_turtle">
+    <label for="nt_raph">Raph</label>
+  </div>
+
+  <div class="signup__field">
+    <input type="checkbox" id="amazing" name="amazing">
+    <label for="amazing">I'm amazing</label>
+  </div>
+
+  <div class="signup__field">
+    <button class="button" type="submit">Signup</button>
+  </div>
+
+</form>
