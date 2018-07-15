@@ -16,6 +16,10 @@ body
   transform translate(-50%, 0) translate(0, 50vh)
   transition transform .25s ease
 
+  input
+    &:invalid
+      border 4px solid red
+
   &--active
     transform translate(-50%, 0) translate(0, 50vh) translate(0, -25vh)
     opacity 1
