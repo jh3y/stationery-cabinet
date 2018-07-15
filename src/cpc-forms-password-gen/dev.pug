@@ -1,0 +1,27 @@
+#app
+  dialog.modal(ref='MODAL')
+    .modal__content
+      .potential(v-if='potential.password')
+        .potential__password {{potential.password}}
+        .potential__score {{potential.strength}}
+      .options
+        label(style='gridColumn: 1/4') Length
+        label {{passLength}}
+        input(style="' gridColumn: '1/-1' '", type="range", min="8", max="100", v-model='passLength')
+        label(for="upper") A-Z
+        input(id="upper", type="checkbox", v-model='options.upper')
+        label(for="lower") a-z
+        input(id="lower", type="checkbox", v-model='options.lower')
+        label(for="numbers") 0-9
+        input(id="numbers", type="checkbox", v-model='options.numbers')
+        label(for="symbols") !"#$
+        input(id="symbols", type="checkbox", v-model='options.symbols')
+      .actions
+        button(v-on:click='getNewPassword')
+          svg(preserveAspectRatio="xMinYMin", viewBox="0 0 24 24")
+            path(d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z")
+        button(v-on:click='setPassword') Use
+  .signup__field
+    label(for="password") Password
+    input.input-field(type="password", name="password", id="password", required, v-model='password')
+    button(v-on:click='openModal') Generate
