@@ -37,6 +37,7 @@
     "no-unused-vars": 2,
     "no-console": 2,
     "no-restricted-syntax": 2,
-    "no-undef": 2
+    "no-undef": 2,
+    "react/react-in-jsx-scope": 0
   }
 }

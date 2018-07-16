@@ -1,4 +1,4 @@
-// @import url('https://fonts.googleapis.com/css?family=Roboto')
+@import url('https://fonts.googleapis.com/css?family=Roboto')
 
 *
   box-sizing border-box
@@ -6,7 +6,7 @@
 body
   background linear-gradient(45deg, rgba(0, 255, 255, 0.5), rgba(255, 0, 0, 0.5)),
     radial-gradient(circle at 0% 0%, rgba(0, 255, 0, 0.45), transparent 75%)
-  color            #fafafa
+  color #fff
   display flex
   align-items center
   justify-content center
@@ -15,12 +15,112 @@ body
   margin 0
   font-family 'Roboto', sans-serif
 
+h1
+  font-size 1.25rem
+  margin 0
+  max-width 100%
+  text-align center
+  word-wrap break-word
+  font-weight bold
+  transition color .25s
+
+.potential
+  height 120px
+  display flex
+  align-items center
+  justify-content center
+
+.actions
+  display flex
+  justify-content flex-end
+
+.options
+  padding 20px 0
+  display grid
+  grid-template-columns repeat(4, auto)
+  grid-template-rows repeat(4, 1fr)
+  width 50%
+  margin 0 auto
+  align-items center
+  justify-items center
+
+  label
+    text-align right
+    padding-right 4px
+
+    &:nth-of-type(1)
+      text-align left
+
+  label
+  input
+    color #111
+    margin 0
+    width 100%
+
 @keyframes fadeIn
   from
     opacity 0
 
-@keyframes moveGradient
-  0, 100%
-    transform translate(-50vw, -50vh)
-  50%
-    transform translate(25vw, 50vh)
+@keyframes bounceIn
+  from
+    transform translate(-50%, -50%) scale(0)
+
+.dialog
+  animation bounceIn .25s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+  position fixed
+  top 50%
+  left 50%
+  transform translate(-50%, -50%) scale(1)
+  margin 0
+  padding 0
+  border-radius 6px
+  transition background .25s, border-color .25s
+  max-width 400px
+  width 90vw
+
+  &::backdrop
+    animation fadeIn .25s
+    background rgba(152, 51, 153, 0.5)
+
+  &__content
+    background #fff
+    border-radius 6px
+    padding 20px
+    overflow hidden
+
+dialog ~ div
+  align-items center
+  justify-content center
+  display flex
+  flex-direction column
+
+  label
+    font-size 1.5rem
+    margin-bottom 10px
+
+  input
+    font-size 1.75rem
+    padding 6px 12px
+    border 0
+    border-radius 6px
+    margin-bottom 10px
+
+svg
+  height 30px
+  path
+    fill dodgerblue
+
+label[for]
+[type]
+  cursor pointer
+
+button
+  background dodgerblue
+  border 0
+  border-radius 6px
+  cursor pointer
+  color #fff
+  height 44px
+  padding 8px 12px
+  min-width 120px
+  font-size 14px
