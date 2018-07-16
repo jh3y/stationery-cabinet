@@ -146,6 +146,9 @@ class App extends Component {
       },
     })
   }
+  componentDidMount = () => {
+    window.dialogPolyfill.registerDialog(this.DIALOG)
+  }
   render = () => {
     const { getNewPassword, onOptionChange, setPassword, state } = this
     const { password, potential, options } = state
@@ -182,13 +185,17 @@ class App extends Component {
               ].map((o, i) => (
                 <Fragment key={`password-option--${i}`}>
                   <label htmlFor={o.id}>{o.label}</label>
-                  <input
-                    id={o.id}
-                    type="checkbox"
-                    name={o.id}
-                    onChange={onOptionChange}
-                    checked={options[o.id]}
-                  />
+                  <div className="check">
+                    <input
+                      id={o.id}
+                      type="checkbox"
+                      name={o.id}
+                      onChange={onOptionChange}
+                      checked={options[o.id]}
+                    />
+                    <span />
+                    <span />
+                  </div>
                 </Fragment>
               ))}
             </div>
