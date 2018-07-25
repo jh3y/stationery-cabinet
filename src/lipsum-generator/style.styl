@@ -1,0 +1,89 @@
+*
+  box-sizing border-box
+
+body
+  background linear-gradient(65deg, rgba(102, 51, 153, 0.5), rgba(246, 36, 89, 0.5)),
+    radial-gradient(circle at 0 0, rgba(0, 230, 64, 0.75), transparent)
+  display flex
+  font-family 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif
+  justify-content center
+  align-items center
+  margin 0
+  padding 0
+  overflow hidden
+  min-height 100vh
+
+#app
+  display flex
+  flex-direction column
+  align-items center
+
+h1
+  color #fafafa
+  font-size 2.25rem
+  text-align center
+
+textarea
+  border-radius 6px
+  border 0
+  width 500px
+  resize none
+  color #666
+  outline 0
+  padding 22px
+  height auto
+  font-size 20px
+  line-height 24px
+  max-width 90vw
+  max-height 75vh
+  text-align justify
+  margin-bottom 30px
+
+.actions
+  display flex
+  justify-content space-between
+  padding 20px
+
+.textarea-wrap
+  position relative
+
+  button
+    cursor pointer
+    position absolute
+    bottom 30px
+    right 0
+    background 0
+    border 0
+    height 44px
+    width 44px
+
+    &:hover
+      path
+        fill dodgerblue
+
+  svg
+    height 24px
+    width 24px
+
+    path
+      fill #ccc
+      transition fill .25s ease
+
+
+
+.action
+  background dodgerblue
+  cursor pointer
+  width 200px
+  font-size 16px
+  padding 12px
+  border-radius 6px
+  color #ffffff
+  border 0
+  height 50px
+
+  &:hover
+    background darken(dodgerblue, 20%)
+
+  &:active
+    background darken(dodgerblue, 40%)
