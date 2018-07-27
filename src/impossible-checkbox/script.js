@@ -88,9 +88,9 @@ class App extends Component {
       .to(this.BG, checkboxDuration, { backgroundColor: '#aaa' }, delay)
       .to(this.INDICATOR, checkboxDuration, { x: '0%' }, delay)
       .to(PAW, pawDuration, { scaleX: 0 }, delay)
-      .to(ARM, pawDuration, { scaleX: 1 }, delay + 0.1)
-      .to(ARM_WRAP, armDuration, { x: 0 }, delay + 0.1)
-      .to(BEAR, bearDuration, { y: '100%' }, delay + 0.1)
+      .to(ARM, pawDuration, { scaleX: 1 }, delay + pawDuration)
+      .to(ARM_WRAP, armDuration, { x: 0 }, delay + pawDuration)
+      .to(BEAR, bearDuration, { y: '100%' }, delay + pawDuration)
     return bearTL
   }
   showTimeline = () => {
