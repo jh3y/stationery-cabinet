@@ -1,0 +1,145 @@
+*
+*:before
+*:after
+  box-sizing border-box
+
+$imageId = 'https://source.unsplash.com/8mDJ31rIg08/300x300'
+
+body
+  background-color #86e2d5
+  min-height 100vh
+  overflow hidden
+
+input
+  cursor pointer
+  opacity 0
+  height 50vh
+  width 50vw
+  position fixed
+  transform translate3d(-50%, -50%, 0)
+  top 50%
+  left 50%
+  z-index 10
+
+  &:checked ~ table
+    transition transform .25s cubic-bezier(.76,.18,.95,.03)
+    transform translate(-50%, -50%) rotateX(-30deg) rotateY(40deg) translate3d(0, 0, -100px) rotateX(90deg)
+
+td
+th
+  background-color #4c2e10
+  background-image url('https://source.unsplash.com/8mDJ31rIg08/300x300')
+  background-size cover
+
+// Add a little darkness to some sides
+td:nth-of-type(1)
+  filter brightness(0.85)
+th:nth-of-type(2)
+  filter brightness(0.65)
+
+$height = 200px
+$width = 300px
+.table
+  position absolute
+  transform-style preserve-3d
+  transform-origin bottom
+  transition transform .25s ease
+  transform translate(-50%, -50%) rotateX(-30deg) rotateY(40deg) translate3d(0, 0, -100px)
+  top 50%
+  left 50%
+  height $height
+  width $width
+  display block
+
+  *
+    transform-style preserve-3d
+    position absolute
+    display block
+
+  tbody
+    height 100%
+    width 100%
+
+  &__top
+    height $height
+    width $width
+    top 75px
+    transform rotateX(90deg) translate3d(0, 0, 0)
+    transform-origin top center
+
+    th:nth-of-type(1)
+    th:nth-of-type(2)
+      height 100%
+      width 100%
+
+    th:nth-of-type(2)
+      transform translate3d(0, 0, -25px)
+
+    th:nth-of-type(3)
+    th:nth-of-type(5)
+      height 25px
+      width 100%
+
+    th:nth-of-type(4)
+    th:nth-of-type(6)
+      height 100%
+      width 25px
+
+    th:nth-of-type(3)
+      transform-origin top
+      transform rotateX(-90deg)
+
+    th:nth-of-type(4)
+      transform-origin right
+      transform rotateY(-90deg)
+      right 0
+
+    th:nth-of-type(5)
+      transform-origin bottom
+      bottom 0
+      transform rotateX(90deg)
+
+    th:nth-of-type(6)
+      transform-origin left
+      left 0
+      transform rotateY(90deg)
+
+
+  &__leg
+    height ($height / 2)
+    width 25px
+    bottom 0px
+
+    &:nth-of-type(1)
+    &:nth-of-type(3)
+      transform translate3d(0, 0, $height)
+
+    &:nth-of-type(2)
+    &:nth-of-type(4)
+      transform translate3d(0, 0, 25px)
+
+    &:nth-of-type(3)
+    &:nth-of-type(4)
+      left 275px
+
+    td
+      height 100%
+      width 100%
+
+    td:nth-of-type(2)
+      transform translate3d(0, 0, -25px)
+
+    td:nth-of-type(3)
+      transform-origin left
+      transform rotateY(90deg)
+
+    td:nth-of-type(4)
+      transform-origin right
+      transform rotateY(-90deg)
+
+    td:nth-of-type(5)
+      height 25px
+      width 25px
+      bottom 0
+      transform-origin bottom
+      transform rotateX(90deg)

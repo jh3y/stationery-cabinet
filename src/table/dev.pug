@@ -1,0 +1,21 @@
+mixin top()
+  tr.table__top
+    th
+    th
+    th
+    th
+    th
+    th
+mixin leg()
+  tr.table__leg
+    td
+    td
+    td
+    td
+    td
+input(type='checkbox')
+table.table
+  tbody
+    +top()
+  - for (let i = 0; i < 4; i++)
+    +leg()
