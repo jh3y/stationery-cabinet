@@ -1,0 +1,95 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+body
+  background linear-gradient(35deg, #111, #db0a5b)
+  display flex
+  align-items center
+  justify-content center
+  min-height 100vh
+
+/**
+  * Hourglass - pseudo
+  *
+  * @author jh3y - jheytompkins.com
+*/
+
+$color-one = #fff
+$color-two = #2eec71
+$duration = 2.5s
+$glass-thickness = 6px
+$size = 50px
+$base-translate = translate($size, 0) rotate(135deg) translateY($size * 0.7)
+
+@keyframes hour-glass-one
+  0%
+    background-image linear-gradient(45deg, transparent, transparent 50%, $color-two 50%, $color-two)
+    background-position -40% 0
+    transform $base-translate rotate(0deg)
+  40%
+    background-image linear-gradient(45deg, transparent, transparent 50%, $color-two 50%, $color-two)
+    background-position 100% 0
+    transform $base-translate rotate(0deg)
+  50%
+    background-image linear-gradient(45deg, transparent, transparent 50%, $color-two 50%, $color-two)
+    background-position 100% 0
+    transform $base-translate rotate(180deg)
+  50.001%
+    background-image linear-gradient(45deg, $color-two, $color-two 50%, transparent 50%, transparent)
+    background-position 0% 40%
+    transform $base-translate rotate(180deg)
+  90%
+    background-image linear-gradient(45deg, $color-two, $color-two 50%, transparent 50%, transparent)
+    background-position 0% -50%
+    transform $base-translate rotate(180deg)
+  100%
+    background-image linear-gradient(45deg, $color-two, $color-two 50%, transparent 50%, transparent)
+    background-position 0 -50%
+    transform $base-translate rotate(360deg)
+
+@keyframes hour-glass-two
+  0%
+    background-image linear-gradient(45deg, $color-two, $color-two 50%, transparent 50%, transparent)
+    background-position 0 40%
+    transform $base-translate rotate(180deg)
+  40%
+    background-image linear-gradient(45deg, $color-two, $color-two 50%, transparent 50%, transparent)
+    background-position 0 -50%
+    transform $base-translate rotate(180deg)
+  50%
+    background-image linear-gradient(45deg, $color-two, $color-two 50%, transparent 50%, transparent)
+    background-position 0 -50%
+    transform $base-translate rotate(360deg)
+  50.001%
+    background-image linear-gradient(45deg, transparent, transparent 50%, $color-two 50%, $color-two)
+    background-position -40% 0
+    transform $base-translate rotate(360deg)
+  90%
+    background-image linear-gradient(45deg, transparent, transparent 50%, $color-two 50%, $color-two)
+    background-position 100% 0
+    transform $base-translate rotate(360deg)
+  100%
+    background-image linear-gradient(45deg, transparent, transparent 50%, $color-two 50%, $color-two)
+    background-position 100% 0
+    transform $base-translate rotate(540deg)
+
+body:after
+body:before
+  background-size 300% 300%
+  background-repeat no-repeat
+  border $glass-thickness solid $color-one
+  border-radius 100% 100% 100% 0
+  content ''
+  display block
+  height $size
+  width $size
+  position absolute
+  transform-origin bottom left
+
+body:after
+  animation hour-glass-one $duration infinite linear
+
+body:before
+  animation hour-glass-two $duration infinite linear both
