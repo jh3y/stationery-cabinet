@@ -1,0 +1,30 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+body
+  background #eee
+  margin 0
+  padding 0
+
+canvas
+  background #663399
+
+@keyframes float
+  0%
+    transform translate(0, 0) scale(0)
+  5%
+    transform translate(5vw, 0) scale(1)
+  95%
+    transform translate(95vw, 0) scale(1)
+  100%
+    transform translate(100vw, 0) scale(0)
+.blob
+  height 50px
+  width 50px
+  background red
+  animation float 60s linear
+  position absolute
+  left 0
+  top 200px

@@ -1,38 +1,35 @@
+const { moment, Vue } = window
 /**
-  * debounce function
-  * use inDebounce to maintain internal reference of timeout to clear
-*/
+ * debounce function
+ * use inDebounce to maintain internal reference of timeout to clear
+ */
 const debounce = (func, delay) => {
   let inDebounce
   return function() {
     const context = this
     const args = arguments
     clearTimeout(inDebounce)
-    inDebounce = setTimeout(() =>
-      func.apply(context, args)
-    , delay)
+    inDebounce = setTimeout(() => func.apply(context, args), delay)
   }
 }
 
 /**
-  * throttle function that catches and triggers last invocation
-  * use time to see if there is a last invocation
-*/
+ * throttle function that catches and triggers last invocation
+ * use time to see if there is a last invocation
+ */
 const throttle = (func, limit) => {
-  let inThrottle
   let lastFunc
   let lastRan
   return function() {
     const context = this
     const args = arguments
-    if (!inThrottle) {
+    if (!lastRan) {
       func.apply(context, args)
       lastRan = Date.now()
-      inThrottle = true
     } else {
       clearTimeout(lastFunc)
       lastFunc = setTimeout(function() {
-        if ((Date.now() - lastRan) >= limit) {
+        if (Date.now() - lastRan >= limit) {
           func.apply(context, args)
           lastRan = Date.now()
         }
@@ -41,7 +38,7 @@ const throttle = (func, limit) => {
   }
 }
 
-const app = new Vue({
+new Vue({
   el: '#app',
   data: {
     timeFormat: 'h:mm:ss A',
@@ -50,19 +47,22 @@ const app = new Vue({
   },
   methods: {
     log: function(type) {
-      const newDate = new Date()
       this.logs.unshift({
         type,
-        time: moment().format(this.timeFormat)
+        time: moment().format(this.timeFormat),
       })
     },
-    debounceCall: debounce(function() { this.log('DEBOUNCE') }, 3000),
-    throttleCall: throttle(function() { this.log('THROTTLE') }, 1000),
+    debounceCall: debounce(function() {
+      this.log('DEBOUNCE')
+    }, 2000),
+    throttleCall: throttle(function() {
+      this.log('THROTTLE')
+    }, 3000),
     updateTime: function() {
       this.time = moment().format(this.timeFormat)
-    }
+    },
   },
   mounted: function() {
     setInterval(this.updateTime, 1000)
-  }
+  },
 })
