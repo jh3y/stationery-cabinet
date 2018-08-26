@@ -206,6 +206,7 @@ class App extends Component {
     time: TIME_BASE,
     debounceRate: 2000,
     throttleRate: 1000,
+    showInfo: true,
   }
   showBlob = isDebounce => {
     return () => {
@@ -254,13 +255,44 @@ class App extends Component {
     newState[e.target.name] = e.target.value
     this.setState(newState, () => this.updateHandlers(e.target.value))
   }
+  discardIntro = () => {
+    this.setState({ showInfo: false })
+  }
   render = () => {
     const {
+      discardIntro,
       onOptionChange,
-      state: { debounceRate, throttleRate, time },
+      state: { debounceRate, showInfo, throttleRate, time },
     } = this
     return (
       <Fragment>
+        {showInfo && (
+          <div className="show-info">
+            <h2>What is happening here?</h2>
+            <p>
+              This demo is visualising when throttled and debounced functions
+              are fired.
+            </p>
+            <p>
+              We are throttling and debouncing <code>mousemove</code> and{' '}
+              <code>touchmove</code> event handling on <code>window</code>. Move
+              your mouse or finger around to start throttling and debouncing an
+              event handler. Throttled function calls are represented by a red
+              diamond. A debounced function call is represented by a green
+              circle.
+            </p>
+            <p>
+              You can read about throttling and debouncing in this post:{' '}
+              <a
+                rel="noopener noreferrer"
+                target="_blank"
+                href="https://codeburst.io/throttling-and-debouncing-in-javascript-b01cad5c8edf">
+                Throttling and Debouncing in JavaScript
+              </a>
+            </p>
+            <button onClick={discardIntro}>Got it! 👍</button>
+          </div>
+        )}
         <div className="timeline__container">
           <div className="time">{time}</div>
           <Timeline ref={timeline => (this.TIMELINE = timeline)} />

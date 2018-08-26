@@ -19,6 +19,22 @@ canvas
   width 100vw
   position absolute
 
+button
+  $color = #26a65b
+  padding 8px 14px
+  border-radius 4px
+  border 0
+  color #fafafa
+  cursor pointer
+  background $color
+  outline-color transparent
+
+  &:hover
+    background darken($color, 20%)
+
+  &:active
+    background darken($color, 30%)
+
 .time
   border-left 2px dashed #fafafa
   position absolute
@@ -28,6 +44,27 @@ canvas
   right 0
   top 0
   bottom 0
+
+.show-info
+  animation scaleIn .5s ease both
+  width 85vw
+  background #fafafa
+  padding 20px
+  border-radius 6px
+  max-height 85vh
+  max-width 400px
+  overflow auto
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%) scale(1)
+  z-index 2
+  code
+    color #e74c3c
+
+@keyframes scaleIn
+  from
+    transform translate(-50%, -50%) scale(0)
 
 .actions
   color #fafafa
