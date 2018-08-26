@@ -4,13 +4,14 @@ html
     meta(http-equiv="X-UA-Compatible", content="IE=edge")
     title Some cool pen
     meta(name="viewport", content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1.0")
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css')
     link(rel='stylesheet', href='style.css')
   body
     block content
       include dev.pug
     script(crossorigin, src="https://unpkg.com/react@16.4.0/umd/react.development.js")
     script(crossorigin, src="https://unpkg.com/react-dom@16.4.0/umd/react-dom.development.js")
-    script(src="https://unpkg.com/styled-components/dist/styled-components.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/moment.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.1/prop-types.min.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.7.1/pixi.min.js")
     script(src="script.js")
