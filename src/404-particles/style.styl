@@ -1,13 +1,37 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto')
+
 *
   box-sizing border-box
 
+body
+  font-family 'Roboto', sans-serif
+  min-height 100vh
+  background linear-gradient(35deg, #a1eeeb 30%, #4331ec 85%)
+  background linear-gradient(35deg, #f8d60f 20%, #fc5c5c 85%)
+  background linear-gradient(35deg, #04c4d4 20%, #fc5c5c 85%)
+
 canvas
-.content
-  height 100vh
+  height 30vh
   left 0
   position absolute
   top 0
   width 100vw
 
+canvas
+  top 50%
+  transform translate(0, -50%)
+
 .content
+  align-items center
+  color #fafafa
+  display flex
+  height 100vh
+  justify-content center
   z-index 2
+
+  h1
+    font-size 4rem
+    text-shadow 5px 5px 15px #000
+
+    @media(min-width 768px)
+      font-size 10rem
