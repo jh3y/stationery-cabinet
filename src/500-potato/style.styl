@@ -1,0 +1,139 @@
+*
+*:before
+*:after
+  box-sizing border-box
+
+body
+  align-items center
+  background-color rebeccapurple
+  display flex
+  justify-content center
+  margin 0
+  padding 0
+  height 100vh
+  width 100vw
+
+
+$ear-color = #f981b3
+$body-color = #dd9b75
+$hat-color = #000
+$shoe-color = #4b68f4
+$nose-color = #ff7a1c
+
+.mr
+  position relative
+  height 250px
+  width 190px
+
+  &__head
+    background $body-color
+    border-radius 50% 50% 50% 50% / 60% 60% 40% 40%
+    height 100%
+    width 100%
+
+  &__hat
+    position absolute
+    top -10%
+    left 50%
+    transform translate(-75%, 0) rotate(-30deg)
+
+  &__ear
+    position absolute
+
+    &--left
+      right 98%
+      top 50%
+      transform rotate(-10deg)
+
+    &--right
+      left 95%
+      transform rotate(165deg)
+      top 20%
+
+  &__shoe
+    position absolute
+    top 95%
+
+    &--left
+      left 10%
+
+    &--right
+      right 10%
+
+  &__nose
+    background orange
+
+
+
+
+.hat
+  width 60%
+  height 45%
+
+  &__bowl
+    background $hat-color
+    border-radius 100%
+    clip-path inset( 0 0 50% 0)
+    height 100%
+    width 100%
+
+  &__brim
+    border-radius 0 0 100% 100%
+    position absolute
+    bottom 40%
+    height 25%
+    width 110%
+    left 50%
+    background $hat-color
+    transform translate(-50%, 0)
+
+.ear
+  height 30%
+  width 25%
+  background $ear-color
+  position absolute
+  border-radius 130% 60% 60% 130% / 100% 100% 100% 100%
+
+  &:before
+    content ''
+    height 80%
+    width 80%
+    box-shadow inset 0 0 20px darken($ear-color, 30%)
+    position absolute
+    border-radius 130% 60% 60% 130% / 100% 100% 100% 100%
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+
+  &__inner
+    height 25%
+    width 30%
+    position absolute
+    top 50%
+    right 2px
+    background $ear-color
+    border-radius 100% 0 0 100%
+    transform translate(0, -50%)
+    box-shadow -5px 0 10px darken($ear-color, 30%)
+
+.shoe
+  width 35%
+  height 35%
+
+  &__body
+    background $shoe-color
+    border-radius 100%
+    clip-path inset( 0 0 50% 0)
+    height 100%
+    width 100%
+
+  &__sole
+    border-radius 50% 50% 100% 100%
+    position absolute
+    bottom 40%
+    height 30%
+    width 104%
+    left 50%
+    background $shoe-color
+    transform translate(-50%, 0)
+
