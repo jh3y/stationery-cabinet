@@ -1,0 +1,36 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+
+.test-card
+  height 100vh
+  display grid
+  width 100vw
+  grid-template-columns repeat(7, 1fr)
+  grid-template-rows 65vh 10vh 25vh
+
+  div
+    background var(--bg, #fff)
+
+    &:nth-child(15)
+      background dodgerblue
+      grid-column 1 / -1
+      display grid
+      grid-template-columns repeat(7, 1fr)
+
+      & > div:nth-child(1)
+        display grid
+        grid-column 1 / 6
+        grid-template-columns repeat(4, 1fr)
+
+
+
+      & > div:nth-child(2)
+        display grid
+        grid-column 6 / -1
+        grid-template-columns repeat(6, 1fr)
+
+        div:nth-child(4)
+          grid-column 4 / -1

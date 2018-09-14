@@ -1,0 +1,17 @@
+- const colors = ['#bfbfbf', '#fcfc3a', '#7efcfc', '#86ef34', '#ff28ed', '#ff1415', '#0e0ef2', '#0e0ef2', '#1a1a1a', '#ff28ed', '#1a1a1a', '#7efcfc', '#1a1a1a', '#bfbfbf', '#163060', '#ffffff', '#330075', '#1a1a1a', '#0b0b0b', '#1a1a1a', '#232323', '#1a1a1a']
+.test-card
+  - let i = 0
+  - while (i < 15)
+    div(style=`--bg: ${colors[i]}`)
+      - if (i === 14)
+        div
+          div(style=`--bg: ${colors[14]}`)
+          div(style=`--bg: ${colors[15]}`)
+          div(style=`--bg: ${colors[16]}`)
+          div(style=`--bg: ${colors[17]}`)
+        div
+          div(style=`--bg: ${colors[18]}`)
+          div(style=`--bg: ${colors[19]}`)
+          div(style=`--bg: ${colors[20]}`)
+          div(style=`--bg: ${colors[21]}`)
+    - i++
