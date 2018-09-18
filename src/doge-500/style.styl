@@ -1,7 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Muli:900')
+
 *
 *:after
 *:before
   box-sizing border-box
+
+
+body
+  font-family 'Muli', sans-serif
+  margin 0
+  padding 0
 
 
 .test-card
@@ -34,3 +42,104 @@
 
         div:nth-child(4)
           grid-column 4 / -1
+
+.messages
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  display grid
+  font-size 1rem
+  grid-template-columns 1fr 150px 1fr
+
+  @media(min-width 768px)
+    font-size 2rem
+    grid-template-columns 1fr 250px 1fr
+
+  & > div
+    animation scaleIn .15s cubic-bezier(0.175, 0.885, 0.32, 1.275) both
+    color var(--color)
+    padding 1rem
+    text-align center
+
+    @keyframes scaleIn
+      from
+        transform scale(0) translate(0, 100%)
+
+    &:nth-child(1)
+      animation-delay 1s
+
+    &:nth-child(3)
+      animation-delay 1.5s
+
+    &:nth-child(4)
+      animation-delay 2s
+
+    &:nth-child(7)
+      animation-delay 1.75s
+
+    &:nth-child(9)
+      animation-delay 1.25s
+
+
+
+$lg-width = 250px
+.doge
+  width 100%
+
+  &__wrap
+    animation springIn .25s .75s cubic-bezier(0.175, 0.885, 0.32, 1.275) both
+    bottom -40px
+    left 50%
+    position absolute
+    transform translate(-50%, 0)
+    width 130px
+
+    @media(min-width 768px)
+      bottom -80px
+      width 230px
+
+  &__body
+    // border-radius 100% 100% 100% 100% / 50% 50% 50% 50%
+    width 90%
+    height 100%
+    background #ffe7b5
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, 0)
+    z-index -1
+
+  @keyframes springIn
+    from
+      transform translate(-50%, 100%)
+
+
+  &__container
+    border-radius 0 0 150px 150px
+    height 180px
+    width 150px
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    overflow hidden
+
+    @media(min-width 768px)
+      border-radius 0 0 250px 250px
+      height 300px
+      width 250px
+
+  &__badge
+    background black
+    border-radius 100%
+    position absolute
+    bottom 0
+    left 50%
+    transform translate(-50%, 0)
+    height 150px
+    width 150px
+
+    @media(min-width 768px)
+      height 250px
+      width 250px
