@@ -1,0 +1,21 @@
+<svg
+   class='staff'
+   preserveAspectRatio='xMinYMin'
+   viewBox="0 0 150 1000"
+  >
+  <g
+     transform="translate(-175,-52.362282)"
+     id="layer1">
+    <g
+       id="g4382">
+      <path
+         style="fill:#9f6c44;fill-opacity:1;stroke:none;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 175,52.36216 150,0 -16.25561,323.43052 -46.52466,247.19733 17.43274,278.0269 -13.9574,151.34529 -38.00449,0 -46.52466,-488.50898 51.00897,-228.41929 C 213.5517,240.97738 195.88522,146.34563 175,52.36216 Z"
+         id="rect4377" />
+      <path
+         id="path4380"
+         d="m 175,52.36216 37.89238,10e-7 54.37219,320.067289 -51.00897,246.07626 27.52243,331.83855 21.91704,102.01794 -38.00449,0 -46.52466,-488.50898 51.00897,-228.41929 C 213.5517,240.97738 195.88522,146.34563 175,52.36216 Z"
+         style="fill:#4b3a21;fill-opacity:1;stroke:none;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+  </g>
+</svg>
