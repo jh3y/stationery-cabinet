@@ -1,0 +1,4 @@
+.page
+  - const effects = ['random', 'enter', 'swapsies', 'fading', 'flipping', 'slide', 'scale', 'turn', 'fold', 'bulge', 'far', 'teeth']
+  each val in effects
+    .text(data-scroll='out', data-splitting='', class=`text--${val}`)= `${val.charAt(0).toUpperCase()}${val.substr(1)}`

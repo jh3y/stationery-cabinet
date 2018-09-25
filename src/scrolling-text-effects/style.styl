@@ -1,0 +1,101 @@
+*
+  box-sizing border-box
+
+body
+  margin 0
+  padding 0
+
+.page
+  height 100vh
+  overflow auto
+
+.text
+  align-items center
+  display flex
+  height 100vh
+  justify-content center
+  width 100vw
+
+  &:nth-child(odd)
+    background dodgerblue
+  &:nth-child(even)
+    background rebeccapurple
+
+  // Splitting related code
+  .char
+    color #fff
+    display inline-block
+    font-size 5rem
+    animation-delay calc(var(--char-index) * .1s)
+    transition all .25s calc(var(--char-index) * .1s)
+
+.text
+
+  &--enter
+    [data-scroll='out'] .char
+      opacity 0
+      transform translate(0, -150%)
+
+    .char
+      opacity 1
+      transform translate(0, 0)
+
+  &--random
+    random()
+      return floor(math(0, 'random')*(250 - 25 + 1) + 25)
+
+    [data-scroll='out'] .char
+      for $i in (1..6)
+        &:nth-of-type({$i})
+          $x = random()
+          $y = random()
+          if ($x % 2 eq 1)
+            $x = $x * -1
+          if ($y % 2 eq 1)
+            $y = $y * -1
+
+          transform translateX($x * 1%) translateY($y * 1%)
+
+  &--swapsies
+    [data-scroll='in'] .char
+    [data-scroll='out'] .char
+      for $i in (1..8)
+        &:nth-of-type({$i})
+          if ($i % 2 eq 0)
+            transform translateX(100%)
+          else
+            transform translateX(-100%)
+
+    [data-scroll='in'] .char
+      animation-duration .5s
+      animation-fill-mode forwards
+      for $i in (1..8)
+        &:nth-of-type({$i})
+          if ($i % 2 eq 0)
+            animation-name swap-left
+          else
+            animation-name swap-right
+
+    @keyframes swap-right
+      25%
+        transform translateX(-100%) translateY(-100%)
+      75%
+        transform translateX(0) translateY(-100%)
+      100%
+        transform translateX(0) translateY(0)
+
+    @keyframes swap-left
+      25%
+        transform translateX(100%) translateY(100%)
+      75%
+        transform translateX(0) translateY(100%)
+      100%
+        transform translateX(0) translateY(0)
+
+  &--fading
+    [data-scroll='out'] .char
+      opacity 0
+
+  &--flipping
+    [data-scroll='out'] .char
+      transform rotateY(180deg)
