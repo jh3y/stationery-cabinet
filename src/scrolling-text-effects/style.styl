@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:700')
+
 *
   box-sizing border-box
 
 body
+  font-family 'Lato', sans-serif
   margin 0
   padding 0
 
@@ -11,26 +14,35 @@ body
 
 .text
   align-items center
+  color #fff
   display flex
+  font-size 3rem
   height 100vh
   justify-content center
+  overflow hidden
+  text-align center
   width 100vw
 
-  &:nth-child(odd)
-    background dodgerblue
-  &:nth-child(even)
-    background rebeccapurple
+  @media(min-width 768px)
+    font-size 5rem
+
+  &:nth-child(n)
+    background #7e05d7
+  &:nth-child(2n)
+    background #f21e56
+  &:nth-child(3n)
+    background #bd04a9
 
   // Splitting related code
   .char
-    color #fff
     display inline-block
-    font-size 5rem
-    animation-delay calc(var(--char-index) * .1s)
-    transition all .25s calc(var(--char-index) * .1s)
+    animation-delay calc(.25s + var(--char-index) * .1s)
+    transition all .25s calc(.25s + var(--char-index) * .1s)
+
+random(min, max)
+  return floor(math(0, 'random')*(max - min + 1)) + min
 
 .text
-
   &--enter
     [data-scroll='out'] .char
       opacity 0
@@ -99,3 +111,190 @@ body
   &--flipping
     [data-scroll='out'] .char
       transform rotateY(180deg)
+
+  &--slide
+    .char
+      for $i in (5..1)
+        &:nth-of-type({$i})
+          transition-delay (5 - $i) * .1s
+    [data-scroll='out'] .char
+      opacity 0
+      transform translate(-300%, 0) skewX(20deg)
+
+  &--karaoke
+    .char
+      color rgba(255, 255, 255, 0.15)
+      transition-duration .1s
+
+      &:after
+        color #fff
+        visibility visible
+
+    [data-scroll='in'] .char:after
+      clip-path inset(0 0 0 0)
+
+    [data-scroll='out'] .char:after
+      clip-path inset(0 100% 0 0)
+
+  &--filling
+    .char
+      color rgba(255, 255, 255, 0.15)
+
+      &:after
+        color #fff
+        visibility visible
+
+    [data-scroll='in'] .char:after
+      clip-path inset(0 0 0 0)
+
+    [data-scroll='out'] .char:after
+      clip-path inset(100% 0 0 0)
+
+  &--blocks
+    [data-scroll='out'] .char
+      visibility hidden
+
+    [data-scroll='in']
+      overflow hidden
+      position relative
+
+      .char
+        transition-delay .5s
+
+      &:after
+        content ''
+        height 100%
+        width 100%
+        position absolute
+        top 0
+        right 0
+        bottom 0
+        left 0
+        background #fff
+        animation block .5s .25s both
+
+
+        @keyframes block
+          0%
+            transform translate(-110%, 0)
+          45%, 55%
+            transform translate(0, 0)
+          100%
+            transform translate(110%, 0)
+
+  &--scaling
+    [data-scroll='out'] .char
+      transform scale(0)
+
+  &--turning
+    [data-scroll='out'] .char
+      transform rotateY(90deg)
+
+  &--folding
+    [data-scroll='out'] .char
+      transform rotateX(90deg)
+      transform-origin bottom
+
+  &--bulge
+    [data-scroll='in'] .char
+      animation-name bulge
+      animation-duration .25s
+
+      @keyframes bulge
+        50%
+          transform scale(1.5)
+
+  &--perspective
+    perspective 1000px
+    .char
+      transition transform .25s calc(.25s + var(--char-index) * .1s), opacity .05s calc(.25s + var(--char-index) * .1s)
+    [data-scroll='out'] .char
+      opacity 0
+      transform translate3d(-25px, -20px, -800px)
+
+  &--zipping
+    .char
+      transition transform .25s calc(.25s + var(--char-index) * .1s), opacity .05s calc(.25s + var(--char-index) * .1s)
+    [data-scroll='out'] .char
+      opacity 0
+      for $i in (1..7)
+        &:nth-of-type({$i})
+          if ($i % 2 eq 0)
+            transform translate(0, -100%)
+          else
+            transform translate(0, 100%)
+
+  &--spinning
+    [data-scroll='out'] .char
+      transform rotateY(-360deg)
+
+  &--tumbling
+    .char
+      for $i in (8..1)
+        &:nth-of-type({$i})
+          transition-delay (8 - $i) * .1s
+    [data-scroll='out'] .char
+      opacity 0
+      transform translate(-300%, -50%) rotate(1080deg) scale(0)
+
+  &--bubbling
+    .char
+      for $i in (1..8)
+        &:nth-of-type({$i})
+          transition-delay (random(8, 1) * .1s)
+      transition-timing-function cubic-bezier(0.75, -2, .75, 2)
+    [data-scroll='out'] .char
+      transform scale(0.5)
+
+  &--swinging
+    .char
+      for $i in (1..8)
+        &:nth-of-type({$i})
+          transform-origin ((8 - $i) * 100%) -100%
+          transition-delay (8 - $i) * .1s
+    [data-scroll='out'] .char
+      opacity 0
+      transform rotate(90deg)
+
+
+  &--rolling
+    .char
+      transition transform 1s, opacity .2s
+      for $i in (1..8)
+        &:nth-of-type({$i})
+          transition-delay (8 - $i) * .1s
+    [data-scroll='out'] .char
+      opacity 0
+      transform translate(-500%, 0) scale(0) rotate(-1440deg)
+
+  &--blowing
+    .char
+      animation-duration 1s
+      animation-fill-mode both
+      transform-origin left bottom
+
+      for $i in (1..7)
+        &:nth-of-type({$i})
+          animation-delay $i * .025s
+    [data-scroll='in'] .char
+      animation-name blowing
+
+    @keyframes blowing
+      50%, 60%, 70%
+        transform skewX(-35deg)
+      55%, 65%, 75%
+        transform skewX(-40deg)
+
+  &--meeting
+    .char
+      for $i in (1..7)
+        &:nth-of-type({$i})
+          transition-delay (8 - $i) * .1s
+          if ($i % 2 eq 0)
+            transform-origin top right
+          else
+            transform-origin bottom left
+
+    [data-scroll='out'] .char
+      transform rotate(180deg)
+
