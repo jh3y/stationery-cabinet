@@ -1,5 +1,5 @@
 .page
   .text Scroll for cascading text effects!
-  - const effects = ['random', 'enter', 'swapsies', 'fading', 'flipping', 'slide', 'karaoke', 'spinning', 'filling', 'blocks', 'scaling', 'turning', 'folding', 'bulge', 'tumbling', 'rolling', 'perspective', 'zipping', 'swinging', 'bubbling', 'blowing', 'meeting']
+  - const effects = ['random', 'enter', 'swapsies', 'fading', 'flipping', 'slide', 'karaoke', 'spinning', 'filling', 'blocks', 'scaling', 'turning', 'folding', 'bulge', 'tumbling', 'rolling', 'perspective', 'zipping', 'swinging', 'bubbling', 'blowing', 'meeting', 'conveyor']
   each val in effects
     .text(data-scroll='out', data-splitting='', class=`text--${val}`)= `${val.charAt(0).toUpperCase()}${val.substr(1)}`

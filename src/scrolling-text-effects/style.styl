@@ -71,22 +71,18 @@ random(min, max)
   &--swapsies
     [data-scroll='in'] .char
     [data-scroll='out'] .char
-      for $i in (1..8)
-        &:nth-of-type({$i})
-          if ($i % 2 eq 0)
-            transform translateX(100%)
-          else
-            transform translateX(-100%)
+      &:nth-of-type(odd)
+        transform translateX(100%)
+      &:nth-of-type(even)
+        transform translateX(-100%)
 
     [data-scroll='in'] .char
       animation-duration .5s
       animation-fill-mode forwards
-      for $i in (1..8)
-        &:nth-of-type({$i})
-          if ($i % 2 eq 0)
-            animation-name swap-left
-          else
-            animation-name swap-right
+      &:nth-of-type(odd)
+        animation-name swap-left
+      &:nth-of-type(even)
+        animation-name swap-right
 
     @keyframes swap-right
       25%
@@ -114,9 +110,8 @@ random(min, max)
 
   &--slide
     .char
-      for $i in (5..1)
-        &:nth-of-type({$i})
-          transition-delay (5 - $i) * .1s
+      transition-delay calc((var(--char-total) - var(--char-index)) * .1s)
+
     [data-scroll='out'] .char
       opacity 0
       transform translate(-300%, 0) skewX(20deg)
@@ -217,12 +212,10 @@ random(min, max)
       transition transform .25s calc(.25s + var(--char-index) * .1s), opacity .05s calc(.25s + var(--char-index) * .1s)
     [data-scroll='out'] .char
       opacity 0
-      for $i in (1..7)
-        &:nth-of-type({$i})
-          if ($i % 2 eq 0)
-            transform translate(0, -100%)
-          else
-            transform translate(0, 100%)
+      &:nth-of-type(odd)
+        transform translate(0, -100%)
+      &:nth-of-type(even)
+        transform translate(0, 100%)
 
   &--spinning
     [data-scroll='out'] .char
@@ -230,9 +223,7 @@ random(min, max)
 
   &--tumbling
     .char
-      for $i in (8..1)
-        &:nth-of-type({$i})
-          transition-delay (8 - $i) * .1s
+      transition-delay calc((var(--char-total) - var(--char-index)) * .1s)
     [data-scroll='out'] .char
       opacity 0
       transform translate(-300%, -50%) rotate(1080deg) scale(0)
@@ -248,10 +239,9 @@ random(min, max)
 
   &--swinging
     .char
-      for $i in (1..8)
-        &:nth-of-type({$i})
-          transform-origin ((8 - $i) * 100%) -100%
-          transition-delay (8 - $i) * .1s
+      transform-origin calc((var(--char-total) - var(--char-index)) * 100%) -100%
+      transition-delay calc((var(--char-total) - var(--char-index)) * .1s)
+
     [data-scroll='out'] .char
       opacity 0
       transform rotate(90deg)
@@ -260,9 +250,8 @@ random(min, max)
   &--rolling
     .char
       transition transform 1s, opacity .2s
-      for $i in (1..8)
-        &:nth-of-type({$i})
-          transition-delay (8 - $i) * .1s
+      transition-delay calc((var(--char-total) - var(--char-index)) * .1s)
+
     [data-scroll='out'] .char
       opacity 0
       transform translate(-500%, 0) scale(0) rotate(-1440deg)
@@ -272,10 +261,8 @@ random(min, max)
       animation-duration 1s
       animation-fill-mode both
       transform-origin left bottom
+      animation-delay calc(var(--char-index) * .025s)
 
-      for $i in (1..7)
-        &:nth-of-type({$i})
-          animation-delay $i * .025s
     [data-scroll='in'] .char
       animation-name blowing
 
@@ -287,14 +274,29 @@ random(min, max)
 
   &--meeting
     .char
-      for $i in (1..7)
-        &:nth-of-type({$i})
-          transition-delay (8 - $i) * .1s
-          if ($i % 2 eq 0)
-            transform-origin top right
-          else
-            transform-origin bottom left
+      transition-delay calc((var(--char-total) - var(--char-index)) * .1s)
+      &:nth-of-type(even)
+        transform-origin top right
+      &:nth-of-type(odd)
+        transform-origin bottom left
 
     [data-scroll='out'] .char
       transform rotate(180deg)
 
+
+  &--conveyor
+    [data-scroll='in'] .char
+      transform-origin left bottom
+      animation convey 1s both linear
+      animation-delay calc((var(--char-total) - var(--char-index)) * .15s)
+      transition none
+
+      @keyframes convey
+        0%
+          transform translate(calc((var(--char-total) - (var(--char-total) - var(--char-index))) * -100%), 0) rotate(-180deg) translate(calc((var(--char-total) - var(--char-index)) * -100%), 0)
+        40%
+          transform translate(calc((var(--char-total) - (var(--char-total) - var(--char-index))) * -100%), 0) rotate(-180deg) translate(0, 0)
+        50%
+          transform translate(calc((var(--char-total) - (var(--char-total) - var(--char-index))) * -100%), 0) rotate(0deg) translate(0, 0)
+        100%
+          transform translate(0, 0) rotate(0deg) translate(0, 0)
