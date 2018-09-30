@@ -1,0 +1,79 @@
+*
+  box-sizing border-box
+
+$primary = #d5aaff
+
+:root
+  --size 20
+
+body
+  align-items center
+  background $primary
+  display flex
+  justify-content center
+  min-height 100vh
+
+.cube
+  height calc(var(--size) * 1vh)
+  position relative
+  transform-style preserve-3d
+  width calc(var(--size) * 1vh)
+  transform rotateY(-45deg)
+
+  &__wrapper
+    transform-style preserve-3d
+    transform translate(-50%, -50%) rotateX(-35deg)
+    position absolute
+    top 50%
+    left 50%
+
+    &:nth-of-type(2)
+      display none
+
+      .cube__panel--left
+        transform rotateX(-270deg)
+
+      .cube__panel--right
+        transform rotateY(270deg)
+
+      .cube__panel--top
+        transform rotateY(-270deg)
+
+
+  &__panel
+    background $primary
+    height 100%
+    width 100%
+    border 10px solid black
+    position absolute
+
+    &--left
+      transform-origin bottom
+
+    &--top
+      transform-origin left
+
+    &--right
+      transform-origin right
+
+    &--fake
+      display none
+
+
+    &-wrap
+      height 100%
+      width 100%
+      position absolute
+      transform-style preserve-3d
+
+      &--left
+        transform-origin bottom
+        transform rotateX(0deg) translate3d(0, 0, calc((var(--size) / 2) * 1vh)) rotateX(-0deg)
+
+      &--top
+        transform-origin left
+        transform rotateX(90deg) translate3d(0, 0, calc((var(--size) / 2) * 1vh)) rotateY(-0deg)
+
+      &--right
+        transform-origin right
+        transform rotateY(90deg) translate3d(calc((var(--size) / 2) * 1vh), 0, 0) rotateY(0deg)
