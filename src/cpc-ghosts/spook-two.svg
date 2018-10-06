@@ -1,0 +1,75 @@
+<svg
+  class='ghost__image-body'
+   viewBox="0 0 100 130"
+   preserveAspectRatio='xMinYMin'>
+  <g
+     transform="translate(0,-922.36216)"
+     id="layer1">
+    <path
+      class='ghost__path'
+       id="path4149"
+       d="m 87.104126,985.99028 c 3e-6,18.29482 23.310064,51.08502 7.251515,64.80642 -4.508673,3.8525 -10.735588,-6.2194 -16.533188,-5.808 -4.489803,0.3185 -7.636172,5.7797 -12.112396,6.2655 -5.152434,0.559 -9.879869,-4.3961 -15.050164,-4.066 -4.493939,0.2869 -8.076853,5.0762 -12.578149,5.1722 -4.822196,0.1028 -8.903453,-4.2416 -13.677721,-4.9617 -6.489307,-0.9788 -15.1515178,5.9929 -19.6454524,0.9765 -14.2159436,-15.8688 8.0865824,-46.7737 6.6754904,-65.00824 -1.7280703,-22.33068 -1.210964,-29.61106 6.765096,-41.60022 7.976059,-11.98915 18.994883,-19.4046 31.165941,-19.4046 12.171058,0 23.189882,7.41545 31.165941,19.4046 7.97606,11.98916 6.573083,25.92871 6.573087,44.22354 z"
+       style="fill-opacity:1;stroke:none;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <circle
+    class='ghost__eyes'
+       r="4.9010091"
+       cy="957.77557"
+       cx="41.527569"
+       id="path4152"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <circle
+    class='ghost__eyes'
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="circle4156"
+       cx="64.691391"
+       cy="955.00385"
+       r="8.6626558" />
+    <path
+      class='ghost__mouth'
+       id="path4158"
+       d="m 74.836967,972.6979 c -3e-6,11.63211 -14.670414,22.44764 -25.440609,22.44764 -10.770196,0 -19.303184,-0.71848 -19.303187,-12.35059 3e-6,-11.63211 8.852855,-13.5886 19.62305,-13.5886 10.770195,0 25.120743,-8.14052 25.120746,3.49155 z"
+       style="fill-opacity:1;stroke:none;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <g
+    class='ghost__eyes ghost__eyes--busted'
+       transform="matrix(1.5105663,0,0,1.5105663,35.905034,-496.71423)"
+       id="g4167">
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect4162"
+         width="2"
+         height="15"
+         x="692.03461"
+         y="658.58441"
+         transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,0,0)" />
+      <rect
+         transform="matrix(-0.70710678,0.70710678,-0.70710678,-0.70710678,0,0)"
+         y="-700.53461"
+         x="665.08441"
+         height="15"
+         width="2"
+         id="rect4165"
+         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+    <g
+      class='ghost__eyes ghost__eyes--busted'
+       transform="translate(22.470903,-3.2666991)"
+       id="g4171">
+      <rect
+         transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,0,0)"
+         y="658.58441"
+         x="692.03461"
+         height="15"
+         width="2"
+         id="rect4173"
+         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect4175"
+         width="2"
+         height="15"
+         x="665.08441"
+         y="-700.53461"
+         transform="matrix(-0.70710678,0.70710678,-0.70710678,-0.70710678,0,0)" />
+    </g>
+  </g>
+</svg>

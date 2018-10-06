@@ -1,0 +1,274 @@
+@import url('https://fonts.googleapis.com/css?family=Lato')
+
+*
+  box-sizing border-box
+
+$bg = linear-gradient(35deg, #333, #000)
+$grass = #1e824c
+
+body
+  align-items center
+  background-color darken($grass, 75%)
+  color #fff
+  counter-reset score
+  display flex
+  font-family 'Lato', sans-serif
+  justify-content center
+  min-height 100vh
+
+.game
+  display grid
+  grid-gap 20px
+  grid-template-columns repeat(var(--cols), 1fr)
+  grid-template-rows repeat(var(--rows), 1fr)
+  height 250px
+  position relative
+  width 250px
+
+  // Make the game a little bigger on the bigger viewport
+  @media(min-width 768px)
+    grid-gap 25px
+    height 400px
+    width 400px
+
+.ghost-pen
+  position relative
+  transform translate(0, 50%)
+
+
+.ghost
+.ghost__image
+  animation bob calc(var(--speed) * 1s) infinite ease
+  animation-delay calc(var(--delay) * 1s)
+  height 45px
+  transform translate(0, 100%) scale(1)
+  width 30px
+
+  @media(min-width 768px)
+    height 75px
+    width 60px
+
+.ghost
+  cursor pointer
+  position absolute
+  z-index 2
+  opacity 0
+
+  // SVG related styling for the ghosts
+  &__path
+    fill var(--color)
+
+  &__mouth
+    fill pink
+
+  &__eyes--busted
+    display none
+
+  &__image-body
+    // needs explicit no animation so that reset resets it
+    animation none
+    height 100%
+    width 100%
+
+  &__container
+    align-items center
+    display flex
+    height 100%
+    justify-content center
+    position absolute
+    width 100%
+    z-index 3
+
+    &:after
+      background #6c7a89
+      border-radius 50% 50% 0 0
+      box-shadow 10px 0 0 #2e3131
+      bottom 0
+      color #2e3131
+      content 'R.I.P'
+      text-align center
+      line-height 60px
+      left 0
+      position absolute
+      right 0
+      top 0
+      transform translate(0, 50%)
+      z-index 3
+
+      @media(min-width 768px)
+        font-size 1.5rem
+        line-height 80px
+
+    // Contained containers are hidden by default.
+    // This trick allows us to have many levels per a slot.
+    .ghost__container
+      display none
+
+  // When a ghost is checked, increment the score by the declared
+  // var score and float that ghost out of there
+  &:checked
+    animation busted 1.75s .25s both
+    counter-increment score var(--score)
+
+    // At the same time, our image needs to get out of there
+    ~ .ghost__image
+      animation busted 1.75s .25s both
+
+      // Use the inner SVG to animate the wiggle
+      .ghost__image-body
+        animation wiggle 1.75s .25s
+        // And cross out the ghost eyes by showing and hiding SVG elements
+        .ghost__eyes
+          display none
+        .ghost__eyes--busted
+          display block
+
+    // When it gets checked, bring in the next one if there is one.
+    // The trick here is to do a stepped animation on the container
+    // of the duration of the delay so there's no overlap whilst the
+    // checked ghost floats out of view
+    ~ .ghost__container
+      display flex
+      animation fadeIn calc(var(--delay) * 1s) both steps(2)
+
+
+.menu
+  opacity 0
+
+  &:checked
+  &:checked ~ .title-screen
+    display none
+
+  // This starts the game timer
+  &:checked ~ .end
+    animation slideUp 15s both
+
+    .credit-ghost
+      animation float 2s 15s both
+
+      svg
+        animation wiggle 2s 15s
+.end
+.title-screen
+.backdrop
+  position fixed
+  top 0
+  right 0
+  bottom 0
+  left 0
+
+.title-screen
+.end
+  display flex
+  align-items center
+  justify-content center
+  flex-direction column
+  z-index 5
+  background $bg
+
+.backdrop
+  animation flash 10s infinite linear
+  @keyframes flash
+    71%, 73%, 75%, 77%, 79%
+      background rgba(255, 255, 204, .5)
+    0%, 70%, 72%, 74%, 76%, 78%, 80%, 100%
+      background transparent
+
+
+.menu
+  height 100vh
+  width 100vw
+  position fixed
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  z-index 6
+
+.end
+  background $bg
+  transform translate(0, 100%)
+
+.credit-ghost
+  position absolute
+  left 75%
+  top 100%
+  animation none
+
+.title
+  letter-spacing 4px
+  font-size 1.75rem
+  margin 0
+  text-transform uppercase
+
+  @media(min-width 768px)
+    font-size 3rem
+
+.title-screen__content
+  display grid
+  grid-gap 0 1rem
+  align-content center
+  align-items center
+  grid-template-columns auto 1fr
+  grid-template-rows repeat(3, auto)
+  max-width 90vw
+
+.description
+  grid-column 2
+  text-align justify
+  max-width 210px
+
+button
+  cursor pointer
+  grid-column 2
+  background white
+  color black
+  text-transform uppercase
+  letter-spacing 4px
+  padding 8px 12px
+
+.credit-ghost
+.title-ghost
+  height 65px
+  width 50px
+  .ghost__path
+    fill white
+
+.score
+  margin-bottom 2rem
+
+  &:after
+    content counter(score)
+
+
+
+// All the different keyframes required
+@keyframes bob
+  50%
+    transform translate(0, -100%) scale(1.25)
+
+@keyframes slideUp
+  95%
+    transform translate(0, 100%)
+  100%
+    transform translate(0, 0)
+
+@keyframes float
+  to
+    transform translate(0, -125vh)
+
+@keyframes busted
+  0%
+    transform translate(0, -100%) scale(1.25)
+  100%
+    opacity 0
+    transform translate(0, -100vh) scale(0)
+
+@keyframes wiggle
+  25%, 75%
+    transform translate(-50%, 0)
+  50%
+    transform translate(50%, 0)
+
+@keyframes fadeIn
+  from
+    opacity 0
