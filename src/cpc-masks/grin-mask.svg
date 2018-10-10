@@ -1,0 +1,24 @@
+<svg
+   class='mask mask--grin'
+   preserveAspectRatio="xMinYMin"
+   viewBox="0 0 300.6918 319.20682">
+<g
+     id="layer9">
+    <path
+       id="path5536"
+       d="m 147.58008,26.732422 c -74.901464,0 -127.830075,34.707122 -127.83008,120.773438 -2.7e-5,86.06635 52.928594,149.3418 127.83008,149.3418 74.90149,0 133.02348,-63.27545 133.02344,-149.3418 0,-86.066316 -58.12196,-120.773438 -133.02344,-120.773438 z M 92.908203,115.94922 a 26.921295,26.921295 0 0 1 26.921877,26.92187 26.921295,26.921295 0 0 1 -26.921877,26.92188 26.921295,26.921295 0 0 1 -26.921875,-26.92188 26.921295,26.921295 0 0 1 26.921875,-26.92187 z m 105.435547,0 a 26.921295,26.921295 0 0 1 26.92187,26.92187 26.921295,26.921295 0 0 1 -26.92187,26.92188 26.921295,26.921295 0 0 1 -26.92187,-26.92188 26.921295,26.921295 0 0 1 26.92187,-26.92187 z"
+       style="display:inline;fill:#ececec;fill-opacity:1;stroke:#000000;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       id="path5558"
+       d="m 268.22266,147.23438 0.23828,0 a 119.25443,120.02216 0 0 0 -0.0977,-0.79297 119.25443,120.02216 0 0 1 -0.14062,0.79297 z"
+       style="fill:#ffffff;fill-opacity:0.27164181;stroke:#000000;stroke-width:6.2329998;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       id="path5556"
+       d="m 31.902344,147.23438 a 119.25443,120.02216 0 0 0 -0.980469,14.07617 119.25443,120.02216 0 0 0 119.253905,120.02148 119.25443,120.02216 0 0 0 119.25586,-120.02148 119.25443,120.02216 0 0 0 -0.9707,-14.07617 l -0.23828,0 A 119.25443,120.02216 0 0 1 150.17578,251.33203 119.25443,120.02216 0 0 1 32.146484,147.23438 l -0.24414,0 z"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:6.2329998;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       id="path5547"
+       d="m 31.902344,147.23438 0.24414,0 a 119.25443,120.02216 0 0 1 -0.15625,-1.05665 119.25443,120.02216 0 0 0 -0.08789,1.05665 z"
+       style="fill:#ffffff;fill-opacity:0.27164181;stroke:#000000;stroke-width:6.2329998;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
+</svg>

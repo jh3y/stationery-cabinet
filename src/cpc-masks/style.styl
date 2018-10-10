@@ -1,0 +1,103 @@
+*
+  box-sizing border-box
+
+:root
+  --selection 0
+
+body
+  align-items center
+  background-color #372357
+  display flex
+  height 100vh
+  justify-content center
+  overflow hidden
+  width 100vw
+
+.btn
+  align-items center
+  justify-content center
+  border 0
+  cursor pointer
+  display flex
+  height 44px
+  border-radius 100%
+  padding 0
+  opacity .5
+  transition opacity .25s ease
+  width 44px
+
+  &:hover
+    opacity 1
+
+  svg
+    height 44px
+    width 44px
+
+  &--prev
+    transform rotate(180deg)
+
+.cover
+  background radial-gradient(circle at 50% 50%, transparent, transparent 15%, #111 45%, #111)
+  height 100vh
+  left 0
+  position fixed
+  top 0
+  width 100vw
+
+  @media(min-width 768px)
+    background radial-gradient(circle at 50% 50%, transparent, transparent 5%, #111 20%, #111)
+
+.wrap
+  height 212.5px
+  width 200px
+  position relative
+
+.actions
+  align-items center
+  display flex
+  justify-content space-between
+  max-width 300px
+  position absolute
+  width 100%
+  z-index 2
+
+.bear
+  position absolute
+
+$radius = 200%
+$no-of-masks = 8
+
+.mask-wrap
+  height 100%
+  position relative
+  transform translate(0, $radius) rotate(calc(var(--selection) * calc((360 / 8) * -1deg)))
+  transition transform .25s cubic-bezier(.76,-0.29,.45,1.36)
+  width 100%
+
+.mask
+  bottom 0
+  left 0
+  position absolute
+  right 0
+  top 0
+
+  for $mask in (1..$no-of-masks)
+    &:nth-of-type({$mask})
+      transform rotate(((360 / $no-of-masks) * ($mask - 1)) * 1deg) translate(0, -($radius))
+
+
+.eye
+  transform-origin 0 150px
+  animation blink 4s infinite linear
+
+@keyframes blink
+  9%
+    transform scaleY(1)
+  10%
+    transform scaleY(0)
+  11%
+    transform scaleY(1)
+  12%
+    transform scaleY(0)
+  13%
+    transform scaleY(1)
