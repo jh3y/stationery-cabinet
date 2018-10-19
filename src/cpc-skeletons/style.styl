@@ -1,0 +1,100 @@
+*
+  box-sizing border-box
+
+:root
+  --pos 0
+
+body
+  background-color #e74c3c
+  display flex
+  align-items center
+  justify-content center
+  overflow auto
+  padding 2rem
+  position fixed
+  min-height 100vh
+  width 100vw
+
+  @media(min-width 768px)
+    position static
+
+
+$height = 550px
+$width = 300px
+$mobile = 0.75
+$boardHeight = $height * 0.20
+$boardWidth = $width * 0.85
+
+.bear
+  height $height * $mobile
+  width $width * $mobile
+  background-position center
+
+  @media(min-width 768px)
+    height $height
+    width $width
+
+.bear
+.xray
+  background-size ($width * $mobile) ($height * $mobile)
+
+  @media(min-width 768px)
+    background-size $width $height
+
+.exam
+  cursor move
+  cursor -webkit-grab
+  position relative
+  display flex
+  justify-content center
+
+.xray
+  background-color #111
+  background-image url(https://jh3y-doodles.netlify.com/bear-skeleton.svg)
+  height ($boardHeight * $mobile)
+  width ($boardWidth * $mobile)
+  position absolute
+  top calc(var(--pos) * 1px)
+  left 50%
+  background-position center calc(var(--pos) * -1px)
+  transform translate(-50%, 0)
+
+  @media(min-width 768px)
+    height $boardHeight
+    width $boardWidth
+
+  &__frame
+    border-radius 6px
+    height (($boardHeight * $mobile) + 10px)
+    width (($boardWidth * $mobile) + 10px)
+    position absolute
+    top calc((var(--pos) * 1px) - 5px)
+    left 50%
+    transform translate(-50%, 0)
+    border 5px solid silver
+
+    @media(min-width 768px)
+      height ($boardHeight + 10px)
+      width ($boardWidth + 10px)
+
+    &:after
+    &:before
+      border-radius 10px 0 0 10px
+      content ''
+      position absolute
+      transform translate(-100%, 0)
+      height 20%
+      width 10px
+      left -5px
+
+    &:before
+      background #2eec7a
+      top 20%
+
+    &:after
+      background #ffcb05
+      top 50%
+
+
+.bear
+  background-image url(https://jh3y-doodles.netlify.com/bear-ready-for-xray.svg)
