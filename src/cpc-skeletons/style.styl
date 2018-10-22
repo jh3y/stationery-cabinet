@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Lato')
+
 *
   box-sizing border-box
 
@@ -14,6 +16,7 @@ body
   position fixed
   min-height 100vh
   width 100vw
+  font-family 'Lato', sans-serif
 
   @media(min-width 768px)
     position static
@@ -47,6 +50,20 @@ $boardWidth = $width * 0.85
   position relative
   display flex
   justify-content center
+
+.instruction
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%) rotate(-90deg) translate(0, (($width * $mobile) * -0.6))
+  font-weight bold
+  font-size 1.5rem
+  text-align center
+  width 100vh
+  color darken(#e74c3c, 20%)
+
+  @media(min-width 768px)
+    transform translate(-50%, -50%) rotate(-90deg) translate(0, (($width) * -0.6))
 
 .xray
   background-color #111
