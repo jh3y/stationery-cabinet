@@ -1,6 +1,7 @@
 // START PIE CHART RELATED FUNCTIONAL STYLES
 .pie
   height calc(var(--height, 200) * 1px)
+  -webkit-clip-path circle(40% at 50% 50%)
   clip-path circle(40% at 50% 50%)
   position relative
   width calc(var(--width, 200) * 1px)
@@ -9,6 +10,7 @@
     --a calc(var(--over180, 0) * -100%)
     --b calc((1 + var(--over180, 0)) * 100%)
     clip-path polygon(var(--a) var(--a), var(--b) var(--a), var(--b) var(--b), var(--a) var(--b))
+    -webkit-clip-path polygon(var(--a) var(--a), var(--b) var(--a), var(--b) var(--b), var(--a) var(--b))
     height 100%
     position absolute
     transform translate(0, -50%) rotate(90deg) rotate(calc(var(--offset, 0) * 1deg))
@@ -26,7 +28,7 @@
       transform translate(0, 100%) rotate(calc(var(--value, 0) * 1deg))
       transform-origin 50% 0%
       width 100%
-    
+
     // apply negatively to after and set opacity based on isBig
     &:after
       --angle calc((var(--value) - (var(--value) - 180)))
@@ -52,6 +54,13 @@ label
 
 input
   margin-bottom 1.5rem
+  height 44px
 
 .pie
   background #ffcb05
+
+.actions
+  display flex
+  flex-direction column
+  padding 1rem
+  z-index 99
