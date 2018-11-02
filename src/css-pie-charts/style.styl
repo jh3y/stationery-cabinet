@@ -1,0 +1,75 @@
+*
+  box-sizing border-box
+
+body
+  align-items center
+  background #111
+  display flex
+  flex-direction column
+  justify-content center
+  min-height 100vh
+
+// Something like this to generate the required clip paths
+getPosition(radius, angle)
+  xPos = (radius * cos(angle * (PI / 180)) * 1%) + 50%
+  yPos = (radius * sin(angle * (PI / 180)) * 1%) + 50%
+  (xPos yPos)
+
+.pie
+  height 200px
+  position relative
+  clip-path circle(40% at 50% 50%)
+  width 200px
+
+  &__segment
+    height 100%
+    position absolute
+    width 100%
+    transform rotate(-90deg) rotate(calc(var(--start) * 1deg))
+
+    for $angle in (1..45)
+      &[data-value=\'{$angle}\']
+        clip-path polygon(50% 50%, 100% 50%, getPosition(200, $angle))
+    for $angle in (46..90)
+      &[data-value=\'{$angle}\']
+        clip-path polygon(50% 50%, 100% 50%, 100% 100%, getPosition(200, $angle))
+    for $angle in (91..135)
+      &[data-value=\'{$angle}\']
+        clip-path polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%, getPosition(200, $angle))
+    for $angle in (136..180)
+      &[data-value=\'{$angle}\']
+        clip-path polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%, 0 100%, getPosition(200, $angle))
+    for $angle in (181..225)
+      &[data-value=\'{$angle}\']
+        clip-path polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%, 0 100%, 0 50%, getPosition(200, $angle))
+    for $angle in (226..270)
+      &[data-value=\'{$angle}\']
+        clip-path polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%, 0 100%, 0 50%, 0 0, getPosition(200, $angle))
+    for $angle in (271..315)
+      &[data-value=\'{$angle}\']
+        clip-path polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%, 0 100%, 0 50%, 0 0, 50% 0, getPosition(200, $angle))
+    for $angle in (316..360)
+      &[data-value=\'{$angle}\']
+        clip-path polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%, 0 100%, 0 50%, 0 0, 50% 0, 100% 0, getPosition(200, $angle))
+
+.pie__segment
+  animation fadeIn .25s both
+  &:nth-of-type(1)
+    animation-delay .1s
+    background dodgerblue
+  &:nth-of-type(2)
+    animation-delay .2s
+    background rebeccapurple
+  &:nth-of-type(3)
+    animation-delay .3s
+    background #2eec71
+  &:nth-of-type(4)
+    animation-delay .4s
+    background #e74c3c
+  &:nth-of-type(5)
+    animation-delay .5s
+    background orange
+
+@keyframes fadeIn
+  from
+    opacity 0

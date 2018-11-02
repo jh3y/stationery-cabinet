@@ -1,0 +1,57 @@
+// START PIE CHART RELATED FUNCTIONAL STYLES
+.pie
+  height calc(var(--height, 200) * 1px)
+  clip-path circle(40% at 50% 50%)
+  position relative
+  width calc(var(--width, 200) * 1px)
+
+  &__segment
+    --a calc(var(--over180, 0) * -100%)
+    --b calc((1 + var(--over180, 0)) * 100%)
+    clip-path polygon(var(--a) var(--a), var(--b) var(--a), var(--b) var(--b), var(--a) var(--b))
+    height 100%
+    position absolute
+    transform translate(0, -50%) rotate(90deg) rotate(calc(var(--offset, 0) * 1deg))
+    transform-origin 50% 100%
+    width 100%
+
+    &:after
+    &:before
+      background var(--bg)
+      content ''
+      height 100%
+      left 0
+      position absolute
+      top 0
+      transform translate(0, 100%) rotate(calc(var(--value, 0) * 1deg))
+      transform-origin 50% 0%
+      width 100%
+    
+    // apply negatively to after and set opacity based on isBig
+    &:after
+      --angle calc((var(--value) - (var(--value) - 180)))
+      opacity var(--over180, 0)
+      transform translate(0, 100%) rotate(calc(var(--angle) * -1deg))
+// END PIE CHART STYLES
+*
+  box-sizing border-box
+
+body
+  align-items center
+  background #111
+  color #fafafa
+  display flex
+  flex-direction column
+  font-family 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif
+  justify-content center
+  min-height 100vh
+
+label
+  font-size 1rem
+  margin-bottom .5rem
+
+input
+  margin-bottom 1.5rem
+
+.pie
+  background #ffcb05

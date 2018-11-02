@@ -1,0 +1,9 @@
+.pie
+  .pie__segment(style='--offset: 0; --value: 40; --bg: #db0a5b;')
+  .pie__segment(style='--offset: 40; --value: 30; --bg: #22a7f0;')
+  .pie__segment(style='--offset: 70; --value: 90; --bg: #2ecc71;')
+  .pie__segment(style='--offset: 160; --value: 200; --over180: 1; --bg: #4d05e8;')
+label Offset
+input(type='range', step='1', name='offset', min='0', max='360', value='160')
+label Value
+input(type='range', step='1', name='value', min='0', max='360', value='200')
