@@ -1,0 +1,14 @@
+html
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    title Some cool pen
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css')
+    link(rel='stylesheet', href='https://unpkg.com/splitting/dist/splitting.css')
+    link(rel='stylesheet', href='style.css')
+  body
+    block content
+      include dev.pug
+    script(src="https://unpkg.com/splitting/dist/splitting.js")
+    script(src="https://unpkg.com/scroll-out/dist/scroll-out.min.js")
+    script(src='script.js')

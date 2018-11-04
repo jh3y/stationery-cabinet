@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:700')
+
+:root
+  --font-size 3rem
+
+@media(min-width 768px)
+  :root
+    --font-size 5rem
+
+*
+  box-sizing border-box
+
+body
+  font-family 'Lato', sans-serif
+  margin 0
+  padding 0
+
+.page
+  height 100vh
+  overflow auto
+.char
+  text-transform uppercase
+.text__container
+  align-items center
+  color #fff
+  display flex
+  font-size var(--font-size)
+  height 100vh
+  justify-content center
+  overflow hidden
+  font-weight 300
+  text-align center
+  width 100vw
+
+  &:nth-child(n)
+    background #4d05e8
+  &:nth-child(2n)
+    background #00b5cc
+  &:nth-child(3n)
+    background #446cb3
+
+.cascade
+  display grid
+  grid-auto-rows auto
+
+  .word
+    --chars 7
+    --center 3
+    display grid
+    grid-template-columns repeat(var(--chars), auto)
+
+  &[data-scroll="in"] .char
+    animation-delay calc(.25s + (var(--word-index) * .1s))
+    animation-name bloat
+    animation-timing-function ease-out
+    animation-duration .5s
+
+  .char
+    --offset calc((var(--char-index) - (var(--chars) * var(--word-index))) - var(--center))
+    transform translate(0, 0)
+
+  @keyframes bloat
+    0%, 100%
+      transform translate(0, 0)
+    50%
+      transform translate(calc(var(--offset) * 150%), 0)
+
+.slots
+  height calc(var(--font-size) * 3)
+  overflow hidden
+
+  .char
+    text-shadow 0 calc(var(--font-size) * -1) 0 #fff,
+      0 calc(var(--font-size) * -2) 0 #fff,
+      0 calc(var(--font-size) * -3) 0 #fff,
+      0 calc(var(--font-size) * 1) 0 #fff,
+      0 calc(var(--font-size) * 2) 0 #fff,
+      0 calc(var(--font-size) * 3) 0 #fff
+
+  .char
+    &:nth-of-type(even)
+      animation scrollDown .5s .25s infinite linear
+
+    &:nth-of-type(odd)
+      animation scrollUp .5s .25s infinite linear
+
+    @keyframes scrollUp
+      to
+        transform translate(0, calc(var(--font-size) * -1))
+
+    @keyframes scrollDown
+      to
+        transform translate(0, calc(var(--font-size) * 1))
+
+.carousel
+  height var(--font-size)
+  width var(--font-size)
+  .word
+    position relative
+    transform-style preserve-3d
+    transform rotateX(-15deg) rotateY(0)
+    height 100%
+    width 100%
+  .char
+    top 50%
+    left 50%
+    position absolute
+    transform translate(-50%, -50%) rotateY(calc(((360 / var(--char-total)) * var(--char-index)) * 1deg)) translate(var(--font-size), 0)
+
+  .word[data-scroll="in"]
+    animation spin 2s .25s infinite linear
+
+  @keyframes spin
+    to
+      transform rotateX(-15deg) rotateY(-360deg)
+
+.roulette
+  position relative
+  .word[data-scroll='in']
+    animation rotate 2.5s .25s infinite linear
+  .word
+    display block
+    height 100%
+    width 100%
+    height var(--font-size)
+    width var(--font-size)
+  .char
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) rotate(calc((var(--char-index) * (360 / var(--char-total)) * 1deg))) translate(0, -150%)
+  @keyframes rotate
+    to
+      transform rotate(-360deg)
+
+.hinged
+  [data-scroll='in'] .char
+    transform rotate(0deg)
+  .char
+    transform-origin left bottom
+    transform rotate(-180deg)
+    transition transform .25s calc(var(--char-index) * .1s)
+
+.mexiwave
+  [data-scroll='in'] .char
+    animation wave .25s calc(var(--char-index) * .1s) ease
+
+  @keyframes wave
+    50%
+      transform translate(0, -50%)
+
+
