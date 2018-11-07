@@ -1,8 +1,11 @@
 const pie = document.querySelector('.pie')
-const selected = pie.children[pie.children.length - 1]
-const updateSegment = ({ target: { name, value } }) => {
-  selected.style.setProperty(`--${name}`, value)
-  if (name === 'value')
-    selected.style.setProperty('--over180', value > 180 ? 1 : 0)
+const actions = document.querySelector('.actions')
+const segments = pie.children
+
+const updateSegment = e => {
+  const idx = [...actions.children].indexOf(e.target)
+  const key = idx % 2 === 0 ? 'offset' : 'value'
+  const toUpdate = segments[Math.floor(idx / 2) - 1]
+  toUpdate.style.setProperty(`--${key}`, e.target.value)
 }
 window.addEventListener('input', updateSegment)
