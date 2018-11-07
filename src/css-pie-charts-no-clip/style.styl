@@ -1,40 +1,41 @@
 // START PIE CHART RELATED FUNCTIONAL STYLES
 .pie
-  height calc(var(--height, 200) * 1px)
-  -webkit-clip-path circle(40% at 50% 50%)
-  clip-path circle(40% at 50% 50%)
+  border-radius 100%
+  height calc(var(--size, 200) * 1px)
+  overflow hidden
   position relative
-  width calc(var(--width, 200) * 1px)
+  width calc(var(--size, 200) * 1px)
 
   &__segment
-    --a calc(var(--over180, 0) * -100%)
-    --b calc((1 + var(--over180, 0)) * 100%)
-    clip-path polygon(var(--a) var(--a), var(--b) var(--a), var(--b) var(--b), var(--a) var(--b))
+    --a calc(var(--over50, 0) * -100%)
+    --b calc((1 + var(--over50, 0)) * 100%)
+    --degrees calc((var(--offset, 0) / 100) * 360)
     -webkit-clip-path polygon(var(--a) var(--a), var(--b) var(--a), var(--b) var(--b), var(--a) var(--b))
+    clip-path polygon(var(--a) var(--a), var(--b) var(--a), var(--b) var(--b), var(--a) var(--b))
     height 100%
     position absolute
-    transform translate(0, -50%) rotate(90deg) rotate(calc(var(--offset, 0) * 1deg))
+    transform translate(0, -50%) rotate(90deg) rotate(calc(var(--degrees) * 1deg))
     transform-origin 50% 100%
     width 100%
+    z-index calc(1 + var(--over50))
 
     &:after
     &:before
-      background var(--bg)
+      background var(--bg, #e74c3c)
       content ''
       height 100%
-      left 0
       position absolute
-      top 0
-      transform translate(0, 100%) rotate(calc(var(--value, 0) * 1deg))
-      transform-origin 50% 0%
       width 100%
 
-    // apply negatively to after and set opacity based on isBig
+    &:before
+      --degrees calc((var(--value, 45) / 100) * 360)
+      transform translate(0, 100%) rotate(calc(var(--degrees) * 1deg))
+      transform-origin 50% 0%
+
     &:after
-      --angle calc((var(--value) - (var(--value) - 180)))
-      opacity var(--over180, 0)
-      transform translate(0, 100%) rotate(calc(var(--angle) * -1deg))
+      opacity var(--over50, 0)
 // END PIE CHART STYLES
+
 *
   box-sizing border-box
 
@@ -44,6 +45,7 @@ body
   color #fafafa
   display flex
   flex-direction column
+  padding 1rem
   font-family 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif
   justify-content center
   min-height 100vh
@@ -53,14 +55,10 @@ label
   margin-bottom .5rem
 
 input
-  margin-bottom 1.5rem
-  height 44px
-
-.pie
-  background #ffcb05
+  min-width 80px
 
 .actions
-  display flex
-  flex-direction column
-  padding 1rem
+  display grid
+  grid-gap 4px
+  grid-template-columns auto auto
   z-index 99
