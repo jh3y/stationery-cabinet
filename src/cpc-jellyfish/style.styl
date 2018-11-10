@@ -1,0 +1,19 @@
+*
+  box-sizing border-box
+
+body
+  align-items center
+  display flex
+  justify-content center
+  min-height 100vh
+
+.box
+  height 200px
+  width 200px
+  background red
+  transform-origin bottom
+  transform translate(calc(var(--x, 0) * 1px), calc(var(--y, 0) * 1%)) skewX(calc(var(--skewX, 0) * 1deg))
+
+@keyframes bounce
+  100%
+    transform skewX(0deg)
