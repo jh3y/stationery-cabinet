@@ -109,9 +109,14 @@ const onDrag = d => {
   const {
     velocity: { velocityX, velocityY },
   } = d
-  const scale = (0.25 / 1) * velocityY
+  const scale =
+    velocityY < 0
+      ? Math.abs((0.25 / 1) * velocityY)
+      : (0.25 / 1) * velocityY * -1
   const skewX =
-    velocityX < 0 ? Math.max(-50, 20 * velocityX) : Math.min(20 * velocityX, 50)
+    velocityX < 0
+      ? Math.abs(Math.max(-50, 20 * velocityX))
+      : Math.min(20 * velocityX, 50) * -1
   TweenMax.to(jel, 0.1, { skewX, scaleY: 1 + scale, scaleX: 1 - scale })
 }
 const onDragEnd = () => {
