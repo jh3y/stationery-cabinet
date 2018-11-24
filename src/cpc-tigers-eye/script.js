@@ -97,9 +97,13 @@ class EyeOfTheTiger extends Component {
     image: undefined,
   }
   getImage = async () => {
-    const newImage = await fetch('https://source.unsplash.com/300x300/?tiger')
-    if (newImage.url !== this.state.image) return newImage.url
-    return this.getImage()
+    try {
+      const newImage = await fetch('https://source.unsplash.com/300x300/?tiger')
+      if (newImage.url !== this.state.image) return newImage.url
+      return this.getImage()
+    } catch (e) {
+      return this.state.image
+    }
   }
   blink = () => {
     this.setState({ fetching: true }, async () => {
