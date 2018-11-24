@@ -1,0 +1,38 @@
+*
+  box-sizing border-box
+
+body
+  align-items center
+  background-color #29f1c3
+  display flex
+  justify-content center
+  min-height 100vh
+
+$duration = .5s
+$timing = ease-out
+.tiger
+  height 200px
+  animation jump $duration infinite $timing
+
+  @media(min-width 768px) and (min-height 600px)
+    height 350px
+
+  &__tail
+    d path("m 122.0852,915.81508 1e-5,8.07175 -1e-5,8.07175 -0.67264,10.08968 0.67264,8.7444 1.00897,9.08072 10e-6,7.73542 1.34528,9.75337 -0.33632,14.12556")
+    stroke #ff6600
+    stroke-width 5
+    stroke-linecap round
+    stroke-linejoin round
+    animation bounce $duration infinite $timing
+
+@keyframes jump
+  0%, 100%
+    transform translateY(-45%)
+  50%
+    transform translateY(0)
+
+@keyframes bounce
+  0%, 100%
+    d path("m 122.0852,915.81508 1e-5,8.07175 -1e-5,8.07175 -0.67264,10.08968 0.67264,8.7444 1.00897,9.08072 10e-6,7.73542 1.34528,9.75337 -0.33632,14.12556")
+  50%
+    d path("m 122.0852,915.81508 14.12557,17.15247 -25.22422,-4.70852 24.55157,18.16143 -24.21525,-5.04484 17.48879,10.76233 -14.7982,1.68161 10.426,2.69059 0.67265,12.78027")
