@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Exo:900')
+
 *
   box-sizing border-box
 
 body
-  background #fafafa
+  background linear-gradient(35deg, #111111, #fafafa)
   display flex
+  font-family 'Exo', sans-serif
   margin 0
   min-height 100vh
   padding 0
@@ -15,4 +18,24 @@ body
   grid-template-columns repeat(auto-fit, minmax(auto, 150px))
   justify-content center
   justify-items center
+  padding 1rem 0
   width 100%
+
+  & > div
+    background repeating-linear-gradient(30deg, var(--strapColor) 0, var(--strapColor) 5px, transparent 5px, transparent 10px) 5px 0 / 90% 100% no-repeat,
+      repeating-linear-gradient(-30deg, transparent 0, transparent 5px, var(--strapColor) 5px, var(--strapColor) 10px) 5px 0 / 90% 100% no-repeat, var(--strapBg)
+    &:nth-of-type(1)
+      --strapColor rgba(165, 55, 253, .25)
+      --strapBg rgba(190, 144, 212,1)
+    &:nth-of-type(2)
+      --strapColor rgba(41, 241, 195, .25)
+      --strapBg #29c3b9
+    &:nth-of-type(3)
+      --strapColor rgba(89, 171, 227, .25)
+      --strapBg rgba(129, 207, 224, 1)
+    &:nth-of-type(4)
+      --strapColor rgba(246, 36, 89, .25)
+      --strapBg rgba(226, 106, 106, 1)
+    &:nth-of-type(5)
+      --strapColor rgba(245, 229, 27, .25)
+      --strapBg rgba(254, 241, 96, 1)
