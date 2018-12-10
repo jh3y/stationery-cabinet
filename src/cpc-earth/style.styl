@@ -1,0 +1,220 @@
+*
+  box-sizing border-box
+
+body
+  align-items center
+  background #2c3e50
+  display flex
+  justify-content center
+  min-height 100vh
+
+:root
+  --b #22a7f0
+  --c rgba(255, 255, 255, 0.3)
+  --g #2ecc71
+  --s 100
+
+.earth
+  background var(--b)
+  border-radius calc(var(--s) * 0.5px)
+  cursor pointer
+  height calc(var(--s) * 1px)
+  overflow hidden
+  position relative
+  width calc(var(--s) * 1px)
+
+  &__face
+    --size calc((var(--s) * 0.1) * 1px)
+    height 20%
+    left 50%
+    position absolute
+    top 50%
+    transform translate(-50%, -75%)
+    width 45%
+
+    &--straining
+      &:after
+        background white
+        border-radius 0 100% 100%
+        content ''
+        height var(--size)
+        left 85%
+        opacity .65
+        position absolute
+        top -65%
+        transform rotate(45deg)
+        width var(--size)
+
+  &__eye
+    background black
+    border-radius 100%
+    height var(--size)
+    position absolute
+    top 0
+    width var(--size)
+
+    &--blinking
+      animation blink 10s infinite linear
+
+    @keyframes blink
+      0%, 73%, 75%, 100%
+        transform scaleY(1)
+      74%
+        transform scaleY(0.1)
+
+    &:after
+    &:before
+      background white
+      border-radius 100%
+      content ''
+      position absolute
+
+    &:after
+      height 30%
+      left 20%
+      top 15%
+      width 30%
+
+    &:before
+      height 15%
+      left 25%
+      top 55%
+      width 15%
+
+    &:nth-of-type(1)
+      left 0
+
+    &:nth-of-type(2)
+      right 0
+
+    &--straining
+      background transparent
+
+      &:nth-of-type(2)
+        transform rotate(180deg)
+
+      &:after
+      &:before
+        background black
+        border-radius 0
+        height calc((var(--s) * 0.025) * 1px)
+        left 50%
+        position absolute
+        top 50%
+        transform-origin right
+        width var(--size)
+
+      &:after
+        transform translate(-50%, -50%) rotate(20deg)
+      &:before
+        transform translate(-50%, -50%) rotate(-20deg)
+
+    &--spinning
+      background transparent
+      &:after
+      &:before
+        background black
+        border-radius 0
+        height calc((var(--s) * 0.025) * 1px)
+        left 50%
+        position absolute
+        top 50%
+        transform-origin center
+        width var(--size)
+
+      &:after
+        transform translate(-50%, -50%) rotate(45deg)
+      &:before
+        transform translate(-50%, -50%) rotate(-45deg)
+
+  &__mouth
+    $clip = circle(50% at 50% 0)
+    -webkit-clip-path $clip
+    background black
+    bottom 0
+    clip-path $clip
+    height var(--size)
+    left 40%
+    position absolute
+    width var(--size)
+
+    &--extended
+    &--dizzy
+      $clip = circle(50% at 50%)
+      -webkit-clip-path $clip
+      clip-path $clip
+
+    &--straining
+      $clip = polygon(0 0, 100% 0, 100% 15%, 0 15%)
+      -webkit-clip-path $clip
+      border-radius 0
+      clip-path $clip
+
+  &__map
+    --starter calc(var(--s) * 0.05)
+    background var(--g)
+    border-radius calc(var(--starter) * 1px)
+    cursor pointer
+    height calc(var(--starter) * 1px)
+    left 50%
+    margin calc(var(--starter) * -1px) 0 0 calc(var(--starter) * -1px)
+    position absolute
+    top 30%
+    width calc(var(--starter) * 1px)
+    box-shadow calc(var(--s) * -1px) 0 0 calc((var(--s) * 0.2) * 1px) var(--g),
+      calc((var(--s) * 0.825) * -1px) 0 0 calc((var(--s) * 0.175) * 1px) var(--g),
+      calc((var(--s) * 0.75) * -1px) calc((var(--s) * 0.4) * 1px) 0 calc((var(--s) * 0.15) * 1px) var(--g),
+      calc((var(--s) * 0.15) * 1px) 0 0 calc((var(--s) * 0.075) * 1px) var(--g),
+      calc((var(--s) * 0.075) * 1px) calc((var(--s) * 0.3) * 1px) 0 calc((var(--s) * 0.125) * 1px) var(--g),
+      calc((var(--s) * 0.6) * 1px) calc((var(--s) * 0.15) * 1px) 0 calc((var(--s) * 0.25) * 1px) var(--g),
+      calc((var(--s) * 1.1) * 1px) calc((var(--s) * 0.4) * 1px) 0 calc((var(--s) * 0.2) * 1px) var(--g),
+      calc((var(--s) * 2) * 1px) 0 0 calc((var(--s) * 0.2) * 1px) var(--g),
+      calc((var(--s) * 2.175) * 1px) 0 0 calc((var(--s) * 0.175) * 1px) var(--g),
+      calc((var(--s) * 2.25) * 1px) calc((var(--s) * 0.4) * 1px) 0 calc((var(--s) * 0.15) * 1px) var(--g),
+      calc((var(--s) * 3) * 1px) 0 0 0 var(--g),
+      calc((var(--s) * 3.15) * 1px) 0 0 calc((var(--s) * 0.075) * 1px) var(--g),
+      calc((var(--s) * 3.075) * 1px) calc((var(--s) * 0.3) * 1px) 0 calc((var(--s) * 0.125) * 1px) var(--g),
+      calc((var(--s) * 3.6) * 1px) calc((var(--s) * 0.15) * 1px) 0 calc((var(--s) * 0.25) * 1px) var(--g),
+      calc((var(--s) * 4.1) * 1px) calc((var(--s) * 0.4) * 1px) 0 calc((var(--s) * 0.2) * 1px) var(--g)
+
+  &__clouds
+    --starter calc(var(--s) * 0.05)
+    animation rotate 60s infinite linear
+    background var(--c)
+    border-radius 100%
+    height calc(var(--starter) * 2px)
+    left 50%
+    margin calc(var(--starter) * -1px) 0 0 calc(var(--starter) * -1px)
+    position absolute
+    top 60%
+    transform translate(-50%, -50%, 0)
+    width calc(var(--starter) * 4px)
+    box-shadow calc((var(--s) * 1) * -1px) calc((var(--s) * 0.1) * -1px) 0 calc((var(--s) * 0.05) * 1px) var(--c),
+      calc((var(--s) * 0.5) * -1px) calc((var(--s) * 0.05) * 1px) 0 calc((var(--s) * 0.15) * 1px) var(--c),
+      calc((var(--s) * 0.6) * -1px) calc((var(--s) * 0.425) * -1px) 0 calc((var(--s) * 0.1) * 1px) var(--c),
+      calc((var(--s) * 0.05) * 1px) calc((var(--s) * 0.375) * -1px) 0 calc((var(--s) * 0.2) * 1px) var(--c),
+      calc((var(--s) * 0.7) * 1px) calc((var(--s) * 0.15) * -1px) 0 calc((var(--s) * 0.15) * 1px) var(--c),
+      calc((var(--s) * 1.1) * 1px) calc((var(--s) * 0.4) * -1px) 0 calc((var(--s) * 0.1) * 1px) var(--c),
+      calc((var(--s) * 0.3) * 1px) calc((var(--s) * 0.1) * 1px) 0 calc((var(--s) * 0.05) * 1px) var(--c),
+      calc((var(--s) * 1.2) * -1px) calc((var(--s) * 0.4) * -1px) 0 calc((var(--s) * 0.1) * 1px) var(--c),
+      calc((var(--s) * 1.25) * -1px) calc((var(--s) * 0.2) * 1px) 0 calc((var(--s) * 0.125) * 1px) var(--c),
+      calc((var(--s) * 1.1) * 1px) calc((var(--s) * 0.15) * 1px) 0 calc((var(--s) * 0.15) * 1px) var(--c),
+      0 0 0 calc((var(--s) * 0.025) * 1px) var(--c),
+      calc((var(--s) * 3) * 1px) 0 0 calc((var(--s) * 0.025) * 1px) var(--c),
+      calc((var(--s) * 2) * 1px) calc((var(--s) * 0.1) * -1px) 0 calc((var(--s) * 0.05) * 1px) var(--c),
+      calc((var(--s) * 2.5) * 1px) calc((var(--s) * 0.05) * 1px) 0 calc((var(--s) * 0.15) * 1px) var(--c),
+      calc((var(--s) * 2.4) * 1px) calc((var(--s) * 0.425) * -1px) 0 calc((var(--s) * 0.1) * 1px) var(--c),
+      calc((var(--s) * 3.05) * 1px) calc((var(--s) * 0.375) * -1px) 0 calc((var(--s) * 0.2) * 1px) var(--c),
+      calc((var(--s) * 3.7) * 1px) calc((var(--s) * 0.15) * -1px) 0 calc((var(--s) * 0.15) * 1px) var(--c),
+      calc((var(--s) * 4.1) * 1px) calc((var(--s) * 0.4) * -1px) 0 calc((var(--s) * 0.1) * 1px) var(--c),
+      calc((var(--s) * 3.3) * 1px) calc((var(--s) * 0.1) * 1px) 0 calc((var(--s) * 0.05) * 1px) var(--c),
+      calc((var(--s) * 1.8) * 1px) calc((var(--s) * 0.4) * -1px) 0 calc((var(--s) * 0.1) * 1px) var(--c),
+      calc((var(--s) * 1.75) * 1px) calc((var(--s) * 0.2) * 1px) 0 calc((var(--s) * 0.125) * 1px) var(--c),
+      calc((var(--s) * 4.1) * 1px) calc((var(--s) * 0.15) * 1px) 0 calc((var(--s) * 0.15) * 1px) var(--c)
+
+  @media(min-width 768px)
+    --s 200
+
+@keyframes rotate
+  to
+    transform translate(calc(var(--s) * -3px), 0)
