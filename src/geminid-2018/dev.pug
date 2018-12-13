@@ -1,0 +1,23 @@
+- const inRange = (max, min) => Math.floor(Math.random() * (max - min + 1)) + min
+- const amount = 20
+- for (let g = 0; g < amount; g++)
+  - let angle = inRange(45, 125)
+  - let speed = inRange(8, 30)
+  - let delay = inRange(1, 15)
+  - let x = inRange(0, 80)
+  - let y = inRange(0, 45)
+  - let travel = inRange(10, 80)
+  - let trail = inRange(1, 4)
+  .geminid(style=`--angle: ${angle}; --speed: ${speed}; --delay: ${delay}; --x: ${x}; --y: ${y}; --travel: ${travel}; --trail: ${trail}`)
+    .geminid__trail
+- for (let s = 0; s < 20; s++)
+  - let x = inRange(0, 100)
+  - let y = inRange(0, 100)
+  - let opacity = inRange(0, 100)
+  - let scale = inRange(0, 3)
+  .star(style=`--x: ${x}; --y: ${y}; --opacity: ${opacity / 100}; --scale: ${scale}`)
+.hill
+  .house__wrap
+    .house
+      .house__house
+      .house__roof

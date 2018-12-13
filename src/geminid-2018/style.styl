@@ -1,0 +1,96 @@
+*
+  box-sizing border-box
+
+body
+  background linear-gradient(160deg, rgb(20, 29, 48), rgb(35, 44, 74), rgb(62, 81, 118))
+
+.geminid
+  position absolute
+  top calc(var(--y) * 1vh)
+  left calc(var(--x) * 1vw)
+  animation shoot calc(var(--speed) * 1s) calc(var(--delay) * 1s) infinite linear both
+
+  &__trail
+    height 2px
+    width 25px
+    position absolute
+    background linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.85))
+    border-radius 100% 25% 25% 100%
+    filter blur(1px)
+    transform-origin right
+    animation spark calc(var(--speed) * 1s) calc(var(--delay) * 1s) infinite linear both
+
+    @media(min-width 768px)
+      height 5px
+      width 50px
+
+.star
+  border-radius 100%
+  height 1px
+  width 1px
+  position absolute
+  top calc(var(--y) * 1vh)
+  left calc(var(--x) * 1vw)
+  background #fafafa
+  opacity var(--opacity)
+  transform scale(var(--scale))
+
+@keyframes shoot
+  0%
+    transform rotate(calc(var(--angle) * 1deg))
+  2%, 100%
+    transform rotate(calc(var(--angle) * 1deg)) translate(calc(var(--travel) * 1vw), 0)
+
+@keyframes spark
+  0%, 2%, 100%
+    transform scaleX(0)
+
+  1%
+    transform scaleX(var(--trail))
+
+.hill
+  background #000
+  height 20vh
+  width 75vw
+  max-width 400px
+  position absolute
+  bottom 0
+  right 0
+  border-radius 50% 0 0 0 / 100% 0 0 0
+
+.house__wrap
+  position absolute
+  bottom 100%
+  right 0
+  filter drop-shadow(-50px -50px 100px white)
+
+.house
+  height 150px
+  width 150px
+
+  &__house
+    position absolute
+    height 50%
+    width 75%
+    bottom 0
+    right 0
+    background #111
+    &:after
+      content ''
+      background #fff9de
+      box-shadow 0 0 5px 0 #fff9de
+      position absolute
+      left 20%
+      top 20%
+      bottom 40%
+      width 20%
+  &__roof
+    position absolute
+    top 0
+    right 0
+    height 50%
+    width 100%
+    background #111
+    $clip = polygon(0 100%, 35% 45%, 35% 0, 55% 0, 55% 25%, 100% 25%, 100% 100%)
+    -webkit-clip-path $clip
+    clip-path $clip
