@@ -1,0 +1,28 @@
+input(type='checkbox')
+.header
+  h1 NO
+  h1 ICE
+.base
+  .surface
+    .puddle
+      .face
+        .eye
+        .eye
+        .mouth
+  .surface.surface--clone
+    .edge
+      .edge__puddle
+    .droplets
+      .droplet(style='--delay: 2; --left: 30')
+      .droplet(style='--delay: 1; --left: 50')
+      .droplet(style='--delay: 4; --left: 65')
+
+  .cube
+    - for(let i = 0; i < 6; i++)
+      .cube__side
+        - if (i === 0)
+          .cube__face
+            .face
+              .eye
+              .eye
+              .mouth

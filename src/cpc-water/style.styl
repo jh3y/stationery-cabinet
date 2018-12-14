@@ -1,0 +1,307 @@
+@import url('https://fonts.googleapis.com/css?family=Oswald')
+
+*
+  box-sizing border-box
+
+body
+  align-items center
+  background #333
+  display flex
+  font-family 'Oswald', sans-serif
+  justify-content center
+  margin 0
+  min-height 100vh
+  overflow hidden
+  padding 0
+
+:root
+  --size 300
+  // --color rgba(228, 241, 254, .5)
+  // --puddle rgba(228, 241, 254, .75)
+  // --cube rgba(228, 241, 254, .25)
+  --color rgba(197, 239, 247, .5)
+  --puddle rgba(197, 239, 247, .75)
+  --cube rgba(197, 239, 247, .25)
+  --sign rgba(246, 36, 89, 1)
+
+$melt = .5s
+$face = .2s
+$spill = .3s
+$puddle = .1s
+
+.header
+  position absolute
+  top 50%
+  left 50%
+  display grid
+  font-size 2rem
+  grid-gap 10px
+  grid-template-columns auto auto
+  transform translate(-100%, -200%) rotate(-25deg) translate(20%, 0)
+
+h1
+  margin 0
+  display inline-block
+  color var(--sign)
+  z-index 3
+  filter drop-shadow(0 0 5px var(--sign))
+
+  &:nth-of-type(1)
+    animation blinkers 3s ($melt + $spill) infinite steps(1)
+    filter none
+    color #efefef
+    opacity .1
+  
+  @keyframes blinkers
+    2%, 4%, 6%
+      color var(--sign)
+      filter drop-shadow(0 0 5px var(--sign))
+      opacity 1
+    0%, 3%, 5%, 7%, 100%
+      color #efefef
+      filter none
+      opacity .1
+    
+
+
+.base
+  height calc(var(--size) * 1px)
+  left 50%
+  position absolute
+  top 50%
+  transform translate(-50%, -50%) rotateX(-30deg) rotateY(40deg) translate(-10%, 0)
+  transform-style preserve-3d
+  width calc(var(--size) * 1px)
+
+input
+  cursor pointer
+  height 500px
+  left 50%
+  opacity 0
+  position absolute
+  top 50%
+  transform translate(-50%, -50%)
+  width 500px
+  z-index 2
+
+  &:checked ~ .base .cube
+    transform translate(-50%, -50%) rotateX(90deg) translate(0, 50%) rotateX(-90deg) translate3d(0, -50px, 0) scaleY(0)
+    transition transform $melt ease
+
+  &:checked ~ .base .cube__side
+    box-shadow none
+    background none
+  
+  &:checked ~ .base .surface .puddle
+    border-radius 100%
+    background var(--color)
+    transform translate(-50%, 0) scale(2.75)
+    transition background $puddle ease, border-radius $melt ease, transform $melt ease
+
+  &:checked ~ .base .surface .edge__puddle
+    transform translate(-50%, 0)
+
+  &:checked ~ .base .surface .face
+    opacity 1
+    transition opacity $face ($melt + $spill)
+
+  &:checked ~ .base .droplet
+    animation-name drop
+
+  &:checked ~ .header h1:nth-of-type(1)
+    color var(--sign)
+    animation none
+    filter drop-shadow(0 0 5px var(--sign))
+    opacity 1
+
+.droplet
+  animation-delay calc(var(--delay) * 1s)
+  animation-duration 5s
+  animation-iteration-count infinite
+  animation-timing-function linear
+  background var(--color)
+  bottom 100%
+  border-radius 100%
+  height 10px
+  left calc(var(--left) * 1%)
+  position absolute
+  width 10px
+
+  @keyframes drop
+    5%, 100%
+      opacity 0
+      transform translateY(calc((var(--size) / 3) * 1px))
+
+
+.droplets
+  height calc((var(--size) / 3) * 1px)
+  left 0
+  overflow hidden
+  position absolute
+  top 100%
+  transform rotateX(-90deg) translate(0, calc((var(--size) / 6) * 1px))
+  transform-origin top
+  width 100%
+
+.puddle
+  background transparent
+  border-radius 0
+  height calc((var(--size) / 3) * 1px)
+  left 50%
+  position absolute
+  top 50%
+  transform translate(-50%, 0%) scale(1)
+  transition background $puddle ($melt + $spill + $melt), border-radius $melt ($melt + $spill) ease, transform $melt ($melt + $spill) ease
+  width calc((var(--size) / 3) * 1px)
+
+.surface
+  height 100%
+  left 0
+  overflow hidden
+  position absolute
+  top 0
+  transform rotateX(90deg)
+  transform-style preserve-3d
+  width 100%
+
+  &--clone
+    overflow visible
+
+.edge
+  height calc((var(--size) / 6 ) * 1px)
+  left 0
+  overflow hidden
+  position absolute
+  top 100%
+  transform rotateX(-90deg)
+  transform-origin top
+  width 100%
+
+  &__puddle
+    background var(--puddle)
+    height 200%
+    left 50%
+    opacity .6
+    position absolute
+    top 0
+    transform translate(-50%, -100%)
+    transition transform $melt $spill ease
+    width 63%
+
+.surface
+  .face
+    opacity 0
+    transform translate(-50%, 0) scale(0.5)
+    transition opacity $face
+  
+  .mouth
+    -webkit-clip-path none
+    border-radius 100%
+    clip-path none
+
+.face
+  height 35%
+  left 50%
+  position absolute
+  top 20%
+  transform translate(-50%, 0)
+  width 80%
+
+.eye
+  animation blink 10s infinite linear
+  background black
+  border-radius 100%
+  height 20px
+  position absolute
+  top 0
+  width 20px
+
+  @keyframes blink
+    0%, 73%, 75%, 100%
+      transform scaleY(1)
+    74%
+      transform scaleY(0.1)
+
+  &:after
+  &:before
+    background white
+    border-radius 100%
+    content ''
+    position absolute
+
+  &:after
+    height 30%
+    left 20%
+    top 15%
+    width 30%
+
+  &:before
+    height 15%
+    left 25%
+    top 55%
+    width 15%
+
+  &:nth-of-type(1)
+    left 0
+
+  &:nth-of-type(2)
+    right 0
+
+.mouth
+  $clip = circle(50% at 50% 0)
+  -webkit-clip-path $clip
+  background black
+  bottom 0
+  clip-path $clip
+  height 20px
+  left 40%
+  position absolute
+  width 20px
+
+.cube
+  height calc((var(--size) / 3) * 1px)
+  left 50%
+  position absolute
+  top 50%
+  transform translate(-50%, -50%) rotateX(90deg) translate(0, 50%) rotateX(-90deg) translate3d(0, -50px, 0) scaleY(1)
+  transform-origin bottom
+  transform-style preserve-3d
+  transition transform $melt ($melt + $spill) ease, opacity .1s $melt ease
+  width calc((var(--size) / 3) * 1px)
+
+  &__face
+    height 100%
+    width 100%
+
+  &__side
+    background var(--cube)
+    border-radius 5px
+    box-shadow inset 0 0 10px 5px var(--color)
+    height 100%
+    left 0
+    opacity 1
+    position absolute
+    top 0
+    transition background .1s $melt, box-shadow .1s $melt
+    transform-style preserve-3d
+    width 100%
+
+    &:nth-of-type(1)
+      opacity 1
+      transform translate3d(0, 0, 50px)
+
+    &:nth-of-type(2)
+      transform rotateX(90deg) translate3d(0, 0, 50px)
+
+    &:nth-of-type(3)
+      transform rotateX(180deg) translate3d(0, 0, 50px)
+
+    &:nth-of-type(4)
+      background transparent
+      transform rotateX(270deg) translate3d(0, 0, 50px)
+
+    &:nth-of-type(5)
+      transform rotateY(90deg) translate3d(0, 0, 50px)
+
+    &:nth-of-type(6)
+      transform rotateY(-90deg) translate3d(0, 0, 50px)
