@@ -1,0 +1,97 @@
+*
+  box-sizing border-box
+
+body
+  display flex
+  align-items center
+  justify-content center
+  min-height 100vh
+
+$size = 300px
+form
+  height $size
+  width $size
+  background rgba(255, 0, 0, 0.5)
+  position relative
+
+[type='radio']
+  position absolute
+  left 0
+  display none
+
+[type='reset']
+  display none
+  height 100%
+  left 0
+  opacity 0
+  position absolute
+  top 0
+  width 100%
+  z-index 4
+
+label
+  display block
+  height $size
+  width $size
+
+ul
+  cursor pointer
+  padding 0
+  margin 0
+  animation scale 7s infinite steps(20)
+  position absolute
+  top 0
+  left 0
+  z-index 3
+  width 100%
+
+span
+  text-transform uppercase
+  // position absolute
+
+@keyframes scale
+  to
+    transform translateY(-100%)
+
+.eight
+  height $size
+  width $size
+  border-radius 100%
+  background rgba(0, 0, 0, 0.25)
+  position relative
+
+  &__number
+    width 50%
+    height 50%
+    background white
+    border-radius 100%
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+
+  &__window
+    width 50%
+    height 50%
+    background black
+    border-radius 100%
+    position absolute
+    top 150%
+    left 50%
+    transform translate(-50%, -50%)
+[type='radio']:checked
+  + span
+    color purple
+  ~ .eight
+    animation shake 1s
+    transform translate(0, -100px)
+    transition transform 1s 1s
+
+  ~ [type='reset']
+    display block
+
+@keyframes shake
+  0%, 100%
+    transform translate(0, 0)
+  50%
+    transform translate(25px, 25px)
