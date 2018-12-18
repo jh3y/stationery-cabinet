@@ -4,20 +4,31 @@
 body
   display flex
   align-items center
+  font-family 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif
   justify-content center
+  font-size .8rem
   min-height 100vh
+  text-align center
+  letter-spacing 1px
+  background rgb(219, 10, 91)
 
 $size = 300px
+$reset = translate(-50%, -50%)
+
 form
+  border-radius 100%
+  cursor pointer
   height $size
-  width $size
-  background rgba(255, 0, 0, 0.5)
   position relative
+  width $size
+
+  *
+    cursor pointer
 
 [type='radio']
-  position absolute
-  left 0
   display none
+  left 100%
+  position absolute
 
 [type='reset']
   display none
@@ -26,72 +37,160 @@ form
   opacity 0
   position absolute
   top 0
+  visibility hidden
   width 100%
-  z-index 4
+  z-index 6
 
-label
-  display block
+li
+  margin 0
+  padding 0
   height $size
   width $size
 
-ul
-  cursor pointer
-  padding 0
-  margin 0
-  animation scale 7s infinite steps(20)
-  position absolute
-  top 0
-  left 0
-  z-index 3
+label
+  display block
+  height 100%
   width 100%
 
-span
-  text-transform uppercase
-  // position absolute
+ul
+  animation scale 7s infinite steps(20)
+  left 0
+  margin 0
+  padding 0
+  position absolute
+  top 0
+  width 100%
+  z-index 5
 
 @keyframes scale
   to
     transform translateY(-100%)
 
 .eight
-  height $size
-  width $size
   border-radius 100%
-  background rgba(0, 0, 0, 0.25)
+  height 100%
+  overflow hidden
   position relative
+  width 100%
+  z-index 4
+
+  &__backdrop
+    background radial-gradient(circle at 5% 5%, #666, #222 50%), #222
+    border-radius 100%
+    height 100%
+    left 0
+    position absolute
+    top 0
+    width 100%
 
   &__number
-    width 50%
-    height 50%
+    align-items center
     background white
     border-radius 100%
+    display flex
+    font-size 125px
+    height 50%
+    justify-content center
+    left 50%
     position absolute
     top 50%
-    left 50%
-    transform translate(-50%, -50%)
+    transform $reset
+    width 50%
 
   &__window
-    width 50%
-    height 50%
-    background black
+    background radial-gradient(transparent, #000)
+    border 10px double #555
     border-radius 100%
-    position absolute
-    top 150%
+    height calc(50% + 20px)
     left 50%
-    transform translate(-50%, -50%)
+    position absolute
+    top 50%
+    transform $reset
+    width calc(50% + 20px)
+
+  &__fascia
+    height $size
+    position relative
+    width $size
+
+
+@keyframes floaty
+  0%, 100%
+    transform $reset
+  25%
+    transform $reset translate(-2%, 2%) rotate(2deg)
+  50%
+    transform $reset translate(2%, -2%) rotate(-2deg)
+  75%
+    transform $reset translate(1%, 1%) rotate(1deg)
+
+
+span
+  background blue
+  text-transform uppercase
+  color #ffffff
+  text-shadow 1px 1px 0 darken(#fff, 25%)
+  position absolute
+  top 50%
+  left 50%
+  width 45%
+  height 45%
+  transform-origin 50% 25%
+  transform translate(-50%, -50%)
+  text-transform uppercase
+  display flex
+  align-items center
+  justify-content center
+  opacity 0
+  animation-duration 10s
+  animation-timing-function linear
+  animation-iteration-count infinite
+  animation-name floaty
+  z-index 2
+
+  &:nth-of-type(even)
+    $clip = polygon(0 100%, 50% 20%, 100% 100%)
+    -webkit-clip-path $clip
+    align-items flex-end
+    clip-path $clip
+    padding-bottom 5%
+    top 40%
+
+  &:nth-of-type(odd)
+    $clip = polygon(0 0, 50% 80%, 100% 0)
+    -webkit-clip-path $clip
+    align-items flex-start
+    clip-path $clip
+    padding-top 5%
+    top 60%
+
 [type='radio']:checked
+
   + span
-    color purple
+    opacity 1
+    transition opacity 1s 1.7s
+
   ~ .eight
-    animation shake 1s
-    transform translate(0, -100px)
-    transition transform 1s 1s
+  ~ .eight__backdrop
+    animation shake .25s 4
+
+  ~ .eight .eight__fascia
+    transform translate(0, -100%)
+    transition transform .25s 1.25s ease
 
   ~ [type='reset']
     display block
+    visibility visible
+    transition display 0s 3s
+
+  ~ .eight__mask
+    display block
+
 
 @keyframes shake
   0%, 100%
     transform translate(0, 0)
   50%
-    transform translate(25px, 25px)
+    transform translate(10px, 5px)
+  75%
+    transform translate(-10px, -5px)
