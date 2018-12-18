@@ -1,13 +1,17 @@
 form
-  - const possibilities = [ 'It is certain', 'It is decidedly so', 'Without a doubt', 'Yes - definitely', 'You may rely on it', 'As I see it, yes', 'Most likely', 'Outlook good', 'Yes', 'Signs point to yes', 'Reply hazy, try again', 'Ask again later', 'Better not tell you now', 'Cannot predict now', 'Concentrate and ask again', 'Don\'t count on it', 'My reply is no', 'My sources say no', 'Outlook not so good', 'Very doubtful']
+  - const possibilities = [ 'It is<br/> certain', 'It is<br/> decidedly<br/> so', 'Without<br> a<br/> doubt', 'Yes<br/> definitely', 'You may<br/> rely<br/> on it', 'As I<br/> see it,<br/> yes', 'Most<br/> likely', 'Outlook<br/> good', 'Yes', 'Signs<br/> point to<br/> yes', 'Reply <br/> hazy, try<br/> again', 'Ask<br/> again<br/> later', 'Better not<br/> tell you<br/> now', 'Cannot<br/> predict<br/> now', 'Concentrate<br/> and ask<br/> again', 'Don\'t<br/> count<br/> on it', 'My reply<br/> is<br/> no', 'My<br/> sources<br/> say no', 'Outlook<br/> not so<br/> good', 'Very<br/> doubtful']
   - for (let i = 0; i < possibilities.length; i++)
     input(type='radio', name='answer', id=possibilities[i], value=possibilities[i])
-    //- span= possibilities[i]
+    span !{possibilities[i]}
+  .eight__backdrop
   .eight
-    .eight__number
-    .eight__window
-  //- ul
-  //-   - for (let i = 0; i < possibilities.length; i++)
-  //-     label(for=possibilities[i])
+    .eight__fascia
+      .eight__number 8
+    .eight__fascia
+      .eight__window
+    ul
+      - for (let i = 0; i < possibilities.length; i++)
+        li
+          label(for=possibilities[i])
 
   input(type='reset')
