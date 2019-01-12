@@ -1,0 +1,33 @@
+*
+  box-sizing border-box
+  transition font-size .15s ease
+
+:root
+  --size 16
+
+html
+body
+  margin 0
+  padding 0
+  font-size calc(var(--size) * 1px)
+  text-align center
+
+p
+  max-width 80vw
+
+button
+  cursor pointer
+
+#app
+  align-items center
+  display flex
+  flex-direction column
+  justify-content center
+  min-height 100vh
+
+.size-selector
+  position absolute
+  top 10px
+  right 10px
+  display flex
+  align-items center

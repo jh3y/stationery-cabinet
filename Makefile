@@ -50,6 +50,9 @@ endif
 lint: checkForPen ## lints source
 	$(ESLINT) $(SCRIPT_SRC)
 
+lint-fix: checkForPen ## lints + fixes source
+	$(ESLINT) $(SCRIPT_SRC) --fix
+
 # Compile javascript using babel and copy to respective pen folder in public.
 compile-script: checkForPen ## compiles scripts
 	mkdir -pv $(OUTPUT_DIR)

@@ -1,0 +1,31 @@
+*
+  box-sizing border-box
+
+html
+body
+  margin 0
+  padding 0
+  text-align center
+  background #a2ccb6
+
+#app
+  display grid
+  align-items center
+  justify-content center
+  justify-items center
+  grid-template-columns repeat(2, minmax(auto, 160px))
+  min-height 100vh
+  width 100vw
+  overflow hidden
+  & > div
+    &:nth-of-type(1)
+      --strapColor rgba(255, 160, 130, .25)
+      --strapBg rgba(238, 120, 110,1)
+
+    &:nth-of-type(2)
+      --strapColor rgba(252, 200, 121, .25)
+      --strapBg rgba(252, 238, 181, 1)
+
+    div:first-of-type
+      background repeating-linear-gradient(30deg, var(--strapColor) 0, var(--strapColor) 5px, transparent 5px, transparent 10px) 5px 0 / 90% 100% no-repeat,
+      repeating-linear-gradient(-30deg, transparent 0, transparent 5px, var(--strapColor) 5px, var(--strapColor) 10px) 5px 0 / 90% 100% no-repeat, var(--strapBg)
