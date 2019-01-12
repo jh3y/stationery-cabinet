@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300')
+
+*
+*:after
+*:before
+  box-sizing border-box
+
+body
+  background #000
+  margin 0
+  padding 0
+  font-family 'Roboto', sans-serif
+  letter-spacing 2px
+
+input
+  display none
+
+  &:checked + label
+    opacity 1
+
+    &:after
+      content ''
+      height 4px
+      background radial-gradient(white, transparent)
+      opacity .5
+      width 110px
+      border-radius 100%
+      position absolute
+      top 125%
+      left 50%
+      transform translate(-50%, 0)
