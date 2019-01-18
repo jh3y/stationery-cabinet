@@ -47,6 +47,7 @@ const BanderImage = styled.img`
   object-fit: cover;
   grid-column: 1 / -1;
   height: 100%;
+  max-height: 100%;
   width: 100%;
   transition: all 0.25s ease;
   ${p =>
@@ -62,9 +63,13 @@ const Container = styled.div`
   width: 100vw;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 6fr 1fr;
+  grid-template-rows: 6fr minmax(80px, 1fr);
   align-items: center;
   justify-items: center;
+
+  @media (min-width: 768px) {
+    grid-template-rows: 6fr minmax(120px, 1fr);
+  }
 `
 
 const Option = styled.label`

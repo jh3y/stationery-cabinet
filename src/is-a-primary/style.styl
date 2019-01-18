@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css?family=Lato')
+
+*
+*:after
+  box-sizing border-box
+
+html
+body
+  background linear-gradient(25deg, #d5b8ff, #fff)
+  color #fafafa
+  overflow-x hidden
+  min-height 100vh
+  display flex
+  font-family 'Lato', sans-serif
+  align-items center
+  justify-content center
+  margin 0
+  padding 0
+
+#app
+  display flex
+  align-items center
+  justify-content center
+  flex-direction column
+  width 100vw
+  height 100vh
+  max-height 667px
+  max-width 375px
+  border-radius 10px
+  position relative
+  overflow hidden
+  background #111
+
+
+  @media(min-width 768px)
+    height 90vh
+
+img
+video
+  height 100%
+  position absolute
+
+img
+  z-index 2
+
+h1
+  position absolute
+  z-index 5
+
+button
+  height 60px
+  width 60px
+  border-radius 100%
+  position absolute
+  z-index 3
+  display flex
+  align-items center
+  justify-content center
+
+svg
+  height 40px
+  width 40px
+  path
+    fill #e4e9ed
+
+.toggle
+  position absolute
+  right 20px
+  bottom 20px
+  background 0
+  border 0
+
+.shutter
+  left 50%
+  bottom 20px
+  transform translate(-50%, 0)
+  background #e4e9ed
+  border 5px solid darken(#e4e9ed, 20%)
+
+.restart
+  left 50%
+  transform translate(-50%, 0)
+  background 0
+  border 0
+
+  &--top
+    top 20px
+    background #e74c3c
+
+  &--bottom
+    bottom 20px
+    background #2eec71
+
+.banner
+  position absolute
+  color #fff
+  z-index 6
+  width 100%
+  min-height 80px
+  display flex
+  align-items center
+  justify-content center
+
+  h1
+    text-align center
+    width 100%
+    margin 0
+
+  &__icon
+    height 70px
+    width 70px
+    border-radius 100%
+    display flex
+    align-items center
+    justify-content center
+    position absolute
+
+  &--success
+    top 0
+    left 0
+    width 100%
+    background #2eec71
+
+    .banner__icon
+      background #2eec7a
+      left 50%
+      bottom 0
+      transform translate(-50%, 65%)
+
+  &--fail
+    left 0
+    bottom 0
+    background #e74c3c
+
+    .banner__icon
+      background #e74c3c
+      left 50%
+      top 0
+      transform translate(-50%, -65%)
