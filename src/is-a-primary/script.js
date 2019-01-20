@@ -26,9 +26,16 @@ const useCamera = () => {
   const [useRear, setUseRear] = useState(undefined)
 
   const hasMultipleCameras = async () => {
-    const devices = await navigator.mediaDevices.enumerateDevices()
-    const multiple =
-      devices.filter(d => d.kind === 'videoinput').length > 1 ? true : false
+    let multiple = false
+    if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+      alert(
+        'Sorry, enumerate devices is not supported, can only use front camera'
+      )
+    } else {
+      const devices = await navigator.mediaDevices.enumerateDevices()
+      multiple =
+        devices.filter(d => d.kind === 'videoinput').length > 1 ? true : false
+    }
     setRearAvailable(multiple)
     setUseRear(multiple)
   }
@@ -57,13 +64,13 @@ const useCamera = () => {
 
   useEffect(
     () => {
-      if (!navigator.mediaDevices.getUserMedia) {
-        return alert('getUserMedia() not supported')
+      if (!navigator.getUserMedia) {
+        alert('getUserMedia() not supported')
       }
       if (
         active &&
         rearAvailable !== undefined &&
-        navigator.mediaDevices.getUserMedia &&
+        navigator.getUserMedia &&
         !stream
       ) {
         const facingMode =
