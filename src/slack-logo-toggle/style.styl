@@ -1,0 +1,112 @@
+*
+  box-sizing border-box
+
+
+// Colors from media kit
+$red = #E01E5A
+$green = #2EB67D
+$yellow = #ECB22E
+$blue = #36C5F0
+$purple = #4A154B
+$transition = 2s
+
+body
+  display flex
+  align-items center
+  justify-content center
+  min-height 100vh
+  background $purple
+
+input
+  position fixed
+  top 5px
+  left 5px
+  height 100vh
+  width 100vw
+  z-index 3
+  opacity 0
+  cursor pointer
+
+
+  &:checked
+    ~ .bg
+      background #fff
+    ~ .container
+      transform translate(-50%, -50%) rotate(-18deg) scale(.85)
+      .spur
+        width 150px
+        opacity .95
+        mix-blend-mode multiply
+
+        &:nth-of-type(1)
+          transform translate(0, -10px)
+
+        &:nth-of-type(2)
+          transform-origin center
+          transform rotate(90deg) translate(20px, 110px)
+
+        &:nth-of-type(3)
+          transform-origin center
+          transform rotate(180deg) translate(0, 30px)
+
+        &:nth-of-type(4)
+          transform-origin center
+          transform rotate(270deg) translate(60px, -50px)
+
+        &:after
+          transform translate(0, 40px)
+          border-radius 100%
+
+.bg
+  background $purple
+  transition background $transition
+  height 100vh
+  width 100vw
+  position fixed
+
+.container
+  position absolute
+  top 50%
+  left 50%
+  display grid
+  grid-template-columns repeat(15, 10px)
+  grid-template-rows repeat(15, 10px)
+  transform translate(-50%, -50%)
+  transition transform $transition
+
+.spur
+  background var(--bg)
+  grid-row 5 / span 3
+  grid-column 1
+  border-radius 15px
+  position relative
+  transition all $transition
+  width 70px
+  height 30px
+
+  &:after
+    content ''
+    position absolute
+    right 0
+    bottom 40px
+    height 30px
+    width 30px
+    background var(--bg)
+    transition transform $transition, border-radius $transition
+    border-radius 15px 15px 0 15px
+
+  &:nth-of-type(2)
+    transform-origin 50% -20%
+    transform rotate(90deg)
+    grid-column 9 / span 7
+
+  &:nth-of-type(3)
+    grid-row 13 / span 3
+    transform-origin 50% -20%
+    transform rotate(270deg)
+
+  &:nth-of-type(4)
+    grid-row 13 / span 3
+    grid-column 9 / span 7
+    transform-origin 50% -20%
+    transform rotate(180deg)
