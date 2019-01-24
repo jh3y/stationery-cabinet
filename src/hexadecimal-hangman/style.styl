@@ -1,0 +1,85 @@
+*
+  box-sizing border-box
+
+body
+  margin 0
+  padding 0
+  transition background .25s ease
+
+#app
+  align-items center
+  display flex
+  flex-direction column
+  justify-content center
+  min-height 100vh
+
+.options
+  grid-column 1 / -1
+  align-content center
+  justify-content center
+  animation enter .25s 2s ease both
+
+.hangzone
+  grid-column 1 / -1
+  display flex
+  justify-content center
+
+svg
+  height 200px
+
+.container
+  grid-template-columns repeat(7, 1fr)
+  grid-template-rows 1fr 3rem 200px
+  grid-gap 10px 0
+  align-items center
+
+.char
+  text-align center
+  line-height 2.5rem
+  font-weight bold
+  animation enter .25s ease
+  margin 0 5px
+  font-size 2.5rem !important
+  height 100%
+  transform translate(calc((300 / 14) * -1px), 0)
+span
+  font-size 1.25rem
+
+button
+  cursor pointer
+
+@keyframes enter
+  from
+    opacity 0
+.hangzone
+  position relative
+  &:after
+    // content ''
+    display block
+    position absolute
+    left 50%
+    height 100px
+    top 0
+    background red
+    opacity .5
+    width 100px
+
+.frame
+  stroke-dasharray 400
+  stroke-dashoffset 400
+  animation draw 2s ease forwards
+
+@keyframes draw
+  to
+    stroke-dashoffset 0
+// g
+//   // animation swing 3s infinite linear
+//   transform-origin 50% 0
+
+// @keyframes swing
+//   0%, 50%, 100%
+//     transform rotate(0)
+//   25%
+//     transform rotate(-1deg)
+//   75%
+//     transform rotate(1deg)
