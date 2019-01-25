@@ -42,13 +42,13 @@ const fly = styled.keyframes`
 const Container = styled.div`
   display: grid;
   width: 280px;
-  min-height: 460px;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: auto 3rem 200px;
+  grid-template-rows: 180px 3rem 200px;
   grid-gap: 10px 0;
   align-items: center;
   @media (min-width: 375px) and (min-height: 660px) {
     grid-gap: 20px 0;
+    grid-template-rows: 320px 3rem 200px;
     width: 320px;
   }
 `
@@ -115,12 +115,11 @@ const Char = styled.div`
     border-bottom: 5px solid ${p.dark ? '#000' : '#FFF'};
   `};
 `
+
 const HangingMan = styled.svg`
-  height: 100%;
-  max-width: 320px;
+  height: 180px;
   @media (min-width: 375px) and (min-height: 660px) {
-    height: auto;
-    width: 100%;
+    height: 320px;
   }
   path,
   circle {
@@ -134,7 +133,6 @@ const HangingMan = styled.svg`
 `
 const HangZone = styled.div`
   display: block;
-  height: 100%;
   grid-column: 1 / -1;
   text-align: center;
 `
@@ -150,7 +148,6 @@ const Swingers = styled.g`
 `
 
 const Frame = styled.path`
-  d: path('M 5 195 L 5 5 L 100 5 M 50 5 L 5 50');
   stroke-dashoffset: 400;
   stroke-dasharray: 400;
   animation: ${draw} 2s 1s ease;
@@ -265,13 +262,13 @@ const Game = () => {
           dark={dark}
           preserveAspectRatio="xMinYMin"
           viewBox="0 0 200 200">
-          <Frame />
+          <Frame d="M 5 195 L 5 5 L 100 5 M 50 5 L 5 50" />
           <Swingers animate={fails.length > 1}>
-            {fails.length >= 1 && <Rope />}
+            {fails.length >= 1 && <Rope d="M 100 5 L 100 30" />}
             {fails.length >= 2 && <Head cx="100" cy="50" r="20" />}
-            {fails.length >= 3 && <Body />}
-            {fails.length >= 4 && <Arms />}
-            {fails.length >= 5 && <Legs />}
+            {fails.length >= 3 && <Body d="M 100 70 L 100 120" />}
+            {fails.length >= 4 && <Arms d="M 90 110 L 100 80 L 110 110" />}
+            {fails.length >= 5 && <Legs d="M 96 140 L 100 120 L 104 140" />}
           </Swingers>
         </HangingMan>
       </HangZone>
