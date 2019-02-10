@@ -1,0 +1,30 @@
+input(type='checkbox', id='toggle')
+.toggle
+  .toggle__head
+  .toggle__ear.toggle__ear--left
+  .toggle__ear.toggle__ear--right
+  .toggle__ear.toggle__ear--left.toggle__ear--clone
+  .toggle__ear.toggle__ear--right.toggle__ear--clone
+  .toggle__face
+    .toggle__eye.toggle__eye--left
+    .toggle__eye.toggle__eye--right
+    .toggle__mouth
+  .toggle__label.
+    BUN<br/>FROG
+  .toggle__scribble
+svg
+  filter#scribble--0
+    feturbulence(basefrequency='0.02', numoctaves='3', result='noise', seed='0')
+    fedisplacementmap#displacement(in='SourceGraphic', in2='noise', scale='2')
+  filter#scribble--1
+    feturbulence(basefrequency='0.02', numoctaves='3', result='noise', seed='1')
+    fedisplacementmap(in='SourceGraphic', in2='noise', scale='3')
+  filter#scribble--2
+    feturbulence(basefrequency='0.02', numoctaves='3', result='noise', seed='2')
+    fedisplacementmap(in='SourceGraphic', in2='noise', scale='2')
+  filter#scribble--3
+    feturbulence(basefrequency='0.02', numoctaves='3', result='noise', seed='3')
+    fedisplacementmap(in='SourceGraphic', in2='noise', scale='3')
+  filter#scribble--4
+    feturbulence(basefrequency='0.02', numoctaves='3', result='noise', seed='4')
+    fedisplacementmap(in='SourceGraphic', in2='noise', scale='2')
