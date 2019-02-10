@@ -3,6 +3,10 @@ const { useEffect, useState } = React
 const { render } = ReactDOM
 const rootNode = document.getElementById('app')
 
+/**
+ * A hook for wrapping callbacks inside requestAnimationFrame for performance
+ * @param {function} callback - a callback to use inside the raf handler
+ */
 const useRAF = callback => {
   const [handler, setHandler] = useState()
   useEffect(() => {
@@ -30,8 +34,8 @@ const useRAF = callback => {
 }
 
 const App = () => {
-  const [x, setX] = useState(Date.now())
-  const [y, setY] = useState(Date.now())
+  const [x, setX] = useState(0)
+  const [y, setY] = useState(0)
   const handler = useRAF(e => {
     setX(e.x)
     setY(e.y)
