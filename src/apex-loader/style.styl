@@ -1,0 +1,107 @@
+*
+  box-sizing border-box
+
+body
+  background-color #111
+  min-height 100vh
+
+$duration = 2.5s
+
+.loader
+  width 200px
+  height 240px
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  display grid
+  grid-template-columns 1fr 1fr 1fr
+  grid-gap 8px
+  $clip = polygon(0 -15%, 100% -15%, 100% 100%, 0 100%)
+  -webkit-clip-path $clip
+  clip-path $clip
+
+  &__prong
+    background red
+
+    &:nth-of-type(1)
+      $clip = polygon(0 0, 100% 15%, 100% 100%, 0 85%)
+      -webkit-clip-path $clip
+      clip-path $clip
+      animation drop-in-3 $duration infinite linear
+
+    &:nth-of-type(2)
+      $clip = polygon(0 0, 100% 15%, 100% 100%, 0 100%)
+      -webkit-clip-path $clip
+      clip-path $clip
+      animation drop-in $duration infinite linear
+
+    &:nth-of-type(3)
+      $clip = polygon(0 0, 100% 15%, 100% 85%, 0 100%)
+      -webkit-clip-path $clip
+      clip-path $clip
+      animation drop-in-2 $duration infinite linear
+
+  &__icon
+    position absolute
+    height 58%
+    width 80%
+    background #111
+    top 25%
+    left 50%
+    transform translate(-50%, 0)
+    $clip = polygon(50% 0, 100% 85%, 85% 100%, 58% 80%, 73% 80%, 50% 40%, 27% 80%, 42% 80%, 15% 100%, 0 85%)
+    -webkit-clip-path $clip
+    clip-path $clip
+    animation fade-in $duration infinite linear
+
+@keyframes fade-in
+  0%
+    opacity 0
+  8%
+  100%
+    opacity 1
+
+@keyframes drop-in-2
+  0%
+  10%
+    opacity 0
+    transform translate(0, -25%)
+  20%
+    opacity 1
+  30%
+  50%
+    opacity 1
+    transform translate(0, 0)
+  100%
+    transform translate(0, 100%)
+    opacity 0
+
+@keyframes drop-in-3
+  0%
+  10%
+    opacity 0
+    transform translate(0, -25%)
+  20%
+    opacity 1
+  30%
+  75%
+    opacity 1
+    transform translate(0, 0)
+  100%
+    transform translate(0, 100%)
+    opacity 0
+
+@keyframes drop-in
+  0%
+    opacity 0
+    transform translate(0, -25%)
+  5%
+    opacity 1
+  10%
+  65%
+    opacity 1
+    transform translate(0, 0)
+  100%
+    transform translate(0, 100%)
+    opacity 0
