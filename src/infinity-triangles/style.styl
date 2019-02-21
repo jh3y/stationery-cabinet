@@ -1,0 +1,67 @@
+*
+  box-sizing border-box
+
+body
+  background #eeeeee
+  min-height 100vh
+
+// Equilateral triangle calculations
+$size = 100
+$height = math(($size * $size) - (($size / 2) * ($size / 2)), 'sqrt')
+$duration = 2s
+$color = #4d05e8
+
+.triangle
+  border-style solid
+  border-color transparent
+  border-bottom-color $color
+  border-width 0 (($size / 2) * 1px) ($height * 1px) (($size / 2) * 1px)
+  position absolute
+  top 50%
+  left 50%
+  animation-duration $duration
+  animation-iteration-count infinite
+  animation-timing-function ease
+
+  &--one
+    filter drop-shadow(1px 1px 1px $color)
+    transform-origin 50% 67%
+    animation-name one
+
+
+  &--two
+    transform-origin bottom right
+    animation-name two
+
+  &--three
+    transform-origin top center
+    animation-name three
+
+  &--four
+    transform-origin bottom left
+    animation-name four
+
+
+@keyframes one
+  0%, 10%, 20%, 30%, 40%, 50%, 60%, 70%, 80%
+    transform translate(-50%, -50%) rotate(-60deg) scale(1)
+  90%, 100%
+    transform translate(-50%, -50%) rotate(0deg) scale(0.5)
+
+@keyframes two
+  0%, 10%, 20%
+    transform translate(-50%, 0) rotate(0deg)
+  30%, 40%, 50%, 60%, 70%, 80%, 90%, 100%
+    transform translate(-50%, 0) rotate(300deg)
+
+@keyframes three
+  0%, 10%, 20%, 30%, 40%
+    transform translate(-50%, 0) rotate(0deg)
+  50%, 60%, 70%, 80%, 90%, 100%
+    transform translate(-50%, 0) rotate(300deg)
+
+@keyframes four
+  0%, 10%, 20%, 30%, 40%, 50%, 60%
+    transform translate(-50%, 0) rotate(0deg)
+  70%, 80%, 90%, 100%
+    transform translate(-50%, 0) rotate(300deg)
