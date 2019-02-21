@@ -1,12 +1,16 @@
 const { React, ReactDOM, styled } = window
-const { useEffect, useState } = React
+const { useEffect, useRef, useState } = React
 const { render } = ReactDOM
 const rootNode = document.getElementById('app')
-
 /**
  * Keyframes animations used for elements
  */
-const swing = styled.keyframes`
+
+/**
+ * CHEAT CODES 😅
+ * "SHAKE A LEG" - draw each leg individually
+ * "GIVE ME A HAND" - draw each arm individually
+ */ const swing = styled.keyframes`
   0%,
   50%,
   100% {
@@ -38,7 +42,6 @@ const fly = styled.keyframes`
     opacity: 1;
   }
 `
-
 const Container = styled.div`
   display: grid;
   width: 280px;
@@ -52,7 +55,22 @@ const Container = styled.div`
     width: 320px;
   }
 `
-
+const fadeAway = styled.keyframes`
+  to {
+    opacity: 0;
+  }
+`
+const Activation = styled.div`
+  padding: 8px 12px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: white;
+  font-size: 1.25rem;
+  color: ${p => (p.dark ? '#000' : '#FFF')};
+  border: 2px solid ${p => (p.dark ? '#000' : '#FFF')};
+  animation: ${fadeAway} 0.25s 2s ease forwards;
+`
 const Button = styled.button`
   cursor: pointer;
   background: transparent;
@@ -69,12 +87,10 @@ const Button = styled.button`
     opacity: 0.2;
   }
 `
-
 const NewGameButton = styled(Button)`
   padding: 0 16px;
   height: 44px;
 `
-
 const Options = styled.div`
   display: grid;
   grid-gap: 2px;
@@ -85,7 +101,6 @@ const Options = styled.div`
   justify-content: center;
   animation: ${enter} 0.25s ${p => (p.games > 0 ? 0 : 2)}s ease both;
 `
-
 const Result = styled.div`
   color: ${p => (p.dark ? '#000' : '#FFF')};
   grid-column: 1 / -1;
@@ -93,7 +108,6 @@ const Result = styled.div`
   text-align: center;
   position: relative;
 `
-
 const Char = styled.div`
   font-size: 2rem;
   line-height: 3rem;
@@ -115,7 +129,6 @@ const Char = styled.div`
     border-bottom: 5px solid ${p.dark ? '#000' : '#FFF'};
   `};
 `
-
 const HangingMan = styled.svg`
   height: 180px;
   @media (min-width: 375px) and (min-height: 660px) {
@@ -136,7 +149,6 @@ const HangZone = styled.div`
   grid-column: 1 / -1;
   text-align: center;
 `
-
 const Swingers = styled.g`
   transform-origin: 50% 0;
   animation: ${swing} 3s infinite linear paused;
@@ -146,7 +158,6 @@ const Swingers = styled.g`
     animation-play-state: running;
   `};
 `
-
 const Frame = styled.path`
   stroke-dashoffset: 400;
   stroke-dasharray: 400;
@@ -164,12 +175,11 @@ const Head = styled.circle`
   animation: ${draw} 1s ease;
 `
 const Arms = styled.path`
-  d: path('M 90 110 L 100 80 L 110 110');
+  d: path(${p => p.d});
   stroke-dashoffset: 300;
   stroke-dasharray: 300;
   animation: ${draw} 2s ease;
 `
-
 const Body = styled.path`
   d: path('M 100 70 L 100 120');
   stroke-dashoffset: 200;
@@ -177,7 +187,7 @@ const Body = styled.path`
   animation: ${draw} 1s ease;
 `
 const Legs = styled.path`
-  d: path('M 96 140 L 100 120 L 104 140');
+  d: path(${p => p.d});
   stroke-dashoffset: 300;
   stroke-dasharray: 300;
   animation: ${draw} 2s ease;
@@ -191,6 +201,49 @@ const Tada = styled.span`
   transform: rotate(calc(var(--r) * 1deg)) translate(0, calc(var(--l) * 1px));
 `
 /**
+ * A hook that provides a way to hook into users typing out easter egg codes 😅
+ * @param {String} code - Cheat code for user to enter on keypress
+ */
+const useCheatCode = (code, insensitive) => {
+  const [active, setActive] = useState(false)
+  const keyed = useRef([])
+  const splitCode = useRef(code.split(''))
+  const handlePress = e => {
+    keyed.current = keyed.current.length ? [...keyed.current, e.key] : [e.key]
+    if (
+      splitCode.current.slice(0, keyed.current.length).every((v, i) => {
+        const match = insensitive
+          ? v.toLowerCase() === keyed.current[i].toLowerCase()
+          : v === keyed.current[i]
+        return match && keyed.current.length === splitCode.current.length
+      })
+    ) {
+      // We got a match, let's do something cool 🎉
+      window.removeEventListener('keypress', handlePress)
+      setActive(true)
+    } else if (
+      !splitCode.current
+        .slice(0, keyed.current.length)
+        .every(
+          (v, i) =>
+            insensitive
+              ? v.toLowerCase() === keyed.current[i].toLowerCase()
+              : v === keyed.current[i]
+        )
+    ) {
+      // No match so reset 👎
+      keyed.current = []
+    }
+  }
+  useEffect(() => {
+    window.addEventListener('keypress', handlePress)
+    return () => {
+      window.removeEventListener('keypress', handlePress)
+    }
+  }, [])
+  return active
+}
+/**
  * Hexadecimal Hangman
  * Built w/ React Hooks + CSS Grid
  * @author Jhey
@@ -201,7 +254,6 @@ const getHex = () =>
     .fill()
     .map(() => chars.charAt(Math.floor(Math.random() * chars.length)))
     .join('')
-
 const getRgbFromHex = hex => {
   let i = 0
   let result = []
@@ -211,13 +263,15 @@ const getRgbFromHex = hex => {
   }
   return result
 }
-
 const Game = () => {
   const [games, setGames] = useState(0)
   const [fails, setFails] = useState([])
   const [successes, setSuccesses] = useState([])
   const [dark, setDark] = useState(false)
+  const threshold = useRef(5)
   const [hex, setHex] = useState(getHex())
+  const hand = useCheatCode('GIVE ME A HAND', true)
+  const leg = useCheatCode('SHAKE A LEG', true)
   /**
    * When a character is selected
    * Check it against the hex in state
@@ -247,16 +301,22 @@ const Game = () => {
       // If 2 out of 3 RGB values are over 200 then switch container
       // to dark mode 👍
       const rgb = getRgbFromHex(hex)
-      document.body.style.background = `rgb(${rgb.join(',')})`
+      document.body.style.background = `rgb(${rgb.join(',')})` // console.info(hex) // document.body.style.background = `#${hex}`
       // CHEAT 😅
-      // console.info(hex)
-      // document.body.style.background = `#${hex}`
       setDark(rgb.filter(c => c > 200).length >= 2)
     },
     [hex]
   )
+  useEffect(
+    () => {
+      if (hand || leg) threshold.current = threshold.current + 1
+    },
+    [hand, leg]
+  )
   return (
     <Container className="container">
+      {hand && <Activation dark={dark}>Help activated!</Activation>}
+      {leg && <Activation dark={dark}>Help activated!</Activation>}
       <HangZone>
         <HangingMan
           dark={dark}
@@ -267,8 +327,44 @@ const Game = () => {
             {fails.length >= 1 && <Rope d="M 100 5 L 100 30" />}
             {fails.length >= 2 && <Head cx="100" cy="50" r="20" />}
             {fails.length >= 3 && <Body d="M 100 70 L 100 120" />}
-            {fails.length >= 4 && <Arms d="M 90 110 L 100 80 L 110 110" />}
-            {fails.length >= 5 && <Legs d="M 96 140 L 100 120 L 104 140" />}
+            {/** NO CHEATS ACTIVATED = FINISH IN 5 */}
+            {!hand &&
+              !leg &&
+              fails.length >= 4 && <Arms d="M 90 110 L 100 80 L 110 110" />}
+            {!hand &&
+              !leg &&
+              fails.length >= 5 && <Legs d="M 96 140 L 100 120 L 104 140" />}
+            {/** ACTIVATED HAND + NOT LEG = FINISH IN 6 */}
+            {hand &&
+              !leg &&
+              fails.length >= 4 && <Arms d="M 90 110 L 100 80" />}
+            {hand &&
+              !leg &&
+              fails.length >= 5 && <Arms d="M 100 80 L 110 110" />}
+            {hand &&
+              !leg &&
+              fails.length >= 6 && <Legs d="M 96 140 L 100 120 L 104 140" />}
+            {/** ACTIVATED LEG + NOT HAND = FINISH IN 6 */}
+            {!hand &&
+              leg &&
+              fails.length >= 4 && <Arms d="M 90 110 L 100 80 L 110 110" />}
+            {!hand &&
+              leg &&
+              fails.length >= 5 && <Legs d="M 96 140 L 100 120" />}
+            {!hand &&
+              leg &&
+              fails.length >= 6 && <Legs d="M 100 120 L 104 140" />}
+            {/** ACTIVATED LEG + HAND = FINISH IN 7 */}
+            {hand && leg && fails.length >= 4 && <Arms d="M 90 110 L 100 80" />}
+            {hand &&
+              leg &&
+              fails.length >= 5 && <Arms d="M 100 80 L 110 110" />}
+            {hand &&
+              leg &&
+              fails.length >= 6 && <Legs d="M 96 140 L 100 120" />}
+            {hand &&
+              leg &&
+              fails.length >= 7 && <Legs d="M 100 120 L 104 140" />}
           </Swingers>
         </HangingMan>
       </HangZone>
@@ -284,12 +380,13 @@ const Game = () => {
               underline={true}
               fade={!successes.includes(c)}
               dark={dark}>
-              {(successes.includes(c) || fails.length === 5) && c}
+              {(successes.includes(c) || fails.length === threshold.current) &&
+                c}
             </Char>
           )
         })}
       {hex &&
-        fails.length !== 5 &&
+        fails.length !== threshold.current &&
         successes.length !== 6 && (
           <Options dark={dark} games={games} className="options">
             {chars.split('').map(c => (
@@ -303,7 +400,7 @@ const Game = () => {
             ))}
           </Options>
         )}
-      {(fails.length === 5 || successes.length === 6) && (
+      {(fails.length === threshold.current || successes.length === 6) && (
         <Result dark={dark} lost={fails.length === 5}>
           <h1>{`${successes.length === 6 ? 'Well Done!' : 'Unlucky!'}`}</h1>
           <NewGameButton dark={dark} onClick={newGame}>
