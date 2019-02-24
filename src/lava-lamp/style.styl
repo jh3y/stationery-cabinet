@@ -1,0 +1,170 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+body
+  align-items center
+  display flex
+  justify-content center
+  min-height 100vh
+  background darken(#8c14fc, 80%)
+
+$lamp = #000
+// $shadow = #bf55ec
+// $core = #663399
+// $lava = lighten(#9f5afd, 30%)
+// $lava-bg = radial-gradient(circle at 50% 50%, $core 25%, $shadow)
+$shadow = #19b5fe
+$core = #3a539b
+$lava = #29f1c3
+$lava-bg = radial-gradient(circle at 50% 50%, $core 25%, $shadow)
+
+img
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-69.5%, -26%)
+  opacity .2
+  height 1300px
+
+.lava-lamp
+  height calc(var(--height) * 1px)
+  width calc(var(--width) * 1px)
+  position relative
+
+  &:after
+    content ''
+    height 500px
+    width 500px
+    position absolute
+    background radial-gradient(circle at 50% 50%, $shadow, transparent 60%)
+    top 45%
+    left 50%
+    z-index 4
+    transform translate(-50%, -50%)
+    filter blur(10px)
+    opacity .5
+
+  &:before
+    content ''
+    height 25%
+    width 300%
+    border-radius 100%
+    background radial-gradient(ellipse at 50% 50%, $shadow, transparent 60%)
+    position absolute
+    top 85%
+    left 50%
+    transform translate(-50%, 0)
+    opacity .5
+    filter blur(10px)
+
+  &__main
+    border-radius 50% 50% 50% 50% / 60% 60% 40% 40%
+    width 100%
+    height 100%
+    position relative
+    overflow hidden
+    z-index 2
+
+    &:after
+    &:before
+      background $lamp
+      content ''
+      height 12%
+      left 0
+      position absolute
+      width 100%
+
+    &:after
+      top 0
+
+    &:before
+      bottom 0
+      height 26%
+
+  &__glass
+    background $lava-bg
+    border-radius 50% / 10%
+    overflow hidden
+    height 70%
+    left 0
+    position absolute
+    top 10%
+    width 100%
+    z-index 2
+
+  &__base
+    height 20%
+    width 100%
+    position absolute
+    bottom 0
+    overflow hidden
+    border-radius 0 0 50% 50% / 0 0 35% 35%
+
+    &:before
+      content ''
+      background $lamp
+      border-radius 50% 50% 50% 50% / 60% 60% 40% 40%
+      position absolute
+      top -60%
+      height calc(var(--height) * 1px)
+      width calc(var(--width) * 1px)
+
+  &__lava
+    border-radius 50% / 10%
+    height 100%
+    filter url('#goo')
+    overflow hidden
+    position absolute
+    width 100%
+
+    &:after
+    &:before
+      content ''
+      position absolute
+      left 50%
+      background $lava
+      width 100%
+
+    &:before
+      bottom 0
+      height 5%
+      border-radius 100% 100% 0 0 / 200% 200% 0 0
+      transform translate(-50%, 0)
+
+    &:after
+      top 0
+      height 5%
+      border-radius 0 0 100% 100% / 0 0 200% 200%
+      transform translate(-50%, 0)
+      width 50%
+      animation sway 20s infinite linear
+
+      @keyframes sway
+        50%
+          transform translate(0%, 0)
+
+.blob
+  animation-delay calc(var(--delay) * 1s)
+  animation-direction var(--direction)
+  animation-duration calc(var(--speed) * 1s)
+  animation-iteration-count infinite
+  animation-name blob
+  animation-timing-function linear
+  background $lava
+  border-radius 100%
+  height calc(var(--width) * 1px)
+  left calc(var(--x) * 1%)
+  position absolute
+  top 100%
+  width calc(var(--width) * 1px)
+
+svg
+  display none
+
+@keyframes blob
+  from
+    transform skewX(calc(var(--skewX) * 1deg)) skewY(calc(var(--skewY) * 1deg)) translate(-50%, 0)
+  to
+    transform skewX(calc(var(--skewX) * 1deg)) skewY(calc(var(--skewY) * 1deg)) translate(-50%, calc((400 + var(--height)) * -1px))

@@ -1,0 +1,30 @@
+
+
+- const height = 400
+- const width = 150
+- const inRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+mixin lava(amount)
+  .lava-lamp__lava
+    - for (let i = 0; i < amount; i++)
+      - const skewX = inRange(0, 5)
+      - const skewY = inRange(0, 5)
+      - const speed = inRange(8, 30)
+      - const delay = inRange(0, 10) - 10
+      - const height = inRange(20, 100)
+      - const width = inRange(20, 100)
+      - const x = inRange(0, 100)
+      - const direction = Math.random() > 0.5 ? 'alternate' : 'alternate-reverse'
+      .blob(style=`--skewX: ${skewX}; --skewY: ${skewY}; --speed: ${speed}; --delay: ${delay}; --height: ${height}; --width: ${width}; --x: ${x}; --direction: ${direction}`)
+.lava-lamp(style=`--height: ${height}; --width: ${width}`)
+  .lava-lamp__main
+    .lava-lamp__glass
+      +lava(3)
+      +lava(2)
+      +lava(2)
+  .lava-lamp__base
+
+svg
+  filter(id='goo')
+    feGaussianBlur(in='SourceGraphic', stdDeviation='10', result='BLUR')
+    feColorMatrix(in='BLUR', mode='matrix', values='1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7', result='GOO')
+    feBlend(in='SourceGraphic', in2='goo')
