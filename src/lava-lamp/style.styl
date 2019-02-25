@@ -1,14 +1,18 @@
 *
-*:after
-*:before
   box-sizing border-box
 
 body
+  background darken(#8c14fc, 80%)
+  min-height 100vh
+
+.scene
   align-items center
   display flex
   justify-content center
-  min-height 100vh
-  background darken(#8c14fc, 80%)
+  width 100vw
+  position relative
+  height 100vh
+  overflow-x hidden
 
 $lamp = #000
 // $shadow = #bf55ec
@@ -114,36 +118,14 @@ img
   &__lava
     border-radius 50% / 10%
     height 100%
-    filter url('#goo')
     overflow hidden
     position absolute
     width 100%
+    filter url('#goo')
 
-    &:after
-    &:before
-      content ''
-      position absolute
-      left 50%
-      background $lava
-      width 100%
-
-    &:before
-      bottom 0
-      height 5%
-      border-radius 100% 100% 0 0 / 200% 200% 0 0
-      transform translate(-50%, 0)
-
-    &:after
-      top 0
-      height 5%
-      border-radius 0 0 100% 100% / 0 0 200% 200%
-      transform translate(-50%, 0)
-      width 50%
-      animation sway 20s infinite linear
-
-      @keyframes sway
-        50%
-          transform translate(0%, 0)
+    svg
+      height 280px
+      width 150px
 
 .blob
   animation-delay calc(var(--delay) * 1s)
@@ -152,19 +134,22 @@ img
   animation-iteration-count infinite
   animation-name blob
   animation-timing-function linear
-  background $lava
-  border-radius 100%
-  height calc(var(--width) * 1px)
-  left calc(var(--x) * 1%)
-  position absolute
-  top 100%
-  width calc(var(--width) * 1px)
+  fill $lava
+  transform-box fill-box
 
-svg
-  display none
+  &--bottom
+  &--top
+    animation none
+
+  &--top
+    animation sway 20s infinite linear
+
+    @keyframes sway
+      50%
+        transform translate(50%, 0)
 
 @keyframes blob
   from
-    transform skewX(calc(var(--skewX) * 1deg)) skewY(calc(var(--skewY) * 1deg)) translate(-50%, 0)
+    transform skew(calc(var(--skewX) * 1deg), calc(var(--skewY) * 1deg)) translate(0, 0)
   to
-    transform skewX(calc(var(--skewX) * 1deg)) skewY(calc(var(--skewY) * 1deg)) translate(-50%, calc((400 + var(--height)) * -1px))
+    transform skew(calc(var(--skewX) * 1deg), calc(var(--skewY) * 1deg)) translate(0, calc((400 + (var(--height) * 2)) * -1px))
