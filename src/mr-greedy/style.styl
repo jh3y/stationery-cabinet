@@ -1,0 +1,224 @@
+*
+  box-sizing border-box
+  -webkit-tap-highlight-color transparent
+
+body
+  align-items center
+  display flex
+  justify-content center
+  min-height 100vh
+
+svg
+  position absolute
+  top 0
+  left 0
+
+$color = #d40179
+
+.mr-greedy
+  height 300px
+  filter drop-shadow(0 0 6px #000)
+  position relative
+  width 300px
+
+  &:after
+  &:before
+    content ''
+    position absolute
+    background $color
+    height 14px
+    width 11px
+
+  &:after
+    top 275px
+    left 210px
+
+  &:before
+    top 275px
+    left 193px
+    z-index 5
+
+  &__body
+    height 100%
+    fill $color
+    stroke-width 10px
+    stroke #000
+    width 100%
+
+  &__mouth
+    width 84px
+    height 50px
+    position absolute
+    left 196px
+    top 50px
+    border 6px solid black
+    border-top 0
+    border-radius 0 0 45px 35px / 0 0 50px 50px
+    z-index 2
+
+    &--shocked
+      background #000
+      width 30px
+      top 60px
+      left 215px
+      height 40px
+      transform rotate(15deg)
+      border-radius 100%
+
+  &__hand
+    z-index 2
+    &--left
+      background black
+      height 10px
+      width 10px
+      position absolute
+      top 100px
+      left 110px
+
+      .mr-greedy__finger
+        border-radius 100%
+        height 27px
+        width 21px
+        border 6px solid black
+        background $color
+        position absolute
+
+        &:nth-of-type(1)
+          transform translate(-19px, 3px) rotate(-14deg)
+
+        &:nth-of-type(2)
+          transform translate(-4px, -3px)
+
+        &:nth-of-type(3)
+          transform translate(11px, -12px) rotate(-10deg)
+
+    &--right
+      height 50px
+      width 25px
+      background black
+      position absolute
+      top 155px
+      left 222px
+      transform rotate(14deg)
+      background $color
+      border-left 6px solid black
+      border-right 6px solid black
+
+      &:before
+        content ''
+        background $color
+        position absolute
+        top 70%
+        left 50%
+        height 20px
+        width 40px
+        transform translate(-50%, -50%)
+
+      &:after
+        content ''
+        background $color
+        position absolute
+        top 40%
+        left 50%
+        height 15px
+        width 10px
+
+      .mr-greedy__finger
+        position absolute
+        border 6px solid black
+        background $color
+
+        &:nth-of-type(1)
+          height 23px
+          width 22px
+          border-right 0
+          left -22px
+          top 20px
+          border-radius 20px 0 0 20px / 10px 10px 10px 10px
+          z-index 4
+          transform rotate(15deg) translate(-2px, 0)
+
+          &:after
+            content ''
+            background $color
+            position absolute
+            top 0
+            left 1px
+            height 12px
+            width 20px
+            border-radius 100%
+
+        &:nth-of-type(2)
+          height 24px
+          width 22px
+          top 35px
+          left 3px
+          border-top 0
+          border-radius 0 0 10px 10px/0 0 20px 10px
+          transform rotate(-16deg)
+          z-index 2
+
+        &:nth-of-type(3)
+          height 24px
+          width 22px
+          top 35px
+          left -10px
+          border-top 0
+          border-radius 10px 0 10px 10px / 10px 0 10px 10px
+          z-index 3
+
+        &:nth-of-type(4)
+          height 39px
+          width 23px
+          top 13px
+          left 13px
+          border-top 6px solid black
+          border-left 0
+          border-radius 0 23px 10px 10px/0 18px 10px 10px
+
+
+  &__eye
+    height 20px
+    width 10px
+    background black
+    position absolute
+    top 25px
+    left 225px
+    border-radius 100%
+    transform rotate(10deg)
+    z-index 2
+
+    &--right
+      left 245px
+      height 21px
+
+  &__leg
+    position absolute
+    background $color
+    border 6px solid black
+    top 260px
+    height 35px
+    width 23px
+    &--left
+      left 187px
+
+      div
+        right -6px
+        border-radius 30px 15px 12px 12px / 12px 13px 10px 12px
+
+    &--right
+      left 204px
+
+      div
+       left -6px
+       border-radius 15px 30px 12px 12px / 12px 13px 10px 12px
+
+  &__foot
+    position absolute
+    bottom 0
+    width 50px
+    height 25px
+    background $color
+    border 6px solid black
+    transform translate(0, 12px)
+
