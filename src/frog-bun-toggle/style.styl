@@ -12,14 +12,17 @@ body
   font-family 'Sigmar One', cursive
   justify-content center
   min-height 100vh
+  overflow hidden
 
 .toggle
-  animation scribble .2s infinite
   height 260px
   position relative
   width 320px
   z-index 2
   opacity .65
+
+  @media(min-width 768px)
+    animation scribble .2s infinite
 
   &__head
     height 200px
@@ -195,7 +198,8 @@ img
   transform translate(-50%, -50%)
 
 svg
-  display none
+  position absolute
+  left 100%
 
 @keyframes scribble
   0%
