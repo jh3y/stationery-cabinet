@@ -1,0 +1,360 @@
+*
+  box-sizing border-box
+
+body
+  padding 0
+  margin 0
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  overflow hidden
+
+  @media(min-width 768px)
+    animation scribble .2s infinite
+
+img
+  position absolute
+  height 250px
+  object-fit cover
+  left 50%
+  top 50%
+  transform translate(-50%, -50%)
+  opacity .2
+
+svg
+  position absolute
+  left 100%
+
+.mr-bump
+  position absolute
+  left 50%
+  top 50%
+  transform translate(-50%, -61%)
+  height 195px
+  width 200px
+  // opacity .25
+
+  &:after
+  &:before
+    content ''
+    background dodgerblue
+    position absolute
+    top 189px
+    height 29px
+    z-index 3
+
+  &:before
+    width 12px
+    border-right 5px solid black
+    left 93px
+
+  &:after
+    width 15px
+    border-left 5px solid black
+    left 105px
+
+  &__body
+    height 195px
+    width 200px
+    border-radius 105px 70px 90px 90px / 125px 95px 105px 75px
+    border 5px solid black
+    background dodgerblue
+    overflow hidden
+    position relative
+    z-index 2
+
+  &__face
+    position absolute
+    background dodgerblue
+    border-bottom 5px solid black
+    width 300px
+    height 100px
+    top 50%
+    left 50%
+    transform translate(-50%, -49%) rotate(2deg)
+    z-index 2
+    border-radius 0 0 150px 150px / 0 0 90px 100px
+    overflow hidden
+
+  &__eye
+    height 21px
+    width 13px
+    background #000
+    border-radius 100%
+    position absolute
+    top 50%
+    left 50%
+
+    &--left
+      transform translate(-140%, -95%) rotate(7deg)
+
+    &--right
+      transform translate(90%, -100%) rotate(7deg)
+
+  &__mouth
+    height 42px
+    width 87px
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-57%, 29%) rotate(14deg)
+    border 5px solid #000
+    border-top 0
+    border-radius 0 0 42px 38px/0 0 32px 42px
+
+    &:after
+      content ''
+      background dodgerblue
+      width 100%
+      position absolute
+      height 10%
+      top -5%
+
+
+  &__bandage
+    border 5px solid black
+    background #fff
+    position absolute
+    top 50%
+    left 50%
+    height 70px
+    width 230px
+    border-radius 0 0 120px 70px / 0 0 24px 20px
+
+    &--one
+      transform translate(-50%, -153%)
+      z-index 3
+
+    &--two
+      transform translate(-50%, -185%) rotate(5deg)
+      z-index 4
+
+    &--three
+      transform translate(-29%, -215%) rotate(-4deg)
+      z-index 5
+
+    &--four
+      transform translate(-54%, -12%) rotate(4deg)
+      border-radius 0 0 110px 124px/0 0 49px 48px
+      width 250px
+      z-index 2
+
+    &--five
+      transform translate(-50%, 17%) rotate(8deg)
+      border-radius 0 0 120px 70px/0 0 45px 20px
+      z-index 1
+
+  &__leg
+    background dodgerblue
+    border 5px solid black
+    position absolute
+
+    &--left
+      top 89%
+      left 44%
+      height 50px
+      width 22px
+
+    &--right
+      height 50px
+      width 24px
+      top 89%
+      left 53%
+
+  &__foot
+    position absolute
+    background dodgerblue
+    border 5px solid black
+
+    &--left
+      width 68px
+      height 26px
+      right -8px
+      bottom -8px
+      transform-origin right center
+      transform rotate(-7deg)
+      border-radius 100%
+
+    &--right
+      width 76px
+      height 26px
+      left -6px
+      bottom -10px
+      transform-origin left center
+      transform rotate(1deg)
+      border-radius 100%
+
+  &__hand
+    background dodgerblue
+    border 5px solid black
+    border-left 0
+    border-right 0
+    position absolute
+    height 30px
+    width 30px
+    top 50%
+
+    &--left
+      right 95%
+      height 25px
+      width 30px
+      top 49%
+      transform rotate(-10deg)
+
+    &--right
+      height 25px
+      left 95%
+      top 55%
+      transform rotate(10deg)
+
+      &:after
+        content ''
+        height 15px
+        width 20px
+        border-radius 100%
+        position absolute
+        top 50%
+        left 50%
+        background dodgerblue
+        // opacity .2
+        transform translate(-35%, -60%)
+
+  &__finger
+    background dodgerblue
+    position absolute
+    border 5px solid black
+    top 50%
+    left 50%
+
+    &--one
+      width 22px
+      height 20px
+      transform translate(-87%, -136%)
+      border-radius 13px 12px 8px 12px/9px 15px 0px 11px
+      border-bottom 0
+
+    &--two
+      width 22px
+      height 20px
+      transform translate(-135%, -73%)
+      border-radius 13px 12px 12px 17px/13px 15px 12px 11px
+      border-right 0
+
+      &:after
+        content ''
+        background dodgerblue
+        position absolute
+        width 150%
+        height 100%
+        border-radius 100%
+
+    &--three
+      width 22px
+      height 18px
+      transform translate(-120%, -8%) rotate(-12deg)
+      border-radius 13px 12px 12px 17px/13px 15px 12px 11px
+      border-right 0
+
+      &:after
+        content ''
+        background dodgerblue
+        position absolute
+        width 150%
+        height 100%
+        border-radius 100%
+
+    &--four
+      width 22px
+      height 18px
+      transform translate(-79%, 55%) rotate(-58deg)
+      border-radius 13px 12px 12px 17px/13px 15px 12px 11px
+      border-right 0
+
+      &:after
+        content ''
+        background dodgerblue
+        position absolute
+        width 150%
+        height 100%
+        border-radius 100%
+
+    &--five
+      width 23px
+      height 23px
+      transform translate(-13%, -123%)
+      border-radius 18px 10px 19px 10px/16px 8px 21px 10px
+
+      &:after
+        content ''
+        background dodgerblue
+        position absolute
+        width 80%
+        height 160%
+        border-radius 100%
+        transform rotate(20deg)
+
+    &--six
+      width 23px
+      height 20px
+      transform translate(23%, -70%)
+      border-radius 18px 23px 19px 15px/16px 20px 21px 20px
+
+      &:after
+        content ''
+        background dodgerblue
+        position absolute
+        height 80%
+        width 160%
+        border-radius 100%
+        right 6px
+
+    &--seven
+      width 22px
+      height 18px
+      transform translate(1%, -12%) rotate(28deg)
+      border-radius 18px 23px 19px 15px/16px 20px 21px 20px
+
+      &:after
+        content ''
+        background dodgerblue
+        position absolute
+        height 80%
+        width 160%
+        border-radius 100%
+        right 6px
+
+    &--eight
+      width 18px
+      height 24px
+      transform translate(-39%, 12%) rotate(-24deg)
+      border-radius 18px 23px 19px 15px/16px 20px 21px 20px
+
+      &:after
+        content ''
+        background dodgerblue
+        position absolute
+        width 100%
+        height 160%
+        border-radius 100%
+        bottom 6px
+
+
+
+@keyframes scribble
+  0%
+    filter drop-shadow(0 0 6px #000) url('#scribble--0')
+    -webkit-filter drop-shadow(0 0 6px #000) url('#scribble--0')
+  25%
+    filter drop-shadow(0 0 6px #000) url('#scribble--1')
+    -webkit-filter drop-shadow(0 0 6px #000) url('#scribble--1')
+  50%
+    filter drop-shadow(0 0 6px #000) url('#scribble--2')
+    -webkit-filter drop-shadow(0 0 6px #000) url('#scribble--2')
+  75%
+    filter drop-shadow(0 0 6px #000) url('#scribble--3')
+    -webkit-filter drop-shadow(0 0 6px #000) url('#scribble--3')
+  100%
+    filter drop-shadow(0 0 6px #000) url('#scribble--4')
+    -webkit-filter drop-shadow(0 0 6px #000) url('#scribble--4')
+

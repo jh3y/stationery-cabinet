@@ -1,0 +1,42 @@
+.mr-bump
+  .mr-bump__body
+    .mr-bump__bandage.mr-bump__bandage--one
+    .mr-bump__bandage.mr-bump__bandage--two
+    .mr-bump__bandage.mr-bump__bandage--three
+    .mr-bump__bandage.mr-bump__bandage--five
+    .mr-bump__bandage.mr-bump__bandage--four
+    .mr-bump__face
+      .mr-bump__eye.mr-bump__eye--left
+      .mr-bump__eye.mr-bump__eye--right
+      .mr-bump__mouth
+  .mr-bump__leg.mr-bump__leg--left
+    .mr-bump__foot.mr-bump__foot--left
+  .mr-bump__leg.mr-bump__leg--right
+    .mr-bump__foot.mr-bump__foot--right
+  .mr-bump__hand.mr-bump__hand--left
+    .mr-bump__finger.mr-bump__finger--one
+    .mr-bump__finger.mr-bump__finger--two
+    .mr-bump__finger.mr-bump__finger--three
+    .mr-bump__finger.mr-bump__finger--four
+  .mr-bump__hand.mr-bump__hand--right
+    .mr-bump__finger.mr-bump__finger--five
+    .mr-bump__finger.mr-bump__finger--six
+    .mr-bump__finger.mr-bump__finger--seven
+    .mr-bump__finger.mr-bump__finger--eight
+svg
+  defs
+    filter#scribble--0
+      feturbulence(basefrequency='0.02', numoctaves='3', result='noise', seed='0')
+      fedisplacementmap#displacement(in='SourceGraphic', in2='noise', scale='2')
+    filter#scribble--1
+      feturbulence(basefrequency='0.02', numoctaves='3', result='noise', seed='1')
+      fedisplacementmap(in='SourceGraphic', in2='noise', scale='3')
+    filter#scribble--2
+      feturbulence(basefrequency='0.02', numoctaves='3', result='noise', seed='2')
+      fedisplacementmap(in='SourceGraphic', in2='noise', scale='2')
+    filter#scribble--3
+      feturbulence(basefrequency='0.02', numoctaves='3', result='noise', seed='3')
+      fedisplacementmap(in='SourceGraphic', in2='noise', scale='3')
+    filter#scribble--4
+      feturbulence(basefrequency='0.02', numoctaves='3', result='noise', seed='4')
+      fedisplacementmap(in='SourceGraphic', in2='noise', scale='2')
