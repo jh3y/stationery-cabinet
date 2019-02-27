@@ -1,4 +1,6 @@
 *
+*:after
+*:before
   box-sizing border-box
   -webkit-tap-highlight-color transparent
 
@@ -14,6 +16,75 @@ svg
   left 0
 
 $color = #d40179
+
+.body
+  width 237px
+  height 190px
+  z-index 2
+  right 0
+  bottom 27px
+  position absolute
+
+  &:after
+  &:before
+    content ''
+    position absolute
+
+  &:after
+    height 30px
+    width 120px
+    border-radius 100%
+    border-bottom 6px solid black
+    left 44px
+    top -48px
+    transform rotate(-53deg)
+    z-index 1
+    border-radius 0 0 0 36px / 0 0 0 30px
+    $clip = polygon(0 60%,50% 0, 73% 0, 100% 100%, 0 100%)
+    -webkit-clip-path $clip
+    clip-path $clip
+
+  &:before
+    height 97px
+    width 70px
+    background $color
+    z-index 4
+    transform translate(90px, 9px)
+
+  &__belly
+    border 6px solid black
+    width 100%
+    height 100%
+    background $color
+    position absolute
+    border-radius 120px 10px 110px 105px / 100px 10px 90px 85px
+    transform-origin right
+    z-index 2
+
+  &__head
+    position absolute
+    height 187px
+    width 134px
+    background $color
+    border 6px solid black
+    top 50%
+    right 0
+    transform translate(0, -96%)
+    border-bottom 0
+    border-radius 144px 125px 0 0/409px 142px 0 0
+    z-index 3
+
+    &:after
+      content ''
+      position absolute
+      background $color
+      height 100px
+      width 100px
+      transform rotate(38deg) translate(19px, 22px)
+
+
+  .mr-greedy__hand
+    transform translate(-700%, -900%)
 
 .mr-greedy
   height 300px
@@ -37,13 +108,6 @@ $color = #d40179
     top 275px
     left 193px
     z-index 5
-
-  &__body
-    height 100%
-    fill $color
-    stroke-width 10px
-    stroke #000
-    width 100%
 
   &__mouth
     width 84px
