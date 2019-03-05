@@ -1,0 +1,51 @@
+<svg
+   class='pan'
+   preserveAspectRatio='xMinYMin'
+   viewBox="0 0 200 325">
+  <g
+     transform="translate(-179.87888,-433.19762)"
+     style="opacity:1"
+     id="layer1">
+    <g
+       transform="translate(0.47635,0.39756772)"
+       id="g4336">
+      <g
+         id="g4303">
+        <path
+           id="rect4296"
+           transform="translate(179.40253,558.67396)"
+           d="m 100,-126.27148 c -9.695,0 -17.5,8.40675 -17.5,18.8496 l 0,85.722661 c 0,10.442858 7.805,18.8496096 17.5,18.8496096 9.695,0 17.5,-8.4067516 17.5,-18.8496096 l 0,-85.722661 c 0,-10.44285 -7.805,-18.8496 -17.5,-18.8496 z m 0,6.50781 a 10,10 0 0 1 10,10 10,10 0 0 1 -10,9.999998 10,10 0 0 1 -10,-9.999998 10,10 0 0 1 10,-10 z"
+           style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:3.42972708;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <rect
+           y="534.65881"
+           x="261.90253"
+           height="47.743256"
+           width="34.999996"
+           id="rect4298"
+           style="opacity:1;fill:#cccccc;fill-opacity:1;stroke:none;stroke-width:4;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      </g>
+      <g
+         id="g4272"
+         transform="translate(-8.7763963e-6,0)">
+        <circle
+           r="97.523636"
+           cy="658.67395"
+           cx="279.40253"
+           id="path4136"
+           style="fill:#333333;fill-opacity:1;stroke:#e8ecf1;stroke-width:3.99999952;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <circle
+           r="75"
+           cy="658.67395"
+           cx="279.40253"
+           id="path4138"
+           style="fill:#1a1a1a;fill-opacity:1;stroke:none;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <circle
+           r="14.999998"
+           cy="658.67395"
+           cx="279.40253"
+           id="path4228"
+           style="opacity:1;fill:#800000;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      </g>
+    </g>
+  </g>
+</svg>

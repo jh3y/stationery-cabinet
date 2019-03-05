@@ -1,0 +1,91 @@
+*
+  box-sizing border-box
+  -webkit-tap-highlight-color transparent
+
+body
+  background #5333ed
+  min-height 100vh
+  margin 0
+  padding 0
+  transform-style preserve-3d
+  perspective 1000px
+  cursor pointer
+
+.pan
+  cursor pointer
+  width 200px
+  position absolute
+  top 50%
+  left 50%
+  transform-origin 100px 225px
+  margin-left -100px
+  margin-top -225px
+  transform rotate(45deg)
+
+$cake-one = #fff2a4
+$cake-two = #eca24d
+$cake-three = #b45326
+
+.pancake
+  height 100%
+  width 100%
+  transform rotate(-45deg) translate3d(0, 0, 5px)
+
+  &--cooking .pancake__face
+    &--smiling
+      display none
+    &--cooking
+      display block
+
+  &--flipping .pancake__face
+    &--smiling
+    &--cooking
+      display none
+    &--flipping
+      display block
+
+  &__wrapper
+    height 120px
+    width 120px
+    position absolute
+    top 50%
+    left 50%
+    z-index 2
+    margin-left -60px
+    margin-top -60px
+    transform rotate(45deg)
+    transform-style preserve-3d
+    backface-visibility hidden
+
+    &:before
+      content ''
+      background $cake-one
+      position absolute
+      top 50%
+      left 50%
+      transform translate(-50%, -50%) rotateX(180deg)
+      height 100%
+      width 100%
+      border-radius 100%
+      animation cook 60s forwards ease
+
+  &__head
+    animation cook 60s forwards ease
+    fill $cake-one
+
+  &__face
+    display none
+
+    &--smiling
+      display block
+
+@keyframes cook
+  0%
+    background $cake-one
+    fill $cake-one
+  50%
+    background $cake-two
+    fill $cake-two
+  100%
+    background $cake-three
+    fill $cake-three
