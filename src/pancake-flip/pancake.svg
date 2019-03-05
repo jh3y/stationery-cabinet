@@ -1,0 +1,99 @@
+<svg
+   class='pancake'
+   viewBox="0 0 125 125"
+   preserveAspectRatio='xMinYMin'>
+  <g
+     transform="translate(-218.45033,-597.48341)"
+     >
+    <circle
+      class='pancake__head'
+       r="62.499992"
+       cy="659.9834"
+       cx="280.95032"
+       id="path4364"/>
+  </g>
+  <g
+      class='pancake__face pancake__face--smiling'
+     id="layer5">
+    <g
+       id="g4534">
+      <g
+         transform="translate(-218.45036,-597.48348)"
+         style="display:inline;opacity:1"
+         id="g4448">
+        <circle
+           r="4.9999995"
+           cy="651.05475"
+           cx="252.80746"
+           id="path4366"
+           style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:4;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <circle
+           style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:4;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="circle4368"
+           cx="309.09317"
+           cy="651.05475"
+           r="4.9999995" />
+      </g>
+      <path
+         style="display:inline;opacity:1;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:3.99999952;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 72.469621,64.28627 a 10,10 0 0 1 -9.969686,9.221947 10,10 0 0 1 -9.969693,-9.222032"
+         id="circle4387" />
+    </g>
+  </g>
+  <g
+     class='pancake__face pancake__face--flipping'
+     id="layer2">
+    <g
+       id="g4476">
+      <circle
+         transform="translate(-218.45036,-597.48348)"
+         style="display:inline;opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:4;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path4376"
+         cx="280.95032"
+         cy="666.99176"
+         r="9.999999" />
+      <g
+         id="g4472">
+        <path
+           id="path4468"
+           d="m 30.460063,49.409049 9.823502,5.671602 -9.912729,2.656107"
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.99999976;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.99999976;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m 94.539792,49.409049 -9.823502,5.671602 9.912729,2.656107"
+           id="path4470" />
+      </g>
+    </g>
+  </g>
+  <g
+     class='pancake__face pancake__face--cooking'
+     id="layer4">
+    <g
+       id="g4526">
+      <path
+         style="display:inline;opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:3.99999952;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 52.619141,65 A 10.000001,10.000001 0 0 0 62.5,73.507812 10.000001,10.000001 0 0 0 72.376953,65 l -19.757812,0 z"
+         id="path4409" />
+      <path
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 29.360776,53.391934 a 4.1666665,4.1666665 0 0 1 3.996303,-2.987397 4.1666665,4.1666665 0 0 1 3.996158,2.98691"
+         id="circle4494" />
+      <path
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 85.646485,53.391934 a 4.1666665,4.1666665 0 0 1 3.996302,-2.987397 4.1666665,4.1666665 0 0 1 3.996187,2.987005"
+         id="circle4496" />
+      <path
+         style="opacity:.5;fill:#d7e3f4;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 88.905974,16.026569 c 0.262252,1.252029 -0.685379,1.878774 -1.362104,1.884632 -0.701684,0.0061 -1.660737,-0.775402 -1.433794,-1.929505 0.226944,-1.154102 0.665476,-0.717955 1.433794,-4.621835 0.788264,3.848825 1.099852,3.414679 1.362104,4.666708 z"
+         id="path4519" />
+      <path
+         id="path4522"
+         d="m 93.839277,31.198421 c 0.653242,3.118673 -1.707207,4.679827 -3.392857,4.694418 -1.747821,0.01514 -4.136721,-1.931444 -3.571428,-4.806191 0.565293,-2.874747 1.65763,-1.78835 3.571428,-11.512503 1.963483,9.587015 2.739615,8.505603 3.392857,11.624276 z"
+         style="opacity:.5;fill:#d7e3f4;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         style="opacity:.5;fill:#d7e3f4;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 97.460727,22.408817 c 0.360003,1.71869 -0.940838,2.579036 -1.869792,2.587078 -0.963218,0.0083 -2.279733,-1.064413 -1.968202,-2.648676 0.311531,-1.584264 0.913514,-0.985554 1.968202,-6.344502 1.082071,5.283372 1.509794,4.687409 1.869792,6.4061 z"
+         id="path4524" />
+    </g>
+  </g>
+</svg>
