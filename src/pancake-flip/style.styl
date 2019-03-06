@@ -3,7 +3,7 @@
   -webkit-tap-highlight-color transparent
 
 body
-  background #5333ed
+  background #db0a5b
   min-height 100vh
   margin 0
   padding 0
@@ -59,8 +59,10 @@ $cake-three = #b45326
 
     &:before
       content ''
+      box-sizing border-box
       background $cake-one
       position absolute
+      border 5px solid $cake-one
       top 50%
       left 50%
       transform translate(-50%, -50%) rotateX(180deg)
@@ -70,6 +72,9 @@ $cake-three = #b45326
       animation cook 60s forwards ease
 
   &__head
+    fill $cake-one
+
+  &__splodge
     animation cook 60s forwards ease
     fill $cake-one
 
