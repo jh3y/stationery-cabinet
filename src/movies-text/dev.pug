@@ -1,0 +1,13 @@
+- const word = 'Showcase'
+- const letters = word.split('').length
+- const step = 0.1
+- const duration = ((letters + 2) * step) + step
+.showcase(style=`--duration: ${duration}; --step: ${step};`)
+  .showcase__border
+    - for(let i = 0; i < letters + 2; i++)
+      div
+  .showcase__backdrop
+  h1.showcase__text(data-splitting='')= word
+  .showcase__border
+    - for(let i = 0; i < letters + 2; i++)
+      div
