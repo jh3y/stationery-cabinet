@@ -1,0 +1,27 @@
+<svg
+   preserveAspectRatio="xMinYMin"
+   viewBox="0 0 125 125"
+   class="pancake__back">
+  <g
+     style="display:inline"
+     id="layer7">
+    <path
+       class='pancake__back-base'
+       d="m 343.45031,659.9834 c 0,34.51779 -27.9822,62.49999 -62.49999,62.49999 -34.51779,0 -62.49999,-27.9822 -62.49999,-62.49999 0,-34.51779 27.9822,-62.49999 62.49999,-62.49999 34.51779,0 62.49999,27.9822 62.49999,62.49999 z"
+       transform="translate(-218.45033,-597.48341)" />
+    <circle
+      class='pancake__back-scorch'
+       r="57.5"
+       cy="62.499989"
+       cx="62.499989"
+       id="path5075" />
+    <path
+       id="path5094"
+       d="m 39.876477,87.578884 a 16.605942,15.835202 0 0 1 10.114028,-3.275931 16.605942,15.835202 0 0 1 13.035631,6.025321"
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       id="path5081"
+       d="M 61.906521 110.36384 A 15.728429 15.44816 0 0 1 58.823153 101.17712 A 15.728429 15.44816 0 0 1 74.551582 85.728956 A 15.728429 15.44816 0 0 1 87.521224 92.437812 "
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
+</svg>

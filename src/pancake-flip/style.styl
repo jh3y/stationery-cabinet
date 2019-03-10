@@ -3,33 +3,35 @@
   -webkit-tap-highlight-color transparent
 
 body
-  background #db0a5b
-  min-height 100vh
+  background #4d05e8
+  cursor pointer
   margin 0
+  min-height 100vh
   padding 0
   transform-style preserve-3d
   perspective 1000px
-  cursor pointer
 
 .pan
   cursor pointer
-  width 200px
-  position absolute
-  top 50%
   left 50%
-  transform-origin 100px 225px
   margin-left -100px
   margin-top -225px
+  position absolute
+  top 50%
+  transform-origin 100px 225px
   transform rotate(45deg)
+  width 200px
 
 $cake-one = #fff2a4
 $cake-two = #eca24d
 $cake-three = #b45326
+$cooking-time = 120s
 
 .pancake
+  backface-visibility hidden
   height 100%
+  transform rotate(-5deg) translate3d(0, 0, 1px)
   width 100%
-  transform rotate(-45deg) translate3d(0, 0, 5px)
 
   &--cooking .pancake__face
     &--smiling
@@ -44,38 +46,47 @@ $cake-three = #b45326
     &--flipping
       display block
 
-  &__wrapper
+  &__container
     height 120px
-    width 120px
-    position absolute
-    top 50%
     left 50%
-    z-index 2
     margin-left -60px
     margin-top -60px
-    transform rotate(45deg)
+    perspective 2000px
+    position absolute
+    top 50%
     transform-style preserve-3d
-    backface-visibility hidden
+    width 120px
+    z-index 2
 
-    &:before
-      content ''
-      box-sizing border-box
-      background $cake-one
-      position absolute
-      border 5px solid $cake-one
-      top 50%
-      left 50%
-      transform translate(-50%, -50%) rotateX(180deg)
+  &__wrapper
+    backface-visibility hidden
+    height 100%
+    transform rotate(45deg) translate3d(0, 0, 5px)
+    transform-style preserve-3d
+    width 100%
+
+  &__back
+    border-radius 100%
+    height 100%
+    left 50%
+    position absolute
+    top 50%
+    transform translate(-50%, -50%)
+    width 100%
+
+    .pancake__back
       height 100%
       width 100%
-      border-radius 100%
-      animation cook 60s forwards ease
+      &-base
+        fill $cake-one
+      &-scorch
+        animation cook $cooking-time forwards ease
 
   &__head
     fill $cake-one
 
   &__splodge
-    animation cook 60s forwards ease
+    animation cook $cooking-time forwards ease
     fill $cake-one
 
   &__face
@@ -86,11 +97,8 @@ $cake-three = #b45326
 
 @keyframes cook
   0%
-    background $cake-one
     fill $cake-one
   50%
-    background $cake-two
     fill $cake-two
   100%
-    background $cake-three
     fill $cake-three
