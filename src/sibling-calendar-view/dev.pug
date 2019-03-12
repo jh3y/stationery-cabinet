@@ -1,0 +1,11 @@
+.calendar
+  h1.calendar__header Sun
+  h1.calendar__header Mon
+  h1.calendar__header Tue
+  h1.calendar__header Wed
+  h1.calendar__header Thu
+  h1.calendar__header Fri
+  h1.calendar__header Sat
+  - const today = Math.floor(Math.random() * 31) + 1
+  - for(let d = 1; d < 31; d++)
+    .calendar__day(class=`${d === today && 'calendar__day--today'}`)= d

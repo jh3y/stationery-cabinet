@@ -1,0 +1,45 @@
+*
+  box-sizing border-box
+
+body
+  align-items center
+  display flex
+  justify-content center
+  min-height 100vh
+  background linear-gradient(45deg, dodgerblue, #663399)
+
+.calendar
+  display grid
+  grid-gap 4px
+  grid-template-columns repeat(7, auto)
+  grid-template-rows repeat(5, auto)
+
+  &__header
+    font-size 1rem
+    text-align center
+    text-transform uppercase
+    color white
+
+  &__day
+    background #663399
+    border-radius 4px
+    color white
+    font-weight bold
+    height 50px
+    padding 4px
+    width 50px
+
+    &:first-of-type
+      grid-column 3
+
+    &--today
+      background white
+      color #663399
+
+
+      & + .calendar__day
+        background #2eec71
+
+.today + .day {
+  background: #2eec71;
+}
