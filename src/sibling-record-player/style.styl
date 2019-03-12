@@ -1,0 +1,80 @@
+*
+  box-sizing border-box
+
+body
+  align-items center
+  display flex
+  justify-content center
+  margin 0
+  min-height 100vh
+  padding 0
+
+button
+  background 0
+  border 0
+  cursor pointer
+
+svg
+  height 40px
+  width 40px
+
+  &:nth-of-type(2)
+    height 55px
+    width 55px
+
+.playlist
+  height 200px
+  position relative
+  width 200px
+
+  &__controls
+    position absolute
+    top 100%
+    left 0
+    height 50px
+    display grid
+    grid-template-columns repeat(3, auto)
+    align-items center
+    justify-items center
+    right 0
+
+  &__track
+    height 100%
+    width 100%
+    background #000000
+    border-radius 100%
+    position absolute
+    font-size 1.5rem
+    font-weight bold
+    text-align center
+    color #fff
+    transition transform .5s ease 0s
+    transform scale(0) translate(155%, 0) rotate(0deg)
+
+
+    &:before
+      content attr(data-track-number)
+      background dodgerblue
+      height 40%
+      width 40%
+      border-radius 100%
+      line-height 200 * 0.4px
+      position absolute
+      top 50%
+      left 50%
+      transform translate(-50%, -50%)
+
+    &--playing
+      animation play 1s .5s infinite linear
+      transform scale(1) translate(0, 0) rotate(0deg)
+      z-index 2
+
+    &--playing + .playlist__track
+      transition transform .5s .5s ease
+      transform scale(0.5) translate(155%, 0) rotate(0deg)
+
+@keyframes play
+  from
+    transform scale(1) translate(0, 0) rotate(0deg)
+  to
+    transform scale(1) translate(0, 0) rotate(360deg)
