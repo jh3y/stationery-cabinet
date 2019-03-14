@@ -1,0 +1,207 @@
+*
+  box-sizing border-box
+
+body
+  background linear-gradient(30deg, dodgerblue, #ffffff) 0 0 / 200vw 200vh, dodgerblue
+
+.scroll
+  display block
+  position relative
+  overflow auto
+
+:root
+  --scroll 0
+  --scale 0
+
+.cat
+  width 220px
+  height 100%
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  filter drop-shadow(0 4px 4px #000)
+
+  &__body
+    background #ffffff
+    border 4px solid #000
+    height 90%
+    width 100%
+    position absolute
+    border-radius 90px 90px 90px 90px / 160px 160px 100px 100px
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    z-index 2
+
+  &__arm
+    height 50px
+    width 30px
+    position absolute
+    top 50%
+    left 50%
+    border 4px solid black
+    border-radius 0 0 15px 15px / 0 0 15px 15px
+    border-top 0
+    background #ffffff
+    z-index 3
+
+    &--left
+      transform translate(-50%, -50%) translate(-80px, 60px) rotate(10deg)
+
+    &--right
+      transform translate(-50%, -50%) translate(80px, 60px) rotate(-10deg)
+
+
+  &__foot
+    height 70px
+    width 40px
+    background #ffffff
+    border 4px solid black
+    position absolute
+    top 95%
+    left 50%
+    border-radius 100%
+
+    &--left
+      transform translate(-50%, -50%) translate(-35px, -20px)
+    &--right
+      transform translate(-50%, -50%) translate(35px, -20px)
+
+  &__ear
+    height 80px
+    width 60px
+    background #FFFFFF
+    border 4px solid black
+    position absolute
+    border-radius 30px 30px 0 0 / 80px 80px 0 0
+    top 0
+
+    &--left
+      left 0
+      transform translate(15px, 0) rotate(-15deg)
+
+    &--right
+      right 0
+      transform translate(-15px, 0) rotate(15deg)
+
+  &__eyes
+    display grid
+    grid-template-columns repeat(2, auto)
+    grid-gap 0 60px
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) translate(0, -50px)
+    z-index 3
+
+  &__mouth
+    z-index 3
+    background #000000
+    position absolute
+    top 50%
+    left 50%
+    width 105px
+    height 10px
+    border-radius 10px 10px 10px 10px / 10px 10px 10px 10px
+    transform translate(-50%, -50%) scale(var(--scale))
+
+  &__nose
+    height 20px
+    width 30px
+    position absolute
+    z-index 3
+    border-top 20px solid black
+    border-bottom 0
+    border-left 15px solid transparent
+    border-right 15px solid transparent
+    top 50%
+    left 50%
+    transform translate(-50%, -30px)
+
+    &:after
+      content ''
+      width 1px
+      height 6px
+      position absolute
+      top 100%
+      left 50%
+      transform translate(-50%, 0)
+      background #000
+
+  &__eye
+    height 50px
+    width 50px
+    background #000000
+    border-radius 100%
+    position relative
+
+    &:after
+      content ''
+      background #ffffff
+      position absolute
+      top 100%
+      left 50%
+      transform translate(-50%, calc(var(--scale) * -70%)) scaleX(0.95)
+      height 50px
+      width 50px
+      border-radius 100%
+
+    &-pupil
+      height 20px
+      width 20px
+      background #ffffff
+      position absolute
+      border-radius 100%
+      top 15%
+      left 15%
+
+      &:after
+      &:before
+        border-radius 100%
+        content ''
+        background #ffffff
+        height 35%
+        width 35%
+        position absolute
+
+      &:after
+        top 110%
+        left 30%
+
+      &:before
+        top 70%
+        left 100%
+
+  &__container
+    height 300px
+    width 300px
+    position fixed
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+
+
+
+.container
+  transform-style preserve-3d
+  perspective 230px
+  position fixed
+  top 0
+  right 0
+  bottom 0
+  left 0
+
+$tongue-colors = #ed3897 #f2b03c #ffff7d #cef182
+
+.tongue
+  background linear-gradient(90deg, $tongue-colors[0], $tongue-colors[0] 25%, $tongue-colors[1] 25%, $tongue-colors[1] 50%, $tongue-colors[2] 50%, $tongue-colors[2] 75%, $tongue-colors[3] 75% )
+  height calc(var(--scroll) * 1px)
+  width 100px
+  position absolute
+  top 50%
+  left 50%
+  transform translate3d(-50%, -50%, 0) rotateX(60deg) translateY(calc(var(--scroll) * 0.5px))
+  $clip = polygon(0 0, 100% 0, 100% 100%, 90% 95%, 80% 100%, 70% 95%, 60% 100%, 50% 95%, 40% 100%, 30% 95%, 20% 100%, 10% 95%, 0 100%)
+  -webkit-clip-path $clip
+  clip-path $clip
