@@ -1,8 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:900')
 *
   box-sizing border-box
 
 body
-  background linear-gradient(30deg, dodgerblue, #ffffff) 0 0 / 200vw 200vh, dodgerblue
+  background linear-gradient(30deg, dodgerblue, #ffffff), dodgerblue
+  min-height 100vh
+  font-family 'Roboto', sans-serif
+
+.ios h1
+  display none
+
+h1
+  color dodgerblue
+  text-transform uppercase
+  position fixed
+  top 20px
+  right 20px
+  opacity .25
+  margin 0
+  padding 0
+  font-size 2.25rem
 
 .scroll
   display block
@@ -181,7 +198,16 @@ body
     left 50%
     transform translate(-50%, -50%)
 
+.ios input
+  display block
 
+input
+  position absolute
+  z-index 4
+  display none
+  top 50%
+  left 50%
+  transform rotate(90deg) translate(0, -80px)
 
 .container
   transform-style preserve-3d

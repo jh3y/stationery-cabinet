@@ -1,18 +1,28 @@
+const input = document.querySelector('input')
 const { innerHeight } = window
-const THRESHOLD = innerHeight * 0.25
+const onIOS = navigator.platform && /iPad|iPhone/.test(navigator.platform)
+// const onIOS = true
+if (!onIOS) {
+  document.body.style.height = `${innerHeight * 2}px`
+} else {
+  document.body.classList.add('ios')
+}
 
-document.body.style.height = `${innerHeight * 2}px`
-
-const handleScroll = () => {
-  const scrolled = window.scrollY || window.pageYOffset
-  if (scrolled < THRESHOLD) {
-    document.documentElement.style.setProperty('--scale', scrolled / THRESHOLD)
+const THRESHOLD = onIOS ? 25 : innerHeight * 0.25
+const handleScroll = e => {
+  const progress = onIOS ? e.target.value : window.scrollY || window.pageYOffset
+  if (progress < THRESHOLD) {
+    document.documentElement.style.setProperty('--scale', progress / THRESHOLD)
     document.documentElement.style.setProperty('--scroll', 0)
   }
-  if (scrolled > THRESHOLD) {
-    document.documentElement.style.setProperty('--scroll', scrolled - THRESHOLD)
+  if (progress > THRESHOLD) {
+    document.documentElement.style.setProperty(
+      '--scroll',
+      (progress - THRESHOLD) * (onIOS ? 10 : 1)
+    )
     document.documentElement.style.setProperty('--scale', 1)
   }
 }
 
+input.addEventListener('input', handleScroll)
 document.addEventListener('scroll', handleScroll)
