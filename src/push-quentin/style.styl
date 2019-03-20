@@ -1,0 +1,123 @@
+:root
+  --quentin #ff5555
+  --burst 0.4
+  --bubble #59abe3
+  --belly #ffd5d5
+
+*
+  -webkit-tap-highlight-color transparent
+  box-sizing border-box
+  cursor pointer
+
+body
+  background radial-gradient(circle at 50% 50%, dodgerblue 20%, #2c3e50 75%), dodgerblue
+  cursor pointer
+  min-height 100vh
+  overflow hidden
+
+#app
+  height 100vh
+  overflow hidden
+  display flex
+  align-items center
+  justify-content center
+
+.quentin
+  width 200px
+
+  &__belly
+    fill var(--belly)
+
+  &__body
+    fill var(--quentin)
+
+  &__burst
+  &__eye
+  &__squint
+  &__open-mouth
+  &__mouth
+    opacity 1
+    fill #000000
+    fill-opacity 1
+    stroke-width 4
+    stroke-linecap round
+    stroke-linejoin round
+    stroke-miterlimit 4
+    stroke-dasharray none
+    stroke-opacity 1
+
+  &__squint
+  &__burst
+  &__mouth
+    fill none
+    stroke #000000
+
+  &__squint
+  &__burst
+  &__open-mouth
+    display none
+
+  &--cheer
+    .quentin__squint
+      display block
+    .quentin__eye
+      display none
+
+  &--bursting
+    .quentin__squint
+    .quentin__eye
+    .quentin__mouth
+      display none
+    .quentin__burst
+    .quentin__open-mouth
+      display block
+
+  &__wrapper
+    animation bob 5s infinite linear
+
+.stream
+  height 100vh
+  width 50px
+  background radial-gradient(calc(var(--radius) * 1px) calc(var(--radius) * 1px) at 50% calc(var(--top) * 1%), var(--bubble) 0, var(--bubble) 95%, transparent 95%)
+  animation-timing-function linear
+  animation-iteration-count infinite
+  animation-delay calc(var(--delay) * -1s)
+
+.streams
+  display flex
+  position absolute
+  left 0
+  right 0
+  opacity .4
+  justify-content space-around
+  z-index 2
+
+  .stream
+    animation-name float
+    animation-duration 10s
+
+  &--bursting .stream
+    animation-name stream
+    animation-duration calc(var(--duration) * 1s)
+
+@keyframes stream
+  to
+    background-position 0 100vh
+
+@keyframes bob
+  0, 100%
+    transform translate(0, 10%)
+  50%
+    transform translate(0, -10%)
+
+@keyframes float
+  0%
+    transform translate(0, 0)
+  25%
+    transform translate(calc(var(--travel) * -1px), calc(var(--travel) * -1px))
+  50%
+    transform translate(calc(var(--travel) * 1px), 0)
+  75%
+    transform translate(calc(var(--travel) * 1px), calc(var(--travel) * 1px))
+  100%
+    transform translate(0, 0)
