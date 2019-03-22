@@ -1,0 +1,88 @@
+*
+  box-sizing border-box
+
+
+body
+  min-height 100vh
+  background #111
+  overflow hidden
+  display flex
+  align-items center
+  justify-content center
+  margin 0
+  padding 0
+
+.cloak
+  height 400vh
+  width 100vw
+  transform translate(0, 100%)
+  background linear-gradient(180deg, white, white 50%, #111 50%)
+  position absolute
+  top 0
+  z-index 2
+
+.container
+  width 300px
+  height 160px
+  position absolute
+  z-index 2
+
+.mouth
+  position absolute
+  bottom 0
+  height 20px
+  width 100%
+  background #fff
+  transform scaleX(0.5)
+
+.eye
+  height 70px
+  width 70px
+  position absolute
+  left 175px
+
+  &__piece
+    height 105%
+    width 30%
+    background #fff
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) rotate(-45deg)
+
+    &--curved
+      border-radius 20px
+      height 120%
+      transform translate(-50%, -50%) rotate(45deg)
+
+.heart
+  height 68px
+  width 76px
+  position absolute
+  left 55px
+
+  &:after
+  &:before
+    content ''
+    height 100%
+    width 50%
+    background #fff
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) rotate(42deg) translate(4px, -8px)
+    border-radius 20px 20px 0 0/20px 20px 0 0
+    $clip = polygon(0 0, 100% 0, 100% 100%, 0 94%)
+    -webkit-clip-path $clip
+    clip-path $clip
+
+  &:before
+    transform translate(-50%, -50%) rotate(42deg) translate(4px, -8px) rotate(-84deg) rotateY(180deg) translate(13px, -12px)
+
+img
+  position fixed
+  top 50%
+  left 50%
+  transform translate(-50%, -50%) translate(0, -15px)
+  transform translate(-50%, -50%) translate(4px, 8px)
+  width 300px
