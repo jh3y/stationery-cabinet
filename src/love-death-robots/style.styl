@@ -5,12 +5,16 @@
 body
   min-height 100vh
   background #111
-  overflow hidden
-  display flex
-  align-items center
-  justify-content center
   margin 0
   padding 0
+
+.app
+  position absolute
+  top 0
+  right 0
+  bottom 0
+  left 0
+  overflow hidden
 
 .cloak
   height 400vh
@@ -25,6 +29,9 @@ body
   width 300px
   height 160px
   position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
   z-index 2
 
 .mouth
@@ -78,11 +85,3 @@ body
 
   &:before
     transform translate(-50%, -50%) rotate(42deg) translate(4px, -8px) rotate(-84deg) rotateY(180deg) translate(13px, -12px)
-
-img
-  position fixed
-  top 50%
-  left 50%
-  transform translate(-50%, -50%) translate(0, -15px)
-  transform translate(-50%, -50%) translate(4px, 8px)
-  width 300px
