@@ -1,0 +1,109 @@
+*
+  box-sizing border-box
+  cursor pointer
+
+body
+  margin 0
+  min-height 100vh
+  padding 0
+  background #111
+  overflow hidden
+
+  &:after
+    content ''
+    position absolute
+    background linear-gradient(90deg, #666 10%, silver)
+    width 10px
+    height 10px
+    top 50%
+    left 50%
+    transform translate(-50%, 120px)
+    border-radius 0 0 100% 100%
+
+canvas
+  position absolute
+  top 0
+  left 0
+  right 0
+  bottom 0
+  z-index 2
+
+.tesla-coil
+
+  &__head
+    border-radius 100%
+    height 50px
+    width 50px
+    background radial-gradient(circle at 60% 40%, silver 50%, #000), silver
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) translate3d(0, 0, 100px)
+    z-index 3
+    perspective 350px
+    transform-style preserve-3d
+
+    &--active
+      box-shadow 0 0 15px 4px #a537fd
+
+  &__body
+    height 180px
+    position absolute
+    top 50%
+    left 50%
+    width 10px
+    background linear-gradient(90deg, #666 10%, silver)
+    transform translate(-50%, 0) rotateX(-30deg)
+    position absolute
+    perspective 350px
+    transform-style preserve-3d
+
+  &__ring
+    content ''
+    height calc(var(--size) * 1px)
+    width calc(var(--size) * 1px)
+    border-radius 100%
+    border 15px solid #555
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, 0) rotateX(90deg)
+
+    &:nth-of-type(1)
+      --size 60
+      top 10%
+    &:nth-of-type(2)
+      --size 70
+      top 20%
+    &:nth-of-type(3)
+      --size 80
+      top 30%
+
+  &__base
+    $size = 60px
+    height $size
+    transform-style preserve-3d
+    width $size
+    position absolute
+    top 90%
+    left 50%
+    transform translate(-50%, -50%) rotateY(35deg)
+
+    div
+      background-color silver
+      height 100%
+      position absolute
+      width  100%
+
+      &:nth-of-type(1)
+        background #333
+        transform rotateY(270deg) translateX(-50%)
+        transform-origin center left
+
+      &:nth-of-type(2)
+        transform rotateX(90deg) translateY(-50%)
+        transform-origin top center
+
+      &:nth-of-type(3)
+        background #666
+        transform translateZ(($size / 2))
