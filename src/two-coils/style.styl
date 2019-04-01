@@ -1,0 +1,53 @@
+*
+  box-sizing border-box
+  cursor pointer
+
+body
+  margin 0
+  min-height 100vh
+  padding 0
+  background #111
+  overflow hidden
+
+canvas
+  position absolute
+  top 0
+  left 0
+  right 0
+  bottom 0
+
+.tesla-coil
+  height 30px
+  width 80px
+  background linear-gradient(0deg, #333 20%, silver, #333 80%)
+  border-radius 15px
+  position absolute
+  top 50%
+  left 50%
+  z-index 2
+
+  &:after
+  &:before
+    content ''
+    position absolute
+    height 50vh
+    top 100%
+    left 50%
+    transform translate(-50%, 0)
+    z-index -1
+
+  &:before
+    background linear-gradient(90deg, silver 50%, #333)
+    width 10px
+
+  &:after
+    $gap = 30px
+    $spread = 2px
+    background repeating-linear-gradient(1deg, transparent ($gap - $spread), #444 $gap, transparent ($gap + $spread)), linear-gradient(90deg, #222 25%, silver 65%, #222)
+    width 40px
+    top 150%
+
+  &:nth-of-type(1)
+    transform translate(calc((var(--gap) / 2) * -1px), -50%) translate(-75%, 0)
+  &:nth-of-type(2)
+    transform translate(calc((var(--gap) / 2) * 1px), -50%) translate(-25%, 0)
