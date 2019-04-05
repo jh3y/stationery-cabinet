@@ -1,0 +1,9 @@
+- const horses = 10
+- const sides = 360
+.carousel
+  .carousel__horses(style=`--horses: ${horses}`)
+    - for(let h = 0; h < horses; h++)
+      .carousel__horse(style=`--horse: ${h}`) 🎠
+  .carousel__base(style=`--sides: ${sides}`)
+    - for (let s = 0; s < sides; s++)
+      div(style=`--side: ${s}`)
