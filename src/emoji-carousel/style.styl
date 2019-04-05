@@ -1,0 +1,94 @@
+*
+  box-sizing border-box
+
+body
+  align-items center
+  display flex
+  justify-content center
+  min-height 100vh
+  transform-style preserve-3d
+  perspective 1500px
+
+.carousel
+  height 100px
+  width 100px
+  background rgba(255, 0, 0, 0.25)
+  transform translate(-50%, -50%) rotateX(-15deg) rotateY(40deg)
+  transform-style preserve-3d
+  position absolute
+  top 50%
+  left 50%
+  // animation carousel-two 4s infinite linear
+
+
+  &__horses
+    height 50px
+    position absolute
+    background rgba(0, 0, 255, 0.25)
+    transform translate(-50%, -50%)
+    transform-style preserve-3d
+    width 50px
+    top 50%
+    left 50%
+    animation carousel 4s infinite linear
+
+  &__horse
+    font-size 2rem
+    position absolute
+    top 50%
+    left 50%
+    $reset = translate(-50%, -50%)
+    transform $reset rotateY(calc(((-360 / var(--horses)) * var(--horse)) * 1deg)) translate3d(0, 0, 100px) rotateY(180deg)
+    $duration = 2s
+    animation horse $duration infinite linear
+
+    &:nth-of-type(even)
+      animation-delay ($duration * -0.5)
+
+  &__base
+    height 20px
+    width 20px
+    position absolute
+    background rgba(0, 255, 0, 0.35)
+    top 100%
+    left 50%
+    transform translate(-50%, -50%)
+    transform-style preserve-3d
+    // animation carousel 2s infinite linear
+
+    &:after
+      content ''
+      height 240px
+      width 240px
+      position absolute
+      top 50%
+      left 50%
+      background purple
+      border-radius 100%
+      transform translate(-50%, -50%) rotateX(90deg) translate3d(0, 0,10px)
+
+    div
+      height 20px
+      width 3px
+      background red
+      position absolute
+      top 50%
+      left 50%
+      transform translate(-50%, -50%) rotateY(calc(((-360 / var(--sides)) * var(--side)) * 1deg)) translate3d(0, 0, 120px)
+
+      // &:nth-of-type(even)
+      //   background blue
+
+@keyframes carousel
+  to
+    transform translate(-50%, -50%) rotateY(360deg)
+
+@keyframes carousel-two
+  to
+    transform translate(-50%, -50%) rotateX(-15deg) rotateY(400deg)
+
+@keyframes horse
+  0%, 100%
+    transform translate(-50%, -100%) rotateY(calc(((-360 / var(--horses)) * var(--horse)) * 1deg)) translate3d(0, 0, 100px) rotateY(180deg)
+  50%
+    transform translate(-50%, 0) rotateY(calc(((-360 / var(--horses)) * var(--horse)) * 1deg)) translate3d(0, 0, 100px) rotateY(180deg)
