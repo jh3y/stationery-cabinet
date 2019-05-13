@@ -1,8 +1,14 @@
+const { _ } = window
 const randomInRange = (min, max) =>
   Math.floor(Math.random() * (max - min)) + min
 
 const VELOCITY_BASE = 1
-const VELOCITY_LIMIT = 3
+const VELOCITY_LIMIT = 2
+const BASE_SIZE = 10
+const BASE_SCALE = 0.1
+const ALPHA_STEP = 0.02
+const ALPHA_LIMIT = 1
+const SCALE_STEP = 0.001
 
 class Star {
   canvas = document.createElement('canvas')
@@ -12,8 +18,8 @@ class Star {
     characteristics: {
       alpha: Math.random(),
       angle: randomInRange(0, 360) * (Math.PI / 180),
-      size: randomInRange(1, 4),
-      velocity: VELOCITY_BASE,
+      size: BASE_SIZE,
+      scale: BASE_SCALE,
     },
   }
   activate = () => {
@@ -25,22 +31,22 @@ class Star {
   reset = start => {
     const angle = randomInRange(0, 360) * (Math.PI / 180)
     const alpha = Math.random()
-    // TODO:: Start with everything at the same size so you get a good scale and then start the scale at a small scale and add to the scale
-    // This way you preserve the quality fof the circle whilst it scales up
-    // TODO:: the scale needs to actually relate to the distance travelled not the set size. It would make more sense to be proportionate to distance travelled
-
-    const size = randomInRange(10, 10)
-    const travelled = randomInRange(15, start ? start : innerWidth)
-    const active = travelled > 50 ? true : false
+    const velocity = VELOCITY_BASE
+    const travelled = randomInRange(
+      velocity === 0 ? 50 : 15,
+      start ? start : innerWidth
+    )
     const x = Math.floor(Math.sin(angle) * travelled) + innerWidth / 2
-    const y = Math.floor(Math.cos(angle) * travelled) + innerWidth / 2
+    const y = Math.floor(Math.cos(angle) * travelled) + innerHeight / 2
+    const active = travelled > 50 || velocity === 0 ? true : false
     this.STATE = {
       active,
       characteristics: {
+        ...this.STATE.characteristics,
         alpha,
         angle,
-        size,
-        velocity: VELOCITY_BASE,
+        scale: BASE_SCALE,
+        velocity,
       },
       position: {
         x,
@@ -72,14 +78,17 @@ class Star {
         Math.cos(this.STATE.characteristics.angle) *
           this.STATE.distance.travelled
       ) +
-      innerWidth / 2
-    const velocity = jumping ? VELOCITY_LIMIT : VELOCITY_BASE
-    // const size = (this.STATE.characteristics.size += 0.025)
+      innerHeight / 2
+    const velocity = jumping
+      ? VELOCITY_LIMIT
+      : this.STATE.characteristics.velocity
     this.STATE = {
       ...this.STATE,
       characteristics: {
         ...this.STATE.characteristics,
-        // size,
+        scale: velocity
+          ? this.STATE.characteristics.scale + SCALE_STEP
+          : this.STATE.characteristics.scale,
         velocity,
       },
       position: {
@@ -98,82 +107,132 @@ class Star {
     this.render()
   }
 }
-/**
- * Sprinkled
- * Dont clear
- * then fade to black
- * Resprinkle from opacity 0
- */
+
 class HyperSpace {
   constructor(options) {
     this.options = options
     this.setup()
     document.body.appendChild(this.canvas)
     this.render()
+    this.bindAction()
   }
   STATE = {
     jumping: false,
     starPool: [],
   }
-  // create canvas/context instance on creation
+
   canvas = document.createElement('canvas')
   context = this.canvas.getContext('2d')
   render = () => {
     const { context } = this
     context.save()
-    if (!this.STATE.jumping)
+    if (!this.STATE.jumping && !this.STATE.toBeCleared)
       context.clearRect(0, 0, window.innerWidth, window.innerHeight)
-    // Should we activate some items?
-    if (
-      Math.random() > 0.95 &&
-      this.STATE.starPool.filter(s => s.STATE.active === false).length > 0 &&
-      !this.STATE.jumping
-    ) {
-      this.STATE.starPool.filter(s => s.STATE.active === false)[0].activate()
-    }
 
-    for (const star of this.STATE.starPool) {
-      // Check if it's within the bounds. If it isn't then it needs to be reset and deactivated
+    // Should we activate some items?
+    if (!this.STATE.jumping && this.STATE.toBeCleared) {
+      // Do something else instead of updating items
+      if (this.STATE.blanketOpacity >= ALPHA_LIMIT) {
+        this.STATE = {
+          ...this.STATE,
+          flashed: true,
+          toBeCleared: false,
+          jumping: false,
+          starPool: this.generateStars(this.options.limit),
+        }
+      } else if (!this.STATE.flashed) {
+        context.fillStyle = `rgba(255, 255, 255, ${(this.STATE.blanketOpacity +=
+          ALPHA_STEP * 5)})`
+        context.fillRect(0, 0, innerWidth, innerHeight)
+      }
+    } else {
       if (
-        star.STATE.position.x < 0 ||
-        star.STATE.position.x > innerWidth ||
-        star.STATE.position.y < 0 ||
-        (star.STATE.position.y > innerHeight && star.STATE.active)
+        Math.random() > 0.75 &&
+        this.STATE.starPool.filter(s => s.STATE.active === false).length > 0 &&
+        !this.STATE.jumping
       ) {
-        star.reset(50)
-      } else if (star.STATE.active) {
-        star.update(this.STATE.jumping)
-        context.drawImage(
-          star.canvas,
-          star.STATE.position.x - star.STATE.characteristics.size / 2,
-          star.STATE.position.y - star.STATE.characteristics.size / 2,
-          star.STATE.characteristics.size,
-          star.STATE.characteristics.size
-        )
+        this.STATE.starPool.filter(s => s.STATE.active === false)[0].activate()
+      }
+
+      for (const star of this.STATE.starPool) {
+        // Check if it's within the bounds. If it isn't then it needs to be reset and deactivated
+        if (
+          star.STATE.position.x < 0 ||
+          star.STATE.position.x > innerWidth ||
+          star.STATE.position.y < 0 ||
+          (star.STATE.position.y > innerHeight && star.STATE.active)
+        ) {
+          star.reset(this.STATE.jumping ? undefined : 50)
+        } else if (star.STATE.active) {
+          star.update(this.STATE.jumping)
+          context.drawImage(
+            star.canvas,
+            star.STATE.position.x - star.STATE.characteristics.size / 2,
+            star.STATE.position.y - star.STATE.characteristics.size / 2,
+            star.STATE.characteristics.size * star.STATE.characteristics.scale,
+            star.STATE.characteristics.size * star.STATE.characteristics.scale
+          )
+        }
+      }
+      if (this.STATE.blanketOpacity >= 0) {
+        context.fillStyle = `rgba(0, 0, 0, ${(this.STATE.blanketOpacity -= ALPHA_STEP)})`
+        context.fillRect(0, 0, innerWidth, innerHeight)
       }
     }
-    // Uncomment to see those FPS stats 👍
-    // console.log(new Date().toUTCString())
     requestAnimationFrame(this.render)
   }
-  bindAction = () => {
-    this.canvas.addEventListener('mousedown', () => {
-      this.STATE.jumping = true
-    })
-    this.canvas.addEventListener('mouseup', () => {
+  jump = () => {
+    this.STATE = {
+      ...this.STATE,
+      jumping: true,
+      toBeCleared: true,
+      flashed: false,
+      blanketOpacity: 0,
+      initiated: new Date().getTime(),
+    }
+  }
+  slow = () => {
+    // At this stage we need to clear the jets and then reset all the stars to new position
+    const stop = new Date().getTime()
+    if (stop - this.STATE.initiated >= 2000) {
       this.STATE.jumping = false
-    })
+    } else {
+      this.STATE = {
+        ...this.STATE,
+        jumping: false,
+        toBeCleared: false,
+      }
+    }
+  }
+  bindAction = () => {
+    this.canvas.addEventListener('mousedown', this.jump)
+    this.canvas.addEventListener('touchstart', this.jump)
+    this.canvas.addEventListener('mouseup', this.slow)
+    this.canvas.addEventListener('touchend', this.slow)
+  }
+  generateStars = amount => {
+    const result = []
+    for (let s = 0; s < amount; s++) {
+      result.push(new Star())
+    }
+    return result
+  }
+  reset = () => {
+    this.STATE = {}
+    this.setup()
   }
   setup = () => {
     this.canvas.height = innerHeight
     this.canvas.width = innerWidth
-    for (let s = 0; s < this.options.limit; s++) {
-      // Generate a new star
-      this.STATE.starPool.push(new Star())
-    }
-    this.bindAction()
+    this.STATE.starPool = this.generateStars(this.options.limit)
   }
 }
-new HyperSpace({
-  limit: 200,
+const myHyperspace = new HyperSpace({
+  limit: 1000,
 })
+window.addEventListener(
+  'resize',
+  _.debounce(() => {
+    myHyperspace.reset()
+  }, 250)
+)
