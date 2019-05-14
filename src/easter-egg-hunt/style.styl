@@ -1,0 +1,227 @@
+*
+  box-sizing border-box
+
+:root
+  --primary #f7f396
+  --secondary #663399
+  --grass #8beaaf
+  --size 250
+
+body
+  align-items center
+  background var(--grass)
+  counter-reset score
+  display flex
+  font-family 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif
+  justify-content center
+  min-height 100vh
+  overflow hidden
+
+.game
+  background blue
+  cursor search
+  height 250px
+  margin 0
+  position relative
+  width 250px
+
+  &__cell
+    --cellSize calc((var(--size) / var(--cells)))
+    height calc(var(--cellSize) * 1px)
+    left calc((var(--x) * var(--cellSize)) * 1px)
+    line-height calc(var(--cellSize) * 1px)
+    position absolute
+    top calc((var(--y) * var(--cellSize)) * 1px)
+    width calc(var(--cellSize) * 1px)
+
+    .game__cell
+      display none
+
+    &:hover
+      & > .egg__container
+        transform translate(-50%, -50%) scale(1)
+      & > .egg__container > .egg
+        transform-origin center
+        transform translate(-50%, -50%) scale(1) rotate(calc(var(--rotation) * 1deg))
+
+.grass
+  height 300px
+  width 300px
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+  &__base
+    fill #87d37c
+
+  &__blade
+    fill #26a65b
+
+.egg
+  background radial-gradient(circle at 30% 0%, var(--primary) 20%, var(--secondary) 20%, var(--secondary) 25%, var(--primary) 25%, var(--primary) 30%, var(--secondary) 30%, var(--secondary) 35%, var(--primary) 35%) 0 0/ 200% 200%, var(--primary)
+  border-radius 50% 50% 50% 50% / 60% 60% 40% 40%
+  height 50px
+  left 50%
+  position absolute
+  top 50%
+  transform translate(-50%, -50%) scale(0) rotate(calc(var(--rotation) * 1deg))
+  transition transform .25s ease
+  width 40px
+
+  &__container
+    height calc(var(--cellSize) * 1px)
+    left 50%
+    position absolute
+    top 50%
+    transform translate(-50%, -50%) scale(0)
+    transition transform .25s ease
+    width calc(var(--cellSize) * 1px)
+
+  &__check
+    cursor pointer
+    height calc(var(--cellSize) * 1px)
+    left 0
+    opacity 0
+    position absolute
+    top 0
+    width calc(var(--cellSize) * 1px)
+    z-index 2
+
+    &:checked
+      counter-increment score var(--score)
+      transform scale(0)
+
+      & ~ .egg__container
+        transform translate(-50%, -50%) scale(1)
+
+        & > .egg
+          animation found .5s forwards
+
+        .game__cell
+          display block
+
+.info-screen
+  align-items center
+  background var(--secondary)
+  color var(--primary)
+  display flex
+  flex-direction column
+  height 100vh
+  justify-content center
+  left 50%
+  overflow hidden
+  position fixed
+  top 50%
+  transform translate(-50%, -50%)
+  width 100vw
+  z-index 5
+
+  &__content
+    position relative
+    max-width 90vw
+    width 200px
+
+    h1
+    h2
+      text-transform uppercase
+
+    p
+      text-align justify
+
+    .egg
+      --secondary #f7f396
+      --primary #8beaaf
+      left 100%
+      position absolute
+      top 0
+      transform translate(-120%, 60%) scale(1) rotate(20deg)
+
+button
+  background var(--secondary)
+  border 2px solid var(--primary)
+  color var(--primary)
+  cursor pointer
+  font-weight bold
+  letter-spacing 4px
+  padding 8px 12px
+  text-transform uppercase
+  width 100%
+
+.start
+  height 100vh
+  left 50%
+  opacity 0
+  position fixed
+  top 50%
+  transform translate(-50%, -50%)
+  width 100vw
+  z-index 6
+
+  &:checked
+  &:checked ~ .title-screen
+    transform translate(-50%, -50%) translate(0, -100%)
+    transition transform .25s ease
+
+  &:checked ~ .result
+    animation slideUp .25s 15s both
+
+    .egg
+      animation-name drop
+
+.result
+  text-align center
+  transform translate(-50%, -50%) translate(0, 100%)
+
+  .egg
+    animation-duration 2s
+    animation-fill-mode both
+    transform translate(-50%, -50%) scale(1) rotate(calc(var(--rotation) * 1deg)) translate(0, -100vh)
+
+    &:nth-of-type(1)
+      animation-delay 15.25s
+
+    &:nth-of-type(2)
+      animation-delay 15.5s
+
+    &:nth-of-type(3)
+      animation-delay 15.75s
+
+.bunny
+  position absolute
+  font-size 4rem
+  z-index 4
+
+  &:nth-of-type(1)
+    top -35%
+    left -15%
+    transform rotate(-30deg)
+  &:nth-of-type(2)
+    top 105%
+    left 85%
+    transform rotate(30deg)
+
+.score:after
+  content counter(score)
+
+@keyframes wiggle
+  0%, 100%
+    transform translate(-150%, 100%) scale(1) rotate(-35deg)
+  50%
+    transform translate(-150%, 100%) scale(1) rotate(35deg)
+
+@keyframes slideUp
+  to
+    transform translate(-50%, -50%) translate(0, 0)
+
+@keyframes found
+  0%
+    transform translate(-50%, -50%) scale(1) rotate(calc(var(--rotation) * 1deg))
+  50%
+    transform translate(-50%, -50%) scale(1.5) rotate(calc(var(--rotation) * 1deg))
+  100%
+    transform translate(-50%, -50%) scale(0) rotate(calc(var(--rotation) * 1deg))
+
+@keyframes drop
+  to
+    transform translate(-50%, -50%) scale(1) rotate(calc(var(--rotation) * 1deg)) translate(0, 100vh)
