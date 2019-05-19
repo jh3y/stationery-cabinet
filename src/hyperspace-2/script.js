@@ -1,4 +1,4 @@
-const { TweenMax } = window
+const { TweenMax, _ } = window
 /**
  * Utility function for returning a random integer in a given range
  * @param {Int} max
@@ -6,13 +6,12 @@ const { TweenMax } = window
  */
 const randomInRange = (max, min) =>
   Math.floor(Math.random() * (max - min + 1)) + min
-const ACTIVE_PROBABILITY = 0
 const BASE_SIZE = 1
 const VELOCITY_INC = 1.01
 const VELOCITY_INIT_INC = 1.025
 const JUMP_VELOCITY_INC = 1.25
-const JUMP_SIZE_INC = 1.05
-const SIZE_INC = 1.001
+const JUMP_SIZE_INC = 1.15
+const SIZE_INC = 1.01
 const RAD = Math.PI / 180
 const WARP_COLORS = [
   [197, 239, 247],
@@ -30,14 +29,15 @@ class Star {
     alpha: Math.random(),
     angle: randomInRange(0, 360) * RAD,
   }
-  reset = restarting => {
+  reset = () => {
     const angle = randomInRange(0, 360) * (Math.PI / 180)
     const vX = Math.cos(angle)
     const vY = Math.sin(angle)
     const travelled =
-      Math.random() > 0.5 && !restarting
-        ? Math.random() * Math.max(window.innerWidth, window.innerHeight)
-        : 0
+      Math.random() > 0.5
+        ? Math.random() * Math.max(window.innerWidth, window.innerHeight) +
+          Math.random() * (window.innerWidth * 0.24)
+        : Math.random() * (window.innerWidth * 0.25)
     this.STATE = {
       ...this.STATE,
       iX: undefined,
@@ -62,7 +62,10 @@ const generateStarPool = size => new Array(size).fill().map(() => new Star())
 // Initiate the drawing process and listen for user interactions 👍
 class JumpToHyperspace {
   STATE = {
-    stars: generateStarPool(1000),
+    stars: generateStarPool(300),
+    bgAlpha: 0,
+    sizeInc: SIZE_INC,
+    velocity: VELOCITY_INC,
   }
   canvas = document.createElement('canvas')
   context = this.canvas.getContext('2d')
@@ -73,24 +76,26 @@ class JumpToHyperspace {
     this.render()
   }
   render = () => {
+    const {
+      STATE: { bgAlpha, velocity, sizeInc, initiating, jumping, stars },
+      context,
+      render,
+    } = this
     // Clear the canvas
-    this.context.clearRect(0, 0, window.innerWidth, window.innerHeight)
-    if (this.STATE.bgAlpha > 0) {
-      this.context.fillStyle = `rgba(228, 241, 254, ${this.STATE.bgAlpha})`
-      this.context.fillRect(0, 0, window.innerWidth, window.innerHeight)
+    context.clearRect(0, 0, window.innerWidth, window.innerHeight)
+    if (bgAlpha > 0) {
+      context.fillStyle = `rgba(31, 58, 157, ${bgAlpha})`
+      context.fillRect(0, 0, window.innerWidth, window.innerHeight)
     }
     // 1. Shall we add a new star
-    const nonActive = this.STATE.stars.filter(s => !s.STATE.active)
-    const INTRO_PROB = this.STATE.jumping
-      ? true
-      : Math.random() > ACTIVE_PROBABILITY
-    if (!this.STATE.initiating && nonActive.length > 0 && INTRO_PROB) {
+    const nonActive = stars.filter(s => !s.STATE.active)
+    if (!initiating && nonActive.length > 0) {
       // Introduce a star
       nonActive[0].STATE.active = true
     }
     // 2. Update the stars and draw them.
-    for (const star of this.STATE.stars.filter(s => s.STATE.active)) {
-      const { active, x, y, iX, iY, iVX, iVY } = star.STATE
+    for (const star of stars.filter(s => s.STATE.active)) {
+      const { active, x, y, iX, iY, iVX, iVY, size, vX, vY } = star.STATE
       // Check if the star needs deactivating
       if (
         ((iX || x) < 0 ||
@@ -98,52 +103,46 @@ class JumpToHyperspace {
           (iY || y) < 0 ||
           (iY || y) > window.innerHeight) &&
         active &&
-        !this.STATE.initiating
+        !initiating
       ) {
         star.reset(true)
-      } else if (star.STATE.active) {
-        const size = this.STATE.jumping
-          ? star.STATE.size * JUMP_SIZE_INC
-          : star.STATE.size * SIZE_INC
-        let V = VELOCITY_INC
-        if (this.STATE.initiating) V = VELOCITY_INIT_INC
-        if (this.STATE.jumping) V = JUMP_VELOCITY_INC
-        const newIX = this.STATE.initiating ? iX : iX + iVX
-        const newIY = this.STATE.initiating ? iY : iY + iVY
-        const newX = star.STATE.x + star.STATE.vX
-        const newY = star.STATE.y + star.STATE.vY
+      } else if (active) {
+        const newIX = initiating ? iX : iX + iVX
+        const newIY = initiating ? iY : iY + iVY
+        const newX = x + vX
+        const newY = y + vY
         // Just need to work out if it overtakes the original line that's all
         const caught =
-          (star.STATE.vX < 0 && newIX < x) ||
-          (star.STATE.vX > 0 && newIX > x) ||
-          (star.STATE.vY < 0 && newIY < y) ||
-          (star.STATE.vY > 0 && newIY > y)
+          (vX < 0 && newIX < x) ||
+          (vX > 0 && newIX > x) ||
+          (vY < 0 && newIY < y) ||
+          (vY > 0 && newIY > y)
         star.STATE = {
           ...star.STATE,
           iX: caught ? undefined : newIX,
           iY: caught ? undefined : newIY,
-          iVX: caught ? undefined : iVX * V,
-          iVY: caught ? undefined : iVY * V,
+          iVX: caught ? undefined : iVX * VELOCITY_INIT_INC,
+          iVY: caught ? undefined : iVY * VELOCITY_INIT_INC,
           x: newX,
-          vX: star.STATE.vX * V,
+          vX: star.STATE.vX * velocity,
           y: newY,
-          vY: star.STATE.vY * V,
-          size,
+          vY: star.STATE.vY * velocity,
+          size: initiating ? size : size * (iX || iY ? SIZE_INC : sizeInc),
         }
         let color = `rgba(255, 255, 255, ${star.STATE.alpha})`
-        if (this.STATE.jumping) {
+        if (jumping) {
           const [r, g, b] = WARP_COLORS[randomInRange(0, WARP_COLORS.length)]
           color = `rgba(${r}, ${g}, ${b}, ${star.STATE.alpha})`
         }
-        this.context.strokeStyle = color
-        this.context.lineWidth = star.STATE.size
-        this.context.beginPath()
-        this.context.moveTo(star.STATE.iX || x, star.STATE.iY || y)
-        this.context.lineTo(star.STATE.x, star.STATE.y)
-        this.context.stroke()
+        context.strokeStyle = color
+        context.lineWidth = size
+        context.beginPath()
+        context.moveTo(star.STATE.iX || x, star.STATE.iY || y)
+        context.lineTo(star.STATE.x, star.STATE.y)
+        context.stroke()
       }
     }
-    requestAnimationFrame(this.render)
+    requestAnimationFrame(render)
   }
   initiate = () => {
     if (this.STATE.jumping || this.STATE.initiating) return
@@ -152,6 +151,7 @@ class JumpToHyperspace {
       initiating: true,
       initiateTimestamp: new Date().getTime(),
     }
+    TweenMax.to(this.STATE, 0.25, { velocity: VELOCITY_INIT_INC, bgAlpha: 0.3 })
     // When we initiate, stop the XY origin from moving so that we draw
     // longer lines until the jump
     for (const star of this.STATE.stars.filter(s => s.STATE.active)) {
@@ -170,23 +170,36 @@ class JumpToHyperspace {
       bgAlpha: 0,
       jumping: true,
     }
-    TweenMax.to(this.STATE, 1, { bgAlpha: 0.75 })
+    TweenMax.to(this.STATE, 0.25, {
+      velocity: JUMP_VELOCITY_INC,
+      bgAlpha: 0.75,
+      sizeInc: JUMP_SIZE_INC,
+    })
     setTimeout(() => {
       this.STATE = {
         ...this.STATE,
         jumping: false,
       }
-      TweenMax.to(this.STATE, 0.5, { bgAlpha: 0 })
-    }, 5000)
+      TweenMax.to(this.STATE, 0.25, {
+        bgAlpha: 0,
+        velocity: VELOCITY_INC,
+        sizeInc: SIZE_INC,
+      })
+    }, 2500)
   }
   enter = () => {
+    if (this.STATE.jumping) return
     const { initiateTimestamp } = this.STATE
     this.STATE = {
       ...this.STATE,
       initiating: false,
       initiateTimestamp: undefined,
     }
-    if (new Date().getTime() - initiateTimestamp > 500) this.jump()
+    if (new Date().getTime() - initiateTimestamp > 600) {
+      this.jump()
+    } else {
+      TweenMax.to(this.STATE, 0.25, { velocity: VELOCITY_INC, bgAlpha: 0 })
+    }
   }
   bind = () => {
     this.canvas.addEventListener('mousedown', this.initiate)
@@ -199,5 +212,18 @@ class JumpToHyperspace {
     this.canvas.height = window.innerHeight
     this.canvas.width = window.innerWidth
   }
+  reset = () => {
+    this.STATE = {
+      ...this.STATE,
+      stars: generateStarPool(300),
+    }
+    this.setup()
+  }
 }
 window.myJump = new JumpToHyperspace()
+window.addEventListener(
+  'resize',
+  _.debounce(() => {
+    window.myJump.reset()
+  }, 250)
+)
