@@ -16,20 +16,22 @@ body
   height 100vh
   width 100vw
   transform translate(-50%, -50%)
+  transform-style preserve-3d
 
 .atmosphere
-  background radial-gradient(var(--atmosphere) 0%, transparent calc(var(--atmosphereSize) * 1vw))
-  position fixed
+  background radial-gradient(var(--atmosphere) 0%, transparent calc(var(--size) * 2%))
+  position absolute
   top 50%
   left 50%
   height 100vw
   width 100vw
-  transform translate(-50%, -50%)
+  transform translate(-50%, -50%) scale(0)
 
 .stars
   height 100%
   width 100%
   position absolute
+  opacity 0
 
 .star
   background #FAFAFA
@@ -43,15 +45,28 @@ body
 
 .planet
   background var(--bg)
-  height calc(var(--size) * 1vw)
-  width calc(var(--size) * 1vw)
+  height calc(var(--size) * 1px)
+  width calc(var(--size) * 1px)
   border-radius 100%
   position absolute
-  transform translate(-50%, -50%)
+  transform translate(-50%, -50%) scale(0)
   left 50%
   top 50%
   z-index 2
-  // animation rotate 5s infinite linear
+
+  &__surface
+    height 100%
+    width 100%
+    position absolute
+    background var(--bg)
+    border-radius 100%
+    filter drop-shadow(0 0 10px var(--atmosphere))
+
+  &__planet
+    height 100%
+    width 100%
+    animation rotate calc(var(--speed) * 1s) infinite linear
+    position absolute
 
   &__spots
     position absolute
@@ -59,8 +74,8 @@ body
     top 50%
     left 50%
     transform translate(-50%, -50%)
-    height calc(var(--size) * 1vw)
-    width calc(var(--size) * 1vw)
+    height calc(var(--size) * 1px)
+    width calc(var(--size) * 1px)
     border-radius 100%
     overflow hidden
     filter drop-shadow(0 0 2px #000)
@@ -70,13 +85,14 @@ body
     top 50%
     left 50%
     transform translate(-50%, -50%)
-    height calc(var(--size) * 1vw)
-    width calc(var(--size) * 1vw)
+    height calc(var(--size) * 1px)
+    width calc(var(--size) * 1px)
     border-radius 100%
+    will-change transform
 
   &__spot
-    height calc(var(--size) * 1vw)
-    width calc(var(--size) * 1vw)
+    height calc(var(--size) * 1%)
+    width calc(var(--size) * 1%)
     background var(--spotColor)
     position absolute
     border-radius 100%
@@ -84,15 +100,25 @@ body
     left calc(var(--x) * 1%)
     top calc(var(--y) * 1%)
 
+
+.planet__clouds--loaded .cloud
+  animation pulse calc(var(--speed) * 1s) calc(var(--delay) * 1s) infinite alternate-reverse linear
 .cloud
   background white
-  opacity .5
+  opacity var(--alpha)
   position absolute
   top 50%
   left 50%
-  height 50px
-  width 50px
-  transform rotate(calc(var(--angle) * 1deg)) translate(-50%, calc(var(--translate) * -1vw))
+  height calc(var(--size) * 1px)
+  width calc(var(--size) * 1px)
+  border-radius 100%
+  transform translate(-50%, -50%) rotate(calc(var(--angle) * 1deg)) translate(-50%, calc(var(--translate) * -1px)) scale(0)
+
+@keyframes pulse
+  0, 100%
+    transform translate(-50%, -50%) rotate(calc(var(--angle) * 1deg)) translate(-50%, calc(var(--translate) * -1px)) scale(1)
+  50%
+    transform translate(-50%, -50%) rotate(calc(var(--angle) * 1deg)) translate(-50%, calc(var(--translate) * -1px)) scale(1.4)
 
 .astronaut
   position absolute
@@ -107,8 +133,13 @@ body
     height 100%
     width 100%
     position relative
-    // border 2px solid white
+    transform rotate(calc(var(--angle) * 1deg))
 
+button
+  position absolute
+  top 20px
+  left 20px
+  z-index 2
 
 @keyframes rotate
   to
