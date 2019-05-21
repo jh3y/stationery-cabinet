@@ -37,6 +37,9 @@ const initialState = {
   astronautAngle: randomInRange(0, 180),
   flagAngle: randomInRange(0, 360),
   flagColor: genRGB(),
+  distance: randomInRange(100, 200),
+  height: randomInRange(10, 60),
+  duration: randomInRange(500, 2500),
 }
 
 const reducer = (state, action) => {
@@ -61,6 +64,9 @@ const reducer = (state, action) => {
         astronautAngle: randomInRange(0, 180),
         flagAngle: randomInRange(0, 360),
         flagColor: genRGB(),
+        distance: randomInRange(100, 200),
+        height: randomInRange(10, 60),
+        duration: randomInRange(500, 2500),
       }
     default:
       return state
@@ -84,6 +90,9 @@ const App = () => {
       astronautAngle,
       flagAngle,
       flagColor,
+      distance,
+      height,
+      duration,
     },
     dispatch,
   ] = useReducer(reducer, initialState)
@@ -159,6 +168,9 @@ const App = () => {
       spotAlpha,
       flagAngle,
       flagColor,
+      distance,
+      height,
+      duration,
     ]
   )
 
