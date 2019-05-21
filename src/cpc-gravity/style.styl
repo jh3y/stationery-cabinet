@@ -19,12 +19,12 @@ body
   transform-style preserve-3d
 
 .atmosphere
-  background radial-gradient(var(--atmosphere) 0%, transparent calc(var(--size) * 2%))
+  background radial-gradient(var(--atmosphere) 0%, transparent calc(var(--radius) * 2%))
   position absolute
   top 50%
   left 50%
-  height 100vw
-  width 100vw
+  height calc(var(--size) * 1px)
+  width calc(var(--size) * 1px)
   transform translate(-50%, -50%) scale(0)
 
 .stars
@@ -54,6 +54,24 @@ body
   top 50%
   z-index 2
 
+  &__flag
+    height 22px
+    width 2px
+    background silver
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) rotate(calc(var(--angle) * 1deg)) translate(0, calc(var(--radius) * -1px)) translate(0, -25%)
+
+    &:after
+      content ''
+      position absolute
+      top 0
+      left 100%
+      height 10px
+      width 12px
+      background var(--color)
+
   &__surface
     height 100%
     width 100%
@@ -67,6 +85,11 @@ body
     width 100%
     animation rotate calc(var(--speed) * 1s) infinite linear
     position absolute
+
+  &__bumps
+    position absolute
+    height 100%
+    width 100%
 
   &__spots
     position absolute
@@ -101,6 +124,16 @@ body
     top calc(var(--y) * 1%)
 
 
+.bump
+  position absolute
+  top 50%
+  left 50%
+  border-radius calc(var(--curve) * 1%)
+  height calc(var(--size) * 1px)
+  width calc(var(--size) * 1px)
+  background var(--bg)
+  transform translate(-50%, -50%) rotate(calc(var(--angle) * 1deg)) translate(0, calc(var(--radius) * -1px))
+
 .planet__clouds--loaded .cloud
   animation pulse calc(var(--speed) * 1s) calc(var(--delay) * 1s) infinite alternate-reverse linear
 .cloud
@@ -122,7 +155,7 @@ body
 
 .astronaut
   position absolute
-  bottom 100%
+  bottom 98%
   height 50px
   width 50px
   left 50%
@@ -137,9 +170,26 @@ body
 
 button
   position absolute
-  top 20px
-  left 20px
+  bottom 20px
+  left 50%
   z-index 2
+  height 44px
+  width 44px
+  background transparent
+  border 0
+  transform translate(-50%, 0)
+  transition background .25s
+  border-radius 100%
+
+  &:hover
+    background rgba(255, 255, 255, 0.4)
+
+  &:active
+    background rgba(255, 255, 255, 0.8)
+
+  svg
+    height 30px
+    width 30px
 
 @keyframes rotate
   to
