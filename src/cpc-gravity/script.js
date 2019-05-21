@@ -1,6 +1,6 @@
-const MAX_DURATION = 1000
-const MAX_DISTANCE = 120
-const MAX_HEIGHT = 50
+const STAGGER = 0.025
+const TRANSITION = 0.25
+const DELAY = 0.5
 const {
   ReactDOM: { render },
   React,
@@ -37,9 +37,9 @@ const initialState = {
   astronautAngle: randomInRange(0, 180),
   flagAngle: randomInRange(0, 360),
   flagColor: genRGB(),
-  distance: randomInRange(100, 200),
-  height: randomInRange(10, 60),
-  duration: randomInRange(500, 2500),
+  max_distance: randomInRange(100, 200),
+  max_height: randomInRange(10, 60),
+  max_duration: randomInRange(500, 2500),
 }
 
 const reducer = (state, action) => {
@@ -64,9 +64,9 @@ const reducer = (state, action) => {
         astronautAngle: randomInRange(0, 180),
         flagAngle: randomInRange(0, 360),
         flagColor: genRGB(),
-        distance: randomInRange(100, 200),
-        height: randomInRange(10, 60),
-        duration: randomInRange(500, 2500),
+        max_distance: randomInRange(100, 200),
+        max_height: randomInRange(10, 60),
+        max_duration: randomInRange(500, 2500),
       }
     default:
       return state
@@ -90,9 +90,9 @@ const App = () => {
       astronautAngle,
       flagAngle,
       flagColor,
-      distance,
-      height,
-      duration,
+      max_distance,
+      max_height,
+      max_duration,
     },
     dispatch,
   ] = useReducer(reducer, initialState)
@@ -131,29 +131,23 @@ const App = () => {
     [astronautAngle]
   )
 
-  /**
-   * Animate in/out the pieces in this order
-   * 1. stars
-   * 2. planet
-   * 3. atmosphere
-   * 4. clouds
-   * 5. astronaut
-   */
   useEffect(
     () => {
-      new TimelineMax({ delay: 0.5 })
-        .add(TweenMax.to('.stars', 0.25, { opacity: 1 }))
-        .add(TweenMax.to('.planet', 0.25, { scale: 1 }))
-        .add(TweenMax.to('.atmosphere', 0.25, { scale: 1 }))
+      new TimelineMax({ delay: DELAY })
+        .add(TweenMax.to('.stars', TRANSITION, { opacity: 1 }))
+        .add(TweenMax.to('.planet', TRANSITION, { scale: 1 }))
+        .add(TweenMax.to('.atmosphere', TRANSITION, { scale: 1 }))
         .add(
-          TweenMax.staggerTo('.cloud', 0.25, { scale: 1 }, 0.025, () =>
+          TweenMax.staggerTo('.cloud', TRANSITION, { scale: 1 }, STAGGER, () =>
             document
               .querySelector('.planet__clouds')
               .classList.add('planet__clouds--loaded')
           )
         )
-        .add(TweenMax.from('.astronaut', 0.5, { y: -planetSize, scale: 0 }))
-        .add(TweenMax.from('.planet__flag', 0.25, { scale: 0 }))
+        .add(
+          TweenMax.from('.astronaut', TRANSITION, { y: -planetSize, scale: 0 })
+        )
+        .add(TweenMax.from('.planet__flag', TRANSITION, { scale: 0 }))
     },
     [
       bumps,
@@ -168,15 +162,15 @@ const App = () => {
       spotAlpha,
       flagAngle,
       flagColor,
-      distance,
-      height,
-      duration,
+      max_distance,
+      max_height,
+      max_duration,
     ]
   )
 
   const regenerate = () => {
     new TimelineMax({
-      delay: 0.5,
+      delay: DELAY,
       onComplete: () => dispatch({ type: 'REGENERATE' }),
     })
       .call(() => {
@@ -189,12 +183,12 @@ const App = () => {
           jumping: false,
         }
       })
-      .add(TweenMax.to('.planet__flag', 0.25, { scale: 0 }))
-      .add(TweenMax.to('.astronaut', 0.25, { scale: 0, y: -planetSize }))
-      .add(TweenMax.staggerTo('.cloud', 0.25, { scale: 0 }, 0.025))
-      .add(TweenMax.to('.atmosphere', 0.25, { scale: 0 }))
-      .add(TweenMax.to('.planet', 0.25, { scale: 0 }))
-      .add(TweenMax.to('.stars', 0.25, { opacity: 0 }))
+      .add(TweenMax.to('.planet__flag', TRANSITION, { scale: 0 }))
+      .add(TweenMax.to('.astronaut', TRANSITION, { scale: 0, y: -planetSize }))
+      .add(TweenMax.staggerTo('.cloud', TRANSITION, { scale: 0 }, STAGGER))
+      .add(TweenMax.to('.atmosphere', TRANSITION, { scale: 0 }))
+      .add(TweenMax.to('.planet', TRANSITION, { scale: 0 }))
+      .add(TweenMax.to('.stars', TRANSITION, { opacity: 0 }))
   }
 
   const jump = ({ type, keyCode }) => {
@@ -209,10 +203,10 @@ const App = () => {
       jumping: true,
     }
     const jumpTime = new Date().getTime() - astronaut.current.start
-    const DIFF = Math.min(1, jumpTime / MAX_DURATION)
-    const DURATION = DIFF.toFixed(1)
-    const ANGLE = Math.floor(Math.min(MAX_DISTANCE, DURATION * MAX_DISTANCE))
-    const HEIGHT = Math.floor(Math.min(MAX_HEIGHT, DURATION * MAX_HEIGHT))
+    const diff = Math.min(1, jumpTime / max_duration)
+    const duration = diff.toFixed(1)
+    const angle = Math.floor(Math.min(max_distance, duration * max_distance))
+    const height = Math.floor(Math.min(max_height, duration * max_height))
     new TimelineMax({
       onStart: () => {
         astronautEl.current.classList.add('astronaut--jumping')
@@ -227,15 +221,15 @@ const App = () => {
       },
     })
       .add(
-        TweenMax.to(astronautWrapper.current, DURATION, {
-          rotation: (astronaut.current.angle += ANGLE),
+        TweenMax.to(astronautWrapper.current, duration, {
+          rotation: (astronaut.current.angle += angle),
           ease: Power0.easeNone,
         }),
         0
       )
       .add(
-        TweenMax.to(astronautEl.current, DURATION / 2, {
-          y: -HEIGHT,
+        TweenMax.to(astronautEl.current, duration / 2, {
+          y: -height,
           ease: Power4.easeOut,
           yoyo: true,
           repeat: 1,
