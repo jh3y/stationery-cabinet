@@ -1,165 +1,205 @@
+/*
+ * Base styling
+*/
 *
   box-sizing border-box
 
 body
   background radial-gradient(#000, #222), #222
-  min-height 100vh
+  height 100vh
   overflow hidden
 
-.scene
-  display flex
-  align-items center
-  justify-content center
+button
+  -webkit-tap-highlight-color transparent
+  background transparent
+  border 0
+  border-radius 100%
+  bottom 20px
+  height 44px
+  left 50%
+  outline-color transparent
   position fixed
-  top 50%
-  left 50%
-  height 100vh
-  width 100vw
-  transform translate(-50%, -50%)
-  transform-style preserve-3d
-
-.atmosphere
-  background radial-gradient(var(--atmosphere) 0%, transparent calc(var(--radius) * 2%))
-  position absolute
-  top 50%
-  left 50%
-  height calc(var(--size) * 1px)
-  width calc(var(--size) * 1px)
-  transform translate(-50%, -50%) scale(0)
-
-.stars
-  height 100%
-  width 100%
-  position absolute
-  opacity 0
-
-.star
-  background #FAFAFA
-  opacity var(--alpha)
-  left calc(var(--x) * 1%)
-  top calc(var(--y) * 1%)
-  position absolute
-  border-radius 100%
-  height calc(var(--size) * 1px)
-  width calc(var(--size) * 1px)
-
-.planet
-  background var(--bg)
-  height calc(var(--size) * 1px)
-  width calc(var(--size) * 1px)
-  border-radius 100%
-  position absolute
-  transform translate(-50%, -50%) scale(0)
-  left 50%
-  top 50%
+  transform translate(-50%, 0)
+  transition background .25s
+  width 44px
   z-index 2
 
-  &__flag
-    height 80px
-    width 5px
-    background #fafafa
-    position absolute
-    top 50%
-    left 50%
-    transform translate(-50%, -50%) rotate(calc(var(--angle) * 1deg)) translate(0, calc(var(--radius) * -1px)) translate(0, -35%)
+  &:hover
+    background rgba(255, 255, 255, 0.4)
 
-    &:after
-      content ''
-      position absolute
-      top 0
-      left 100%
-      height 40px
-      width 60px
-      background var(--color)
+  &:active
+    background rgba(255, 255, 255, 0.8)
 
-  &__surface
-    height 100%
-    width 100%
-    position absolute
-    background var(--bg)
-    border-radius 100%
-    filter drop-shadow(0 0 10px var(--atmosphere))
-
-  &__planet
-    height 100%
-    width 100%
-    animation rotate calc(var(--speed) * 1s) infinite linear
-    position absolute
-
-  &__bumps
-    position absolute
-    height 100%
-    width 100%
-
-  &__spots
-    position absolute
-    opacity var(--alpha)
-    top 50%
-    left 50%
-    transform translate(-50%, -50%)
-    height calc(var(--size) * 1px)
-    width calc(var(--size) * 1px)
-    border-radius 100%
-    overflow hidden
-    filter drop-shadow(0 0 2px #000)
-
-  &__clouds
+  svg
+    height 30px
     position absolute
     top 50%
     left 50%
     transform translate(-50%, -50%)
-    height calc(var(--size) * 1px)
-    width calc(var(--size) * 1px)
-    border-radius 100%
-    will-change transform
+    width 30px
 
-  &__spot
-    height calc(var(--size) * 1%)
-    width calc(var(--size) * 1%)
-    background var(--spotColor)
-    position absolute
-    border-radius 100%
-    transform translate(-50%, -50%)
-    left calc(var(--x) * 1%)
-    top calc(var(--y) * 1%)
-
-
-.bump
-  position absolute
-  top 50%
-  left 50%
-  border-radius calc(var(--curve) * 1%)
-  height calc(var(--size) * 1px)
-  width calc(var(--size) * 1px)
-  background var(--bg)
-  transform translate(-50%, -50%) rotate(calc(var(--angle) * 1deg)) translate(0, calc(var(--radius) * -1px))
-
-.planet__clouds--loaded .cloud
-  animation pulse calc(var(--speed) * 1s) calc(var(--delay) * 1s) infinite alternate-reverse linear
-.cloud
-  background white
-  opacity var(--alpha)
-  position absolute
-  top 50%
-  left 50%
-  height calc(var(--size) * 1px)
-  width calc(var(--size) * 1px)
-  border-radius 100%
-  transform translate(-50%, -50%) rotate(calc(var(--angle) * 1deg)) translate(-50%, calc(var(--translate) * -1px)) scale(0)
-
+/*
+ * Animations
+*/
 @keyframes pulse
   0, 100%
     transform translate(-50%, -50%) rotate(calc(var(--angle) * 1deg)) translate(-50%, calc(var(--translate) * -1px)) scale(1)
   50%
     transform translate(-50%, -50%) rotate(calc(var(--angle) * 1deg)) translate(-50%, calc(var(--translate) * -1px)) scale(1.4)
 
-.astronaut
+@keyframes rotate
+  to
+    transform rotate(-360deg)
+
+#root
   position absolute
+  top 0
+  right 0
+  bottom 0
+  left 0
+  max-height 100vh
+  transform-style preserve-3d
+
+.scene
+  height 100vh
+  width 100vw
+  overflow hidden
+
+.atmosphere
+  background radial-gradient(var(--atmosphere) 0%, transparent calc(var(--radius) * 2%))
+  height calc(var(--size) * 1px)
+  left 50%
+  position absolute
+  top 50%
+  transform translate(-50%, -50%) scale(0)
+  width calc(var(--size) * 1px)
+
+.stars
+  height 100%
+  opacity 0
+  position absolute
+  width 100%
+
+.star
+  background #FAFAFA
+  border-radius 100%
+  height calc(var(--size) * 1px)
+  left calc(var(--x) * 1%)
+  opacity var(--alpha)
+  position absolute
+  top calc(var(--y) * 1%)
+  width calc(var(--size) * 1px)
+
+.planet
+  background var(--bg)
+  border-radius 100%
+  height calc(var(--size) * 1px)
+  left 50%
+  position absolute
+  top 50%
+  transform translate(-50%, -50%) scale(0)
+  width calc(var(--size) * 1px)
+  z-index 2
+
+  &__flag
+    background #fafafa
+    height 80px
+    left 50%
+    position absolute
+    top 50%
+    transform translate(-50%, -50%) rotate(calc(var(--angle) * 1deg)) translate(0, calc(var(--radius) * -1px)) translate(0, -35%)
+    width 5px
+
+    &:after
+      background var(--color)
+      content ''
+      height 40px
+      left 100%
+      position absolute
+      top 0
+      width 60px
+
+  &__surface
+    background var(--bg)
+    border-radius 100%
+    filter drop-shadow(0 0 10px var(--atmosphere))
+    height 100%
+    position absolute
+    width 100%
+
+  &__planet
+    animation rotate calc(var(--speed) * 1s) infinite linear
+    height 100%
+    position absolute
+    width 100%
+
+  &__bumps
+    height 100%
+    position absolute
+    width 100%
+
+  &__spots
+    border-radius 100%
+    height calc(var(--size) * 1px)
+    filter drop-shadow(0 0 2px #000)
+    left 50%
+    opacity var(--alpha)
+    overflow hidden
+    position absolute
+    top 50%
+    transform translate(-50%, -50%)
+    width calc(var(--size) * 1px)
+
+  &__clouds
+    border-radius 100%
+    height calc(var(--size) * 1px)
+    left 50%
+    position absolute
+    top 50%
+    transform translate(-50%, -50%)
+    width calc(var(--size) * 1px)
+
+    &--loaded .cloud
+      animation pulse calc(var(--speed) * 1s) calc(var(--delay) * 1s) infinite alternate-reverse linear
+
+  &__spot
+    background var(--spotColor)
+    border-radius 100%
+    height calc(var(--size) * 1%)
+    left calc(var(--x) * 1%)
+    position absolute
+    top calc(var(--y) * 1%)
+    transform translate(-50%, -50%)
+    width calc(var(--size) * 1%)
+
+.bump
+  background var(--bg)
+  border-radius calc(var(--curve) * 1%)
+  height calc(var(--size) * 1px)
+  left 50%
+  position absolute
+  top 50%
+  transform translate(-50%, -50%) rotate(calc(var(--angle) * 1deg)) translate(0, calc(var(--radius) * -1px))
+  width calc(var(--size) * 1px)
+
+.cloud
+  background white
+  border-radius 100%
+  height calc(var(--size) * 1px)
+  left 50%
+  opacity var(--alpha)
+  position absolute
+  top 50%
+  transform translate(-50%, -50%) rotate(calc(var(--angle) * 1deg)) translate(-50%, calc(var(--translate) * -1px)) scale(0)
+  width calc(var(--size) * 1px)
+
+.astronaut
   bottom 98%
   height 50px
-  width 50px
   left 50%
+  position absolute
   transform translate(-50%, 0)
+  width 50px
 
   &--jumping
     .astronaut__arm--left
@@ -173,90 +213,90 @@ body
 
   &__wrapper
     height 100%
-    width 100%
     position relative
     transform rotate(calc(var(--angle) * 1deg))
+    width 100%
 
   &__head
-    width 100%
-    height 60%
-    position absolute
-    top 0
-    left 0
-    transform translate(0, -30%)
     background white
     border-radius 25% 25% 25% 25%/50% 50% 50% 50%
+    height 60%
+    position absolute
+    left 0
+    top 0
+    transform translate(0, -30%)
+    width 100%
     z-index 2
 
   &__backpack
-    width 50%
-    height 50%
     background silver
-    position absolute
-    left 0
-    top 30%
     border-radius 5px 0 0 5px
+    height 50%
+    left 0
+    position absolute
+    top 30%
+    width 50%
 
   &__visor
-    width 100%
-    height 125%
     background black
     border-radius 100%
+    height 125%
+    overflow hidden
     position absolute
     top -20%
-    overflow hidden
+    width 100%
 
     &:after
-      content ''
-      position absolute
       border-radius 100%
-      height 200%
-      width 200%
       border-right 8px solid white
-      opacity 0.8
+      content ''
+      height 200%
       left -125%
+      opacity 0.8
+      position absolute
       top -50%
+      width 200%
 
   &__arm
-    width 6px
-    height 25%
     background #e8e8e8
+    border-radius 6px
+    height 25%
+    left 18%
     position absolute
     top 55%
-    left 18%
-    border-radius 6px
     transform-origin top center
+    width 6px
 
     &:after
-      position absolute
+      background black
+      border-radius 100%
+      bottom 0
       content ''
       height 6px
-      width 6px
-      background black
-      bottom 0
       left 0
-      border-radius 100%
+      position absolute
+      width 6px
 
     &--right
       left 78%
 
   &__foot
-    width 6px
-    height 25%
-    position absolute
-    bottom 0
-    left 35%
     background #e8e8e8
     border-radius 6px
+    bottom 0
+    height 25%
+    left 35%
+    position absolute
     transform-origin top center
+    width 6px
 
     &:after
-      content ''
-      position absolute
+      background #000
       bottom -2px
       border-radius 100%
-      background #000
+      content ''
       height 6px
+      position absolute
       width 6px
 
     &--right
@@ -264,51 +304,20 @@ body
 
   &__body
     background white
+    border-radius 25% 25% 50% 50% / 30% 30% 30% 30%
     height 85%
-    top 5%
     left 50%
     position absolute
+    top 5%
     transform translate(-50%, 0)
     width 70%
-    border-radius 25% 25% 50% 50% / 30% 30% 30% 30%
 
     &:after
-      content ''
       background var(--badge)
-      position absolute
       border-radius 100%
-      top 55%
-      right 6px
+      content ''
       height 10px
+      position absolute
+      right 6px
+      top 55%
       width 10px
-
-
-
-button
-  position absolute
-  bottom 20px
-  left 50%
-  z-index 2
-  height 44px
-  width 44px
-  background transparent
-  border 0
-  transform translate(-50%, 0)
-  transition background .25s
-  border-radius 100%
-  -webkit-tap-highlight-color transparent
-  outline-color transparent
-
-  &:hover
-    background rgba(255, 255, 255, 0.4)
-
-  &:active
-    background rgba(255, 255, 255, 0.8)
-
-  svg
-    height 30px
-    width 30px
-
-@keyframes rotate
-  to
-    transform rotate(-360deg)
