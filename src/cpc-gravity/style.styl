@@ -2,7 +2,7 @@
   box-sizing border-box
 
 body
-  background radial-gradient(#000, #111), #111
+  background radial-gradient(#000, #222), #222
   min-height 100vh
   overflow hidden
 
@@ -55,21 +55,21 @@ body
   z-index 2
 
   &__flag
-    height 22px
-    width 2px
-    background silver
+    height 80px
+    width 5px
+    background #fafafa
     position absolute
     top 50%
     left 50%
-    transform translate(-50%, -50%) rotate(calc(var(--angle) * 1deg)) translate(0, calc(var(--radius) * -1px)) translate(0, -25%)
+    transform translate(-50%, -50%) rotate(calc(var(--angle) * 1deg)) translate(0, calc(var(--radius) * -1px)) translate(0, -35%)
 
     &:after
       content ''
       position absolute
       top 0
       left 100%
-      height 10px
-      width 12px
+      height 40px
+      width 60px
       background var(--color)
 
   &__surface
@@ -160,13 +160,129 @@ body
   width 50px
   left 50%
   transform translate(-50%, 0)
-  background red
+
+  &--jumping
+    .astronaut__arm--left
+      transform rotate(115deg)
+    .astronaut__arm--right
+      transform rotate(-115deg)
+    .astronaut__foot--left
+      transform rotate(45deg)
+    .astronaut__foot--right
+      transform rotate(-45deg)
 
   &__wrapper
     height 100%
     width 100%
     position relative
     transform rotate(calc(var(--angle) * 1deg))
+
+  &__head
+    width 100%
+    height 60%
+    position absolute
+    top 0
+    left 0
+    transform translate(0, -30%)
+    background white
+    border-radius 25% 25% 25% 25%/50% 50% 50% 50%
+    z-index 2
+
+  &__backpack
+    width 50%
+    height 50%
+    background silver
+    position absolute
+    left 0
+    top 30%
+    border-radius 5px 0 0 5px
+
+  &__visor
+    width 100%
+    height 125%
+    background black
+    border-radius 100%
+    position absolute
+    top -20%
+    overflow hidden
+
+    &:after
+      content ''
+      position absolute
+      border-radius 100%
+      height 200%
+      width 200%
+      border-right 8px solid white
+      opacity 0.8
+      left -125%
+      top -50%
+
+  &__arm
+    width 6px
+    height 25%
+    background #e8e8e8
+    position absolute
+    top 55%
+    left 18%
+    border-radius 6px
+    transform-origin top center
+
+    &:after
+      position absolute
+      content ''
+      height 6px
+      width 6px
+      background black
+      bottom 0
+      left 0
+      border-radius 100%
+
+    &--right
+      left 78%
+
+  &__foot
+    width 6px
+    height 25%
+    position absolute
+    bottom 0
+    left 35%
+    background #e8e8e8
+    border-radius 6px
+    transform-origin top center
+
+    &:after
+      content ''
+      position absolute
+      bottom -2px
+      border-radius 100%
+      background #000
+      height 6px
+      width 6px
+
+    &--right
+      left 55%
+
+  &__body
+    background white
+    height 85%
+    top 5%
+    left 50%
+    position absolute
+    transform translate(-50%, 0)
+    width 70%
+    border-radius 25% 25% 50% 50% / 30% 30% 30% 30%
+
+    &:after
+      content ''
+      background var(--badge)
+      position absolute
+      border-radius 100%
+      top 55%
+      right 6px
+      height 10px
+      width 10px
+
+
 
 button
   position absolute
@@ -180,6 +296,8 @@ button
   transform translate(-50%, 0)
   transition background .25s
   border-radius 100%
+  -webkit-tap-highlight-color transparent
+  outline-color transparent
 
   &:hover
     background rgba(255, 255, 255, 0.4)
