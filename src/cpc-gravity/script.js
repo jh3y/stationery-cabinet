@@ -202,7 +202,11 @@ const App = () => {
     const ANGLE = Math.floor(Math.min(MAX_DISTANCE, DURATION * MAX_DISTANCE))
     const HEIGHT = Math.floor(Math.min(MAX_HEIGHT, DURATION * MAX_HEIGHT))
     new TimelineMax({
+      onStart: () => {
+        astronautEl.current.classList.add('astronaut--jumping')
+      },
       onComplete: () => {
+        astronautEl.current.classList.remove('astronaut--jumping')
         astronaut.current = {
           ...astronaut.current,
           jumping: false,
@@ -375,12 +379,27 @@ const App = () => {
               ref={astronautWrapper}
               style={{ '--angle': astronautAngle }}
               className="astronaut__wrapper">
-              <div ref={astronautEl} className="astronaut" />
+              <div
+                ref={astronautEl}
+                className="astronaut"
+                style={{
+                  '--badge': flagColor,
+                }}>
+                <div className="astronaut__head">
+                  <div className="astronaut__visor" />
+                </div>
+                <div className="astronaut__backpack" />
+                <div className="astronaut__foot astronaut__foot--left" />
+                <div className="astronaut__foot astronaut__foot--right" />
+                <div className="astronaut__body" />
+                <div className="astronaut__arm astronaut__arm--left" />
+                <div className="astronaut__arm astronaut__arm--right" />
+              </div>
             </div>
             <div
               className="planet__flag"
               style={{
-                '--angle': flagAngle,
+                '--angle': astronautAngle + 25,
                 '--color': flagColor,
                 '--radius': planetSize / 2,
               }}
