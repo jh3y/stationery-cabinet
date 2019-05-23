@@ -19,7 +19,7 @@ const genRGB = (alpha = 1) =>
     255
   )}, ${alpha})`
 
-const initialState = {
+const genState = () => ({
   planet: 0,
   stars: randomInRange(50, 100),
   planetSize: randomInRange(
@@ -40,6 +40,10 @@ const initialState = {
   max_distance: randomInRange(100, 200),
   max_height: randomInRange(10, 60),
   max_duration: randomInRange(500, 2500),
+})
+
+const initialState = {
+  ...genState(),
 }
 
 const reducer = (state, action) => {
@@ -47,26 +51,8 @@ const reducer = (state, action) => {
     case 'REGENERATE':
       return {
         ...state,
+        ...genState(),
         planet: (state.planet += 1),
-        stars: randomInRange(50, 100),
-        planetSize: randomInRange(
-          Math.min(window.innerWidth, window.innerHeight) * 0.15,
-          Math.min(window.innerWidth, window.innerHeight) * 0.3
-        ),
-        bumps: randomInRange(0, 4),
-        planetColor: genRGB(),
-        planetSpeed: randomInRange(5, 25),
-        atmosphere: genRGB(0.75),
-        spots: randomInRange(1, 5),
-        spotColor: genRGB(),
-        spotAlpha: Math.random(),
-        clouds: randomInRange(15, 25),
-        astronautAngle: randomInRange(0, 180),
-        flagAngle: randomInRange(0, 360),
-        flagColor: genRGB(),
-        max_distance: randomInRange(100, 200),
-        max_height: randomInRange(10, 60),
-        max_duration: randomInRange(500, 2500),
       }
     default:
       return state
