@@ -1,0 +1,11 @@
+- const mnemonics = ['My very easy method just speeds up naming planets', 'My very educated mother just served us nine pizzas', 'My very energetic mother jumps skateboards under nana\'s patio', 'My very easy method just shows us nine planets', 'Many volcanoes emit mulberry jam sandwiches under normal pressure', 'My very efficient memory just stores up nine planets', 'Mary\'s violet eyes make Johnnie stay up nights pondering']
+- const planets = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']
+- const result = Array(planets.length).fill().map((a,b)=>{const c=[];for(const d of mnemonics)c.push(planets[b]),c.push(`${d.split(" ")[b].charAt(0).toUpperCase()}${d.split(" ")[b].substring(1)}`);return c});
+mixin line(words)
+  .block-reveal__line
+    - for (const word of words)
+      h1= word
+    span
+.block-reveal
+  - for (const mnemonic of result)
+    +line(mnemonic)
