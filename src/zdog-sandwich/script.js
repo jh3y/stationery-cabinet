@@ -54,18 +54,19 @@ const normalize = arr => {
 /**
  * Generates the path array from a path string
  */
-const getPath = pathString => {
-  const result = toCubic(pathString).reduce((a, c) => {
-    c.map((e, i) => {
-      if (i % 2 === 1) {
-        const [x, y] = c.slice(i, i + 2)
-        a.push({ x, y })
-      }
-    })
-    return a
-  }, [])
-  return normalize(result)
-}
+const getPath = pathString =>
+  normalize(
+    // SnapSVG toCubic
+    toCubic(pathString).reduce((a, c) => {
+      c.map((e, i) => {
+        if (i % 2 === 1) {
+          const [x, y] = c.slice(i, i + 2)
+          a.push({ x, y })
+        }
+      })
+      return a
+    }, [])
+  ) // EXAMPLE
 const Scene = new Illustration({
   element: 'canvas',
   resize: 'fullscreen',
