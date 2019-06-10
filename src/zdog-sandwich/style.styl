@@ -1,0 +1,15 @@
+*
+  box-sizing border-box
+
+$margin = 10px
+
+$color = rgba(107, 185, 240, .5)
+
+body
+  background repeating-linear-gradient(90deg, transparent , transparent $margin, $color $margin, $color ($margin + 1), transparent ($margin + 1), transparent ($margin + 2), $color ($margin + 2), $color ($margin + 8), transparent ($margin + 8), transparent ($margin + 9), $color ($margin + 9), $color ($margin + 10), transparent ($margin + 10)), repeating-linear-gradient(0deg, transparent , transparent $margin, $color $margin, $color ($margin + 1), transparent ($margin + 1), transparent ($margin + 2), $color ($margin + 2), $color ($margin + 8), transparent ($margin + 8), transparent ($margin + 9), $color ($margin + 9), $color ($margin + 10), transparent ($margin + 10)), #fafafa
+  min-height 100vh
+
+canvas
+  touch-action none
+  height 100vh
+  width 100vw

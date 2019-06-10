@@ -25,12 +25,13 @@ const PATHS = {
 }
 
 const BOARD_COLOR = '#26232b'
-const CHALK = '#f4f4f0'
 const CHALK_ONE = '#f4f4f0'
 const CHALK_TWO = '#f2a3bd'
 const CHALK_THREE = '#d6d963'
 const CHALK_FOUR = '#6fe7db'
 const CHALK_FIVE = '#c4adc9'
+const CHALK_COLORS = [CHALK_ONE, CHALK_TWO, CHALK_THREE, CHALK_FOUR, CHALK_FIVE]
+const CHALK = CHALK_COLORS[Math.floor(Math.random() * CHALK_COLORS.length)]
 
 const FRAME = '#deb887'
 const BOARD_WIDTH = 150
@@ -269,7 +270,6 @@ const start = () => {
   Scene.updateRenderGraph()
   requestAnimationFrame(start)
 }
-const CHALK_COLORS = [CHALK_ONE, CHALK_TWO, CHALK_THREE, CHALK_FOUR, CHALK_FIVE]
 const changeColors = item => {
   // Search the Scene for any item that has a color of chalk
   if (item.color && CHALK_COLORS.includes(item.color)) {
