@@ -1,0 +1,63 @@
+*
+  box-sizing border-box
+  -webkit-overflow-scrolling touch
+
+body
+  min-height 100vh
+  margin 0
+  padding 0
+
+.scene
+  min-height 100vh
+  position relative
+
+.bowl
+  position absolute
+  bottom 50vh
+  left 50%
+  height 100px
+  width 100px
+  background red
+  // animation shake .25s infinite
+
+  &--shaking
+    animation shake .25s infinite
+
+$shakes = 0 0 0,
+          1 1 0,
+          -1 -2 -1,
+          -3 0 1,
+          3 2 0,
+          1 -1 1,
+          -1 2 -1,
+          -3 1 0,
+          3 1 -1,
+          -1 -1 1,
+          1 2 0,
+          1 -2 -1,
+          0 0 0
+
+@keyframes shake
+  for $shake, i in (0...length($shakes))
+    {i * 100% / (length($shakes) ) }
+      x = $shakes[i]
+      transform translate(x[0] * 1px, x[1] * 1px) rotate(x[2] * 1deg)
+
+
+.noodles
+  bottom 50vh
+  position absolute
+  left 50%
+  height 100px
+  width 50px
+  background yellow
+
+.target
+  height 10px
+  background purple
+
+.score
+  position fixed
+  top 20px
+  right 20px
+  font-weight bold
