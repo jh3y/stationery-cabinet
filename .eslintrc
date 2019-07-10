@@ -5,6 +5,11 @@
     "es6": true,
     "browser": true
   },
+  "settings": {
+    "react": {
+      "version": "16.8.0"
+    }
+  },
   "parserOptions": {
     "ecmaVersion": 7,
     "ecmaFeatures": {
@@ -38,6 +43,10 @@
     "no-console": 2,
     "no-restricted-syntax": 2,
     "no-undef": 2,
+    "no-useless-catch": 0,
+    "no-misleading-character-class": 0,
+    "no-async-promise-executor": 0,
+    "require-atomic-updates": 0,
     "react/react-in-jsx-scope": 0
   }
 }
