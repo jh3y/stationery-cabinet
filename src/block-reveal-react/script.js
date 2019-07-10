@@ -41,115 +41,101 @@ const BlockReveal = ({
   }, [])
   /**
    * Use an Effect to cache all of our elements and index widths 👍
-   */ useEffect(
-    () => {
-      if (containerRef.current) {
-        const segmentsPerLine = phrases[0].length
-        // Here we need to loop througn the different elements and create a cache
-        cache.current.blocks = containerRef.current.querySelectorAll(
-          `.${CLASSES.BLOCK}`
-        )
-        for (let i = 0; i < segmentsPerLine; i++) {
-          cache.current.segments.push(
-            containerRef.current.querySelectorAll(
-              `.${CLASSES.LINE} .${CLASSES.SEGMENT}:nth-of-type(${i + 1})`
-            )
-          )
-        }
-        cache.current.segments.forEach(phrase => {
-          const blockWidths = []
-          // For each segment in the phrase, calculate the correct block width
-          phrase.forEach(segment => {
-            const current =
-              segment.previousElementSibling ||
-              segment.parentElement.children[segmentsPerLine - 1]
-            const segmentWidth = Math.ceil(
-              segment.getBoundingClientRect().width
-            )
-            const currentWidth = Math.ceil(
-              current.getBoundingClientRect().width
-            )
-            blockWidths.push(Math.max(segmentWidth, currentWidth))
-          })
-          cache.current.blockWidths.push(blockWidths)
-        })
-        /**
-         * Push one last set of widths which equate to when everything is blank
-         * and we are revealing the first set of segments.
-         */ cache.current.blockWidths.push(
-          [...cache.current.segments[index.current]].map(segment =>
-            Math.ceil(segment.getBoundingClientRect().width)
+   */ useEffect(() => {
+    if (containerRef.current) {
+      const segmentsPerLine = phrases[0].length
+      // Here we need to loop througn the different elements and create a cache
+      cache.current.blocks = containerRef.current.querySelectorAll(
+        `.${CLASSES.BLOCK}`
+      )
+      for (let i = 0; i < segmentsPerLine; i++) {
+        cache.current.segments.push(
+          containerRef.current.querySelectorAll(
+            `.${CLASSES.LINE} .${CLASSES.SEGMENT}:nth-of-type(${i + 1})`
           )
         )
       }
-    },
-    [containerRef.current]
-  )
+      cache.current.segments.forEach(phrase => {
+        const blockWidths = []
+        // For each segment in the phrase, calculate the correct block width
+        phrase.forEach(segment => {
+          const current =
+            segment.previousElementSibling ||
+            segment.parentElement.children[segmentsPerLine - 1]
+          const segmentWidth = Math.ceil(segment.getBoundingClientRect().width)
+          const currentWidth = Math.ceil(current.getBoundingClientRect().width)
+          blockWidths.push(Math.max(segmentWidth, currentWidth))
+        })
+        cache.current.blockWidths.push(blockWidths)
+      })
+      /**
+       * Push one last set of widths which equate to when everything is blank
+       * and we are revealing the first set of segments.
+       */ cache.current.blockWidths.push(
+        [...cache.current.segments[index.current]].map(segment =>
+          Math.ceil(segment.getBoundingClientRect().width)
+        )
+      )
+    }
+  }, [containerRef.current])
   /**
    * Trigger this if the prop active is true and there is a ref
-   */ useEffect(
-    () => {
-      if (containerRef.current && active) {
-        const segmentsPerLine = phrases[0].length
-        const TL = new TimelineMax({
-          delay,
-          repeat,
-          repeatDelay,
+   */ useEffect(() => {
+    if (containerRef.current && active) {
+      const segmentsPerLine = phrases[0].length
+      const TL = new TimelineMax({
+        delay,
+        repeat,
+        repeatDelay,
+      })
+      const onStart = () => {
+        const nextsegments = cache.current.segments[index.current]
+        nextsegments.forEach((segment, segmentIndex) => {
+          const block = cache.current.blocks[segmentIndex]
+          block.style.width = `${cache.current.blockWidths[ran.current ? index.current : segmentsPerLine][segmentIndex]}px`
         })
-        const onStart = () => {
-          const nextsegments = cache.current.segments[index.current]
-          nextsegments.forEach((segment, segmentIndex) => {
-            const block = cache.current.blocks[segmentIndex]
-            block.style.width = `${
-              cache.current.blockWidths[
-                ran.current ? index.current : segmentsPerLine
-              ][segmentIndex]
-            }px`
-          })
-        }
-        const onCompleteIn = () => {
-          const previoussegments =
-            cache.current.segments[
-              index.current === 0 ? segmentsPerLine - 1 : index.current - 1
-            ]
-          const newsegments = cache.current.segments[index.current]
-          for (const segment of previoussegments) {
-            segment.style.opacity = '0'
-          }
-          for (const block of cache.current.blocks) {
-            block.style.transformOrigin = 'right'
-          }
-          for (const segment of newsegments) {
-            segment.style.opacity = '1'
-          }
-        }
-        const onCompleteOut = () => {
-          index.current =
-            index.current + 1 > segmentsPerLine - 1 ? 0 : index.current + 1
-          ran.current += 1
-        }
-        TL.add(
-          TweenMax.staggerTo(
-            cache.current.blocks,
-            blockSlide,
-            { onStart, transformOrigin: 'left', scaleX: 1 },
-            blockStagger,
-            onCompleteIn
-          )
-        )
-        TL.add(
-          TweenMax.staggerTo(
-            cache.current.blocks,
-            blockSlide,
-            { scaleX: 0 },
-            blockStagger,
-            onCompleteOut
-          )
-        )
       }
-    },
-    [active]
-  )
+      const onCompleteIn = () => {
+        const previoussegments =
+          cache.current.segments[
+            index.current === 0 ? segmentsPerLine - 1 : index.current - 1
+          ]
+        const newsegments = cache.current.segments[index.current]
+        for (const segment of previoussegments) {
+          segment.style.opacity = '0'
+        }
+        for (const block of cache.current.blocks) {
+          block.style.transformOrigin = 'right'
+        }
+        for (const segment of newsegments) {
+          segment.style.opacity = '1'
+        }
+      }
+      const onCompleteOut = () => {
+        index.current =
+          index.current + 1 > segmentsPerLine - 1 ? 0 : index.current + 1
+        ran.current += 1
+      }
+      TL.add(
+        TweenMax.staggerTo(
+          cache.current.blocks,
+          blockSlide,
+          { onStart, transformOrigin: 'left', scaleX: 1 },
+          blockStagger,
+          onCompleteIn
+        )
+      )
+      TL.add(
+        TweenMax.staggerTo(
+          cache.current.blocks,
+          blockSlide,
+          { scaleX: 0 },
+          blockStagger,
+          onCompleteOut
+        )
+      )
+    }
+  }, [active])
   return (
     <div className="block-reveal" ref={containerRef}>
       {new Array(phrases[0].length).fill().map((p, i) => {
