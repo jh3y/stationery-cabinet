@@ -5,9 +5,9 @@ interface ElementCache {
   reveals: NodeListOf<Element>
 }
 class BlockReveal {
-  private duration: number = 0.5;
-  private stagger: number = 0.25;
-  private delay: number = 2;
+  private duration: number = 0.4;
+  private stagger: number = 0.2;
+  private delay: number = 1;
   private elementCache: ElementCache = {
     words: [],
     reveals: this.el.querySelectorAll('span')
@@ -41,15 +41,16 @@ class BlockReveal {
     const TL = new TimelineMax({
       paused: true,
       repeat: -1,
-      repeatDelay: this.delay
+      repeatDelay: this.delay,
+      delay: 2
     })
     const onStart = () => {
       const currentWords = this.elementCache.words[this.index - 1] as NodeListOf<HTMLElement>
       for (const word of currentWords) {
-        const next = word.previousElementSibling as HTMLElement || word.parentElement.children[this.wordsPerLine - 1] as HTMLElement
+        const prev = word.previousElementSibling as HTMLElement || word.parentElement.children[this.wordsPerLine - 1] as HTMLElement
         const reveal = word.parentElement.querySelector('span') as HTMLElement
         // Need to set the reveal to the size of the largest word.
-        reveal.style.width = `${next ? Math.max(word.offsetWidth, next.offsetWidth).toString() : word.offsetWidth.toString()}px`
+        reveal.style.width = `${prev.style.opacity ? Math.max(word.offsetWidth, prev.offsetWidth).toString() : word.offsetWidth.toString()}px`
       }
     }
     TL.add(TweenMax.staggerTo(this.elementCache.reveals, this.duration, {onStart, transformOrigin: 'left', scaleX: 1}, this.stagger, () => {

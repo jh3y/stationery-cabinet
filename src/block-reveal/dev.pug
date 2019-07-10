@@ -1,0 +1,8 @@
+- const lines = ['Hey How', 'there are', 'reader! you?']
+.block-reveal
+  - for (const line of lines)
+    .block-reveal__line
+      - for (const word of line.split(' '))
+        span.block-reveal__word= word
+      span.block-reveal__block
+button restart

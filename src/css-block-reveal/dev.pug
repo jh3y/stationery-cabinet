@@ -1,0 +1,6 @@
+- const colors = ['#db0a5b', '#fef160', '#23cba7']
+.block-reveal(style='--reveal-speed: 0.75')
+  - const phrase = 'Block reveal effect!'
+  each word, index in phrase.split(' ')
+    span(style=`--delay: 1.${index}; --color: ${colors[index]}`)= word
+button restart
