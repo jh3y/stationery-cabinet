@@ -1,0 +1,55 @@
+*
+  box-sizing border-box
+
+body
+  background-color #fff
+  text-align center
+  font-family 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+
+button
+  position fixed
+  top 1rem
+  left 1rem
+  background 0
+  opacity 0.5
+  border 0
+  cursor pointer
+  transition opacity .15s ease
+  font-weight bold
+  letter-spacing 2px
+
+  &:hover
+    opacity 1
+
+.block-reveal
+  display inline-flex
+  flex-direction column
+  position relative
+
+  &__line
+    display grid
+    // grid-template-columns 1fr
+    justify-items flex-start
+    position relative
+
+  &__block
+    background rebeccapurple
+    bottom 0
+    left 0
+    // opacity 0.5
+    position absolute
+    right 0
+    top 0
+    transform-origin left
+    transform scaleX(0)
+
+  &__word
+    font-size 4rem
+    font-weight bold
+    grid-column 1
+    grid-row 1
+    opacity 0
