@@ -1,118 +1,155 @@
-const button = document.querySelector('button')
-const restart = () => {
-  myBlockReveal.start()
-}
-button.addEventListener('click', restart)
-
 const { TimelineMax, TweenMax } = window
 
+const CLASSES = {
+  BLOCK: 'block-reveal__block',
+  LINE: 'block-reveal__line',
+  WORD: 'block-reveal__word',
+}
 class BlockReveal {
-  /**
-   *
-   * @param {Object} element - container element with words in
-   * @param {Object} options - expect this to contain words etc. colors durations
-   */
+  blockWidths = []
   element = undefined
-  wordsPerLine = undefined
-  // Start at index 1 for nth-child purposes instead of zero based.
-  index = 1
   elementCache = {
+    blocks: undefined,
     words: [],
-    reveals: undefined,
   }
-  constructor(element) {
-    // Store element on class instance
+  index = 0
+  ran = 0
+  options = {
+    delay: 2,
+    repeat: 2,
+    repeatDelay: 1,
+    blockStagger: 0.2,
+    blockSlide: 0.4,
+  }
+  wordsPerLine = undefined
+  constructor(element, options) {
+    // Store element on class
     this.element = element
+    // Store options on class
+    this.options = { ...this.options, ...options }
     // Set the wordsPerLine
-    this.wordsPerLine =
-      this.element.querySelector('.block-reveal__line').children.length - 1
+    this.wordsPerLine = this.element
+      .querySelector(`.${CLASSES.LINE}`)
+      .querySelectorAll(`.${CLASSES.WORD}`).length
     const sameLineLength = [
-      ...this.element.querySelectorAll('.block-reveal__line'),
-    ].every(v => {
-      return v.children.length === this.wordsPerLine + 1
-    })
+      ...this.element.querySelectorAll(`.${CLASSES.LINE}`),
+    ].every(
+      v => v.querySelectorAll(`.${CLASSES.WORD}`).length === this.wordsPerLine
+    )
     if (!sameLineLength)
       throw new Error('BlockReveal: Lines need to be same amount of words')
     // Cache the elements in advance so we aren't making querySelector calls all the time
     this.cacheElements()
+    // Cache the block widths for each index
+    this.cacheBlockWidths()
   }
   cacheElements = () => {
-    // Make a check that all lines are equal in length
-    // Cache the reveals
-    this.elementCache.reveals = this.element.querySelectorAll(
-      '.block-reveal__block'
+    // Cache the blocks
+    this.elementCache.blocks = this.element.querySelectorAll(
+      `.${CLASSES.BLOCK}`
     )
+    // Cache the words in blocks of phrases
     for (let i = 0; i < this.wordsPerLine; i++) {
       this.elementCache.words.push(
         this.element.querySelectorAll(
-          `.block-reveal__line .block-reveal__word:nth-of-type(${i + 1})`
+          `.${CLASSES.LINE} .${CLASSES.WORD}:nth-of-type(${i + 1})`
         )
       )
     }
   }
-  start = () => {
-    // console.info('starting', this)
-    const TL = new TimelineMax({
-      paused: true,
-      repeat: 3,
-      repeatDelay: 1,
-      delay: 2,
-    })
-    const onStart = () => {
-      const currentWords = this.elementCache.words[this.index - 1]
-      currentWords.forEach((word, index) => {
-        const prev =
+  cacheBlockWidths = () => {
+    // Iterate through the elementCache words
+    this.elementCache.words.forEach(phrase => {
+      const blockWidths = []
+      // For each word in the phrase, calculate the correct block width
+      phrase.forEach(word => {
+        const current =
           word.previousElementSibling ||
           word.parentElement.children[this.wordsPerLine - 1]
-        const reveal = this.elementCache.reveals[index]
-        reveal.style.width = `${
-          prev.style.opacity
-            ? Math.max(word.offsetWidth, prev.offsetWidth)
-            : word.offsetWidth
+        const wordWidth = Math.ceil(word.getBoundingClientRect().width)
+        const currentWidth = Math.ceil(current.getBoundingClientRect().width)
+        blockWidths.push(Math.max(wordWidth, currentWidth))
+      })
+      this.blockWidths.push(blockWidths)
+    })
+    /**
+     * Push one last set of widths which equate to when everything is blank
+     * and we are revealing the first set of words.
+     */
+    this.blockWidths.push(
+      [...this.elementCache.words[this.index]].map(word =>
+        Math.ceil(word.getBoundingClientRect().width)
+      )
+    )
+  }
+  start = () => {
+    const {
+      options: { delay, repeat, repeatDelay },
+    } = this
+
+    const TL = new TimelineMax({
+      delay,
+      repeat,
+      repeatDelay,
+    })
+    const onStart = () => {
+      const nextWords = this.elementCache.words[this.index]
+      nextWords.forEach((word, index) => {
+        const block = this.elementCache.blocks[index]
+        block.style.width = `${
+          this.blockWidths[this.ran ? this.index : this.wordsPerLine][index]
         }px`
       })
     }
-    TL.add(
-      TweenMax.staggerTo(
-        this.elementCache.reveals,
-        0.4,
-        { onStart, transformOrigin: 'left', scaleX: 1 },
-        0.2,
-        () => {
-          const previousWords = this.elementCache.words[
-            this.index === 1 ? this.wordsPerLine - 1 : this.index - 2
-          ]
-          const reveals = this.elementCache.reveals
-          for (const prev of previousWords) {
-            prev.style.opacity = '0'
-          }
-          for (const reveal of reveals) {
-            reveal.style.transformOrigin = 'right'
-          }
-        }
-      ),
-      0
-    )
-    TL.call(() => {
-      const revealed = this.elementCache.words[this.index - 1]
-      for (const word of revealed) {
+    const onCompleteIn = () => {
+      const {
+        elementCache: { blocks, words },
+        index,
+        wordsPerLine,
+      } = this
+      const previousWords = words[index === 0 ? wordsPerLine - 1 : index - 1]
+      const newWords = words[index]
+      for (const word of previousWords) {
+        word.style.opacity = '0'
+      }
+      for (const block of blocks) {
+        block.style.transformOrigin = 'right'
+      }
+      for (const word of newWords) {
         word.style.opacity = '1'
       }
-    })
+    }
+    const onCompleteOut = () => {
+      this.index = this.index + 1 > this.wordsPerLine - 1 ? 0 : this.index + 1
+      this.ran += 1
+    }
     TL.add(
       TweenMax.staggerTo(
-        this.elementCache.reveals,
-        0.4,
-        { scaleX: 0 },
-        0.2,
-        () => {
-          this.index = this.index + 1 > this.wordsPerLine ? 1 : this.index + 1
-        }
+        this.elementCache.blocks,
+        this.options.blockSlide,
+        { onStart, transformOrigin: 'left', scaleX: 1 },
+        this.options.blockStagger,
+        onCompleteIn
       )
     )
-    TL.play()
+    TL.add(
+      TweenMax.staggerTo(
+        this.elementCache.blocks,
+        this.options.blockSlide,
+        { scaleX: 0 },
+        this.options.blockStagger,
+        onCompleteOut
+      )
+    )
   }
 }
 
-const myBlockReveal = new BlockReveal(document.querySelector('.block-reveal'))
+const block = document.querySelector('.block-reveal')
+const myBlockReveal = new BlockReveal(block, {
+  delay: 1,
+  repeat: -1,
+  repeatDelay: 1,
+  blockStagger: 0.15,
+  blockSlide: 0.5,
+})
 myBlockReveal.start()
