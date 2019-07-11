@@ -96,9 +96,7 @@ class BlockReveal {
       const nextWords = this.elementCache.words[this.index]
       nextWords.forEach((word, index) => {
         const block = this.elementCache.blocks[index]
-        block.style.width = `${
-          this.blockWidths[this.ran ? this.index : this.wordsPerLine][index]
-        }px`
+        block.style.width = `${this.blockWidths[this.ran ? this.index : this.wordsPerLine][index]}px`
       })
     }
     const onCompleteIn = () => {
