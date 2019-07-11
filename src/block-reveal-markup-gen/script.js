@@ -29,9 +29,10 @@ class BlockReveal {
     // Store options on class
     this.options = { ...this.options, ...options }
     // Set the segmentsPerLine
-    this.segmentsPerLine = phrases[0].length
+    this.segmentsPerLine = phrases.length
+    this.segmentsPerReveal = phrases[0].length
     const sameLineLength = phrases.every(
-      phrase => phrase.length === this.segmentsPerLine
+      phrase => phrase.length === this.segmentsPerReveal
     )
     if (!sameLineLength)
       throw new Error('BlockReveal: Lines need to be same amount of blocks')
@@ -44,7 +45,7 @@ class BlockReveal {
   }
   buildElements = phrases => {
     this.element.classList.add(CLASSES.CONTAINER)
-    for (let i = 0; i < this.segmentsPerLine; i++) {
+    for (let i = 0; i < this.segmentsPerReveal; i++) {
       const line = document.createElement('div')
       line.classList.add(CLASSES.LINE)
       phrases.forEach(phrase => {
@@ -112,9 +113,7 @@ class BlockReveal {
       const nextsegments = this.elementCache.segments[this.index]
       nextsegments.forEach((segment, index) => {
         const block = this.elementCache.blocks[index]
-        block.style.width = `${
-          this.blockWidths[this.ran ? this.index : this.segmentsPerLine][index]
-        }px`
+        block.style.width = `${this.blockWidths[this.ran ? this.index : this.segmentsPerLine][index]}px`
       })
     }
     const onCompleteIn = () => {
@@ -164,11 +163,7 @@ class BlockReveal {
 
 const container = document.querySelector('div')
 
-const phrases = [
-  ['I am', 'a', 'Block Reveal'],
-  ['Times', 'go', 'by'],
-  ['And', 'I', 'keep looping'],
-]
+const phrases = [['Block', 'Reveal', 'Effect'], ['But', '...', 'on a loop!']]
 
 const myBlockReveal = new BlockReveal(phrases, container, {
   delay: 1,

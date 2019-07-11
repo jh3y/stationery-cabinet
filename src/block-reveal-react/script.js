@@ -43,7 +43,7 @@ const BlockReveal = ({
    * Use an Effect to cache all of our elements and index widths 👍
    */ useEffect(() => {
     if (containerRef.current) {
-      const segmentsPerLine = phrases[0].length
+      const segmentsPerLine = phrases.length
       // Here we need to loop througn the different elements and create a cache
       cache.current.blocks = containerRef.current.querySelectorAll(
         `.${CLASSES.BLOCK}`
@@ -82,7 +82,7 @@ const BlockReveal = ({
    * Trigger this if the prop active is true and there is a ref
    */ useEffect(() => {
     if (containerRef.current && active) {
-      const segmentsPerLine = phrases[0].length
+      const segmentsPerLine = phrases.length
       const TL = new TimelineMax({
         delay,
         repeat,
