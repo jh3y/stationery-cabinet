@@ -1,0 +1,119 @@
+*
+  box-sizing border-box
+
+body
+  background-color #fff
+  text-align center
+  font-family 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+
+.container
+  display grid
+  grid-template-columns 1fr 1fr
+  grid-gap 20px
+
+button
+  --borderWidth 4
+  --paddingX 8
+  --paddingY 12
+  --transition .25
+  background var(--bg, #fff)
+  border calc(var(--borderWidth) * 1px) solid var(--color, #f0f)
+  border-radius calc(var(--borderWidth) * 1px)
+  color var(--color, #f0f)
+  box-shadow calc(var(--borderWidth) * 1px) calc(var(--borderWidth) * 1px) 0 #888
+  cursor pointer
+  font-weight bold
+  outline transparent
+  padding calc(var(--paddingX) * 1px) calc(var(--paddingY) * 1px)
+  position relative
+  transition box-shadow calc(var(--transition) * .5s) ease
+  -webkit-tap-highlight-color transparent
+
+  &:active
+    box-shadow 0 0 0 #888
+
+  &:hover:after
+    opacity 1
+    transition opacity calc(var(--transition) * 1s) calc(var(--transition) * 1s) steps(1)
+
+  &:after
+    background var(--color, #f0f)
+    bottom 0
+    color var(--bg, #fff)
+    content var(--text)
+    left 0
+    opacity 0
+    padding calc(var(--paddingX) * 1px) calc(var(--paddingY) * 1px)
+    position absolute
+    right 0
+    top 0
+
+  span
+    -webkit-clip-path var(--clip)
+    bottom -4px
+    clip-path var(--clip)
+    left -4px
+    opacity .5
+    position absolute
+    right -4px
+    top -4px
+    z-index 2
+
+    &:nth-of-type(1)
+      --clip polygon(0 0, 100% 0, 50% 50%)
+
+    &:nth-of-type(2)
+      --clip polygon(100% 0, 100% 100%, 50% 50%)
+
+    &:nth-of-type(3)
+      --clip polygon(0 100%, 100% 100%, 50% 50%)
+
+    &:nth-of-type(4)
+      --clip polygon(0 0, 0 100%, 50% 50%)
+
+    &:nth-of-type(1):hover
+    &:nth-of-type(2):hover
+    &:nth-of-type(3):hover
+    &:nth-of-type(4):hover
+      --clip polygon(0 0, 100% 0, 100% 100%, 0 100%)
+      z-index 3
+
+    &:nth-of-type(1):hover ~ div:nth-of-type(1)
+    &:nth-of-type(2):hover ~ div:nth-of-type(2)
+    &:nth-of-type(3):hover ~ div:nth-of-type(3)
+    &:nth-of-type(4):hover ~ div:nth-of-type(4)
+      --clip inset( -5% -5% -5% -5% )
+
+  div
+    -webkit-clip-path var(--clip)
+    background var(--color, #f0f)
+    border calc(var(--borderWidth) * 1px) solid var(--color, #f0f)
+    border-radius calc(var(--borderWidth) * 1px)
+    bottom calc(var(--borderWidth) * -1px)
+    clip-path var(--clip)
+    color var(--bg, #fff)
+    left calc(var(--borderWidth) * -1px)
+    padding calc(var(--paddingX) * 1px) calc(var(--paddingY) * 1px)
+    position absolute
+    right calc(var(--borderWidth) * -1px)
+    top calc(var(--borderWidth) * -1px)
+    transition clip-path calc(var(--transition) * 1s) ease, -webkit-clip-path calc(var(--transition) * 1s) ease
+    // TOP
+    &:nth-of-type(1)
+      --clip inset( -5% -5% 110% -5% )
+
+    // RIGHT
+    &:nth-of-type(2)
+      --clip inset( -5% -5% -5% 110% )
+
+    // BOTTOM
+    &:nth-of-type(3)
+      --clip inset( 110% -5% -5% -5% )
+
+    // LEFT
+    &:nth-of-type(4)
+      --clip inset( -5% 110% -5% -5% )
