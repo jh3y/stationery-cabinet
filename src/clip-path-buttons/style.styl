@@ -36,21 +36,9 @@ button
   &:active
     box-shadow 0 0 0 #888
 
-  &:hover:after
+  &:hover: div:nth-child(5)
     opacity 1
     transition opacity calc(var(--transition) * 1s) calc(var(--transition) * 1s) steps(1)
-
-  &:after
-    background var(--color, #f0f)
-    bottom 0
-    color var(--bg, #fff)
-    content var(--text)
-    left 0
-    opacity 0
-    padding calc(var(--paddingX) * 1px) calc(var(--paddingY) * 1px)
-    position absolute
-    right 0
-    top 0
 
   span
     -webkit-clip-path var(--clip)
@@ -117,3 +105,10 @@ button
     // LEFT
     &:nth-of-type(4)
       --clip inset( -5% 110% -5% -5% )
+
+    &:nth-of-type(5)
+      bottom 0
+      left 0
+      opacity 0
+      right 0
+      top 0

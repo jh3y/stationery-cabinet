@@ -1,12 +1,13 @@
 - const colors = ['#0088FF', '#FFAA00', '#FF7700', '#FF0033', '#9911AA', '#AADD22']
 .container
   - for (let b = 0; b < colors.length; b++)
-    button(style=`--text: "Button"; --color: ${colors[b]}`) Button
+    button(role='button' tabindex='0' style=`--color: ${colors[b]}`) Click!
       span
       span
       span
       span
-      div Button
-      div Button
-      div Button
-      div Button
+      div(aria-hidden='true') Click!
+      div(aria-hidden='true') Click!
+      div(aria-hidden='true') Click!
+      div(aria-hidden='true') Click!
+      div(aria-hidden='true') Click!
