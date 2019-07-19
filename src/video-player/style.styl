@@ -1,0 +1,79 @@
+*
+  box-sizing border-box
+  -webkit-tap-highlight-color transparent
+
+body
+  display flex
+  align-items center
+  justify-content center
+  font-family 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif
+  min-height 100vh
+
+.video-player
+  --accent #19b5fe
+  --border-width 5
+  background var(--accent)
+  overflow hidden
+  position relative
+
+  &__action
+    position absolute
+    font-weight bold
+    font-size 2rem
+    color #ffffff
+    transform scale(0)
+    line-height 44px
+    background transparent
+    border 0
+    cursor pointer
+    top 0
+    right 0
+    bottom 0
+    left 0
+    width 100%
+    outline-color transparent
+    outline 0
+
+  &__indicator
+    position absolute
+    background var(--accent)
+
+    &:nth-of-type(1)
+    &:nth-of-type(3)
+      height calc(var(--border-width) * 1px)
+      width 100%
+      transform-origin left
+      transform scaleX(0)
+
+    &:nth-of-type(2)
+    &:nth-of-type(4)
+      height 100%
+      width calc(var(--border-width) * 1px)
+      transform-origin bottom
+      transform scaleY(0)
+
+    &:nth-of-type(1)
+      top 0
+
+    &:nth-of-type(3)
+      bottom 0
+
+    &:nth-of-type(2)
+      top 0
+      right 0
+      bottom 0
+
+    &:nth-of-type(4)
+      top 0
+      left 0
+      bottom 0
+
+  video
+    display block
+    object-fit cover
+    object-position center
+    width 300px
+    outline-color transparent
+
+    @media(min-width 768px)
+      width 640px
