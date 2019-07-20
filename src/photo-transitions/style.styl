@@ -1,0 +1,76 @@
+*
+  box-sizing border-box
+  -webkit-tap-highlight-color transparent
+
+body
+  display flex
+  align-items center
+  justify-content center
+  font-family 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif
+  min-height 100vh
+  background #BA4E60
+
+.app-container
+  position relative
+
+  h1
+    position absolute
+    top 0
+    left 100%
+    margin 0
+    transform-origin bottom left
+    transform rotate(90deg)
+    font-size 2rem
+    font-weight bold
+    color darken(#BA4E60, 30%)
+    white-space nowrap
+
+.photo-transitioner
+  width 300px
+  height 300px
+  overflow hidden
+  position relative
+
+  @media(min-width 768px)
+    width 600px
+    height 600px
+
+  &__cursor
+    position absolute
+    height 35px
+    width 35px
+    border 2px solid #fff
+    border-radius 100%
+    opacity var(--opacity, 0)
+    top calc(var(--cursorY) * 1%)
+    left calc(var(--cursorX) * 1%)
+    transform translate(-50%, -50%)
+    transition transform .5s ease, opacity .5s ease
+    cursor pointer
+    background transparent
+    outline-color transparent
+    outline-width 0
+    z-index 2
+
+    &:active
+      transform translate(-50%, -50%) scale(0.9)
+
+  &__photos
+    height 100%
+    position relative
+    z-index 1
+
+  &__photo
+    --radius 0
+    height 100%
+    width 100%
+    position absolute
+    object-fit cover
+    object-position center
+    -webkit-clip-path circle(calc(var(--radius, 0) * 1%) at calc(var(--cursorX) * 1%) calc(var(--cursorY) * 1%))
+    clip-path circle(calc(var(--radius, 0) * 1%) at calc(var(--cursorX) * 1%) calc(var(--cursorY) * 1%))
+
+    &--active
+      --radius 150
+      --cursorX 50
+      --cursorY 50
