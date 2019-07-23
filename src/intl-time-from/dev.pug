@@ -9,3 +9,7 @@ h1
     option Select places
     - for (const unit of [0, 1, 2, 3])
       option(value= unit)= unit
+  select
+    option Select locale
+    - for (const unit of ['current', 'de', 'en', 'es', 'fr', 'it', 'ko'])
+      option(value= unit)= unit
