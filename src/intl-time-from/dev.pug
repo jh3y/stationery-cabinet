@@ -1,0 +1,11 @@
+- const units = ['second', 'minute', 'hour', 'day', 'week']
+h1
+.options
+  select
+    option Select unit
+    - for (const unit of units)
+      option(value= unit)= unit
+  select
+    option Select places
+    - for (const unit of [0, 1, 2, 3])
+      option(value= unit)= unit
