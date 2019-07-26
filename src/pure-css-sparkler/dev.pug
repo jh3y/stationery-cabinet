@@ -1,0 +1,10 @@
+- const randomInRange = (min, max) => Math.floor(Math.random() * (max - min) + 1) + min
+- const colors = ['#F6D58F', '#F38437', '#CB6E36', '#FCB404', '#FCE43E', '#FC6205', '#F2A814', '#E4700C', '#E45411', '#F5E238', '#EBCB6B', '#f5e51b', '#fef160', '#f5e653']
+.sparkler
+  - for (let s = 0; s < 100; s++)
+    - const rotation = randomInRange(0, 360)
+    - const speed = randomInRange(1, 10) / 10
+    - const delay = Math.random()
+    - const travel = randomInRange(50, 150)
+    - const shadow = colors[Math.floor(Math.random() * colors.length)]
+    .sparkler__spark(style=`--rotation: ${rotation}; --delay: ${delay}; --speed: ${speed}; --travel: ${travel}; --shadow: ${shadow}`)
