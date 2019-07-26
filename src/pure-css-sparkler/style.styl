@@ -1,0 +1,59 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+:root
+  --bg #04050D
+  --glow rgba(246, 213, 143, 0.5)
+  --sparkler-top #4F4139
+  --sparkler-bottom #333
+  --spark #fff
+
+body
+  min-height 100vh
+  background var(--bg)
+  touch-action none
+  cursor none
+
+.sparkler
+  position absolute
+  border-radius 100%
+  left calc(var(--x) * 1px)
+  top calc(var(--y) * 1px)
+  box-shadow 0 0 25px 25px var(--glow)
+
+  &:after
+  &:before
+    content ''
+    height 100px
+    width 5px
+    background var(--sparkler-top)
+    position absolute
+    top 100%
+    left 50%
+    border-radius 2px
+    transform translate(-50%, 0) rotate(-40deg)
+    transform-origin top center
+
+  &:before
+    height 160px
+    width 2px
+    background var(--sparkler-bottom)
+
+  &__spark
+    height 5px
+    position absolute
+    width 5px
+    box-shadow 0 0 20px 4px var(--shadow)
+    background var(--spark)
+    border-radius 100%
+    transform rotate(calc(var(--rotation) * 1deg)) translate(0, 0)
+    animation spark calc(var(--speed) * 1s) calc(var(--delay) * -1s) infinite ease
+    z-index 2
+
+
+@keyframes spark
+  to
+    opacity 0
+    transform rotate(calc(var(--rotation) * 1deg)) translate(0, calc(var(--travel) * 1px))
