@@ -13,8 +13,69 @@
 body
   min-height 100vh
   background var(--bg)
-  touch-action none
   cursor none
+  display flex
+  align-items center
+  justify-content center
+  touch-action none
+  overflow hidden
+
+span
+  position absolute
+  border-radius 100%
+  opacity 0
+  width calc((100 / 3) * 1vw)
+  height 50vh
+  z-index 3
+
+  &:nth-of-type(1)
+    top 0
+    left 0
+    &:hover ~ .sparkler
+      --glow rgba(134, 226, 213, 0.5)
+      .sparkler__spark
+        box-shadow 0 0 20px 4px var(--shadow-2)
+
+  &:nth-of-type(2)
+    bottom 0
+    right 0
+    &:hover ~ .sparkler
+      --glow rgba(213, 184, 255, 0.5)
+      .sparkler__spark
+        box-shadow 0 0 20px 4px var(--shadow-3)
+
+  &:nth-of-type(3)
+    bottom 0
+    left 0
+    &:hover ~ .sparkler
+      --glow rgba(236, 100, 75, 0.5)
+      .sparkler__spark
+        box-shadow 0 0 20px 4px var(--shadow-4)
+
+  &:nth-of-type(4)
+    top 0
+    right 0
+    &:hover ~ .sparkler
+      --glow rgba(82, 179, 217, 0.5)
+      .sparkler__spark
+        box-shadow 0 0 20px 4px var(--shadow-5)
+
+  &:nth-of-type(5)
+  &:nth-of-type(6)
+    left 0
+    right 0
+    height 25vh
+    width 100vw
+
+    &:hover ~ .sparkler .sparkler__spark
+      box-shadow 0 0 20px 4px var(--shadow-6)
+
+  &:nth-of-type(5)
+    top 0
+
+  &:nth-of-type(6)
+    bottom 0
+
 
 .sparkler
   position absolute
