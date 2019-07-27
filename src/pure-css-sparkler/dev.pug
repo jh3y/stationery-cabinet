@@ -1,10 +1,26 @@
 - const randomInRange = (min, max) => Math.floor(Math.random() * (max - min) + 1) + min
 - const colors = ['#F6D58F', '#F38437', '#CB6E36', '#FCB404', '#FCE43E', '#FC6205', '#F2A814', '#E4700C', '#E45411', '#F5E238', '#EBCB6B', '#f5e51b', '#fef160', '#f5e653']
+- const colors2 = ['#86e2d5', '#2ecc71', '#c8f7c5', '#26c281', '#29f1c3', '#00e640', '#36d7b7', '#87d37c', '#03c9a9', '#1ba39c', '#16a085', '#23cba7', '#2abb9b', '#049372']
+- const colors3 = ['#a537fd', '#8c14fc', '#947cb0', '#bf55ec', '#9a12b3', '#913d88', '#9b59b6', '#d5b8ff', '#9f5afd', '#663399', '#674172', '#a96dad', '#963694', '#8e44ad']
+- const colors4 = ['#db0a5b', '#ff9478', '#d64541', '#d24d57', '#f03434', '#d91e18', '#c0392b', '#f62459', '#e26a6a', '#ec644b', '#f64747', '#d2527f', '#f22613', '#cf000f']
+- const colors5 = ['#81cfe0', '#00b5cc', '#52b3d9', '#19b5fe', '#22a7f0', '#6bb9f0', '#5333ed', '#89c4f4', '#1e8bc3', '#2574a9', '#446cb3', '#2c82c9', '#4d05e8', '#4d13d1']
+- const colors6 = ['#ff0000', '#ffa500', '#ffff00', '#008000', '#0000ff', '#4b0082', '#ee92ee']
+span
+span
+span
+span
+span
+span
 .sparkler
-  - for (let s = 0; s < 100; s++)
+  - for (let s = 0; s < 75; s++)
     - const rotation = randomInRange(0, 360)
     - const speed = randomInRange(1, 10) / 10
     - const delay = Math.random()
     - const travel = randomInRange(50, 150)
     - const shadow = colors[Math.floor(Math.random() * colors.length)]
-    .sparkler__spark(style=`--rotation: ${rotation}; --delay: ${delay}; --speed: ${speed}; --travel: ${travel}; --shadow: ${shadow}`)
+    - const shadow2 = colors2[Math.floor(Math.random() * colors2.length)]
+    - const shadow3 = colors3[Math.floor(Math.random() * colors3.length)]
+    - const shadow4 = colors4[Math.floor(Math.random() * colors4.length)]
+    - const shadow5 = colors5[Math.floor(Math.random() * colors5.length)]
+    - const shadow6 = colors6[Math.floor(Math.random() * colors6.length)]
+    .sparkler__spark(style=`--rotation: ${rotation}; --delay: ${delay}; --speed: ${speed}; --travel: ${travel}; --shadow: ${shadow}; --shadow-2: ${shadow2}; --shadow-3: ${shadow3}; --shadow-4: ${shadow4}; --shadow-5: ${shadow5}; --shadow-6: ${shadow6}`)
