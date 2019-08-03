@@ -23,7 +23,9 @@ const getImageData = src =>
       const [r, g, b] = context.getImageData(0, 0, 1, 1).data
       resolve({
         src,
+        copied: false,
         color: {
+          dark: [r, g, b].filter(v => v > 200).length >= 2,
           hex: getHex(r, g, b),
           rgb: { r, g, b },
         },
@@ -34,7 +36,7 @@ const getImageData = src =>
   })
 
 const initialState = {
-  dataSet: [],
+  dataSet: undefined,
   searchTime: 0,
   searching: false,
   keyword: undefined,
@@ -42,6 +44,7 @@ const initialState = {
 const ACTIONS = {
   SEARCH_NEW: 'SEARCH_NEW',
   SEARCH_RESULTS: 'SEARCH_RESULTS',
+  COPY: 'COPY',
 }
 const PREFIX = 'https://source.unsplash.com/random?'
 const colorSearchReducer = (state, action) => {
@@ -50,11 +53,20 @@ const colorSearchReducer = (state, action) => {
       return {
         searching: true,
         searchTime: Date.now(),
-        dataSet: [],
+        dataSet: undefined,
         keyword: action.keyword,
       }
     case ACTIONS.SEARCH_RESULTS:
       return { searching: false, searchTime: null, dataSet: action.data }
+    case ACTIONS.COPY:
+      return {
+        searching: false,
+        searchTime: null,
+        dataSet: state.dataSet.map(c => ({
+          ...c,
+          copied: c.color.hex === action.color,
+        })),
+      }
     default:
       return state
   }
@@ -89,26 +101,58 @@ const useColorSearch = () => {
     grabImages(keyword)
   }, [searchTime])
   const search = async keyword => {
+    if (!keyword) return
     searchResults.current = []
     dispatch({ type: ACTIONS.SEARCH_NEW, keyword })
   }
-  return [dataSet, searching, search]
+  const copy = color => {
+    // Copy to clipboard
+    const input = document.createElement('input')
+    input.value = color
+    document.body.appendChild(input)
+    input.select()
+    document.execCommand('copy')
+    input.remove()
+    dispatch({ type: ACTIONS.COPY, color })
+  }
+  return [dataSet, searching, search, copy]
 }
 
 const App = () => {
   const [keyword, setKeyword] = useState('')
-  const [data, searching, search] = useColorSearch()
-  const copy = color => {
-    return color
+  const invisiput = useRef(null)
+  const [data, searching, search, copy] = useColorSearch()
+  const onSubmit = e => {
+    e.preventDefault()
+    search(keyword)
+  }
+  const copyToClipboard = color => {
+    invisiput.current.value = color
+    invisiput.current.select()
+    document.execCommand('copy')
+    copy(color)
   }
   return (
     <Fragment>
-      <h1>Search for a color</h1>
-      <input
-        value={keyword}
-        onChange={e => setKeyword(e.target.value)}
-        placeholder="Enter a search term"
-      />
+      <form onSubmit={onSubmit} className="input-container">
+        <input ref={invisiput} className="input-invisible" />
+        <input
+          value={keyword}
+          disabled={searching}
+          onChange={e => setKeyword(e.target.value)}
+          placeholder="Search for a color"
+        />
+        <button role="button" disabled={searching} onClick={onSubmit}>
+          <div className="search">
+            <div className="search__glass" />
+            <div className="search__prongs">
+              {new Array(10).fill().map((d, i) => (
+                <div key={`loader-prong--${i}`} />
+              ))}
+            </div>
+          </div>
+        </button>
+      </form>
       <div className="colors">
         {data &&
           data.length !== 0 &&
@@ -116,9 +160,19 @@ const App = () => {
             <div
               key={`color--${i}`}
               className="color"
-              style={{ '--color': s.color.hex }}
-              onClick={() => copy(s.color.hex)}>
-              <span className="color__hex">{s.color.hex}</span>
+              style={{
+                '--color': s.color.hex,
+                '--r': s.color.rgb.r,
+                '--g': s.color.rgb.g,
+                '--b': s.color.rgb.b,
+              }}
+              onClick={() => copyToClipboard(s.color.hex)}>
+              <span
+                className={`color__hex ${
+                  s.color.dark ? 'color__hex--dark' : ''
+                }`}>
+                {s.copied ? 'Copied!' : s.color.hex}
+              </span>
               <img
                 className={searching ? 'searching' : ''}
                 src={s.src}
@@ -126,8 +180,8 @@ const App = () => {
               />
             </div>
           ))}
+        {data && data.length === 0 && <h1>No results! 😭</h1>}
       </div>
-      <button onClick={() => search(keyword)}>Click Me</button>
     </Fragment>
   )
 }
