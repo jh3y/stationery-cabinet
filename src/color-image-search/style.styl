@@ -1,0 +1,219 @@
+*
+  box-sizing border-box
+
+body
+  margin 0
+  padding 0
+  overflow-x hidden
+  font-family 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif
+
+.input-container
+  display grid
+  grid-template-columns auto auto
+  margin 0
+  height 60px
+  margin 1rem
+
+  &:hover
+    [disabled]
+      border-color #ddd
+
+    input
+      border-color #111
+
+      ~ button
+        border-color #111
+
+        .search__glass
+          border-color #111
+
+          &:after
+            background #111
+
+input
+  box-sizing border-box
+  cursor pointer
+  padding 0 24px
+  font-size 20px
+  border 2px solid #aaa
+  border-radius 10px 0 0 10px
+  outline transparent
+  transition border-color .25s ease, color .25s ease
+
+  &::placeholder
+    color #aaa
+
+
+  &:hover
+  &:active
+  &:focus
+    border-color #111
+
+    ~ button
+      border-color #111
+
+      .search__glass
+        border-color #111
+        transition border-color 0.25s ease
+
+        &:after
+          background #111
+          transition background 0.25s ease
+
+  &[disabled]
+  &:hover[disabled]
+    border-color #ddd
+    color #ddd
+
+    ~ button
+      border-color #ddd
+
+      .search__glass
+        border-color transparent
+
+button
+  cursor pointer
+  width 60px
+  outline transparent
+  border-radius 0 10px 10px 0
+  position relative
+  border 2px solid #aaa
+  border-left-width 0
+  transition border-color 0.25s ease
+  background transparent
+
+  &:hover[disabled] .search__glass
+    border-color transparent
+
+  &[disabled] .search__prongs
+    opacity 1
+    transition opacity .25s .25s ease
+
+  &[disabled] .search__glass
+    transform translate(0, 0)
+    border-color transparent
+    transition border-color 0.25s ease, transform 0.25s ease
+
+  &[disabled] .search__glass:after
+    background transparent
+    transition background 0.25s ease, transform 0.25s ease
+    transform translate(-50%, 0) rotate(-45deg) translate(0, 100%) scaleY(0)
+
+.search
+  height 24px
+  width 24px
+  border-radius 100%
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+  &__glass
+    border-radius 100%
+    position absolute
+    top 0
+    right 0
+    bottom 0
+    left 0
+    border 4px solid #aaa
+    transition border-color 0.25s ease, transform 0.25s ease
+    transform translate(-10%, -10%)
+
+    &:after
+      content ''
+      position absolute
+      height 12px
+      top 50%
+      left 50%
+      background #aaa
+      transition background 0.25s ease, transform 0.25s ease
+      width 4px
+      transform-origin top center
+      transform translate(-50%, 0) rotate(-45deg) translate(0, 95%) scaleY(1)
+      border-radius 0 0 2px 2px
+
+  &__prongs
+    position absolute
+    top 0
+    right 0
+    bottom 0
+    left 0
+    animation rotate 1s infinite linear
+    opacity 0
+    transition opacity .25s ease
+
+    > div
+      for $prong in (1..10)
+        &:nth-of-type({$prong})
+          height 2px
+          width 2px
+          background #222
+          position absolute
+          top 50%
+          left 50%
+          transform translate(-50%, -50%) rotate($prong * 36deg) translate(0, 10px)
+
+@keyframes rotate
+  to
+    transform rotate(360deg)
+
+#app
+  display flex
+  justify-content center
+  align-items center
+  min-height 100vh
+
+.colors
+  display grid
+  align-items center
+  justify-content center
+  grid-template-columns repeat(3, auto)
+  grid-gap 4px
+  transition opacity .25s ease, filter .25s ease
+  position relative
+
+  &--searching
+    filter grayscale(1)
+
+.color
+  background-color var(--color)
+  position relative
+  height 100px
+  width 100px
+  cursor pointer
+  overflow hidden
+  text-transform uppercase
+
+  &__hex
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    font-weight bold
+    z-index 2
+    color #fafafa
+    background 'rgba(%s, %s, %s, 0.75)' % (var(--r) var(--g) var(--b))
+    padding 4px
+    border-radius 2px
+
+    &--dark
+      color #111
+
+  &:hover
+    img
+      opacity 1
+
+  img
+    opacity 0
+    transition opacity .25s ease
+    position absolute
+
+img
+  height 100px
+  width 100px
+  object-fit cover
+
+.input-invisible
+  position fixed
+  top 0
+  left 100%
