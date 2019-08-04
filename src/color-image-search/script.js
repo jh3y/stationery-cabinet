@@ -208,7 +208,7 @@ const App = () => {
             <button
               onClick={() => copyToClipboard(selected.data.color.hex)}
               className="info">
-              {data[selected.index].copiedHex
+              {data && data[selected.index] && data[selected.index].copiedHex
                 ? 'COPIED!'
                 : selected.data.color.hex}
             </button>
@@ -219,7 +219,7 @@ const App = () => {
                 )
               }
               className="info">
-              {data[selected.index].copiedRgb
+              {data && data[selected.index] && data[selected.index].copiedRgb
                 ? 'COPIED!'
                 : `rgb(${selected.data.color.rgb.r}, ${selected.data.color.rgb.g}, ${selected.data.color.rgb.b})`}
             </button>
