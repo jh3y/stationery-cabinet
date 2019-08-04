@@ -8,11 +8,12 @@ body
   font-family 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif
 
 .input-container
-  display grid
-  grid-template-columns auto auto
+  display inline-grid
+  grid-template-columns auto 60px
   margin 0
   height 60px
-  margin 1rem
+  margin 1rem 0
+  width 100%
 
   &:hover
     [disabled]
@@ -34,7 +35,7 @@ input
   box-sizing border-box
   cursor pointer
   padding 0 24px
-  font-size 20px
+  font-size 18px
   border 2px solid #aaa
   border-radius 10px 0 0 10px
   outline transparent
@@ -71,7 +72,7 @@ input
       .search__glass
         border-color transparent
 
-button
+.input-container__button
   cursor pointer
   width 60px
   outline transparent
@@ -183,7 +184,67 @@ button
   cursor pointer
   overflow hidden
   text-transform uppercase
+  transition transform 0.1s ease
+  border-radius 10px
 
+  &:hover
+    transform scale(0.9)
+
+  &__close
+    cursor pointer
+    position absolute
+    top 5px
+    right 5px
+    height 44px
+    border 0
+    background transparent
+    width 44px
+    svg
+      position absolute
+      top 50%
+      left 50%
+      transform translate(-50%, -50%)
+      width 30px
+      height 30px
+      path
+        fill #fff
+
+  &--selected
+    border-radius 10px
+    position absolute
+    color #FFFFFF
+    overflow hidden
+    background var(--color)
+    opacity 0
+    top 0
+    right 0
+    bottom 0
+    left 0
+    font-weight bold
+    display flex
+    flex-direction column
+    justify-content flex-end
+    align-items flex-end
+    padding 1rem
+    z-index -1
+    $clip = inset(calc(var(--t) * 1px) calc(var(--r) * 1px) calc(var(--b) * 1px) calc(var(--l) * 1px))
+    -webkit-clip-path $clip
+    clip-path $clip
+
+    a
+    button
+      color #FFF
+
+
+    &-dark
+      color #111
+
+      a
+      button
+        color #111
+
+      svg path
+        fill #111
   &__hex
     position absolute
     top 50%
@@ -199,19 +260,45 @@ button
     &--dark
       color #111
 
-  &:hover
-    img
-      opacity 1
-
-  img
-    opacity 0
-    transition opacity .25s ease
-    position absolute
-
+.img
 img
-  height 100px
-  width 100px
+  border-radius 10px
   object-fit cover
+  position absolute
+  top 0
+  width 100%
+  height 100%
+  left 0
+  animation fadeIn 0.25s ease
+  z-index -1
+
+.info
+  cursor pointer
+  padding 0.5rem 0 0.5rem
+  text-align right
+  background 'rgba(%s, %s, %s, %s)' % (var(--red) var(--green) var(--blue) var(--alpha, 0))
+  transition background 0.25s ease
+  border 0
+  font-weight bold
+
+  &:hover
+    --alpha 1
+    ~ .img
+      --alpha 0
+
+@keyframes fadeIn
+  from
+    opacity 0
+
+.img:after
+  content ''
+  background 'rgba(%s, %s, %s, %s)' % (var(--red) var(--green) var(--blue) var(--alpha, 0.75))
+  position absolute
+  transition background 0.25s ease
+  top 0
+  right 0
+  bottom 0
+  left 0
 
 .input-invisible
   position fixed
