@@ -1,7 +1,9 @@
-const { React, ReactDOM, TweenMax } = window
+const { React, ReactDOM, TweenMax, TimelineMax } = window
 const { useEffect, useState, useRef, useReducer } = React
 const { render } = ReactDOM
 const rootNode = document.getElementById('app')
+
+const ANIM_SPEED = 0.25
 
 const initialState = {
   dataSet: undefined,
@@ -83,15 +85,24 @@ const App = () => {
   const colorsRef = useRef(null)
   const [selected, setSelected] = useState(null)
   const selectedRef = useRef(null)
+  const selectedImageRef = useRef(null)
   const colorRef = useRef(null)
   const formRef = useRef(null)
   const [data, searching, search, copy] = useColorSearch()
 
   // const data = new Array(12).fill().map(() => ({ color: { hex: 'red' } }))
 
+  const unset = () => {
+    setSelected(null)
+    search(keyword)
+  }
   const onSubmit = e => {
     e.preventDefault()
-    search(keyword)
+    if (selected) {
+      closeSelected(unset)
+    } else {
+      unset()
+    }
   }
 
   const copyToClipboard = color => {
@@ -121,38 +132,55 @@ const App = () => {
       colorRef.current = {
         pos: colorPos,
       }
-      TweenMax.set(selectedRef.current, {
-        opacity: 1,
-        '--color': selected.data.color.hex,
-        '--red': selected.data.color.rgb.r,
-        '--green': selected.data.color.rgb.g,
-        '--blue': selected.data.color.rgb.b,
-        '--t': colorPos.top,
-        '--r': colorPos.right,
-        '--b': colorPos.bottom,
-        '--l': colorPos.left,
-
-        zIndex: 2,
-      })
-      TweenMax.to(selectedRef.current, 0.25, {
-        '--t': -10,
-        '--r': -10,
-        '--b': -10,
-        '--l': -10,
-      })
+      const onStart = () => {
+        TweenMax.set(selectedRef.current, {
+          opacity: 1,
+          '--color': selected.data.color.hex,
+          '--red': selected.data.color.rgb.r,
+          '--green': selected.data.color.rgb.g,
+          '--blue': selected.data.color.rgb.b,
+          '--t': colorPos.top,
+          '--r': colorPos.right,
+          '--b': colorPos.bottom,
+          '--l': colorPos.left,
+          zIndex: 2,
+        })
+      }
+      new TimelineMax({ onStart })
+        .add(
+          TweenMax.to(selectedRef.current, ANIM_SPEED, {
+            '--t': -10,
+            '--r': -10,
+            '--b': -10,
+            '--l': -10,
+          })
+        )
+        .add(
+          TweenMax.to(selectedImageRef.current, ANIM_SPEED, {
+            opacity: 1,
+          })
+        )
     }
   }, [selected])
 
-  const closeSelected = () => {
+  const closeSelected = cb => {
     const colorPos = colorRef.current.pos
-    TweenMax.to(selectedRef.current, 0.25, {
-      '--t': colorPos.top,
-      '--r': colorPos.right,
-      '--b': colorPos.bottom,
-      '--l': colorPos.left,
-      onComplete: () =>
-        TweenMax.set(selectedRef.current, { opacity: 0, zIndex: -1 }),
-    })
+    const onComplete = () => {
+      TweenMax.set(selectedRef.current, { opacity: 0, zIndex: -1 })
+      if (cb && typeof cb === 'function') {
+        cb()
+      }
+    }
+    new TimelineMax({ onComplete })
+      .add(TweenMax.to(selectedImageRef.current, ANIM_SPEED, { opacity: 0 }))
+      .add(
+        TweenMax.to(selectedRef.current, ANIM_SPEED, {
+          '--t': colorPos.top,
+          '--r': colorPos.right,
+          '--b': colorPos.bottom,
+          '--l': colorPos.left,
+        })
+      )
   }
 
   return (
@@ -239,7 +267,7 @@ const App = () => {
                 Unsplash
               </a>
             </div>
-            <div className="img">
+            <div ref={selectedImageRef} className="img">
               <img
                 className="image--loading"
                 key={selected.data.id}
