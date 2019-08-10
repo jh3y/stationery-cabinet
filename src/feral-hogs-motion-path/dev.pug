@@ -1,0 +1,25 @@
+- const randomInRange = (max, min) => Math.floor(Math.random() * (max - min)) + min
+//- How many hogs and how much time do we have?
+//- We aren't doing 3 - 5 minutes. Let's do 30 - 50 seconds.
+- const seconds = randomInRange(30, 50)
+//- Same for the hogs
+- const hogs = randomInRange(30, 50)
+//- We need to declare some paths as I'm not sure how to randomly generate them
+- const circlePath = (r = 50) => `M 0 0 A ${r} ${r} 0 1 1 0 ${r * 2} A ${r} ${r} 0 1 1 0 0`
+//- Then we want a wavy path, a straight path and maybe a figure of eight path?
+- const linePath = 'M 0 -50 L 0 350'
+- const singleWavePath = (x, y) => `M 0 -50 Q ${x} ${y} 0 350`
+- const figureEightPath = ''
+- const doubleWavePath = ''
+.pen(style=`--seconds: ${seconds}; --hogs: ${hogs}`)
+  - for (let h = 0; h < 3; h++)
+    - const isACircle = Math.random() > 0.75
+    - const radius = isACircle ? Math.random(10, 100) : false
+    - const x = randomInRange(-150, 150)
+    - const y = randomInRange(0, 300)
+    - let path = isACircle ? circlePath(radius) : singleWavePath(x, y)
+    .hog(style=`--path: '${path}'`)
+
+
+//- .hog(style=`--path: 'M-70,-40 C-70,70 70,70 70,-40z'`)
+//- .hog(style=`--path: 'M 50 250 Q 150 -50 350 100 C 500 350 350 -50 600 200'`)
