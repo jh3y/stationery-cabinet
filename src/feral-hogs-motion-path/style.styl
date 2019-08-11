@@ -1,48 +1,161 @@
 *
   box-sizing border-box
+  -webkit-tap-highlight-color transparent
+  outline-color transparent
+
+:root
+  --soil rgb(140, 104, 78)
+  --grass #C5C887
 
 body
-  display flex
   min-height 100vh
-  align-items center
-  justify-content center
+  counter-reset score
+  background var(--grass)
+  overflow hidden
 
+form
+  counter-reset caught
+  margin 0
+  height calc(var(--grid-size) * 1px)
+  width calc(var(--grid-size) * 1px)
+  position fixed
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  -webkit-clip-path inset(0 0 0 0)
+  clip-path inset(0 0 0 0)
 
 .pen
-  height 300px
-  width 300px
-  background brown
-  position relative
-
-.hog
-  background orange
-  height 20px
-  width 20px
+  height calc(var(--grid-size) * 1px)
+  width calc(var(--grid-size) * 1px)
+  background var(--soil)
+  // overflow hidden
   position absolute
   top 50%
   left 50%
   transform translate(-50%, -50%)
-  animation traverse 5s infinite linear
-  offset-path 'path(%s)' % var(--path)
 
-  &:nth-of-type(2)
-    animation-delay 1s
-    left 75%
+input
+  opacity 0
+  height 0
+  width 0
 
-  &:after
-    content ''
+.info-screen
+  align-items center
+  backdrop-filter blur(10px)
+  background rgba(240, 212, 204, 0.25)
+  display flex
+  flex-direction column
+  height 100vh
+  justify-content center
+  left 50%
+  overflow hidden
+  position fixed
+  top 50%
+  transform translate(-50%, -50%)
+  width 100vw
+  z-index 5
+
+  &__content
+    position relative
+    max-width 90vw
+    width 200px
+
+    h1
+    h2
+      text-transform uppercase
+
+    p
+      text-align justify
+
+
+button
+  background transparent
+  border 2px solid #000
+  color #000
+  cursor pointer
+  font-weight bold
+  letter-spacing 4px
+  padding 8px 12px
+  text-transform uppercase
+  width 100%
+
+.start
+  cursor pointer
+  height 100vh
+  left 50%
+  opacity 0
+  position fixed
+  top 50%
+  transform translate(-50%, -50%)
+  width 100vw
+  z-index 6
+
+  &:checked
+  &:checked ~ .title-screen
+    transform translate(-50%, -50%) translate(0, -100%)
+    transition transform .25s ease
+
+  &:checked ~ .result
+    animation slideUp .25s calc(var(--seconds) * 1s) both
+
+.result
+  text-align center
+  transform translate(-50%, -50%) translate(0, 100%)
+
+.hog
+  cursor crosshair
+  height 44px
+  width 44px
+  position absolute
+  top calc(var(--top) * 1%)
+  left calc(var(--left) * 1%)
+  transform translate(-50%, -50%) translate(calc(var(--translateX) * 1%), calc(var(--translateY) * 1%)) rotate(calc(var(--rotation) * 1deg))
+
+  :checked
+    counter-increment score var(--score)
+
+    & ~ .hog__container
+      counter-increment caught 1
+      animation none
+      animation-play-state paused
+      visibility hidden
+
+  &__abdomen
+  &__tail
+    fill var(--color)
+
+  &__mane
+  &__tail-end
+    fill var(--maneColor)
+
+  &__body
+    height 100%
+    width 100%
     position absolute
-    top 50%
-    left 100%
-    height 5px
-    width 5px
-    border-radius 100%
-    background purple
-    transform translate(-50%, -50%)
 
+  &__container
+    cursor crosshair
+    animation traverse calc(var(--speed) * 1s) calc(var(--delay) * 1s) infinite linear
+    height 44px
+    width 44px
+    position absolute
+    top 0
+    left 0
+    offset-path 'path(%s)' % var(--path)
+
+.score:after
+  content counter(score)
+
+.caught:after
+  content counter(caught) " hogs!"
 
 @keyframes traverse
   from
     offset-distance 0
   to
     offset-distance 100%
+
+@keyframes slideUp
+  to
+    transform translate(-50%, -50%) translate(0, 0)
