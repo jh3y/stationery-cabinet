@@ -1,0 +1,166 @@
+*
+  box-sizing border-box
+
+body
+  align-items center
+  counter-reset score
+  display flex
+  justify-content center
+  min-height 100vh
+
+$gameTime = 5
+
+:root
+  --active 1
+  --gameTime $gameTime
+
+.game
+
+  &__start
+    position absolute
+    top 0
+    right 0
+    bottom 0
+    left 0
+    opacity 0
+    cursor pointer
+    height 100%
+    width 100%
+
+  &__container
+    background dodgerblue
+    height 50px
+    width 100px
+    position relative
+    // overflow hidden
+    transform scale(2)
+    margin 0
+
+    .game__start:checked ~ .game__over
+      transform translate(-100%, 0)
+
+    &:hover
+      .game__over
+        z-index -1
+      .game__start:checked
+
+        & ~ .game__winner
+          animation reveal 10s steps(2) forwards
+          position absolute
+          top 0
+          right 0
+          bottom 0
+          left 0
+          opacity 1
+          cursor pointer
+          height 100%
+          width 100%
+        & ~ .game
+          --active 0
+          cursor crosshair
+
+          .win
+            animation arrive 5s calc(var(--delay) * 1s) forwards
+
+          .asteroid
+            animation travel calc(var(--speed) * 1s) calc(var(--delay) * 1s) linear forwards
+
+            &:hover
+              animation none
+              background purple
+              top 0
+              right 0
+              bottom 0
+              left 0
+              height 50px
+              width 100px
+              transform translate(0, 0)
+              z-index 2
+
+              .asteroid__shape
+                visibility hidden
+
+@keyframes reveal
+  to
+    z-index 10
+
+.game__over
+  font-size 12px
+  background orange
+  position absolute
+  top 0
+  right 0
+  bottom 0
+  height 50px
+  width 100px
+  left 100%
+  z-index 5
+
+.board
+  position absolute
+  top 0
+  right 0
+  bottom 0
+  left 0
+  background red
+  transform translate(0, calc(var(--active) * 100%))
+
+// Reset button
+[type="reset"]
+  position absolute
+  left 100%
+  top 0
+
+
+/**
+  * Dots that need to be avoided, infinite animation for debugging
+  */
+.asteroid
+  height calc(var(--size) * 1px)
+  width calc(var(--size) * 1px)
+  position absolute
+  top calc(var(--top) * 1px)
+  left 100%
+
+  &__shape
+    background var(--color)
+    position absolute
+    top 50%
+    left 50%
+    height 100%
+    width 100%
+    border-radius calc(var(--radius) * 1%)
+    transform translate(-50%, -50%) rotate(calc(var(--rotation) * 1deg))
+
+.win
+  height 25px
+  width 25px
+  position absolute
+  top 50%
+  left 50%
+  font-size 2rem
+  transform translate(-50%, -50%) translate(150px, 0)
+
+// ANIMATIONS
+@keyframes travel
+  to
+    transform translate(calc((var(--size) + 100) * -1px), 0)
+
+@keyframes arrive
+  to
+    transform translate(-50%, -50%) translate(0, 0)
+
+// @keyframes score
+//   from
+//     counter-increment score 0
+//   to
+//     counter-increment score 100
+/**
+  * Thought this was quite cool. Can increment a counter via keyframes.
+  * Quite some possibilities with this. You could tell someone how far
+  * they got etc. maybe?
+  */
+// @keyframes score
+//   for $second in (0...$gameTime)
+//     {(100 / $gameTime * $second) * 1%}
+//       counter-increment score floor((100 / $gameTime) * $second)
