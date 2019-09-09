@@ -1,34 +1,51 @@
-- const asteroidCount = 50
+- const sprinkleCount = 50
 - const randomInRange = (max, min) => Math.floor(Math.random() * (max - min)) + min
 - let durations = []
-- let colors = ['blue', 'orange', 'green', 'yellow']
-//- - const asteroids = new Array(asteroidCount).fill().map(a => ({}))
+- const colors = ['#ff6698','#ffb366','#98ff66','#6698ff']
+//- const sprinkles = new Array(sprinkleCount).fill().map(() => {
+//- 	const characteristics = {
+//-       speed: randomInRange(3, 8),
+//-       delay: randomInRange(1, sprinklerCount / 4),
+//-       top: randomInRange(0, 40),
+//-       color: colors[Math.floor(Math.random() * colors.length)],
+//-       rotation: randomInRange(0, 360),
+//-       radius: randomInRange(0, 100),
+//-       size: randomInRange(4, 15),
+//-     }
+//-     durations.push(characteristics.delay + characteristics.speed)
+//-     return characteristics
+//- })
+- const sprinkles = Array(sprinkleCount).fill().map(()=>{const a={speed:randomInRange(3,8),delay:randomInRange(1,sprinkleCount/4),top:randomInRange(0,40),color:colors[Math.floor(Math.random()*colors.length)],rotation:randomInRange(0,360),radius:randomInRange(0,100),size:randomInRange(4,15)};return durations.push(a.delay+a.speed),a})
+input(type='checkbox', id='cheat')
+.cheat-box
+  label(for='cheat') Zoom (Cheat 🐵)
 form.game__container
   //- The start checkbox will show/hide the intro screen
   //- Clicking it reveal the moving blocks
   input.game__start(type='checkbox')
-  //- The winning checkbox has to be in the top of the form
-  //- In order to use sibling tricks 👍
-  //- input.game__winner(type='checkbox')
+  //- The winning box needs to go here, it can appear after a certain time
+  input.game__winning(type='checkbox', style=`--delay: ${Math.max(...durations) - 3};`)
+  .game__header
+    .game__header-content
+      .game__title Cake 😋
+      .game__sub-title.sub-text Click to start
   .game
     .board
-      input(type='reset', value='Restart')
       - let a = 0
-      while a < asteroidCount
-        //- Define asteroid characteristics here
-        - const speed = randomInRange(3, 8)
-        - const delay = randomInRange(1, asteroidCount / 4)
-        - const top = randomInRange(0, 40)
-        - const color = colors[Math.floor(Math.random() * colors.length)]
-        - const rotation = randomInRange(0, 360)
-        - const radius = randomInRange(0, 100)
-        - const size = randomInRange(4, 15)
-        - durations.push(delay + speed)
-        .asteroid(style=`--speed: ${speed}; --delay: ${delay}; --top: ${top}; --size: ${size}`)
-          .asteroid__shape(style=`--color: ${color}; --rotation: ${rotation}; --radius: ${radius}`)
+      while a < sprinkleCount
+        - const {speed, delay, top, color, rotation, size, radius } = sprinkles[a]
+        .sprinkle(style=`--speed: ${speed}; --delay: ${delay}; --top: ${top}; --size: ${size}`)
+          .sprinkle__shape(style=`--color: ${color}; --rotation: ${rotation}; --radius: ${radius}`)
         //- Bump the count
         - a++
-      .win(style=`--delay: ${Math.max(...durations) - 2};`) 🏆
+      .game__over--internal
+        .game__no-cake.sub-text No cake for you!<br>Click to restart
+        input(type='reset', value='Restart')
+      .win(style=`--delay: ${Math.max(...durations) - 3};`)
+        .cake 🎂
   //- If we hover out of bounds, there needs to be a reset
   //- Otherwise it's going to be pretty easy to win 😅
-  .game__over Out of bounds! 👎 <br/> Hover to restart.
+  .game__over.sub-text Hover to restart
+  .game__won
+    .cake 🎂
+    input(type='reset')
