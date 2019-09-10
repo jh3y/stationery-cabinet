@@ -1,0 +1,31 @@
+*
+  box-sizing border-box
+
+
+body
+  align-items center
+  background #fff
+  display flex
+  justify-content center
+  min-height 100vh
+  flex-direction column
+
+.color-slider
+  width 300px
+  height 20px
+  // border 4px solid #111
+  // border-radius 4px
+  position relative
+  background linear-gradient(90deg, hsl(0, 100%, 50%), hsl(36, 100%, 50%), hsl(72, 100%, 50%), hsl(108, 100%, 50%), hsl(144, 100%, 50%), hsl(180, 100%, 50%), hsl(216, 100%, 50%), hsl(252, 100%, 50%), hsl(288, 100%, 50%), hsl(324, 100%, 50%), hsl(360, 100%, 50%))
+
+  &__handle
+    height 50px
+    width 50px
+    border-radius 100%
+    background 'hsl(%s, 100%, 50%)' % var(--hue, 0)
+    border 4px solid #111
+    touch-action none
+    position absolute
+    top 50%
+    left calc(var(--value, 0) * 1%)
+    transform translate(-50%, -50%)
