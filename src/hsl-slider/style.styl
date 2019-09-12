@@ -16,13 +16,13 @@ body
   border 4px solid #111
   border-radius 4px
   position relative
-  background 'linear-gradient(90deg, hsl(0, 100%, %s), hsl(36, 100%, %s), hsl(72, 100%, %s), hsl(108, 100%, %s), hsl(144, 100%, %s), hsl(180, 100%, %s), hsl(216, 100%, %s), hsl(252, 100%, %s), hsl(288, 100%, %s), hsl(324, 100%, %s), hsl(360, 100%, %s))' % (calc(var(--lightness, 50) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--lightness, 50) * 1%))
+  background 'linear-gradient(90deg, hsl(0, %s, %s), hsl(36, %s, %s), hsl(72, %s, %s), hsl(108, %s, %s), hsl(144, %s, %s), hsl(180, %s, %s), hsl(216, %s, %s), hsl(252, %s, %s), hsl(288, %s, %s), hsl(324, %s, %s), hsl(360, %s, %s))' % (calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%))
 
   &__handle
     height 50px
     width 50px
     border-radius 100%
-    background 'hsl(%s, 100%, %s)' % (var(--hue, 0) calc(var(--lightness, 50) * 1%))
+    background 'hsl(%s, %s, %s)' % (var(--hue, 0) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%))
     border 4px solid #111
     touch-action none
     position absolute
@@ -30,8 +30,18 @@ body
     left calc(var(--value, 0) * 1%)
     transform translate(-50%, -50%)
 
-    input
-      position absolute
-      top 0
+    &--lightness
+      background 'hsl(0, 0%, %s)' % (calc(var(--lightness, 50) * 1%))
       left 50%
-      transform translate(-50%, -50px)
+      width 50%
+      height 50%
+      top 50%
+      transform translate(-50%, -50%) rotate(90deg) rotate(calc(var(--angle) * 1deg)) translate(0, 50px)
+
+    &--saturation
+      background background 'linear-gradient(90deg, hsl(0, %s, 50%), hsl(36, %s, 50%), hsl(72, %s, 50%), hsl(108, %s, 50%), hsl(144, %s, 50%), hsl(180, %s, 50%), hsl(216, %s, 50%), hsl(252, %s, 50%), hsl(288, %s, 50%), hsl(324, %s, 50%), hsl(360, %s, 50%))' % (calc(var(--saturation, 50) * 1%) calc(var(--saturation, 50) * 1%) calc(var(--saturation, 50) * 1%) calc(var(--saturation, 50) * 1%) calc(var(--saturation, 50) * 1%) calc(var(--saturation, 50) * 1%) calc(var(--saturation, 50) * 1%) calc(var(--saturation, 50) * 1%) calc(var(--saturation, 50) * 1%) calc(var(--saturation, 50) * 1%) calc(var(--saturation, 50) * 1%))
+      left 50%
+      top 50%
+      width 50%
+      height 50%
+      transform translate(-50%, -50%) rotate(90deg) rotate(calc(var(--angle) * 1deg)) translate(0, 50px)
