@@ -10,7 +10,8 @@ const rootNode = document.getElementById('app')
  * @param {Number} buffer - buffer so that angle doesn't allow handle + track overlap
  */
 const getAngle = (event, element, buffer) => {
-  const { x, y } = event
+  const { clientX: x, clientY: y } =
+    event.touches && event.touches.length ? event.touches[0] : event
   const {
     x: handleX,
     y: handleY,
@@ -50,14 +51,15 @@ const HslSlider = ({
   )
   const handleRef = useRef(null)
   const trackRef = useRef(null)
-  const lightnessHandleRef = useRef(null)
-  const saturationHandleRef = useRef(null)
 
   /**
    * Updates the hue based on the pointer position
    * @param {Number} x - Where pointer is in relation to hue track
    */
-  const updateHue = ({ x }) => {
+  const updateHue = e => {
+    // Return if we are tapping a handle
+    if (e.target.dataset.hslSliderHandle) return
+    const { clientX: x } = e.touches && e.touches.length ? e.touches[0] : e
     const {
       left: trackLeft,
       width: trackWidth,
@@ -93,8 +95,10 @@ const HslSlider = ({
     const up = () => {
       setCursor('grab')
       document.documentElement.style.setProperty('--cursor', 'initial')
-      window.removeEventListener('pointermove', onMove)
-      window.removeEventListener('pointerup', up)
+      window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('touchmove', onMove)
+      window.removeEventListener('mouseup', up)
+      window.removeEventListener('touchend', up)
     }
     return up
   }
@@ -108,13 +112,22 @@ const HslSlider = ({
     if (stopPropagation) e.stopPropagation()
     setCursor('grabbing')
     document.documentElement.style.setProperty('--cursor', 'grabbing')
-    window.addEventListener('pointermove', onMove)
-    window.addEventListener('pointerup', handleUp(onMove))
+    window.addEventListener('mousemove', onMove)
+    window.addEventListener('touchmove', onMove)
+    window.addEventListener('mouseup', handleUp(onMove))
+    window.addEventListener('touchend', handleUp(onMove))
   }
 
   useEffect(() => {
     if (onChange) onChange({ hue, saturation, lightness })
   }, [hue, saturation, lightness])
+
+  useEffect(() => {
+    trackRef.current.addEventListener('click', updateHue)
+    return () => {
+      trackRef.current.removeEventListener('click', updateHue)
+    }
+  }, [])
 
   return (
     <div
@@ -132,19 +145,21 @@ const HslSlider = ({
           '--value': Math.max(0, Math.min(100, (hue / 360) * 100)),
           '--hue': hue,
         }}
-        onPointerDown={handleDown(updateHue)}
+        onMouseDown={handleDown(updateHue)}
+        onTouchStart={handleDown(updateHue)}
         title="Set hue">
         <div
+          data-hsl-slider-handle="true"
           className="hsl-slider__handle hsl-slider__handle--saturation"
-          onPointerDown={handleDown(updateSaturation, true)}
-          ref={saturationHandleRef}
+          onMouseDown={handleDown(updateSaturation, true)}
           style={{ '--angle': saturationAngle }}
           title="Set saturation"
         />
         <div
+          data-hsl-slider-handle="true"
           className="hsl-slider__handle hsl-slider__handle--lightness"
-          onPointerDown={handleDown(updateLightness, true)}
-          ref={lightnessHandleRef}
+          onMouseDown={handleDown(updateLightness, true)}
+          onTouchStart={handleDown(updateLightness, true)}
           style={{ '--angle': lightnessAngle }}
           title="Set lightness"
         />
