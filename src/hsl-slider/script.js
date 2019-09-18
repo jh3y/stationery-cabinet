@@ -1,19 +1,62 @@
-const { React, ReactDOM } = window
+const { React, ReactDOM, PropTypes, w3color } = window
 const { useEffect, useState, useRef } = React
 const { render } = ReactDOM
 const rootNode = document.getElementById('app')
 
-const ColorSlider = () => {
-  const [hue, setHue] = useState(0)
-  const [lightness, setLightness] = useState(50)
-  const [saturation, setSaturation] = useState(100)
-  const [saturationAngle, setSaturationAngle] = useState(90)
-  const [lightnessAngle, setLightnessAngle] = useState(270)
+/**
+ * Grab the angle between two points
+ * @param {Object} event - pointer event for current coords
+ * @param {Object} element - element to use as center point
+ * @param {Number} buffer - buffer so that angle doesn't allow handle + track overlap
+ */
+const getAngle = (event, element, buffer) => {
+  const { x, y } = event
+  const {
+    x: handleX,
+    y: handleY,
+    width: handleWidth,
+    height: handleHeight,
+  } = element.getBoundingClientRect()
+  const handleCenterPoint = {
+    x: handleX + handleWidth / 2,
+    y: handleY + handleHeight / 2,
+  }
+  const angle =
+    (Math.atan2(handleCenterPoint.y - y, handleCenterPoint.x - x) * 180) /
+    Math.PI
+  return Math.max(buffer, Math.min(180 - buffer, Math.abs(angle)))
+}
+
+const getInitialAngle = (value, buffer) => {
+  return ((180 - buffer * 2) / 100) * value + buffer
+}
+
+const HslSlider = ({
+  hue: propsHue = 180,
+  saturation: propsSaturation = 100,
+  lightness: propsLightness = 50,
+  BUFFER = 40,
+  onChange,
+}) => {
+  const [hue, setHue] = useState(propsHue)
+  const [cursor, setCursor] = useState('grab')
+  const [lightness, setLightness] = useState(propsLightness)
+  const [saturation, setSaturation] = useState(propsSaturation)
+  const [saturationAngle, setSaturationAngle] = useState(
+    getInitialAngle(saturation, BUFFER)
+  )
+  const [lightnessAngle, setLightnessAngle] = useState(
+    180 + (180 - getInitialAngle(lightness, BUFFER))
+  )
   const handleRef = useRef(null)
   const trackRef = useRef(null)
   const lightnessHandleRef = useRef(null)
   const saturationHandleRef = useRef(null)
 
+  /**
+   * Updates the hue based on the pointer position
+   * @param {Number} x - Where pointer is in relation to hue track
+   */
   const updateHue = ({ x }) => {
     const {
       left: trackLeft,
@@ -23,136 +66,118 @@ const ColorSlider = () => {
     setHue(Math.max(0, Math.min(360, newValue * 360)))
   }
 
-  // Set up event bindings on the handle
-  const handleUp = () => {
-    window.removeEventListener('pointermove', updateHue)
-    window.removeEventListener('pointerup', handleUp)
-  }
-  const handleDown = () => {
-    window.addEventListener('pointermove', updateHue)
-    window.addEventListener('pointerup', handleUp)
-    // Need a ref to the parent div bar, then calculate the distance covered at the pointer in relation to the whole thing 👍
-  }
-  const updateLightness = e => {
-    const { x, y } = e
-    const {
-      x: handleX,
-      y: handleY,
-      width: handleWidth,
-      height: handleHeight,
-    } = handleRef.current.getBoundingClientRect()
-    const handleCenterPoint = {
-      x: handleX + handleWidth / 2,
-      y: handleY + handleHeight / 2,
-    }
-    const angle =
-      (Math.atan2(handleCenterPoint.y - y, handleCenterPoint.x - x) * 180) /
-      Math.PI
-    const START = 30
-    const handleAngle = Math.max(START, Math.min(180 - START, Math.abs(angle)))
-    const lightness = ((handleAngle - START) / (180 - START * 2)) * 100
-    setLightnessAngle(180 + (180 - handleAngle))
+  /**
+   *
+   * @param {Object} event - pointer event
+   */
+  const updateLightness = event => {
+    const angle = getAngle(event, handleRef.current, BUFFER)
+    const lightness = ((angle - BUFFER) / (180 - BUFFER * 2)) * 100
+    setLightnessAngle(180 + (180 - angle))
     setLightness(lightness)
   }
-  const handleLightnessUp = () => {
-    window.removeEventListener('pointermove', updateLightness)
-    window.removeEventListener('pointerup', handleLightnessUp)
-  }
-  const handleLightnessDown = e => {
-    e.stopPropagation()
-    window.addEventListener('pointermove', updateLightness)
-    window.addEventListener('pointerup', handleLightnessUp)
-  }
-  const updateSaturation = e => {
-    const { x, y } = e
-    const {
-      x: handleX,
-      y: handleY,
-      width: handleWidth,
-      height: handleHeight,
-    } = handleRef.current.getBoundingClientRect()
-    const handleCenterPoint = {
-      x: handleX + handleWidth / 2,
-      y: handleY + handleHeight / 2,
-    }
-    const angle =
-      (Math.atan2(handleCenterPoint.y - y, handleCenterPoint.x - x) * 180) /
-      Math.PI
-    const START = 30
-    const handleAngle = Math.max(START, Math.min(180 - START, Math.abs(angle)))
-    const saturation = ((handleAngle - START) / (180 - START * 2)) * 100
+
+  const updateSaturation = event => {
+    const angle = getAngle(event, handleRef.current, BUFFER)
+    const saturation = ((angle - BUFFER) / (180 - BUFFER * 2)) * 100
     setSaturation(saturation)
-    setSaturationAngle(handleAngle)
+    setSaturationAngle(angle)
   }
-  const handleSaturationUp = () => {
-    window.removeEventListener('pointermove', updateSaturation)
-    window.removeEventListener('pointerup', handleSaturationUp)
+
+  /**
+   * Convenience method to handle event listening on handles
+   * This will remove the event listeners on pointerUp
+   * @param {Function} onMove - onMove handler for handle
+   */
+  const handleUp = onMove => {
+    const up = () => {
+      setCursor('grab')
+      document.documentElement.style.setProperty('--cursor', 'initial')
+      window.removeEventListener('pointermove', onMove)
+      window.removeEventListener('pointerup', up)
+    }
+    return up
   }
-  const handleSaturationDown = e => {
-    e.stopPropagation()
-    window.addEventListener('pointermove', updateSaturation)
-    window.addEventListener('pointerup', handleSaturationUp)
+
+  /**
+   * Convenience method to assign event listening for handles
+   * @param {Function} onMove - onMove handler for handle
+   * @param {Bool} stopPropagation - defines whether to stop event propagation
+   */
+  const handleDown = (onMove, stopPropagation) => e => {
+    if (stopPropagation) e.stopPropagation()
+    setCursor('grabbing')
+    document.documentElement.style.setProperty('--cursor', 'grabbing')
+    window.addEventListener('pointermove', onMove)
+    window.addEventListener('pointerup', handleUp(onMove))
   }
+
   useEffect(() => {
-    handleRef.current.addEventListener('pointerdown', handleDown)
-    return () => {
-      handleRef.current.removeEventListener('pointerdown', handleDown)
-    }
-  }, [])
-  useEffect(() => {
-    lightnessHandleRef.current.addEventListener(
-      'pointerdown',
-      handleLightnessDown
-    )
-    return () => {
-      lightnessHandleRef.current.removeEventListener(
-        'pointerdown',
-        handleLightnessDown
-      )
-    }
-  }, [])
-  useEffect(() => {
-    saturationHandleRef.current.addEventListener(
-      'pointerdown',
-      handleSaturationDown
-    )
-    return () => {
-      saturationHandleRef.current.removeEventListener(
-        'pointerdown',
-        handleSaturationDown
-      )
-    }
-  })
+    if (onChange) onChange({ hue, saturation, lightness })
+  }, [hue, saturation, lightness])
+
   return (
     <div
       ref={trackRef}
-      className="color-slider"
+      className="hsl-slider"
       style={{
         '--lightness': lightness,
         '--saturation': saturation,
       }}>
       <div
-        className="color-slider__handle"
+        className="hsl-slider__handle"
         ref={handleRef}
         style={{
+          '--cursor': cursor,
           '--value': Math.max(0, Math.min(100, (hue / 360) * 100)),
           '--hue': hue,
-        }}>
+        }}
+        onPointerDown={handleDown(updateHue)}
+        title="Set hue">
         <div
-          className="color-slider__handle color-slider__handle--saturation"
+          className="hsl-slider__handle hsl-slider__handle--saturation"
+          onPointerDown={handleDown(updateSaturation, true)}
           ref={saturationHandleRef}
           style={{ '--angle': saturationAngle }}
+          title="Set saturation"
         />
         <div
-          className="color-slider__handle color-slider__handle--lightness"
+          className="hsl-slider__handle hsl-slider__handle--lightness"
+          onPointerDown={handleDown(updateLightness, true)}
           ref={lightnessHandleRef}
           style={{ '--angle': lightnessAngle }}
+          title="Set lightness"
         />
       </div>
     </div>
   )
 }
+HslSlider.propTypes = {
+  hue: PropTypes.number,
+  saturation: PropTypes.number,
+  lightness: PropTypes.number,
+  BUFFER: PropTypes.number,
+  onChange: PropTypes.func,
+}
 const App = () => {
-  return <ColorSlider />
+  const [color, setColor] = useState(new w3color('hsl(180, 100%, 50%'))
+  const onChange = ({ hue, saturation, lightness }) => {
+    setColor(new w3color(`hsl(${hue}, ${saturation}%), ${lightness}%`))
+  }
+  return (
+    <div className="container" style={{ '--color': color.toHslString() }}>
+      <HslSlider
+        hue={color.hue}
+        saturation={color.sat * 100}
+        lightness={color.lightness * 100}
+        onChange={onChange}
+      />
+      <div className="values">
+        <h1>{color.toHslString()}</h1>
+        <h1>{color.toHexString()}</h1>
+        <h1>{color.toRgbString()}</h1>
+      </div>
+    </div>
+  )
 }
 render(<App />, rootNode)
