@@ -1,14 +1,19 @@
 *
+*:after
+*:before
   box-sizing border-box
 
+:root
+  --bg #fafafa
+
 body
-  background-color #fff
-  text-align center
-  font-family 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif
-  min-height 100vh
   display flex
   align-items center
   justify-content center
+  min-height 100vh
+  background var(--bg)
+  color var(--bg)
+  font-family -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
 
 .container
   display grid
@@ -16,99 +21,82 @@ body
   grid-gap 20px
 
 button
-  --borderWidth 4
-  --paddingX 8
-  --paddingY 12
-  --transition .25
-  background var(--bg, #fff)
-  border calc(var(--borderWidth) * 1px) solid var(--color, #f0f)
-  border-radius calc(var(--borderWidth) * 1px)
-  color var(--color, #f0f)
-  box-shadow calc(var(--borderWidth) * 1px) calc(var(--borderWidth) * 1px) 0 #888
+  --borderWidth 5
+  --boxShadowDepth 8
+  --buttonColor red
+  --fontSize 3
+  --horizontalPadding 16
+  --verticalPadding 8
+  background transparent
+  border calc(var(--borderWidth) * 1px) solid var(--buttonColor)
+  box-shadow calc(var(--boxShadowDepth) * 1px) calc(var(--boxShadowDepth) * 1px) 0 #888
+  color var(--buttonColor)
   cursor pointer
+  font-size calc(var(--fontSize) * 1rem)
   font-weight bold
   outline transparent
-  padding calc(var(--paddingX) * 1px) calc(var(--paddingY) * 1px)
+  padding calc(var(--verticalPadding) * 1px) calc(var(--horizontalPadding) * 1px)
   position relative
-  transition box-shadow calc(var(--transition) * .5s) ease
-  -webkit-tap-highlight-color transparent
+  transition box-shadow .15s ease
+
+  &:hover
+    box-shadow calc(var(--boxShadowDepth) / 2 * 1px) calc(var(--boxShadowDepth) / 2 * 1px) 0 #888
 
   &:active
     box-shadow 0 0 0 #888
 
-  &:hover: div:nth-child(5)
-    opacity 1
-    transition opacity calc(var(--transition) * 1s) calc(var(--transition) * 1s) steps(1)
-
   span
     -webkit-clip-path var(--clip)
-    bottom -4px
+    bottom calc(var(--borderWidth) * -1px)
     clip-path var(--clip)
-    left -4px
-    opacity .5
+    left calc(var(--borderWidth) * -1px)
     position absolute
-    right -4px
-    top -4px
-    z-index 2
-
-    &:nth-of-type(1)
-      --clip polygon(0 0, 100% 0, 50% 50%)
-
-    &:nth-of-type(2)
-      --clip polygon(100% 0, 100% 100%, 50% 50%)
-
-    &:nth-of-type(3)
-      --clip polygon(0 100%, 100% 100%, 50% 50%)
-
-    &:nth-of-type(4)
-      --clip polygon(0 0, 0 100%, 50% 50%)
+    right calc(var(--borderWidth) * -1px)
+    top calc(var(--borderWidth) * -1px)
+    z-index 1
 
     &:nth-of-type(1):hover
     &:nth-of-type(2):hover
     &:nth-of-type(3):hover
     &:nth-of-type(4):hover
       --clip polygon(0 0, 100% 0, 100% 100%, 0 100%)
-      z-index 3
+      z-index 2
 
-    &:nth-of-type(1):hover ~ div:nth-of-type(1)
-    &:nth-of-type(2):hover ~ div:nth-of-type(2)
-    &:nth-of-type(3):hover ~ div:nth-of-type(3)
-    &:nth-of-type(4):hover ~ div:nth-of-type(4)
-      --clip inset( -5% -5% -5% -5% )
+    &:nth-of-type(1):hover ~ b:nth-of-type(1)
+    &:nth-of-type(2):hover ~ b:nth-of-type(2)
+    &:nth-of-type(3):hover ~ b:nth-of-type(3)
+    &:nth-of-type(4):hover ~ b:nth-of-type(4)
+        --clip inset(0 0 0 0)
 
-  div
+    &:nth-of-type(1)
+      --clip polygon(0 0, 100% 0, 50% 50%, 50% 50%)
+    &:nth-of-type(2)
+      --clip polygon(100% 0, 100% 100%, 50% 50%)
+    &:nth-of-type(3)
+      --clip polygon(0 100%, 100% 100%, 50% 50%)
+    &:nth-of-type(4)
+      --clip polygon(0 0, 0 100%, 50% 50%)
+
+  b
     -webkit-clip-path var(--clip)
-    background var(--color, #f0f)
-    border calc(var(--borderWidth) * 1px) solid var(--color, #f0f)
-    border-radius calc(var(--borderWidth) * 1px)
+    background var(--buttonColor)
+    border calc(var(--borderWidth) * 1px) solid var(--buttonColor)
     bottom calc(var(--borderWidth) * -1px)
+    font-weight bold
     clip-path var(--clip)
-    color var(--bg, #fff)
+    color var(--bg, #fafafa)
     left calc(var(--borderWidth) * -1px)
-    padding calc(var(--paddingX) * 1px) calc(var(--paddingY) * 1px)
+    padding calc(var(--verticalPadding) * 1px) calc(var(--horizontalPadding) * 1px)
     position absolute
     right calc(var(--borderWidth) * -1px)
     top calc(var(--borderWidth) * -1px)
-    transition clip-path calc(var(--transition) * 1s) ease, -webkit-clip-path calc(var(--transition) * 1s) ease
-    // TOP
+    transition clip-path .25s ease
+
     &:nth-of-type(1)
-      --clip inset( -5% -5% 110% -5% )
-
-    // RIGHT
+      --clip inset(0 0 100% 0)
     &:nth-of-type(2)
-      --clip inset( -5% -5% -5% 110% )
-
-    // BOTTOM
+      --clip inset(0 0 0 100%)
     &:nth-of-type(3)
-      --clip inset( 110% -5% -5% -5% )
-
-    // LEFT
+      --clip inset(100% 0 0 0)
     &:nth-of-type(4)
-      --clip inset( -5% 110% -5% -5% )
-
-    &:nth-of-type(5)
-      bottom 0
-      left 0
-      opacity 0
-      right 0
-      top 0
+      --clip inset(0 100% 0 0)
