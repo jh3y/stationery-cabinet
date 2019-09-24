@@ -15,6 +15,7 @@ body
   cursor var(--cursor)
 
 .hsl-slider
+  --handle-size 50
   width 280px
   height 20px
   border 4px solid #111
@@ -24,9 +25,23 @@ body
   cursor pointer
   background 'linear-gradient(90deg, hsl(0, %s, %s), hsl(36, %s, %s), hsl(72, %s, %s), hsl(108, %s, %s), hsl(144, %s, %s), hsl(180, %s, %s), hsl(216, %s, %s), hsl(252, %s, %s), hsl(288, %s, %s), hsl(324, %s, %s), hsl(360, %s, %s))' % (calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%))
 
+  &__arc
+    height calc(var(--handle-size) * 2px + 4px)
+    width calc(var(--handle-size) * 2px + 4px)
+    position absolute
+    top 50%
+    left calc(var(--value, 0) * 1%)
+    transform translate(-50%, -50%)
+    border-radius 100%
+    opacity 0.2
+    border 4px solid #c6c6c6
+    z-index -1
+    -webkit-clip-path polygon(0 0, 100% 0, 50% 50%, 100% 100%, 0 100%, 50% 50%)
+    clip-path polygon(0 0, 100% 0, 50% 50%, 100% 100%, 0 100%, 50% 50%)
+
   &__handle
-    height 50px
-    width 50px
+    height calc(var(--handle-size) * 1px)
+    width calc(var(--handle-size) * 1px)
     border-radius 100%
     background 'hsl(%s, %s, %s)' % (var(--hue, 0) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%))
     border 4px solid #111
@@ -44,7 +59,9 @@ body
       height 100%
       background transparent
       border 0
-      transform translate(-50%, -50%) rotate(90deg) rotate(calc(var(--angle) * 1deg)) translate(0, 50px)
+      transform translate(-50%, -50%) rotate(90deg) rotate(calc(var(--angle) * 1deg)) translate(0, calc(var(--handle-size) * 1px))
+      &:before
+        display none
       &:after
         content ''
         position absolute
