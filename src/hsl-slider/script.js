@@ -36,6 +36,7 @@ const HslSlider = ({
   hue: propsHue = 180,
   saturation: propsSaturation = 100,
   lightness: propsLightness = 50,
+  handleSize = 50,
   BUFFER = 40,
   onChange,
 }) => {
@@ -134,9 +135,16 @@ const HslSlider = ({
       ref={trackRef}
       className="hsl-slider"
       style={{
+        '--handle-size': handleSize,
         '--lightness': lightness,
         '--saturation': saturation,
       }}>
+      <div
+        className="hsl-slider__arc"
+        style={{
+          '--value': Math.max(0, Math.min(100, (hue / 360) * 100)),
+        }}
+      />
       <div
         className="hsl-slider__handle"
         ref={handleRef}
@@ -169,6 +177,7 @@ const HslSlider = ({
 }
 HslSlider.propTypes = {
   hue: PropTypes.number,
+  handleSize: PropTypes.number,
   saturation: PropTypes.number,
   lightness: PropTypes.number,
   BUFFER: PropTypes.number,
