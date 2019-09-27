@@ -1,0 +1,109 @@
+:root
+  --speed 1
+  --delay 0.5
+  --font-size 100
+
+body
+  background #111
+  min-height 100vh
+  display flex
+  flex-direction column
+  align-items center
+  justify-content center
+  overflow-x hidden
+  scroll-snap-type y mandatory
+
+.page
+  height 100vh
+  width 100vw
+  display block
+  scroll-snap-align center
+  font-size calc(var(--font-size) * 1px)
+  font-weight bold
+  display flex
+  align-items center
+  justify-content center
+  font-variant small-caps
+  position relative
+
+.text
+  --clip 0
+  position relative
+  &--north
+    --origin 50% 0
+
+  &--north-east
+    --origin 100% 0
+
+  &--east
+    --origin 100% 50%
+
+  &--south-east
+    --origin 100% 100%
+
+  &--south
+    --origin 50% 100%
+
+  &--south-west
+    --origin 0% 100%
+
+  &--west
+    --origin 0% 50%
+
+  &--north-west
+    --origin 0% 0%
+
+  & > span
+    transition -webkit-clip-path calc(var(--speed) * 1s) calc(var(--delay) * 1s) ease, clip-path calc(var(--speed) * 1s) calc(var(--delay) * 1s) ease
+    $clip = circle(calc(var(--clip) * 1%) at var(--origin))
+    -webkit-clip-path $clip
+    clip-path $clip
+
+  &[data-scroll="in"] > span
+    --clip 150
+
+  &:before
+    content attr(data-word)
+    position absolute
+    color rgba(255, 255, 255, 0.15)
+    top 0
+    left 0
+    font-size calc(var(--font-size) * 1px)
+    z-index -1
+
+
+
+.char
+  color #fff
+
+.text--north .char:nth-of-type(1)
+  color #e6261f
+
+.text--north-east .char:nth-of-type(1)
+  color #eb7532
+
+.text--east .char:nth-of-type(1)
+  color #f7d038
+
+.text--south-east .char:nth-of-type(1)
+  color #a3e048
+
+.text--south .char:nth-of-type(1)
+  color #49da9a
+
+.text--south-west .char:nth-of-type(1)
+  color #34bbe6
+
+.text--west .char:nth-of-type(1)
+  color #4355db
+
+.text--north-west .char:nth-of-type(1)
+  color #e6261f
+.text--north-west .char:nth-of-type(2)
+  color #f7d038
+.text--north-west .char:nth-of-type(3)
+  color #49da9a
+.text--north-west .char:nth-of-type(4)
+  color #4355db
+.text--north-west .char:nth-of-type(5)
+  color #d23be7
