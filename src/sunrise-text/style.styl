@@ -1,22 +1,19 @@
 :root
   --speed 1
   --delay 0.5
-  --font-size 100
+  --font-size 60
 
 body
   background #111
   min-height 100vh
-  display flex
-  flex-direction column
-  align-items center
-  justify-content center
   overflow-x hidden
-  scroll-snap-type y mandatory
+
+  @media(min-width 768px)
+    --font-size 100
 
 .page
   height 100vh
   width 100vw
-  display block
   scroll-snap-align center
   font-size calc(var(--font-size) * 1px)
   font-weight bold
@@ -71,7 +68,15 @@ body
     font-size calc(var(--font-size) * 1px)
     z-index -1
 
+/**
+  * Themeing
+*/
 
+.container
+  height 100vh
+  overflow auto
+  overflow-x hidden
+  scroll-snap-type y mandatory
 
 .char
   color #fff
