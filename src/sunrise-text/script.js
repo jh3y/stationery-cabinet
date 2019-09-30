@@ -1,5 +1,6 @@
-const { Splitting, ScrollOut } = window
+const { Splitting } = window
 Splitting()
-ScrollOut({
+window.ScrollOut({
+  scrollingElement: '.container',
   targets: '.text',
 })
