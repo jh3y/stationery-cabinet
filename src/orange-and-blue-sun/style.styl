@@ -1,0 +1,157 @@
+*
+  box-sizing border-box
+
+:root
+  --sea-height 0.3
+
+body
+  background-color 'hsl(194, 100%, %s)' % (calc(var(--lightness, 50) * 1%))
+  display flex
+  align-items center
+  justify-content center
+  min-height 100vh
+  overflow hidden
+
+.moon
+  height 20vh
+  width 20vh
+  background #fafafa
+  border-radius 100%
+  position absolute
+  bottom 100%
+  left calc(var(--x, 0.5) * 100%)
+  transition transform .25s ease 0s
+  transform translate(-50%, calc(var(--moon-offset) * 1vh))
+
+.sea
+  width 100vw
+  position absolute
+  top calc((1 - var(--sea-height)) * 100vh)
+  left 0
+  right 0
+  bottom 0
+  background 'hsl(215, 100%, %s)' % (calc(var(--lightness) * 1%))
+
+  &__ripples
+    width 15vh
+    position absolute
+    top 0
+    bottom 0
+    left calc(var(--x, 0.5) * 100%)
+    height calc(var(--sea-height) * 100vh)
+    transform translate(-50%, 0) scaleX(var(--ripple-scale))
+    overflow hidden
+    clip-path inset(0 0 0 0)
+    -webkit-clip-path inset(0 0 0 0)
+    opacity var(--ripple-opacity)
+
+  &__ripple
+    width 100%
+    height 10%
+    background orange
+    position absolute
+    border-radius 100%
+    animation ripple 20s calc(var(--ripple-index) * -1s) infinite linear both
+
+@keyframes ripple
+  from
+    transform translate(0, -5vh) scale(1)
+  to
+    transform translate(0, 35vh) scale(1)
+
+.sun
+  height 20vh
+  width 20vh
+  position absolute
+  top calc(var(--y, 0.5) * 100%)
+  left calc(var(--x, 0.5) * 100%)
+  transform translate(-50%, -50%)
+  border-radius 100%
+  background orange
+
+  &__rays
+    height calc((100 + (var(--sun-spread) * 100)) * 1%)
+    width calc((100 + (var(--sun-spread) * 100)) * 1%)
+    position absolute
+    top 50%
+    left 50%
+    border-radius 100%
+    overflow hidden
+    transform translate(-50%, -50%) rotate(0deg)
+    animation spin calc((20 - (var(--sun-spread) * 5)) * 1s) infinite linear
+
+    @keyframes spin
+      to
+        transform translate(-50%, -50%) rotate(360deg)
+
+  &__ray
+    position absolute
+    top 50%
+    left 50%
+    background orange
+    height 100%
+    width 500%
+    display block
+    -webkit-clip-path polygon(0 0, 100% 0, 100% 100%)
+    clip-path polygon(0 0, 100% 0, 100% 100%)
+    transform rotate(calc((var(--ray-index) * (360 / 20)) * 1deg))
+    transform-origin top left
+
+  &__face
+    height 100%
+    width 100%
+    background yellow
+    position absolute
+    border-radius 100%
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+
+  &__mouth
+    position absolute
+    top 80%
+    left 50%
+    height 40%
+    width 30%
+    transform translate(-50%, -50%) rotate(-5deg)
+
+  &__lip
+    background yellow
+    position absolute
+    height 100%
+    width 120%
+    border-radius 100%
+    left 50%
+    top -40%
+    transform translate(-50%, -50%)
+
+  &__mouth-opening
+    position absolute
+    height 100%
+    width 100%
+    background #111111
+    border-radius 100%
+    left 50%
+    top 0%
+    transform translate(-50%, -50%)
+    overflow hidden
+
+    &:after
+      content ''
+      position absolute
+      background red
+      top 80%
+      left 70%
+      height 30%
+      width 30%
+      border-radius 100%
+
+  &__eyes
+    height 25%
+    width 60%
+    background rgba(255, 0, 0, 0.2)
+    position absolute
+    top 25%
+    left 45%
+    transform translate(-50%, 0)
+    z-index 2
