@@ -1,0 +1,20 @@
+.moon
+.sun
+  .sun__rays
+    - let r = 0
+    while r < 10
+      .sun__ray(style=`--ray-index: ${r * 2}`)
+      - r++
+  .sun__face
+    .sun__eyes
+      .sun__eye
+      .sun__eye
+    .sun__mouth
+      .sun__mouth-opening
+      .sun__lip
+.sea
+  .sea__ripples
+    - let n = 0
+    while n < 20
+      .sea__ripple(style=`--ripple-index: ${n}`)
+      - n++
