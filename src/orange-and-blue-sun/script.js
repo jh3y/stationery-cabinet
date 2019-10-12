@@ -1,5 +1,6 @@
 const MIN_LIGHTNESS = 0
 const MAX_LIGHTNESS = 70
+const MAX_SEA_LIGHTNESS = 50
 const BOTTOM_BUFFER = 0.1
 const SEA_HEIGHT = 0.3
 const SUN_HEIGHT = 0.2
@@ -26,11 +27,18 @@ const updatePosition = e => {
    * We say the lightness can go between 10% and 70%
    */
   let lightness = MIN_LIGHTNESS
-  if (positionY < 1 - BOTTOM_BUFFER)
+  let seaLightness = MIN_LIGHTNESS
+  if (positionY < 1 - BOTTOM_BUFFER) {
     lightness =
       (1 - positionY / (1 - BOTTOM_BUFFER)) * (MAX_LIGHTNESS - MIN_LIGHTNESS) +
       MIN_LIGHTNESS
+    seaLightness =
+      (1 - positionY / (1 - BOTTOM_BUFFER)) *
+        (MAX_SEA_LIGHTNESS - MIN_LIGHTNESS) +
+      MIN_LIGHTNESS
+  }
   document.documentElement.style.setProperty('--lightness', lightness)
+  document.documentElement.style.setProperty('--sea-lightness', seaLightness)
   /**
    * Spread and blur of the sun
    * Shouldn't start growing until we at sea height plus half the sun height
@@ -55,12 +63,40 @@ const updatePosition = e => {
   document.documentElement.style.setProperty('--ripple-opacity', opacity)
   document.documentElement.style.setProperty('--ripple-scale', scale)
   /**
+   * Gently open eyes and mouth
+   * Use scaleX on both. Eyes can always be in blinking mode?
+   */
+  /**
    * If y position is above 0.9 bring the moon out
    * Else put him away
    */
   let moonOffset = 0
   if (positionY > 0.9) moonOffset = 15
   document.documentElement.style.setProperty('--moon-offset', moonOffset)
+  /**
+   * Figure out mouth translation
+   * Start at 0.3, translate down to 0
+   */
+  let mouthOpening = 0.3
+  if (positionY <= RIPPLE_BOUNDARY) {
+    mouthOpening = Math.min(
+      0.3,
+      Math.max(0, (positionY - 0.3) / (RIPPLE_BOUNDARY - 0.3))
+    )
+  }
+  document.documentElement.style.setProperty('--mouth-opening', mouthOpening)
+  /**
+   * Control the shades
+   * If y is above 0.4 put them away else
+   * show them
+   */
+  let shadePosition = -200
+  if (positionY > 0.4) {
+    shadePosition = -200
+  } else {
+    shadePosition = 0
+  }
+  document.documentElement.style.setProperty('--shade-position', shadePosition)
 }
 window.addEventListener('touchmove', updatePosition)
 window.addEventListener('mousemove', updatePosition)

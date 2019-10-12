@@ -30,7 +30,7 @@ body
   left 0
   right 0
   bottom 0
-  background 'hsl(215, 100%, %s)' % (calc(var(--lightness) * 1%))
+  background 'hsl(215, 100%, %s)' % (calc(var(--sea-lightness) * 1%))
 
   &__ripples
     width 15vh
@@ -78,7 +78,7 @@ body
     border-radius 100%
     overflow hidden
     transform translate(-50%, -50%) rotate(0deg)
-    animation spin calc((20 - (var(--sun-spread) * 5)) * 1s) infinite linear
+    animation spin calc((20 - (var(--sun-spread) * 10)) * 1s) infinite linear
 
     @keyframes spin
       to
@@ -105,7 +105,7 @@ body
     border-radius 100%
     top 50%
     left 50%
-    transform translate(-50%, -50%)
+    transform translate(-50%, -50%) rotateY(180deg)
 
   &__mouth
     position absolute
@@ -133,7 +133,7 @@ body
     border-radius 100%
     left 50%
     top 0%
-    transform translate(-50%, -50%)
+    transform translate(-50%, -50%) translate(0, calc(var(--mouth-opening) * -100%))
     overflow hidden
 
     &:after
@@ -148,10 +148,76 @@ body
 
   &__eyes
     height 25%
-    width 60%
+    width 50%
     background rgba(255, 0, 0, 0.2)
     position absolute
-    top 25%
+    top 30%
     left 45%
-    transform translate(-50%, 0)
+    transform translate(-50%, 0) rotate(-5deg)
     z-index 2
+
+  &__eye
+    height 100%
+    width 50%
+    border-radius 100%
+    position absolute
+    top 0
+
+    &:nth-of-type(1)
+      left 0%
+
+    &:nth-of-type(2)
+      right 0%
+
+  &__eye-pupil
+    height 25%
+    width 25%
+    background #111
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    border-radius 100%
+    animation blink 10s infinite
+
+
+    @keyframes blink
+      0%, 73%, 75%, 100%
+        transform translate(-50%, -50%) scaleY(1)
+      74%
+        transform translate(-50%, -50%) scaleY(0.1)
+
+  &__shades
+    width 100%
+    height 80%
+    position relative
+    top 10%
+    transition transform .25s ease
+    transform translate(calc(var(--shade-position) * 0.6vw), 0)
+
+    &-lens
+      width 50%
+      height 100%
+      background #000
+      position absolute
+      top 0
+      opacity .85
+      border 4px solid #000
+      border-radius 20% 20% 50% 35% / 20% 20% 75% 60%
+
+      &:nth-of-type(1)
+        left 0
+        overflow hidden
+
+        &:after
+          content ''
+          position absolute
+          top 0
+          left 15%
+          width 30%
+          height 100%
+          background linear-gradient(90deg, white, white 25%, transparent 25%, transparent 45%, white 45%)
+          transform skewX(-20deg)
+      &:nth-of-type(2)
+        right 0
+        transform rotateY(180deg)
