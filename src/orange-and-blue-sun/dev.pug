@@ -1,23 +1,36 @@
 .moon
+  .face
+    .eyes
+      .eye
+        .eye-pupil
+      .eye
+        .eye-pupil
+      .shades
+        .shades-lens
+        .shades-lens
+        .shades-arm
+    .mouth
+      .mouth-opening
+      .lip
 .sun
   .sun__rays
     - let r = 0
     while r < 10
       .sun__ray(style=`--ray-index: ${r * 2}`)
       - r++
-  .sun__face
-    .sun__eyes
-      .sun__eye
-        .sun__eye-pupil
-      .sun__eye
-        .sun__eye-pupil
-      .sun__shades
-        .sun__shades-lens
-        .sun__shades-lens
-        .sun__shades-arm
-    .sun__mouth
-      .sun__mouth-opening
-      .sun__lip
+  .face
+    .eyes
+      .eye
+        .eye-pupil
+      .eye
+        .eye-pupil
+      .shades
+        .shades-lens
+        .shades-lens
+        .shades-arm
+    .mouth
+      .mouth-opening
+      .lip
 .sea
   .sea__ripples
     - let n = 0
