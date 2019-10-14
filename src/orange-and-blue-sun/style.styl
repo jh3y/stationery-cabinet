@@ -3,6 +3,17 @@
 
 :root
   --sea-height 0.3
+  --x 0.5
+  --y 0.5
+  --lightness 31.1111
+  --sea-lightness 22.2222
+  --sun-spread 0.375
+  --ripple-opacity 0.333333
+  --ripple-scale 0.333333
+  --moon-offset 0
+  --mouth-opening 0.2
+  --shade-position -200
+  --flip 1
 
 body
   background-color 'hsl(194, 100%, %s)' % (calc(var(--lightness, 50) * 1%))
@@ -11,15 +22,18 @@ body
   justify-content center
   min-height 100vh
   overflow hidden
+  cursor none
 
 .moon
+  --face-color hsl(251, 0%, 100%)
   height 20vh
   width 20vh
-  background #fafafa
+  background var(--face-color)
   border-radius 100%
   position absolute
   bottom 100%
   left calc(var(--x, 0.5) * 100%)
+  overflow hidden
   transition transform .25s ease 0s
   transform translate(-50%, calc(var(--moon-offset) * 1vh))
 
@@ -60,6 +74,7 @@ body
     transform translate(0, 35vh) scale(1)
 
 .sun
+  --face-color yellow
   height 20vh
   width 20vh
   position absolute
@@ -97,127 +112,156 @@ body
     transform rotate(calc((var(--ray-index) * (360 / 20)) * 1deg))
     transform-origin top left
 
-  &__face
-    height 100%
-    width 100%
-    background yellow
-    position absolute
-    border-radius 100%
-    top 50%
-    left 50%
-    transform translate(-50%, -50%) rotateY(180deg)
+/**
+* Shared face styles
+*/
 
-  &__mouth
+.face
+  background var(--face-color)
+  height 100%
+  width 100%
+  position absolute
+  border-radius 100%
+  top 50%
+  left 50%
+  transform translate(-50%, -50%) rotateY(calc(var(--flip, 0) * 180deg))
+
+.mouth
+  position absolute
+  top 80%
+  left 50%
+  height 40%
+  width 30%
+  transform translate(-50%, -50%) rotate(-5deg)
+
+.lip
+  background var(--face-color)
+  position absolute
+  height 100%
+  width 120%
+  border-radius 100%
+  left 50%
+  top -40%
+  transform translate(-50%, -50%)
+
+.mouth-opening
+  position absolute
+  height 100%
+  width 100%
+  background #111111
+  border-radius 100%
+  left 50%
+  top 0%
+  transform translate(-50%, -50%) translate(0, calc((var(--mouth-opening) + 0.075) * -100%))
+  overflow hidden
+
+  &:after
+    content ''
     position absolute
+    background red
     top 80%
-    left 50%
-    height 40%
+    left 70%
+    height 30%
     width 30%
-    transform translate(-50%, -50%) rotate(-5deg)
-
-  &__lip
-    background yellow
-    position absolute
-    height 100%
-    width 120%
     border-radius 100%
-    left 50%
-    top -40%
-    transform translate(-50%, -50%)
 
-  &__mouth-opening
-    position absolute
-    height 100%
-    width 100%
-    background #111111
-    border-radius 100%
-    left 50%
-    top 0%
-    transform translate(-50%, -50%) translate(0, calc(var(--mouth-opening) * -100%))
-    overflow hidden
+.eyes
+  height 25%
+  width 50%
+  position absolute
+  top 30%
+  left 45%
+  transform translate(-50%, 0) rotate(-5deg)
+  z-index 2
 
-    &:after
-      content ''
-      position absolute
-      background red
-      top 80%
-      left 70%
-      height 30%
-      width 30%
-      border-radius 100%
+.eye
+  height 100%
+  width 50%
+  border-radius 100%
+  position absolute
+  top 0
 
-  &__eyes
-    height 25%
+  &:nth-of-type(1)
+    left 0%
+
+  &:nth-of-type(2)
+    right 0%
+
+.eye-pupil
+  height 25%
+  width 25%
+  background #111
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  border-radius 100%
+  animation blink 10s infinite
+
+
+  @keyframes blink
+    0%, 73%, 75%, 100%
+      transform translate(-50%, -50%) scaleY(1)
+    74%
+      transform translate(-50%, -50%) scaleY(0.1)
+
+.moon .face
+  top 60%
+  background transparent
+  &:after
+    content ''
+    height 50%
     width 50%
-    background rgba(255, 0, 0, 0.2)
     position absolute
-    top 30%
-    left 45%
-    transform translate(-50%, 0) rotate(-5deg)
-    z-index 2
-
-  &__eye
-    height 100%
-    width 50%
+    top -10%
+    left -20%
     border-radius 100%
+    background-color hsl(251, 0%, 75%)
+    box-shadow 0 0 2px 4px hsl(251, 0%, 60%) inset
+
+  &:before
+    content ''
+    height 20%
+    width 20%
+    position absolute
+    top 60%
+    left 70%
+    border-radius 100%
+    background-color hsl(251, 0%, 75%)
+    box-shadow 0 0 2px 4px hsl(251, 0%, 60%) inset
+
+.shades
+  width 100%
+  height 80%
+  position relative
+  top 10%
+  transition transform .25s ease, opacity .25s ease
+  transform translate(calc(var(--shade-position) * .15vw), 0)
+  opacity calc(1 + var(--shade-position))
+
+  &-lens
+    width 50%
+    height 100%
+    background #000
     position absolute
     top 0
+    opacity .85
+    border 4px solid #000
+    border-radius 20% 20% 50% 35% / 20% 20% 75% 60%
 
     &:nth-of-type(1)
-      left 0%
+      left 0
+      overflow hidden
 
+      &:after
+        content ''
+        position absolute
+        top 0
+        left 15%
+        width 30%
+        height 100%
+        background linear-gradient(90deg, white, white 25%, transparent 25%, transparent 45%, white 45%)
+        transform skewX(-20deg)
     &:nth-of-type(2)
-      right 0%
-
-  &__eye-pupil
-    height 25%
-    width 25%
-    background #111
-    position absolute
-    top 50%
-    left 50%
-    transform translate(-50%, -50%)
-    border-radius 100%
-    animation blink 10s infinite
-
-
-    @keyframes blink
-      0%, 73%, 75%, 100%
-        transform translate(-50%, -50%) scaleY(1)
-      74%
-        transform translate(-50%, -50%) scaleY(0.1)
-
-  &__shades
-    width 100%
-    height 80%
-    position relative
-    top 10%
-    transition transform .25s ease
-    transform translate(calc(var(--shade-position) * 0.6vw), 0)
-
-    &-lens
-      width 50%
-      height 100%
-      background #000
-      position absolute
-      top 0
-      opacity .85
-      border 4px solid #000
-      border-radius 20% 20% 50% 35% / 20% 20% 75% 60%
-
-      &:nth-of-type(1)
-        left 0
-        overflow hidden
-
-        &:after
-          content ''
-          position absolute
-          top 0
-          left 15%
-          width 30%
-          height 100%
-          background linear-gradient(90deg, white, white 25%, transparent 25%, transparent 45%, white 45%)
-          transform skewX(-20deg)
-      &:nth-of-type(2)
-        right 0
-        transform rotateY(180deg)
+      right 0
+      transform rotateY(180deg)

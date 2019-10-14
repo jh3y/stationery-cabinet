@@ -77,10 +77,10 @@ const updatePosition = e => {
    * Figure out mouth translation
    * Start at 0.3, translate down to 0
    */
-  let mouthOpening = 0.3
+  let mouthOpening = 0.2
   if (positionY <= RIPPLE_BOUNDARY) {
     mouthOpening = Math.min(
-      0.3,
+      0.2,
       Math.max(0, (positionY - 0.3) / (RIPPLE_BOUNDARY - 0.3))
     )
   }
@@ -97,6 +97,14 @@ const updatePosition = e => {
     shadePosition = 0
   }
   document.documentElement.style.setProperty('--shade-position', shadePosition)
+  /**
+   * Flip the faces if the xPosition is aove 0.5
+   */
+  let flipY = 0
+  if (positionX <= 0.5) {
+    flipY = 1
+  }
+  document.documentElement.style.setProperty('--flip', flipY)
 }
 window.addEventListener('touchmove', updatePosition)
 window.addEventListener('mousemove', updatePosition)
