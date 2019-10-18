@@ -1,90 +1,73 @@
 *
   box-sizing border-box
 
+// Escape the slash so Stylus doesn't do Math
+$sweep-radius = 0 50% 35% 0 \/ 0 50% 15% 0
+$running-radius = 0 80% 20% 100% \/ 0 50% 0% 150%
+$walking-radius = 0 50% 35% 40% \/ 0 50% 0% 40%
+
+:root
+  --bristle-color yellow
+  --bristle-band red
+  --bg #111
+  --transition .1
+
 body
-  display flex
   align-items center
+  background #111
+  display flex
   justify-content center
   min-height 100vh
-  // Use currentColor as a hack for the background color 😅
-  color purple
-  background #111
-
-input
-  position absolute
-  top 0
-  right 0
-  bottom 0
-  left 0
-  width 100vw
-  height 100vh
-  opacity 0
 
 /**
 * If the input is valid, make the broom sweep
 * But also hide the curved out bristles by rotating the whiskers back
 */
-input:valid ~ .broom-container .broom
-  animation sweep 1.15s infinite ease both
+.command:valid ~ .broom-container .broom
+  --speed 0
+  --sweep 1
+  --bristle-radius $sweep-radius
+  --bristle-after-x -100
+  --bristle-after-rotation 45
+  --bristle-before-scale 0
+  --bristle-before-rotation 15
 
-  .broom__handle
-    animation-name none
-
-  .broom-bristle__wrap
-    animation-name none
-
-  .broom-bristle
-    border-radius 0 50% 35% 0 / 0 50% 15% 0
-
-    &:after
-      transform translate(-100%, 0) rotate(45deg)
-
-    &:before
-      transform scale(0) rotate(15deg)
-
-
-input:valid:not(:focus) ~ .broom-container .broom
-  animation-name none
-
+.command:valid:not(:focus) ~ .broom-container .broom
+  --sweep 0
 
 /**
 * This is the default state as the placeholder is shown.
 * As soon as we start tapping keys, let's up the pace and make the broom
 * pointy toed
 */
-input:placeholder-shown ~ .broom-container
-  .broom
-    animation-name none
-
-    .broom__handle
-      animation-name shake
-
-    .broom__bristles--left .broom-bristle__wrap
-      animation-delay 0.5s
-
-    .broom-bristle__wrap
-      animation-name waddle
-      animation-duration 1s
-
-      .broom-bristle
-        border-radius 0 50% 35% 40% / 0 50% 0% 40%
-        transform scaleY(1)
-
-        &:after
-          transform translate(0, 0) rotate(15deg)
-
-        &:before
-          transform scale(1) rotate(20deg)
-
-
+.command:placeholder-shown ~ .broom-container .broom
+  --sweep 0
+  --speed 1
+  --rotation 2
+  --scale-end 0.95
+  --bristle-radius $walking-radius
+  --bristle-scale 1
+  --bristle-after-x 0
+  --bristle-after-rotation 15
+  --bristle-before-scale 1
+  --bristle-before-rotation 20
 
 .broom
+  --bristle-radius $running-radius
+  --bristle-scale 1.15
+  --speed .5
+  --rotation 4
+  --scale-end 0.85
+  --bristle-after-x 0
+  --bristle-after-rotation 15
+  --bristle-before-scale 1
+  --bristle-before-rotation 20
+  animation sweep calc(var(--sweep) * 1s) infinite ease
   height 100%
+  transform-origin 50% 10%
+  transition transform calc(var(--transition) * 1s) ease
   width 100%
   z-index 2
-  transition transform .25s ease
-  transform-origin 50% 10%
-  animation none
 
   &__handle
     position absolute
@@ -96,178 +79,130 @@ input:placeholder-shown ~ .broom-container
     transform translate(-50%, 0)
     transform-origin bottom center
     border-radius 50% 50% 0 0 / 5% 5% 0 0
-    animation-name shake
-    animation-duration 1s
+    animation-duration calc(var(--speed) * 1s)
     animation-iteration-count infinite
+    animation-name shake
     animation-timing-function ease
 
-    @keyframes shake
-      0%, 100%
-        transform translate(-50%, 0) rotate(-2deg)
-      50%
-        transform translate(-50%, 0) rotate(2deg)
-
-    /**
-    * Use pseudo elements for the top of the brush
-    * That way we can use overflow hidden on the brush
-    */
     &:before
-      content ''
-      background red
-      position absolute
-      width 250%
-      height 5%
+      background var(--bristle-band)
       bottom 0
-      left 50%
-      z-index 2
-      transform translate(-50%, 0)
-    &:after
       content ''
-      z-index 2
-      background yellow
-      position absolute
-      width 300%
       height 5%
       left 50%
-      bottom 5%
+      position absolute
       transform translate(-50%, 0)
+      width 250%
+      z-index 2
+
+    &:after
       $clip = polygon(0 0, 100% 0, 85% 100%, 15% 100%)
       -webkit-clip-path $clip
+      background var(--bristle-color)
+      bottom 5%
       clip-path $clip
+      content ''
+      height 5%
+      left 50%
+      position absolute
+      transform translate(-50%, 0)
+      width 300%
+      z-index 2
 
   &__brush
-    width 100%
-    height 35%
-    position absolute
     bottom 0
+    height 35%
     left 0
     overflow hidden
+    position absolute
+    width 100%
 
   &__bristles
-    position absolute
-    left 49%
-    top 0
     height 100%
-    width 50%
+    left 49%
     overflow hidden
+    position absolute
+    top 0
+    width 50%
 
     &--left
       transform-origin left center
       transform rotateY(180deg) translate(-3%, 0)
 
-/**
-* There are three brush modes
-* 1. Indeterminate which will be walking (Pointy walk)
-* 2. Prior to life and sweeping which will look like a normal broom (Standard broom)
-* 3. When something is typed but not sweep (Pointy bounce)
-*/
+      .broom__bristles-wrap
+        animation-delay calc(var(--speed) * -0.5s)
 
-
-/**
-* Trick to the bristles is to create one and mirror it
-* Brush mode 2 is the default and doesn't rely on any extra moving parts.
-* Brush modes 1 & 3 rely on pseudo elements and adjustment of the border-radius
-*/
-.broom__bristles--left .broom-bristle__wrap
-  animation-delay -0.25s
-
-.broom-bristle
-  width 40%
-  background yellow
-  height 100%
-  position absolute
-  top 0
-  left 0
-  transition border-radius .1s ease, transform .1s ease
-  border-radius 0 80% 20% 100% / 0 50% 0% 150%
-  transform scaleX(1.15)
-  /**
-  * Brush mode 1 means the after pseudo element is visible and the bristles
-  * have a 0 bottom radius
-  */
-  &:after
-    content ''
+  &__bristles-wrap
+    animation-duration calc(var(--speed) * 1s)
+    animation-iteration-count infinite
+    animation-name waddle
+    animation-timing-function ease
+    height 100%
+    left 0
+    overflow hidden
     position absolute
-    background transparent
-    height 40%
+    top 0
+    transform-origin top left
     width 100%
-    bottom -2%
-    left 45%
-    border-radius 100%
-    box-shadow 0 -15px 0px 0px yellow inset
-    transition transform .15s ease
-    transform translate(0, 0) rotate(15deg)
-    z-index 2
 
-  &:before
-    content ''
+  &__bristle
+    background var(--bristle-color)
+    border-radius var(--bristle-radius)
+    height 100%
+    left 0
     position absolute
-    height 20%
-    width 50%
-    background transparent
-    box-shadow 0 -5px 0 0 yellow inset
-    bottom 12%
-    left 95%
-    border-radius 100%
-    transition transform .1s ease
-    transform scale(1) rotate(15deg)
+    top 0
+    transform scaleX(var(--bristle-scale))
+    transition border-radius calc(var(--transition) * 1s) ease, transform calc(var(--transition) * 1s) ease
+    width 40%
 
+    &:after
+      bottom -2%
+      border-radius 100%
+      box-shadow 0 -15px 0px 0px var(--bristle-color) inset
+      content ''
+      height 40%
+      left 45%
+      position absolute
+      transform translate(calc(var(--bristle-after-x) * 1%), 0) rotate(calc(var(--bristle-after-rotation) * 1deg))
+      transition transform calc(var(--transition) * 1s) ease
+      width 100%
+      z-index 2
 
+    &:before
+      border-radius 100%
+      bottom 12%
+      box-shadow 0 -5px 0 0 var(--bristle-color) inset
+      content ''
+      height 20%
+      left 95%
+      position absolute
+      transform scale(var(--bristle-before-scale)) rotate(calc(var(--bristle-before-rotation) * 1deg))
+      transition transform calc(var(--transition) * 1s) ease
+      width 50%
 
-
-.broom-bristle__wrap
-  position absolute
-  top 0
-  width 100%
-  height 100%
-  left 0
-  transform-origin top left
-  overflow hidden
-  animation-duration .5s
-  animation-iteration-count infinite
-  animation-timing-function ease
-  animation-name waddle-high
-
-  @keyframes waddle-high
-    0%, 100%
-      transform scaleY(1)
-    50%
-      transform scaleY(0.85) rotate(-5deg)
-
-  @keyframes waddle
-    0%, 100%
-      transform scaleY(1)
-    50%
-      transform scaleY(0.95) rotate(-3deg)
-
-
-
+// Container element for the broom
 .broom-container
-  --x 0
   display block
   height 250px
-  width 150px
-  transition transform .25s ease
   position relative
   transform translate(calc(var(--x, 0) * 1%), calc(var(--y, 0) * 1%))
+  transition transform calc(var(--transition) * 1s) ease
+  width 150px
   z-index 5
 
 
-.left
-  height 100vh
-  width 50vw
-  position absolute
-  left 0
-  top 0
-  z-index 3
-  opacity .15
+@keyframes waddle
+  0%, 100%
+    transform scaleY(1)
+  50%
+    transform scaleY(var(--scale-end)) rotate(calc(var(--rotation) * 1deg))
 
-  // &:hover
-  //   z-index 999
-  //   & ~ .broom-container
-  //     opacity .5
-  //     --x -200
-  //   opacity .8
+@keyframes shake
+  0%, 100%
+    transform translate(-50%, 0) rotate(calc(var(--rotation) * -1deg))
+  50%
+    transform translate(-50%, 0) rotate(calc(var(--rotation) * 1deg))
 
 @keyframes sweep
   0%, 5%, 95%, 100%
@@ -276,3 +211,19 @@ input:placeholder-shown ~ .broom-container
     transform rotate(-15deg)
 
 // TODO: Drop-filter hover positioning LEFT CENTER RIGHT refactor to CSS vars, one animation etc.
+
+// .left
+//   height 100vh
+//   width 50vw
+//   position absolute
+//   left 0
+//   top 0
+//   z-index 3
+//   opacity .15
+
+// &:hover
+//   z-index 999
+//   & ~ .broom-container
+//     opacity .5
+//     --x -200
+//   opacity .8
