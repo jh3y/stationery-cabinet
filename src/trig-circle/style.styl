@@ -1,0 +1,95 @@
+*
+*:after
+  box-sizing border-box
+
+:root
+  --bg #111
+  --primary #ccc
+  --size 280
+  --speed .75
+  --ball-size 25
+  --multiplier 4
+
+body
+  align-items center
+  background var(--bg)
+  display flex
+  justify-content center
+  min-height 100vh
+
+.circle
+  background var(--primary)
+  border-radius 100%
+  height calc(var(--size) * 1px)
+  position relative
+  width calc(var(--size) * 1px)
+
+.line
+  width 100%
+  height 2px
+  background var(--bg)
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%) rotate(calc(var(--n, 0) * (360 / 16) * 1deg))
+  animation reveal .5s calc(var(--o, 10) * 1s) ease both
+
+  @keyframes reveal
+    from
+      opacity 0
+
+  &:after
+    content ''
+    position absolute
+    bottom 0
+    left 0
+    height calc(var(--ball-size) * 1px)
+    width calc(var(--ball-size) * 1px)
+    border-radius 100%
+    background var(--bg)
+    transform translate(0%, 50%) translate(0, 0)
+    animation travel calc(var(--speed) * 1s) calc((var(--d) * (var(--speed) / var(--multiplier))) * 1s) infinite alternate ease-in-out
+
+    @keyframes travel
+      to
+        transform translate(0, 50%) translate(calc((var(--size) - var(--ball-size)) * 1px), 0)
+
+  &:nth-of-type(1)
+    --n 1
+    --d 4.5
+    --o 9
+
+  &:nth-of-type(2)
+    --n 2
+    --d 4
+    --o 5
+
+  &:nth-of-type(3)
+    --n 3
+    --d 3.5
+    --o 15
+
+  &:nth-of-type(4)
+    --n 4
+    --d 3
+    --o 3
+
+  &:nth-of-type(5)
+    --n 5
+    --d 2.5
+    --o 11
+
+  &:nth-of-type(6)
+    --n 6
+    --d 2
+    --o 7
+
+  &:nth-of-type(7)
+    --n 7
+    --d 1.5
+    --o 13
+
+  &:nth-of-type(8)
+    --n 8
+    --d 1
+    --o 1
