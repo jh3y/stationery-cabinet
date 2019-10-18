@@ -23,7 +23,7 @@ body
 * If the input is valid, make the broom sweep
 * But also hide the curved out bristles by rotating the whiskers back
 */
-.command:valid ~ .broom-container .broom
+.bounce:checked ~ .command:valid ~ .broom-container .broom
   --speed 0
   --sweep 1
   --bristle-radius $sweep-radius
@@ -31,6 +31,7 @@ body
   --bristle-after-rotation 45
   --bristle-before-scale 0
   --bristle-before-rotation 15
+  --bristle-scale 1
 
 .command:valid:not(:focus) ~ .broom-container .broom
   --sweep 0
@@ -40,7 +41,7 @@ body
 * As soon as we start tapping keys, let's up the pace and make the broom
 * pointy toed
 */
-.command:placeholder-shown ~ .broom-container .broom
+.bounce:checked ~ .command:placeholder-shown ~ .broom-container .broom
   --sweep 0
   --speed 1
   --rotation 2
@@ -52,7 +53,7 @@ body
   --bristle-before-scale 1
   --bristle-before-rotation 20
 
-.broom
+.bounce:checked ~ .broom-container .broom
   --bristle-radius $running-radius
   --bristle-scale 1.15
   --speed .5
@@ -61,6 +62,14 @@ body
   --bristle-after-x 0
   --bristle-after-rotation 15
   --bristle-before-scale 1
+  --bristle-before-rotation 20
+
+.broom
+  --bristle-radius $sweep-radius
+  --speed 0
+  --bristle-after-x -100
+  --bristle-after-rotation 15
+  --bristle-before-scale 0
   --bristle-before-rotation 20
   animation sweep calc(var(--sweep) * 1s) infinite ease
   height 100%
