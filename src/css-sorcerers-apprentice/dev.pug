@@ -1,4 +1,5 @@
-input(autofocus, pattern=".*sweep", id='controls', type='search', placeholder='Type to command')
+input.bounce(type='checkbox')
+input.command(autofocus, pattern=".*sweep", id='controls', type='search', placeholder='Type to command')
 label.left(for='controls')
 label.right(for='controls')
 label.broom-container(for='controls')
@@ -6,8 +7,8 @@ label.broom-container(for='controls')
     .broom__handle
     .broom__brush
       .broom__bristles
-        .broom-bristle__wrap
-          .broom-bristle
+        .broom__bristles-wrap
+          .broom__bristle
       .broom__bristles.broom__bristles--left
-        .broom-bristle__wrap
-          .broom-bristle
+        .broom__bristles-wrap
+          .broom__bristle
