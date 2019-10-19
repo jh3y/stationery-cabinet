@@ -56,7 +56,14 @@ input
 
   .broom__arm
     --arm-scale 0
-    // animation-name none
+    animation-name none
+    animation-duration 0s
+    animation-delay 0s
+    animation-duration calc(var(--speed) * var(--swing) * 1s)
+    animation-delay calc((var(--is-right) * (var(--speed) / 2)) * 1s)
+    animation-iteration-count infinite
+    animation-timing-function ease
+    animation-fill-mode none
 
   .broom__bristles-wrap
     animation-name none
@@ -83,6 +90,7 @@ input
   animation-name none
   .broom__arm
     --arm-angle 60
+    animation-name swing
 /**
 * This is the default state as the placeholder is shown.
 * As soon as we start tapping keys, let's up the pace and make the broom
@@ -107,7 +115,7 @@ input
   animation-name none
   .broom__arm
     --arm-scale 1
-    // animation-name swing
+    animation-name swing
   .broom__bristles-wrap
     animation-name waddle
 
@@ -221,7 +229,7 @@ input
   --swing 1
   height 100%
   transform-origin 50% 10%
-  transition transform calc(var(--transition) * 1s) ease
+  transition transform calc(var(--transition, .2) * 1s) ease
   width 100%
   z-index 2
   animation-name sweep
@@ -288,9 +296,9 @@ input
     width 50%
     height 35%
     top 40%
-    transition transform calc(var(--transition) * 1s)
+    transition transform calc(var(--transition, .2) * 1s)
     transform-origin top center
-    animation-name swing
+    animation-name none
     animation-duration calc(var(--speed) * var(--swing) * 1s)
     animation-delay calc((var(--is-right) * (var(--speed) / 2)) * 1s)
     animation-iteration-count infinite
@@ -402,7 +410,7 @@ input
     position absolute
     top 0
     transform scaleX(var(--bristle-scale))
-    transition border-radius calc(var(--transition) * 1s) ease, transform calc(var(--transition) * 1s) ease
+    transition border-radius calc(var(--transition, .2) * 1s) ease, transform calc(var(--transition, .2) * 1s) ease
     width 40%
 
     &:after
@@ -414,7 +422,7 @@ input
       left 45%
       position absolute
       transform translate(calc(var(--bristle-after-x) * 1%), 0) rotate(calc(var(--bristle-after-rotation) * 1deg))
-      transition transform calc(var(--transition) * 1s) ease
+      transition transform calc(var(--transition, .2) * 1s) ease
       width 100%
       z-index 2
 
@@ -427,7 +435,7 @@ input
       left 95%
       position absolute
       transform scale(var(--bristle-before-scale)) rotate(calc(var(--bristle-before-rotation) * 1deg))
-      transition transform calc(var(--transition) * 1s) ease
+      transition transform calc(var(--transition, .2) * 1s) ease
       width 50%
 
 // Container element for the broom
@@ -436,7 +444,7 @@ input
   height 250px
   position relative
   transform translate(calc(var(--x, 0) * 1%), calc(var(--y, 0) * 1%))
-  transition transform calc(var(--transition) * 1s) ease
+  transition transform calc(var(--transition, .2) * 1s) ease
   width 150px
   z-index 5
 
