@@ -1,10 +1,30 @@
-input.bounce(type='checkbox')
-input.command(autofocus, pattern=".*sweep", id='controls', type='search', placeholder='Type to command')
-label.left(for='controls')
-label.right(for='controls')
-label.broom-container(for='controls')
+input.flash(id='flash', type='checkbox')
+input.arms(id='arms', type='checkbox')
+input.bounce(id='bounce', type='checkbox')
+label.bounce-label(for='bounce')
+label.arms-label(for='arms')
+label.flash-label(for='flash')
+input.command(id='command', pattern=".*sweep", placeholder='Type to command')
+label.broom-container(for='command')
   .broom
     .broom__handle
+      .broom__handle-shade
+      .broom__arm.broom__arm--left
+        .broom__arm-bicep
+        .broom__arm-forearm
+          .broom__hand
+            .broom__finger
+            .broom__finger
+            .broom__finger
+            .broom__finger
+      .broom__arm.broom__arm--right
+        .broom__arm-bicep
+        .broom__arm-forearm
+          .broom__hand
+            .broom__finger
+            .broom__finger
+            .broom__finger
+            .broom__finger
     .broom__brush
       .broom__bristles
         .broom__bristles-wrap
@@ -12,3 +32,8 @@ label.broom-container(for='controls')
       .broom__bristles.broom__bristles--left
         .broom__bristles-wrap
           .broom__bristle
+label.instruction(for='flash') Tap
+label.instruction(for='arms') Tap again
+label.instruction(for='bounce') Again
+label.catch-all(for='command')
+label.instruction.tap(for='command') Tap & type sweep
