@@ -1,0 +1,475 @@
+*
+  box-sizing border-box
+  transition all .25s ease
+
+body
+  background-color #fafafa
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  flex-direction column
+
+input
+  font-size 2rem
+
+  &:in-range
+    border 2px solid green
+
+  &:out-of-range
+    border 5px solid red
+
+    ~ .wheel
+      transform scale(1.5)
+
+:root
+  --size 500
+  --truck-hue 320
+  --chrome-hue 58
+  --glass-hue 200
+  --indicator-hue 40
+  --tail-light-hue 10
+  --trim-width 2
+  --plastic-lightness 20
+  --grill-lightness 60
+  --chrome-lightness 80
+  --chrome-lightness-highlight 95
+
+@media(min-width 768px)
+  :root
+    --trim-width 4
+
+.truck
+  --plastic 'hsl(%s, 0%, %s)' % (var(--truck-hue) calc(var(--plastic-lightness) * 1%))
+  --grill 'hsl(%s, 0%, %s)' % (var(--truck-hue) calc(var(--grill-lightness) * 1%))
+  --chrome 'hsl(%s, 0%, %s)' % (var(--truck-hue) calc(var(--chrome-lightness) * 1%))
+  --chrome-highlight 'hsl(%s, 0%, %s)' % (var(--truck-hue) calc(var(--chrome-lightness-highlight) * 1%))
+  height calc(var(--size) * 1px)
+  position relative
+  width calc(var(--size) * 1px)
+
+  &__body
+    --multiplier 0
+    --multiplier .09
+    transform translate(0, calc((var(--size) * var(--multiplier)) * 1px))
+    animation body-rumble .1s infinite ease-in-out
+    position absolute
+    width 100%
+    z-index 2
+
+    @keyframes body-rumble
+      0%, 100%
+        transform translate(0, calc((var(--size) * var(--multiplier)) * 1px)) translate(0, 0)
+      50%
+        transform translate(0, calc((var(--size) * var(--multiplier)) * 1px)) translate(0, calc(var(--size) * .0015px))
+
+  &__front
+    border-radius 5% 5% 0 0 / 15% 15% 0 0
+    position absolute
+    top calc(var(--size) * 0.425px)
+    right 4%
+    height calc(var(--size) * 0.1px)
+    width calc(var(--size) * 0.295px)
+    background 'hsl(%s, 100%, 40%)' % (var(--truck-hue))
+    z-index 5
+
+  &__grill
+    // border-radius 5% 5% 0 0 / 20% 20% 0 0
+    height 85%
+    width 100%
+    --bg var(--grill)
+    --chrome-highlight 'hsl(%s, 0%, %s)' % (var(--truck-hue) calc((var(--grill-lightness) + 20) * 1%))
+    background linear-gradient(125deg, transparent, transparent 25%, var(--chrome-highlight) 25%, var(--chrome-highlight) 30%, transparent 30%, transparent 35%, var(--chrome-highlight) 35%, var(--chrome-highlight) 45%, transparent 45%), var(--bg)
+    position absolute
+    bottom 5%
+    left 0
+    overflow hidden
+
+  &__front-bumper
+    border-radius calc(var(--trim-width) * 1px)
+    position absolute
+    top 100%
+    width 116%
+    height 45%
+    background linear-gradient(125deg, var(--chrome), var(--chrome) 10%, var(--chrome-highlight) 10%, var(--chrome-highlight) 15%, var(--chrome) 15%, var(--chrome) 20%, var(--chrome-highlight) 20%, var(--chrome-highlight) 30%, var(--chrome) 30%)
+    left -6%
+
+    &:before
+      left 28%
+
+    &:after
+      left 57%
+
+
+  &__headlight
+    border-radius 10%
+    position absolute
+    height calc(var(--size) * 0.046px)
+    width calc(var(--size) * 0.046px)
+    background white
+    top 15%
+    width 15%
+
+    &:after
+      border-radius 10%
+      content ''
+      background 'hsl(%s, 100%, 50%)' % (var(--indicator-hue))
+      position absolute
+      height 30%
+      width 100%
+      top 110%
+
+    &--left
+      left 5%
+
+    &--right
+      right 5%
+
+  &__grill-vent
+    position absolute
+    bottom 15%
+    height 70%
+    width 54%
+    z-index 2
+    left 50%
+    transform translate(-50%, 0)
+    --black 'hsl(%s, 0%, %s)' % (var(--truck-hue) calc(var(--plastic-lightness) * 1%))
+    background repeating-linear-gradient(0deg, var(--black) 0, var(--black) 20%, transparent 20%, transparent 40%)
+
+  &__bonnet
+    background 'hsl(%s, 100%, 40%)' % (var(--truck-hue))
+    border-radius 2% 2% 0 0 / 100% 100% 0 0
+    width 160%
+    position absolute
+    top 0
+    right 0
+    height 15%
+
+    &:before
+      // aerial
+      position absolute
+      content ''
+      height 1200%
+      width 1%
+      background var(--chrome)
+      bottom 90%
+      left 10%
+      transform-origin bottom center
+      animation sway .2s infinite ease
+
+      @keyframes sway
+        0%, 100%
+          transform rotate(0deg)
+        50%
+          transform rotate(-15deg)
+
+  &__cab
+    --glass 'hsl(%s, 100%, 60%)' % (var(--glass-hue))
+    --glass-highlight 'hsl(%s, 100%, 90%)' % (var(--glass-hue))
+    height calc(var(--size) * 0.12px)
+    width calc(var(--size) * 0.425px)
+    position absolute
+    top calc(var(--size) * 0.32px)
+    left 28%
+    z-index 2
+
+  &__windshield
+    background 'hsl(%s, 100%, 50%)' % (var(--truck-hue))
+    border-radius 0 15% 0 0
+    position absolute
+    height 100%
+    width 60%
+    right 0
+    top 0
+    transform skewX(30deg)
+    z-index 2
+
+    &:after
+      content ''
+      position absolute
+      height 80%
+      width 85%
+      background linear-gradient(140deg, transparent 0, transparent 10%, var(--glass-highlight) 10%, var(--glass-highlight) 15%, transparent 15%, transparent 20%, var(--glass-highlight) 20%, var(--glass-highlight) 30%, transparent 30%), var(--glass)
+      top 10%
+      left 10%
+      border-radius 8% 15% 0 0
+
+  &__wing-mirror
+    background var(--chrome)
+    position absolute
+    top 55%
+    height 25%
+    width 10%
+    border-radius 25%
+
+    &--left
+      z-index 3
+      left 25%
+      border-radius 25% 5% 5% 25%
+
+      &:after
+        content ''
+        position absolute
+        top 50%
+        height 20%
+        width 40%
+        background var(--chrome)
+        left 95%
+
+    &--right
+      right -10%
+
+  &__side-step
+    position absolute
+    bottom -5%
+    left 28%
+    width 12%
+    height 10%
+    background var(--plastic)
+    border-radius calc(var(--trim-width) * 1px) calc(var(--trim-width) * 1px) 0 0
+
+  &__side-window-frame
+    background 'hsl(%s, 100%, 50%)' % (var(--truck-hue))
+    position absolute
+    height 100%
+    width 60%
+    left 0%
+    top 0
+    transform skew(-10deg)
+    border-radius 10% 0 0 0 / 25% 0 0 0
+
+    &:after
+      border-radius 10% 0 0 0 / 25% 0 0 0
+      content ''
+      position absolute
+      top 10%
+      left 10%
+      height 80%
+      width 45%
+      background var(--glass)
+
+    &:before
+      content ''
+      position absolute
+      top 10%
+      width 25%
+      background 'hsl(%s, 0%, %s)' % (var(--truck-hue) calc(var(--plastic-lightness) * 1%))
+      height 80%
+      left 50%
+
+  &__engine-block
+    position absolute
+    height calc(var(--size) * 0.075px)
+    width calc(var(--size) * 0.18px)
+    right calc(var(--size) * .2px)
+    top calc(var(--size) * .3525px)
+    animation rumble .1s infinite ease
+    z-index 3
+
+    @keyframes rumble
+      0%, 100%
+        transform translate(0, 0)
+      50%
+        transform translate(0, 5%)
+
+    &:before
+      content ''
+      position absolute
+      top 70%
+      left 25%
+      background linear-gradient(90deg, var(--grill) 0, var(--grill) 20%, var(--chrome) 20%, var(--chrome))
+      width 50%
+      height 30%
+
+    &-head
+      position absolute
+      top 0
+      width 100%
+      left 0
+      height 80%
+      background var(--grill)
+      border-radius 25% 25% 25% 25% / 50% 50% 50% 50%
+      overflow hidden
+
+    &-hole
+      position absolute
+      background var(--plastic)
+      border-radius 100%
+      top 20%
+      height 60%
+      width 20%
+      left 55%
+
+    &-front
+      position absolute
+      border-radius 25% 25% 25% 25% / 50% 50% 50% 50%
+      top 0
+      width 100%
+      background var(--chrome)
+      height 100%
+      left 20%
+
+      &:after
+      &:before
+        content ''
+        position absolute
+        background var(--plastic)
+        height 60%
+        top 20%
+        width 20%
+        border-radius 100%
+      &:before
+        left 5%
+      &:after
+        left 30%
+
+
+  &__side-body
+    border-radius 2% 0 0 0 / 10% 0 0 0
+    background 'hsl(%s, 100%, 50%)' % (var(--truck-hue))
+    height calc(var(--size) * 0.14px)
+    position absolute
+    left calc(var(--size) * 0.05px)
+    width calc(var(--size) * 0.9px)
+    top calc(var(--size) * 0.425px)
+    z-index 4
+    $clip = polygon(-10% -10%, 110% -10%, 110% 110%, 50% 80%, -10% 110%)
+    -webkit-clip-path $clip
+    clip-path $clip
+
+    &:after
+      // door handle
+      content ''
+      position absolute
+      top 15%
+      left 30%
+      background var(--chrome)
+      height 5%
+      width 5%
+      border-radius calc(var(--trim-width) * 1px)
+
+  &__rear-bumper
+    border-radius calc(var(--trim-width) * 1px)
+    position absolute
+    top 70%
+    height 35%
+    left 0%
+    background var(--chrome)
+    width 5%
+    transform translate(-50%, 0)
+
+  &__tail-light
+    position absolute
+    border-radius 0 25% 25% 0 / 0 20% 20% 0
+    --grey var(--chrome)
+    border calc(var(--trim-width) * 1px) solid var(--grey)
+    border-left 0
+    top 16%
+    height calc(var(--size) * 0.046px)
+    width calc(var(--size) * 0.023px)
+    background 'hsl(%s, 100%, 50%)' % (var(--tail-light-hue))
+    left 0%
+
+  &__wheel-arch
+    border-radius 15% 15% 0 0 / 100% 100% 0 0
+    --grey var(--chrome)
+    border calc(var(--trim-width) * 1px) solid var(--grey)
+    border-bottom 0
+    height 55%
+    width 20%
+    background 'hsl(%s, 0%, %s)' % (var(--truck-hue) calc(var(--plastic-lightness) * 1%))
+    position absolute
+    bottom 0
+
+    &--back
+      left 5%
+    &--front
+      left 45%
+
+  &__light-bar
+    height calc(var(--size) * 0.0075px)
+    width calc(var(--size) * 0.18px)
+    background var(--grill)
+    position absolute
+    top calc(var(--size) * .3px)
+    left calc(var(--size) * .45px)
+    border-radius calc(var(--trim-width) * 1px) calc(var(--trim-width) * 1px) 0 0
+    transform translate(0, 0)
+
+    &-light
+      height 350%
+      width 80%
+      background white
+      position absolute
+      top 50%
+      transform-origin center
+      left 50%
+      transform translate(-50%, -50%) scaleY(1)
+      border calc(var(--trim-width) * 1px) solid var(--grill)
+      border-radius calc(var(--trim-width) * 1px)
+
+    &:after
+    &:before
+      content ''
+      background var(--grill)
+      position absolute
+      top 50%
+      width 5%
+      height 250%
+
+    &:before
+      left 0
+    &:after
+      right 0
+
+  &__bars
+    position absolute
+    width calc(var(--size) * 0.2px)
+    height calc(var(--size) * 0.12px)
+    top calc(var(--size) * 0.325px)
+    left calc(var(--size) * .1px)
+
+  &__bar
+    position absolute
+    background var(--grill)
+    width 10%
+    height 100%
+    border-radius 50% / 10%
+    transform-origin bottom center
+
+    &--vertical
+      left 75%
+      top 0
+      transform rotate(10deg) scaleY(1)
+
+    &--horizontal
+      height 140%
+      left 0%
+      top 0
+      transform rotate(48deg) translate(0, -40%) scaleY(1)
+
+  &__wheel
+    height calc(var(--size) * .15px)
+    width calc(var(--size) * .15px)
+    border-radius 100%
+    background green
+    position absolute
+    bottom 0
+    left 11%
+
+    &--nsf
+      left 47%
+
+  &__chassis
+    background red
+    opacity .2
+    width 100%
+    height calc(var(--size) * .25px)
+    position absolute
+    top calc(var(--size) * .5px)
+
+img
+  opacity .1
+  transform rotateY(180deg)
+  width calc(var(--size) * 1px)
+  position absolute
