@@ -23,7 +23,7 @@ input
       transform scale(1.5)
 
 :root
-  --size 500
+  --size 800
   --truck-hue 320
   --chrome-hue 58
   --glass-hue 200
@@ -47,10 +47,11 @@ input
   height calc(var(--size) * 1px)
   position relative
   width calc(var(--size) * 1px)
+  transform translate(0, -24%)
 
   &__body
     --multiplier 0
-    --multiplier .09
+    --multiplier .39
     transform translate(0, calc((var(--size) * var(--multiplier)) * 1px))
     animation body-rumble .1s infinite ease-in-out
     position absolute
@@ -325,6 +326,11 @@ input
 
 
   &__side-body
+    --wheel-arch-rear-height 40
+    --wheel-arch-front-height 55
+    --wheel-arch-width 18
+    --wheel-arch-rear-left 6
+    --wheel-arch-front-left 45
     border-radius 2% 0 0 0 / 10% 0 0 0
     background 'hsl(%s, 100%, 50%)' % (var(--truck-hue))
     height calc(var(--size) * 0.14px)
@@ -333,9 +339,17 @@ input
     width calc(var(--size) * 0.9px)
     top calc(var(--size) * 0.425px)
     z-index 4
-    $clip = polygon(-10% -10%, 110% -10%, 110% 110%, 50% 80%, -10% 110%)
-    -webkit-clip-path $clip
-    clip-path $clip
+    // $clip = polygon(-10% 110%, calc(var(--trim-width) * 1px + 5%) 110%, calc(var(--trim-width) * 1px + 6%) 50%, 50% 50%, 110% 110%, 110% -10%, -10% -10%)
+    --trim-offset calc(var(--trim-width) * 1px)
+    --rear-wheel-left calc((var(--trim-offset)) + (var(--wheel-arch-rear-left) * 1%))
+    --rear-wheel-top calc((var(--trim-offset)) + (100 - var(--wheel-arch-rear-height)) * 1%)
+    --rear-wheel-right calc(var(--rear-wheel-left) + ((var(--wheel-arch-width) * 1%) - var(--trim-offset) * 2))
+    --front-wheel-left calc((var(--trim-offset)) + (var(--wheel-arch-front-left) * 1%))
+    --front-wheel-top calc((var(--trim-offset)) + (100 - var(--wheel-arch-front-height)) * 1%)
+    --front-wheel-right calc(var(--front-wheel-left) + ((var(--wheel-arch-width) * 1%) - var(--trim-offset) * 2))
+    --clip polygon(-10% 110%, var(--rear-wheel-left) 110%, var(--rear-wheel-left) var(--rear-wheel-top), var(--rear-wheel-right) var(--rear-wheel-top), var(--rear-wheel-right) 110%, var(--front-wheel-left) 110%, var(--front-wheel-left) var(--front-wheel-top), var(--front-wheel-right) var(--front-wheel-top), var(--front-wheel-right) 110%, 110% 110%, 110% -10%, -10% -10%)
+    -webkit-clip-path var(--clip)
+    clip-path var(--clip)
 
     &:after
       // door handle
@@ -371,20 +385,20 @@ input
     left 0%
 
   &__wheel-arch
-    border-radius 15% 15% 0 0 / 100% 100% 0 0
-    --grey var(--chrome)
-    border calc(var(--trim-width) * 1px) solid var(--grey)
+    background var(--chrome)
     border-bottom 0
-    height 55%
-    width 20%
-    background 'hsl(%s, 0%, %s)' % (var(--truck-hue) calc(var(--plastic-lightness) * 1%))
+    height calc(var(--wheel-arch-height) * 1%)
+    width calc(var(--wheel-arch-width) * 1%)
     position absolute
     bottom 0
+    left calc(var(--wheel-arch-left) * 1%)
 
     &--back
-      left 5%
+      --wheel-arch-height var(--wheel-arch-rear-height)
+      --wheel-arch-left var(--wheel-arch-rear-left)
     &--front
-      left 45%
+      --wheel-arch-height var(--wheel-arch-front-height)
+      --wheel-arch-left var(--wheel-arch-front-left)
 
   &__light-bar
     height calc(var(--size) * 0.0075px)
@@ -449,24 +463,71 @@ input
       transform rotate(48deg) translate(0, -40%) scaleY(1)
 
   &__wheel
-    height calc(var(--size) * .15px)
-    width calc(var(--size) * .15px)
-    border-radius 100%
-    background green
+    --wheel-height calc(var(--size) * .12px)
+    --wheel-width calc(var(--size) * .14px)
+    height var(--wheel-height)
+    width var(--wheel-width)
+    border-radius 50% 35% 35% 50% / 50% 50% 50% 50%
+    background #111
     position absolute
     bottom 0
-    left 11%
+    left 12.5%
 
     &--nsf
-      left 47%
+      left 47.5%
+
+    &-face
+      height 100%
+      width var(--wheel-height)
+      background var(--plastic)
+      border-radius 100%
+      position absolute
+      left 0
+      top 0
+
+    &-hub
+      --hub-size calc(var(--size) * .07px)
+      box-shadow calc(var(--size) * 0.018px) 0 0 0 var(--grill) inset
+      border calc(var(--trim-width) * 1px) solid var(--chrome)
+      height var(--hub-size)
+      width var(--hub-size)
+      border-radius 100%
+      position absolute
+      top 50%
+      left 50%
+      transform translate(-50%, -50%)
+      overflow hidden
+
+    &-alloy
+      position absolute
+      height 100%
+      width 100%
+      position absolute
+      top 0
+      left 15%
+      animation spin .5s infinite linear
+      border-radius 100%
+      overflow hidden
+
+      @keyframes spin
+        to
+          transform rotate(360deg)
+
+    &-spoke
+      height 50%
+      width 25%
+      position absolute
+      top 50%
+      left 50%
+      background var(--chrome)
+      transform-origin top center
+      transform translate(-50%, 0) rotate(calc(360 / 5 * var(--s) * 1deg))
 
   &__chassis
-    background red
-    opacity .2
+    background rgba(0, 0, 0, 0.5)
     width 100%
-    height calc(var(--size) * .25px)
     position absolute
-    top calc(var(--size) * .5px)
+    bottom 0
 
 img
   opacity .1
