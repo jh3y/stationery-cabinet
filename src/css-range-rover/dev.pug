@@ -1,5 +1,14 @@
+mixin wheel(pos)
+  .truck__wheel(class=`truck__wheel--${pos}`)
+    .truck__wheel-face
+      .truck__wheel-hub
+        .truck__wheel-alloy
+          - let s = 0
+          while s < 5
+            .truck__wheel-spoke(style=`--s: ${s++}`)
+
 img(src='truck.png')
-.truck
+.truck(style=`--truck-hue: ${Math.floor(Math.random() * 360)}`)
   .truck__body
     .truck__front
       .truck__grill
@@ -30,7 +39,7 @@ img(src='truck.png')
       .truck__bar.truck__bar--vertical
       .truck__bar.truck__bar--horizontal
   .truck__chassis
-    .truck__wheel.truck__wheel--nsf
-    .truck__wheel.truck__wheel--nsr
-    .truck__wheel.truck__wheel--osf
-    .truck__wheel.truck__wheel--osr
+    +wheel('nsf')
+    +wheel('nsr')
+    +wheel('osf')
+    +wheel('osr')
