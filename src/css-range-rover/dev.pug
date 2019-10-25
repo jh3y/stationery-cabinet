@@ -1,45 +1,57 @@
 mixin wheel(pos)
-  .truck__wheel(class=`truck__wheel--${pos}`)
-    .truck__wheel-face
-      .truck__wheel-hub
-        .truck__wheel-alloy
-          - let s = 0
-          while s < 5
-            .truck__wheel-spoke(style=`--s: ${s++}`)
+  .truck__wheel-container(class=`truck__wheel-container--${pos}`)
+    .truck__wheel
+      .truck__coilover
+      .truck__wheel-face
+        .truck__wheel-hub
+          .truck__wheel-alloy
+            - let s = 0
+            while s < 5
+              .truck__wheel-spoke(style=`--s: ${s++}`)
+input#terrain(type='number', min='0', max='5', value='0')
+label(for='terrain') Level of Terrain
 
-img(src='truck.png')
 .truck(style=`--truck-hue: ${Math.floor(Math.random() * 360)}`)
-  .truck__body
-    .truck__front
-      .truck__grill
-        .truck__headlight.truck__headlight--left
-        .truck__grill-vent
-        .truck__headlight.truck__headlight--right
-      .truck__front-bumper
-      .truck__bonnet
-    .truck__engine-block
-      .truck__engine-block-head
-        .truck__engine-block-front
-          .truck__engine-block-hole
-      .truck__engine-block-base
-    .truck__cab
-      .truck__windshield
-      .truck__side-window-frame
-      .truck__wing-mirror.truck__wing-mirror--right
-      .truck__wing-mirror.truck__wing-mirror--left
-    .truck__light-bar
-      .truck__light-bar-light
-    .truck__side-body
-      .truck__rear-bumper
-      .truck__tail-light
-      .truck__wheel-arch.truck__wheel-arch--front
-      .truck__wheel-arch.truck__wheel-arch--back
-      .truck__side-step
-    .truck__bars
-      .truck__bar.truck__bar--vertical
-      .truck__bar.truck__bar--horizontal
+  .truck__body-wrapper
+    .truck__body
+      .truck__front
+        .truck__grill
+          .truck__headlight.truck__headlight--left
+          .truck__grill-vent
+          .truck__headlight.truck__headlight--right
+        .truck__front-bumper
+        .truck__bonnet
+      .truck__engine-block-wrapper
+        .truck__engine-block
+          .truck__engine-block-head
+            .truck__engine-block-front
+              .truck__engine-block-hole
+          .truck__engine-block-base
+      .truck__cab
+        .truck__windshield
+        .truck__side-window-frame
+        .truck__wing-mirror.truck__wing-mirror--right
+        .truck__wing-mirror.truck__wing-mirror--left
+      .truck__light-bar
+        .truck__light-bar-light
+      .truck__side-body
+        .truck__rear-bumper
+        .truck__tail-light
+        .truck__wheel-arch.truck__wheel-arch--front
+        .truck__wheel-arch.truck__wheel-arch--back
+        .truck__side-step
+      .truck__bars
+        .truck__bar.truck__bar--vertical
+        .truck__bar.truck__bar--horizontal
   .truck__chassis
-    +wheel('nsf')
-    +wheel('nsr')
     +wheel('osf')
     +wheel('osr')
+    .truck__underbody
+    .truck__chassis-beam.truck__chassis-beam--horizontal.truck__chassis-beam--horizontal-left
+      .truck__chassis-beam.truck__chassis-beam--vertical.truck__chassis-beam--vertical-left
+      .truck__chassis-beam.truck__chassis-beam--vertical.truck__chassis-beam--vertical-right
+    .truck__chassis-beam.truck__chassis-beam--horizontal.truck__chassis-beam--horizontal-right
+      .truck__chassis-beam.truck__chassis-beam--vertical.truck__chassis-beam--vertical-left
+      .truck__chassis-beam.truck__chassis-beam--vertical.truck__chassis-beam--vertical-right
+    +wheel('nsf')
+    +wheel('nsr')
