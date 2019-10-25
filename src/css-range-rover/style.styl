@@ -1,29 +1,61 @@
+@import url('https://fonts.googleapis.com/css?family=Fredoka+One&display=swap')
 *
   box-sizing border-box
   transition all .25s ease
 
 body
-  background-color #fafafa
+  background-color var(--bg)
   min-height 100vh
   display flex
   align-items center
   justify-content center
   flex-direction column
+  font-family 'Fredoka One', cursive
+  overflow visible
+
+label
+  position absolute
+  top calc(35% + var(--size) * .5px - 46px)
+  font-size 30px
 
 input
   font-size 2rem
+  position absolute
+  width 120px
+  padding 10px
+  top calc(35% + var(--size) * .5px)
+  z-index 2
 
   &:in-range
-    border 2px solid green
+    border 5px solid hsl(100, 100%, 50%)
 
   &:out-of-range
-    border 5px solid red
+    border 5px solid hsl(15, 100%, 50%)
+    animation shake .1s infinite alternate
 
-    ~ .wheel
-      transform scale(1.5)
+@keyframes shake
+  0%, 100%
+    transform translate(0, 0) rotate(0deg)
+  25%
+    transform translate(-1%, 3%) rotate(-2deg)
+  50%
+    transform translate(1%, 2%) rotate(2deg)
+  75%
+    transform translate(1%, -2%) rotate(-1deg)
+
+@keyframes shake-truck
+  0%, 100%
+    transform translate(0, -50%) rotate(0deg)
+  25%
+    transform translate(0, -50%) rotate(-2deg)
+  50%
+    transform translate(0, -50%) rotate(2deg)
+  75%
+    transform translate(0, -50%) rotate(-1deg)
 
 :root
-  --size 800
+  --bg #eee
+  --size 300
   --truck-hue 320
   --chrome-hue 58
   --glass-hue 200
@@ -31,38 +63,83 @@ input
   --tail-light-hue 10
   --trim-width 2
   --plastic-lightness 20
+  --coilover-lightness 15
   --grill-lightness 60
   --chrome-lightness 80
   --chrome-lightness-highlight 95
+  --chassis-lightness 20
 
 @media(min-width 768px)
   :root
     --trim-width 4
+    --size 600
+
+@media(max-height 600px)
+  :root
+    --trim-width 2
+    --size 400
+
+/**
+ * Things that need to move when out of range
+ * 1. Light bar appears
+ * 2. Wheels scale
+ * 3. Suspension scales
+ * 4. Truck body rises
+ * 5. Engine block pops out
+*/
+input:out-of-range ~ .truck
+  --elevated 1
+  .truck__body-wrapper
+    --multiplier 0.18
+  .truck__engine-block-wrapper
+    --engine-rise 0
+  .truck__light-bar
+    --light-bar-scale 1
+  .truck__wheel-container
+    --wheel-scale 2
+  .truck__underbody
+    --multiplier .26
+
 
 .truck
+  --coilover 'hsl(%s, 100%, %s)' % (var(--truck-hue) calc(var(--coilover-lightness) * 1%))
+  --chassis 'hsl(%s, 100%, %s)' % (var(--truck-hue) calc(var(--chassis-lightness) * 1%))
   --plastic 'hsl(%s, 0%, %s)' % (var(--truck-hue) calc(var(--plastic-lightness) * 1%))
   --grill 'hsl(%s, 0%, %s)' % (var(--truck-hue) calc(var(--grill-lightness) * 1%))
   --chrome 'hsl(%s, 0%, %s)' % (var(--truck-hue) calc(var(--chrome-lightness) * 1%))
   --chrome-highlight 'hsl(%s, 0%, %s)' % (var(--truck-hue) calc(var(--chrome-lightness-highlight) * 1%))
+  --wheel-height calc(var(--size) * .12)
+  --wheel-width calc(var(--size) * .14)
   height calc(var(--size) * 1px)
   position relative
   width calc(var(--size) * 1px)
-  transform translate(0, -24%)
+  transform translate(0, -50%)
+  transform-style preserve-3d
+  animation upsydownsy 5s infinite linear
 
-  &__body
+  @keyframes upsydownsy
+    0%, 100%
+      transform translate(0, -50%)
+    50%
+      transform translate(0, -52%)
+
+  &__body-wrapper
     --multiplier 0
     --multiplier .39
-    transform translate(0, calc((var(--size) * var(--multiplier)) * 1px))
-    animation body-rumble .1s infinite ease-in-out
+    // --multiplier 0.18
     position absolute
+    transform translate(0, calc((var(--size) * var(--multiplier)) * 1px))
     width 100%
-    z-index 2
+    z-index 3
+
+  &__body
+    animation body-rumble .1s infinite ease-in-out
 
     @keyframes body-rumble
       0%, 100%
-        transform translate(0, calc((var(--size) * var(--multiplier)) * 1px)) translate(0, 0)
+        transform translate3d(0, 0)
       50%
-        transform translate(0, calc((var(--size) * var(--multiplier)) * 1px)) translate(0, calc(var(--size) * .0015px))
+        transform translate(0, calc(var(--size) * .0015px))
 
   &__front
     border-radius 5% 5% 0 0 / 15% 15% 0 0
@@ -258,14 +335,20 @@ input
       height 80%
       left 50%
 
-  &__engine-block
+
+  &__engine-block-wrapper
     position absolute
     height calc(var(--size) * 0.075px)
     width calc(var(--size) * 0.18px)
     right calc(var(--size) * .2px)
     top calc(var(--size) * .3525px)
-    animation rumble .1s infinite ease
+    transform translate(0, calc(var(--engine-rise, 100) * 1%))
     z-index 3
+
+  &__engine-block
+    height 100%
+    width 100%
+    animation rumble .1s infinite ease
 
     @keyframes rumble
       0%, 100%
@@ -408,7 +491,7 @@ input
     top calc(var(--size) * .3px)
     left calc(var(--size) * .45px)
     border-radius calc(var(--trim-width) * 1px) calc(var(--trim-width) * 1px) 0 0
-    transform translate(0, 0)
+    transform translate(0, 500%) translate(0, calc(var(--light-bar-scale, 0) * -500%))
 
     &-light
       height 350%
@@ -418,9 +501,9 @@ input
       top 50%
       transform-origin center
       left 50%
-      transform translate(-50%, -50%) scaleY(1)
       border calc(var(--trim-width) * 1px) solid var(--grill)
       border-radius calc(var(--trim-width) * 1px)
+      transform translate(-50%, -50%)
 
     &:after
     &:before
@@ -463,22 +546,18 @@ input
       transform rotate(48deg) translate(0, -40%) scaleY(1)
 
   &__wheel
-    --wheel-height calc(var(--size) * .12px)
-    --wheel-width calc(var(--size) * .14px)
-    height var(--wheel-height)
-    width var(--wheel-width)
     border-radius 50% 35% 35% 50% / 50% 50% 50% 50%
     background #111
     position absolute
-    bottom 0
-    left 12.5%
-
-    &--nsf
-      left 47.5%
+    transform-style preserve-3d
+    transform-origin bottom center
+    transform scale(var(--wheel-scale, 1))
+    height 100%
+    width 100%
 
     &-face
       height 100%
-      width var(--wheel-height)
+      width calc(var(--wheel-height) * 1px)
       background var(--plastic)
       border-radius 100%
       position absolute
@@ -489,6 +568,7 @@ input
       --hub-size calc(var(--size) * .07px)
       box-shadow calc(var(--size) * 0.018px) 0 0 0 var(--grill) inset
       border calc(var(--trim-width) * 1px) solid var(--chrome)
+      background var(--plastic)
       height var(--hub-size)
       width var(--hub-size)
       border-radius 100%
@@ -523,14 +603,101 @@ input
       transform-origin top center
       transform translate(-50%, 0) rotate(calc(360 / 5 * var(--s) * 1deg))
 
+
+  &__wheel-container
+    height calc(var(--wheel-height) * 1px)
+    width calc(var(--wheel-width) * 1px)
+    position absolute
+    left 12.5%
+    bottom 0
+
+    &--nsf
+      left 47.5%
+      z-index calc(var(--elevated, 0) * 2)
+
+
+    &--osf
+    &--osr
+      left 44%
+      filter brightness(0.25)
+      --plastic #000
+      transform translate3d(0, 0, -1px)
+      .truck__coilover
+        transform translate3d(-50%, 0, 0)
+        z-index 2
+
+    &--osf
+      left 79%
+
+  &__coilover
+    width 10%
+    height 100%
+    position absolute
+    bottom 50%
+    left 50%
+    transform translate3d(-50%, 0, -1px)
+    background var(--grill)
+
+    &:after
+      // coils
+      content ''
+      background repeating-linear-gradient(20deg, transparent, transparent 6%, var(--coilover) 6%, var(--coilover) 11%, transparent 11%)
+      width 150%
+      height 100%
+      position absolute
+      top 50%
+      left 50%
+      transform translate(-50%, -50%)
+
   &__chassis
     background rgba(0, 0, 0, 0.5)
     width 100%
     position absolute
     bottom 0
 
-img
-  opacity .1
-  transform rotateY(180deg)
-  width calc(var(--size) * 1px)
-  position absolute
+  &__underbody
+    --multiplier .05
+    background #000
+    width 80%
+    left 50%
+    position absolute
+    height calc(var(--size) * 0.1px)
+    bottom calc(var(--size) * var(--multiplier, 1) * 1px)
+    transform translate3d(-50%, 0, -1px)
+
+  &__chassis-beam
+    position absolute
+    bottom 50%
+    background var(--chassis)
+    // filter brightness(0.25)
+    // z-index 999
+
+    &--vertical
+      position absolute
+      width 5%
+      height calc(var(--wheel-height) * 0.5px)
+      bottom 0
+      transform scale(calc(var(--elevated) + 1))
+      transform-origin bottom center
+
+    &--vertical-left
+      left 35%
+    &--vertical-right
+      left 65%
+
+    &--horizontal
+      // filter brightness(0.1)
+      transform translate3d(0, 50%, -1px)
+      width calc(var(--wheel-width) * 2.4px)
+      height calc(var(--wheel-height) * .15px)
+      bottom calc(var(--wheel-width) * ((var(--elevated, 0) + 1) / 2) * 1px)
+      transform translate3d(0, 100%, -1px) scaleY(calc(var(--elevated, 0) + 1))
+      filter brightness(var(--elevated, 0))
+
+    &--horizontal-left
+      left calc(12.5% + (var(--wheel-width) * 0.5px))
+
+    &--horizontal-right
+      left calc(47.5% + (var(--wheel-width) * 0.5px))
+
+
