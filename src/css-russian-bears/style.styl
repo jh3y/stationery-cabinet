@@ -1,0 +1,208 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  transform-style preserve-3d
+
+:root
+  --speed .25
+  --scale-step 6
+  --base-height 200
+  --base-width 100
+  --slide-distance 120
+  --pop-height 50
+  --base-slide calc(var(--base-width) * 1)
+
+.bears
+  width calc(var(--base-width) * 2px)
+  height calc(var(--base-height) * 1px)
+  display flex
+  align-items flex-end
+  justify-content center
+  border-bottom 2px solid black
+
+.bear
+  --height calc((var(--base-height) * ((100 - (var(--bear-index) + 1) * var(--scale-step)) / 100)))
+  --width calc((var(--base-width) * ((100 - (var(--bear-index) + 1) * var(--scale-step)) / 100)))
+  --dummy-height calc((var(--base-height) * ((100 - (var(--bear-index) + 2) * var(--scale-step)) / 100)))
+  --dummy-width calc((var(--base-width) * ((100 - (var(--bear-index) + 2) * var(--scale-step)) / 100)))
+  height calc(var(--height) * 1px)
+  width calc(var(--width) * 1px)
+  position absolute
+  display none
+  transition transform .25s ease
+  transform-origin bottom center
+  z-index calc(var(--bear-count) - var(--bear-index))
+
+  /**
+   * The dummy requires no z-indexing
+  */
+  &--dummy
+    left 50%
+    display block
+    bottom 0
+    transform translate(-50%, 0) translate(0, 0)
+    width 100%
+    height 100%
+    z-index auto
+
+    &--half
+      position absolute
+      bottom 0
+      left 50%
+      transform translate(-50%, calc(var(--translation) * 1%))
+      height calc(var(--dummy-height) * .5px)
+      width calc(var(--dummy-width) * 1px)
+      transform-origin bottom center
+      z-index 2
+
+    &--top
+      --translation -100
+      background hsl(12, 100%, 20%)
+
+    &--bottom
+      --translation 0
+      background brown
+
+  /**
+   * Bear is actually used as a container
+   * We use two half elements to mimic top and bottom
+  */
+  .bear__half
+    position absolute
+    background brown
+    left 50%
+    right 0
+    top 50%
+    height 50%
+    width 100%
+    transform translate(-50%, calc(var(--translation) * 1%))
+
+    &--top
+      --translation -100
+      background hsl(12, 100%, 20%)
+
+    &--bottom
+      --translation 0
+
+
+input
+  position absolute
+  top 0
+  right 0
+  bottom 0
+  left 0
+  height 100vh
+  width 100vw
+  display none
+  -webkit-appearance none
+  transform translate3d(0, 0, 1px)
+  z-index calc(var(--bear-count) - var(--bear-index))
+  opacity 0
+
+
+/**
+ * A lot needs to happen when we check the box
+ * 1. Disable clicking til animation finished
+ * 2. Move the parent bear
+ * 3. Reveal the baby bear
+ * 4. Move the baby bear
+ * 5. Show the real baby bear
+ * 6. Show the new input
+ * 7. Hide the dummy baby bear
+ * 8. Fade out the parent bear
+*/
+input:checked
+  /**
+   * Quickest way to hide this input? Display none it.
+   * Or, if browsers aren't happy, slide it off canvas.
+   * When we are checked, is there a way to slide the last opened a little further left?
+   * Maybe a duplicate track?
+  */
+  animation disappear 0s calc(var(--speed) * 5s) forwards
+  // display none
+  /**
+   * As soon as the input is checked, chain animations in forwards fill
+   * for the container bear. This means scale up, slide left, open up
+   * Reveal inner bear.
+  */
+  + .bear
+    animation slideLeft calc(var(--speed) * 1s) forwards,
+              slideOut calc(var(--speed) * 1s) calc(var(--speed) * 6s) forwards
+    // ,
+              // disappear 1s calc(var(--speed) * 5s) forwards
+
+    .bear__half--top
+      transform-origin bottom left
+      animation open calc(var(--speed) * 1s) calc(var(--speed) * 1s) forwards
+
+    // Once the top has opened, move the dummy up and out and into the spot where it should be
+
+    .bear--dummy
+      color blue
+      animation popOut calc(var(--speed) * 1s) calc(var(--speed) * 2s) forwards,
+                slideRight calc(var(--speed) * 1s) calc(var(--speed) * 3s) forwards,
+                popDown calc(var(--speed) * 1s) calc(var(--speed) * 4s) forwards,
+                disappear 0s calc(var(--speed) * 5s) forwards
+
+    // Catches the last bear instance where there isn't an input
+    + .bear
+      display block
+      animation appear 0s calc(var(--speed) * 5s) both
+
+    + input
+      display block
+      animation appear 0s calc(var(--speed) * 5s) both
+
+      &:checked
+        animation disappear 0s calc(var(--speed) * 5s) forwards
+
+      &:checked + .bear
+        animation slideLeft calc(var(--speed) * 1s) forwards,
+                  slideOut calc(var(--speed) * 1s) calc(var(--speed) * 6s) forwards
+      & + .bear
+        display block
+        animation appear 0s calc(var(--speed) * 5s) both
+
+@keyframes disappear
+  to
+    transform scale(0)
+
+@keyframes appear
+  from
+    transform scale(0)
+
+@keyframes slideLeft
+  to
+    transform translate(calc((var(--base-slide) * -1px) + var(--slide-distance) * -1%), 0)
+
+@keyframes slideOut
+  from
+    transform translate(calc((var(--base-slide) * -1px) + var(--slide-distance) * -1%), 0)
+  to
+    opacity 0
+    transform translate(calc((var(--base-slide) * -1px) + var(--slide-distance) * -2%), 0)
+
+@keyframes open
+  to
+    transform translate(-50%, calc(var(--translation) * 1%)) rotate(-180deg)
+
+@keyframes popOut
+  to
+    transform translate(-50%, calc(var(--pop-height) * -1%)) translate(0, 0)
+
+@keyframes slideRight
+  from
+    transform translate(-50%, calc(var(--pop-height) * -1%)) translate(0, 0)
+  to
+    transform translate(-50%, calc(var(--pop-height) * -1%)) translate(calc((var(--base-slide) * 1px) + var(--slide-distance) * 1%), 0)
+
+@keyframes popDown
+  from
+    transform translate(-50%, calc(var(--pop-height) * -1%)) translate(calc((var(--base-slide) * 1px) + var(--slide-distance) * 1%), 0)
+  to
+    transform translate(-50%, calc(var(--pop-height) * -1%)) translate(calc((var(--base-slide) * 1px) + var(--slide-distance) * 1%), calc(var(--pop-height) * 1%))
