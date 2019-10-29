@@ -1,0 +1,13 @@
+- const bears = 10
+.bears(style=`--bear-count: ${bears}`)
+  - let b = 0
+  while b < bears
+    - if (b !== (bears - 1))
+      input(style=`--bear-index: ${b}; ${b === 0 ? 'display: block;' : ''}`, type='checkbox')
+    .bear(style=`--bear-index: ${b}; ${b === 0 ? 'display: block;' : ''}`)
+      .bear.bear--dummy
+        .bear--dummy--top.bear--dummy--half
+        .bear--dummy--bottom.bear--dummy--half
+      .bear__half.bear__half--top
+      .bear__half.bear__half--bottom
+    - b++
