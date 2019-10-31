@@ -1,0 +1,19 @@
+- const randomInRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+- const hue = randomInRange(0, 360)
+.cauldron(style=`--potion-hue: ${hue}`)
+  .cauldron__opening
+    - let b = 0
+    while b < 25
+      - const speed = randomInRange(5, 10)
+      - const scale = randomInRange(50, 150) / 100
+      - const delay = randomInRange(0, 10)
+      - const x = randomInRange(25, 75)
+      .cauldron__bubble(style=`--delay: ${delay}; --scale: ${scale}; --speed: ${speed}; --x: ${x}`)
+      - b++
+  .cauldron__handle.cauldron__handle--left
+  .cauldron__handle.cauldron__handle--right
+  .cauldron__foot.cauldron__foot--left
+  .cauldron__foot.cauldron__foot--right
+  .cauldron__eye.cauldron__eye--left
+  .cauldron__eye.cauldron__eye--right
+  .cauldron__mouth
