@@ -1,0 +1,8 @@
+- const randomInRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+- const hues = [randomInRange(0, 120), randomInRange(120, 240), randomInRange(240, 360)]
+.container(style=`--hue-1: ${hues[0]}; --hue-2: ${hues[1]}; --hue-3: ${hues[2]}`)
+  .star
+    - let s = 0
+    while s < 6
+      .star__segment(style=`--hue: ${hues[s % 3]}; --index: ${s}`)
+      - s++

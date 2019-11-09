@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css?family=Exo:800&display=swap')
+// <link href="https://fonts.googleapis.com/css?family=Exo:800&display=swap" rel="stylesheet">
+
+:root
+  --speed 1
+  --delay 0.5
+  --font-size 24
+
+/**
+ * Jump and translates around a bit
+*/
+.glitch--0
+  animation glitch--0 4s infinite steps(1)
+  text-transform uppercase
+
+  [data-char='f']
+  [data-char='i']
+  [data-char='o']
+  [data-char='e']
+    --x-1 50
+    --y-1 50
+    animation jump-0 calc(var(--speed) * 1s) infinite steps(1)
+
+  [data-char='o']
+    --x-2 -20
+    --y-2 -25
+    --scale-1 1.3
+    --scale-2 0.75
+    --speed 2
+
+  [data-char='f']
+  [data-char='i']
+    --scale-1 1.3
+    --scale-2 0.75
+    --speed 1.25
+    --x-2 15
+    --y-2 -40
+
+  [data-char='e']
+    --scale-1 0.5
+    --scale-2 0.5
+    --speed 10
+    --x-1 0
+    --x-2 0
+    --y-1 20
+    --y-2 10
+
+@keyframes glitch--0
+  0%, 50%, 58%
+    transform translate(0, 0) scale(1)
+  52%
+    transform translate(-25%, 10%) scale(0.85)
+  56%
+    transform translate(5%, -20%) scale(1.25)
+
+@keyframes jump-0
+  0%, 50%, 60%
+    transform translate(0, 0) scale(1)
+  52%
+    transform translate(calc(var(--x-1) * 1%), calc(var(--y-1) * 1%)) scale(var(--scale-1))
+  54%
+    transform translate(calc(var(--x-2) * 1%), calc(var(--y-2) * 1%)) scale(var(--scale-2))
+
+/**
+ * Slide sections of letters about
+*/
+.glitch--1
+  --shift 5
+  animation glitch--1 4s infinite steps(1)
+  text-transform uppercase
+
+  [data-char='G']
+  [data-char='l']
+  [data-char='t']
+  [data-char='h']
+    position relative
+    &:after
+    &:before
+      content attr(data-char)
+      position absolute
+      top 0%
+      left 0%
+      height 100%
+      width 100%
+      color white
+      -webkit-clip-path var(--clip)
+      clip-path var(--clip)
+    &:after
+      --clip inset(0 0 calc(var(--split) * 1%) 0)
+    &:before
+      --clip inset(calc((95 - var(--split)) * 1%) 0 0 0)
+
+  [data-char='G']
+  [data-char='l']
+    &:after
+    &:before
+      --split 70
+      opacity .75
+    &:after
+      --shift -25
+    &:before
+      animation glitch--1 5s 1s infinite steps(1) alternate-reverse
+      --shift -50
+
+  [data-char='t']
+    color transparent
+    &:after
+    &:before
+      --split 60
+      animation glitch--1 3s 1s infinite steps(1) alternate-reverse
+    &:after
+      --shift -25
+    &:before
+      --shift 10
+
+  [data-char='h']
+    color transparent
+    &:after
+    &:before
+      --split 50
+      color white
+    &:after
+      animation drop--1 2s 1s infinite steps(1)
+
+@keyframes glitch--1
+  0%, 53%, 57%, 100%
+    transform translate(0, 0)
+  55%
+    transform translate(calc(var(--shift) * 1%), 0)
+
+@keyframes drop--1
+  0%, 50%, 60%, 100%
+    transform translate(0, 0)
+  54%
+    transform translate(0, 25%)
+  58%
+    transform translate(0, -50%)
+
+/**
+ * Themeing
+*/
+body
+  background #111
+  font-family 'Exo', sans-serif
+  min-height 100vh
+  overflow-x hidden
+
+  @media(min-width 768px)
+    --font-size 48
+
+.page
+  align-items center
+  display flex
+  font-size calc(var(--font-size) * 1px)
+  height 100vh
+  justify-content center
+  position relative
+  scroll-snap-align center
+  width 100vw
+  letter-spacing calc(var(--font-size) * 0.2px)
+
+.container
+  height 100vh
+  overflow auto
+  overflow-x hidden
+  scroll-snap-type y mandatory
+
+.char
+  color #fff
+  display inline-block

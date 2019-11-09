@@ -1,0 +1,80 @@
+*
+  box-sizing border-box
+
+body
+  align-items center
+  display flex
+  justify-content center
+  min-height 100vh
+  background #333
+
+
+.dodecagon
+  position relative
+  height 0
+  width 0
+  animation turn 20s infinite linear
+
+  &__ring
+    --height calc(var(--segment-height) * 1px)
+    --width calc(var(--segment-size) * 1px)
+
+    &--1
+      --bg 'hsl(%s, 100%, 50%)' % var(--hue-1)
+      --opacity 0
+
+    &--2
+      --bg transparent
+      --opacity 0.65
+
+      .dodecagon__segment:before
+        opacity 0
+
+  &__segment
+    height var(--height)
+    width var(--width)
+    background var(--bg)
+    position absolute
+    top 50%
+    left 50%
+    transform-origin center bottom
+    transform translate(-50%, -100%) rotate(calc(var(--segment-index) * (360 / 6) * 1deg))
+
+    &:before
+      content ''
+      position absolute
+      height var(--width)
+      width var(--width)
+      background 'hsl(%s, 100%, 50%)' % var(--hue-2)
+      bottom 100%
+      left 0
+
+    &:after
+      content ''
+      position absolute
+      height 100%
+      width 100%
+      $clip = polygon(0 0, 100% 0, 50% 100%)
+      clip-path $clip
+      -webkit-clip-path $clip
+      background 'hsl(%s, 100%, 50%)' % var(--hue-3)
+      opacity var(--opacity)
+      transform-origin top right
+      animation rotate 5s infinite ease-in-out forwards
+
+
+@keyframes rotate
+  0%
+    transform rotate(0deg)
+  25%
+    transform rotate(60deg)
+  50%
+    transform rotate(150deg)
+  75%
+    transform rotate(240deg)
+  100%
+    transform rotate(300deg)
+
+@keyframes turn
+  to
+    transform rotate(-360deg)

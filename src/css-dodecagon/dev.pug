@@ -1,0 +1,16 @@
+-
+- const size = 100
+- const height = Math.sqrt((size * size) - ((size / 2) * (size / 2)))
+//- We know that each side of the triangle needs to be 50
+//- So the height of the triangle is the square root of 150
+.dodecagon(style=`--hue-1: ${Math.random() * 360}; --hue-2: ${Math.random() * 360}; --hue-3: ${Math.random() * 360};`)
+  .dodecagon__ring.dodecagon__ring--1(style=`--segment-height: ${height}; --segment-size: ${size};`)
+    - let s = 0
+    while s < 6
+      .dodecagon__segment(style=`--segment-index: ${s}`)
+      - s++
+  .dodecagon__ring.dodecagon__ring--2(style=`--segment-height: ${height}; --segment-size: ${size};`)
+    - let t = 0
+    while t < 6
+      .dodecagon__segment(style=`--segment-index: ${t}`)
+      - t++
