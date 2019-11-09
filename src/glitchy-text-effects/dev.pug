@@ -1,0 +1,9 @@
+- const glitches = ['Scroll for glitches', 'Glitch', 'Glitch', 'Glitch', 'Glitch']
+
+.container
+  - const glitchCount = glitches.length
+  - let g = 0
+  while g < glitchCount
+    .page
+      .glitch(data-scroll='out', data-splitting='', class=`glitch--${g}`)= glitches[g]
+      - g++

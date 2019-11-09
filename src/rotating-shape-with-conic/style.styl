@@ -1,0 +1,41 @@
+*
+  box-sizing border-box
+
+body
+  align-items center
+  display flex
+  justify-content center
+  min-height 100vh
+
+.container
+  --size 50
+  --saturation 75
+  --lightness 60
+  --bg-1 'hsl(%s, %s, %s)' % (var(--hue-1) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+  --bg-2 'hsl(%s, %s, %s)' % (var(--hue-2) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+  --bg-3 'hsl(%s, %s, %s)' % (var(--hue-3) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+  height 100vh
+  width 100vw
+  background conic-gradient(var(--bg-1) 0deg 120deg , var(--bg-2) 120deg 240deg, var(--bg-3) 240deg 360deg)
+
+.star
+  position absolute
+  top 50%
+  left 50%
+  animation rotate 10s infinite linear
+
+  &__segment
+    width calc(var(--size) * 1.15px)
+    height calc(var(--size) * 2px)
+    position absolute
+    top 50%
+    left 50%
+    background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+    transform translate(-50%, -50%) rotate(calc(var(--index) * (360 / 6) * 1deg)) translate(0, 50%)
+    $clip = polygon(0 50%, 50% 0, 100% 50%, 50% 100%)
+    -webkit-clip-path $clip
+    clip-path $clip
+
+@keyframes rotate
+  to
+    transform rotate(360deg)
