@@ -11,32 +11,31 @@
 */
 .glitch--0
   animation glitch--0 4s infinite steps(1)
-  text-transform uppercase
 
-  [data-char='f']
-  [data-char='i']
-  [data-char='o']
-  [data-char='e']
+  [data-char='F']
+  [data-char='I']
+  [data-char='O']
+  [data-char='E']
     --x-1 50
     --y-1 50
     animation jump-0 calc(var(--speed) * 1s) infinite steps(1)
 
-  [data-char='o']
+  [data-char='O']
     --x-2 -20
     --y-2 -25
     --scale-1 1.3
     --scale-2 0.75
     --speed 2
 
-  [data-char='f']
-  [data-char='i']
+  [data-char='F']
+  [data-char='I']
     --scale-1 1.3
     --scale-2 0.75
     --speed 1.25
     --x-2 15
     --y-2 -40
 
-  [data-char='e']
+  [data-char='E']
     --scale-1 0.5
     --scale-2 0.5
     --speed 10
@@ -67,12 +66,11 @@
 .glitch--1
   --shift 5
   animation glitch--1 4s infinite steps(1)
-  text-transform uppercase
 
   [data-char='G']
-  [data-char='l']
-  [data-char='t']
-  [data-char='h']
+  [data-char='L']
+  [data-char='T']
+  [data-char='H']
     position relative
     &:after
     &:before
@@ -91,7 +89,7 @@
       --clip inset(calc((95 - var(--split)) * 1%) 0 0 0)
 
   [data-char='G']
-  [data-char='l']
+  [data-char='L']
     &:after
     &:before
       --split 70
@@ -102,7 +100,7 @@
       animation glitch--1 5s 1s infinite steps(1) alternate-reverse
       --shift -50
 
-  [data-char='t']
+  [data-char='T']
     color transparent
     &:after
     &:before
@@ -113,7 +111,7 @@
     &:before
       --shift 10
 
-  [data-char='h']
+  [data-char='H']
     color transparent
     &:after
     &:before
@@ -136,6 +134,430 @@
   58%
     transform translate(0, -50%)
 
+.glitch--2
+  [data-char='G']
+    --scale 1.75
+    animation scale 4s infinite steps(1)
+  [data-char='T']
+  [data-char='C']
+    animation shrink 5s infinite steps(1), shift 4s infinite steps(1)
+  [data-char='L']
+  [data-char='I']
+    --scale 0.65
+    animation scale 5s infinite steps(1)
+  [data-char='H']
+    animation shift 5s infinite steps(1)
+
+// Let's do the animated clip-path thing
+.glitch--3
+  [data-char]
+    --split 50
+    color transparent
+    position relative
+    animation glitch--3 1.5s infinite ease-in-out alternate-reverse
+    &:after
+    &:before
+      content attr(data-char)
+      position absolute
+      top 0%
+      left 0%
+      height 100%
+      width 100%
+      color white
+      -webkit-clip-path var(--clip)
+      clip-path var(--clip)
+    &:after
+      transform translate(calc(var(--shift) * 1%), 0)
+      --clip inset(0 0 calc(var(--split) * 1%) 0)
+      text-shadow calc(var(--shadow) * 1px) calc(var(--shadow) * 1px) #ff0000
+    &:before
+      --clip inset(calc((95 - var(--split)) * 1%) 0 0 0)
+
+@keyframes glitch--3
+  0%
+    --split 20
+    --shift 15
+    --shadow -2
+  5%
+    --split 30
+    --shift 15
+    --shadow -2
+  10%
+    --split 80
+    --shift 10
+    --shadow -2
+  15%
+    --split 55
+    --shift 10
+    --shadow -2
+  20%
+  50%
+    --split 0
+    --shift 0
+    --shadow 0
+  100%
+    --split 0
+    --shift 0
+    --shadow 0
+
+.glitch--4
+  [data-char]
+    --delay 0
+    --speed 5
+    --skew 25
+    animation skew 5s infinite steps(1) alternate, shrink calc(var(--speed) * 1s) calc(var(--delay) * 1s) infinite steps(1)
+
+  [data-char='G']
+    --speed 4
+    --delay 2
+
+  [data-char='T']
+  [data-char='C']
+    --speed 6
+    --delay 1
+    transform-origin bottom
+
+  [data-char='I']
+    --skew -10
+    --speed 10
+    --delay 3
+
+.glitch--5
+  [data-char]
+    position relative
+    animation glitch--5 2s infinite alternate, scale 4s -2s infinite steps(1)
+    &:after
+    &:before
+      content attr(data-char)
+      transform skew(calc(var(--skew) * 1deg))
+      position absolute
+      top 0%
+      left 0%
+      height 100%
+      width 100%
+      color white
+      opacity .75
+    &:after
+      text-shadow calc(var(--spread) * -1px) calc(var(--spread) * -1px) red
+    &:before
+      text-shadow calc(var(--spread) * 1px) calc(var(--spread) * 1px) #bada55
+  [data-char='I']
+    --scale 1.2
+  [data-char='C']
+    --scale 1.5
+  [data-char='H']
+    --scale 0.5
+
+@keyframes glitch--5
+  0%
+    --spread 3
+    --skew 0
+  5%
+    --spread -1
+  10%
+    --spread -4
+    --skew 5
+  12%
+    --spread 3
+    --skew 3
+  15%
+    --spread 1
+  18%
+    --spread 4
+    --skew -4
+  25%
+  100%
+    --skew 0
+    --spread 0
+
+.glitch--6
+  [data-char]
+    animation flicker calc(var(--speed, 4) * 1s) calc(var(--delay, 0) * 1s) infinite steps(1)
+    opacity var(--opacity, 1)
+    --speed calc(var(--char-index) + 1)
+    --delay var(--char-index)
+
+.glitch--7
+  [data-char]
+    --scale 1.15
+    animation scale calc(var(--speed, 4) * 1s) calc(var(--delay, 0) * 1s) infinite steps(1), shrink calc(var(--speed, 4) * 1s) calc(var(--delay, 0) * 1s) infinite steps(1)
+    opacity var(--opacity, 1)
+    --speed calc(var(--char-index) + 2)
+    --delay var(--char-index)
+
+.glitch--8
+  [data-char]
+    --split 50
+    color transparent
+    position relative
+    &:after
+    &:before
+      content attr(data-char)
+      position absolute
+      top 0%
+      left 0%
+      height 100%
+      width 100%
+      color white
+      -webkit-clip-path var(--clip)
+      clip-path var(--clip)
+    &:after
+      --clip inset(0 0 calc(var(--split) * 1%) 0)
+      --shift-y -20
+      --shift-x 50
+      animation shift 3s infinite steps(1)
+    &:before
+      --shift-x -50
+      animation shift 4s infinite steps(1)
+      --clip inset(calc((95 - var(--split)) * 1%) 0 0 0)
+
+  [data-char="C"]
+  [data-char="H"]
+    &:after
+      --shift-y 25
+      --shift-x 0
+
+.glitch--9
+  [data-char]
+    --split 65
+    color transparent
+    position relative
+    &:after
+    &:before
+      content attr(data-char)
+      position absolute
+      top 0%
+      left 0%
+      height 100%
+      width 100%
+      color white
+      -webkit-clip-path var(--clip)
+      clip-path var(--clip)
+      animation shift calc(var(--speed, 4) * 1s) infinite steps(1)
+
+  [data-char='G']
+  [data-char='T']
+  [data-char='C']
+  [data-char='H']
+    &:after
+      --clip inset(0 calc(var(--split) * 1%) 0 0)
+      --shift-y 0
+      --shift-x -10
+      --speed 2
+    &:before
+      --shift-x 0
+      --shift-y -15
+      --speed 5
+      --clip inset(0 0 0 calc((99 - var(--split)) * 1%))
+  [data-char='L']
+  [data-char='I']
+    --split 50
+    &:after
+      --clip inset(0 0 calc(var(--split) * 1%) 0)
+      --shift-y 0
+      --shift-x 25
+      --speed 3
+    &:before
+      --shift-x 0
+      --shift-y 20
+      --speed 5
+      --clip inset(calc((99 - var(--split)) * 1%) 0 0 0)
+  [data-char='G']
+    &:after
+      --shift-y -20
+    &:before
+      --shift-y 20
+
+.glitch--10
+  [data-char]
+    --txt attr(data-char)
+    color transparent
+    position relative
+    &:after
+      content var(--txt)
+      position absolute
+      top 0%
+      left 0%
+      height 100%
+      width 100%
+      color white
+      animation flash-letter calc(var(--speed, 3) * 1s) calc(var(--delay, 0) * 1s) infinite, scale calc(var(--speed, 3) * 1s) calc(var(--delay, 0) * 1s) infinite steps(1)
+  [data-char='G']
+    --speed 2
+    --delay 0
+    --letter-1 "X"
+    --letter-2 "∞"
+    --letter-3 "("
+    --letter-4 "…"
+
+  [data-char='I']
+    --speed 10
+    --delay 4
+    --letter-3 "ç"
+    --letter-4 "∂"
+
+  [data-char='C']
+  [data-char='H']
+    --scale 0.75
+    --speed 6
+    --delay 2
+    --letter-2 "à"
+    --letter-4 "¶"
+
+@keyframes flash-letter
+  0%, 25%, 100%
+    --txt attr(data-char)
+  5%
+    --txt var(--letter-1, attr(data-char))
+  10%
+    --txt var(--letter-2, attr(data-char))
+  15%
+    --txt var(--letter-3, attr(data-char))
+  20%
+    --txt var(--letter-4, attr(data-char))
+
+//Reveal word underneath
+.glitch--11
+  [data-char]
+    color transparent
+    position relative
+    --speed calc((var(--char-index) + 1) * 2)
+    --delay var(--char-index)
+    &:after
+    &:before
+      position absolute
+      top 0%
+      left 0%
+      height 100%
+      width 100%
+      color white
+    &:after
+      content attr(data-char)
+      animation hide calc(var(--speed, 2) * 1s) calc(var(--delay, 0) * 1s) infinite ease alternate-reverse
+    &:before
+      color hsl(236, 100%, 90%)
+      content var(--txt)
+      animation reveal calc(var(--speed, 2) * 1s) calc(var(--delay, 0) * 1s) infinite ease alternate-reverse
+  [data-char='G']
+    --txt "S"
+  [data-char='L']
+    --txt "E"
+  [data-char='I']
+    --txt "C"
+  [data-char='T']
+    --txt "R"
+  [data-char='C']
+    --txt "E"
+  [data-char='H']
+    --txt "T"
+
+@keyframes reveal
+  0%
+    -webkit-clip-path inset(0 0 0 0)
+  10%
+    -webkit-clip-path inset(70% 0 0 0)
+  20%
+    -webkit-clip-path inset(85% 0 0 0)
+  30%
+    -webkit-clip-path inset(5% 0 0 0)
+  40%
+    -webkit-clip-path inset(45% 0 0 0)
+  50%
+  100%
+    -webkit-clip-path inset(100% 0 0 0)
+@keyframes hide
+  0%
+    -webkit-clip-path inset(0 0 100% 0)
+  10%
+    -webkit-clip-path inset(0 0 30% 0)
+  20%
+    -webkit-clip-path inset(0 0 15% 0)
+  30%
+    -webkit-clip-path inset(0 0 95% 0)
+  40%
+    -webkit-clip-path inset(0 0 55% 0)
+  50%
+  100%
+    -webkit-clip-path inset(0 0 0 0)
+
+// Frayed
+.glitch--12
+  [data-char]
+    --split 70
+    color transparent
+    position relative
+    &:after
+    &:before
+      content attr(data-char)
+      position absolute
+      top 0%
+      left 0%
+      height 100%
+      width 100%
+      color white
+      -webkit-clip-path var(--clip)
+      clip-path var(--clip)
+    &:after
+      --clip inset(0 0 calc(var(--split) * 1%) 0)
+      --shift-x -125
+      animation shift 4s infinite steps(1)
+    &:before
+      animation shift 8s infinite steps(1)
+      --shift-x 50
+      --shift-y 50
+      --clip inset(calc((95 - var(--split)) * 1%) 0 0 0)
+
+  [data-char='G']
+    animation squash 3s infinite steps(2)
+  [data-char='C']
+    animation squash 4s infinite steps(2)
+  [data-char='H']
+    --scale 1.5
+    animation squash 4s infinite steps(2)
+
+@keyframes squash
+  0%, 48%, 52%, 100%
+    transform scaleY(1)
+  50%
+    transform scaleY(var(--scale, 0))
+
+/**
+ * Utility animations
+*/
+@keyframes flicker
+  0%
+  20%
+    --opacity 0.25
+  10%
+  30%
+  40%
+  70%
+  80%
+  90%
+  100%
+    --opacity 1
+@keyframes skew
+  0%, 40%, 48%, 100%
+    transform skew(0deg)
+  44%
+    transform skew(calc(var(--skew) * 1deg))
+@keyframes scale
+  0%, 47%, 55%, 100%
+    transform scale(1)
+  50%
+    transform scale(var(--scale))
+
+@keyframes shrink
+  0%, 45%, 53%, 100%
+    text-transform uppercase
+  50%
+    text-transform lowercase
+
+@keyframes shift
+  0%, 68%, 72%, 100%
+    transform translate(0, 0)
+  70%
+    transform translate(calc(var(--shift-x, 25) * 1%), calc(var(--shift-y, 0) * 1%))
 /**
  * Themeing
 */
@@ -144,6 +566,7 @@ body
   font-family 'Exo', sans-serif
   min-height 100vh
   overflow-x hidden
+  --font-size 20
 
   @media(min-width 768px)
     --font-size 48
