@@ -1,0 +1,47 @@
+- const randomInRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+link(href="https://fonts.googleapis.com/css?family=Wallpoet&display=swap" rel="stylesheet")
+.title
+  - for (const [index, letter] of 'CYBRTRK'.split('').entries())
+    span(data-char=letter, style=`--index: ${index}`)= letter
+.backdrop
+  - let m = 0
+  while m < 10
+    .mountain(style=`--lightness: ${randomInRange(2, 10)}; --height: ${randomInRange(10, 25)}; --width: ${randomInRange(10, 40)}; --speed: ${randomInRange(10, 50)}; --distance: ${randomInRange(150, 200)}; --delay: ${randomInRange(10, 50)}`)
+    - m++
+.truck
+  .truck__body
+    .truck__body.truck__body--top
+      .truck__window
+        .truck__window-glass
+    .truck__body.truck__body--mid
+      .truck__mid-body
+    .truck__body.truck__body--bottom
+      .truck__underpanel
+      .truck__rear-bumper
+      .truck__side-skirt
+  .truck__wheel.truck__wheel--front
+    .truck__wheel-arch
+    .truck__wheel-arch-trim.truck__wheel-arch-trim--top
+    .truck__wheel-arch-trim.truck__wheel-arch-trim--left
+    .truck__wheel-arch-trim.truck__wheel-arch-trim--right
+    .truck-wheel
+      .truck-wheel__rim
+        - let s = 0
+        while s < 7
+          .truck-wheel__spoke(style=`--index: ${s};`)
+          - s++
+  .truck__wheel.truck__wheel--rear
+    .truck__wheel-arch
+    .truck__wheel-arch-trim.truck__wheel-arch-trim--top
+    .truck__wheel-arch-trim.truck__wheel-arch-trim--left
+    .truck__wheel-arch-trim.truck__wheel-arch-trim--right
+    .truck-wheel
+      .truck-wheel__rim
+        - let r = 0
+        while r < 7
+          .truck-wheel__spoke(style=`--index: ${r};`)
+          - r++
+  .truck__headlight
+  .truck__taillight
+  .truck__indicator
+  .truck__foglight
