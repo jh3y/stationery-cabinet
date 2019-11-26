@@ -1,0 +1,25 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  background #222
+
+:root
+  --size 300
+
+  @media(min-width 768px)
+    --size 500
+
+svg
+  height calc(var(--size) * 1px)
+  width calc(var(--size) * 1px)
+  max-width 100%
+
+  polyline
+    stroke 'hsl(%s, 100%, 50%)' % var(--hue)
+    stroke-width var(--stroke, 4)
+    fill none
