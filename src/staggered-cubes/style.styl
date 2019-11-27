@@ -1,0 +1,35 @@
+*
+  box-sizing border-box
+
+body
+  background #111
+  min-height 100vh
+
+canvas
+  touch-action none
+  height 100vh
+  width 100vw
+
+.reset
+  --hue 199
+  --lightness 51
+  text-transform uppercase
+  padding 8px 16px
+  background 'hsl(%s, 67%, %s)' % (var(--hue) calc(var(--lightness) * 1%))
+  color #fff
+  cursor pointer
+  border 0
+
+  &:hover
+    --lightness 65
+  &:active
+    --lightness 75
+
+.button-holder
+  height auto !important
+  border-left 3px solid #2FA1D6
+  padding 8px !important
+
+.closed .button-holder
+  height 0 !important
+  padding 0 !important
