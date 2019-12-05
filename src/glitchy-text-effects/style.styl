@@ -406,15 +406,15 @@
 
 @keyframes flash-letter
   0%, 25%, 100%
-    --txt attr(data-char)
+    content attr(data-char)
   5%
-    --txt var(--letter-1, attr(data-char))
+    content var(--letter-1, attr(data-char))
   10%
-    --txt var(--letter-2, attr(data-char))
+    content var(--letter-2, attr(data-char))
   15%
-    --txt var(--letter-3, attr(data-char))
+    content var(--letter-3, attr(data-char))
   20%
-    --txt var(--letter-4, attr(data-char))
+    content var(--letter-4, attr(data-char))
 
 //Reveal word underneath
 .glitch--11
@@ -433,11 +433,11 @@
       color white
     &:after
       content attr(data-char)
-      animation hide calc(var(--speed, 2) * 1s) calc(var(--delay, 0) * 1s) infinite ease alternate-reverse
+      animation hide calc(var(--speed, 2) * 1s) calc(var(--delay, 0) * 1s) infinite ease alternate-reverse both
     &:before
       color hsl(236, 100%, 90%)
       content var(--txt)
-      animation reveal calc(var(--speed, 2) * 1s) calc(var(--delay, 0) * 1s) infinite ease alternate-reverse
+      animation reveal calc(var(--speed, 2) * 1s) calc(var(--delay, 0) * 1s) infinite ease alternate-reverse both
   [data-char='G']
     --txt "S"
   [data-char='L']
@@ -453,31 +453,44 @@
 
 @keyframes reveal
   0%
+    clip-path inset(0 0 0 0)
     -webkit-clip-path inset(0 0 0 0)
+
   10%
+    clip-path inset(70% 0 0 0)
     -webkit-clip-path inset(70% 0 0 0)
   20%
+    clip-path inset(85% 0 0 0)
     -webkit-clip-path inset(85% 0 0 0)
   30%
+    clip-path inset(5% 0 0 0)
     -webkit-clip-path inset(5% 0 0 0)
   40%
+    clip-path inset(45% 0 0 0)
     -webkit-clip-path inset(45% 0 0 0)
   50%
   100%
+    clip-path inset(100% 0 0 0)
     -webkit-clip-path inset(100% 0 0 0)
 @keyframes hide
   0%
+    clip-path inset(0 0 100% 0)
     -webkit-clip-path inset(0 0 100% 0)
   10%
+    clip-path inset(0 0 30% 0)
     -webkit-clip-path inset(0 0 30% 0)
   20%
+    clip-path inset(0 0 15% 0)
     -webkit-clip-path inset(0 0 15% 0)
   30%
+    clip-path inset(0 0 95% 0)
     -webkit-clip-path inset(0 0 95% 0)
   40%
+    clip-path inset(0 0 55% 0)
     -webkit-clip-path inset(0 0 55% 0)
   50%
   100%
+    clip-path inset(0 0 0 0)
     -webkit-clip-path inset(0 0 0 0)
 
 // Frayed
