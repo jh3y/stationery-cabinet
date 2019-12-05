@@ -1,0 +1,89 @@
+*
+  box-sizing border-box
+
+body
+  background-color #fefefe
+  color            #111
+  display flex
+  align-items center
+  justify-content center
+  min-height 100vh
+  font-size 3.5rem
+  font-family -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+  font-weight bold
+
+p
+  max-width 300px
+
+  &[data-scroll='in']
+    [data-char]:after
+      animation-name glitch-switch
+
+.reveal--0 [data-char]:after
+  animation-iteration-count calc(var(--char-index) * 0.55)
+.reveal--1 [data-char]:after
+  animation-iteration-count 4
+.reveal--2 [data-char]:after
+  animation-iteration-count var(--count)
+
+.word
+  position relative
+  display inline-block
+
+[data-char]
+  color transparent
+  position relative
+
+  &:after
+    --txt attr(data-char)
+    animation-duration .2s
+    animation-delay .5s
+    animation-timing-function steps(1)
+    animation-fill-mode backwards
+    content var(--txt)
+    color #111
+    position absolute
+    left 0
+    top 0
+
+@keyframes glitch-switch
+  0%
+    content var(--char-0)
+  10%
+    content var(--char-1)
+  20%
+    content var(--char-2)
+  30%
+    content var(--char-3)
+  40%
+    content var(--char-4)
+  50%
+    content var(--char-5)
+  60%
+    content var(--char-6)
+  70%
+    content var(--char-7)
+  80%
+    content var(--char-8)
+  90%
+    content var(--char-9)
+  100%
+    content var(--char-0)
+
+/**
+ * Themeing
+*/
+.page
+  align-items center
+  display flex
+  height 100vh
+  justify-content center
+  position relative
+  scroll-snap-align center
+  width 100vw
+
+.container
+  height 100vh
+  overflow auto
+  overflow-x hidden
+  scroll-snap-type y mandatory
