@@ -1,0 +1,23 @@
+*
+  box-sizing border-box
+
+body
+  background-color hsl(40, 100%, 35%)
+  min-height 100vh
+  overflow visible
+  display flex
+  align-items center
+  justify-content center
+
+svg
+  height 80vmin
+  max-height 600px
+  overflow visible
+  transform translateZ(0)
+
+.baby
+  &__eye
+    overflow hidden
+    $clip = circle(50% at 50%)
+    -webkit-clip-path $clip
+    clip-path $clip
