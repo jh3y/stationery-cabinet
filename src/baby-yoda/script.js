@@ -233,6 +233,8 @@ const onStop = () => {
     set(lightsaber, { rotate: 0 })
   }
   // Else, If we have started something, see it through as it's a nightmare to try and cancel it 👍 😅
-}
-document.body.addEventListener('pointerdown', onStart)
-document.body.addEventListener('pointerup', onStop)
+} // document.body.addEventListener('pointerdown', onStart) // document.body.addEventListener('pointerup', onStop)
+document.body.addEventListener('touchstart', onStart)
+document.body.addEventListener('touchend', onStop)
+document.body.addEventListener('mousedown', onStart)
+document.body.addEventListener('mouseup', onStop)
