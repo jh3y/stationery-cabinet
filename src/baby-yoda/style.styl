@@ -1,5 +1,7 @@
 *
   box-sizing border-box
+  user-select none
+  -webkit-user-select none
 
 :root
   --yoda-hue 120
@@ -11,7 +13,7 @@
 body
   background radial-gradient(circle at top left, white, transparent 50%), linear-gradient(0deg, var(--sand), var(--sand) 43%, hsl(190, 65%, 85%) 43%), var(--sand)
   min-height 100vh
-  overflow visible
+  overflow hidden
   display flex
   align-items center
   justify-content center
