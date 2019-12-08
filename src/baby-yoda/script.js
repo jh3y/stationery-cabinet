@@ -1,7 +1,7 @@
 const { gsap, Linear } = window
 const { timeline, to, set } = gsap
 //register the plugin (just once)
-// const svg = document.querySelector('svg')
+const svg = document.querySelector('svg')
 const lightsaber = document.getElementById('lightsaber')
 const beam = document.getElementById('lightsaber__beam')
 const eyelidsLeft = document.querySelector('.baby__eyelids--left')
@@ -21,7 +21,7 @@ const saberShadow = document.getElementById('saberShadow')
  */
 const BLINK_SPEED = 0.1
 const EYE_OPEN = 1
-const EYE_CLOSED = 0.1
+const EYE_CLOSED = 0.25
 const EAR_ROTATION_DEFAULT = 10
 const ROCK_SPEED = 0.1
 const ROCK_ROTATION = 4
@@ -51,6 +51,7 @@ set(eyelidsRight, { transformOrigin: '50% 50%', rotate: 5 })
 set(hand, { y: -1.5, scaleX: 0.75 })
 set(palm, { y: 1, transformOrigin: '50%, 50%', scaleX: 0.75 })
 set(saberShadow, { transformOrigin: '50% 50%', scale: 0.36, x: -69, y: 25 })
+svg.style.setProperty('opacity', '1')
 /**
  * There are some recurring timelines that happen at default
  * Blinking, ear wagging
@@ -115,9 +116,9 @@ const raiseArmTL = () =>
     .add(to(sleeve, FORCE_SPEED, { y: -2 }), INIT_SHIFT)
     .add(to(ears[0], FORCE_SPEED, { rotation: -18 }), INIT_SHIFT)
     .add(to(ears[1], FORCE_SPEED, { rotation: 18 }), INIT_SHIFT)
-    .add(to(fingers[0], FORCE_SPEED, { y: 1 }), INIT_SHIFT)
-    .add(to(fingers[1], FORCE_SPEED, { y: 0 }), INIT_SHIFT)
-    .add(to(fingers[2], FORCE_SPEED, { y: -1 }), INIT_SHIFT)
+    .add(to(fingers[3], FORCE_SPEED, { y: 1 }), INIT_SHIFT)
+    .add(to(fingers[4], FORCE_SPEED, { y: 0 }), INIT_SHIFT)
+    .add(to(fingers[5], FORCE_SPEED, { y: -1 }), INIT_SHIFT)
     .add(to(eyelidsBottom, FORCE_SPEED, { scaleY: 0.9 }), INIT_SHIFT)
     .add(to(eyelidsTop, FORCE_SPEED, { scaleY: 0.9 }), INIT_SHIFT)
 const USE_FORCE_TL = new timeline({ paused: true }).add(
