@@ -1,19 +1,30 @@
 *
   box-sizing border-box
 
+:root
+  --yoda-hue 120
+  --yoda-saturation 50
+  --yoda-lightness 50
+  --sand-hue 40
+  --sand hsl(40, 35%, 65%)
+
 body
-  background-color hsl(40, 100%, 35%)
+  background radial-gradient(circle at top left, white, transparent 50%), linear-gradient(0deg, var(--sand), var(--sand) 43%, hsl(190, 65%, 85%) 43%), var(--sand)
   min-height 100vh
   overflow visible
   display flex
   align-items center
   justify-content center
+  font-family 'Poller One', cursive
+  font-variant small-caps
 
 svg
-  height 80vmin
+  height 90vmin
   max-height 600px
   overflow visible
   transform translateZ(0)
+  opacity 0
+  transition opacity .25s ease
 
 .baby
   &__eye
@@ -21,3 +32,70 @@ svg
     $clip = circle(50% at 50%)
     -webkit-clip-path $clip
     clip-path $clip
+
+  &__shadow
+  &__saber-shadow
+    fill 'hsl(%s, 25%, 15%)' % var(--sand-hue)
+
+  &__hand
+  &__finger
+    fill 'hsl(%s, 50%, %s)' % (var(--yoda-hue) calc(var(--yoda-lightness) * 1%))
+  &__robe
+    fill hsl(30, 50%, 50%)
+    &-sleeve
+      fill hsl(30, 50%, 40%)
+    &-cuff
+      fill hsl(36, 50%, 80%)
+
+    &-fold-shadow
+      stroke hsl(30, 50%, 45%)
+    &-fold
+      stroke hsl(30, 50%, 35%)
+
+  &__head
+    fill 'hsl(%s, 50%, 60%)' % (var(--yoda-hue))
+
+  &__face
+    fill none
+    stroke 'hsl(%s, 50%, 35%)' % (var(--yoda-hue))
+
+  &__eyelid
+    fill 'hsl(%s, 50%, 30%)' % (var(--yoda-hue))
+
+  &__ear
+    &--inner
+      fill hsl(0, 100%, 92%)
+    &--outer
+      fill 'hsl(%s, 50%, 50%)' % (var(--yoda-hue))
+
+  &__forehead
+    stroke 'hsl(%s, 50%, 35%)' % (var(--yoda-hue))
+
+  &__hair
+    stroke #111
+    stroke-opacity .25
+
+  &__collar
+    &--one
+      fill hsl(30, 50%, 50%)
+    &--two
+      fill hsl(30, 50%, 40%)
+    &--three
+      fill hsl(30, 50%, 70%)
+    &--four
+      fill hsl(30, 50%, 60%)
+    &--five
+      fill hsl(30, 50%, 70%)
+    &--six
+      fill hsl(30, 50%, 70%)
+
+h1
+  color hsl(40, 35%, 45%)
+  position fixed
+  font-weight bold
+  font-size 1rem
+  bottom 20px
+  right 20px
+
+  @media(min-width 768px)
+    font-size 2.5rem
