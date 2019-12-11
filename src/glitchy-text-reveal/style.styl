@@ -1,9 +1,19 @@
 *
   box-sizing border-box
+  transition color .25s ease
+
+:root
+  --dark #111
+  --light #fefefe
+  --color var(--dark)
+  --bg var(--light)
+
+  @media (prefers-color-scheme: dark)
+    --color var(--light)
+    --bg var(--dark)
 
 body
-  background-color #fefefe
-  color            #111
+  background-color var(--bg)
   display flex
   align-items center
   justify-content center
@@ -26,6 +36,10 @@ p
 .reveal--2 [data-char]:after
   animation-iteration-count var(--count)
 
+p:nth-of-type(1)
+  position absolute
+  opacity 0
+
 .word
   position relative
   display inline-block
@@ -41,7 +55,7 @@ p
     animation-timing-function steps(1)
     animation-fill-mode backwards
     content var(--txt)
-    color #111
+    color var(--color)
     position absolute
     left 0
     top 0
