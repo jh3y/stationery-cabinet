@@ -1,21 +1,10 @@
-const { React, ReactDOM, Draggable } = window
-const { Component, Fragment } = React
+const { React, ReactDOM, Draggable, PropTypes } = window
+const { useEffect, useRef, useState, Fragment } = React
 const { createPortal, render } = ReactDOM
 
-class Man extends Component {
-  componentDidMount = () =>
-    new Draggable(this.MAN, {
-      allowContextMenu: true,
-      ...this.props,
-    })
-  render = () => {
-    return (
-      <div className="man" ref={m => (this.MAN = m)} role="img">
-        🏃
-      </div>
-    )
-  }
-}
+const outsideEl = document.getElementById('outside')
+const rootNode = document.getElementById('app')
+
 const getXY = e => {
   let { pageX: x, pageY: y, touches } = e
   if (touches && touches.length === 1) {
@@ -27,53 +16,69 @@ const getXY = e => {
     y,
   }
 }
-const outsideEl = document.getElementById('outside')
-const rootNode = document.getElementById('app')
-class App extends Component {
-  state = {
-    outside: false,
-  }
-  isDroppedOn = (e, el) => {
+
+const Man = ({ bounds, outside, onRelease }) => {
+  const manRef = useRef(null)
+  useEffect(() => {
+    if (manRef.current) {
+      new Draggable(manRef.current, {
+        allowContextMenu: true,
+        throwProps: true,
+        onRelease,
+        bounds,
+      })
+    }
+  }, [manRef, bounds])
+
+  return outside ? (
+    createPortal(
+      <div className="man" ref={manRef} role="img">
+        🏃
+      </div>,
+      bounds
+    )
+  ) : (
+    <div className="man" ref={manRef} role="img">
+      🏃
+    </div>
+  )
+}
+Man.propTypes = {
+  bounds: PropTypes.element,
+  onRelease: PropTypes.func,
+  outside: PropTypes.bool,
+}
+const App = () => {
+  const [outside, setOutside] = useState(false)
+  const innerPortalRef = useRef(null)
+  const outerPortalRef = useRef(null)
+  const isDroppedOn = (e, el) => {
     const { x, y } = getXY(e)
     const { left, top, width, height } = el.getBoundingClientRect()
-    if (x > left && x < left + width && (y > top && y < top + height))
-      return true
+    if (x > left && x < left + width && y > top && y < top + height) return true
     return false
   }
-  onRelease = e => {
-    const {
-      isDroppedOn,
-      INNER_PORTAL,
-      OUTER_PORTAL,
-      state: { outside },
-    } = this
-    if (isDroppedOn(e, INNER_PORTAL) || isDroppedOn(e, OUTER_PORTAL)) {
-      this.setState({ outside: !outside })
+  const onRelease = e => {
+    if (
+      isDroppedOn(e, innerPortalRef.current) ||
+      isDroppedOn(e, outerPortalRef.current)
+    ) {
+      setOutside(!outside)
     }
   }
-  render = () => {
-    const {
-      onRelease,
-      state: { outside },
-    } = this
-    return (
-      <Fragment>
-        {!outside && <Man bounds={rootNode} onRelease={onRelease} />}
-        <div className="portal portal--in" ref={i => (this.INNER_PORTAL = i)} />
-        {outside &&
-          createPortal(
-            <Man bounds={outsideEl} onRelease={onRelease} />,
-            outsideEl
-          )}
-        {createPortal(
-          <div
-            ref={o => (this.OUTER_PORTAL = o)}
-            className="portal portal--out"
-          />,
-          outsideEl
-        )}
-      </Fragment>
-    )
-  }
+  return (
+    <Fragment>
+      <Man
+        bounds={outside ? outsideEl : rootNode}
+        onRelease={onRelease}
+        outside={outside}
+      />
+      <div className="portal portal--in" ref={innerPortalRef} />
+      {createPortal(
+        <div ref={outerPortalRef} className="portal portal--out" />,
+        outsideEl
+      )}
+    </Fragment>
+  )
 }
 render(<App />, rootNode)
