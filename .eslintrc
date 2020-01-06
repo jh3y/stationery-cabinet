@@ -25,7 +25,8 @@
   ],
   "plugins": [
     "prettier",
-    "react"
+    "react",
+    "react-hooks"
   ],
   "rules": {
     "prettier/prettier": [
