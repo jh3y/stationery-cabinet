@@ -1,0 +1,102 @@
+*
+  box-sizing border-box
+
+body
+  overflow hidden
+  background #222
+
+#app
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  flex-direction column
+
+
+:root
+  --size 25
+
+.christmas-tree
+  list-style-type none
+  display flex
+  flex-direction column
+  padding 0
+  margin 0
+  place-content center
+  place-items center
+
+  &__star
+    height calc(var(--size) * 1px)
+    width calc(var(--size) * 1px)
+    background 'hsl(58, 100%, %s)' % ( calc(var(--shade, 50%) * 1%))
+    z-index 4
+    transform rotate(calc(var(--rotation, 0) * 1deg))
+
+  &__log
+    height calc(var(--size) * 2px)
+    width calc(var(--size) * 1px)
+    background 'hsl(28, 100%, %s)' % ( calc(var(--shade, 25) * 1%))
+    transform rotate(calc(var(--rotation, 0) * 1deg)) scaleX(calc(1 + (var(--scale) / 10)))
+    position absolute
+
+    &--base
+      transform translate(0, -10%) scaleX(2.2)
+      position static
+
+  &__regenerate
+    height 44px
+    width 44px
+    margin-top 1.5rem
+    background 0
+    border 0
+    outline 0 transparent
+    padding 0
+    display flex
+    align-items center
+    justify-content center
+    opacity .45
+    transition opacity .1s, transform .1s
+
+
+    &:active
+      transform scale(0.85)
+
+    &:disabled
+
+      &:hover
+        opacity .45
+      svg
+        opacity 0.1
+
+    &:hover
+      opacity 1
+
+    svg
+      fill #ffffff
+      height 40px
+      width 40px
+      transition opacity .1s
+
+  &__bauble
+    height calc(var(--size) * 1px)
+    width calc(var(--size) * 1px)
+    transform translate(calc(var(--x) * 1%), 0) rotate(calc(var(--rotation, 0) * 1deg)) scale(0)
+    background 'hsl(%s, 100%, 50%)' % ( calc(var(--hue, 0)) )
+    position absolute
+    z-index 3
+
+  &__branch
+    list-style-type none
+    padding 0
+    margin 0
+    display flex
+    flex-direction row
+    place-content center
+
+  &__leaf
+    height calc(var(--size) * 1px)
+    width calc(var(--size) * 1px)
+    transform-origin center
+    transform translate(-100vw, 0) scale(1.5) rotate(calc(var(--rotation, 0) * 1deg))
+    background 'hsl(100, %s, %s)' % ( calc(var(--saturation, 100) * 1%) calc(var(--shade, 50) * 1%))
+    z-index 2
