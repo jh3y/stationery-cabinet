@@ -13,6 +13,7 @@ const CONFIG = {
   rows: 1,
   delayStep: 0,
   transition: 0.2,
+  bounds: 360,
 }
 
 const BOUNDS = {
@@ -23,6 +24,7 @@ const BOUNDS = {
   rows: [1, 5],
   transition: [0.1, 2, 0.01],
   delayStep: [0, 1, 0.01],
+  bounds: [90, 360, 10],
 }
 
 const App = () => {
@@ -55,6 +57,7 @@ const App = () => {
         '--offset': CONFIG.offset,
         '--delay': CONFIG.delayStep,
         '--transition': CONFIG.transition,
+        '--bounds': CONFIG.bounds,
       }}>
       <input type="checkbox" id="dial" />
       {new Array(CONFIG.elements).fill().map((_, index) => (
