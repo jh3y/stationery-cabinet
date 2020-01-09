@@ -38,7 +38,7 @@ body
 
   button
     --translation 0
-    --rotation calc(var(--offset, 0) + ((360 / var(--kids)) * var(--index)))
+    --rotation calc(var(--offset, 0) + ((var(--bounds) / var(--kids)) * var(--index)))
     position absolute
     top 50%
     left 50%
