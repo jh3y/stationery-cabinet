@@ -1,0 +1,48 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+
+.dial-button
+  position relative
+  height 50px
+  width 50px
+  background red
+
+  & > .off
+    background hsla(0, 100%, 50%, 0.25)
+    position fixed
+    top 0
+    right 0
+    bottom 0
+    left 0
+    display none
+
+  & > input
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    z-index 3
+
+  & > :checked
+    & ~ button
+      --translation var(--radius)
+      z-index 2
+    & ~ .off
+      display block
+
+  button
+    --translation 0
+    --rotation calc(var(--offset, 0) + ((360 / var(--kids)) * var(--index)))
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) rotate(calc(var(--rotation) * 1deg)) translate(0, calc(var(--translation, 0) * 1px)) rotate(calc(var(--rotation) * -1deg)) scale((var(--scale, 1)))
+    transition-property transform
+    transition-duration calc(var(--transition, 0.25) * 1s)
+    transition-delay calc((var(--delay, 0) * var(--index)) * 1s)
