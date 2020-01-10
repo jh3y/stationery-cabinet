@@ -1,0 +1,59 @@
+*
+  box-sizing border-box
+
+body
+  background #111
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+
+.glitch-image
+  height calc(var(--size, 300) * 1px)
+  width calc(var(--size, 300) * 1px)
+  display grid
+  grid-template-columns repeat(var(--columns), 1fr)
+  grid-template-rows repeat(var(--rows), 1fr)
+  position relative
+  overflow hidden
+
+  & > img
+    opacity 0
+    height 0
+    width 0
+
+  &__cell
+    background-image var(--src)
+    background-position calc((var(--x) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y) * (100 / (var(--rows) - 1))) * 1%)
+    background-size calc(var(--size) * 1px) calc(var(--size) * 1px)
+    animation glitch-switch calc(var(--speed, 0.2) * 1s) calc(var(--delay, 0.5) * 1s) var(--count) backwards steps(1)
+
+
+// Worth noting here if we write about this that FireFox requires
+// the explicit background-position. Else, we could just update
+// --x and --y on each keyframes
+@keyframes glitch-switch
+  0%
+    filter grayscale(1)
+    background-position calc((var(--x-0) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-0) * (100 / (var(--rows) - 1))) * 1%)
+  10%
+    background-position calc((var(--x-1) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-1) * (100 / (var(--rows) - 1))) * 1%)
+  20%
+    background-position calc((var(--x-2) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-2) * (100 / (var(--rows) - 1))) * 1%)
+  30%
+    background-position calc((var(--x-3) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-3) * (100 / (var(--rows) - 1))) * 1%)
+  40%
+    background-position calc((var(--x-4) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-4) * (100 / (var(--rows) - 1))) * 1%)
+  50%
+    background-position calc((var(--x-5) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-5) * (100 / (var(--rows) - 1))) * 1%)
+  60%
+    background-position calc((var(--x-6) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-6) * (100 / (var(--rows) - 1))) * 1%)
+  70%
+    background-position calc((var(--x-7) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-7) * (100 / (var(--rows) - 1))) * 1%)
+  80%
+    background-position calc((var(--x-8) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-8) * (100 / (var(--rows) - 1))) * 1%)
+  90%
+    background-position calc((var(--x-9) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-9) * (100 / (var(--rows) - 1))) * 1%)
+  100%
+    filter grayscale(0)
+    background-position calc((var(--x-0) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-0) * (100 / (var(--rows) - 1))) * 1%)
