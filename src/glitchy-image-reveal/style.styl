@@ -9,11 +9,12 @@ body
   justify-content center
 
 .glitch-image
+  --cell-size calc(100 / var(--cells))
   height calc(var(--size, 300) * 1px)
   width calc(var(--size, 300) * 1px)
   display grid
-  grid-template-columns repeat(var(--columns), 1fr)
-  grid-template-rows repeat(var(--rows), 1fr)
+  grid-template-columns repeat(var(--cells), 1fr)
+  grid-template-rows repeat(var(--cells), 1fr)
   position relative
   overflow hidden
 
@@ -23,10 +24,19 @@ body
     width 0
 
   &__cell
-    background-image var(--src)
-    background-position calc((var(--x) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y) * (100 / (var(--rows) - 1))) * 1%)
-    background-size calc(var(--size) * 1px) calc(var(--size) * 1px)
-    animation glitch-switch calc(var(--speed, 0.2) * 1s) calc(var(--delay, 0.5) * 1s) var(--count) backwards steps(1)
+    position relative
+    overflow hidden
+
+    &:after
+      content ''
+      animation glitch-switch calc(var(--speed, 0.2) * 1s) calc(var(--delay, 0.5) * 1s) var(--count) backwards steps(1)
+      background-image var(--src)
+      position absolute
+      top 0
+      left 0
+      transform translate(calc((var(--x) * var(--cell-size)) * -1%), calc((var(--y) * var(--cell-size)) * -1%))
+      height calc(var(--size) * 1px)
+      width calc(var(--size) * 1px)
 
 
 // Worth noting here if we write about this that FireFox requires
@@ -35,25 +45,25 @@ body
 @keyframes glitch-switch
   0%
     filter grayscale(1)
-    background-position calc((var(--x-0) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-0) * (100 / (var(--rows) - 1))) * 1%)
+    transform translate(calc((var(--x-0) * var(--cell-size)) * -1%), calc((var(--y-0) * var(--cell-size)) * -1%))
   10%
-    background-position calc((var(--x-1) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-1) * (100 / (var(--rows) - 1))) * 1%)
+    transform translate(calc((var(--x-1) * var(--cell-size)) * -1%), calc((var(--y-1) * var(--cell-size)) * -1%))
   20%
-    background-position calc((var(--x-2) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-2) * (100 / (var(--rows) - 1))) * 1%)
+    transform translate(calc((var(--x-2) * var(--cell-size)) * -1%), calc((var(--y-2) * var(--cell-size)) * -1%))
   30%
-    background-position calc((var(--x-3) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-3) * (100 / (var(--rows) - 1))) * 1%)
+    transform translate(calc((var(--x-3) * var(--cell-size)) * -1%), calc((var(--y-3) * var(--cell-size)) * -1%))
   40%
-    background-position calc((var(--x-4) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-4) * (100 / (var(--rows) - 1))) * 1%)
+    transform translate(calc((var(--x-4) * var(--cell-size)) * -1%), calc((var(--y-4) * var(--cell-size)) * -1%))
   50%
-    background-position calc((var(--x-5) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-5) * (100 / (var(--rows) - 1))) * 1%)
+    transform translate(calc((var(--x-5) * var(--cell-size)) * -1%), calc((var(--y-5) * var(--cell-size)) * -1%))
   60%
-    background-position calc((var(--x-6) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-6) * (100 / (var(--rows) - 1))) * 1%)
+    transform translate(calc((var(--x-6) * var(--cell-size)) * -1%), calc((var(--y-6) * var(--cell-size)) * -1%))
   70%
-    background-position calc((var(--x-7) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-7) * (100 / (var(--rows) - 1))) * 1%)
+    transform translate(calc((var(--x-7) * var(--cell-size)) * -1%), calc((var(--y-7) * var(--cell-size)) * -1%))
   80%
-    background-position calc((var(--x-8) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-8) * (100 / (var(--rows) - 1))) * 1%)
+    transform translate(calc((var(--x-8) * var(--cell-size)) * -1%), calc((var(--y-8) * var(--cell-size)) * -1%))
   90%
-    background-position calc((var(--x-9) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-9) * (100 / (var(--rows) - 1))) * 1%)
+    transform translate(calc((var(--x-9) * var(--cell-size)) * -1%), calc((var(--y-9) * var(--cell-size)) * -1%))
   100%
     filter grayscale(0)
-    background-position calc((var(--x-0) * (100 / (var(--columns) - 1))) * 1%) calc((var(--y-0) * (100 / (var(--rows) - 1))) * 1%)
+    transform translate(calc((var(--x-0) * var(--cell-size)) * -1%), calc((var(--y-0) * var(--cell-size)) * -1%))
