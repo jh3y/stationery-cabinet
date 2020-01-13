@@ -8,6 +8,7 @@ const {
 const ALT = 'jh3y logo - cartoon bear with snapback cap on'
 const SRC =
   'https://s3-us-west-2.amazonaws.com/s.cdpn.io/605876/bear-with-cap.svg'
+// Try something random like https://source.unsplash.com/300x300?bear
 
 const CONFIG = {
   cells: 5,
@@ -15,6 +16,7 @@ const CONFIG = {
   size: 300,
   speed: 0.2,
   delay: 0.5,
+  src: SRC,
 }
 
 const BOUNDS = {
@@ -73,6 +75,9 @@ const App = () => {
           )
           .onFinishChange(() => setModel(new Date().getTime()))
       }
+      datRef.current
+        .add(CONFIG, 'src')
+        .onChange(() => setModel(new Date().getTime()))
     }
   }, [model])
 
@@ -80,10 +85,9 @@ const App = () => {
     <div
       className="glitch-image"
       style={{
-        '--src': `url(${SRC})`,
+        '--src': `url(${CONFIG.src})`,
         '--size': CONFIG.size,
-        '--columns': CONFIG.cells,
-        '--rows': CONFIG.cells,
+        '--cells': CONFIG.cells,
         '--speed': CONFIG.speed,
         '--delay': CONFIG.delay,
       }}>
@@ -94,7 +98,7 @@ const App = () => {
           ariaHidden={true}
           style={generateStyles(index, CONFIG.cells * CONFIG.cells)}></div>
       ))}
-      <img src={SRC} alt={ALT} />
+      <img src={CONFIG.src} alt={ALT} />
     </div>
   )
 }
