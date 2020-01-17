@@ -8,12 +8,14 @@
 //- Same for the hogs
 - const hogsAmount = randomInRange(30, 50)
 //- Where the magic happens. Check out the full function in the script panel
-- const hogs=Array(hogsAmount).fill().map(()=>{let a=randomInRange(0,100),b=.5<Math.random()?0:100,c=randomInRange(-45,45),d=0,e=0;const f=4*Math.random()+1,g=4*Math.random()+1,h=.5<Math.random();return h&&(a=.5<Math.random()?0:100,b=randomInRange(0,100)),0===a&&(c=-90+randomInRange(-45,45),d=-50),100===a&&(c=90+randomInRange(-45,45),d=50),0===b&&(e=-50),100===b&&(c=180+randomInRange(-45,45),e=50),{left:a,top:b,rotation:c,translateX:d,translateY:e,speed:f,delay:g}});
+- const hogs=Array(hogsAmount).fill().map(()=>{let a=randomInRange(0,100),b=.5<Math.random()?0:100,c=randomInRange(-45,45),d=0,e=0;const f=6*Math.random()+2,g=4*Math.random()+1,h=.5<Math.random();return h&&(a=.5<Math.random()?0:100,b=randomInRange(0,100)),0===a&&(c=-90+randomInRange(-45,45),d=-50),100===a&&(c=90+randomInRange(-45,45),d=50),0===b&&(e=-50),100===b&&(c=180+randomInRange(-45,45),e=50),{left:a,top:b,rotation:c,translateX:d,translateY:e,speed:f,delay:g}});
 //- We need to declare some paths as I'm not sure how to randomly generate them
 - const circlePath = (r = 50) => `M 0 0 A ${r} ${r} 0 1 1 0 ${r * 2} A ${r} ${r} 0 1 1 0 0`
 //- Then we want a wavy path, a straight path and maybe a figure of eight path?
 - const linePath = () => `M 0 0 L 0 ${gridSize * 1.5}`
-- const wavePath = (x, y) => `M 0 0 Q ${x} ${y} 0 ${gridSize * 1.5}`
+//- - const wavePath = (x, y) => `M 0 0 Q ${x /4} ${y / 4} 0 ${gridSize * 1.5}`
+- const getMod = () => (gridSize / 2) * Math.random()
+- const wavePath = (x, y) => `M 0 0 Q ${getMod()} ${getMod()}, ${getMod()} ${getMod()} T ${getMod()} ${getMod()}, ${gridSize * 1.5} ${gridSize * 1.5}`
 form(style=`--seconds: ${seconds}; --hogs: ${hogsAmount}; --grid-size: ${gridSize}`)
   input.start(type='checkbox')
   .info-screen.title-screen
@@ -34,7 +36,7 @@ form(style=`--seconds: ${seconds}; --hogs: ${hogsAmount}; --grid-size: ${gridSiz
       - const score = golden ? 10 : 1
       - const color = hogColors[Math.floor(Math.random() * hogColors.length)]
       - const maneColor = golden ? '#d4af37' : '#000000'
-      - let path = Math.random() > 0.75 ? circlePath(randomInRange(-100, 100)) : Math.random() > 0.5 ? linePath(x, y) : wavePath(x, y)
+      - let path = Math.random() > 0.75 ? circlePath(randomInRange(-100, 100)) : Math.random() > 0.85 ? linePath(x, y) : wavePath(x, y)
       .hog(style=`--path: '${path}'; --left: ${left}; --top: ${top}; --rotation: ${rotation}; --translateX: ${translateX}; --translateY: ${translateY}; --speed: ${speed}; --delay: ${delay}; --color: ${color}; --maneColor: ${maneColor}; --score: ${score}`)
         input(type='checkbox', id=`hog--${h}`)
         label.hog__container(for=`hog--${h}`)
