@@ -1,0 +1,6 @@
+- const SLIDES = [0, 1, 2]
+ul.carousel
+  each SLIDE in SLIDES
+    input(type='radio', id=SLIDE, name="CAROUSEL", style=`--index: ${SLIDE}`)
+    li(style=`--slide-index: ${SLIDE}`)= SLIDE
+    //- We only have + - / *
