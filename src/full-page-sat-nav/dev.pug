@@ -1,4 +1,7 @@
-include clean-sat-nav.svg
-.content
+button.sat-nav__open(role='menu', title='Open Sat Nav')
+  svg.filler(viewbox="0 0 317.5 178")
+.sat-nav__backdrop
+include final.svg
+.page-content
   for page in ['Home', 'About', 'Work', 'Contact']
-    .page= page
+    section(data-location=page.toUpperCase())= page

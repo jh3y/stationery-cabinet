@@ -1,0 +1,117 @@
+<svg class="sat-nav" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 317.5 178.59375">
+  <g transform="translate(0 -118.40623)">
+    <path d="M14.67186 124.64984s96.01292-5.82083 144.07814-5.82083 144.07814 5.82083 144.07814 5.82083c3.06918.124 5.54454 2.47287 5.54454 5.54454v155.01744c0 3.07168-2.47286 5.54454-5.54454 5.54454H14.67186c-3.071675 0-5.5445407-2.47286-5.5445407-5.54454V130.19438c0-3.07167 2.4728657-5.54454 5.5445407-5.54454z" fill="#4d4d4d"/>
+    <path d="M14.67186 124.64984h288.15628c3.07168 0 5.54454 2.47287 5.54454 5.54454v155.01744c0 3.07168-2.47286 5.54454-5.54454 5.54454H14.67186c-3.071675 0-5.5445407-2.47286-5.5445407-5.54454V130.19438c0-3.07167 2.4728657-5.54454 5.5445407-5.54454z" fill="#999"/>
+    <path d="M30.436991 138.59782H287.06301c2.73558 0 4.93785 2.05757 4.93785 4.61339v128.98376c0 2.55584-2.20227 4.6134-4.93785 4.6134H30.436991c-2.73557 0-4.937853-2.05756-4.937853-4.6134V143.21121c0-2.55582 2.202283-4.61339 4.937853-4.61339z" fill="#666"/>
+    <text style="line-height:1.25" x="158.41895" y="286.11819" letter-spacing="0" word-spacing="0" stroke-width=".26458332">
+      <tspan x="158.41895" y="286.11819" style="-inkscape-font-specification:'Copperplate, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center" font-size="9.87777805" font-family="Copperplate" text-anchor="middle" fill="#fff">NAVNAV</tspan>
+    </text>
+    <path d="M30.436991 138.59782H287.06301c2.73558 0 4.93785 2.05757 4.93785 4.61339v128.98376c0 2.55584-2.20227 4.6134-4.93785 4.6134H30.436991c-2.73557 0-4.937853-2.05756-4.937853-4.6134V143.21121c0-2.55582 2.202283-4.61339 4.937853-4.61339z"/>
+    <circle class="sat-nav__power-led" cx="284.79752" cy="283.52032" r="3.3072917" />
+    <g class="sat-nav__lcd">
+      <rect ry="0" y="140.68933" x="28.256378" height="134.02754" width="260.98724" fill="#e6e6e6"/>
+      <path fill="#cfa" d="M164.43958 214.31821h124.80428v29.367199H164.43958zM58.89976 215.98632l52.26271-31.99217 46.66201 28.88952v49.58922H76.63097z"/>
+      <path style="line-height:normal;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;text-orientation:mixed;white-space:normal;shape-padding:0;isolation:auto;mix-blend-mode:normal;solid-color:#000;solid-opacity:1" d="M257.09128 221.2692c-3.4032-.001-6.92163.0225-10.54251.0765-12.87428.19199-27.04483.76583-41.94524 1.95699-55.39727 4.42854-121.213801 17.14854-168.882721 51.41443H57.72721c43.24435-24.97331 99.36726-35.67172 147.82355-39.54539 34.23439-2.73675 64.49155-2.16033 83.69308-1.21439v-11.91917c-8.75853-.42238-19.68217-.76398-32.15256-.76895z" color="#000" font-weight="400" font-family="sans-serif" overflow="visible" fill="#80e5ff"/>
+      <path style="line-height:normal;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;text-orientation:mixed;white-space:normal;shape-padding:0;isolation:auto;mix-blend-mode:normal;solid-color:#000;solid-opacity:1" d="M28.25615556 140.68910732v13.44930777l35.13532214 92.2129764-35.13532214 12.50931199v7.02127693l37.49125149-13.34750404 8.4521965 22.18262406h7.07915453l-2.14560412-5.63117993h78.69131832v5.63117993h6.61510184V250.30102h62.70469875v24.41608042h6.61561512V250.30102h55.48395774v-6.61561778H164.43957412v-29.36719917h124.80427161v-6.61509918H214.4453049v-67.01399656h-6.61509918v67.01399655h-26.19323374v-67.01399655h-6.61561512v67.01399655H162.046955l-47.87873217-28.72796055v-38.286036h-6.61561512v38.28965285l-51.04597984 30.72628966-26.2976198-69.0159425h-1.9528525zm85.91206727 46.00029107l43.65624945 26.19426825v49.58922107h-81.1934908l-6.95306471-18.35960396-.05322623.01912144-10.72492762-28.14608625 48.65284479-29.28710186v26.97613316h6.61561512v-26.98595185z" color="#000" font-weight="400" font-family="sans-serif" overflow="visible" fill="#fff"/>
+      <path d="M235.56165 144.47441a12.5 12.5 0 00-12.5 12.50001 12.5 12.5 0 0012.5 12.50002 12.5 12.5 0 00.42995-.0155 17.2625 17.2625 0 0016.76797 13.24467 17.2625 17.2625 0 0017.26253-17.26251 17.2625 17.2625 0 00-17.26253-17.26251 17.2625 17.2625 0 00-7.04763 1.52755 12.5 12.5 0 00-10.15029-5.23172z" fill="#aef" stroke="#fffffd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path fill="#deaa87" d="M181.63696 140.6891h26.19322v67.014h-26.19322z"/>
+      <path d="M30.20901 140.68911h77.34358v38.28965l-51.04596 30.72629z" fill="#cfa"/>
+      <path fill="#e9afaf" d="M233.75989 250.30103h55.483753v24.415838H233.75989z"/>
+<!--       <path d="M110.9555 214.39497v-33.96303l-56.413171 34.10694-12.952004-34.39476 32.955656 85.77105h86.490609v-18.85236h69.22127v22.30623" fill="none" stroke="#b2b2b2" stroke-width="3.96875"/> -->
+      <path class="sat-nav__path" id="workToAbout" d="M110.9555 214.39497v-33.96303l50.65673 30.79699h49.50544v-12.52027" fill="none" stroke="#000" stroke-width="3.96875"/>
+      <path class="sat-nav__path" id="homeToWork" d="M41.590325 180.14412l12.952004 34.39476 56.413171-34.10694 50.65673 30.79699h49.50544v-12.52027" fill="none" stroke="#b2b2b2" stroke-width="3.96875"/>
+      <path class="sat-nav__path" id="contactToAbout" d="M230.40176 268.64948v-21.29885h-68.78953v-36.1217l-50.65673-30.79699v33.96303" fill="none" stroke="#c94cc0" stroke-width="3.96875"/>
+      <path class="sat-nav__path" id="homeToWork" d="M41.590325 180.14412l12.952004 34.39476 56.413171-34.10694v33.96303-33.96303l50.65673 30.79699h49.50544v-12.52027" fill="none" stroke="#ea3030" stroke-width="3.96875"/>
+      <path class="sat-nav__path" id="homeToContact" d="M230.40176 268.64948v-21.29885l-69.36517-.28782v18.85236H74.54598l-32.955655-85.77105" fill="none" stroke="#c84bc0" stroke-width="3.96875"/>
+      <path class="sat-nav__path" id="homeToAbout" d="M41.590325 180.14412l12.952004 34.39476 56.413171-34.10694v33.96303" fill="none" stroke="#000" stroke-width="3.96875"/>
+      <path class="sat-nav__path" id="contactToWork" d="M230.40176 268.64948l-.1439-21.58667-68.64563.28782v-36.1217h49.50544v-12.52027" fill="none" stroke="#c148bc" stroke-width="3.96875"/>
+<!--       <path class="sat-nav__path" id="contactToAbout" d="M110.9555 214.39497v-33.96303l50.65673 30.79699v36.1217h68.78953v21.29885" fill="none" stroke="#c96722" stroke-width="3.96875"/> -->
+<!--       <circle r="4.5357141" cy="213.93819" cx="110.83665" fill="#0cf" stroke="#1495ff" stroke-width="1.51190472" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="210.99881" cy="198.68361" r="4.5357141" fill="#0cf" stroke="#1495ff" stroke-width="1.51190472" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle r="4.5357141" cy="268.33661" cx="230.42683" fill="#0cf" stroke="#1495ff" stroke-width="1.51190472" stroke-linecap="round" stroke-linejoin="round"/> -->
+      <a title="Close Sat Nav">
+        <g class="sat-nav__close" transform="rotate(45 279.2468 149.78418)" stroke="#000" title="Close Sat Nav">
+          <circle r="6.6145835" cy="149.78418" cx="279.2468" stroke-width="1.32291663" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M279.2468 145.25098v9.0664M283.78 149.78418h-9.0664" fill="none" stroke-width="2.11666656"/>
+        </g>
+      </a>
+      <circle class="sat-nav__position-marker" cx="41.615379" cy="179.83124" r="4.5357141" fill="#0cf" stroke="#1495ff" stroke-width="1.51190472" stroke-linecap="round" stroke-linejoin="round"/>
+      <a class="sat-nav__destination-link" data-location="ABOUT">
+        <g class="sat-nav__location-marker">
+          <path d="M93.874851 226.0293978c0 4.38376-7.9375 15.13306-7.9375 15.13306s-7.9375-10.7493-7.9375-15.13306c0-4.38376 3.55374-7.9375 7.9375-7.9375 4.38376 0 7.9375 3.55374 7.9375 7.9375z" />
+          <path d="M89.341649 226.0293978a3.4042985 3.4042988 0 01-3.404299 3.4043 3.4042985 3.4042988 0 01-3.404298-3.4043 3.4042985 3.4042988 0 013.404298-3.4043 3.4042985 3.4042988 0 013.404299 3.4043z" fill="#fff"/>
+          <text y="229.25534" x="106.94353" style="line-height:1.25" letter-spacing="0" word-spacing="0" stroke-width=".26458332" transform="translate(-10.505515 4.3173348)">
+            <tspan y="229.25534" x="106.94353">About</tspan>
+          </text>
+        </g>
+      </a>
+      <g class="sat-nav__destination-title" data-location="ABOUT">
+        <path fill="#194e8a" d="M127.74638 140.68932628h62.007252v22.905228H127.74638z"/>
+        <text y="199.47887" x="419.61746" style="line-height:1.25" letter-spacing="0" word-spacing="0" fill="#fff" stroke-width=".26458332" transform="translate(-287.09127 -43.39143372)">
+          <tspan y="199.47887" x="419.61746">About</tspan>
+        </text>
+        <g fill="#fff">
+          <path d="M166.2088857 148.49370237h13.283296v7.2964578h-13.283296z"/>
+          <path d="M178.0039057 159.62365237l7.48172-7.48171-7.48172-7.48172z"/>
+        </g>
+      </g>
+      <a class="sat-nav__destination-link" data-location="WORK">
+        <g class="sat-nav__location-marker">
+          <path d="M235.0517 186.45383c0 4.38376-7.9375 15.13306-7.9375 15.13306s-7.9375-10.7493-7.9375-15.13306c0-4.38376 3.55374-7.9375 7.9375-7.9375 4.38376 0 7.9375 3.55374 7.9375 7.9375z" />
+          <path d="M230.518498 186.45383a3.4042985 3.4042988 0 01-3.404299 3.4043 3.4042985 3.4042988 0 01-3.404298-3.4043 3.4042985 3.4042988 0 013.404298-3.4043 3.4042985 3.4042988 0 013.404299 3.4043z" fill="#fff"/>
+          <text y="193.9971" x="237.3461" style="line-height:1.25" letter-spacing="0" word-spacing="0" stroke-width=".26458332">
+            <tspan y="193.9971" x="237.3461">Work</tspan>
+          </text>
+        </g>
+      </a>
+      <g class="sat-nav__destination-title" data-location="WORK">
+        <path fill="#194e8a" d="M128.681815 140.6893263h60.136368v22.905228h-60.136368z"/>
+        <text y="198.35634" x="419.93353" style="line-height:1.25" letter-spacing="0" word-spacing="0" fill="#fff" stroke-width=".26458332" transform="translate(-286.342935 -43.3914337)">
+          <tspan y="198.35634" x="419.93353">Work</tspan>
+        </text>
+        <g fill="#fff">
+          <path d="M164.6886259 147.3711743h13.283296v7.2964578h-13.283296z"/>
+          <path d="M176.4836459 158.5011243l7.48172-7.48171-7.48172-7.48172z"/>
+        </g>
+      </g>
+      <a class="sat-nav__destination-link" data-location="CONTACT">
+        <g class="sat-nav__location-marker">
+          <path d="M227.14426 253.179243c0 4.38376-7.9375 15.13306-7.9375 15.13306s-7.9375-10.7493-7.9375-15.13306c0-4.38376 3.55374-7.9375 7.9375-7.9375 4.38376 0 7.9375 3.55374 7.9375 7.9375z" />
+          <path d="M222.611058 253.179243a3.4042985 3.4042988 0 01-3.404299 3.4043 3.4042985 3.4042988 0 01-3.404298-3.4043 3.4042985 3.4042988 0 013.404298-3.4043 3.4042985 3.4042988 0 013.404299 3.4043z" fill="#fff"/>
+          <text y="260.62949" x="167.66472" style="line-height:1.25" letter-spacing="0" word-spacing="0" stroke-width=".26458332">
+            <tspan y="260.62949" x="167.66472">Contact</tspan>
+          </text>
+        </g>
+      </a>
+      <g class="sat-nav__destination-title" data-location="CONTACT">
+        <path fill="#194e8a" d="M124.00459 140.689333h69.490807v22.905228H124.00459z"/>
+        <text y="204.41316" x="360.22351" style="line-height:1.25" letter-spacing="0" word-spacing="0" fill="#fff" stroke-width=".26458332" transform="translate(-232.5399 -48.418747)">
+          <tspan y="204.41316" x="360.22351">Contact</tspan>
+        </text>
+        <g fill="#fff">
+          <path d="M171.28816 148.58725232h13.283296v7.1093693H171.28816z"/>
+          <path d="M183.08318 159.62365232l7.48172-7.48171-7.48172-7.48172z"/>
+        </g>
+      </g>
+      <a class="sat-nav__destination-link sat-nav__destination-link--active" data-location="HOME">
+        <g class='sat-nav__location-marker'>
+          <path d="M60.19964 162.99631c0 4.38376-7.9375 15.13306-7.9375 15.13306s-7.9375-10.7493-7.9375-15.13306c0-4.38376 3.55374-7.9375 7.9375-7.9375 4.38376 0 7.9375 3.55374 7.9375 7.9375z" />
+          <path d="M55.666438 162.99631a3.4042985 3.4042988 0 01-3.404299 3.4043 3.4042985 3.4042988 0 01-3.404298-3.4043 3.4042985 3.4042988 0 013.404298-3.4043 3.4042985 3.4042988 0 013.404299 3.4043z" fill="#fff"/>
+          <text y="170.3768" x="61.806778" style="line-height:1.25" letter-spacing="0" word-spacing="0" stroke-width=".26458332">
+            <tspan y="170.3768" x="61.806778">Home</tspan>
+          </text>
+        </g>
+      </a>
+      <g class="sat-nav__destination-title" data-location="HOME">
+        <path fill="#194e8a" d="M127.542762 140.68933h62.414474v22.905228h-62.414474z"/>
+        <text y="155.92465" x="142.88533" style="line-height:1.25" letter-spacing="0" word-spacing="0" fill="#fff" stroke-width=".26458332" transform="translate(-10.500328)">
+          <tspan y="155.92465" x="142.88533">Home</tspan>
+        </text>
+        <g fill="#fff">
+          <path d="M165.721462 148.58725237h13.283296v7.1093693h-13.283296z"/>
+          <path d="M177.516482 159.62365237l7.48172-7.48171-7.48172-7.48172z"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
