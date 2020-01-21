@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css?family=Alata&display=swap')
+*
+  box-sizing border-box
+
+:root
+  --speed .85
+  --primary hsl(0, 0, 100%)
+  --size 30
+  --ease cubic-bezier(0.175, 0.885, 0.32, 1.275)
+
+body
+  background #fafafa
+  font-family 'Alata', sans-serif
+  min-height 100vh
+  overflow-x hidden
+  padding 0
+
+main
+  height 100vh
+  overflow-y scroll
+  scroll-behavior smooth
+  scroll-snap-type y mandatory
+
+section
+  align-items center
+  display flex
+  font-size 3rem
+  height 100vh
+  justify-content center
+  scroll-snap-align center
+  width 100vw
+
+.menu
+  position fixed
+
+  &__toggle
+    opacity 0
+    position absolute
+
+    &:checked
+      & ~ .menu__content .menu__item
+        --active-x var(--x)
+        --active-y var(--y)
+        --scale 1
+        --color 1
+
+      & ~ .menu__toggle-label:not(.menu__toggle-label--closer)
+        --clip circle(1000% at 0% 0%)
+        height 100vh
+        width 100vw
+        backdrop-filter blur(10px)
+
+      & ~ .menu__toggle-label .menu__icon
+        &:nth-of-type(1)
+          --scale 0
+        &:nth-of-type(2)
+          --scale 1
+
+  &__toggle-label
+    cursor pointer
+    height calc(var(--size, 20) * 0.5vmin)
+    width calc(var(--size, 20) * 0.5vmin)
+    display block
+    --clip circle(100% at 0% 0%)
+    -webkit-clip-path var(--clip)
+    clip-path var(--clip)
+    position absolute
+    top 0
+    left 0
+    transition backdrop-filter calc(var(--speed, 1) * 1s) var(--ease), clip-path 0s, -webkit-clip-path 0s
+
+    &--closer
+      z-index 3
+      --scale 0
+
+      &:hover ~ .menu__content
+        --label-light 60
+
+  &__icon
+    --scale 1
+    height calc(var(--size, 20) * 0.25vmin)
+    width calc(var(--size, 20) * 0.25vmin)
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-70%, -70%) scale(var(--scale, 1))
+
+    &:nth-of-type(2)
+      --scale 0
+
+    fill var(--primary)
+    transition all calc(var(--speed, 1) * 1s) var(--ease)
+
+  &__content
+    background 'hsl(%s, 50%, %s)' % (var(--hue, 0) calc(var(--label-light, 50) * 1%))
+    margin 0
+    display block
+    list-style-type none
+    z-index -1
+    filter url("#goo")
+    position absolute
+    top 0
+    height 0
+    width 0
+    left 0
+    z-index 2
+    transition background .1s
+
+    &:after
+      background 'hsl(%s, 50%, %s)' % (var(--hue, 0) calc(var(--label-light, 50) * 1%))
+      content ''
+      border-radius 50%
+      transform translate(-50%, -50%)
+      position absolute
+      height calc(var(--size, 20) * 1vmin)
+      width calc(var(--size, 20) * 1vmin)
+      transition background .1s
+      top 0
+      left 0
+
+  &__item
+    background 'hsl(%s, 50%, %s)' % (var(--hue, 0) calc(var(--lightness, 50) * 1%))
+    border-radius 50%
+    cursor pointer
+    display flex
+    list-style-type none
+    font-size 1rem
+    height calc(var(--size, 20) * 1vmin)
+    left calc(var(--active-x, 0) * 1px)
+    overflow hidden
+    place-items center
+    position absolute
+    text-align center
+    top calc(var(--active-y, 0) * 1px)
+    transform translate(-50%, -50%) scale(var(--scale, 0.5))
+    transition all calc(var(--speed, 1) * 1s) calc(var(--delay, 0) * 1s) var(--ease), background .1s
+    width calc(var(--size, 20) * 1vmin)
+
+    @media(min-width 768px)
+      font-size 3rem
+
+    &:hover
+      --lightness 60
+
+  &__link
+    align-items center
+    color 'hsla(0, 0%, 100%, %s)' % var(--color, 0)
+    cursor pointer
+    text-decoration none
+    font-weight bold
+    text-align center
+    display flex
+    justify-content center
+    height 100%
+    width 100%
+    transition color calc(var(--speed, 1) * 1s) calc(var(--delay, 0) * 1s) var(--ease)
+
+    &:hover
+      text-decoration underline
