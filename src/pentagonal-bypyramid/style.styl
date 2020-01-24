@@ -1,0 +1,186 @@
+*
+  box-sizing border-box
+
+:root
+  --inactive-opacity 0.35
+  --inactive-scale 0.25
+  --indicator-size 20
+  --control-size 24
+  --indicator-color hsl(0, 0%, 100%)
+  --transition 0.25
+  --bg #222
+
+body
+  min-height 100vh
+  background var(--bg)
+  overflow hidden
+
+.gallery
+  height calc(var(--side) * 2px)
+  left 50%
+  overflow hidden
+  position absolute
+  top 50%
+  transform translate(-50%, -50%) scale(var(--gallery-scale, var(--inactive-scale)))
+  width calc(var(--side) * 2px)
+
+  &:hover
+    --gallery-scale 1
+    --controls-opacity 1
+    --indicators-opacity 1
+
+    @media(max-width 768px)
+      --gallery-scale 0.55
+    
+    .gallery__images
+      animation entrance calc(var(--transition) * 1s) ease
+
+    [name="gallery"]
+      for $num in (1..10)
+        &:nth-of-type({$num}):checked ~ .gallery__images img:nth-of-type({$num})
+          --opacity 1
+          --grayscale 0
+
+  // Hide all the radio buttons
+  [name="gallery"]
+    opacity 0
+    position absolute
+    right 100%
+
+    for $num in (1..10)
+      &:nth-of-type({$num}):checked
+        ~ .gallery__images
+          $multiplier = 1
+          if $num % 2 > 0
+            $multiplier = -1
+          --active-x 'calc(var(--angle) * %s)' % $multiplier 
+        ~ .gallery__controls .gallery__control-set:nth-of-type({$num})
+          display block
+        ~ .gallery__indicators .gallery__indicator:nth-of-type({$num})
+          --opacity 1
+    
+    for $num in (0..4)
+      &:nth-of-type({$num * 2 + 1}):checked
+      &:nth-of-type({$num * 2 + 2}):checked
+        ~ .gallery__images
+          --active-y $num * (360 / -5)
+  
+  // Indicators at bottom of control. Only show on hover
+  &__indicators
+    bottom calc(var(--control-size) * 1px)
+    display grid
+    grid-gap calc(var(--control-size) * 0.5px)
+    grid-template-columns repeat(10, 1fr)
+    left 50%
+    opacity var(--indicators-opacity, 0)
+    position absolute
+    transform translate(-50%, 0)
+
+  &__indicator
+    background var(--indicator-color)
+    border-radius 50%
+    cursor pointer
+    display block
+    height calc(var(--control-size) * 0.5px)
+    opacity var(--opacity, 0.25)
+    transition all calc(var(--transition) * 1s) ease
+    width calc(var(--control-size) * 0.5px)
+
+  &__controls
+    opacity var(--controls-opacity, 0)
+
+  &__control-set
+    display none
+
+  &__control
+    background transparent
+    height 100%
+    position absolute
+    width 20%
+    top 0
+
+    svg
+      background var(--indicator-color)
+      border-radius 50%
+      cursor pointer
+      height calc(var(--control-size) * 1px)
+      opacity var(--opacity, var(--inactive-opacity))
+      position absolute
+      top 50%
+      transition all calc(var(--transition) * 1s)
+      width calc(var(--control-size) * 1px)
+      
+      &:hover
+        --opacity 1
+
+      path
+        fill var(--bg)
+    
+    &--left
+      left calc(var(--control-size) * 1px)
+
+      svg
+        left 0
+        transform translate(0, -50%) rotate(180deg)
+        
+    &--right
+      right calc(var(--control-size) * 1px)
+
+      svg
+        right 0
+        transform translate(0, -50%)
+
+  &__images
+    animation rotate 10s infinite linear
+    height calc(var(--side) * 2px)
+    left 0
+    position absolute
+    top 0
+    transition all .25s ease 0s
+    transform rotateX(calc(var(--active-x) * 1deg)) rotateY(calc(var(--active-y) * 1deg))
+    transform-style preserve-3d
+    width calc(var(--side) * 2px)
+
+  img
+    -webkit-clip-path var(--clip)
+    clip-path var(--clip)
+    height calc(var(--side) * 1px)
+    filter grayscale(var(--grayscale, 1))
+    left 50%
+    object-fit cover
+    opacity var(--opacity, var(--inactive-opacity))
+    position absolute
+    top 50%
+    transform translate(-50%, -50%) rotateY(calc(var(--index) * 72deg)) translateY(calc(var(--translate) * 50%)) translateZ(calc(var(--radius) * 1px)) rotateX(calc((var(--angle) * var(--tilt)) * 1deg))
+    transform-origin var(--origin)
+    transition all .25s ease
+    width calc(var(--side) * 1px)
+
+    for $num in (0..4)
+      &:nth-of-type({$num * 2 + 1})
+      &:nth-of-type({$num * 2 + 2})
+        --index $num
+
+    &:nth-of-type(odd)
+      --clip polygon(0 100%, 50% 0, 100% 100%)
+      --origin bottom
+      --tilt 1
+      --translate -1
+
+    &:nth-of-type(even)
+      --clip polygon(0 0, 50% 100%, 100% 0)
+      --origin top
+      --tilt -1
+      --translate 1
+
+
+
+@keyframes rotate
+  from
+    transform rotateX(45deg) rotateY(45deg)
+  to
+    transform rotateX(405deg) rotateY(765deg)
+
+@keyframes entrance
+  from
+    transform rotateX(45deg) rotateY(45deg)
