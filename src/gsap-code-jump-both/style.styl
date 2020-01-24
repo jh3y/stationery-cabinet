@@ -1,0 +1,97 @@
+*
+  box-sizing border-box
+
+:root
+  --bg #333
+  --selector #6eff7c
+  --default #dddddd
+  --func #a5c5ff
+  --circle #a5c5ff
+  --steps 5
+  --timing-function steps(var(--steps, 5))
+
+body
+  background-color var(--bg)
+  color            #fafafa
+  font-family -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  overflow-x hidden
+
+main
+  display inline-block
+  overflow hidden
+
+pre
+  display inline-block
+  margin 0 0 2rem
+  background var(--bg)
+  width 550px
+
+code.hljs
+  background var(--bg)
+  color var(--default)
+  .hljs-selector-class
+    color var(--selector)
+  .hljs-built_in
+  .hljs-number
+    color var(--func)
+
+header
+  margin-bottom 2rem
+  position relative
+
+h1
+  font-weight 400
+  letter-spacing 4
+  font-size 3rem
+  margin 0
+h2
+  font-weight 200
+  margin 0
+  font-size 1.25rem
+
+section
+  padding 1rem
+  position relative
+  display flex
+  align-items center
+  justify-content center
+
+  &:after
+    content ''
+    height 150px
+    width 150px
+    position absolute
+    border-radius 50%
+    border 4px dashed #FFF
+
+.circle
+  --bg #a5c5ff
+  height 150px
+  width 150px
+  border-radius 50%
+  background var(--bg, #a5c5ff)
+
+  &--animated
+    animation scaleUp 2s infinite var(--timing-function, steps(var(--steps)))
+
+.after
+  position absolute
+  top 0
+  left 0
+  opacity 0
+  transform translate(25px, 0)
+
+@keyframes scaleUp
+  from
+    transform scale(0)
+
+.step
+  &__jump-term
+    display inline-block
+    transform-origin left
+    font-weight bold
+    color var(--selector)

@@ -1,0 +1,18 @@
+- const STEPS = 5
+main
+  header
+    hgroup.before
+      h1 before
+      h2 frame is skipped and the circle doesn't reach full scale 👎
+    hgroup.after
+      h1 after
+      h2 no jumps, no frames skipped, and the circle reaches full scale 🙌
+  pre
+    code(class='css').
+      .circle {
+        animation: scaleUp 2s infinite steps(5<span class='step__comma'></span><span class='step__jump-term'></span>);
+      }
+
+      @keyframes scaleUp { from { transform: scale(0); } }
+  section
+    .circle.circle--animated
