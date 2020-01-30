@@ -9,10 +9,9 @@ body
   display flex
   justify-content center
   min-height 100vh
-  transform-style preserve-3d
 
 :root
-  --speed .25
+  --speed 0.25
   --scale-step 8
   --base-width 100
   --base-height calc(var(--base-width) * 1.83333333333)
@@ -44,9 +43,9 @@ body
   display none
   position absolute
   transform-origin bottom center
-  transition transform .25s ease
+  transition transform calc(var(--speed) * 1s) ease
   width calc(var(--width) * 1px)
-  z-index calc(var(--bear-count) - var(--bear-index))
+  // z-index calc(var(--bear-count) - var(--bear-index))
 
   .bear-body
     fill var(--bear-color)
@@ -100,13 +99,13 @@ body
    * We use two half elements to mimic top and bottom
   */
   &__half
+    --translation 0
     height 50%
-    left 50%
+    left 0
     overflow hidden
     position absolute
     right 0
     top 50%
-    transform translate(-50%, calc(var(--translation) * 1%))
     width 100%
 
     svg
@@ -115,13 +114,13 @@ body
       width 100%
 
     &--top
-      --translation -100
+      top 0
 
       svg
         top 0
 
     &--bottom
-      --translation 0
+      bottom 0
       svg
         bottom 0
 
@@ -176,7 +175,7 @@ input:checked
               slideOut calc(var(--speed) * 1s) calc(var(--speed) * 5s) forwards
 
     .bear__half--top
-      transform-origin bottom left
+      // transform-origin bottom left
       animation open calc(var(--speed) * 2s) calc(var(--speed) * 1s) forwards
 
     // Once the top has opened, move the dummy up and out and into the spot where it should be
@@ -220,13 +219,13 @@ input:checked
 
 @keyframes open
   0%
-    transform translate(-50%, calc(var(--translation) * 1%)) translate(0, 0)
+    transform translate(0, 0)
   {100 / 3%}
-    transform translate(-50%, calc(var(--translation) * 1%)) translate(0, -100%)
+    transform translate(0, -100%)
   {100/ 3 * 2%}
-    transform translate(-50%, calc(var(--translation) * 1%)) translate(-100%, -100%)
+    transform translate(-100%, -100%)
   100%
-    transform translate(-50%, calc(var(--translation) * 1%)) translate(-100%, 100%)
+    transform translate(-100%, 100%)
 
 @keyframes popOut
   to

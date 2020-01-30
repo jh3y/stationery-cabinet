@@ -14,6 +14,7 @@ body
   min-height 100vh
   background var(--bg)
   overflow hidden
+  margin 0
 
 .gallery
   height calc(var(--side) * 2px)
@@ -31,7 +32,7 @@ body
 
     @media(max-width 768px)
       --gallery-scale 0.55
-    
+
     .gallery__images
       animation entrance calc(var(--transition) * 1s) ease
 
@@ -39,6 +40,7 @@ body
       for $num in (1..10)
         &:nth-of-type({$num}):checked ~ .gallery__images img:nth-of-type({$num})
           --opacity 1
+          --z 1
           --grayscale 0
 
   // Hide all the radio buttons
@@ -53,18 +55,18 @@ body
           $multiplier = 1
           if $num % 2 > 0
             $multiplier = -1
-          --active-x 'calc(var(--angle) * %s)' % $multiplier 
+          --active-x 'calc(var(--angle) * %s)' % $multiplier
         ~ .gallery__controls .gallery__control-set:nth-of-type({$num})
           display block
         ~ .gallery__indicators .gallery__indicator:nth-of-type({$num})
           --opacity 1
-    
+
     for $num in (0..4)
       &:nth-of-type({$num * 2 + 1}):checked
       &:nth-of-type({$num * 2 + 2}):checked
         ~ .gallery__images
           --active-y $num * (360 / -5)
-  
+
   // Indicators at bottom of control. Only show on hover
   &__indicators
     bottom calc(var(--control-size) * 1px)
@@ -109,20 +111,20 @@ body
       top 50%
       transition all calc(var(--transition) * 1s)
       width calc(var(--control-size) * 1px)
-      
+
       &:hover
         --opacity 1
 
       path
         fill var(--bg)
-    
+
     &--left
       left calc(var(--control-size) * 1px)
 
       svg
         left 0
         transform translate(0, -50%) rotate(180deg)
-        
+
     &--right
       right calc(var(--control-size) * 1px)
 
@@ -151,9 +153,9 @@ body
     opacity var(--opacity, var(--inactive-opacity))
     position absolute
     top 50%
-    transform translate(-50%, -50%) rotateY(calc(var(--index) * 72deg)) translateY(calc(var(--translate) * 50%)) translateZ(calc(var(--radius) * 1px)) rotateX(calc((var(--angle) * var(--tilt)) * 1deg))
+    transform translate(-50%, -50%) rotateY(calc(var(--index) * 72deg)) translateY(calc(var(--translate) * 50%)) translateZ(calc(var(--radius) * 1px)) rotateX(calc((var(--angle) * var(--tilt)) * 1deg)) translate3d(0, 0, calc(var(--z, 0) * 1px))
     transform-origin var(--origin)
-    transition all .25s ease
+    transition all calc(var(--transition) * 1s) ease
     width calc(var(--side) * 1px)
 
     for $num in (0..4)
