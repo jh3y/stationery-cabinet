@@ -37,17 +37,16 @@ form.bears(style=`--bear-count: ${bears}`)
     - const { lightness, hue } = colorMap[b]
     - const { lightness: nextLightness, hue: nextHue } = colorMap[b + 1] ? colorMap[b+1] : colorMap[b]
     - if (b !== (bears - 1))
-      input(id=`bear--${b}`, style=`--bear-index: ${b};`, type='checkbox')
-    label.bear(for=`bear--${b}`, style=`--lightness: ${lightness}; --shirt-hue: ${hue}; --scale: ${b === 0 ? 1 : 0}; --bear-index: ${b}; ${b === 0 ? 'display: block;' : ''}`)
-      .bear.bear--dummy(style=`--lightness: ${nextLightness}; --shirt-hue: ${nextHue};`)
-        .bear--dummy--top.bear--dummy--half
+      input(id=`bear--${b}`, type='checkbox')
+    label.bear(for=`bear--${b}`, style=`--lightness: ${lightness}; --shirt-hue: ${hue}; --bear-index: ${b}; ${b === 0 ? 'display: block;' : ''}`)
+      span.bear__dummy-container(style=`--lightness: ${nextLightness}; --shirt-hue: ${nextHue};`)
+        .bear__dummy
           +bear()
-        .bear--dummy--bottom.bear--dummy--half
+      span.bear__container
+        span.bear__half.bear__half--top
           +bear()
-      .bear__half.bear__half--top
-        +bear()
-      .bear__half.bear__half--bottom
-        +bear()
+        span.bear__half.bear__half--bottom
+          +bear()
     - b++
   input(type='reset', id='reset')
   label(for='reset', title='Reset bears')
