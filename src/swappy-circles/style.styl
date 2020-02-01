@@ -1,0 +1,131 @@
+*
+  box-sizing border-box
+
+:root
+  --primary hsla(125, 100%, 85%, 1)
+  --secondary hsla(125, 0%, 30%, 1)
+  --size 200
+  --speed 1
+
+h1
+  font-size 1.5rem
+  position fixed
+  bottom 1rem
+  right 1rem
+  opacity 0.5
+  font-weight bold
+
+body
+  align-items center
+  background hsl(125, 0%, 40%)
+  display flex
+  justify-content center
+  min-height 100vh
+  overflow hidden
+
+  &:before
+    border-radius 6px
+    box-shadow 4px 4px 0 0 #111
+    content ''
+    height calc(var(--size) * 1px)
+    left 50%
+    position absolute
+    top 50%
+    transform translate(-50%, -50%)
+    width calc(var(--size) * 1px)
+
+[type='checkbox']
+  position fixed
+  left 100%
+  opacity 0
+
+label
+  position fixed
+  height 100vh
+  width 100vw
+  z-index 2
+
+:checked ~ .container
+  --speed 5
+  --primary hsla(125, 100%, 85%, 0.5)
+  --secondary hsla(125, 0%, 30%, 0.5)
+  border 4px dashed #fff
+  overflow visible
+
+  &:before
+    background hsl(0, 0%, 100%)
+
+  .circle
+    border 4px dashed #fff
+
+.container
+  --primary-switch var(--secondary)
+  --secondary-switch var(--primary)
+  border-radius 6px
+  height calc(var(--size) * 1px)
+  width calc(var(--size) * 1px)
+  background var(--primary)
+  position relative
+  overflow hidden
+  animation flip calc(var(--speed) * 4s) steps(1) infinite, bg calc(var(--speed) * 4s) steps(1) infinite
+
+  &:before
+    border-radius 50%
+    content ''
+    height 10px
+    left 50%
+    position absolute
+    top 50%
+    transform translate(-50%, -50%)
+    width 10px
+    z-index 5
+
+.circle
+  animation rotate calc(var(--speed) * 1s) ease-in-out infinite alternate
+  height 100%
+  left 0%
+  position absolute
+  top 40%
+  transform-origin 50% 0%
+  width 100%
+
+  &:after
+    --primary-switch var(--primary)
+    --secondary-switch var(--secondary)
+    $clip = inset(0% 45% 90% 45% round 50% 50%)
+    -webkit-clip-path $clip
+    animation clip calc(var(--speed) * 1s) ease-in-out infinite alternate, bg calc(var(--speed) * 4s) steps(1) infinite
+    background var(--secondary)
+    clip-path $clip
+    content ''
+    height 200%
+    left 50%
+    position absolute
+    top 0%
+    transform translate(-50%, 0)
+    transform-origin 50% 0
+    width 200%
+
+@keyframes flip
+  25%
+    transform rotateY(0deg) rotateX(180deg)
+  50%
+    transform rotateY(180deg) rotateX(180deg)
+  75%
+    transform rotateY(180deg) rotateX(0deg)
+
+@keyframes rotate
+  to
+    transform rotate(180deg) translate(0, -10%)
+
+@keyframes clip
+  to
+    $clip = inset(0 0 0 0 round 0 0)
+    -webkit-clip-path $clip
+    clip-path $clip
+
+@keyframes bg
+  25%
+    background var(--primary-switch)
+  75%
+    background var(--secondary-switch)
