@@ -1,0 +1,71 @@
+*
+  box-sizing border-box
+
+:root
+  --chord-lightness 40
+  --bg-lightness 90
+  --glass-lightness 80
+  --glass-saturation 0
+  --filament-saturation 0
+  --filament-lightness 70
+  --fitting-lightness 80
+  --light-alpha 0
+  --ceiling 40
+
+
+  @media(prefers-color-scheme: dark)
+    --filament-saturation 0
+    --filament-lightness 40
+    --fitting-lightness 30
+    --chord-lightness 50
+    --bg-lightness 5
+    --glass-lightness 30
+    --light-alpha 0
+    --ceiling 50
+
+body
+  background 'hsl(215, 100%, %s)' % calc(var(--bg-lightness) * 1%)
+  display flex
+  align-items center
+  justify-content center
+  min-height 100vh
+
+svg
+  width 90vmin
+  transform translate(0, -30%)
+
+.wrapper
+  position relative
+  &:after
+    content ""
+    width 90vmin
+    position absolute
+    bottom 130%
+    left 0%
+    border-bottom '4px solid hsl(0, 0%, %s)' % calc(var(--ceiling) * 1%)
+    transform translate(0, 2px)
+
+.light-bulb
+  display block
+
+  &__chord
+    stroke 'hsl(0, 0%, %s)' % calc(var(--chord-lightness) * 1%)
+
+  &__glass
+    fill 'hsla(60, 100%, 50%, %s)' % var(--light-alpha)
+    stroke 'hsla(60, %s, %s, 1)' % (calc(var(--glass-saturation) * 1%) calc(var(--glass-lightness) * 1%))
+
+  &__filament
+    fill none
+    stroke 'hsl(60, %s, %s)' % (calc(var(--filament-saturation) * 1%) calc(var(--filament-lightness) * 1%))
+
+  &__fitting
+    fill 'hsl(0, 0%, %s)' % calc(var(--fitting-lightness) * 1%)
+
+  &__fitting-shine
+    fill 'hsl(0, 0%, %s)' % calc((var(--fitting-lightness) + 20) * 1%)
+
+  &__bloom
+    fill none
+    stroke 'hsl(60, 100%, 50%)'
+    stroke-width 2
