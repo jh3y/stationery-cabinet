@@ -112,7 +112,7 @@ const SWING_LEFT_TL = new timeline()
         scale: 0,
         opacity: 1,
       },
-      { scale: 1.25, opacity: 0 }
+      { scale: 1.3, opacity: 0 }
     ),
     -0.1
   )
@@ -334,7 +334,7 @@ const SWING_RIGHT_BACK_TL = new timeline()
         scale: 0,
         opacity: 1,
       },
-      { scale: 1.25, opacity: 0 }
+      { scale: 1.3, opacity: 0 }
     ),
     -0.1
   )
