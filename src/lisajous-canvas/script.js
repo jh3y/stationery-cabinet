@@ -37,9 +37,7 @@ class Dial {
     )
     this.CONTEXT.fill()
     this.CONTEXT.restore()
-    this.ROTATION = this.CLOCKWISE
-      ? this.ROTATION + this.SPEED
-      : this.ROTATION - this.SPEED
+    this.ROTATION = this.ROTATION + this.SPEED
     return this.CANVAS
   }
   getXY = () => {
@@ -57,8 +55,12 @@ class Dial {
   }
 }
 
-const LEFT_DIAL = new Dial({ speed: 3, clockwise: true, radius: 90 })
-const RIGHT_DIAL = new Dial({ speed: 2.5, clockwise: true, radius: 90 })
+/**
+ * TODO: Put a pause feature in. Configure all the things 😎
+ */
+
+const LEFT_DIAL = new Dial({ speed: 3, radius: 90 })
+const RIGHT_DIAL = new Dial({ speed: 3.75, radius: 90 })
 const POINTS = []
 const draw = () => {
   const { x: x1, y: y1 } = LEFT_DIAL.getXY()
@@ -83,7 +85,7 @@ const draw = () => {
     CONTEXT.arc(
       SIZE / 2 + POINT[0],
       SIZE / 2 + POINT[1],
-      5,
+      4,
       0,
       (360 * Math.PI) / 180
     )
