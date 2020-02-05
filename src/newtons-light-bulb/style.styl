@@ -2,27 +2,28 @@
   box-sizing border-box
 
 :root
-  --chord-lightness 40
-  --bg-lightness 90
-  --glass-lightness 80
-  --glass-saturation 0
   --filament-saturation 0
-  --filament-lightness 70
-  --fitting-lightness 80
+  --filament-lightness 40
+  --fitting-lightness 30
+  --chord-lightness 50
+  --bg-lightness 5
+  --glass-lightness 30
+  --glass-saturation 0
   --light-alpha 0
-  --ceiling 40
+  --ceiling 50
   --bulb-hue 60
 
-
-  @media(prefers-color-scheme: dark)
+  @media(prefers-color-scheme: light)
+    --chord-lightness 40
+    --bg-lightness 75
+    --glass-lightness 80
+    --glass-saturation 0
     --filament-saturation 0
-    --filament-lightness 40
-    --fitting-lightness 30
-    --chord-lightness 50
-    --bg-lightness 5
-    --glass-lightness 30
+    --filament-lightness 70
+    --fitting-lightness 80
     --light-alpha 0
-    --ceiling 50
+    --ceiling 40
+    --bulb-hue 60
 
 body
   background 'hsl(215, 100%, %s)' % calc(var(--bg-lightness) * 1%)
@@ -53,7 +54,7 @@ svg
     stroke 'hsl(0, 0%, %s)' % calc(var(--chord-lightness) * 1%)
 
   &__glass
-    fill 'hsla(%s, 100%, 50%, %s)' % (var(--bulb-hue) var(--light-alpha))
+    fill 'hsla(%s, 100%, %s, %s)' % (var(--bulb-hue) calc(var(--glass-lightness) * 1%) var(--light-alpha))
     stroke 'hsla(%s, %s, %s, 1)' % (var(--bulb-hue) calc(var(--glass-saturation) * 1%) calc(var(--glass-lightness) * 1%))
 
   &__filament
