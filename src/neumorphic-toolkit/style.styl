@@ -1,0 +1,286 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+:root
+  --hue 275
+  --saturation 45
+  --lightness 80
+  --radius 5
+  --article-height 300
+  --article-width 300
+  --shadow-reach 30
+  --shadow-blur 60
+  --shadow-strength 0.5
+
+body
+  align-items center
+  background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+  display flex
+  flex-direction column
+  font-family -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+  justify-content center
+
+main *
+main *:after
+  transition all .1s ease
+// main
+//   display grid
+//   grid-template-columns repeat(2, 1fr)
+
+section
+  margin-bottom 2rem
+
+article
+  background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+  border-radius calc(var(--radius, 15) * 1%)
+  height calc(var(--article-height, 100) * 1px)
+  width calc(var(--article-width, 100) * 1px)
+  // box shadow is based on 10 percent sizing in the appropriate directions
+  --x calc(var(--shadow-reach) * 1px)
+  --y calc(var(--shadow-reach) * 1px)
+  --blur calc(var(--shadow-blur) * 1px)
+  --x2 calc(var(--shadow-reach) * -1px)
+  --y2 calc(var(--shadow-reach) * -1px)
+  --border-width 0
+  border '%s solid hsla(%s, %s, %s, 0.2)' % (calc(var(--border-width, 0) * 1px) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%))
+  box-shadow '%s %s %s hsla(%s, %s, %s, %s),
+    %s %s %s hsla(%s, %s, %s, %s)' % (var(--x) var(--y) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 15) * 1%) var(--shadow-strength) var(--x2) var(--y2) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--shadow-strength))
+
+h1
+  color 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 50) * 1%))
+  grid-column 1 / -1
+
+label
+  color 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 50) * 1%))
+
+@supports(-webkit-appearance: none)
+  input[type='checkbox']
+  input[type='radio']
+    --active red
+    --active-inner #fff
+    --focus 2px rgba(39, 94, 254, .3)
+    --border #BBC1E1
+    --border-hover #275EFE
+    --background #fff
+    --disabled #F6F8FF
+    --disabled-inner #E1E6F9
+    -webkit-appearance none
+    height 21px
+    outline none
+    display inline-block
+    vertical-align top
+    position relative
+    margin 0
+    cursor pointer
+    border 1px solid var(--bc, var(--border))
+    background var(--b, var(--background))
+    transition background .3s, border-color .3s, box-shadow .2s
+
+    &:after
+      content ''
+      display block
+      left 0
+      top 0
+      position absolute
+      transition transform var(--d-t, .3s) var(--d-t-e, ease), opacity var(--d-o, .2s)
+
+    &:checked
+      --b var(--active)
+      --bc var(--active)
+      --d-o .3s
+      --d-t .6s
+      --d-t-e cubic-bezier(.2, .85, .32, 1.2)
+
+    &:disabled
+      --b var(--disabled)
+      cursor not-allowed
+      opacity .9
+
+      &:checked
+        --b var(--disabled-inner)
+        --bc var(--border)
+
+      & + label
+        cursor not-allowed
+
+    &:hover
+      &:not(:checked)
+        &:not(:disabled)
+          --bc var(--border-hover)
+
+    &:focus
+      box-shadow 0 0 0 var(--focus)
+
+    &:not(.switch)
+      width 21px
+      &:after
+        opacity var(--o, 0)
+
+      &:checked
+        --o 1
+
+    & + label
+      font-size 14px
+      line-height 21px
+      display inline-block
+      vertical-align top
+      cursor pointer
+      margin-left 4px
+
+  input[type='checkbox']
+    &:not(.switch)
+      border-radius 7px
+      &:after
+        width 5px
+        height 9px
+        border 2px solid var(--active-inner)
+        border-top 0
+        border-left 0
+        left 7px
+        top 4px
+        transform rotate(var(--r, 20deg))
+
+      &:checked
+        --r 43deg
+
+    &.switch
+      width 38px
+      border-radius 11px
+      &:after
+        left 2px
+        top 2px
+        border-radius 50%
+        width 15px
+        height 15px
+        background var(--ab, var(--border))
+        transform translateX(var(--x, 0))
+
+      &:checked
+        --ab var(--active-inner)
+        --x 17px
+
+      &:disabled
+        &:not(:checked)
+          &:after
+            opacity .6
+
+  input[type='radio']
+    border-radius 50%
+    &:after
+      width 19px
+      height 19px
+      border-radius 50%
+      background var(--active-inner)
+      opacity 0
+      transform scale(var(--s, .7))
+
+    &:checked
+      --s .5
+
+  // Buttons
+  button
+    --shadow-reach 4
+    --shadow-blur 8
+    --x calc(var(--shadow-reach) * 1px)
+    --y calc(var(--shadow-reach) * 1px)
+    --blur calc(var(--shadow-blur) * 1px)
+    --x2 calc(var(--shadow-reach) * -1px)
+    --y2 calc(var(--shadow-reach) * -1px)
+    --shadow-strength 0.5
+    --border-width 0
+    border-radius 6px
+    color 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 40) * 1%))
+    font-weight 500
+    outline transparent
+    overflow hidden
+    border '%s solid hsla(%s, %s, %s, 0.2)' % (calc(var(--border-width, 0) * 1px) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%))
+    -webkit-appearance none
+    background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+    padding 8px 16px
+    box-shadow '%s %s %s hsla(%s, %s, %s, %s),
+      %s %s %s hsla(%s, %s, %s, %s)' % (var(--x) var(--y) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 15) * 1%) var(--shadow-strength) var(--x2) var(--y2) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--shadow-strength))
+    position relative
+    margin 0 1rem
+
+    &:after
+      content ''
+      position absolute
+      height 15%
+      width 100%
+      bottom 0
+      left 0
+
+    &:active
+      box-shadow '%s %s %s hsla(%s, %s, %s, %s) inset,
+      %s %s %s hsla(%s, %s, %s, %s) inset' % (var(--x) var(--y) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 15) * 1%) var(--shadow-strength) var(--x2) var(--y2) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--shadow-strength))
+
+    &:hover:after
+      background 'hsla(%s, %s, %s, 0.25)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 40) * 1%))
+
+    &:active:after
+      background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 40) * 1%))
+
+    &:nth-of-type(2)
+      &:active
+        background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 40) * 1%))
+        box-shadow none
+        color 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 40) * 1%))
+
+    &:nth-of-type(3)
+      background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%))
+      color 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
+
+      &:hover
+        --shadow-reach 10
+        --shadow-blur 20
+        background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 30) * 1%))
+
+      &:active
+        background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 40) * 1%))
+        box-shadow none
+        color 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 40) * 1%))
+  // Text
+  .input-wrapper
+    position relative
+
+    &:nth-of-type(1)
+      --highlight 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
+
+    &:nth-of-type(2)
+      --highlight 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%))
+
+  [type='text']
+    --radius 6
+    --shadow-reach 4
+    --shadow-blur 8
+    --x calc(var(--shadow-reach) * 1px)
+    --y calc(var(--shadow-reach) * 1px)
+    --blur calc(var(--shadow-blur) * 1px)
+    --x2 calc(var(--shadow-reach) * -1px)
+    --y2 calc(var(--shadow-reach) * -1px)
+    --shadow-strength 0.5
+    --border-width 0
+    border-radius 10px
+    display inline-block
+    overflow hidden
+    box-sizing content-box
+    outline transparent
+    border-radius 10px
+    background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+    padding 8px 16px 8px 16px
+    border-style solid
+    border-width 1px
+    border-color transparent
+    box-shadow '%s %s %s hsla(%s, %s, %s, %s) inset,
+      %s %s %s hsla(%s, %s, %s, %s) inset' % (var(--x) var(--y) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 15) * 1%) var(--shadow-strength) var(--x2) var(--y2) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--shadow-strength))
+
+    &:nth-of-type(1)
+      --highlight 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
+
+    &:nth-of-type(2)
+      --highlight 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%))
+
+    &:focus
+      border-color var(--highlight)
