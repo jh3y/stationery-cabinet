@@ -15,42 +15,79 @@
   --shadow-strength 0.5
 
 body
-  align-items center
   background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
-  display flex
-  flex-direction column
   font-family -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+  min-height 100vh
+  display flex
+  align-items center
   justify-content center
 
-main *
-main *:after
-  transition all .1s ease
-// main
-//   display grid
-//   grid-template-columns repeat(2, 1fr)
-
 section
-  margin-bottom 2rem
+  align-items center
+  height 100%
+  scroll-snap-align start
+  flex 1 0 100%
+  display flex
+  justify-content center
+  overflow auto
+  width 100%
+
+
+main
+  --neumorphic-reach 30
+  --neumorphic-blur 60
+  --neumorphic-intensity 0.25
+  --border-width 0
+  --border-intensity 0.1
+  --border-radius 25
+  --x calc(var(--neumorphic-reach) * 1px)
+  --y calc(var(--neumorphic-reach) * 1px)
+  --blur calc(var(--neumorphic-blur) * 1px)
+  --x2 calc(var(--neumorphic-reach) * -1px)
+  --y2 calc(var(--neumorphic-reach) * -1px)
+  background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+  border '%s solid hsla(%s, %s, %s, %s)' % (calc(var(--border-width, 0) * 1px) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--border-intensity))
+  border-radius calc(var(--border-radius) * 1px)
+  box-shadow '%s %s %s hsla(%s, %s, %s, %s),
+    %s %s %s hsla(%s, %s, %s, %s)' % (var(--x) var(--y) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 15) * 1%) var(--neumorphic-intensity) var(--x2) var(--y2) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--neumorphic-intensity))
+  display flex
+  overflow auto
+  overflow-y hidden
+  position relative
+  scroll-snap-type x mandatory
+  height 75vmin
+  width 75vmin
 
 article
+  --x calc(var(--neumorphic-reach) * 1px)
+  --y calc(var(--neumorphic-reach) * 1px)
+  --blur calc(var(--neumorphic-blur) * 1px)
+  --x2 calc(var(--neumorphic-reach) * -1px)
+  --y2 calc(var(--neumorphic-reach) * -1px)
   background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
-  border-radius calc(var(--radius, 15) * 1%)
-  height calc(var(--article-height, 100) * 1px)
-  width calc(var(--article-width, 100) * 1px)
-  // box shadow is based on 10 percent sizing in the appropriate directions
-  --x calc(var(--shadow-reach) * 1px)
-  --y calc(var(--shadow-reach) * 1px)
-  --blur calc(var(--shadow-blur) * 1px)
-  --x2 calc(var(--shadow-reach) * -1px)
-  --y2 calc(var(--shadow-reach) * -1px)
-  --border-width 0
-  border '%s solid hsla(%s, %s, %s, 0.2)' % (calc(var(--border-width, 0) * 1px) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%))
+  border '%s solid hsla(%s, %s, %s, %s)' % (calc(var(--border-width, 0) * 1px) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--border-intensity))
+  border-radius calc(var(--border-radius) * 1px)
   box-shadow '%s %s %s hsla(%s, %s, %s, %s),
-    %s %s %s hsla(%s, %s, %s, %s)' % (var(--x) var(--y) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 15) * 1%) var(--shadow-strength) var(--x2) var(--y2) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--shadow-strength))
+    %s %s %s hsla(%s, %s, %s, %s)' % (var(--x) var(--y) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 15) * 1%) var(--neumorphic-intensity) var(--x2) var(--y2) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--neumorphic-intensity))
+  height calc(var(--height, 100) * 1px)
+  width calc(var(--width, 100) * 1px)
+
+header
+  position fixed
+  height 75vmin
+  width 100vw
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  z-index -1
 
 h1
   color 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 50) * 1%))
-  grid-column 1 / -1
+  position fixed
+  z-index 2
+  bottom 100%
+  left 50%
+  transform translate(-50%, -100%)
 
 label
   color 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 50) * 1%))
@@ -179,45 +216,44 @@ label
     &:checked
       --s .5
 
+
   // Buttons
   button
-    --shadow-reach 4
-    --shadow-blur 8
-    --x calc(var(--shadow-reach) * 1px)
-    --y calc(var(--shadow-reach) * 1px)
-    --blur calc(var(--shadow-blur) * 1px)
-    --x2 calc(var(--shadow-reach) * -1px)
-    --y2 calc(var(--shadow-reach) * -1px)
-    --shadow-strength 0.5
-    --border-width 0
-    border-radius 6px
-    color 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 40) * 1%))
-    font-weight 500
-    outline transparent
-    overflow hidden
-    border '%s solid hsla(%s, %s, %s, 0.2)' % (calc(var(--border-width, 0) * 1px) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%))
+    --blur calc(var(--neumorphic-blur) * 1px)
+    --x calc(var(--neumorphic-reach) * 1px)
+    --y calc(var(--neumorphic-reach) * 1px)
+    --x2 calc(var(--neumorphic-reach) * -1px)
+    --y2 calc(var(--neumorphic-reach) * -1px)
     -webkit-appearance none
     background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
-    padding 8px 16px
+    color 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 40) * 1%))
+    border '%s solid hsla(%s, %s, %s, %s)' % (calc(var(--border-width, 0) * 1px) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--border-intensity))
+    border-radius calc(var(--border-radius) * 1px)
     box-shadow '%s %s %s hsla(%s, %s, %s, %s),
-      %s %s %s hsla(%s, %s, %s, %s)' % (var(--x) var(--y) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 15) * 1%) var(--shadow-strength) var(--x2) var(--y2) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--shadow-strength))
+      %s %s %s hsla(%s, %s, %s, %s)' % (var(--x) var(--y) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 15) * 1%) var(--shadow-strength) var(--x2) var(--y2) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--neumorphic-intensity))
+    font-size 1rem
+    font-weight 500
+    overflow hidden
+    outline transparent
+    padding 1rem 2rem
     position relative
-    margin 0 1rem
+    transition all .1s ease
 
     &:after
-      content ''
-      position absolute
-      height 15%
-      width 100%
       bottom 0
+      content ''
+      height 15%
       left 0
+      position absolute
+      width 100%
 
     &:active
       box-shadow '%s %s %s hsla(%s, %s, %s, %s) inset,
       %s %s %s hsla(%s, %s, %s, %s) inset' % (var(--x) var(--y) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 15) * 1%) var(--shadow-strength) var(--x2) var(--y2) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--shadow-strength))
 
     &:hover:after
-      background 'hsla(%s, %s, %s, 0.25)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 40) * 1%))
+    &:focus:after
+      background 'hsla(%s, %s, %s, 0.35)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 40) * 1%))
 
     &:active:after
       background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 40) * 1%))
@@ -232,9 +268,15 @@ label
       background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%))
       color 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
 
+      &:after
+        display none
+
       &:hover
-        --shadow-reach 10
-        --shadow-blur 20
+      &:focus
+        --x calc(var(--neumorphic-reach) * 2px)
+        --y calc(var(--neumorphic-reach) * 2px)
+        --x2 calc(var(--neumorphic-reach) * -2px)
+        --y2 calc(var(--neumorphic-reach) * -2px)
         background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 30) * 1%))
 
       &:active
@@ -242,45 +284,53 @@ label
         box-shadow none
         color 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 40) * 1%))
   // Text
-  .input-wrapper
-    position relative
-
-    &:nth-of-type(1)
-      --highlight 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
-
-    &:nth-of-type(2)
-      --highlight 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%))
-
   [type='text']
-    --radius 6
-    --shadow-reach 4
-    --shadow-blur 8
-    --x calc(var(--shadow-reach) * 1px)
-    --y calc(var(--shadow-reach) * 1px)
-    --blur calc(var(--shadow-blur) * 1px)
-    --x2 calc(var(--shadow-reach) * -1px)
-    --y2 calc(var(--shadow-reach) * -1px)
-    --shadow-strength 0.5
-    --border-width 0
-    border-radius 10px
-    display inline-block
-    overflow hidden
-    box-sizing content-box
-    outline transparent
-    border-radius 10px
+    --blur calc(var(--neumorphic-blur) * 1px)
+    --x calc(var(--neumorphic-reach) * 1px)
+    --y calc(var(--neumorphic-reach) * 1px)
+    --x2 calc(var(--neumorphic-reach) * -1px)
+    --y2 calc(var(--neumorphic-reach) * -1px)
     background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
-    padding 8px 16px 8px 16px
-    border-style solid
-    border-width 1px
     border-color transparent
+    border-radius calc(var(--border-radius) * 1px)
+    border-style solid
+    border-width calc(var(--border-width) * 1px)
+    font-size 1rem
+    outline transparent
+    overflow hidden
+    padding 1rem 2rem
     box-shadow '%s %s %s hsla(%s, %s, %s, %s) inset,
-      %s %s %s hsla(%s, %s, %s, %s) inset' % (var(--x) var(--y) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 15) * 1%) var(--shadow-strength) var(--x2) var(--y2) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--shadow-strength))
-
-    &:nth-of-type(1)
-      --highlight 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
-
-    &:nth-of-type(2)
-      --highlight 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%))
+      %s %s %s hsla(%s, %s, %s, %s) inset' % (var(--x) var(--y) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 15) * 1%) var(--neumorphic-intensity) var(--x2) var(--y2) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--neumorphic-intensity))
 
     &:focus
       border-color var(--highlight)
+
+.buttons
+.texts
+  display grid
+  grid-gap calc(var(--margin) * 4px)
+  width 30vmin
+
+.input
+  align-items center
+  display grid
+  grid-template-columns auto 1fr
+  grid-gap 1rem
+
+.input:focus-within label
+  font-weight bold
+
+.input:nth-of-type(1)
+  --highlight 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
+
+.input:nth-of-type(2)
+  --highlight 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%))
+
+.input:nth-of-type(3)
+  &:focus-within label
+    color 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
+  --highlight transparent
+
+// .text
+//   display grid
+//   grid-gap 1rem
