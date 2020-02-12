@@ -1,11 +1,17 @@
 const {
   dat: { GUI },
   React,
-  React: { useEffect, useRef, useState },
+  React: { useEffect, useRef, useState, Fragment },
   ReactDOM: { render },
+  ScrollOut,
 } = window
 
 const CONFIG = {
+  COLOR: {
+    HUE: 225,
+    SATURATION: 40,
+    LIGHTNESS: 65,
+  },
   CARD: {
     BORDER: {
       WIDTH: 0,
@@ -37,6 +43,18 @@ const CONFIG = {
   TEXT: {
     BORDER: {
       WIDTH: 2,
+      RADIUS: 10,
+      ALPHA: 0.1,
+    },
+    SHADOW: {
+      REACH: 4,
+      BLUR: 8,
+      ALPHA: 0.5,
+    },
+  },
+  RANGE: {
+    BORDER: {
+      WIDTH: 2,
       RADIUS: 6,
       ALPHA: 0.1,
     },
@@ -49,6 +67,11 @@ const CONFIG = {
 }
 
 const BOUNDS = {
+  COLOR: {
+    HUE: [0, 360, 1],
+    SATURATION: [0, 100, 1],
+    LIGHTNESS: [0, 100, 1],
+  },
   CARD: {
     BORDER: {
       WIDTH: [0, 10, 1],
@@ -80,7 +103,19 @@ const BOUNDS = {
   TEXT: {
     BORDER: {
       WIDTH: [0, 10, 1],
-      RADIUS: [0, 10, 1],
+      RADIUS: [0, 40, 1],
+      ALPHA: [0, 1, 0.01],
+    },
+    SHADOW: {
+      REACH: [0, 20, 1],
+      BLUR: [0, 40, 1],
+      ALPHA: [0, 1, 0.1],
+    },
+  },
+  RANGE: {
+    BORDER: {
+      WIDTH: [0, 10, 1],
+      RADIUS: [0, 40, 1],
       ALPHA: [0, 1, 0.01],
     },
     SHADOW: {
@@ -121,10 +156,16 @@ const BOUNDS = {
 //   }
 //   return result
 // }
-
+const CARD_ID = '#cards'
+const BUTTON_ID = '#buttons'
+const TEXT_ID = '#texts'
+const RANGE_ID = '#ranges'
+const IDS = [CARD_ID, BUTTON_ID, TEXT_ID, RANGE_ID]
 const App = () => {
   const [model, setModel] = useState(0)
+  const [active, setActive] = useState(window.location.hash || IDS[0])
   const datRef = useRef(null)
+
   useEffect(() => {
     if (!datRef.current) {
       datRef.current = new GUI({ name: 'Neumorphic Playground' })
@@ -148,71 +189,130 @@ const App = () => {
       }
       digest(CONFIG, BOUNDS)
     }
+    // Set HSL on document
+    document.documentElement.style.setProperty('--hue', CONFIG.COLOR.HUE)
+    document.documentElement.style.setProperty(
+      '--saturation',
+      CONFIG.COLOR.SATURATION
+    )
+    document.documentElement.style.setProperty(
+      '--lightness',
+      CONFIG.COLOR.LIGHTNESS
+    )
   }, [model])
 
+  // Set up scroll out
+  useEffect(() => {
+    ScrollOut({
+      scrollingElement: document.querySelector('main'),
+      targets: 'section',
+      threshold: 0.9,
+      onShown: element => {
+        setActive(`#${element.getAttribute('id')}`)
+      },
+    })
+  }, [])
+
   return (
-    <main>
-      <section
-        style={{
-          '--neumorphic-reach': CONFIG.CARD.SHADOW.REACH,
-          '--neumorphic-blur': CONFIG.CARD.SHADOW.BLUR,
-          '--neumorphic-intensity': CONFIG.CARD.SHADOW.ALPHA,
-          '--border-width': CONFIG.CARD.BORDER.WIDTH,
-          '--border-intensity': CONFIG.CARD.BORDER.ALPHA,
-          '--border-radius': CONFIG.CARD.BORDER.RADIUS,
-          '--height': CONFIG.CARD.SIZE.HEIGHT,
-          '--width': CONFIG.CARD.SIZE.WIDTH,
-        }}>
-        <article />
-      </section>
-      <section
-        style={{
-          '--neumorphic-reach': CONFIG.BUTTON.SHADOW.REACH,
-          '--neumorphic-blur': CONFIG.BUTTON.SHADOW.BLUR,
-          '--neumorphic-intensity': CONFIG.BUTTON.SHADOW.ALPHA,
-          '--border-width': CONFIG.BUTTON.BORDER.WIDTH,
-          '--border-intensity': CONFIG.BUTTON.BORDER.ALPHA,
-          '--border-radius': CONFIG.BUTTON.BORDER.RADIUS,
-          '--margin': Math.max(
-            CONFIG.BUTTON.SHADOW.REACH,
-            CONFIG.BUTTON.SHADOW.BLUR
-          ),
-        }}>
-        <div className="buttons">
-          <button>Click</button>
-          <button>Click</button>
-          <button>Click</button>
-        </div>
-      </section>
-      <section
-        style={{
-          '--neumorphic-reach': CONFIG.TEXT.SHADOW.REACH,
-          '--neumorphic-blur': CONFIG.TEXT.SHADOW.BLUR,
-          '--neumorphic-intensity': CONFIG.TEXT.SHADOW.ALPHA,
-          '--border-width': CONFIG.TEXT.BORDER.WIDTH,
-          '--border-intensity': CONFIG.TEXT.BORDER.ALPHA,
-          '--border-radius': CONFIG.TEXT.BORDER.RADIUS,
-          '--margin': Math.max(
-            CONFIG.TEXT.SHADOW.REACH,
-            CONFIG.TEXT.SHADOW.BLUR
-          ),
-        }}>
-        <div className="texts">
-          <div className="input">
-            <label>Label</label>
-            <input type="text" />
+    <Fragment>
+      <main>
+        <section
+          id="cards"
+          style={{
+            '--neumorphic-reach': CONFIG.CARD.SHADOW.REACH,
+            '--neumorphic-blur': CONFIG.CARD.SHADOW.BLUR,
+            '--neumorphic-intensity': CONFIG.CARD.SHADOW.ALPHA,
+            '--border-width': CONFIG.CARD.BORDER.WIDTH,
+            '--border-intensity': CONFIG.CARD.BORDER.ALPHA,
+            '--border-radius': CONFIG.CARD.BORDER.RADIUS,
+            '--height': CONFIG.CARD.SIZE.HEIGHT,
+            '--width': CONFIG.CARD.SIZE.WIDTH,
+          }}>
+          <article />
+        </section>
+        <section
+          id="buttons"
+          style={{
+            '--neumorphic-reach': CONFIG.BUTTON.SHADOW.REACH,
+            '--neumorphic-blur': CONFIG.BUTTON.SHADOW.BLUR,
+            '--neumorphic-intensity': CONFIG.BUTTON.SHADOW.ALPHA,
+            '--border-width': CONFIG.BUTTON.BORDER.WIDTH,
+            '--border-intensity': CONFIG.BUTTON.BORDER.ALPHA,
+            '--border-radius': CONFIG.BUTTON.BORDER.RADIUS,
+            '--margin': Math.max(
+              CONFIG.BUTTON.SHADOW.REACH,
+              CONFIG.BUTTON.SHADOW.BLUR
+            ),
+          }}>
+          <div className="buttons">
+            <button>Click</button>
+            <button>Click</button>
+            <button>Click</button>
           </div>
-          <div className="input">
-            <label>Label</label>
-            <input type="text" />
+        </section>
+        <section
+          id="texts"
+          style={{
+            '--neumorphic-reach': CONFIG.TEXT.SHADOW.REACH,
+            '--neumorphic-blur': CONFIG.TEXT.SHADOW.BLUR,
+            '--neumorphic-intensity': CONFIG.TEXT.SHADOW.ALPHA,
+            '--border-width': CONFIG.TEXT.BORDER.WIDTH,
+            '--border-intensity': CONFIG.TEXT.BORDER.ALPHA,
+            '--border-radius': CONFIG.TEXT.BORDER.RADIUS,
+            '--margin': 6,
+          }}>
+          <div className="texts">
+            <div className="input">
+              <label>Label</label>
+              <input type="text" />
+            </div>
+            <div className="input">
+              <label>Label</label>
+              <input type="text" />
+            </div>
+            <div className="input">
+              <label>Label</label>
+              <input type="text" />
+            </div>
           </div>
-          <div className="input">
-            <label>Label</label>
-            <input type="text" />
+        </section>
+        <section
+          id="ranges"
+          style={{
+            '--neumorphic-reach': CONFIG.RANGE.SHADOW.REACH,
+            '--neumorphic-blur': CONFIG.RANGE.SHADOW.BLUR,
+            '--neumorphic-intensity': CONFIG.RANGE.SHADOW.ALPHA,
+            '--border-width': CONFIG.RANGE.BORDER.WIDTH,
+            '--border-intensity': CONFIG.RANGE.BORDER.ALPHA,
+            '--border-radius': CONFIG.RANGE.BORDER.RADIUS,
+            '--margin': 6,
+          }}>
+          <div className="ranges">
+            <div className="input">
+              <label>Label</label>
+              <input type="range" min="0" max="10" step="1" />
+            </div>
+            <div className="input">
+              <label>Label</label>
+              <input type="range" min="0" max="10" step="1" />
+            </div>
+            <div className="input">
+              <label>Label</label>
+              <input type="range" min="0" max="10" step="1" />
+            </div>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+      <footer>
+        {IDS.map(ID => {
+          return (
+            <a href={ID} key={ID} className={`${active === ID && 'active'}`}>
+              {`${ID.charAt(1).toUpperCase()}${ID.substr(2)}`}
+            </a>
+          )
+        })}
+      </footer>
+    </Fragment>
   )
 }
 
