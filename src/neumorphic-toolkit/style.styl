@@ -3,17 +3,6 @@
 *:before
   box-sizing border-box
 
-:root
-  --hue 275
-  --saturation 45
-  --lightness 80
-  --radius 5
-  --article-height 300
-  --article-width 300
-  --shadow-reach 30
-  --shadow-blur 60
-  --shadow-strength 0.5
-
 body
   background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
   font-family -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
@@ -32,6 +21,8 @@ section
   overflow auto
   width 100%
 
+#app
+  position relative
 
 main
   --neumorphic-reach 30
@@ -45,6 +36,7 @@ main
   --blur calc(var(--neumorphic-blur) * 1px)
   --x2 calc(var(--neumorphic-reach) * -1px)
   --y2 calc(var(--neumorphic-reach) * -1px)
+  -webkit-overflow-scrolling touch
   background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
   border '%s solid hsla(%s, %s, %s, %s)' % (calc(var(--border-width, 0) * 1px) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--border-intensity))
   border-radius calc(var(--border-radius) * 1px)
@@ -54,9 +46,49 @@ main
   overflow auto
   overflow-y hidden
   position relative
+  scroll-behavior smooth
   scroll-snap-type x mandatory
   height 75vmin
   width 75vmin
+
+footer
+  position absolute
+  top calc(100% + 60px)
+  left 50%
+  transform translate(-50%)
+  display flex
+
+  a.active
+    background 'radial-gradient(circle at 50% 50%, hsl(%s, %s, %s) 20%, transparent 25%)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 30) * 1%))
+
+  a
+    height 44px
+    width 44px
+    border-radius 50%
+    font-size 0
+    display block
+    position relative
+
+    &:after
+      --neumorphic-reach 4
+      --neumorphic-blur 8
+      --neumorphic-intensity 0.25
+      --x calc(var(--neumorphic-reach) * 1px)
+      --y calc(var(--neumorphic-reach) * 1px)
+      --blur calc(var(--neumorphic-blur) * 1px)
+      --x2 calc(var(--neumorphic-reach) * -1px)
+      --y2 calc(var(--neumorphic-reach) * -1px)
+      content ''
+      height 30px
+      width 30px
+      position absolute
+      top 50%
+      left 50%
+      transform translate(-50%, -50%)
+      border-radius 50%
+      box-shadow '%s %s %s hsla(%s, %s, %s, %s) inset,
+        %s %s %s hsla(%s, %s, %s, %s) inset' % (var(--x) var(--y) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 15) * 1%) var(--neumorphic-intensity) var(--x2) var(--y2) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--neumorphic-intensity))
+
 
 article
   --x calc(var(--neumorphic-reach) * 1px)
@@ -216,6 +248,104 @@ label
     &:checked
       --s .5
 
+  // Range
+  input[type=range]
+    -webkit-appearance none
+    width 100%
+    background transparent
+
+  input[type=range]::-webkit-slider-thumb
+    -webkit-appearance none
+
+  input[type=range]:focus
+    outline none
+
+  input[type=range]::-ms-track
+    width 100%
+    cursor pointer
+    background transparent;
+    border-color transparent
+    color transparent
+
+  input[type=range]::-webkit-slider-thumb
+    -webkit-appearance none
+    border 1px solid #000000
+    height 36px
+    width 16px
+    border-radius 3px
+    background #ffffff
+    cursor pointer
+    margin-top -14px
+    box-shadow 1px 1px 1px #000000, 0px 0px 1px #0d0d0d
+
+    &:active
+      background red
+
+  input[type=range]::-moz-range-thumb
+    box-shadow 1px 1px 1px #000000, 0px 0px 1px #0d0d0d
+    border 1px solid #000000
+    height 36px
+    width 16px
+    border-radius 3px
+    background #ffffff
+    cursor pointer
+
+  input[type=range]::-ms-thumb
+    box-shadow 1px 1px 1px #000000, 0px 0px 1px #0d0d0d
+    border 1px solid #000000
+    height 36px
+    width 16px
+    border-radius 3px
+    background #ffffff
+    cursor pointer
+
+  input[type=range]::-webkit-slider-runnable-track
+    width 100%
+    height 8.4px
+    cursor pointer
+    box-shadow 1px 1px 1px #000000, 0px 0px 1px #0d0d0d
+    background #3071a9
+    border-radius 1.3px
+    border 0.2px solid #010101
+
+  input[type=range]:focus::-webkit-slider-runnable-track
+    background #367ebd
+
+  input[type=range]::-moz-range-track
+    width 100%
+    height 8.4px
+    cursor pointer
+    box-shadow 1px 1px 1px #000000, 0px 0px 1px #0d0d0d
+    background #3071a9
+    border-radius 1.3px
+    border 0.2px solid #010101
+
+  input[type=range]::-ms-track
+    width 100%
+    height 8.4px
+    cursor pointer
+    background transparent
+    border-color transparent
+    border-width 16px 0
+    color transparent
+
+  input[type=range]::-ms-fill-lower
+    background #2a6495
+    border 0.2px solid #010101
+    border-radius 2.6px
+    box-shadow 1px 1px 1px #000000, 0px 0px 1px #0d0d0d
+
+  input[type=range]:focus::-ms-fill-lower
+    background #3071a9
+
+  input[type=range]::-ms-fill-upper
+    background #3071a9
+    border 0.2px solid #010101
+    border-radius 2.6px
+    box-shadow 1px 1px 1px #000000, 0px 0px 1px #0d0d0d
+
+  input[type=range]:focus::-ms-fill-upper
+    background #367ebd
 
   // Buttons
   button
@@ -230,7 +360,7 @@ label
     border '%s solid hsla(%s, %s, %s, %s)' % (calc(var(--border-width, 0) * 1px) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--border-intensity))
     border-radius calc(var(--border-radius) * 1px)
     box-shadow '%s %s %s hsla(%s, %s, %s, %s),
-      %s %s %s hsla(%s, %s, %s, %s)' % (var(--x) var(--y) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 15) * 1%) var(--shadow-strength) var(--x2) var(--y2) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--neumorphic-intensity))
+      %s %s %s hsla(%s, %s, %s, %s)' % (var(--x) var(--y) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 15) * 1%) var(--neumorphic-intensity) var(--x2) var(--y2) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--neumorphic-intensity))
     font-size 1rem
     font-weight 500
     overflow hidden
@@ -249,7 +379,7 @@ label
 
     &:active
       box-shadow '%s %s %s hsla(%s, %s, %s, %s) inset,
-      %s %s %s hsla(%s, %s, %s, %s) inset' % (var(--x) var(--y) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 15) * 1%) var(--shadow-strength) var(--x2) var(--y2) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--shadow-strength))
+      %s %s %s hsla(%s, %s, %s, %s) inset' % (var(--x) var(--y) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 15) * 1%) var(--neumorphic-intensity) var(--x2) var(--y2) var(--blur) var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 15) * 1%) var(--neumorphic-intensity))
 
     &:hover:after
     &:focus:after
@@ -305,8 +435,10 @@ label
     &:focus
       border-color var(--highlight)
 
+// Layout related fun
 .buttons
 .texts
+.ranges
   display grid
   grid-gap calc(var(--margin) * 4px)
   width 30vmin
@@ -317,6 +449,7 @@ label
   grid-template-columns auto 1fr
   grid-gap 1rem
 
+// Label highlights for accentuating focus
 .input:focus-within label
   font-weight bold
 
@@ -331,6 +464,3 @@ label
     color 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
   --highlight transparent
 
-// .text
-//   display grid
-//   grid-gap 1rem
