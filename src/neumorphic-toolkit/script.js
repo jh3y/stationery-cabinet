@@ -54,14 +54,15 @@ const CONFIG = {
   },
   RANGE: {
     BORDER: {
-      WIDTH: 2,
-      RADIUS: 6,
-      ALPHA: 0.1,
+      RADIUS: 36,
     },
     SHADOW: {
       REACH: 4,
       BLUR: 8,
       ALPHA: 0.5,
+    },
+    TRACK: {
+      ALPHA: 0.2,
     },
   },
 }
@@ -114,14 +115,15 @@ const BOUNDS = {
   },
   RANGE: {
     BORDER: {
-      WIDTH: [0, 10, 1],
-      RADIUS: [0, 40, 1],
-      ALPHA: [0, 1, 0.01],
+      RADIUS: [0, 36, 1],
     },
     SHADOW: {
       REACH: [0, 20, 1],
       BLUR: [0, 40, 1],
       ALPHA: [0, 1, 0.1],
+    },
+    TRACK: {
+      ALPHA: [0, 1, 0.01],
     },
   },
 }
@@ -282,23 +284,24 @@ const App = () => {
             '--neumorphic-reach': CONFIG.RANGE.SHADOW.REACH,
             '--neumorphic-blur': CONFIG.RANGE.SHADOW.BLUR,
             '--neumorphic-intensity': CONFIG.RANGE.SHADOW.ALPHA,
+            '--track-intensity': CONFIG.RANGE.TRACK.ALPHA,
             '--border-width': CONFIG.RANGE.BORDER.WIDTH,
             '--border-intensity': CONFIG.RANGE.BORDER.ALPHA,
             '--border-radius': CONFIG.RANGE.BORDER.RADIUS,
-            '--margin': 6,
+            '--margin': 15,
           }}>
           <div className="ranges">
             <div className="input">
               <label>Label</label>
-              <input type="range" min="0" max="10" step="1" />
+              <input type="range" min="0" max="10" step="1" defaultValue="2" />
             </div>
             <div className="input">
               <label>Label</label>
-              <input type="range" min="0" max="10" step="1" />
+              <input type="range" min="0" max="10" step="1" defaultValue="4" />
             </div>
             <div className="input">
               <label>Label</label>
-              <input type="range" min="0" max="10" step="1" />
+              <input type="range" min="0" max="10" step="1" defaultValue="6" />
             </div>
           </div>
         </section>
