@@ -250,102 +250,164 @@ label
 
   // Range
   input[type=range]
+    --thumb-size 36
+    --thumb-border 4
+    --thumb-angle 135
     -webkit-appearance none
-    width 100%
     background transparent
-
-  input[type=range]::-webkit-slider-thumb
-    -webkit-appearance none
+    width 100%
 
   input[type=range]:focus
     outline none
 
   input[type=range]::-ms-track
-    width 100%
-    cursor pointer
-    background transparent;
-    border-color transparent
-    color transparent
-
-  input[type=range]::-webkit-slider-thumb
-    -webkit-appearance none
-    border 1px solid #000000
-    height 36px
-    width 16px
-    border-radius 3px
-    background #ffffff
-    cursor pointer
-    margin-top -14px
-    box-shadow 1px 1px 1px #000000, 0px 0px 1px #0d0d0d
-
-    &:active
-      background red
-
-  input[type=range]::-moz-range-thumb
-    box-shadow 1px 1px 1px #000000, 0px 0px 1px #0d0d0d
-    border 1px solid #000000
-    height 36px
-    width 16px
-    border-radius 3px
-    background #ffffff
-    cursor pointer
-
-  input[type=range]::-ms-thumb
-    box-shadow 1px 1px 1px #000000, 0px 0px 1px #0d0d0d
-    border 1px solid #000000
-    height 36px
-    width 16px
-    border-radius 3px
-    background #ffffff
-    cursor pointer
-
-  input[type=range]::-webkit-slider-runnable-track
-    width 100%
-    height 8.4px
-    cursor pointer
-    box-shadow 1px 1px 1px #000000, 0px 0px 1px #0d0d0d
-    background #3071a9
-    border-radius 1.3px
-    border 0.2px solid #010101
-
-  input[type=range]:focus::-webkit-slider-runnable-track
-    background #367ebd
-
-  input[type=range]::-moz-range-track
-    width 100%
-    height 8.4px
-    cursor pointer
-    box-shadow 1px 1px 1px #000000, 0px 0px 1px #0d0d0d
-    background #3071a9
-    border-radius 1.3px
-    border 0.2px solid #010101
-
-  input[type=range]::-ms-track
-    width 100%
-    height 8.4px
-    cursor pointer
     background transparent
     border-color transparent
-    border-width 16px 0
     color transparent
+    cursor pointer
+    width 100%
 
-  input[type=range]::-ms-fill-lower
-    background #2a6495
-    border 0.2px solid #010101
-    border-radius 2.6px
-    box-shadow 1px 1px 1px #000000, 0px 0px 1px #0d0d0d
+  input[type=range]:focus::-webkit-slider-thumb
+    border-color 'hsla(%s, %s, %s, 1)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 10) * 1%))
 
-  input[type=range]:focus::-ms-fill-lower
-    background #3071a9
+  input[type=range]:focus::-moz-range-thumb
+    border-color 'hsla(%s, %s, %s, 1)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 10) * 1%))
 
-  input[type=range]::-ms-fill-upper
-    background #3071a9
-    border 0.2px solid #010101
-    border-radius 2.6px
-    box-shadow 1px 1px 1px #000000, 0px 0px 1px #0d0d0d
+  input[type=range]:focus::-ms-thumb
+    border-color 'hsla(%s, %s, %s, 1)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 10) * 1%))
 
-  input[type=range]:focus::-ms-fill-upper
-    background #367ebd
+  input[type=range]::-webkit-slider-thumb
+    --light 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
+    --dark 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%))
+    --default 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+    -webkit-appearance none
+    background 'linear-gradient(%s, %s, %s), %s' % (calc(var(--thumb-angle) * 1deg) var(--light) var(--dark) var(--default))
+    background-size calc((var(--thumb-size) + var(--thumb-border)) * 1px) calc((var(--thumb-size) + var(--thumb-border)) * 1px)
+    background-position calc(var(--thumb-border) * -1px) calc(var(--thumb-border) * -1px)
+    border-style solid
+    border-width calc(var(--thumb-border) * 1px)
+    border-color transparent
+    border-radius calc(var(--border-radius) * 1px)
+    cursor pointer
+    height calc(var(--thumb-size) * 1px)
+    margin-top 0px
+    width calc(var(--thumb-size) * 1px)
+
+    &:hover
+      border-color 'hsla(%s, %s, %s, 1)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%))
+    &:active
+      border-color 'hsla(%s, %s, %s, 1)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
+
+  input[type=range]::-moz-range-thumb
+    --light 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
+    --dark 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%))
+    --default 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+    background 'linear-gradient(%s, %s, %s), %s' % (calc(var(--thumb-angle) * 1deg) var(--light) var(--dark) var(--default))
+    background-size calc((var(--thumb-size) + var(--thumb-border)) * 1px) calc((var(--thumb-size) + var(--thumb-border)) * 1px)
+    background-position calc(var(--thumb-border) * -1px) calc(var(--thumb-border) * -1px)
+    border-style solid
+    border-width calc(var(--thumb-border) * 1px)
+    border-color transparent
+    border-radius calc(var(--border-radius) * 1px)
+    cursor pointer
+    height calc(var(--thumb-size) * 1px)
+    width calc(var(--thumb-size) * 1px)
+
+    &:hover
+      border-color 'hsla(%s, %s, %s, 1)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%))
+    &:active
+      border-color 'hsla(%s, %s, %s, 1)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
+
+  input[type=range]::-ms-thumb
+    --light 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
+    --dark 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%))
+    --default 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+    background 'linear-gradient(%s, %s, %s), %s' % (calc(var(--thumb-angle) * 1deg) var(--light) var(--dark) var(--default))
+    background-size calc((var(--thumb-size) + var(--thumb-border)) * 1px) calc((var(--thumb-size) + var(--thumb-border)) * 1px)
+    background-position calc(var(--thumb-border) * -1px) calc(var(--thumb-border) * -1px)
+    border-style solid
+    border-width calc(var(--thumb-border) * 1px)
+    border-color transparent
+    border-radius calc(var(--border-radius) * 1px)
+    cursor pointer
+    height calc(var(--thumb-size) * 1px)
+    width calc(var(--thumb-size) * 1px)
+
+    &:hover
+      border-color 'hsla(%s, %s, %s, 1)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%))
+    &:active
+      border-color 'hsla(%s, %s, %s, 1)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
+
+  input[type=range]::-webkit-slider-runnable-track
+    --x calc(var(--neumorphic-reach) * 1px)
+    --y calc(var(--neumorphic-reach) * 1px)
+    --blur calc(var(--neumorphic-blur) * 1px)
+    --x2 calc(var(--neumorphic-reach) * -1px)
+    --y2 calc(var(--neumorphic-reach) * -1px)
+    --default 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+    --light 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
+    --neumorphic-light 'hsl(%s, %s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%) var(--neumorphic-intensity))
+    --neumorphic-dark 'hsl(%s, %s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%) var(--neumorphic-intensity))
+    background var(--default)
+    border-radius calc(var(--border-radius) * 1px)
+    border-color var(--light)
+    border-style solid
+    border-width 0
+    box-shadow '%s %s %s %s inset,
+      %s %s %s %s inset' % (var(--x) var(--y) var(--blur) var(--neumorphic-dark) var(--x2) var(--y2) var(--blur) var(--neumorphic-light))
+    cursor pointer
+    height calc(var(--thumb-size) * 1px)
+    width 100%
+
+  input[type=range]:focus::-webkit-slider-runnable-track
+    --track 'hsl(%s, %s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%) var(--track-intensity))
+    background var(--track)
+
+  // input[type=range]:active::-webkit-slider-runnable-track
+  //   --track 'hsl(%s, %s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%) calc(var(--track-intensity) * 2))
+  //   background var(--track)
+
+  input[type=range]::-moz-range-track
+    --x calc(var(--neumorphic-reach) * 1px)
+    --y calc(var(--neumorphic-reach) * 1px)
+    --blur calc(var(--neumorphic-blur) * 1px)
+    --x2 calc(var(--neumorphic-reach) * -1px)
+    --y2 calc(var(--neumorphic-reach) * -1px)
+    --default 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+    --light 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
+    --neumorphic-light 'hsl(%s, %s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%) var(--neumorphic-intensity))
+    --neumorphic-dark 'hsl(%s, %s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%) var(--neumorphic-intensity))
+    background var(--default)
+    border-radius calc(var(--border-radius) * 1px)
+    border-color var(--light)
+    border-style solid
+    border-width 0
+    box-shadow '%s %s %s %s inset,
+      %s %s %s %s inset' % (var(--x) var(--y) var(--blur) var(--neumorphic-dark) var(--x2) var(--y2) var(--blur) var(--neumorphic-light))
+    cursor pointer
+    height calc(var(--thumb-size) * 1px)
+    width 100%
+
+  input[type=range]::-ms-track
+    --x calc(var(--neumorphic-reach) * 1px)
+    --y calc(var(--neumorphic-reach) * 1px)
+    --blur calc(var(--neumorphic-blur) * 1px)
+    --x2 calc(var(--neumorphic-reach) * -1px)
+    --y2 calc(var(--neumorphic-reach) * -1px)
+    --default 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+    --light 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
+    --neumorphic-light 'hsl(%s, %s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%) var(--neumorphic-intensity))
+    --neumorphic-dark 'hsl(%s, %s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%) var(--neumorphic-intensity))
+    background var(--default)
+    border-radius calc(var(--border-radius) * 1px)
+    border-color var(--light)
+    border-style solid
+    border-width 0
+    box-shadow '%s %s %s %s inset,
+      %s %s %s %s inset' % (var(--x) var(--y) var(--blur) var(--neumorphic-dark) var(--x2) var(--y2) var(--blur) var(--neumorphic-light))
+    cursor pointer
+    height calc(var(--thumb-size) * 1px)
+    width 100%
 
   // Buttons
   button
@@ -435,32 +497,88 @@ label
     &:focus
       border-color var(--highlight)
 
-// Layout related fun
-.buttons
-.texts
-.ranges
-  display grid
-  grid-gap calc(var(--margin) * 4px)
-  width 30vmin
+  // Layout related fun
+  .buttons
+  .texts
+  .ranges
+    display grid
+    grid-gap calc(var(--margin) * 4px)
+    width 30vmin
 
-.input
-  align-items center
-  display grid
-  grid-template-columns auto 1fr
-  grid-gap 1rem
+  .input
+    align-items center
+    display grid
+    grid-template-columns auto 1fr
+    grid-gap 1rem
 
-// Label highlights for accentuating focus
-.input:focus-within label
-  font-weight bold
+  // Label highlights for accentuating focus
+  .input:focus-within label
+    font-weight bold
 
-.input:nth-of-type(1)
-  --highlight 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
+  .input:nth-of-type(1)
+    --highlight 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
 
-.input:nth-of-type(2)
-  --highlight 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%))
+  .input:nth-of-type(2)
+    --highlight 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%))
 
-.input:nth-of-type(3)
-  &:focus-within label
-    color 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
-  --highlight transparent
+  .input:nth-of-type(3)
+    &:focus-within label
+      color 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 20) * 1%))
+    --highlight transparent
 
+  .ranges .input
+    &:nth-of-type(1)
+      --track-intensity 0
+
+    &:nth-of-type(2)
+      input[type=range]::-webkit-slider-thumb:active
+        --dark 'hsl(%s, %s, %s, 1)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%))
+        background var(--dark)
+      input[type=range]::-moz-range-thumb:active
+        --dark 'hsl(%s, %s, %s, 1)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%))
+        background var(--dark)
+      input[type=range]::-ms-thumb:active
+        --dark 'hsl(%s, %s, %s, 1)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - 20) * 1%))
+        background var(--dark)
+
+    &:nth-of-type(3)
+      &:focus-within input[type=range]::-webkit-slider-thumb
+        --dot-alpha 0.25
+      input[type=range]::-webkit-slider-thumb
+        --thumb-border 0
+        --dot-alpha 0
+        --dot-color 'hsl(%s, %s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 40) * 1%) var(--dot-alpha))
+        background 'radial-gradient(circle at 50% 50%, %s 25%, transparent 25%), linear-gradient(%s, %s, %s), %s' % (var(--dot-color) calc(var(--thumb-angle) * 1deg) var(--light) var(--dark) var(--default))
+        &:focus
+          --dot-alpha 0.25
+        &:hover
+          --dot-alpha 0.5
+        &:active
+          --dot-alpha 1
+          --thumb-angle -45
+
+      input[type=range]::-moz-range-thumb
+        --thumb-border 0
+        --dot-alpha 0
+        --dot-color 'hsl(%s, %s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 40) * 1%) var(--dot-alpha))
+        background 'radial-gradient(circle at 50% 50%, %s 25%, transparent 25%), linear-gradient(%s, %s, %s), %s' % (var(--dot-color) calc(var(--thumb-angle) * 1deg) var(--light) var(--dark) var(--default))
+        &:focus
+          --dot-alpha 0.25
+        &:hover
+          --dot-alpha 0.5
+        &:active
+          --dot-alpha 1
+          --thumb-angle -45
+
+      input[type=range]::-ms-thumb
+        --thumb-border 0
+        --dot-alpha 0
+        --dot-color 'hsl(%s, %s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + 40) * 1%) var(--dot-alpha))
+        background 'radial-gradient(circle at 50% 50%, %s 25%, transparent 25%), linear-gradient(%s, %s, %s), %s' % (var(--dot-color) calc(var(--thumb-angle) * 1deg) var(--light) var(--dark) var(--default))
+        &:focus
+          --dot-alpha 0.25
+        &:hover
+          --dot-alpha 0.5
+        &:active
+          --dot-alpha 1
+          --thumb-angle -45
