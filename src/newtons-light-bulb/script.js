@@ -56,6 +56,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const FILAMENTS = document.querySelectorAll('g.light-bulb__filament')
 
   // Set transform origin on swinging bulbs
+  gsap.set('.wrapper', { display: 'block' })
   gsap.set(BULBS[1], { transformOrigin: `50% -375%`, rotate: -CONFIG.ROTATION })
   gsap.set(CHORDS[1], { morphSVG: { d: CURVES.RIGHT } })
   gsap.set(GLASSES, { '--light-alpha': CONFIG.GLASS.ALPHA.OFF })
@@ -70,7 +71,7 @@ window.addEventListener('DOMContentLoaded', () => {
     '--filament-lightness': CONFIG.FILAMENT.LIGHTNESS.ON,
   })
 
-  // Create sub timelines
+  //Create sub timelines
   const SWING_LEFT_TL = new timeline()
     .add(
       to(CHORDS[4], {
@@ -107,17 +108,12 @@ window.addEventListener('DOMContentLoaded', () => {
       0
     )
     .add(
-      fromTo(
-        BLOOMS[4],
-        {
-          duration: SPEEDS.ON * 2,
-          stagger: SPEEDS.ON,
-          scale: 0,
-          opacity: 1,
-        },
-        { scale: 1.3, opacity: 0 }
-      ),
-      -0.1
+      to(BLOOMS[4], {
+        duration: SPEEDS.ON * 5,
+        scale: 1.3,
+        opacity: 0,
+      }),
+      0
     )
     .add(
       to(CHORDS[4], {
@@ -195,7 +191,7 @@ window.addEventListener('DOMContentLoaded', () => {
     .add(
       to([GLASSES[2], GLASSES[5], GLASSES[0], GLASSES[3]], {
         duration: SPEEDS.ON,
-        stagger: SPEEDS.ON,
+        stagger: SPEEDS.STAGGER,
         '--light-alpha': CONFIG.GLASS.ALPHA.ON,
         '--glass-saturation': CONFIG.GLASS.SATURATION.ON,
         '--glass-lightness': CONFIG.GLASS.LIGHTNESS.ON,
@@ -203,22 +199,18 @@ window.addEventListener('DOMContentLoaded', () => {
       'SWITCHING_ON'
     )
     .add(
-      fromTo(
-        [BLOOMS[2], BLOOMS[5], BLOOMS[0], BLOOMS[3]],
-        {
-          duration: SPEEDS.ON * 5,
-          stagger: SPEEDS.ON,
-          scale: 0,
-          opacity: 1,
-        },
-        { scale: 1.25, opacity: 0 }
-      ),
+      to([BLOOMS[2], BLOOMS[5], BLOOMS[0], BLOOMS[3]], {
+        duration: SPEEDS.ON * 5,
+        stagger: SPEEDS.STAGGER,
+        scale: 1.25,
+        opacity: 0,
+      }),
       'SWITCHING_ON'
     )
     .add(
       to([FILAMENTS[2], FILAMENTS[5], FILAMENTS[0], FILAMENTS[3]], {
         duration: SPEEDS.ON,
-        stagger: SPEEDS.ON,
+        stagger: SPEEDS.STAGGER,
         '--filament-lightness': CONFIG.FILAMENT.LIGHTNESS.ON,
       }),
       'SWITCHING_ON'
@@ -226,7 +218,7 @@ window.addEventListener('DOMContentLoaded', () => {
     .add(
       to([GLASSES[2], GLASSES[5], GLASSES[0], GLASSES[3]], {
         duration: SPEEDS.ON * 2,
-        stagger: SPEEDS.ON,
+        stagger: SPEEDS.STAGGER,
         '--light-alpha': CONFIG.GLASS.ALPHA.OFF,
         '--glass-saturation': CONFIG.GLASS.SATURATION.OFF,
         '--glass-lightness': CONFIG.GLASS.LIGHTNESS.OFF,
@@ -236,7 +228,7 @@ window.addEventListener('DOMContentLoaded', () => {
     .add(
       to([FILAMENTS[2], FILAMENTS[5], FILAMENTS[0], FILAMENTS[3]], {
         duration: SPEEDS.ON * 2,
-        stagger: SPEEDS.ON,
+        stagger: SPEEDS.STAGGER,
         '--filament-lightness': CONFIG.FILAMENT.LIGHTNESS.OFF,
       }),
       SPEEDS.ON
@@ -246,7 +238,7 @@ window.addEventListener('DOMContentLoaded', () => {
     .add(
       to([GLASSES[3], GLASSES[0], GLASSES[5], GLASSES[2]], {
         duration: SPEEDS.ON,
-        stagger: SPEEDS.ON,
+        stagger: SPEEDS.STAGGER,
         '--light-alpha': CONFIG.GLASS.ALPHA.ON,
         '--glass-saturation': CONFIG.GLASS.SATURATION.ON,
         '--glass-lightness': CONFIG.GLASS.LIGHTNESS.ON,
@@ -257,19 +249,22 @@ window.addEventListener('DOMContentLoaded', () => {
       fromTo(
         [BLOOMS[3], BLOOMS[0], BLOOMS[5], BLOOMS[2]],
         {
-          duration: SPEEDS.ON * 5,
-          stagger: SPEEDS.ON,
           scale: 0,
           opacity: 1,
         },
-        { scale: 1.25, opacity: 0 }
+        {
+          scale: 1.25,
+          opacity: 0,
+          duration: SPEEDS.ON * 5,
+          stagger: SPEEDS.STAGGER,
+        }
       ),
       'SWITCHING_ON_2'
     )
     .add(
       to([FILAMENTS[3], FILAMENTS[0], FILAMENTS[5], FILAMENTS[2]], {
         duration: SPEEDS.ON,
-        stagger: SPEEDS.ON,
+        stagger: SPEEDS.STAGGER,
         '--filament-lightness': CONFIG.FILAMENT.LIGHTNESS.ON,
       }),
       'SWITCHING_ON_2'
@@ -277,7 +272,7 @@ window.addEventListener('DOMContentLoaded', () => {
     .add(
       to([GLASSES[3], GLASSES[0], GLASSES[5], GLASSES[2]], {
         duration: SPEEDS.ON * 2,
-        stagger: SPEEDS.ON,
+        stagger: SPEEDS.STAGGER,
         '--light-alpha': CONFIG.GLASS.ALPHA.OFF,
         '--glass-saturation': CONFIG.GLASS.SATURATION.OFF,
         '--glass-lightness': CONFIG.GLASS.LIGHTNESS.OFF,
@@ -287,7 +282,7 @@ window.addEventListener('DOMContentLoaded', () => {
     .add(
       to([FILAMENTS[3], FILAMENTS[0], FILAMENTS[5], FILAMENTS[2]], {
         duration: SPEEDS.ON * 2,
-        stagger: SPEEDS.ON,
+        stagger: SPEEDS.STAGGER,
         '--filament-lightness': CONFIG.FILAMENT.LIGHTNESS.OFF,
       }),
       SPEEDS.ON
@@ -329,26 +324,22 @@ window.addEventListener('DOMContentLoaded', () => {
       0
     )
     .add(
-      fromTo(
-        BLOOMS[1],
-        {
-          duration: SPEEDS.ON * 2,
-          stagger: SPEEDS.ON,
-          scale: 0,
-          opacity: 1,
-        },
-        { scale: 1.3, opacity: 0 }
-      ),
-      -0.1
+      to(BLOOMS[1], {
+        duration: SPEEDS.ON * 5,
+        stagger: SPEEDS.STAGGER,
+        scale: 1.3,
+        opacity: 0,
+      }),
+      0
     )
 
   const BULBS_TL = new timeline({ repeat: -1 })
 
-  BULBS_TL.add(SWING_RIGHT_TL)
-  BULBS_TL.add(FLASH_TL, `SWITCH_OFF-=${SPEEDS.ON * 1.5}`)
-  BULBS_TL.add(SWING_LEFT_TL, `SWITCHING_ON-=${SPEEDS.ON * 8}`)
-  BULBS_TL.add(FLASH_BACK_TL, `SWINGING_BACK-=${SPEEDS.ON * 1.5}`)
-  BULBS_TL.add(SWING_RIGHT_BACK_TL, `SWITCHING_ON_2-=${SPEEDS.ON * 8}`)
+  BULBS_TL.add(SWING_RIGHT_TL, 'SWING_IN')
+  BULBS_TL.add(FLASH_TL, `>-${SPEEDS.ON * 2}`)
+  BULBS_TL.add(SWING_LEFT_TL, `>-${SPEEDS.ON * 4}`)
+  BULBS_TL.add(FLASH_BACK_TL, `>-${SPEEDS.ON}`)
+  BULBS_TL.add(SWING_RIGHT_BACK_TL, `>-${SPEEDS.ON * 4}`)
 
   // GSDevTools.create()
 })
