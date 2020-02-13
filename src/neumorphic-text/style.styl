@@ -1,0 +1,28 @@
+*
+  box-sizing border-box
+
+body
+  --base 'hsla(%s, %s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%) var(--alpha))
+  background-color var(--base)
+  color var(--base)
+  text-align center
+  min-height 100vh
+  display flex
+  justify-content center
+  align-items center
+
+h1
+  --blur calc(var(--neumorphic-blur) * 1px)
+  --x calc(var(--neumorphic-reach) * 1px)
+  --y calc(var(--neumorphic-reach) * 1px)
+  --x2 calc(var(--neumorphic-reach) * -1px)
+  --y2 calc(var(--neumorphic-reach) * -1px)
+  --light 'hsla(%s, %s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) + var(--neumorphic-contrast)) * 1%) 1)
+  --dark 'hsla(%s, %s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc((var(--lightness) - var(--neumorphic-contrast)) * 1%) var(--neumorphic-intensity))
+  --top '%s %s %s %s' % (var(--x) var(--y) var(--blur) var(--dark))
+  --bottom '%s %s %s %s' % (var(--x2) var(--y2) var(--blur) var(--light))
+  font-weight var(--font-weight)
+  font-family var(--font-family)
+  font-size calc(var(--font-size) * 1rem)
+  text-shadow var(--top), var(--bottom)
+  filter blur(calc(var(--text-blur) * 1px))

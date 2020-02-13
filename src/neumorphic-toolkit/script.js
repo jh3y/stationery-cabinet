@@ -65,6 +65,27 @@ const CONFIG = {
       ALPHA: 0.2,
     },
   },
+  CHECKBOX: {
+    BORDER: {
+      RADIUS: 36,
+    },
+    SHADOW: {
+      REACH: 4,
+      BLUR: 8,
+      ALPHA: 0.5,
+    },
+  },
+  RADIO: {
+    BORDER: {
+      WIDTH: 1,
+      RADIUS: 36,
+    },
+    SHADOW: {
+      REACH: 4,
+      BLUR: 8,
+      ALPHA: 0.5,
+    },
+  },
 }
 
 const BOUNDS = {
@@ -126,46 +147,41 @@ const BOUNDS = {
       ALPHA: [0, 1, 0.01],
     },
   },
+  CHECKBOX: {
+    BORDER: {
+      RADIUS: [0, 36, 1],
+    },
+    SHADOW: {
+      REACH: [0, 20, 1],
+      BLUR: [0, 40, 1],
+      ALPHA: [0, 1, 0.1],
+    },
+  },
+  RADIO: {
+    BORDER: {
+      WIDTH: [0, 10, 1],
+      RADIUS: [0, 36, 1],
+    },
+    SHADOW: {
+      REACH: [0, 20, 1],
+      BLUR: [0, 40, 1],
+      ALPHA: [0, 1, 0.1],
+    },
+  },
 }
 
-// const randomInRange = (min, max) =>
-//   Math.floor(Math.random() * max - min + 1) + min
-
-// const generateStyles = (index, cells) => {
-//   const X = index % Math.sqrt(cells)
-//   const Y = Math.floor(index / Math.sqrt(cells))
-//   const COUNT = randomInRange(1, CONFIG.count)
-//   const glitches = new Array(10)
-//     .fill()
-//     .map(
-//       (_, index) =>
-//         `--x-${index}: ${Math.floor(
-//           Math.random() * Math.sqrt(cells)
-//         )}; --y-${index}: ${Math.floor(Math.random() * Math.sqrt(cells))};`
-//     )
-//   return `--x: ${X}; --y: ${Y}; --count: ${COUNT}; ${glitches.join(' ')}`
-// }
-
-// const generateStyles = (index, cells) => {
-//   const result = {
-//     '--x': index % Math.sqrt(cells),
-//     '--y': Math.floor(index / Math.sqrt(cells)),
-//     '--count': randomInRange(1, CONFIG.count),
-//   }
-//   for (let g = 0; g < 10; g++) {
-//     result[`--x-${g}`] = Math.floor(Math.random() * Math.sqrt(cells))
-//     result[`--y-${g}`] = Math.floor(Math.random() * Math.sqrt(cells))
-//   }
-//   return result
-// }
 const CARD_ID = '#cards'
 const BUTTON_ID = '#buttons'
 const TEXT_ID = '#texts'
 const RANGE_ID = '#ranges'
-const IDS = [CARD_ID, BUTTON_ID, TEXT_ID, RANGE_ID]
+const CHECKBOX_ID = '#checkboxes'
+const RADIO_ID = '#radios'
+const IDS = [CARD_ID, BUTTON_ID, TEXT_ID, RANGE_ID, CHECKBOX_ID, RADIO_ID]
 const App = () => {
   const [model, setModel] = useState(0)
   const [active, setActive] = useState(window.location.hash || IDS[0])
+  const [next, setNext] = useState(IDS[IDS.indexOf(active) + 1])
+  const [prev, setPrev] = useState(IDS[IDS.indexOf(active) - 1])
   const datRef = useRef(null)
 
   useEffect(() => {
@@ -215,6 +231,11 @@ const App = () => {
     })
   }, [])
 
+  useEffect(() => {
+    setNext(IDS[IDS.indexOf(active) + 1])
+    setPrev(IDS[IDS.indexOf(active) - 1])
+  }, [active])
+
   return (
     <Fragment>
       <main>
@@ -231,6 +252,7 @@ const App = () => {
             '--width': CONFIG.CARD.SIZE.WIDTH,
           }}>
           <article />
+          <h1>Card</h1>
         </section>
         <section
           id="buttons"
@@ -251,6 +273,7 @@ const App = () => {
             <button>Click</button>
             <button>Click</button>
           </div>
+          <h1>Button</h1>
         </section>
         <section
           id="texts"
@@ -265,18 +288,19 @@ const App = () => {
           }}>
           <div className="texts">
             <div className="input">
-              <label>Label</label>
-              <input type="text" />
+              <label htmlFor="text-1">Label</label>
+              <input id="text-1" type="text" />
             </div>
             <div className="input">
-              <label>Label</label>
-              <input type="text" />
+              <label htmlFor="text-2">Label</label>
+              <input id="text-2" type="text" />
             </div>
             <div className="input">
-              <label>Label</label>
-              <input type="text" />
+              <label htmlFor="text-3">Label</label>
+              <input id="text-3" type="text" />
             </div>
           </div>
+          <h1>Text</h1>
         </section>
         <section
           id="ranges"
@@ -292,18 +316,100 @@ const App = () => {
           }}>
           <div className="ranges">
             <div className="input">
-              <label>Label</label>
-              <input type="range" min="0" max="10" step="1" defaultValue="2" />
+              <label htmlFor="range-1">Label</label>
+              <input
+                id="range-1"
+                type="range"
+                min="0"
+                max="10"
+                step="1"
+                defaultValue="2"
+              />
             </div>
             <div className="input">
-              <label>Label</label>
-              <input type="range" min="0" max="10" step="1" defaultValue="4" />
+              <label htmlFor="range-2">Label</label>
+              <input
+                id="range-2"
+                type="range"
+                min="0"
+                max="10"
+                step="1"
+                defaultValue="4"
+              />
             </div>
             <div className="input">
-              <label>Label</label>
-              <input type="range" min="0" max="10" step="1" defaultValue="6" />
+              <label htmlFor="range-3">Label</label>
+              <input
+                id="range-3"
+                type="range"
+                min="0"
+                max="10"
+                step="1"
+                defaultValue="6"
+              />
             </div>
           </div>
+          <h1>Range</h1>
+        </section>
+        <section
+          id="checkboxes"
+          style={{
+            '--neumorphic-reach': CONFIG.CHECKBOX.SHADOW.REACH,
+            '--neumorphic-blur': CONFIG.CHECKBOX.SHADOW.BLUR,
+            '--neumorphic-intensity': CONFIG.CHECKBOX.SHADOW.ALPHA,
+            '--border-width': CONFIG.CHECKBOX.BORDER.WIDTH,
+            '--border-intensity': CONFIG.CHECKBOX.BORDER.ALPHA,
+            '--border-radius': CONFIG.CHECKBOX.BORDER.RADIUS,
+            '--margin': 15,
+          }}>
+          <div className="checkboxes">
+            <div className="input">
+              <input id="check-1" type="checkbox" />
+              <label htmlFor="check-1">Check</label>
+            </div>
+            <div className="input">
+              <input id="check-2" type="checkbox" />
+              <label htmlFor="check-2">Check</label>
+            </div>
+            <div className="input">
+              <input id="check-3" type="checkbox" />
+              <label htmlFor="check-3">Check</label>
+            </div>
+          </div>
+          <h1>Checkbox</h1>
+        </section>
+        <section
+          id="radios"
+          style={{
+            '--neumorphic-reach': CONFIG.RADIO.SHADOW.REACH,
+            '--neumorphic-blur': CONFIG.RADIO.SHADOW.BLUR,
+            '--neumorphic-intensity': CONFIG.RADIO.SHADOW.ALPHA,
+            '--border-width': CONFIG.RADIO.BORDER.WIDTH,
+            '--border-intensity': CONFIG.RADIO.BORDER.ALPHA,
+            '--border-radius': CONFIG.RADIO.BORDER.RADIUS,
+            '--margin': 15,
+          }}>
+          <div className="radios">
+            <div className="input radio">
+              <input id="radio-1-1" type="radio" name="radio-one" checked />
+              <label htmlFor="radio-1-1">Radio</label>
+              <input id="radio-1-2" type="radio" name="radio-one" />
+              <label htmlFor="radio-1-2">Radio</label>
+            </div>
+            <div className="input radio">
+              <input id="radio-2-1" type="radio" name="radio-two" checked />
+              <label htmlFor="radio-2-1">Radio</label>
+              <input id="radio-2-2" type="radio" name="radio-two" />
+              <label htmlFor="radio-2-2">Radio</label>
+            </div>
+            <div className="input radio">
+              <input id="radio-3-1" type="radio" name="radio-three" checked />
+              <label htmlFor="radio-3-1">Radio</label>
+              <input id="radio-3-2" type="radio" name="radio-three" />
+              <label htmlFor="radio-3-2">Radio</label>
+            </div>
+          </div>
+          <h1>Radio</h1>
         </section>
       </main>
       <footer>
@@ -315,6 +421,24 @@ const App = () => {
           )
         })}
       </footer>
+      <a href={next}>
+        Next
+        <svg viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
+          />
+        </svg>
+      </a>
+      <a href={prev}>
+        Prev
+        <svg viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
+          />
+        </svg>
+      </a>
     </Fragment>
   )
 }
