@@ -1,0 +1,85 @@
+*
+  box-sizing border-box
+  user-select none
+  -webkit-user-select none
+
+body
+  background hsl(0, 0%, 90%)
+  min-height 100vh
+  overflow hidden
+  display flex
+  align-items center
+  justify-content center
+
+.heart
+  position absolute
+  height calc(var(--size) * 1vmin)
+  width calc(var(--size) * 1vmin)
+  left 50%
+  top 50%
+  transform translate(-50%, -50%)
+
+  svg
+    height 100%
+    width 100%
+
+  path
+    fill 'hsl(%s, 100%, 60%)' % var(--hue)
+
+.backdrop
+  --color-one hsl(235, 90%, 75%)
+  --color-two hsl(180, 90%, 75%)
+  --color-three hsl(90, 90%, 75%)
+  --color-four hsl(50, 90%, 75%)
+  --color-five hsl(10, 90%, 75%)
+  --cloud hsla(0, 0%, 100%, 0.95)
+  height 100vmax
+  width 100vmax
+  background radial-gradient(circle at center center, var(--cloud) 20%, transparent 20%), repeating-conic-gradient(var(--color-one) 0, var(--color-one) 10%, var(--color-two) 10%, var(--color-two) 20%, var(--color-three) 20%, var(--color-three) 30%, var(--color-four) 30%, var(--color-four) 40%, var(--color-five) 40%, var(--color-five) 50%)
+  position fixed
+  transform-origin center
+  border-radius 50%
+
+svg
+  --size 50
+  height calc(var(--size) * 1vmin)
+  width calc(var(--size) * 1vmin)
+  z-index 2
+
+.care-bear
+  --lightness 50
+  cursor pointer
+  &__ear
+    circle:nth-of-type(1)
+      fill 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+    circle:nth-of-type(2)
+      --lightness 90
+      fill 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+  &__arm
+    rect
+      --lightness 45
+      fill 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+  &__feet
+    --lightness 40
+    $clip = circle(65% at 50% 130%)
+    -webkit-clip-path $clip
+    clip-path $clip
+    path
+      fill 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+  &__head
+    circle
+      fill 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+  &__belly
+    circle:nth-of-type(1)
+      fill 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+    circle:nth-of-type(2)
+      --lightness 90
+      fill 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+  &__heart
+    --saturation 20
+    --hue 0
+    fill 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+  &__muzzle
+    --lightness 90
+    circle
+      fill 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
