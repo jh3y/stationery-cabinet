@@ -34,12 +34,21 @@ const STATE = {
   CLOSING: false,
 }
 
+set(document.body, { opacity: 1 })
 // Set the backdrop scale to 0
 set($BACKDROP, { scale: 0 })
 // Set bear to sulking
 set($BEAR, { '--hue': Math.floor(Math.random() * 360), '--saturation': 0 })
-set($BEAR_ARM_LEFT, { transformOrigin: '85% 80%', scale: 0.85, rotate: -110 })
-set($BEAR_ARM_RIGHT, { transformOrigin: '15% 80%', scale: 0.85, rotate: 110 })
+set($BEAR_ARM_LEFT, {
+  transformOrigin: '85% 80%',
+  scale: 0.85,
+  rotate: -110,
+})
+set($BEAR_ARM_RIGHT, {
+  transformOrigin: '15% 80%',
+  scale: 0.85,
+  rotate: 110,
+})
 set($BEAR_EAR_LEFT, { transformOrigin: '70% 85%', rotate: -60 })
 set($BEAR_EAR_RIGHT, { transformOrigin: '30% 85%', rotate: 60 })
 set($BEAR_MOUTH, { transformOrigin: '50%, 0', scaleY: 0, y: '+=2' })
@@ -211,7 +220,23 @@ const end = () => {
   RAISE_TL.reverse()
 }
 
+const tease = () => {
+  to([$BEAR_EYE_RIGHT, $BEAR_EYE_LEFT], {
+    duration: SPEEDS.SWITCH,
+    clipPath: 'inset(0 0 0 0)',
+  })
+}
+
+const sadden = () => {
+  to([$BEAR_EYE_RIGHT, $BEAR_EYE_LEFT], {
+    duration: SPEEDS.SWITCH,
+    clipPath: 'inset(50% 0 0 0)',
+  })
+}
+
 $BEAR.addEventListener('mousedown', start)
 $BEAR.addEventListener('touchstart', start)
 $BEAR.addEventListener('mouseup', end)
 $BEAR.addEventListener('touchend', end)
+$BEAR.addEventListener('mouseover', tease)
+$BEAR.addEventListener('mouseleave', sadden)
