@@ -204,12 +204,30 @@ const BREATHING_TL = new timeline({ repeat: -1, yoyo: true })
   )
   .add(to($BEAR_MUZZLE, { y: '-=0.4', duration: SPEEDS.BREATHING }), 0)
 
+let BLINKING_TL
+const blink = () => {
+  const DELAY = Math.floor(Math.random() * 5 - 1 + 1) + 1
+  BLINKING_TL = new timeline().add(
+    to([$BEAR_EYE_LEFT, $BEAR_EYE_RIGHT], {
+      delay: DELAY,
+      scaleY: 0,
+      duration: SPEEDS.SWITCH,
+      repeat: 1,
+      yoyo: true,
+      onComplete: blink,
+    })
+  )
+}
+blink()
+
 const start = () => {
   if (STATE.CLOSING) return
   STATE.FIRING = true
   OPEN_BACKDROP_TL.restart()
   RAISE_TL.play()
   BREATHING_TL.pause()
+  BLINKING_TL.pause()
+  BLINKING_TL.seek(0)
   fireHearts()
 }
 
@@ -217,6 +235,7 @@ const end = () => {
   if (STATE.CLOSING || !STATE.FIRING) return
   STATE.CLOSING = true
   CLOSE_BACKDROP_TL.restart()
+  BLINKING_TL.restart()
   RAISE_TL.reverse()
 }
 

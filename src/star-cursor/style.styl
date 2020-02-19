@@ -1,0 +1,38 @@
+*
+  box-sizing border-box
+
+:root
+  --light 95
+
+  @media(prefers-color-scheme dark)
+    --light 15
+
+body
+  background 'hsl(0, 0%, %s)' % calc(var(--light) * 1%)
+  min-height 100vh
+  overflow hidden
+  transition background .1s ease 0s
+  touch-action none
+
+.star
+  position absolute
+  left calc(var(--x) * 1px)
+  top calc(var(--y) * 1px)
+  height calc(var(--s) * 1px)
+  width calc(var(--s) * 1px)
+  transform-origin center
+  transform translate(-50%, -50%) rotate(calc(var(--r) * 1deg))
+  svg
+    height 100%
+    transform scale(0)
+  path
+    fill 'hsl(%s, 100%, 75%)' % var(--h)
+
+h1
+  position fixed
+  top 50%
+  left 50%
+  font-size 5rem
+  line-height 5rem
+  transform translate(-50%, -50%)
+  margin 0
