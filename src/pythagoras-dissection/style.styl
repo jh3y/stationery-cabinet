@@ -6,6 +6,7 @@ $scaleUp = math(20000, 'sqrt') / 100
 
 :root
   --size 150
+  --speed 3
   --scale-down $scaleDown
   --scale-up $scaleUp
   --lightness 85
@@ -23,6 +24,69 @@ $scaleUp = math(20000, 'sqrt') / 100
   @media(prefers-color-scheme dark)
     --lightness 15
 
+[type='checkbox']
+  position absolute
+  opacity 0
+  height 0
+  width 0
+
+label
+  cursor pointer
+  display block
+
+#rotater:checked ~ .container
+  // --speed 10
+  .rotater
+    background 'hsla(%s, %s, %s, 0.25)' % (var(--h-1) calc(var(--s) * 1%) calc(var(--l) * 1%))
+
+  .extras
+    background 'hsla(%s, %s, %s, 0.25)' % (var(--h-5) calc(var(--s) * 1%) calc(var(--l) * 1%))
+
+  .extras-container
+    background 'hsla(%s, %s, %s, 0.25)' % (var(--h-3) calc(var(--s) * 1%) calc(var(--l) * 1%))
+
+  .extras-wrapper
+    background 'hsla(%s, %s, %s, 0.75)' % (var(--h-4) calc(var(--s) * 1%) calc(var(--l) * 1%))
+    overflow visible
+    // opacity 0.5
+  .extra--1
+    background 'hsla(%s, %s, %s, 0.25)' % (var(--h-4) calc(var(--s) * 1%) calc(var(--l) * 1%))
+  .extra--2
+    background 'hsla(%s, %s, %s, 0.25)' % (var(--h-5) calc(var(--s) * 1%) calc(var(--l) * 1%))
+
+
+#corner:checked ~ .container
+  // --speed 10
+  .corner-piece
+    overflow visible
+    background 'hsla(%s, %s, %s, 0.5)' % (var(--h-1) calc(var(--s) * 1%) calc(var(--l) * 1%))
+
+  .upright
+    background 'hsl(%s, %s, %s, 0.5)' % (var(--h-5) calc(var(--s) * 1%) calc(var(--l) * 1%))
+
+#bottom:checked ~ .container
+  // --speed 10
+
+  .bottom
+    background 'hsla(%s, %s, %s, 1)' % (var(--h-1) calc(var(--s) * 1%) calc(var(--l) * 1%))
+    overflow visible
+
+  .slider-container
+    background 'hsla(%s, %s, %s, 0.35)' % (var(--h-5) calc(var(--s) * 1%) calc(var(--l) * 1%))
+
+  .slider
+    background 'hsla(%s, %s, %s, 0.35)' % (var(--h-1) calc(var(--s) * 1%) calc(var(--l) * 1%))
+
+  .grower
+    background 'hsla(%s, %s, %s, 0.35)' % (var(--h-2) calc(var(--s) * 1%) calc(var(--l) * 1%))
+    &:after
+      background 'hsla(%s, %s, %s, 0.35)' % (var(--h-4) calc(var(--s) * 1%) calc(var(--l) * 1%))
+
+  .rotater--bottom
+    background 'hsla(%s, %s, %s, 0.35)' % (var(--h-4) calc(var(--s) * 1%) calc(var(--l) * 1%))
+
+  .scaler--bottom
+    background 'hsla(%s, %s, %s, 0.35)' % (var(--h-2) calc(var(--s) * 1%) calc(var(--l) * 1%))
 
 body
   min-height 100vh
@@ -51,7 +115,7 @@ body
   height 100%
   width 100%
   transform-origin bottom right
-  animation rotate 4s infinite alternate linear
+  animation rotate calc(var(--speed, 4) * 1s) infinite alternate linear
 
 .scaler
   height 100%
@@ -59,7 +123,7 @@ body
   position absolute
   top 0
   left 0
-  animation scale-down 4s infinite alternate cubic-bezier(0.55, 0, 1, 1)
+  animation scale-down calc(var(--speed, 4) * 1s) infinite alternate cubic-bezier(0.55, 0, 1, 1)
   transform-origin bottom right
   --lightness 15
 
@@ -77,7 +141,7 @@ body
     border-style solid
     border-color 'hsl(0, 0%, %s)' % calc(var(--lightness) * 1%)
     transform-origin top left
-    animation scale-up 4s infinite alternate linear
+    animation scale-up calc(var(--speed, 4) * 1s) infinite alternate linear
 
 
 .corner-piece
@@ -88,7 +152,7 @@ body
   height 100%
   width 100%
   transform-origin top right
-  animation scale-up 4s infinite alternate cubic-bezier(0.81, 0.60, 1, 1)
+  animation scale-up calc(var(--speed, 4) * 1s) infinite alternate cubic-bezier(0.81, 0.60, 1, 1)
   overflow hidden
 
 
@@ -98,13 +162,13 @@ body
   height 100%
   width 100%
   transform-origin bottom right
-  animation upright-rotate 4s infinite alternate linear
+  animation upright-rotate calc(var(--speed, 4) * 1s) infinite alternate linear
 
 .extras
   height 100%
   width 100%
   transform-origin top right
-  animation extras-rotate 4s infinite alternate linear
+  animation extras-rotate calc(var(--speed, 4) * 1s) infinite alternate linear
 
 .extras-wrapper
   height 100%
@@ -116,7 +180,7 @@ body
   height 100%
   width 100%
   transform-origin top right
-  animation extras-scale 4s infinite alternate cubic-bezier(0.70, 0, 1, 1)
+  animation extras-scale calc(var(--speed, 4) * 1s) infinite alternate cubic-bezier(0.70, 0, 1, 1)
 
 .extra--1
   height 100%
@@ -141,7 +205,7 @@ body
   height 100%
   width 100%
   transform-origin top right
-  animation rotate 4s infinite alternate linear
+  animation rotate calc(var(--speed, 4) * 1s) infinite alternate linear
   z-index 2
   position absolute
   top 0
@@ -153,7 +217,7 @@ body
   background 'hsl(%s, %s, %s)' % (var(--h-3) calc(var(--s) * 1%) calc(var(--l) * 1%))
   transform-origin top right
   position relative
-  animation scale-down 4s infinite alternate cubic-bezier(0.55, 0, 1, 1)
+  animation scale-down calc(var(--speed, 4) * 1s) infinite alternate cubic-bezier(0.55, 0, 1, 1)
   z-index 2
 
 .grower
@@ -163,7 +227,7 @@ body
   height 100%
   width 100%
   background 'hsl(%s, %s, %s)' % (var(--h-2) calc(var(--s) * 1%) calc(var(--l) * 1%))
-  animation rotate 4s infinite alternate linear
+  animation rotate calc(var(--speed, 4) * 1s) infinite alternate linear
   transform-origin bottom right
   z-index 1
 
@@ -189,7 +253,7 @@ body
   height 100%
   width 100%
   background 'hsl(%s, %s, %s)' % (var(--h-1) calc(var(--s) * 1%) calc(var(--l) * 1%))
-  animation slide 4s infinite alternate cubic-bezier(0.55, 0, 1, 1)
+  animation slide calc(var(--speed, 4) * 1s) infinite alternate cubic-bezier(0.55, 0, 1, 1)
   transform-origin bottom center
 
 @keyframes slide
