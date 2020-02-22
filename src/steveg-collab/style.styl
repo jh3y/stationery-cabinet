@@ -1,0 +1,212 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap')
+@import url('https://fonts.googleapis.com/css?family=Fredoka+One&display=swap&text=staxrecords');
+.jh3y
+  --gutter 2rem
+  --perspective 600px
+  --speed 0.5
+  --stagger 0.1
+  --play-speed 2
+  --fall-speed 0.25
+  --stamp-delay 0.2
+  --stamp-stagger 0.2
+  box-sizing border-box
+  width 95vmin
+  display grid
+  grid-template-columns 1fr
+  align-items start
+  grid-gap 1rem
+  line-height 1.75
+  font-family 'Lato', sans-serif
+  letter-spacing 1.25
+  border 4px solid black
+  padding var(--gutter)
+  margin var(--gutter) auto
+
+  & *
+    box-sizing border-box
+
+  header
+    position static
+    grid-template-columns 1fr
+    transform-style preserve-3d
+    perspective var(--perspective)
+    margin-top 200px
+    display inline-grid
+    --fall-delay calc((var(--stamp-delay) * 3 + var(--speed)) * 1)
+
+    &:after
+      --z 1
+      --x 0
+      --y 50
+      content ''
+      height 80px
+      width 80px
+      position absolute
+      background black
+      background radial-gradient(hsl(0, 0%, 100%) 10%, transparent 10%), radial-gradient(hsl(0, 0%, 25%) 20%, transparent 20%), url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/557388/Stax-records-logo.jpg') 0 0 / 100px 100px
+      bottom calc(100% + 100px)
+      left 0%
+      margin-left 60px
+      border-radius 50%
+      transform translate3d(-50%, 0, calc(var(--z) * 1px)) rotate(0deg)
+      animation stamp calc(var(--speed) * 1s) calc(var(--fall-delay) * 1s) cubic-bezier(.17,.67,.49,1) both, rotate calc(var(--play-speed) * 1s) calc((var(--fall-delay) + var(--speed)) * 1s) infinite linear
+
+    &:before
+      --z 0
+      --x 0
+      --y 0
+      content ''
+      height 200px
+      width 200px
+      position absolute
+      background repeating-radial-gradient(transparent 0px, transparent 10px, hsl(0, 0%, 10%) 10px, hsl(0, 0%, 10%) 12px, transparent 12px), conic-gradient(transparent 35%, hsla(0, 0%, 75%, 0.75) 35%, hsla(0, 0%, 75%, 0.75) 40%, transparent 40%), hsl(0, 0%, 15%)
+      bottom 100%
+      border-radius 50%
+      left 0%
+      transform translate3d(-50%, 0, calc(var(--z) * 1px)) rotate(0deg)
+      animation stamp calc(var(--speed) * 1s) calc(var(--fall-delay) * 1s) cubic-bezier(.17,.67,.49,1) both
+
+    img
+      display none
+      height 50%
+      width 50%
+      border-radius 50%
+
+  a
+    color hsl(0, 100%, 50%)
+
+  img
+    // max-height 25vmin
+    width 100%
+    object-fit cover
+    margin 1rem 0
+    border 4px solid black
+
+
+  .intro
+  .details
+  .history
+    grid-column 1
+
+  .history
+    grid-row 2
+
+    .year
+      font-weight bold
+
+    h2
+      display none
+
+    ul
+      list-style-type none
+      padding 0
+      margin 0
+      display grid
+      grid-template-columns 1fr
+      grid-gap 1rem 0
+
+      li
+        --fall-delay calc((var(--stamp-delay) * 3 + var(--speed)) * 1)
+        border 4px solid black
+        padding 0.5rem
+        display grid
+        align-items center
+        grid-template-columns 120px 1fr
+        grid-gap 0 0.5rem
+        animation fall calc(var(--fall-speed) * 1s) ease both
+        animation-delay calc((var(--fall-delay) + var(--index) * var(--stagger)) * 1.5s)
+
+        &:hover
+          background red
+          a
+            color white
+
+        for i in (1..12)
+          &:nth-of-type({i})
+            --index (12 - i)
+
+        a
+          color red
+          font-weight bold
+          text-decoration none
+
+  .title
+    --speed 1
+    --delay calc(var(--stamp-delay) * 1)
+    margin-bottom 0
+    font-family 'Fredoka One'
+    animation-name stamp
+    animation-duration calc(var(--speed) * 1s)
+    animation-delay calc(var(--delay) * 1s)
+    animation-timing-function cubic-bezier(.17,.67,.49,1)
+    animation-fill-mode both
+    font-size 40px
+    color hsla(0, 100%, 50%, 0.3)
+    position relative
+    transform-style preserve-3d
+    perspective var(--perspective)
+    text-transform lowercase
+
+    &:after
+    &:before
+      --x 0
+      animation-name stamp
+      animation-duration calc(var(--speed) * 1s)
+      animation-delay calc(var(--delay) * 1s)
+      animation-timing-function cubic-bezier(.17,.67,.49,1)
+      animation-fill-mode both
+      content 'Stax Records'
+      left 0
+      top 0
+      position absolute
+
+    &:before
+      --delay calc(var(--stamp-delay) * 2)
+      color hsla(0, 100%, 50%, 0.6)
+
+    &:after
+      --delay calc(var(--stamp-delay) * 3)
+      color hsla(0, 100%, 50%, 1)
+
+
+  // .stax
+  //   margin 0 .25rem
+  //   border 2px solid black
+  //   color red
+  //   font-weight bold
+
+
+  .attribution
+    font-size 0.675rem
+    margin 0
+
+  @media(min-width 768px)
+    grid-template-columns 1fr 1fr
+
+    header
+      position fixed
+
+    .intro
+    .details
+    .history
+      grid-column 2
+
+    .history
+      grid-row 1
+
+  @keyframes fall
+    from
+      opacity 0
+      transform translate(0, -100vmin)
+
+  @keyframes stamp
+    from
+      transform translate3d(calc(var(--x, 0) * 1%), calc(var(--y, 0) * 1%), var(--perspective))
+    to
+      transform translate3d(calc(var(--x, 0) * 1%), calc(var(--y, 0) * 1%), 0)
+
+  @keyframes rotate
+    from
+      transform translate3d(calc(var(--x, 0) * 1%), calc(var(--y, 0) * 1%), calc(var(--z, 0) * 1px)) rotate(0deg)
+    to
+      transform translate3d(calc(var(--x, 0) * 1%), calc(var(--y, 0) * 1%), calc(var(--z, 0) * 1px)) rotate(360deg)
