@@ -1,15 +1,18 @@
+input#corner(type='checkbox')
+input#rotater(type='checkbox')
+input#bottom(type='checkbox')
 .container
   .square.top
     .rotater
       .square.scaler
-        .extras-wrapper
+        label.extras-wrapper(for='rotater')
           .square.extras
             .square.extras-container
               .square.extra--1
               .square.extra--2
-        .square.corner-piece
+        label.square.corner-piece(for='corner')
           .square.upright
-  .square.bottom
+  label.square.bottom(for='bottom')
     .square.rotater--bottom
       .square.scaler--bottom
         .square.slider-container

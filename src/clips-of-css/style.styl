@@ -1,0 +1,196 @@
+body
+  align-items center
+  min-height 100vh
+
+*
+  -webkit-tap-highlight-color transparent
+  box-sizing border-box
+
+:root
+  --size 250
+  --hue 225
+  --transition 0.15
+  --ease ease-in-out
+  // GO UP TO 10 SIDED SHAPE
+  // TRIANGLE-UP
+  --clip-0 polygon(50% 0, 7% 75%, 93% 75%, 93% 75%, 93% 75%, 93% 75%, 93% 75%, 93% 75%, 93% 75%, 93% 75%)
+  // TRIANGLE-LEFT
+  --clip-1 polygon(75% 7%, 0% 50%, 75% 93%, 75% 93%, 75% 93%, 75% 93%, 75% 93%, 75% 93%, 75% 93%, 75% 93%)
+  // TRIANGLE-DOWN
+  --clip-2 polygon(93% 25%, 7% 25%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%)
+  // TRIANGLE-RIGHT
+  --clip-3 polygon(100% 50%, 25% 7%, 25% 93%, 25% 93%, 25% 93%, 25% 93%, 25% 93%, 25% 93%, 25% 93%, 25% 93%)
+  // TRIANGLE-TOP-LEFT
+  --clip-4 polygon(87.5% 12.5%, 12.5% 12.5%, 12.5% 87.5%, 12.5% 87.5%, 12.5% 87.5%, 12.5% 87.5%, 12.5% 87.5%, 12.5% 87.5%, 12.5% 87.5%, 12.5% 87.5%)
+  // TRIANGLE-TOP-RIGHT
+  --clip-5 polygon(87.5% 12.5%, 12.5% 12.5%, 87.5% 87.5%, 87.5% 87.5%, 87.5% 87.5%, 87.5% 87.5%, 87.5% 87.5%, 87.5% 87.5%, 87.5% 87.5%, 87.5% 87.5%)
+  // TRIANGLE-BOTTOM-LEFT
+  --clip-6 polygon(12.5% 12.5%, 12.5% 87.5%, 87.5% 87.5%, 87.5% 87.5%, 87.5% 87.5%, 87.5% 87.5%, 87.5% 87.5%, 87.5% 87.5%, 87.5% 87.5%, 87.5% 87.5%)
+  // TRIANGLE-BOTTOM-RIGHT
+  --clip-7 polygon(87.5% 12.5%, 12.5% 87.5%, 87.5% 87.5%, 87.5% 87.5%, 87.5% 87.5%, 87.5% 87.5%, 87.5% 87.5%, 87.5% 87.5%, 87.5% 87.5%, 87.5% 87.5%)
+  // SQUARE
+  --clip-8 polygon(15% 15%, 15% 85%, 85% 85%, 85% 85%, 85% 85%, 85% 85%, 85% 85%, 85% 85%, 85% 85%, 85% 15%)
+  // RECTANGLE
+  --clip-9 polygon(0% 25%, 0% 75%, 100% 75%, 100% 75%, 100% 75%, 100% 75%, 100% 75%, 100% 75%, 100% 75%, 100% 25%)
+  // TRAPEZOID
+  --clip-10 polygon(25% 20%, 5% 80%, 95% 80%, 95% 80%, 95% 80%, 95% 80%, 95% 80%, 95% 80%, 95% 80%, 75% 20%)
+  // PARELELLOGRAM
+  --clip-11 polygon(5% 20%, 25% 80%, 95% 80%, 95% 80%, 95% 80%, 95% 80%, 95% 80%, 95% 80%, 95% 80%, 75% 20%)
+  // DIAMOND-SQUARE
+  --clip-12 polygon(15% 50%, 50% 85%, 85% 50%, 85% 50%, 85% 50%, 85% 50%, 85% 50%, 85% 50%, 85% 50%, 50% 15%)
+  // DIAMOND SHIELD
+  --clip-13 polygon(15% 35%, 50% 85%, 85% 35%, 85% 35%, 85% 35%, 85% 35%, 85% 35%, 85% 35%, 85% 35%, 50% 15%)
+  // DIAMOND NARROW
+  --clip-14 polygon(25% 50%, 50% 85%, 75% 50%, 75% 50%, 75% 50%, 75% 50%, 75% 50%, 75% 50%, 75% 50%, 50% 15%)
+  // PENTAGON
+  --clip-15 polygon(2% 35%, 21% 90%, 79% 90%, 79% 90%, 79% 90%, 79% 90%, 79% 90%, 79% 90%, 98% 35%, 50% 0%)
+  // CUT DIAMOND
+  --clip-16 polygon(2% 35%, 50% 90%, 98% 35%, 98% 35%, 98% 35%, 98% 35%, 98% 35%, 98% 35%, 75% 0%, 25% 0%)
+  // BASE
+  --clip-17 polygon(2% 35%, 2% 85%, 98% 85%, 98% 35%, 98% 35%, 98% 35%, 98% 35%, 98% 35%, 98% 35%, 50% 0%)
+  // FLAG
+  --clip-18 polygon(2% 15%, 2% 85%, 50% 65%, 98% 85%, 98% 85%, 98% 85%, 98% 85%, 98% 85%, 98% 85%, 98% 15%)
+  // HEXAGON
+  --clip-19 polygon(0% 50%, 25% 93%, 75% 93%, 100% 50%, 100% 50%, 100% 50%, 100% 50%, 100% 50%, 75% 7%, 25% 7%)
+  // HOUSE
+  --clip-20 polygon(0% 50%, 0% 93%, 100% 93%, 100% 50%, 100% 50%, 100% 50%, 100% 50%, 100% 50%, 75% 7%, 25% 7%)
+  // POINTER
+  --clip-21 polygon(25% 50%, 0% 75%, 75% 75%, 100% 50%, 100% 50%, 100% 50%, 100% 50%, 100% 50%, 75% 25%, 0% 25%)
+  // CHEVRON
+  --clip-22 polygon(0% 50%, 0% 75%, 50% 55%, 100% 75%, 100% 75%, 100% 75%, 100% 75%, 100% 75%, 100% 50%, 50% 25%)
+  // ISOTOXAL STAR
+  --clip-23 polygon(40% 45%, 7% 75%, 50% 60%, 50% 60%, 50% 60%, 50% 60%, 50% 60%, 93% 75%, 60% 45%, 50% 0%)
+  // HEPTAGON
+  --clip-24 polygon(1% 61%, 28% 95%, 72% 95%, 99% 61%, 99% 61%, 99% 61%, 99% 61%, 89% 19%, 50% 0%, 11% 19%)
+  // TALK BUBBLE
+  --clip-25 polygon(0% 50%, 15% 60%, 15% 85%, 85% 85%, 85% 85%, 85% 85%, 85% 85%, 85% 15%, 15% 15%, 15% 40%)
+  // OCTAGON
+  --clip-26 polygon(4% 69%, 31% 96%, 69% 96%, 96% 69%, 96% 31%, 96% 31%, 96% 31%, 69% 4%, 31% 4%, 4% 31%)
+  // NONAGON
+  --clip-27 polygon(7% 75%, 33% 97%, 67% 97%, 93% 75%, 99% 41%, 99% 41%, 82% 12%, 50% 0%, 18% 12%, 1% 41%)
+  // DECAGON
+  --clip-28 polygon(10% 79%, 35% 98%, 65% 98%, 90% 79%, 100% 50%, 90% 21%, 65% 2%, 35% 2%, 10% 21%, 0% 50%)
+  // STAR
+  --clip-29 polygon(20% 87%, 50% 66%, 80% 87%, 67% 54%, 96% 35%, 60% 35%, 50% 5%, 40% 35%, 4% 35%, 33% 54%)
+
+::selection
+  background transparent
+
+label
+  display none
+  cursor pointer
+
+[type='checkbox']
+  display none
+
+[type='reset']
+  cursor pointer
+  display none
+  position absolute
+  top 1rem
+  right 1rem
+
+.clip
+  cursor pointer
+  height calc(var(--size) * 1px)
+  left 50%
+  position absolute
+  text-align center
+  top 50%
+  transform translate(-50%, -50%)
+  width calc(var(--size) * 1px)
+
+input:checked + label + input + label
+input:checked + label + label
+  display block
+
+input:checked + label + label + label
+  --scale 1
+
+[type='checkbox']:nth-of-type(1):not(:checked) ~
+  .local
+  .global
+  .backdrop
+  .shape__container
+    --transition 0
+
+
+.shape
+  --clip var(--clip-0)
+  --hue var(--hue-0)
+  -webkit-clip-path var(--clip)
+  background 'hsl(%s, 50%, 50%)' % var(--hue)
+  clip-path var(--clip)
+  height calc(var(--size) * 1px)
+  left 50%
+  position absolute
+  top 50%
+  transform translate(-50%, -50%)
+  transition clip-path calc(var(--transition) * 1s) var(--ease), -webkit-clip-path calc(var(--transition) * 1s) var(--ease), background calc(var(--transition) * 1s) var(--ease)
+  width calc(var(--size) * 1px)
+  z-index -1
+
+form
+  height 100vh
+  position relative
+  width 100vw
+
+.local
+  --scale 0
+  display inline-block
+  height calc(var(--size) * 0.25px)
+  left 50%
+  position absolute
+  top 50%
+  transform translate(-50%, -50%) scale(var(--scale))
+  transition transform calc(var(--transition) * 1s) var(--ease)
+  width calc(var(--size) * 0.25px)
+
+  path
+    fill 'hsl(%s, 15%, 20%)' % var(--hue)
+
+.global
+  display inline-block
+  height calc(var(--size) * 0.15px)
+  position fixed
+  right 1rem
+  top 1rem
+  width calc(var(--size) * 0.15px)
+
+  path
+    fill 'hsl(%s, 15%, 80%)' % var(--hue)
+
+.shape__container
+  --hue var(--hue-0)
+  --shadow-one 'hsl(%s, 50%, 45%)' % var(--hue)
+  --shadow-two 'hsl(%s, 50%, 55%)' % var(--hue)
+  filter drop-shadow(2px 2px 4px var(--shadow-one)) drop-shadow(-2px -2px 4px var(--shadow-two))
+  height calc(var(--size) * 1px)
+  left 50%
+  position absolute
+  top 50%
+  transform translate(-50%, -50%)
+  transition filter calc(var(--transition) * 1s) var(--ease)
+  width calc(var(--size) * 1px)
+  z-index -1
+
+.backdrop
+  --hue var(--hue-0)
+  background 'hsl(%s, 15%, 10%)' % var(--hue)
+  height 100vh
+  position fixed
+  transition background calc(var(--transition) * 1s) var(--ease)
+  width 100vw
+  z-index -2
+
+for $clip in (1..30)
+  [type='checkbox']:nth-of-type({$clip}):checked ~
+    .local
+    .global
+    .backdrop
+    .shape__container
+      --hue 'var(--hue-%s)' % $clip
+      .shape
+        --hue 'var(--hue-%s)' % $clip
+        --clip 'var(--clip-%s)' % $clip
+
