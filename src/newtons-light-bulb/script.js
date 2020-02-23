@@ -1,4 +1,5 @@
-window.addEventListener('DOMContentLoaded', () => {
+// eslint-disable-next-line
+;(function() {
   const {
     // GSDevTools,
     gsap,
@@ -22,8 +23,9 @@ window.addEventListener('DOMContentLoaded', () => {
     SWING: 0.5,
     EASE: 4,
   }
-
-  const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  // Disabled for now
+  // const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  const isLightMode = false
   const CONFIG = {
     ROTATION: 30,
     FILAMENT: {
@@ -341,5 +343,31 @@ window.addEventListener('DOMContentLoaded', () => {
   BULBS_TL.add(FLASH_BACK_TL, `>-${SPEEDS.ON}`)
   BULBS_TL.add(SWING_RIGHT_BACK_TL, `>-${SPEEDS.ON * 4}`)
 
+  /**
+   * Easter EGG - Type to Hue
+   */
+  const CONTAINER = document.querySelector('.banner-container')
+  let HUE = ''
+  const processHue = e => {
+    if (e.key !== undefined && parseInt(e.key, 10) !== undefined) {
+      HUE += e.key
+      if (HUE.length === 3) {
+        if (HUE >= 0 && HUE <= 360) {
+          for (const BULB of BULBS) {
+            BULB.style.setProperty('--bulb-hue', HUE)
+          }
+          const BANNER = document.createElement('div')
+          BANNER.className = 'hue-banner'
+          BANNER.style = `--hue: ${HUE};`
+          BANNER.innerHTML = `Hue changed to ${HUE}`
+          CONTAINER.appendChild(BANNER)
+          BANNER.addEventListener('animationend', BANNER.remove)
+        }
+        // Reset the hue regardless of whether it is valid
+        HUE = ''
+      }
+    }
+  }
+  window.addEventListener('keyup', processHue)
   // GSDevTools.create()
-})
+})()
