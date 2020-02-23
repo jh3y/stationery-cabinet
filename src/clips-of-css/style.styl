@@ -1,6 +1,8 @@
 body
   align-items center
-  min-height 100vh
+  margin 0
+  height 100vh
+  overflow hidden
 
 *
   -webkit-tap-highlight-color transparent
@@ -107,6 +109,9 @@ input:checked + label + label
 input:checked + label + label + label
   --scale 1
 
+:checked ~ .instruction
+  display none
+
 [type='checkbox']:nth-of-type(1):not(:checked) ~
   .local
   .global
@@ -194,3 +199,18 @@ for $clip in (1..30)
         --hue 'var(--hue-%s)' % $clip
         --clip 'var(--clip-%s)' % $clip
 
+.instruction
+  position absolute
+  font-size 3rem
+  top 50%
+  left 50%
+  // transform translate(-50%, -50%)
+  filter grayscale(1)
+  display block
+  animation float 2.5s infinite linear
+
+@keyframes float
+  0%, 100%
+    transform translate(-68%, -350%)
+  50%
+    transform translate(-68%, -400%)
