@@ -1,0 +1,45 @@
+*
+  box-sizing border-box
+
+body
+  text-align       center
+  display flex
+  align-items center
+  justify-content center
+  background white
+
+.dismantle
+.dot
+.cross
+  height 30vmin
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+img
+  position absolute
+  height 30vmin
+
+.t__cross
+  path
+    fill black
+
+.crane
+  position absolute
+  z-index -1
+  background repeating-linear-gradient(60deg, black 2px, white 4px)
+
+  &--vertical
+    height 100vh
+    width 0.5vmin
+    transform translate(-50%, -99%)
+
+  &--horizontal
+    width 100vw
+    height 0.5vmin
+
+    &-left
+      transform translate(-100%, -50%)
+    &-right
+      transform translate(0, -50%)
