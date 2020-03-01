@@ -28,8 +28,11 @@
         ...$MOVING_PARTS,
         ...$CRANES,
         $LINE_ONE,
-        $TEXT_TWO,
+        ...$DOTS,
+        ...$CROSSES,
         ...$LINE_ONE,
+        ...$LINE_TWO,
+        $LINE_TWO,
         ...$DOUBLE_CROSSES_ONE,
         ...$DOUBLE_DOTS_ONE,
         ...$CRANES,
@@ -48,7 +51,7 @@
   const movePart = (index, reversed, onStart) => {
     const CRANE = $CRANES[index]
     // Work out the speed in relation to where the text is in the window
-    const DURATION = CRANE.dataset.offset / 1500
+    const DURATION = CRANE.dataset.offset / 750
     return (
       new timeline({ repeatRefresh: true, reversed, onStart })
         // .add(set($MOVING_PARTS[index], { opacity: 1 }))
@@ -182,7 +185,7 @@
         )
         .add(
           movePart(5, true, () => set($DOTS[3], { opacity: 1 })),
-          '-=1'
+          '-=0.5'
         )
         .add(
           to([$TEXT_TWO, $DOTS[2], $DOTS[3]], {
@@ -192,14 +195,14 @@
           })
         )
         .add(
-          to('.logo-container', {
+          to($LOGO_CONTAINER, {
             delay: STEP_DELAY,
             duration: $LOGO_CONTAINER.dataset.offset / 500,
             x: `+=${$LOGO_CONTAINER.dataset.offset}`,
           })
         )
         .add(
-          to('.logo-container .crane', {
+          to($CRANES[5], {
             duration: $LOGO_CONTAINER.dataset.offset / 1000,
             x: `-=${$LOGO_CONTAINER.dataset.offset}`,
           })
