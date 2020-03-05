@@ -12,6 +12,9 @@ body
   justify-content center
   opacity 0
 
+  @media(prefers-color-scheme dark)
+    background hsl(0, 0%, 10%)
+
 .heart
   position absolute
   height calc(var(--size) * 1vmin)
@@ -87,3 +90,33 @@ span
     --lightness 90
     circle
       fill 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+
+/**
+  * Rain
+  */
+.rain
+  svg
+    animation-delay calc(var(--d) * -1s)
+    animation-duration calc(var(--a) * 1s)
+    animation-iteration-count infinite
+    animation-name drop
+    animation-timing-function linear
+    height 50px
+    left calc(var(--x) * 1%)
+    position absolute
+    top calc((var(--y) + 50) * -1px)
+    width 50px
+    z-index -1
+
+    path
+      fill #a1c6cc
+      stroke none
+      opacity var(--o)
+      transform scaleY(calc(var(--s) * 1.5))
+
+@keyframes drop
+  90%
+    opacity 1
+  100%
+    opacity 0
+    transform translateY(75vmin)
