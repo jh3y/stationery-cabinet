@@ -1,6 +1,7 @@
 const { gsap } = window
 const { timeline, to, set } = gsap
 
+const $RAIN = document.querySelector('.rain')
 const $BACKDROP = document.querySelector('.backdrop')
 const $HEARTS = document.querySelector('.hearts')
 const $BEAR = document.querySelector('.care-bear')
@@ -220,25 +221,6 @@ const blink = () => {
 }
 blink()
 
-const start = () => {
-  if (STATE.CLOSING) return
-  STATE.FIRING = true
-  OPEN_BACKDROP_TL.restart()
-  RAISE_TL.play()
-  BREATHING_TL.pause()
-  BLINKING_TL.pause()
-  BLINKING_TL.seek(0)
-  fireHearts()
-}
-
-const end = () => {
-  if (STATE.CLOSING || !STATE.FIRING) return
-  STATE.CLOSING = true
-  CLOSE_BACKDROP_TL.restart()
-  BLINKING_TL.restart()
-  RAISE_TL.reverse()
-}
-
 const tease = () => {
   to([$BEAR_EYE_RIGHT, $BEAR_EYE_LEFT], {
     duration: SPEEDS.SWITCH,
@@ -253,9 +235,65 @@ const sadden = () => {
   })
 }
 
+const handleKeyDown = e => {
+  if (e.keyCode === 32 && !STATE.FIRING && !STATE.CLOSING) start()
+}
+
+const handleKeyUp = e => {
+  if (e.keyCode === 32 && STATE.FIRING && !STATE.CLOSING) end()
+}
+
+const start = () => {
+  if (STATE.CLOSING) return
+  document.body.removeEventListener('keypress', handleKeyDown)
+  STATE.FIRING = true
+  OPEN_BACKDROP_TL.restart()
+  RAISE_TL.play()
+  BREATHING_TL.pause()
+  BLINKING_TL.pause()
+  BLINKING_TL.seek(0)
+  $RAIN.style.display = 'none'
+  fireHearts()
+}
+
+const end = () => {
+  if (STATE.CLOSING || !STATE.FIRING) return
+  document.body.addEventListener('keypress', handleKeyDown)
+  STATE.CLOSING = true
+  CLOSE_BACKDROP_TL.restart()
+  BLINKING_TL.restart()
+  RAISE_TL.reverse()
+  $RAIN.style.display = 'block'
+  sadden()
+}
+
 $BEAR.addEventListener('mousedown', start)
 $BEAR.addEventListener('touchstart', start)
 $BEAR.addEventListener('mouseup', end)
 $BEAR.addEventListener('touchend', end)
 $BEAR.addEventListener('mouseover', tease)
 $BEAR.addEventListener('mouseleave', sadden)
+document.body.addEventListener('keydown', handleKeyDown)
+document.body.addEventListener('keyup', handleKeyUp)
+
+/**
+ * Should it be raining?
+ */
+const letItRain = new Date().getHours() % 2
+if (letItRain) {
+  // Create a random number of rain drops and animate them.
+  for (let d = 0; d < Math.floor(Math.random() * 25); d++) {
+    // Create an SVG droplet and append it to the DOM
+    const droplet = document.querySelector('svg').cloneNode()
+    droplet.setAttribute('viewBox', '0 0 5 50')
+    droplet.setAttribute(
+      'style',
+      `--x: ${Math.floor(Math.random() * 100)}; --y: ${Math.floor(
+        Math.random() * 100
+      )}; --o: ${Math.random()}; --a: ${Math.random() +
+        0.5}; --d: ${Math.random() * 2 - 1}; --s: ${Math.random()}`
+    )
+    droplet.innerHTML = `<path d="M 2.5,0 C 2.6949458,3.5392017 3.344765,20.524571 4.4494577,30.9559 5.7551357,42.666753 4.5915685,50 2.5,50 0.40843152,50 -0.75513565,42.666753 0.55054234,30.9559 1.655235,20.524571 2.3050542,3.5392017 2.5,0 Z"></path>`
+    $RAIN.appendChild(droplet)
+  }
+}
