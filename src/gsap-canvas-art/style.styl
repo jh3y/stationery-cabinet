@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap&text=Regenerate');
+
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  background hsl(0, 0%, 100%)
+  overflow hidden
+
+  &:before
+    content ''
+    position absolute
+    height 4vmin
+    width 25vmin
+    background hsl(0, 0%, 50%)
+    top 50%
+    left 50%
+    transform translate(-50%, calc((-100% - 35vmin)))
+    border-radius 50% 50% 0 0
+
+
+  &:after
+    content ''
+    position absolute
+    height 100vh
+    width 100vw
+    background radial-gradient(transparent 25vmin, hsl(0, 0%, 20%))
+
+canvas
+  background hsl(0, 0%, 95%)
+  height 50vmin
+  width 50vmin
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  box-shadow 1vmin 1vmin 2vmin 1vmin #444
+  border-radius 0.5vmin
+
+button
+  position absolute
+  bottom 15vmin
+  left 50%
+  transform translate(-50%, 4vmin)
+  z-index 2
+  font-size 1rem
+  padding 4px 12px
+  border-radius 4px
+  font-family 'Lato', sans-serif
+
+.curtains
+  height 55vmin
+  width 70vmin
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+  .curtain
+    --curtain-hue 0
+    --curtain-saturation 60%
+    --curtain-light 'hsl(%s, %s, 50%)' % (var(--curtain-hue) var(--curtain-saturation))
+    --curtain-dark 'hsl(%s, %s, 20%)' % (var(--curtain-hue) var(--curtain-saturation))
+    height 55vmin
+    width 35vmin
+    background repeating-linear-gradient(90deg, var(--curtain-light), var(--curtain-dark) 2.5vmin, var(--curtain-light) 5vmin), var(--curtain-light)
+    position absolute
+    // transform scaleX(0.1)
+    position absolute
+
+    &--left
+      transform-origin left
+      left 0
+
+    &--right
+      transform-origin right
+      right 0
