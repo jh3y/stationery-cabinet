@@ -1,0 +1,40 @@
+*
+  box-sizing border-box
+  transition background .25s ease
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  background hsl(0, 0%, 85%)
+  @media(prefers-color-scheme dark)
+    background hsl(0, 0%, 15%)
+
+.grid
+  --size 50
+  cursor pointer
+  display grid
+  grid-template-columns repeat(var(--columns), 1fr)
+  grid-template-rows repeat(var(--rows), 1fr)
+  grid-gap 5px
+  height calc(var(--size) * 1vmin)
+  width calc(((var(--columns) / var(--rows)) * var(--size)) * 1vmin)
+
+  &__cell
+    position relative
+    &:after
+      background 'hsla(%s, 100%, 50%, %s)' % (var(--hue) var(--active))
+      @media(prefers-color-scheme dark)
+        background 'hsla(%s, 90%, 65%, %s)' % (var(--hue) var(--active))
+    &:before
+      background hsl(0, 0%, 95%)
+      @media(prefers-color-scheme dark)
+        background hsl(0, 0%, 5%)
+    &:after
+    &:before
+      content ''
+      height 100%
+      width 100%
+      position absolute
+      display block

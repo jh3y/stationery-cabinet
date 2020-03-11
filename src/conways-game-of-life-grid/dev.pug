@@ -1,0 +1,8 @@
+- const COLUMNS = 15
+- const ROWS = 10
+.grid(style=`--columns: ${COLUMNS}; --rows: ${ROWS}; --hue: ${Math.random() * 360}`)
+  - let n = 0
+  while (n < (COLUMNS * ROWS))
+    .grid__cell(data-index=n)
+    - n++
+
