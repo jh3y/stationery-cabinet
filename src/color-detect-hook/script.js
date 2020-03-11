@@ -30,12 +30,9 @@ const useCamera = () => {
     setStream(null)
   }
 
-  useEffect(
-    () => {
-      hasMultipleCameras()
-    },
-    [rearAvailable]
-  )
+  useEffect(() => {
+    hasMultipleCameras()
+  }, [rearAvailable])
 
   const toggleCamera = () => {
     setUseRear(!useRear)
@@ -47,32 +44,29 @@ const useCamera = () => {
     if (active) stopCamera()
   }
 
-  useEffect(
-    () => {
-      if (!media.current.getUserMedia) {
-        alert('getUserMedia() not supported')
+  useEffect(() => {
+    if (!media.current.getUserMedia) {
+      alert('getUserMedia() not supported')
+    }
+    if (
+      active &&
+      rearAvailable !== undefined &&
+      media.current.getUserMedia &&
+      !stream
+    ) {
+      const facingMode =
+        (useRear === undefined && rearAvailable) || useRear
+          ? { exact: 'environment' }
+          : 'user'
+      const updateStream = async () => {
+        const stream = await media.current.getUserMedia({
+          video: { facingMode },
+        })
+        setStream(stream)
       }
-      if (
-        active &&
-        rearAvailable !== undefined &&
-        media.current.getUserMedia &&
-        !stream
-      ) {
-        const facingMode =
-          (useRear === undefined && rearAvailable) || useRear
-            ? { exact: 'environment' }
-            : 'user'
-        const updateStream = async () => {
-          const stream = await media.current.getUserMedia({
-            video: { facingMode },
-          })
-          setStream(stream)
-        }
-        updateStream()
-      }
-    },
-    [stream, rearAvailable, useRear, active]
-  )
+      updateStream()
+    }
+  }, [stream, rearAvailable, useRear, active])
   return {
     stream,
     toggleCamera: rearAvailable ? toggleCamera : undefined,
@@ -96,35 +90,32 @@ const useColorGrab = stream => {
   const [hex, setHex] = useState(null)
   const [rgb, setRgb] = useState(null)
 
-  useEffect(
-    () => {
-      video.current.srcObject = stream
-      const update = () => {
-        context.drawImage(
-          video.current,
-          0,
-          0,
-          canvas.current.width,
-          canvas.current.height
-        )
-        const [r, g, b] = context.getImageData(
-          0,
-          0,
-          canvas.current.width,
-          canvas.current.height
-        ).data
-        setRgb({ r, g, b })
-        setHex(getHex(r, g, b))
-        loop.current = requestAnimationFrame(update)
-      }
-      update()
-      return () => {
-        cancelAnimationFrame(loop.current)
-        loop.current = null
-      }
-    },
-    [stream]
-  )
+  useEffect(() => {
+    video.current.srcObject = stream
+    const update = () => {
+      context.drawImage(
+        video.current,
+        0,
+        0,
+        canvas.current.width,
+        canvas.current.height
+      )
+      const [r, g, b] = context.getImageData(
+        0,
+        0,
+        canvas.current.width,
+        canvas.current.height
+      ).data
+      setRgb({ r, g, b })
+      setHex(getHex(r, g, b))
+      loop.current = requestAnimationFrame(update)
+    }
+    update()
+    return () => {
+      cancelAnimationFrame(loop.current)
+      loop.current = null
+    }
+  }, [context, stream])
 
   return {
     hex,
@@ -172,30 +163,21 @@ const App = () => {
     setCopied(colors[colorIndex])
   }
 
-  useEffect(
-    () => {
-      if (stream && webcam.current) webcam.current.srcObject = stream
-    },
-    [stream, webcam, debug]
-  )
+  useEffect(() => {
+    if (stream && webcam.current) webcam.current.srcObject = stream
+  }, [stream, webcam, debug])
   // If two values in the rgb are over 200 set dark mode
-  useEffect(
-    () => {
-      if (rgb) setDark([rgb.r, rgb.g, rgb.b].filter(v => v > 200).length >= 2)
-      document.documentElement.style.setProperty('--bg', hex)
-    },
-    [rgb]
-  )
+  useEffect(() => {
+    if (rgb) setDark([rgb.r, rgb.g, rgb.b].filter(v => v > 200).length >= 2)
+    document.documentElement.style.setProperty('--bg', hex)
+  }, [hex, rgb])
   const wipeClipboard = () => setCopied(null)
-  useEffect(
-    () => {
-      copyTimeout.current = setTimeout(wipeClipboard, 2000)
-      return () => {
-        clearTimeout(copyTimeout.current)
-      }
-    },
-    [copied]
-  )
+  useEffect(() => {
+    copyTimeout.current = setTimeout(wipeClipboard, 2000)
+    return () => {
+      clearTimeout(copyTimeout.current)
+    }
+  }, [copied])
   return (
     <Fragment>
       {copied && (
@@ -244,25 +226,25 @@ const App = () => {
           {debug && (
             <video ref={webcam} className="debug-video" autoPlay playsInline />
           )}
-          {colors &&
-            colors.length > 0 && <button onClick={clear}>Clear</button>}
-          {colors &&
-            colors.length > 0 && (
-              <div className="colors">
-                {colors.map((c, i) => (
-                  <div
-                    className="colors__color"
-                    onClick={copyToCb(i)}
-                    key={`color--${i}`}
-                    style={{
-                      '--bg': c.hex,
-                      '--color': c.dark ? '#000000' : '#FFFFFF',
-                    }}>
-                    {c.hex}
-                  </div>
-                ))}
-              </div>
-            )}
+          {colors && colors.length > 0 && (
+            <button onClick={clear}>Clear</button>
+          )}
+          {colors && colors.length > 0 && (
+            <div className="colors">
+              {colors.map((c, i) => (
+                <div
+                  className="colors__color"
+                  onClick={copyToCb(i)}
+                  key={`color--${i}`}
+                  style={{
+                    '--bg': c.hex,
+                    '--color': c.dark ? '#000000' : '#FFFFFF',
+                  }}>
+                  {c.hex}
+                </div>
+              ))}
+            </div>
+          )}
         </ol>
       </nav>
     </Fragment>
