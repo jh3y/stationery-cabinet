@@ -82,11 +82,13 @@ const convertImageDataToSeed = imageData => {
   }
   return seed
 }
+const WIDTH = 400
+const HEIGHT = 200
 
 // eslint-disable-next-line
 ;(async function() {
   // Grab an image source string from unsplash
-  const BASE = 'https://source.unsplash.com/random/200x200'
+  const BASE = `https://source.unsplash.com/random/${WIDTH}x${HEIGHT}`
   const SRC = await (await fetch(BASE)).url
   // Grab our canvas from the DOM
   const $IMG = document.querySelector('img')
@@ -150,7 +152,7 @@ const convertImageDataToSeed = imageData => {
       FRAME: 0,
     }
     const CONFIG = {
-      FRAME_SKIP: 5,
+      FRAME_SKIP: 1,
     }
     const draw = () => {
       const currentState = STATE.STATE
