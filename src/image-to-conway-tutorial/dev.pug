@@ -1,0 +1,32 @@
+.stage
+  img(crossorigin="Anonymous")
+  canvas
+input.step-range(type='range', min="1", max="7", step="1", value="1")
+.instructions
+  .instruction
+    p This is a "HOW TO" for taking an image and converting it into a "<a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" target="_blank" rel="noopener noreferrer">Game of Life</a>" seed.
+    p First, grab an Image! 🖼
+    button.grab Or, grab another
+  .instruction
+    p Draw that onto a Canvas ⬆️
+  .instruction
+    p Downscale the image ⬇️
+    p More downscaling means larger cells for the game!
+    input.scale(type='range', min='1', max='20', value='10')
+  .instruction
+    p Convert that image to grayscale by manipulating the image data. We do this by averaging out the RGB values of each pixel.
+    p Store the midpoint of those averages in state 👍
+    //- p Check out this <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Pixel_manipulation_with_canvas" target="_blank" rel="noreferrer noopener">doc</a> for more on pixel manipulation 📑
+  .instruction
+    p Convert that image into a Game of Life seed by iterating over the image data and calculating which cells(pixels) are alive.
+    p Make that calculation based on whether a pixel's average falls above or below that stored averages midpoint 🤓
+  .instruction
+    p Take the seed and draw it onto the canvas using <code>fillRect</code>.
+    p The trick here is to upscale back to original image size so the canvas is sharp.
+    //- p For example, if we downscaled by <code>5</code>, upscale the rectangles by <code>5</code>.
+    p Fill the alive cells with random hue for style points! 😎
+  .instruction
+    p Start the game! 🕹
+    button.start Start!
+    p Limit the FPS
+    input.fps(type='range', min="1", max="60", value="56")
