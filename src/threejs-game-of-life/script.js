@@ -1,6 +1,6 @@
 const {
   THREE,
-  gsap: { timeline, to },
+  gsap: { set, timeline, to },
   dat: { GUI },
 } = window
 const {
@@ -112,6 +112,11 @@ const getNextState = (currentState, columns, rows) => {
  * 10. Before doing anything though, append the renderer's DOM element to the document.body
  *     or wherever it's going.
  */
+const randomInRange = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1)) + min
+const HUE_LOWER = Math.random() * 360
+const HUE_HIGHER = randomInRange(HUE_LOWER, 360)
+
 const CONFIG = {
   SIZE: 2,
   MARGIN: 0.1,
@@ -120,6 +125,22 @@ const CONFIG = {
   FAR: 1000,
   ROWS: 100,
   COLUMNS: 100,
+  TWEEN_SPEED: 0.2,
+  TWEEN_DELAY: 0.4,
+  COLOR: {
+    HUE_RANGE: {
+      FROM: HUE_LOWER,
+      TO: HUE_HIGHER,
+    },
+    SATURATION_RANGE: {
+      FROM: 50,
+      TO: 100,
+    },
+    LIGHTNESS_RANGE: {
+      FROM: 40,
+      TO: 60,
+    },
+  },
   LIGHTS: {
     POSITIONS: [
       [210, 20, 40],
@@ -129,34 +150,84 @@ const CONFIG = {
     COLOR: 0xffffff,
   },
   START: () => {},
-  // SPIN: {
-  //   X: 0.001,
-  //   Y: 0.001,
-  //   Z: 0.001,
-  // },
-  // ROTATION: {
-  //   X: 0.35,
-  //   Y: 2.65,
-  //   Z: 0,
-  // },
+  REGENERATE: () => {},
+  RESET: () => {},
+  SPIN: {
+    X: 0.00005,
+    Y: 0.0005,
+    Z: 0.00005,
+  },
 }
 const STATE = {
   GAME_LOOP: null,
   GAME_TIMELINE: null,
   GAME_SEED: generateSeed(CONFIG.COLUMNS * CONFIG.ROWS),
   ANIM_LOOP: null,
+  // Keep an Array of created cells in memory for reuse
+  CELLS: null,
+  CELL_POOL: [],
 }
 
+// UTILITY FUNCTIONS
+const setCellColor = cell => {
+  // Generate a hue from range
+  const HUE = randomInRange(
+    CONFIG.COLOR.HUE_RANGE.FROM,
+    CONFIG.COLOR.HUE_RANGE.TO
+  )
+  const SATURATION = randomInRange(
+    CONFIG.COLOR.SATURATION_RANGE.FROM,
+    CONFIG.COLOR.SATURATION_RANGE.TO
+  )
+  const LIGHTNESS = randomInRange(
+    CONFIG.COLOR.LIGHTNESS_RANGE.FROM,
+    CONFIG.COLOR.LIGHTNESS_RANGE.TO
+  )
+  // Set a random color for that cell
+  cell.material.color.setHSL(HUE * (1 / 360), SATURATION / 100, LIGHTNESS / 100)
+}
+//
+
+/**
+ * Set up dat.GUI to play with different configurations
+ */
+const CONTROLS = new GUI({ closed: false })
 // Create a Scene
 const SCENE = new Scene()
 // Set the background
-SCENE.background = new Color(0x444444)
+SCENE.background = new Color(0x222222)
 // Create a camera (Could use different types of camera if needs be, maybe try cube)
 const CAMERA = new PerspectiveCamera(
   CONFIG.FOV,
   window.innerWidth / window.innerHeight,
   CONFIG.NEAR,
   CONFIG.FAR
+)
+CAMERA.position.x = -90
+CAMERA.position.y = -20
+CAMERA.position.z = 180
+const CAMERA_CONTROLS = CONTROLS.addFolder('Camera')
+const CAMERA_POS_CONTROLS = CAMERA_CONTROLS.addFolder('Position')
+const CAMERA_X_CONTROL = CAMERA_POS_CONTROLS.add(
+  CAMERA.position,
+  'x',
+  -1000,
+  1000,
+  1
+)
+const CAMERA_Y_CONTROL = CAMERA_POS_CONTROLS.add(
+  CAMERA.position,
+  'y',
+  -1000,
+  1000,
+  1
+)
+const CAMERA_Z_CONTROL = CAMERA_POS_CONTROLS.add(
+  CAMERA.position,
+  'z',
+  0,
+  1000,
+  1
 )
 // Create the renderer
 const RENDERER = new WebGLRenderer({ alpha: false })
@@ -170,7 +241,11 @@ new OrbitControls(CAMERA, RENDERER.domElement)
 // A cell is just a cube or a box so we can use the box geometry 👍
 const CELL_GEOMETRY = new BoxGeometry(CONFIG.SIZE, CONFIG.SIZE, CONFIG.SIZE)
 // Create a color for the brick material from HSL
-const COLOR = new Color(`hsl(${Math.random() * 360}, 100%, 20%)`)
+const HUE =
+  Math.floor(
+    Math.random() * CONFIG.COLOR.HUE_RANGE.TO - CONFIG.COLOR.HUE_RANGE.FROM + 1
+  ) + CONFIG.COLOR.HUE_RANGE.FROM
+const COLOR = new Color(`hsl(${HUE}, 100%, ${Math.floor(Math.random() * 75)}%)`)
 // Create a shared material that the different elements of a group can use
 const CELL_MATERIAL = new MeshPhongMaterial({
   color: COLOR,
@@ -181,45 +256,47 @@ const CELL_MATERIAL = new MeshPhongMaterial({
 // Create a new group for our cells.
 // Fill this and then translate the group to center it
 const CELLS = new Group()
-// Iterate over the game seed and create cells
-for (let c = 0; c < STATE.GAME_SEED.length; c++) {
-  // Create a new cell
-  const NEW_CELL = new Mesh(CELL_GEOMETRY, CELL_MATERIAL.clone())
-  // Set a random color for that cell
-  NEW_CELL.material.color.setHSL(Math.random(), 1, 0.5)
-  // If the SEED is 0, scale the cell down to 0.001
-  if (STATE.GAME_SEED[c] === 0) NEW_CELL.scale.set(0.001, 0.001, 0.001)
-  // Work out the column for that cell
-  const COL = c % CONFIG.COLUMNS
-  // Work out the row for that cell
-  const ROW = Math.floor(c / CONFIG.COLUMNS)
-  NEW_CELL.position.x = CONFIG.SIZE * COL + CONFIG.MARGIN * COL
-  NEW_CELL.position.y = CONFIG.SIZE * -ROW - CONFIG.MARGIN * ROW
-  CELLS.add(NEW_CELL)
-}
-// Now all the cells are added into the group, translate the group to center 👍
-// Take into account any applied margins
-CELLS.translateX(
-  (-CONFIG.SIZE * CONFIG.COLUMNS) / 2 +
+// Create a utility function for rendering the cells
+const renderCells = SEED => {
+  // Iterate over the game seed and create cells
+  for (let c = 0; c < SEED.length; c++) {
+    // Grab a cell from the CELL_POOL if we can. Else create a new one
+    const NEW_CELL = STATE.CELL_POOL[c]
+      ? STATE.CELL_POOL[c]
+      : new Mesh(CELL_GEOMETRY, CELL_MATERIAL.clone())
+    setCellColor(NEW_CELL)
+    // If the SEED is 0, scale the cell down to 0.001
+    if (SEED[c] === 0) NEW_CELL.scale.set(0.001, 0.001, 0.001)
+    // Else set it to 1 just in case we are reusing a cell
+    else NEW_CELL.scale.set(1, 1, 1)
+    // Work out the column for that cell
+    const COL = c % CONFIG.COLUMNS
+    // Work out the row for that cell
+    const ROW = Math.floor(c / CONFIG.COLUMNS)
+    NEW_CELL.position.x = CONFIG.SIZE * COL + CONFIG.MARGIN * COL
+    NEW_CELL.position.y = CONFIG.SIZE * -ROW - CONFIG.MARGIN * ROW
+    CELLS.add(NEW_CELL)
+  }
+  // Now all the cells are added into the group, translate the group to center 👍
+  // Take into account any applied margins
+  CELLS.position.x =
+    (-CONFIG.SIZE * CONFIG.COLUMNS) / 2 +
     CONFIG.SIZE / 2 -
     (CONFIG.MARGIN * CONFIG.COLUMNS) / 2 +
     CONFIG.MARGIN / 2
-)
-CELLS.translateY(
-  (CONFIG.SIZE * CONFIG.COLUMNS) / 2 -
+  CELLS.position.y =
+    (CONFIG.SIZE * CONFIG.ROWS) / 2 -
     CONFIG.SIZE / 2 +
     (CONFIG.MARGIN * CONFIG.ROWS) / 2 -
     CONFIG.MARGIN / 2
-)
+}
+// Render those cells into the Cells group with the utility
+renderCells(STATE.GAME_SEED)
 // Add the cells to the scene within a group
 // This way we can rotate the Group and the translation won't affect it
 const CELL_HOLDER = new Group()
 CELL_HOLDER.add(CELLS)
 SCENE.add(CELL_HOLDER)
-/**
- * Set up dat.GUI to play with different configurations
- */
-const CONTROLS = new GUI({ closed: false })
 /**
  * LIGHTING
  */
@@ -238,6 +315,7 @@ for (let l = 0; l < 3; l++) {
   SCENE.add(LIGHTS[l])
   LIGHT_HELPERS.push(new PointLightHelper(LIGHTS[l]))
   SCENE.add(LIGHT_HELPERS[l])
+  LIGHT_HELPERS[l].visible = false
   const LIGHT_CONTROLS = LIGHTS_CONTROL.addFolder(l)
   LIGHT_CONTROLS.add(LIGHTS[l].position, 'x', -300, 300, 1)
   LIGHT_CONTROLS.add(LIGHTS[l].position, 'y', -300, 300, 1)
@@ -248,27 +326,21 @@ for (let l = 0; l < 3; l++) {
 /**
  * Set up renderer and scene
  */
-CAMERA.position.z = 450
 document.body.appendChild(RENDERER.domElement)
 const animate = () => {
+  // Gently rotate the scene
+  CELL_HOLDER.rotation.x += CONFIG.SPIN.X
+  CELL_HOLDER.rotation.y += CONFIG.SPIN.Y
+  CELL_HOLDER.rotation.z += CONFIG.SPIN.Z
+  // Update the camera controls if user has zoomed
+  CAMERA_X_CONTROL.updateDisplay()
+  CAMERA_Y_CONTROL.updateDisplay()
+  CAMERA_Z_CONTROL.updateDisplay()
+  // Render the scene
   RENDERER.render(SCENE, CAMERA)
-  // CELL_HOLDER.rotation.x += 0.01
-  // CELL_HOLDER.rotation.y += 0.01
-  // CELL_HOLDER.rotation.z += 0.01
   STATE.ANIM_LOOP = requestAnimationFrame(animate)
 }
 animate()
-// to(
-//   [...CELLS.children.filter(() => Math.random() > 0.5).map(cell => cell.scale)],
-//   {
-//     duration: 0.5,
-//     x: 0.001,
-//     y: 0.001,
-//     z: 0.001,
-//     repeat: -1,
-//     yoyo: true,
-//   }
-// )
 // On window resize, update the aspect ratio and renderer dimensions
 window.addEventListener('resize', () => {
   RENDERER.setSize(window.innerWidth, window.innerHeight)
@@ -283,23 +355,30 @@ window.addEventListener('resize', () => {
  */
 const tweenGame = () => {
   const NEXT_STATE = getNextState(STATE.GAME_STATE, CONFIG.COLUMNS, CONFIG.ROWS)
-  const ONS = [
-    ...CELLS.children
-      .filter((cell, index) => NEXT_STATE[index] === 1)
-      .map(cell => cell.scale),
+  if (NEXT_STATE.toString() === STATE.GAME_STATE.toString()) return
+  const ON_CELLS = [
+    ...CELLS.children.filter((cell, index) => NEXT_STATE[index] === 1),
   ]
-  const OFFS = [
-    ...CELLS.children
-      .filter((cell, index) => NEXT_STATE[index] === 0)
-      .map(cell => cell.scale),
+  const ONS = [...ON_CELLS.map(cell => cell.scale)]
+  const OFF_CELLS = [
+    ...CELLS.children.filter((cell, index) => NEXT_STATE[index] === 0),
   ]
+  const OFFS = [...OFF_CELLS.map(cell => cell.scale)]
   STATE.GAME_STATE = NEXT_STATE
   STATE.GAME_TIMELINE = new timeline({
-    onComplete: () => tweenGame(),
+    delay: CONFIG.TWEEN_DELAY,
+    onStart: () => {
+      set(ON_CELLS, { visible: true })
+    },
+    onComplete: () => {
+      // Hide the OFFS
+      set(OFF_CELLS, { visible: false })
+      tweenGame()
+    },
   })
     .add(
       to(ONS, {
-        duration: 0.25,
+        duration: CONFIG.TWEEN_SPEED,
         x: 1,
         y: 1,
         z: 1,
@@ -307,7 +386,7 @@ const tweenGame = () => {
     )
     .add(
       to(OFFS, {
-        duration: 0.25,
+        duration: CONFIG.TWEEN_SPEED,
         x: 0.001,
         y: 0.001,
         z: 0.001,
@@ -315,21 +394,114 @@ const tweenGame = () => {
       0
     )
 }
+
+const KILL_TL = () => {
+  // If playing pause and kill
+  if (STATE.GAME_TIMELINE) {
+    STATE.GAME_TIMELINE.kill()
+    STATE.GAME_TIMELINE = null
+    START_BUTTON.name('Play')
+  }
+  // Remove all the cells from the group but not the pool
+  while (CELLS.children.length > 0) {
+    CELLS.remove(CELLS.children[0])
+  }
+}
+
+const onConfigChange = () => {
+  KILL_TL()
+  STATE.GAME_SEED = generateSeed(CONFIG.COLUMNS * CONFIG.ROWS)
+  renderCells(STATE.GAME_SEED)
+}
+
+const CONFIG_CONTROLS = CONTROLS.addFolder('Board')
+CONFIG_CONTROLS.add(CONFIG, 'COLUMNS', 5, 100, 1)
+  .name('Columns')
+  .onFinishChange(onConfigChange)
+CONFIG_CONTROLS.add(CONFIG, 'ROWS', 5, 100, 1)
+  .name('Rows')
+  .onFinishChange(onConfigChange)
+
+const ANIM_CONTROLS = CONTROLS.addFolder('Animation')
+const TWEEN_CONTROLS = ANIM_CONTROLS.addFolder('Tween')
+TWEEN_CONTROLS.add(CONFIG, 'TWEEN_SPEED', 0.05, 2, 0.01).name('Speed')
+TWEEN_CONTROLS.add(CONFIG, 'TWEEN_DELAY', 0, 2, 0.01).name('Delay')
+const SPIN_CONTROLS = ANIM_CONTROLS.addFolder('Spin')
+SPIN_CONTROLS.add(CONFIG.SPIN, 'X', 0, 0.1, 0.0001)
+SPIN_CONTROLS.add(CONFIG.SPIN, 'Y', 0, 0.1, 0.0001)
+SPIN_CONTROLS.add(CONFIG.SPIN, 'Z', 0, 0.1, 0.0001)
+const onColorChange = () => {
+  for (const CELL of CELLS.children) {
+    setCellColor(CELL)
+  }
+}
+const COLOR_CONTROLS = CONTROLS.addFolder('Color')
+const HUE_CONTROLS = COLOR_CONTROLS.addFolder('Hue Range')
+HUE_CONTROLS.add(CONFIG.COLOR.HUE_RANGE, 'FROM', 0, 360, 1).onFinishChange(
+  onColorChange
+)
+HUE_CONTROLS.add(CONFIG.COLOR.HUE_RANGE, 'TO', 0, 360, 1).onFinishChange(
+  onColorChange
+)
+const SAT_CONTROLS = COLOR_CONTROLS.addFolder('Saturation Range')
+SAT_CONTROLS.add(
+  CONFIG.COLOR.SATURATION_RANGE,
+  'FROM',
+  0,
+  100,
+  1
+).onFinishChange(onColorChange)
+SAT_CONTROLS.add(CONFIG.COLOR.SATURATION_RANGE, 'TO', 0, 100, 1).onFinishChange(
+  onColorChange
+)
+const LIGHT_CONTROLS = COLOR_CONTROLS.addFolder('Lightness Range')
+LIGHT_CONTROLS.add(
+  CONFIG.COLOR.LIGHTNESS_RANGE,
+  'FROM',
+  0,
+  100,
+  1
+).onFinishChange(onColorChange)
+LIGHT_CONTROLS.add(
+  CONFIG.COLOR.LIGHTNESS_RANGE,
+  'TO',
+  0,
+  100,
+  1
+).onFinishChange(onColorChange)
+
+CONTROLS.add(CONFIG, 'REGENERATE')
+  .name('Regenerate')
+  .onChange(() => {
+    KILL_TL()
+    // Regenerate seed
+    STATE.GAME_SEED = generateSeed(CONFIG.COLUMNS * CONFIG.ROWS)
+    // Draw seed
+    renderCells(STATE.GAME_SEED)
+  })
+
+CONTROLS.add(CONFIG, 'RESET')
+  .name('Reset')
+  .onChange(() => {
+    KILL_TL()
+    renderCells(STATE.GAME_SEED)
+  })
+
 const START_BUTTON = CONTROLS.add(CONFIG, 'START')
-  .name('Play game')
+  .name('Play')
   .onChange(() => {
     if (STATE.GAME_TIMELINE && STATE.GAME_TIMELINE.isActive()) {
       STATE.GAME_TIMELINE.pause()
-      START_BUTTON.name('Play game')
+      START_BUTTON.name('Play')
     } else if (STATE.GAME_TIMELINE) {
       STATE.GAME_TIMELINE.play()
       // Set the start button to say pause
-      START_BUTTON.name('Pause game')
+      START_BUTTON.name('Pause')
     } else {
       // Before starting the game set the seed
       STATE.GAME_STATE = STATE.GAME_SEED
       // Set the start button to say pause
-      START_BUTTON.name('Pause game')
+      START_BUTTON.name('Pause')
       tweenGame()
     }
   })
