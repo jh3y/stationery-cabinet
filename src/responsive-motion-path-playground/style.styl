@@ -20,17 +20,40 @@ body
   flex-direction column
   width 50vmin
   min-width 200px
+  transform-style preserve-3d
+  perspective 1000px
+  perspective-origin 50% 25%
 
 .motion-element
   height 40px
   width 40px
-  background rgba(128,191,255,0.5)
-  border 2px #80bfff solid
   position absolute
   top 0%
   left 0%
   offset-path path(var(--path))
   animation travel 2s infinite var(--animation-direction, normal) linear
+  transform-style var(--transform-style, 'none')
+  transform translate3d(0, 0, 20px)
+
+  &__side
+    background rgba(128,191,255,0.1)
+    border 2px #80bfff solid
+    height 100%
+    position absolute
+    width 100%
+
+    &:nth-of-type(1)
+      transform translate3d(0, 0, 20px)
+    &:nth-of-type(2)
+      transform translate3d(0, 0, -20px)
+    &:nth-of-type(3)
+      transform rotateX(90deg) translate3d(0, 0, -20px)
+    &:nth-of-type(4)
+      transform rotateX(90deg) translate3d(0, 0, 20px)
+    &:nth-of-type(5)
+      transform rotateY(90deg) translate3d(0, 0, 20px)
+    &:nth-of-type(6)
+      transform rotateY(-90deg) translate3d(0, 0, 20px)
 
 .container
   height 50vmin
@@ -40,7 +63,14 @@ body
   border 4px solid hsla(0, 0%, 100%, 0.5)
   overflow hidden
   position relative
+  resize both
   margin-bottom 2rem
+  transform-origin bottom center
+  transform-style preserve-3d
+  transform rotateX(calc(var(--rotation, 0) * 1deg))
+
+button
+  padding 8px 16px
 
 details
   width 100%

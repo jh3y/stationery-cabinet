@@ -1,0 +1,12 @@
+- const one = 'Loading'
+- const two = 'Wait...'
+.scene(style=`--hue: ${Math.random() * 360}; --saturation: ${Math.floor(Math.random() * 50 + 1) + 50}; --lightness: ${Math.floor(Math.random() * 25) + 50}`)
+  .word
+    - for (const [index, letter] of one.split('').entries())
+      .letter__wrap(style=`--index: ${index}`)
+        .letter(data-letter=letter)
+          span.letter__panel(aria-hidden='true')= letter
+          span.letter__panel(aria-hidden='true')= two[index]
+          span.letter__panel(aria-hidden='true')= letter
+          span.letter__panel(aria-hidden='true')= two[index]
+          span.letter__panel
