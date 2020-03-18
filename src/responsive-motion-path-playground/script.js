@@ -30,7 +30,6 @@ class ResponsiveMotionPath {
     )
     // Set the initial path on the element
     onChange(initialPath)
-    window.addEventListener('resize', this.scale)
   }
   getMinMax = data => {
     const X_POINTS = data.map(point => point[0])
@@ -73,7 +72,10 @@ class ResponsiveMotionPath {
   // Whenever there is a change in the container size, reference the data points
   // and generate a new path 👍
   scale = () => {
-    const { height, width } = this.CONTAINER.getBoundingClientRect()
+    const { offsetHeight, offsetWidth } = this.CONTAINER
+    // Inline style takes precedence. In cases where there's a rotation, bounding box won't be correct.
+    const height = parseFloat(this.CONTAINER.style.height, 10) || offsetHeight
+    const width = parseFloat(this.CONTAINER.style.width, 10) || offsetWidth
     if (
       height !== this.STATE.CONTAINER_HEIGHT ||
       width !== this.STATE.CONTAINER_WIDTH
@@ -90,7 +92,10 @@ class ResponsiveMotionPath {
   }
   // Utility to draw path
   generatePath = (data, heightRatio, widthRatio, maxHeight, maxWidth) => {
-    const { height, width } = this.CONTAINER.getBoundingClientRect()
+    const { offsetHeight, offsetWidth } = this.CONTAINER
+    // Inline style takes precedence. In cases where there's a rotation, bounding box won't be correct.
+    const height = parseFloat(this.CONTAINER.style.height, 10) || offsetHeight
+    const width = parseFloat(this.CONTAINER.style.width, 10) || offsetWidth
     // Create two d3 scales for X and Y
     const xScale = d3
       .scaleLinear()
@@ -121,6 +126,7 @@ const INITIAL_STATE = {
   svg: true,
   x2: 79.375,
   y2: 79.375,
+  threeD: false,
 }
 
 const formReducer = (state, action) => {
@@ -141,7 +147,7 @@ const App = () => {
   const svgRef = useRef(null)
   const motionPathRef = useRef(null)
   const [state, dispatch] = useReducer(formReducer, INITIAL_STATE)
-  const { alternate, path, strokeWidth, svg, x2, y2 } = state
+  const { alternate, path, strokeWidth, svg, threeD, x2, y2 } = state
 
   const onMotionPathChange = path => {
     elementRef.current.style.setProperty('--path', `"${path}"`)
@@ -204,6 +210,17 @@ const App = () => {
     })
 
   useEffect(() => {
+    if (containerRef.current) {
+      const containerRefObserver = new ResizeObserver(entries => {
+        if (motionPathRef.current) {
+          motionPathRef.current.scale()
+        }
+      })
+      containerRefObserver.observe(containerRef.current)
+    }
+  }, [])
+
+  useEffect(() => {
     if (containerRef.current && elementRef.current) {
       // Set up the initial responsive motion path
       motionPathRef.current = new ResponsiveMotionPath({
@@ -229,7 +246,13 @@ const App = () => {
 
   return (
     <Fragment>
-      <div ref={containerRef} className="container">
+      <div
+        ref={containerRef}
+        className="container"
+        style={{
+          '--rotation': threeD ? 75 : 0,
+          overflow: threeD ? 'visible' : 'hidden',
+        }}>
         <svg
           {...(!svg && { hidden: true })}
           ref={svgRef}
@@ -242,8 +265,16 @@ const App = () => {
           ref={elementRef}
           style={{
             '--animation-direction': alternate ? 'alternate' : 'normal',
+            '--transform-style': threeD ? 'preserve-3d' : 'none',
           }}
-          className="motion-element"></div>
+          className="motion-element">
+          <div className="motion-element__side"></div>
+          <div className="motion-element__side"></div>
+          <div className="motion-element__side"></div>
+          <div className="motion-element__side"></div>
+          <div className="motion-element__side"></div>
+          <div className="motion-element__side"></div>
+        </div>
       </div>
       <p
         style={{
@@ -260,7 +291,12 @@ const App = () => {
         . Alternatively, manually enter path info into the configuration form
         below.
       </p>
-      <p>Resize the viewport and see your motion path scale! 🎉</p>
+      <p>
+        Resize the viewport and see your motion path scale!{' '}
+        <span aria-label="TADA!" role="img">
+          🎉
+        </span>
+      </p>
       <details>
         <summary>Path configuration</summary>
         <form onDrop={onFileDrop}>
@@ -321,6 +357,23 @@ const App = () => {
               checked={alternate}
               onChange={updateField}
             />
+            <label htmlFor="threeD">See path in 3D?</label>
+            <input
+              id="threeD"
+              type="checkbox"
+              name="threeD"
+              checked={threeD}
+              onChange={updateField}
+            />
+          </section>
+          <section className="form-field form-field--grid">
+            <button
+              onClick={e => {
+                e.preventDefault()
+                containerRef.current.removeAttribute('style')
+              }}>
+              Reset container size
+            </button>
           </section>
         </form>
       </details>
