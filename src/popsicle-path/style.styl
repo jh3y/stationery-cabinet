@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap')
+
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  font-family 'Lato', sans-serif
+
+.container
+  height 40vmin
+  position relative
+  width 40vmin
+
+.char
+  --delay calc(((var(--char-total) - var(--char-index))) - var(--word-index))
+  offset-path path(var(--path))
+  animation travel 6s calc((var(--delay) * (0.15)) * -1s) infinite linear both
+  offset-rotate auto 180deg
+  position absolute !important
+  font-size 4vmin
+  font-weight bold
+  top 0%
+  left 0%
+  transform translate(0, -2.5vmin)
+
+svg
+  height 100%
+  width 100%
+
+path
+  stroke #111111
+  stroke-width 4px
+  fill hsla(225, 100%, 50%, 0.25)
+  fill url(#popsicle-gradient)
+
+
+.gradient
+  height 0
+  width 0
+@keyframes travel
+  from
+    offset-distance 0%
+  to
+    offset-distance 100%
