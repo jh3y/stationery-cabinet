@@ -4,6 +4,7 @@
   box-sizing border-box
 
 body
+  background hsl(0, 0%, 5%)
   min-height 100vh
   display flex
   align-items center
@@ -11,10 +12,9 @@ body
   font-family 'Lato', sans-serif
 
 .container
-  height 40vmin
+  height 60vmin
   position relative
-  width 40vmin
-  width calc((112.748 / 241.22) * 40vmin)
+  width 60vmin
 
 .char
   --delay calc(((var(--char-total) - var(--char-index))) - var(--word-index))
@@ -26,22 +26,21 @@ body
   font-weight bold
   top 0%
   left 0%
-  transform translate(0, -2.5vmin)
+  transform translate(0, -0.5vmin)
+  color hsl(0, 0%, 95%)
 
 svg
   height 100%
   width 100%
 
 path
-  stroke #111111
-  stroke-width 2.5px
-  fill hsla(225, 100%, 50%, 0.25)
-  fill url(#popsicle-gradient)
-
+  stroke 'hsla(%s, 100%, 50%, 0.25)' % var(--hue, 0)
+  stroke-width 0.25px
 
 .gradient
   height 0
   width 0
+
 @keyframes travel
   from
     offset-distance 0%
