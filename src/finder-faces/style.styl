@@ -1,0 +1,226 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap')
+
+*
+*:after
+*:before
+  box-sizing border-box
+
+:root
+  --size 200
+  --height 200
+  --width calc(var(--height) * 1.14)
+  --face-color-one linear-gradient(0deg, hsl(210, 84%, 51%), hsl(192, 89%, 63%))
+  --face-color-two hsl(0, 0%, 93%)
+  --distance 0
+
+body
+  display flex
+  min-height 100vh
+  align-items center
+  justify-content center
+  font-family 'Roboto Mono', monospace
+
+.backdrop
+  height 100vh
+  width 100vw
+  background hsl(0, 0%, 50%)
+  position fixed
+  transition background .25s ease, color .25s ease
+  color hsl(0, 0%, 65%)
+
+img
+  height calc(var(--height) * 1px)
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  opacity 0.5
+
+h1
+  margin 0
+  right 1rem
+  bottom 1rem
+  position fixed
+
+  @media(max-width 768px)
+    font-size 1rem
+
+[type='checkbox']
+  position fixed
+  top 1rem
+  left 1rem
+  height 0
+  width 0
+  opacity 0
+
+:checked ~ label
+  --distance 50
+
+  @media(min-width 768px)
+    --distance 100
+
+:checked ~ .backdrop
+  background hsl(100, 70%, 70%)
+  color hsl(100, 70%, 70%)
+
+label
+  cursor pointer
+  height 100vh
+  width 100vw
+  position relative
+
+.face
+  height calc(var(--height) * 1px)
+  width calc(var(--width) * 1px)
+  background var(--face-color-one)
+  position absolute
+  top 50%
+  left 50%
+  border-radius 5%
+  transform translate(-50%, -50%) translate(calc(var(--distance) * -1%), 0)
+
+  &__eye
+    background #000
+    position absolute
+    width 4%
+    height 14%
+    left 50%
+    top 50%
+    transform translate(-648%, -228%)
+    border-radius 50% 50% 50% 50% / 20% 20% 20% 20%
+
+    &--right
+      transform translate(458%, -228%)
+
+.face
+.side
+  overflow hidden
+  transition transform .25s ease
+  &__mouth
+    position absolute
+    height calc(var(--height) * 1px)
+    width calc(var(--width) * 1px)
+    top 0
+    left 0
+    $clip = polygon(50% -40%, 0% 100%, 100% 100%)
+    -webkit-clip-path $clip
+    clip-path $clip
+
+    &:after
+    &:before
+      content ''
+      height 10px
+      width 10px
+      border-radius 50%
+      position absolute
+      top 50%
+      left 50%
+      background #000
+
+    &:after
+      transform translate(-800%, -170%)
+
+    &:before
+      transform translate(700%, -170%)
+
+
+    &-opening
+      position absolute
+      border 10px solid #000
+      border-top 0
+      left 50%
+      height 51%
+      bottom 21%
+      transform translate(-50%, 0)
+      width 100%
+      border-radius 0 0 50% 50% / 0 0 60% 60%
+
+.side
+  height calc(var(--height) * 1px)
+  width calc(var(--width) * 1px)
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%) translate(calc(var(--distance) * 1%), 0)
+  border-radius 5%
+
+  &:after
+    content ''
+    background #000
+    height 10px
+    width 50px
+    position absolute
+    top 51%
+    left 40%
+    transform skewX(-22deg)
+
+  &__eye
+    background #000
+    position absolute
+    width 4%
+    height 14%
+    left 50%
+    top 50%
+    transform translate(458%, -228%)
+    border-radius 50% 50% 50% 50% / 20% 20% 20% 20%
+
+    &:before
+      content ""
+      position absolute
+      top 0
+      left 0
+      background var(--face-color-two)
+      transform translate(-12%, -66.25%)
+      height calc(var(--height) * 1px)
+      width calc(var(--width) * 1px)
+      $clip = polygon(0 65%, 0 100%, 100% 100%, 100% 0, 25% 0)
+      -webkit-clip-path $clip
+      clip-path $clip
+
+    &:after
+      content ''
+      height 100%
+      width 100%
+      background #000
+      position absolute
+      top 0
+      left 0
+      border-radius 50% 50% 50% 50% / 20% 20% 20% 20%
+
+  &__jaw
+    --size 1
+    position absolute
+    background var(--face-color-two)
+    height 150%
+    width 100%
+    border-radius 50% 0 0 50% / 50% 0 0 50%
+    border 10px solid #000
+    left 55%
+    overflow hidden
+
+  &__mouth
+    transform translate(-59%, -5%)
+
+  &__nose
+    background var(--face-color-two)
+    height calc(var(--height) * 3px)
+    width calc(var(--width) * 3px)
+    position absolute
+    left 38%
+    top 46%
+    border 10px solid #000
+    transform translate(0, -50%)
+    $clip = inset(0 0 46.5% 0)
+    -webkit-clip-path $clip
+    clip-path $clip
+    border-radius 95% 0 0 0 / 52% 0 0 0
+    overflow hidden
+    &:after
+      content ''
+      border-bottom 10px solid black
+      height 50%
+      width 100%
+      background var(--face-color-two)
+      position absolute
+      top 3.75%
+      left 0
