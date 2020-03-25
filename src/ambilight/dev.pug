@@ -1,0 +1,15 @@
+//- This input will control the lights
+input#lights(type='checkbox')
+//- Let's get the functionality in place first  for video.
+//- We are aiming for the effect of those Philips Ambilight TVs
+.backdrop
+.scene
+  .tv
+    video#dupe.ambilight(src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/605876/video-player-video.mp4' autoplay loop)
+    video#player.screen(src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/605876/video-player-video.mp4' autoplay loop controls)
+    button
+  .tv__unit.tv-unit
+    .tv-unit__door
+    .tv-unit__door
+    .tv-unit__door
+  label.light-switch(for='lights')
