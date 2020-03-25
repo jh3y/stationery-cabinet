@@ -1,0 +1,190 @@
+// Let's start with the globals
+*
+*:before
+*:after
+  box-sizing border-box
+
+:root
+  --speed 0.2
+  --wall-lightness 10
+  --light-switch 15
+  --light-switch-border 10
+  --light-switch-top 15
+  --light-switch-bottom 25
+  --brightness 250
+  --shadow-opacity 0
+  --tv-bezel 15
+  --tv-unit-bezel 4
+  --desired-height 25vmin
+  --tv-width 158.1
+  --tv-height 89.4
+  --unit-height 42
+  --unit-width 180
+  --unit-top 78.7
+  --tv-bottom 114.3
+  // Using a little math we can get this all to scale.
+  --scaled-tv-width calc((var(--tv-width) / var(--tv-height)) * var(--desired-height))
+  --one-cm calc(var(--scaled-tv-width) / var(--tv-width))
+  // Let's test that with the height
+  --scaled-tv-height calc(var(--tv-height) * var(--one-cm))
+  // BOOOM!
+  --scaled-unit-width calc(var(--unit-width) * var(--one-cm))
+  --scaled-unit-height calc(var(--unit-height) * var(--one-cm))
+
+
+input[type='checkbox']
+  height 0
+  width 0
+  opacity 0
+
+:checked ~ .backdrop
+  --wall-lightness 95
+:checked ~ .scene
+  --brightness 500
+  --shadow-opacity .75
+  --tv-bezel 65
+  --tv-unit-bezel 15
+  --light-switch 95
+  --light-switch-border 75
+  --light-switch-top 75
+  --light-switch-bottom 95
+
+.light-switch
+  --switch-top 'hsl(0, 0%, %s)' % calc(var(--light-switch-top) * 1%)
+  --switch-bottom 'hsl(0, 0%, %s)' % calc(var(--light-switch-bottom) * 1%)
+  height 44px
+  width 44px
+  position absolute
+  top 50%
+  left calc(var(--tv-width) * 1.5 * var(--one-cm))
+
+  &:before
+    content ''
+    position absolute
+    height calc(15 * var(--one-cm))
+    width calc(15 * var(--one-cm))
+    background 'hsl(0, 0%, %s)' % calc(var(--light-switch) * 1%)
+    box-shadow '0 calc(1 * var(--one-cm)) calc(1 * var(--one-cm)) calc(0 * var(--one-cm)) hsla(0, 0%, 35%, %s)' % var(--shadow-opacity)
+    cursor pointer
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    transition background calc(var(--speed, 0.2) * 1s) ease, box-shadow calc(var(--speed, 0.2) * 1s) ease
+
+  &:after
+    content ''
+    height calc(6 * var(--one-cm))
+    width calc(4 * var(--one-cm))
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    border 'calc(var(--one-cm) * 0.5) solid hsl(0, 0%, %s)' % calc(var(--light-switch-border) * 1%)
+    background linear-gradient(var(--switch-top), var(--switch-bottom))
+    transition border 0.2 ease, background calc(var(--speed, 0.2) * 1s) ease
+
+body
+  min-height 100vh
+  margin 0
+  display flex
+  align-items center
+  justify-content center
+
+.backdrop
+  height 100vh
+  width 100vw
+  position fixed
+  background 'hsl(0, 0%, %s)' % calc(var(--wall-lightness) * 1%)
+  z-index -1
+  transition background calc(var(--speed, 0.2) * 1s) ease
+
+.scene
+  display flex
+  flex-direction column
+  align-items center
+  justify-content center
+  position relative
+
+  > .tv
+    // Now we can actually use the correct spacing between the tv and the unit
+    margin-bottom calc((var(--tv-bottom) - var(--unit-top)) * var(--one-cm))
+
+.tv
+  height var(--scaled-tv-height)
+  width var(--scaled-tv-width)
+  position relative
+  background black
+  transition box-shadow calc(var(--speed, 0.2) * 1s) ease
+  box-shadow '0 calc(15 * var(--one-cm)) calc(15 * var(--one-cm)) calc(0 * var(--one-cm)) hsla(0, 0%, 35%, %s)' % var(--shadow-opacity)
+
+  video
+    height 100%
+    width 100%
+    position absolute
+    top 50%
+    left 50%
+    outline transparent
+    transform translate(-50%, -50%)
+
+  // Now we need to dupe video in the background to bleed out the back of the TV.
+  .ambilight
+    height 100%
+    width 100%
+    // Now let's give it that ambilight blurry bright effect
+    filter brightness(calc(var(--brightness) * 1%)) blur(50px)
+    // Ooo that's pretty much it. Way better than I thought it would be!
+  button
+    height 100%
+    width 100%
+    position absolute
+    appearance none
+    background transparent
+    border '4px solid hsl(0, 0%, %s)' % calc(var(--tv-bezel) * 1%)
+    outline transparent
+    transition border calc(var(--speed, 0.2) * 1s) ease
+
+// Let's work on some other furniture.
+// We are going to model this whole thing on my front room 😅
+// So, it's a floating three cupboard unit with glass doors...
+// https://www.ikea.com/gb/en/p/besta-tv-bench-with-doors-black-brown-glassvik-smoked-glass-s89299191/
+// One of those with a glass top
+.tv-unit
+  //   BANG ON!
+  width var(--scaled-unit-width)
+  height var(--scaled-unit-height)
+  background hsl(0, 0%, 0%)
+  display flex
+  position relative
+  box-shadow '0 calc(15 * var(--one-cm)) calc(15 * var(--one-cm)) calc(0 * var(--one-cm)) hsla(0, 0%, 35%, %s)' % var(--shadow-opacity)
+
+  &:after
+    content ''
+    position absolute
+    height 100%
+    width 100%
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    background 'linear-gradient(-35deg, transparent 25%, hsla(0, 0%, 85%, %s), transparent)' % calc(var(--shadow-opacity) * 0.35)
+
+  &__door
+    flex 1 1 0
+    background 'hsl(0, 0%, %s)' % calc(var(--tv-unit-bezel) * 1%)
+    position relative
+    transition background calc(var(--speed, 0.2) * 1s) ease
+
+    &:before
+      content ''
+      position absolute
+      top 50%
+      left 50%
+      transform translate(-50%, -50%)
+      height calc(var(--scaled-unit-height) - (var(--one-cm) * 15))
+      width calc(((var(--scaled-unit-width) - (2 * (var(--one-cm) * 0.75))) / 3) - (var(--one-cm) * 15))
+      background hsl(0, 0%, 0%)
+
+    // Target the doors to add a little gap but don't apply it
+    // to the last one
+    &:not(:last-of-type)
+      margin-right calc(0.75 * var(--one-cm))
+
