@@ -12,6 +12,7 @@
   --light-switch-top 15
   --light-switch-bottom 25
   --brightness 250
+  --blur 30
   --shadow-opacity 0
   --tv-bezel 15
   --tv-unit-bezel 4
@@ -40,8 +41,9 @@ input[type='checkbox']
 :checked ~ .backdrop
   --wall-lightness 95
 :checked ~ .scene
+  --blur 10
   --brightness 500
-  --shadow-opacity .75
+  --shadow-opacity .95
   --tv-bezel 65
   --tv-unit-bezel 15
   --light-switch 95
@@ -89,6 +91,7 @@ body
   display flex
   align-items center
   justify-content center
+  overflow hidden
 
 .backdrop
   height 100vh
@@ -125,23 +128,27 @@ body
     left 50%
     outline transparent
     transform translate(-50%, -50%)
+    background #000
+    border 'calc(2 * var(--one-cm)) solid hsl(0, 0%, %s)' % calc(var(--tv-bezel) * 1%)
+    outline transparent
+    transition border calc(var(--speed, 0.2) * 1s) ease
 
   // Now we need to dupe video in the background to bleed out the back of the TV.
   .ambilight
     height 100%
     width 100%
     // Now let's give it that ambilight blurry bright effect
-    filter brightness(calc(var(--brightness) * 1%)) blur(50px)
+    filter brightness(calc(var(--brightness) * 1%)) blur(calc(var(--blur) * var(--one-cm)))
     // Ooo that's pretty much it. Way better than I thought it would be!
-  button
-    height 100%
-    width 100%
-    position absolute
-    appearance none
-    background transparent
-    border '4px solid hsl(0, 0%, %s)' % calc(var(--tv-bezel) * 1%)
-    outline transparent
-    transition border calc(var(--speed, 0.2) * 1s) ease
+  // button
+  //   height 100%
+  //   width 100%
+  //   position absolute
+  //   appearance none
+  //   background transparent
+  //   border '4px solid hsl(0, 0%, %s)' % calc(var(--tv-bezel) * 1%)
+  //   outline transparent
+  //   transition border calc(var(--speed, 0.2) * 1s) ease
 
 // Let's work on some other furniture.
 // We are going to model this whole thing on my front room 😅
