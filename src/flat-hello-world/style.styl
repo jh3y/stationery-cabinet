@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:900&display=swap')
+
+*
+  box-sizing border-box
+
+:root
+  --orbit-speed 6
+  --shift-speed 6
+  --size 25
+  --bg hsl(0, 0%, 10%)
+  --color hsl(0, 0%, 100%)
+  --water hsl(200, 80%, 70%)
+  --land hsl(100, 70%, 65%)
+  --stand-light hsl(0, 0%, 40%)
+  --stand-dark hsl(0, 0%, 30%)
+
+
+body
+  align-items center
+  background var(--bg)
+  color var(--color)
+  display flex
+  font-family 'Work Sans', sans-serif
+  justify-content center
+  min-height 100vh
+  perspective 500px
+  transform-style preserve-3d
+
+.globe
+  background var(--water)
+  border-radius 50%
+  height 25vmin
+  left 50%
+  position absolute
+  top 50%
+  transform translate3d(-50%, -50%, 0) rotate(-35deg)
+  transform-style preserve-3d
+  width 25vmin
+
+  &__maps
+    border-radius 50%
+    height 100%
+    overflow hidden
+    position relative
+    width 100%
+
+  &__stand
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, 19.5vmin)
+    height 10vmin
+    width 15vmin
+
+    &:after
+    &:before
+      content ''
+      bottom 0
+      position absolute
+
+    &:before
+      background var(--stand-dark)
+      height 100%
+      left 50%
+      transform translate(-50%, 0)
+      width 10%
+
+    &:after
+      background linear-gradient(-35deg, transparent 0 40%, hsla(0, 0%, 95%, 0.25) 40% 50%, transparent 50% 55%, hsla(0, 0%, 95%, 0.25) 55% 60%, transparent 60%), var(--stand-light)
+      border-radius 50% 50% 0 0 / 100% 100% 0 0
+      height 50%
+      left 0
+      width 100%
+
+  &__holder
+    $clip = inset(0 45% 0 0)
+    -webkit-clip-path $clip
+    clip-path $clip
+    border 1vmin solid var(--stand-light)
+    border-radius 50%
+    height 40vmin
+    transform rotate(-35deg)
+    width 40vmin
+
+  &__skewer
+    background var(--stand-dark)
+    border-radius 50% 50% 50% 50% / 0.5vmin 0.5vmin 0.5vmin 0.5vmin
+    height 42vmin
+    left 50%
+    position absolute
+    top 50%
+    transform translate(-50%, -50%) rotate(-35deg)
+    width 1vmin
+
+.message
+  font-size 5vmin
+  font-weight bold
+  left 50%
+  margin 0
+  position absolute
+  text-transform uppercase
+  top 50%
+  white-space nowrap
+
+  &__wrapper
+    animation orbit calc(var(--orbit-speed) * 1s) infinite linear
+    left 50%
+    position absolute
+    top 50%
+    transform-style preserve-3d
+
+  &__letter
+    display inline-block
+    left 50%
+    position absolute
+    top 50%
+    transform rotateY(calc(var(--index) * 15deg)) translate3d(-50%, -50%, 15vmin)
+    transform-origin center
+
+.world-map
+  animation shift calc(var(--shift-speed) * 1s) calc(var(--delay) * 1s) infinite linear
+  animation-fill-mode forwards
+  background var(--water)
+  height 25vmin
+  left calc(var(--offset) * 1%)
+  position absolute
+  top 0
+
+  &:nth-of-type(1)
+    --offset 0
+    --delay 0
+
+  &:nth-of-type(2)
+    --offset 100
+    --delay calc(var(--shift-speed) / 3)
+
+  path
+    fill var(--land)
+
+
+// Keyframes
+@keyframes orbit
+  from
+    transform rotateY(360deg)
+  to
+    transform rotateY(0deg)
+
+@keyframes shift
+  from
+    transform translate(0, 0)
+  100%
+    transform translate(-100%, 0)
