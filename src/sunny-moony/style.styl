@@ -1,0 +1,35 @@
+*
+  box-sizing border-box
+  animation  fadeIn .5s
+
+body
+  min-height 100vh
+  margin 0
+  display flex
+  align-items center
+  justify-content center
+  background 'hsl(200, %s, %s)' % (calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+
+svg
+  width 95vmin
+
+.moon__cloud
+.sun__cloud
+  fill blue
+  display none
+
+.cloud--static
+  fill 'hsl(0, 0%, %s)' % calc(var(--lightness) * 1%)
+
+.cloud-path
+  fill hsl(0, 0%, 75%)
+
+.moon
+  fill 'hsl(0, 0%, %s)' % calc(var(--lightness) * 1%)
+
+.stars-path
+  fill hsl(50, 30%, 75%)
+
+.sun
+.sun__ray
+  fill 'hsl(50, %s, %s)' % (calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
