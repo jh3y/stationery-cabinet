@@ -1,14 +1,15 @@
 *
   box-sizing border-box
-  animation  fadeIn .5s
 
 body
-  background-color #e74c3c
-  color            #fafafa
-  text-align       center
+  align-items center
+  display flex
+  justify-content center
+  min-height 100vh
 
-@keyframes fadeIn
-  from
-    opacity 0
-  to
-    opacity 1
+.rainbow-cloud
+  width 50vmin
+
+.cloud__body
+  fill 'hsl(0, 0%, %s)' % calc(var(--cloud-lightness, 65) * 1%)
+  stroke #000
