@@ -14,8 +14,10 @@ const CONFIG = {
   },
 }
 
-const CLOUD_WRAPPER = document.querySelector('.cloud__wrapper')
-const CLOUD = document.querySelector('.cloud')
+const CLOUD_WRAPPER = document.querySelector(
+  '.cloud__wrapper:not(.cloud__wrapper--baby)'
+)
+const CLOUD = document.querySelector('.cloud:not(.cloud--baby)')
 const RAINBOW = document.querySelector('.rainbow')
 
 set(CLOUD_WRAPPER, { transformOrigin: '135% 55%' })
