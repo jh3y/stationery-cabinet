@@ -1,15 +1,58 @@
 *
   box-sizing border-box
 
+:root
+  --lightness 50
+  --saturation 50
+  --rainbow-lightness 50
+
 body
   align-items center
+  background 'hsl(210, %s, %s)' % (calc(var(--saturation, 50) * 1%) calc(var(--lightness, 50) * 1%))
   display flex
   justify-content center
   min-height 100vh
 
-// .rainbow-cloud
-//   width 50vmin
+.rainbow-cloud
+  width 95vmin
 
-.cloud__body
-  fill 'hsl(0, 0%, %s)' % calc(var(--cloud-lightness, 65) * 1%)
+.rainbow
   stroke #000
+  stroke-width 0
+  &__beam
+    fill 'hsl(%s, 85%, %s)' % (var(--hue) calc(var(--rainbow-lightness, 100) * 1%))
+  &__red
+    --hue 2
+  &__orange
+    --hue 22
+  &__yellow
+    --hue 48
+  &__green
+    --hue 90
+  &__blue
+    --hue 200
+  &__indigo
+    --hue 235
+  &__violet
+    --hue 295
+
+.cloud
+  &__body
+    fill 'hsl(0, 0%, %s)' % calc(var(--cloud-lightness, 65) * 1%)
+    stroke #000
+    stroke-width 2px
+
+  &__mouth
+    stroke #000
+    stroke-width 2px
+
+    &--thrilled path:nth-of-type(2)
+      stroke none
+
+button
+  position absolute
+  top 0
+  left 0
+  height 100vh
+  width 100vw
+  opacity 0
