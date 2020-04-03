@@ -1,0 +1,37 @@
+.scene
+  .scene__jar
+    svg(xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewbox='0 0 150.5 229.2')
+      defs
+        radialgradient#b(cx='0' cy='0' fx='0' fy='0' r='7.8' gradientunits='userSpaceOnUse')
+          stop(offset='0')
+          stop(offset='1' stop-opacity='0')
+      g.fireflies(transform='translate(75.25, 114.6)')
+        - let f = 0
+        - while ( f < 25)
+          g.firefly
+            circle(cx='0' cy='0' r='7.8' fill='url(#b)')
+            circle.firefly__body(r='2.2' cy='0' cx='0')
+          - f++
+      g.jar(transform='translate(-36 -37)')
+        rect.jar__shine(ry='5.3' y='74.9' x='47' height='72.8' width='11.9')
+        rect(ry='23.4' y='54.4' x='37.8' height='210.1' width='146.6' fill='none' stroke='#000' stroke-width='4' stroke-linecap='round' stroke-linejoin='round')
+        rect.jar__lid(ry='4.9' y='39.2' x='55.1' height='15.1' width='111.9' stroke='#000' stroke-width='4' stroke-linecap='round' stroke-linejoin='round')
+        path.jar__shine(d='M64 39v15h12V41l-1-2zM78 39v15h5V41v-2z')
+        rect(width='111.9' height='15.1' x='55.1' y='39.2' ry='4.9' fill='none' stroke='#000' stroke-width='4' stroke-linecap='round' stroke-linejoin='round')
+        rect.jar__shine(width='11.9' height='11.9' x='47' y='155.3' ry='5.3')
+      g.face(transform='translate(-37 -37)')
+        g.face__eyes
+          g.face__eye
+            circle(cx='78.8' cy='228.6' r='8')
+            circle.face__pupil(cx='76.6' cy='226.5' r='2.8')
+          g.face__eye(transform='translate(66)')
+            circle(r='8' cy='228.6' cx='78.8')
+            circle.face__pupil(r='2.8' cy='226.5' cx='76.6')
+        circle.face__cheek(r='7.5' cy='238.3' cx='59.1')
+        circle.face__cheek(cx='165.2' cy='239.9' r='7.5')
+        g.face__mouth.face__mouth--thrilled
+          path(d='M99 232a13 13 0 0014 13 13 13 0 0013-13z')
+          path.face__tongue(d='M114 237a10 6 0 00-10 5 13 13 0 009 3 13 13 0 009-4 10 6 0 00-8-4z')
+        circle.face__mouth.face__mouth--shocked(r='4.8' cy='237.5' cx='112.7')
+        path.face__mouth.face__mouth--smiley(d='M123 238a12 12 0 01-10 7 12 12 0 01-11-7' fill='none' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round')
+button Click
