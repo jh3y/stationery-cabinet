@@ -1,0 +1,97 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  background 'hsl(195, 100%, %s)' % (calc(var(--lightness) * 1%))
+
+:root
+  --glow 1
+  --blur 10
+  --spread 75
+  --size 35
+  --shine 0.25
+  --lightness 5
+  --lid-lightness 15
+  --shadow-opacity 0.35
+  --shadow-lightness 35
+  --shadow-saturation 50
+  --glow-opacity 0.4
+  --glow-saturation 50
+  --glow-lightness 35
+  --fly-saturation 100
+  --fly-lightness 50
+  --cheeky 0.35
+  --tongue 0.5
+  --fly-hue 65
+
+svg
+  height calc(var(--size) * 1vmin)
+
+.scene
+  position relative
+  &__jar
+    position relative
+    --glow-color 'hsla(%s, %s, %s, %s)' % (var(--fly-hue) calc(var(--glow-saturation) * 1%) calc(var(--glow-lightness) * 1%) var(--glow-opacity))
+    --shadow-color 'hsla(%s, %s, %s, %s)' % (var(--fly-hue) calc(var(--shadow-saturation) * 1%) calc(var(--shadow-lightness) * 1%) var(--shadow-opacity))
+
+    &:after
+      content ''
+      position absolute
+      top 100%
+      left 50%
+      background radial-gradient(var(--shadow-color), transparent 20%), radial-gradient(var(--shadow-color), transparent calc(var(--spread) * 1%))
+      height 25%
+      width 250%
+      transform translate(-50%, -50%)
+      z-index -1
+      filter blur(calc(var(--blur) * 1px))
+
+    &:before
+      position relative
+      content ''
+      height calc(var(--size) * 1vmin)
+      width calc(var(--size) * 1vmin)
+      border-radius 50%
+      position absolute
+      top 50%
+      left 50%
+      z-index -1
+      filter blur(15px)
+      background radial-gradient(var(--glow-color), transparent 30%), radial-gradient(var(--glow-color), transparent 50%)
+      transform translate(-50%, -50%) scale(3)
+
+.jar
+  &__shine
+    fill 'hsla(0, 0%, 100%, %s)' % var(--shine)
+  &__lid
+    fill 'hsl(0, 0%, %s)' % calc(var(--lid-lightness) * 1%)
+
+.face__cheek
+  fill 'hsl(0, 100%, 75%, %s)' % var(--cheeky)
+
+.face__mouth--smiley
+  stroke #000
+
+.face__tongue
+  fill 'hsla(0, 100%, 50%, %s)' % var(--tongue)
+
+.face__pupil
+  fill 'hsla(0, 0%, 100%, %s)' % var(--tongue)
+
+.firefly__body
+  fill 'hsla(%s, %s, %s)' % (var(--fly-hue) calc(var(--fly-saturation) * 1%) calc(var(--fly-lightness) * 1%))
+
+stop
+  stop-color 'hsla(%s, 100%, 50%, %s)' % (var(--fly-hue) var(--glow))
+
+button
+  position absolute
+  top 0
+  left 0
+  opacity 0
+  width 100vw
+  height 100vh
