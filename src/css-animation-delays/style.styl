@@ -1,0 +1,58 @@
+*
+  box-sizing border-box
+
+:root
+  --delay 0
+  --duration 2
+  --stagger-step 0
+  --coefficient 1
+  --offset 0
+
+body
+  background linear-gradient(-45deg, #111, #444)
+  min-height 100vh
+  display flex
+  color hsl(0, 0%, 100%)
+  align-items center
+  font-family sans-serif
+  justify-content center
+  flex-direction column
+  text-align center
+
+pre
+  background hsl(0, 0%, 0%)
+  font-weight bold
+  padding 1rem
+  border-radius 6px
+
+.block
+  animation party calc(var(--duration, 1) * 1s) linear infinite
+  animation-delay calc((((var(--delay, 0) + (var(--index) * var(--stagger-step))) + var(--offset)) * var(--coefficient)) * 1s)
+  background hsl(0, 100%, 50%)
+  padding-top 100%
+
+.container
+  display grid
+  grid-template-columns repeat(5, 1fr)
+  grid-gap 1vmin
+  width 25vmin
+  margin 4rem 0
+
+h1
+p
+pre
+  display none
+  text-align left
+
+code
+  line-height 1.75
+  display block
+
+@keyframes party
+  for $frame in (0..100)
+    {$frame * 1%}
+      background 'hsl(%s, 65%, 40%)' % ($frame * 3.6)
+
+
+[hidden] *
+  animation none
