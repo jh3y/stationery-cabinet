@@ -1,0 +1,15 @@
+- const one = 'Woo!!!!'
+- const two = 'Partay!'
+.scene
+  .word
+    - for (const [index, letter] of one.split('').entries())
+      .letter__wrap(style=`--index: ${index};`)
+        .letter(data-letter=letter)
+          span.letter__panel(aria-hidden='true')= letter
+          span.letter__panel(aria-hidden='true')= two[index]
+          span.letter__panel(aria-hidden='true')= letter
+          span.letter__panel(aria-hidden='true')= two[index]
+          span.letter__panel
+    .word__shadow
+      - for (const [index, letter] of one.split('').entries())
+        .letter__shadow(style=`--index: ${index};`)
