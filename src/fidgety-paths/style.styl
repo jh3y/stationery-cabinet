@@ -1,0 +1,74 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  text-align center
+  background hsl(0, 0%, 5%)
+
+svg
+  width 75vmin
+
+:root
+  --fade-delay 1
+  --fade-duration 1
+  --move-duration 4
+  --merge-duration 1
+  --merge-delay calc(var(--move-duration) - var(--merge-duration))
+path
+  animation fade calc(var(--fade-duration) * 1s) calc(var(--fade-delay) * 1s) ease-in both, move calc(var(--move-duration) * 1s) ease-out forwards, merge calc(var(--merge-duration) * 1s) calc(var(--merge-delay) * 1s) ease-out forwards
+  fill none
+  stroke 'hsl(%s, 80%, 60%)' % var(--hue)
+  stroke-dasharray var(--dash)
+  stroke-width 1px
+
+.text
+  filter drop-shadow(0px 0px 10px hsla(0, 0%, 100%, 0.75))
+
+g:nth-of-type(1) path
+  --hue 120
+  --dash 0 0
+  --from 0%
+  --to -100%
+
+g:nth-of-type(2) path
+  --hue 0
+  --dash 1 1
+  --from 50%
+  --to 70%
+g:nth-of-type(3) path
+  display none
+  --hue 85
+  --dash 2 2
+g:nth-of-type(4) path
+  --dash 2 3
+  --hue 190
+  --from 0
+  --to 160%
+g:nth-of-type(5) path
+  --dash 2 6
+  --hue 45
+  --from 0
+  --to 180%
+g:nth-of-type(6) path
+  --dash 1 3
+  --hue 250
+  --from 45%
+  --to -100%
+
+@keyframes move
+  from
+    stroke-dashoffset var(--from, 0%)
+  to
+    stroke-dashoffset var(--to, 200%)
+
+@keyframes fade
+  from
+    opacity 0
+
+@keyframes merge
+  to
+    stroke hsl(0, 0%, 100%)
