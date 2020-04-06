@@ -28,8 +28,11 @@ pre
 .block
   animation party calc(var(--duration, 1) * 1s) linear infinite
   animation-delay calc((((var(--delay, 0) + (var(--index) * var(--stagger-step))) + var(--offset)) * var(--coefficient)) * 1s)
-  background hsl(0, 100%, 50%)
+  background hsl(0, 0%, 0%)
   padding-top 100%
+
+.reversed .block
+  animation-delay calc((((var(--delay, 0) + ((5 - var(--index)) * var(--stagger-step))) + var(--offset)) * var(--coefficient)) * 1s)
 
 .container
   display grid
@@ -43,6 +46,7 @@ p
 pre
   display none
   text-align left
+  max-width 550px
 
 code
   line-height 1.75
