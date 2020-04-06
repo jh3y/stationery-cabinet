@@ -12,6 +12,7 @@ const STEP_CONFIGS = [
   [-0.5, 2, 0, 1, 0],
   [0, 2, 0.25, 1, 0],
   [0, 2, 0.25, 1, -5],
+  [0, 2, 0.25, 1, 0],
   [0, 2, 0.25, -1, 0],
 ]
 
@@ -28,6 +29,11 @@ const update = () => {
   document.documentElement.style.setProperty('--stagger-step', CONFIG[2])
   document.documentElement.style.setProperty('--coefficient', CONFIG[3])
   document.documentElement.style.setProperty('--offset', CONFIG[4])
+  if (parseInt(RANGE.value, 10) === 5) {
+    CONTAINER.classList.add('reversed')
+  } else {
+    CONTAINER.classList.remove('reversed')
+  }
   // Retrigger the animation
   CONTAINER.hidden = true
   requestAnimationFrame(() => (CONTAINER.hidden = false))
