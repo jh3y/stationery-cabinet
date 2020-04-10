@@ -1,0 +1,23 @@
+include t-shirt.pug
+include cannon.pug
+button
+  .button
+    .t-shirt__cannon.button__cannon
+      .t-shirt__cannon-content
+        +cannon(0)
+        +cannon(1)
+    .t-shirt__container
+      .t-shirt__wrapper.button__shirt
+        //- Middle
+        +shirt(0)
+        //- Left arm
+        +shirt(1)
+        //- Right arm
+        +shirt(2)
+        //- Bottom
+        +shirt(3)
+    .button__text
+      .dummy Ordered
+      .text.text--order(data-splitting='') Order
+      .text.text--ordered(data-splitting='') Ordered
+

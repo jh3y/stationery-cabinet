@@ -1,0 +1,115 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  overflow hidden
+
+:root
+  --color 'hsl(%s, 80%, 60%)' % var(--hue)
+.t-shirt
+  height 100%
+  width 100%
+  position absolute
+  top 0
+  left 0
+  &__shirt
+    fill var(--color)
+
+  &__wrapper
+    position relative
+
+  &__cannon
+    position absolute
+    left 50%
+    top 50%
+    width 10px
+    transform translate(-50%, 0)
+
+    svg
+      position absolute
+      top 0
+      left 0
+
+.cannon__shirt path
+  fill var(--color)
+
+.cannon__band
+  fill hsl(50, 100%, 50%)
+
+.cannon__plastic
+  fill hsla(190, 80%, 80%, 0.35)
+
+.cannon__shine
+  fill hsla(0, 0%, 100%, 0.5)
+
+.button
+  font-family sans-serif
+  font-weight bold
+  font-size 1rem
+  padding 1rem 2rem
+  padding-left calc(1rem + 50px)
+  position relative
+  border-radius 6px
+  border 0
+  color hsl(0, 0%, 100%)
+  outline transparent
+  min-width 120px
+  $clip = inset(-1000% -1000% 0 0)
+  // $clip = inset(-1000% -1000% -1000% -1000%)
+  -webkit-clip-path $clip
+  clip-path $clip
+
+  &__text
+    position relative
+    .dummy
+      color transparent
+    & > .text
+      position absolute
+      top 0
+      left 0
+      white-space nowrap
+
+  .word
+    display inline-block
+    -webkit-clip-path inset(0 0 0 0)
+    clip-path inset(0 0 0 0)
+
+  .char
+    display inline-block
+
+  &__shirt
+    position absolute
+    height 32px
+    width 32px
+    top 50%
+    left calc(0.5rem + 25px)
+    transform translate(-50%, -50%)
+
+// Don't know why but I needed this little wrapper piece to hide the t-shirt
+.t-shirt__container
+  position absolute
+  top 0
+  right 0
+  bottom 0
+  left 0
+  overflow hidden
+  border-radius 6px
+
+button
+  --hue 260
+  cursor pointer
+  background transparent
+  padding 0
+  border 0
+  border-radius 6px
+  outline transparent
+  background 'hsl(%s, 46%, %s)' % (var(--hue, 260) calc(var(--lightness, 20) * 1%))
+  box-shadow 2px 2px 4px 0px #333
+  transition box-shadow .15s
+
+  &:active
+    box-shadow 0px 0px 0px 0px #333
