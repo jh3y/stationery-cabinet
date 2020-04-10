@@ -1,0 +1,292 @@
+*
+  box-sizing border-box
+
+:root
+  --size 80
+  --board-hue 10
+  --transition 0.1
+
+  @media(min-width 768px)
+    --size 50
+
+body
+  background hsl(190, 50%, 75%)
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  overflow hidden
+  margin 0
+  padding 0
+
+form
+  height 100vh
+  width 100vw
+  position relative
+
+// FUNCTIONALITY PIECES
+// This means we've picked someone
+#selector:checked
+  height 0
+  width 0
+  position fixed
+  top 0
+  left 0
+
+  ~ .selector .selector__cards
+    animation-play-state paused
+
+  ~ .selector .selector__button
+    display none
+
+  ~ .selector
+    transform-origin bottom left
+    transform translate(0, calc(-100% - 20px)) scale(0.5)
+    left 20px
+    top 100%
+    // NOTE:: Special case for transition from selection to bottom corner
+    transition transform .25s 0.5s ease, left 0.25s 0.5s ease, top .25s 0.5s ease
+
+  ~ [type='reset']
+  ~ [for='blue']
+    display block
+
+  ~ .board__wrapper .board
+    display grid
+    animation fadeIn 0.25s 0.5s both ease
+// This means we've flipped someone
+.card-flipper:checked
+  & + .card__slot .card
+    transform rotateX(0deg)
+  & + .card__slot:before
+    transform scaleY(1)
+// Enable blue mode!
+#blue:checked ~ .board__wrapper
+#blue:checked ~ .selector
+  --board-hue 220
+
+.board__wrapper
+  height 100vh
+  width 100vw
+  perspective calc(var(--perspective, 2400) * 1px)
+
+.board
+  // height calc(var(--size) * 1vmin)
+  width calc(var(--size) * 1vmin)
+  background 'hsl(%s, 90%, 45%)' % var(--board-hue)
+  padding 2vmin
+  grid-gap 1.25vmin
+  grid-template-columns repeat(var(--columns), 1fr)
+  grid-template-rows repeat(var(--rows), 1fr)
+  position absolute
+  top 50%
+  left 50%
+  display none
+  perspective calc(var(--perspective, 400) * 2px)
+  transform translate(-50%, -50%) translate3d(0, 0, -250px) rotateX(45deg)
+  transition background calc(var(--transition) * 1s) ease
+
+  &__front
+    height 5vmin
+    width 100%
+    position absolute
+    background 'hsl(%s, 90%, 35%)' % var(--board-hue)
+    transition background calc(var(--transition) * 1s) ease
+    top 100%
+    left 0
+    transform-origin top center
+    transform rotateX(-45deg)
+
+.card
+  --depth 10
+  display block
+  align-items center
+  justify-content center
+  font-weight bold
+  font-size 16px
+  transform-origin top center
+  backface-visibility visible
+  transform-style preserve-3d
+  transition transform .25s ease
+  transform rotateX(130deg)
+  // Controlling aspect ratio of the cards here through the padding
+  padding-top 200%
+
+  &__name
+    text-align center
+    overflow hidden
+    text-overflow ellipsis
+    max-width 100%
+
+  &__picture
+    background red
+
+  &__slot
+    background 'hsl(%s, 80%, 50%)' % var(--board-hue)
+    box-shadow '0 0 25px 5px hsl(%s, 75%, 25%) inset' % var(--board-hue)
+    position relative
+    transform-style preserve-3d
+    transition box-shadow calc(var(--transition) * 1s) ease, background calc(var(--transition) * 1s) ease
+
+    &:before
+      position absolute
+      content ''
+      top 0
+      left 0
+      right 0
+      height 100%
+      background hsla(0, 0%, 0%, 0.25)
+      transform scaleY(0)
+      transition transform .25s ease
+      transform-origin top center
+
+  &__front
+    background hsl(0, 0%, 95%)
+    transform translate3d(0, 0, calc(var(--depth) * -1px)) rotateY(180deg) rotate(180deg)
+    transform-style preserve-3d
+    position absolute
+    display grid
+    grid-template-columns 1fr
+    grid-template-rows 1fr auto
+    grid-gap 1vmin
+    padding 10%
+    top 0
+    left 0
+
+    &:after
+    &:before
+      content ''
+      position absolute
+      left 0
+
+    &:after
+      top 0
+      width calc(var(--depth) * 1px)
+      height 100%
+      background hsl(0, 0%, 80%)
+      transform-origin left
+      transform rotateY(90deg)
+    &:before
+      bottom 0
+      width 100%
+      height calc(var(--depth) * 1px)
+      transform-origin top center
+      transform translate(0, calc(var(--depth) * 1px)) rotateX(-90deg)
+      background hsl(0, 0%, 85%)
+
+  &__back
+    background hsl(0, 0%, 95%)
+    display flex
+    align-items center
+    justify-content center
+    transform rotate(180deg)
+    position absolute
+    transform-style preserve-3d
+    top 0
+    left 0
+
+    &:after
+    &:before
+      content ''
+      position absolute
+      left 0
+
+    &:after
+      top 0
+      width calc(var(--depth) * 1px)
+      height 100%
+      background hsl(0, 0%, 80%)
+      transform-origin left
+      transform rotateY(90deg)
+    &:before
+      top 0
+      width 100%
+      height calc(var(--depth) * 1px)
+      transform-origin top center
+      transform translate(0, 0px) rotateX(-90deg)
+      background hsl(0, 0%, 85%)
+
+    svg
+      width 50%
+      fill hsl(0, 0%, 40%)
+
+  &__front
+  &__back
+    position absolute
+    height 100%
+    width 100%
+
+[type='checkbox']
+  position fixed
+  top 0
+  left 100%
+  opacity 0
+
+[type='reset']
+  display none
+  position fixed
+  right 20px
+  bottom 20px
+
+[for='blue']
+  display none
+
+
+.selector
+  display inline-block
+  background 'hsl(%s, 90%, 45%)' % var(--board-hue)
+  z-index 2
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%) scale(1)
+  transition background calc(var(--transition) * 1s) ease
+
+  &__button
+    cursor pointer
+    position absolute
+    top 0
+    right 0
+    bottom 0
+    left 0
+    z-index 2
+
+  &__cards
+    display flex
+    height 100%
+    width 100%
+    flex-direction column
+    animation shuffle 1s infinite steps(15)
+
+    &-wrapper
+      overflow hidden
+      height 300px
+      width 200px
+
+  &__card
+    background white
+    display flex
+    flex 1 0 100%
+    align-items center
+    justify-content center
+    font-size 1rem
+    font-weight bold
+    height 100%
+    width 100%
+
+    &-content
+      height 100%
+      width 100%
+      display grid
+      grid-template-columns 1fr
+      grid-template-rows 1fr auto
+      grid-gap 1vmin
+      padding 10%
+
+@keyframes shuffle
+  to
+    transform translate(0, -1500%)
+
+@keyframes fadeIn
+  from
+    opacity 0
