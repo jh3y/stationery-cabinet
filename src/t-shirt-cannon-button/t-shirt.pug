@@ -1,0 +1,23 @@
+- const POSITIONS = ['middle', 'left', 'right', 'bottom']
+mixin shirt(posIndex)
+  svg.t-shirt(class=`t-shirt--${POSITIONS[posIndex]}` xmlns='http://www.w3.org/2000/svg' width='245' height='230' viewbox='0 0 64.8 60.9')
+    defs
+      if (posIndex === 0)
+        clipPath#clipMain
+          rect(width="65" height="61")
+      if (posIndex === 1)
+        clipPath#clipLeft
+          rect(width="22.5" height="61")
+      if (posIndex === 2)
+        clipPath#clipRight
+          rect(x="42.3" width="22.5" height="61")
+    g.t-shirt__shirt(stroke='#000')
+      if (posIndex === 1 || posIndex === 2)
+        g.t-shirt__arm(class=`t-shirt__arm--${posIndex === 1 ? 'left' : 'right'}` clip-path=`url(#clip${posIndex === 1 ? 'Left' : 'Right'})`)
+          path(d='M251.8 109.2a36 17.5 0 01-34 11.6 36 17.5 0 01-33.9-11.6l-31.5 4.8-50 50 37 36.8 13-13v142.7h130.9V187.7l13.1 13.1 36.9-36.8-50-50z' transform='matrix(.26468 0 0 .2626 -25.2 -27.2)' stroke-width='5' stroke-linecap='square')
+      if (posIndex === 0)
+        g.t-shirt__middle(clip-path="url(#clipMain)")
+          path(d='M90.5 151.3a9.5 4.6 0 01-9 3 9.5 4.6 0 01-9-3l-2.3.4v58.2h22.7v-58.2z' stroke-width='1.3' stroke-linecap='square' transform='matrix(1.00036 0 0 .99247 -49.2 -148.7)')
+      if (posIndex === 3)
+        g.t-shirt__fold
+          path(stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round' d='M70.2 197.8h22.7v12H70.2z' transform='matrix(1.00036 0 0 .99247 -49.2 -148.7)')
