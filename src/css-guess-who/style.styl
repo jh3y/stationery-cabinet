@@ -5,9 +5,12 @@
   --size 80
   --board-hue 10
   --transition 0.1
+  --scene-perspective 2400
+  --board-perspective 600
+  --board-tilt 45
 
   @media(min-width 768px)
-    --size 50
+    --size 65
 
 body
   background hsl(190, 50%, 75%)
@@ -46,9 +49,12 @@ form
     top 100%
     // NOTE:: Special case for transition from selection to bottom corner
     transition transform .25s 0.5s ease, left 0.25s 0.5s ease, top .25s 0.5s ease
+    @media(min-width 992px)
+      transform translate(0, calc(-100% - 20px)) scale(0.75)
 
-  ~ [type='reset']
+  ~ [for='reset']
   ~ [for='blue']
+    animation fadeIn 0.25s 0.5s both ease
     display block
 
   ~ .board__wrapper .board
@@ -64,11 +70,13 @@ form
 #blue:checked ~ .board__wrapper
 #blue:checked ~ .selector
   --board-hue 220
+#blue:checked ~ [for='blue']
+  --board-hue 10
 
 .board__wrapper
   height 100vh
   width 100vw
-  perspective calc(var(--perspective, 2400) * 1px)
+  perspective calc(var(--scene-perspective, 2400) * 1px)
 
 .board
   // height calc(var(--size) * 1vmin)
@@ -82,8 +90,8 @@ form
   top 50%
   left 50%
   display none
-  perspective calc(var(--perspective, 400) * 2px)
-  transform translate(-50%, -50%) translate3d(0, 0, -250px) rotateX(45deg)
+  perspective calc(var(--board-perspective, 600) * 2px)
+  transform translate(-50%, -50%) translate3d(0, 0, -250px) rotateX(calc(var(--board-tilt) * 1deg))
   transition background calc(var(--transition) * 1s) ease
 
   &__front
@@ -110,16 +118,20 @@ form
   transition transform .25s ease
   transform rotateX(130deg)
   // Controlling aspect ratio of the cards here through the padding
-  padding-top 200%
+  padding-top 180%
 
   &__name
     text-align center
     overflow hidden
     text-overflow ellipsis
     max-width 100%
-
+    padding-top 10%
+    @media(min-width 992px)
+      font-size 1.5rem
   &__picture
-    background red
+    background 'hsl(%s, 60%, 50%)' % var(--board-hue)
+    position relative
+    overflow hidden
 
   &__slot
     background 'hsl(%s, 80%, 50%)' % var(--board-hue)
@@ -145,11 +157,10 @@ form
     transform translate3d(0, 0, calc(var(--depth) * -1px)) rotateY(180deg) rotate(180deg)
     transform-style preserve-3d
     position absolute
-    display grid
-    grid-template-columns 1fr
-    grid-template-rows 1fr auto
-    grid-gap 1vmin
+    display flex
+    flex-direction column
     padding 10%
+    // overflow hidden
     top 0
     left 0
 
@@ -217,19 +228,42 @@ form
     width 100%
 
 [type='checkbox']
+[type='reset']
   position fixed
   top 0
   left 100%
   opacity 0
 
-[type='reset']
+[for='reset']
+  cursor pointer
   display none
   position fixed
-  right 20px
-  bottom 20px
+  right 40px
+  bottom 40px
+  height 44px
+  width 44px
+
+  svg
+    position absolute
+    top 50%
+    left 50%
+    height 40px
+    width 40px
+    transform translate(-50%, -50%)
 
 [for='blue']
+  --board-hue 220
   display none
+  position fixed
+  right 40px
+  height 44px
+  width 44px
+  border-radius 50%
+  bottom 94px
+  cursor pointer
+  color transparent
+  transition background calc(var(--transition) * 1s) ease
+  background 'hsl(%s, 90%, 45%)' % var(--board-hue)
 
 
 .selector
@@ -282,6 +316,18 @@ form
       grid-template-rows 1fr auto
       grid-gap 1vmin
       padding 10%
+
+    .card__name
+      font-size 1.5rem
+
+.card__picture
+  flex 1 1 0
+  svg
+    height 100%
+    position absolute
+    bottom 0
+    left 50%
+    transform translate(-50%, 3%)
 
 @keyframes shuffle
   to
