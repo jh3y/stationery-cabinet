@@ -1,0 +1,9 @@
+//- G A B C D E F G A B C D E
+- const NOTES = [196, 220, 246.94, 261.63, 293.66, 329.63, 349.23, 392, 440, 493.88, 523.25, 587.33, 659.26, 698.46]
+//- G# A# C# D# F# G# A# C# D#
+- const SHARPS = [207.65, 233.08, 277.18, 311.13, 369.99, 415.3, 466.16, 554.37, 622.25]
+.keyboard
+  - for (const NOTE of NOTES)
+    button.keyboard__key.key(data-frequency=NOTE, data-key="true")
+  - for (const SHARP of SHARPS)
+    button.keyboard__key.key.key--sharp(data-frequency=SHARP, data-sharp="true")
