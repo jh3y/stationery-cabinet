@@ -1,0 +1,233 @@
+body {
+	font-family:sans-serif;
+}
+
+.wrapper {
+
+	display:flex;
+	flex-wrap:wrap;
+}
+.instructions{
+	padding:20px;
+	width:800px;
+}
+
+li{
+	margin:10px;
+}
+
+
+.graph{
+	position:relative;
+	width:400px;
+	height:350px;
+	background-color:#ccc;
+background-image: linear-gradient(white 2px, transparent 2px),
+linear-gradient(90deg, white 2px, transparent 2px),
+linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px);
+background-size: 50px 50px, 50px 50px;
+background-position:-2px -2px, -2px -2px;
+}
+
+.box {
+	width:48px;
+	height:48px;
+	position:absolute;
+}
+
+.red {
+	background:red;
+	transform:translate(150px, 150px);
+}
+
+.blue {
+	background:blue;
+	transform:translate(200px, 150px);
+}
+
+.green {
+	width:398px;
+	height:10px;
+	position:absolute;
+	background:green;
+	bottom:-10px;
+}
+
+/*  CHALLENGE ONE CODE */
+
+
+.red,
+.blue {
+	animation-name: horizontal, vertical;
+	animation-duration: 1s, 2s;
+/* 	animation-delay: 0s, 2s; */
+	animation-delay: 2s, 4s;
+	animation-timing-function: ease-out;
+	animation-fill-mode: forwards;
+}
+
+.red {
+	--x: 150;
+	--y: 150;
+	--x-0: 0;
+	--y-0: 150;
+	--x-1: 150;
+	--y-1: 0;
+}
+
+.blue {
+	--x: 200;
+	--y: 150;
+	--x-0: 350;
+	--y-0: 150;
+	--x-1: 200;
+	--y-1: 300;
+}
+
+@keyframes horizontal {
+	from {
+      transform: translate(calc(var(--x-0) * 1px), calc(var(--y-0) * 1px));
+	}
+	to {
+		transform: translate(calc(var(--x) * 1px), calc(var(--y) * 1px));
+	}
+}
+
+@keyframes vertical {
+	from {
+      transform: translate(calc(var(--x) * 1px), calc(var(--y) * 1px));
+	}
+	to {
+		transform: translate(calc(var(--x-1) * 1px), calc(var(--y-1) * 1px));
+	}
+}
+
+/* Challenge 2 code */
+/* Let's start scoping things! */
+.wrapper {
+	--fade-speed: 2;
+	--timing-function: ease-out;
+	/* element characteristics */
+	--horizontal-speed: 1;
+	--horizontal-wait: 0;
+	--vertical-speed: 2;
+	--vertical-wait: 1;
+}
+
+.graph {
+	animation-name: fade;
+	animation-duration: calc(var(--fade-speed) * 1s);
+	animation-delay: calc(var(--fade-delay) * 1s);
+}
+
+.red,
+.blue {
+	animation-duration: calc(var(--horizontal-speed) * 1s), calc(var(--vertical-speed) * 1s);
+	animation-delay: calc((var(--fade-speed) + var(--horizontal-wait)) * 1s), calc((var(--fade-speed) + var(--horizontal-speed) + var(--vertical-wait)) * 1s);
+	animation-timing-function: var(--timing-function);
+	animation-fill-mode: both, forwards;
+}
+
+.green {
+	animation-name: scale;
+	animation-duration: calc((var(--fade-speed) + var(--horizontal-wait) + var(--horizontal-speed) + var(--vertical-wait) + var(--vertical-speed)) * 1s);
+	animation-fill-mode: forwards;
+	animation-timing-function: var(--timing-function);
+	transform-origin: left;
+}
+
+@keyframes fade {
+	from {
+		opacity: 0;
+	}
+}
+
+@keyframes scale {
+	from {
+		transform: scaleX(0);
+	}
+}
+
+/* Challenge 3 code */
+
+.red,
+.blue {
+  --travel: calc(var(--x) - var(--x-0));
+  background: transparent;
+  position: absolute;
+  z-index: 2;
+}
+
+.red:after,
+.blue:after {
+  animation-name: spin;
+  animation-duration: 1s;
+  animation-delay: calc((var(--fade-speed) + var(--horizontal-speed) + var(--vertical-wait) + 1) * 1s)
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.red:after {
+  background: red;
+}
+.blue:after {
+  background: blue;
+}
+
+@keyframes horizontal {
+	0% {
+		transform: translate(calc(var(--x-0) * 1px), calc(var(--y) * 1px));
+	}
+
+	12% {
+		transform: translate(calc((var(--x-0) + (var(--travel) * 0.1089)) * 1px), calc(var(--y) * 1px));
+	}
+
+	24% {
+		transform: translate(calc((var(--x-0) + (var(--travel) * 0.4356)) * 1px), calc(var(--y) * 1px));
+	}
+
+	36% {
+		transform: translate(calc((var(--x-0) + (var(--travel) * 0.9801)) * 1px), calc(var(--y) * 1px));
+	}
+
+	54% {
+		transform: translate(calc((var(--x-0) + (var(--travel) * 0.7502)) * 1px), calc(var(--y) * 1px));
+	}
+
+	74% {
+		transform: translate(calc((var(--x-0) + (var(--travel) * 0.9837)) * 1px), calc(var(--y) * 1px));
+	}
+
+	82% {
+		transform: translate(calc((var(--x-0) + (var(--travel) * 0.9375)) * 1px), calc(var(--y) * 1px));
+	}
+
+	92% {
+		transform: translate(calc((var(--x-0) + (var(--travel) * 0.9934)) * 1px), calc(var(--y) * 1px));
+	}
+
+	96% {
+		transform: translate(calc((var(--x-0) + (var(--travel) * 0.9846)) * 1px), calc(var(--y) * 1px));
+	}
+
+	100% {
+		transform: translate(calc((var(--x-0) + (var(--travel) * 1)) * 1px), calc(var(--y) * 1px));
+	}
+
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  95% {
+    transform: rotate(405deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

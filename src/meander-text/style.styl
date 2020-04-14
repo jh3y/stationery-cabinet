@@ -1,0 +1,40 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  background hsl(0, 0%, 15%)
+
+:root
+  --coefficient 1.25
+
+.container__wrapper
+  height 75vmin
+  width 75vmin
+  padding 5vmin
+
+.container
+  height 100%
+  width 100%
+  position relative
+
+.motion
+  font-weight bold
+  font-size 5vmin
+  font-family sans-serif
+  .char
+    offset-path path(var(--path))
+    position absolute
+    color 'hsl(%s, 80%, 50%)' % calc((360 / var(--char-total)) * var(--char-index))
+    top 0
+    left 0
+    animation travel 10s -8s infinite ease alternate
+
+@keyframes travel
+  from
+    offset-distance calc((var(--char-index) * var(--coefficient)) * 1%)
+  to
+    offset-distance calc((100 - ((var(--char-total) - var(--char-index)) * var(--coefficient))) * 1%)

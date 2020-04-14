@@ -1,0 +1,120 @@
+*
+  box-sizing border-box
+
+body
+  background linear-gradient(35deg, hsl(265, 80%, 40%), hsl(265, 80%, 10%))
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  overflow hidden
+  touch-action none
+
+
+.keyboard
+  background hsl(0, 0%, 5%)
+  max-height 300px
+  max-width 1000px
+  width 90vmin
+  height calc((300 / 1000) * 90vmin)
+  display grid
+  grid-template-columns repeat(14, 1fr)
+  grid-template-rows 2fr 1fr
+  grid-gap 4px
+  padding 4vmin 2vmin 1vmin
+  position relative
+  grid-auto-flow dense
+  border-radius 5px
+
+  &:after
+    content 'Yamajhay'
+    position absolute
+    top 2vmin
+    right 2rem
+    color hsl(0, 0%, 40%)
+    font-family cursive
+    font-weight bold
+    font-size 1.5vmin
+    transform translate(0, -50%)
+
+  &:before
+    content ''
+    height 0.5vmin
+    width 0.5vmin
+    border-radius 50%
+    background hsl(0, 100%, 50%)
+    box-shadow 0 0 5px 5px red
+    position absolute
+    top 2vmin
+    left 2vmin
+    transform translate(0%, -50%)
+
+.key
+  cursor pointer
+  border 0
+  grid-row span 2
+  background hsl(0, 0%, 95%)
+  border-radius 0 0 5px 5px
+  outline transparent
+
+
+  &--active
+    background hsl(0, 0%, 85%)
+
+  &--sharp
+    grid-row 1
+    background hsl(0, 0%, 15%)
+    width 80%
+    transform translate(calc(75% + 2.5px), 0)
+    position relative
+
+    &:after
+      content ''
+      position absolute
+      top 0
+      left 50%
+      width 80%
+      height 90%
+      transform translate(-50%, 0)
+      background hsl(0, 0%, 20%)
+
+    &.key--active
+      background hsl(0, 0%, 25%)
+
+// These are the pairs
+//- G A C D F G A C D
+// - const NOTES = [196, 220, 261.63, 293.66, 349.23, 392, 440, 523.25, 587.33, 659.26]
+//- G# A# C# D# F# G# A# C# D#
+// - const SHARPS = [207.65, 233.08, 277.18, 311.13, 369.99, 415.3, 466.16, 554.37, 622.25]
+
+[data-key]
+  grid-row 1 / -1
+
+[data-frequency="196"]
+[data-frequency="207.65"]
+  grid-column 1
+[data-frequency="220"]
+[data-frequency="233.08"]
+  grid-column 2
+[data-frequency="261.63"]
+[data-frequency="277.18"]
+  grid-column 4
+[data-frequency="293.66"]
+[data-frequency="311.13"]
+  grid-column 5
+[data-frequency="349.23"]
+[data-frequency="369.99"]
+  grid-column 7
+[data-frequency="392"]
+[data-frequency="415.3"]
+  grid-column 8
+[data-frequency="523.25"]
+[data-frequency="466.16"]
+  grid-column 9
+[data-frequency="587.33"]
+[data-frequency="554.37"]
+  grid-column 11
+[data-frequency="659.26"]
+[data-frequency="622.25"]
+  grid-column 12
+
