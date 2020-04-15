@@ -3,6 +3,9 @@ const {
   gsap: { timeline, set },
 } = window
 
+const CLIP = new Audio(
+  'https://s3-us-west-2.amazonaws.com/s.cdpn.io/605876/t-shirt-cannon-pop.mp3'
+)
 // Split the order letter
 Splitting()
 
@@ -84,7 +87,11 @@ const FIRE_TL = () =>
     .to('.t-shirt__cannon-content', { duration: 1, y: -35 })
     .to('.t-shirt__cannon-content', { duration: 0.25, y: -37.5 })
     .to('.t-shirt__cannon-content', { duration: 0.015, y: -30.5 })
-    .to('.cannon__shirt', { duration: 0.5, y: '-25vmax' }, '<')
+    .to(
+      '.cannon__shirt',
+      { onStart: () => CLIP.play(), duration: 0.5, y: '-25vmax' },
+      '<'
+    )
     .to('.text--ordered .char', { duration: 0.15, stagger: 0.1, y: '0%' })
     .to('button', { duration: 7 * 0.15, '--hue': 116, '--lightness': 55 }, '<')
 

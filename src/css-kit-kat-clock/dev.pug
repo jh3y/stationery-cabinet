@@ -1,0 +1,24 @@
+mixin paw(className)
+  .clock__paw(class=`clock__paw--${className}`)
+    - let p = 0
+    while p < 5
+      .clock__pad
+      - p++
+.clock
+  .clock__eyes
+    .clock__eye.clock__eye--left
+    .clock__eye.clock__eye--right
+  .clock__body
+    - let d = 0
+    while (d < 12)
+      .clock__dot(style=`--index: ${d};`)
+      - d++
+    .clock__hand.clock__hand--minutes
+    .clock__hand.clock__hand--hours
+  +paw('top-left')
+  +paw('top-right')
+  +paw('bottom-left')
+  +paw('bottom-right')
+
+img(src='./kit-kat.png')
+
