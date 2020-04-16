@@ -4,10 +4,35 @@
   box-sizing border-box
 
 :root
+  --hue 320
   --white hsl(0, 0%, 95%)
   --black hsl(0, 0%, 25%)
-  --height 800
-  --width 300
+  --aspect-ratio calc(300 / 800)
+  // 75vmin === 800px then 75 / 800 === 1px in our drawing
+  --unit calc((80 / 800) * 1vmin)
+  // --unit 1px
+  --width calc(300 * var(--unit))
+  --height calc(800 * var(--unit))
+svg
+  // width calc(var(--width) * 1px)
+  width 30vmin
+  height 80vmin
+  position fixed
+  top 50%
+  // display none
+
+
+  &:nth-of-type(1)
+    left 50%
+    transform translate(-50%, -50%)
+    opacity 0.15
+
+
+  &:nth-of-type(2)
+    right 0
+    height 800px
+    width 300px
+    transform translate(0, -50%)
 
 body
   min-height 100vh
@@ -18,47 +43,49 @@ body
   transform-origin top center
 
 .clock
-  height calc(var(--height) * 1px)
-  background hsla(0, 0%, 100%, 0.15)
-  width calc(var(--width) * 1px)
+  height calc(var(--height))
+  width calc(var(--width))
   position relative
 
   &__eye
-    --size 110
-    height calc(var(--size) * 1px)
-    width calc(var(--size) * 1px)
+    --size 134
+    height calc(var(--size) * var(--unit))
+    width calc(var(--size) * var(--unit))
     background var(--white)
     position absolute
-    top calc(var(--height) * 0.055px)
+    top calc(17 * var(--unit))
     border-radius 50%
+    border calc(6 * var(--unit)) solid var(--black)
     left 50%
+
+    // Eyebrows
     &:after
       content ''
       height 110%
       width 110%
-      border 4px solid var(--white)
+      border calc(4 * var(--unit)) solid var(--white)
       border-radius 50%
       position absolute
       top 50%
       left 50%
-      $clip = polygon(50% 50%, 85% 0, 15% 0)
+      $clip = polygon(50% 50%, 94% 0, 6% 0)
       -webkit-clip-path $clip
       clip-path $clip
 
     &--left
-      transform translate(-104%, 0%)
+      transform translate(-100%, 0%)
       &:after
-        transform translate(-48%, -57%)
+        transform translate(-50%, -60%)
 
     &--right
-      transform translate(4%, 0%)
+      transform translate(0%, 0%)
       &:after
-        transform translate(-52%, -57%)
+        transform translate(-50%, -60%)
   &__body
     --size 200
     background var(--white)
-    height calc(var(--size) * 1px)
-    width calc(var(--size) * 1px)
+    height calc(var(--size) * var(--unit))
+    width calc(var(--size) * var(--unit))
     position absolute
     top 46%
     left 50%
@@ -66,82 +93,271 @@ body
     border-radius 50%
 
     &:after
+      --size calc(25 * var(--unit))
       content ''
       position absolute
       top 50%
       left 50%
       border-radius 50%
       background var(--black)
-      height 25px
-      width 25px
+      height var(--size)
+      width var(--size)
       transform translate(-50%, -50%)
 
   &__dot
-    height 10px
-    width 10px
+    --size 10
+    --radius 90
+    height calc(var(--size) * var(--unit))
+    width calc(var(--size) * var(--unit))
     background var(--black)
     border-radius 50%
     top 50%
     left 50%
     position absolute
-    transform translate(-50%, -50%) rotate(calc(((360/12) * var(--index)) * 1deg)) translate(0, 92px)
+    transform translate(-50%, -50%) rotate(calc(((360/12) * var(--index)) * 1deg)) translate(0, calc(var(--radius) * var(--unit)))
 
   &__paw
-    --size 68
+    --height 70
+    --width 80
     position absolute
-    height calc(var(--size) * 1px)
-    width calc(var(--size) * 1px)
+    height calc(var(--height) * var(--unit))
+    width calc(var(--width) * var(--unit))
 
     &--top-left
-      top 234px
-      left 15px
+      top calc(238 * var(--unit))
+      left 0
 
     &--bottom-left
-      top 452px
-      left 15px
+      top calc(448 * var(--unit))
+      left 0
 
     &--top-right
-      top 234px
-      left 215px
+      top calc(238 * var(--unit))
+      right 0
 
     &--bottom-right
-      top 452px
-      left 215px
+      top calc(448 * var(--unit))
+      right 0
 
   &__pad
-    height 35%
-    width 25%
+    --size calc(20 * var(--unit))
+    height var(--size)
+    width var(--size)
     background var(--white)
     position absolute
     border-radius 50%
 
     &:nth-of-type(1)
-      left 3%
-      top 23%
-      transform rotate(-22deg)
+      left 0%
+      top 20%
+
     &:nth-of-type(2)
-      left 25%
+      left 24%
       top 0%
-      transform rotate(-15deg)
+
     &:nth-of-type(3)
-      left 56%
+      left 52%
       top 0%
-      transform rotate(15deg)
+
     &:nth-of-type(4)
-      left 74%
-      top 28%
-      transform rotate(20deg)
+      right 0%
+      top 20%
+
     &:nth-of-type(5)
-      bottom 1%
-      left 23%
-      height 54%
-      width 54%
+      --size calc(50 * var(--unit))
+      bottom 0%
+      left 50%
+      transform translate(-50%, 0)
+  &__face
+    background var(--white)
+    position absolute
+    top calc(136 * var(--unit))
+    left calc(20 * var(--unit))
+    height calc(90 * var(--unit))
+    width calc(260 * var(--unit))
+    border-radius 0 0 50% 50% / 0 0 100% 100%
+  &__nose
+    background var(--black)
+    position absolute
+    height calc(45 * var(--unit))
+    width calc(70 * var(--unit))
+    top calc(115 * var(--unit))
+    border-radius 50%
+    left 50%
+    transform translate(-50%, 0)
+
+  &__mouth
+    position absolute
+    height calc(60 * var(--unit))
+    width calc(110 * var(--unit))
+    background var(--black)
+    border-radius 50%
+    bottom calc(5 * var(--unit))
+    left 50%
+    transform translate(-50%, 0)
+
+    &:before
+    &:after
+      content ''
+      position absolute
+      top 0
+      height 50%
+      width 55%
+      background var(--white)
+
+    &:before
+      right 49%
+      border-radius 0 0 40% 35%
+    &:after
+      left 49%
+      border-radius 0 0 35% 40%
+
+  &__tongue
+    width 100%
+    height 100%
+    overflow hidden
+    border-radius 50%
+    position relative
+
+    &:before
+      content ''
+      position absolute
+      bottom 0
+      height 40%
+      width 50%
+      background hsl(0, 90%, 55%)
+      border-radius 50%
+      left 50%
+      transform translate(-45%, 50%)
+
+  &__whiskers
+    height 100%
+    width 100%
+    position relative
+
+  &__whisker
+    background var(--black)
+    height calc(5 * var(--unit))
+    width calc(70 * var(--unit))
+    position absolute
+    left 50%
+    top 50%
+
+    &:nth-of-type(1)
+      transform-origin right
+      transform translate(-160%, -550%) rotate(-5deg)
+    &:nth-of-type(2)
+      transform-origin right
+      width calc(56 * var(--unit))
+      transform translate(-160%, -350%) rotate(-15deg)
+    &:nth-of-type(3)
+      transform-origin left
+      transform translate(60%, -550%) rotate(5deg)
+    &:nth-of-type(4)
+      transform-origin left
+      width calc(56 * var(--unit))
+      transform translate(60%, -350%) rotate(15deg)
+
+  &__tail
+    --swing 38
+    width calc(140 * var(--unit))
+    height calc(280 * var(--unit))
+    position absolute
+    bottom 0
+    left 50%
+    transform translate(-50%, 0)
+    transform-origin top center
+    animation swing 1s infinite alternate ease-in-out
+
+    &:after
+      content ''
+      background var(--white)
+      position absolute
+      height calc(70 * var(--unit))
+      width calc(50 * var(--unit))
+      bottom 0
+      left 50%
+      transform-origin bottom left
+      transform translate(-18%, 0) rotate(-30deg)
+      border-radius 0 0 50% 50% / 0 0 50% 50%
+      $clip = polygon(0 0, 100% 25%, 100% 100%, 0 100%)
+      -webkit-clip-path $clip
+      clip-path $clip
+
+    @keyframes swing
+      from
+        transform translate(-50%, 0) rotate(calc(var(--swing) * -1deg))
+      to
+        transform translate(-50%, 0) rotate(calc(var(--swing) * 1deg))
+
+  // Pupils
+  &__pupil
+    position absolute
+    top 50%
+    left 50%
+    height 92%
+    width 15%
+    transform translate(-50%, -50%)
+    animation shift 1s infinite alternate ease-in-out
+
+    &:before
+      content ''
+      height 100%
+      width 100%
+      background var(--black)
+      border-radius 50%
+      position absolute
+      top 50%
+      left 50%
+      transform translate(-50%, -50%)
+      animation scale 0.5s infinite ease-in-out alternate
+
+    @keyframes scale
+      0%
+        transform translate(-50%, -50%) scale(0.6)
+      100%
+        transform translate(-50%, -50%) scale(1)
+
+    @keyframes shift
+      0%
+        transform translate(-50%, -50%) translate(-250%, 0)
+      100%
+        transform translate(-50%, -50%) translate(250%, 0)
+  &__bowtie
+    --size calc(20 * var(--unit))
+    border-radius 50%
+    position absolute
+    background 'hsl(%s, 60%, 60%)' % var(--hue)
+    left 50%
+    top calc(236 * var(--unit))
+    transform translate(-50%, 0)
+    height var(--size)
+    width var(--size)
+
+    &:after
+    &:before
+      content ''
+      position absolute
+      height 160%
+      width 160%
+      background 'hsl(%s, 60%, 60%)' % var(--hue)
+      top 50%
+      transform translate(0, -50%) rotate(calc(var(--rotate, 0) * 1deg))
+      $clip = polygon(0 0, 100% 50%, 0 100%)
+      -webkit-clip-path $clip
+      clip-path $clip
+
+    &:after
+      --rotate 180
+      left 15%
+    &:before
+      right 15%
 
   &__hand
     position absolute
-    width 5px
+    width calc(5 * var(--unit))
     background var(--black)
-    border-radius 2px 2px 0 0
+    border-radius calc(2 * var(--unit)) calc(2 * var(--unit)) 0 0
     top 50%
     left 50%
     transform-origin bottom center
@@ -152,7 +368,7 @@ body
       bottom 0
       left 50%
       transform translate(-50%, 0)
-      width 12px
+      width calc(12 * var(--unit))
       height 80%
       background var(--black)
       $clip = polygon(50% 0, 100% 20%, 75% 100%, 25% 100%, 0 20%)
@@ -160,17 +376,18 @@ body
       clip-path $clip
 
     &--minutes
-      height 80px
+      --seconds 3600
+      height 40%
       transform translate(-50%, -100%) rotate(0deg)
+      animation time calc(var(--seconds) * 1s) calc(var(--minutes-delay, 0) * -1s) infinite linear
     &--hours
-      height 70px
+      --seconds 43200
+      height 35%
       transform translate(-50%, -100%) rotate(270deg)
+      animation time calc(var(--seconds) * 1s) calc(var(--hours-delay) * -1s) infinite linear
 
-
-img
-  position fixed
-  width 300px
-  top 50%
-  left 50%
-  opacity 0.15
-  transform translate(-50%, -50%) translate(-1.75px, 0)
+    @keyframes time
+      0%
+        transform translate(-50%, -100%) rotate(0deg)
+      100%
+        transform translate(-50%, -100%) rotate(360deg)

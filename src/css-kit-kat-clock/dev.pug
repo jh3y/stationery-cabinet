@@ -5,9 +5,20 @@ mixin paw(className)
       .clock__pad
       - p++
 .clock
+  .clock__face
+    .clock__mouth
+      .clock__tongue
+    .clock__whiskers
+      - let w = 0
+      while w < 4
+        .clock__whisker
+        - w++
   .clock__eyes
     .clock__eye.clock__eye--left
+      .clock__pupil
     .clock__eye.clock__eye--right
+      .clock__pupil
+  .clock__nose
   .clock__body
     - let d = 0
     while (d < 12)
@@ -19,6 +30,5 @@ mixin paw(className)
   +paw('top-right')
   +paw('bottom-left')
   +paw('bottom-right')
-
-img(src='./kit-kat.png')
-
+  .clock__tail
+  .clock__bowtie
