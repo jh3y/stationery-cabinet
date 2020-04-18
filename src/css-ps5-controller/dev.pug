@@ -1,0 +1,79 @@
+img(src='./ps5-controller.jpeg')
+mixin stick
+  .controller__stick
+    div
+      div
+    div
+      div
+mixin grip(side)
+  .controller__grip(class=`controller__grip--${side}`)
+    //- Top of the outer grip curve
+    div
+    //- Bottom of the outer grip curve
+    div
+    //- Slight overhang at the bottom
+    div
+    //- Little curve at the bottom of the base
+    div
+mixin grip-underlay(side)
+  .controller__grip-underlay(class=`controller__grip-underlay--${side}`)
+    //- Faceplate to be overlapped
+    div
+    //- Actual underlay piece
+    div
+    //- Side piece/nub at the bottom
+    div
+    //- Face plate
+    div
+.controller
+  .controller__container
+    .controller__body
+      .controller__trigger.controller__trigger--left
+      .controller__trigger.controller__trigger--right
+      .controller__body-top.controller__body-top--left
+      .controller__body-top.controller__body-top--right
+      .controller__body-top.controller__body-top--center
+      //- Acts as a base for the entire grip
+      +grip('left')
+      +grip('right')
+      .controller__sticks-container
+        .controller__backdrop
+        .controller__clip
+        +grip-underlay('left')
+        +grip-underlay('right')
+        .controller__sticks
+          div
+            +stick()
+          div
+            +stick()
+      .controller__touch-pad
+        //- Bottom container
+        div
+          div
+          div
+        div
+          div
+          div
+      .controller__speaker
+        - let s = 0
+        while s < 9
+          div
+          - s++
+      .controller__start
+      .controller__headphone
+      .controller__buttons
+        .controller__button.controller__button--triangle
+        .controller__button.controller__button--square
+        .controller__button.controller__button--circle
+        .controller__button.controller__button--cross
+      .controller__dpad
+        .controller__dbutton.controller__dbutton--top
+          div
+        .controller__dbutton.controller__dbutton--right
+          div
+        .controller__dbutton.controller__dbutton--bottom
+          div
+        .controller__dbutton.controller__dbutton--left
+          div
+
+
