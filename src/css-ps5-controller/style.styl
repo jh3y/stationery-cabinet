@@ -5,10 +5,10 @@
 
 :root
   // This color is needed to clip the border at the bottom
-  --bg hsl(270, 80%, 70%)
+  --bg hsl(206, 100%, 32%)
   --accent hsl(225, 92%, 50%)
   // We know the original is 1920x1080
-  --desired-size 80
+  --desired-size 75
   --controller-white hsl(225, 13%, 95%)
   // --controller-white red
   --controller-black hsl(0, 0%, 12%)
@@ -22,7 +22,6 @@ body
 
 
 .controller
-  opacity 0.5
   &__container
     width calc(1920 * var(--unit))
     height calc(1080 * var(--unit))
@@ -30,6 +29,17 @@ body
     top 50%
     left 50%
     transform translate(-50%, -50%)
+    &:before
+      content ''
+      position absolute
+      bottom 0
+      left 50%
+      width 80%
+      height 35%
+      z-index -1
+      background radial-gradient(hsla(0, 0%, 5%, 0.5), transparent 50%)
+      filter blur(25px)
+      transform translate(-50%, 24%)
 
   &__body
     width calc(1330 * var(--unit))
@@ -38,6 +48,24 @@ body
     top 50%
     left 50%
     transform translate(-50%, -50%)
+
+    &:before
+    &:after
+      content ''
+      position absolute
+      z-index -1
+      bottom 0
+      height 15%
+      width 40%
+      filter blur(25px)
+      background radial-gradient(hsl(0, 0%, 5%), transparent 75%)
+
+    &:before
+      transform translate(-25%, 50%)
+      left 0
+    &:after
+      right 0
+      transform translate(25%, 50%)
 
   &__body-top
     width 200%
@@ -49,10 +77,11 @@ body
     position absolute
     transform translate(-50%, 0%)
     &--center
-      $clip = inset(0 30.5% 52% 30.5%)
+      $clip = inset(0 32.5% 52% 32.5%)
       -webkit-clip-path $clip
       clip-path $clip
       transform translate(-50%, 0.4%)
+      background hsl(225, 13%, 88%)
 
     &--left
       $clip = inset(0 62.5% 52% 30.5%)
@@ -211,7 +240,8 @@ body
         left 50%
 
     & > div:nth-of-type(2)
-      background hsl(0, 0%, 40%)
+      background repeating-conic-gradient(hsla(0, 0%, 10%, 0.5) 1deg, hsla(0, 0%, 60%, 0.5) 6deg), #666
+      filter blur(1px)
       border-radius 50%
       position absolute
       top 50%
@@ -225,7 +255,7 @@ body
         position absolute
         top 50%
         left 50%
-        background radial-gradient(circle at 80% 100%, hsl(0, 0%, 15%), transparent)
+        background radial-gradient(circle at 80% 100%, hsl(0, 0%, 15%), transparent), hsl(0, 0%, 40%)
         transform translate(-50%, -50%)
         border-radius 50%
         width 60%
@@ -248,6 +278,9 @@ body
     left 50%
     transform translate(-50%, 3%)
     border-radius 15% 15% 0 0 / 22% 22% 0 0
+    $clip = inset(0 0 80% 0)
+    -webkit-clip-path $clip
+    clip-path $clip
 
   &__grip-underlay
     --mirrored 0
@@ -351,6 +384,21 @@ body
     transform translate(-50%, 0)
     border-radius 50% 50% 0 0 / 8% 8% 0 0
     overflow hidden
+
+    &:after
+      content ''
+      position absolute
+      background linear-gradient(hsl(0, 0%, 70%), white, transparent)
+      top 0
+      left 50%
+      width 95%
+      height 30%
+      transform translate(-50%, 0)
+      border-radius 18% 18% 0 0 / 50% 50% 0 0
+      opacity 0.5
+      $clip = polygon(-2% 0, 102% 0, 98% 100%, 2% 100%)
+      -webkit-clip-path $clip
+      clip-path $clip
 
     & > div:nth-of-type(1)
       width 86%
@@ -668,22 +716,241 @@ body
       --mirrored 1
       right 12%
 
+  &__auxiliary-button
+    --mirrored 0
+    position absolute
+    top 9%
+    border calc(2 * var(--unit)) solid hsl(0, 0%, 15%)
+    border-radius 50% / 30%
+    background var(--controller-white)
+    box-shadow 0 0 calc(2 * var(--unit)) calc(2 * var(--unit)) hsla(0, 0%, 45%, 0.5) inset
+    height calc(62 * var(--unit))
+    width calc(34 * var(--unit))
+    transform rotateY(calc(var(--mirrored) * 180deg)) rotate(-12deg) translate(-18%, -4%)
 
+    & > div
+      position absolute
+      top 0
+      left 50%
 
+    &--share
+      left 26%
 
+      & > div
+        background hsl(0, 0%, 65%)
+        height 24%
+        width 10%
+        transform-origin bottom center
+        transform translate(50%, -200%) rotate(12deg)
 
+        &:after
+        &:before
+          content ''
+          position absolute
+          bottom 0
+          left 0
+          height 70%
+          width 100%
+          background hsl(0, 0%, 65%)
+          transform-origin 50% 220%
 
+        &:before
+          transform rotate(-33deg)
+        &:after
+          transform rotate(33deg)
+    &--options
+      --mirrored 1
+      right 26%
 
+      & > div
+        background hsl(0, 0%, 65%)
+        width 10%
+        height 30%
+        transform translate(0, -160%) rotate(102deg) translate(0, -22%)
 
+        &:after
+        &:before
+          content ''
+          position absolute
+          bottom 0
+          left 0
+          height 100%
+          width 100%
+          background hsl(0, 0%, 65%)
 
+        &:before
+          transform translate(-250%, 0)
+        &:after
+          transform translate(250%, 0)
 
+  &__logo
+    position absolute
+    top 50%
+    left 50%
+    width calc(90 * var(--unit))
+    height calc(70 * var(--unit))
+    transform translate(-50%, -74%)
 
+    & > div:nth-of-type(2)
+      height 96%
+      width 22%
+      background var(--controller-black)
+      position absolute
+      top 50%
+      left 50%
+      border calc(3 * var(--unit)) solid hsl(0, 0%, 5%)
+      transform translate(-71%, -50%) skewY(15deg)
 
-img
-  position fixed
-  top 50%
-  left 50%
-  width calc(var(--desired-size) * 1vmin)
-  transform translate(-50%, -50%)
-  // opacity 0.25
-  // z-index 2
+      &:after
+      &:before
+        content ''
+        position absolute
+
+      &:before
+        left 108%
+        top -5%
+        width 150%
+        height 62%
+        background var(--controller-black)
+        border calc(3 * var(--unit)) solid hsl(0, 0%, 5%)
+        border-radius 0 50% 50% 0
+
+      &:after
+        left 0%
+        width 230%
+        box-shadow 0 0 calc(2 * var(--unit)) calc(2 * var(--unit)) hsla(0, 0%, 100%, 0.5) inset
+        height 20%
+        background var(--controller-black)
+        border-radius 0 30% 0 0 / 0 100% 0 0
+        $clip = polygon(0 0, 100% 0, 100% 80%, 0 30%)
+        -webkit-clip-path $clip
+        clip-path $clip
+
+    & > div:nth-of-type(1)
+      position absolute
+      height 38%
+      transform-origin bottom center
+      width 122%
+      bottom 0
+      left 32%
+      transform skewX(62deg) rotate(-13deg) translate(-2%, -21%)
+
+      div:after
+        content ''
+        position absolute
+        top 50%
+        left 50%
+        width 70%
+        height 25%
+        background hsl(0, 0%, 5%)
+        // box-shadow 0 0 calc(1 * var(--unit)) calc(1 * var(--unit)) hsla(0, 0%, 100%, 0.5) inset
+        transform translate(-50%, -50%)
+        border-radius 25% / 50%
+
+      div:nth-of-type(1)
+        height 54%
+        background var(--controller-black)
+        position absolute
+        top 45%
+        width 100%
+        $clip = polygon(57% 0, 100% 0, 100% 100%, 19% 100%)
+        -webkit-clip-path $clip
+        clip-path $clip
+        border-radius 25% / 50%
+        box-shadow calc(-1 * var(--unit)) calc(1 * var(--unit)) calc(1 * var(--unit)) calc(1 * var(--unit)) rgba(255,255,255,0.5) inset
+        border calc(2.5 * var(--unit)) solid hsl(0, 0%, 5%)
+
+      div:nth-of-type(2)
+        border calc(2 * var(--unit)) solid hsl(0, 0%, 5%)
+        top 2%
+        width 100%
+        left 2%
+        position absolute
+        box-shadow calc(-1 * var(--unit)) calc(1 * var(--unit)) calc(1 * var(--unit)) calc(1 * var(--unit)) rgba(255,255,255,0.5) inset
+        height 58%
+        background var(--controller-black)
+        border-radius 35% / 50%
+        $clip = polygon(0 0, 85% 0, 40% 100%, 0% 100%)
+        -webkit-clip-path $clip
+        clip-path $clip
+  &__mute
+    position absolute
+    width calc(20 * var(--unit))
+    height calc(20 * var(--unit))
+    top 60%
+    left 50%
+    transform translate(-50%, 0)
+
+    & > div:nth-of-type(1)
+      position absolute
+      top 38%
+      left 50%
+      width 62%
+      height 36%
+      background hsl(0, 0%, 50%)
+      border-radius 0 0 25% 25% / 0 0 50% 50%
+      transform translate(-50%, 0)
+
+      &:after
+      &:before
+        content ''
+        position absolute
+
+      &:before
+        height 200%
+        width 80%
+        background hsl(0, 0%, 50%)
+        border var(--unit) solid var(--controller-black)
+        border-radius 25%
+        position absolute
+        left 50%
+        top 0
+        transform translate(-50%, -60%)
+
+      &:after
+        width 150%
+        height 50%
+        border-radius 25% / 25%
+        background hsl(0, 0%, 50%)
+        border var(--unit) solid var(--controller-black)
+        top 50%
+        left 50%
+        transform translate(-50%, -159%) rotate(45deg)
+
+    & > div:nth-of-type(2)
+      position absolute
+      bottom 0
+      left 50%
+      background hsl(0, 0%, 50%)
+      transform translate(-50%, 0)
+      width 60%
+      height 15%
+      border-radius 25%
+
+      &:after
+        content ''
+        left 50%
+        bottom 0
+        height 200%
+        background hsl(0, 0%, 50%)
+        width 25%
+        position absolute
+        transform translate(-50%, 0)
+
+  &__patch
+    --mirrrored 0
+    position absolute
+    bottom 1.5%
+    height 25%
+    width 7%
+    background var(--controller-white)
+    border-radius 50%/50%
+    transform-origin bottom center
+
+    &--left
+      left 4%
+      transform rotate(6deg)
+
+    &--right
+      right 4%
+      transform rotate(-6deg)
