@@ -1,41 +1,56 @@
 *
   box-sizing border-box
 
+:root
+  --train-size 50
+
 body
   display flex
   min-height 100vh
   align-items center
   justify-content center
   background hsl(78, 60%, 50%)
+  background black
+  &:after
+    content ''
+    position fixed
 
 svg
-  height 40vmin
-  width 40vmin
-  min-height 300px
-  min-width 300px
+  height 100%
+  width 100%
 
-  path
-    stroke hsl(225, 100%, 25%)
-    stroke-width 5px
-    fill hsl(225, 100%, 75%)
-    transition d 0.5s ease
+.train__container
+  // background blue
+  height calc(var(--train-size) * 1vmin)
+  width calc(var(--train-size) * 1vmin)
+  svg
+    transform scale(1.5) translate(-17%, -13%)
 
-.train
-  // background red
-  font-size 3rem
-  animation train 10s infinite linear
-  transform-origin center center
-  margin-left -45px
-  margin-top 0px
-  transform translate(0%, -50%) rotateX(0deg) rotateY(180deg)
-  offset-path 'path(%s)' % var(--path)
-  position absolute
-  top 50%
-  left 50%
-  transition all 0.5s ease
+.bubbles
+  filter blur(10px)
 
-@keyframes train
-  0%
-    offset-distance 0%
-  100%
-    offset-distance 100%
+  // path
+  //   stroke hsl(225, 100%, 25%)
+  //   stroke-width 5px
+  //   fill hsl(225, 100%, 75%)
+  //   transition d 0.5s ease
+
+// .train
+//   // background red
+//   font-size 3rem
+//   animation train 10s infinite linear
+//   transform-origin center center
+//   margin-left -45px
+//   margin-top 0px
+//   transform translate(0%, -50%) rotateX(0deg) rotateY(180deg)
+//   offset-path 'path(%s)' % var(--path)
+//   position absolute
+//   top 50%
+//   left 50%
+//   transition all 0.5s ease
+
+// @keyframes train
+//   0%
+//     offset-distance 0%
+//   100%
+//     offset-distance 100%
