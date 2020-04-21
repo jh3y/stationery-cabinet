@@ -1,0 +1,7 @@
+mixin rockOrHedge()
+  - const HUE = Math.random() * 35 + 90
+  - const SATURATION = Math.random() > 0.5 ? Math.random() * 25 + 75 : Math.random() * 25
+  - const LIGHTNESS = Math.random() * 50 + 25
+  - const SIZE = Math.random() * 10 + 5
+  svg.rock-or-hedge(xmlns='http://www.w3.org/2000/svg' viewbox='0 0 161 65' style=`--hue: ${HUE}; --saturation: ${SATURATION}; --lightness: ${LIGHTNESS}; --SIZE: ${size}`)
+    path(d='M80 0A80 69 0 000 65h161A80 69 0 0080 0z')

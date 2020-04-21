@@ -1,6 +1,99 @@
-//- svg(height="600", width="600", viewBox="0 0 600 600")
-//-   path
-//- button Regenerate
-//- .train 🚂
-.train__container
+mixin cloud()
+  - const speed = Math.random() * 20 + 60
+  - const translation = (Math.random() * 25 + 50) / 100
+  - const delay = Math.random() * speed
+  - const direction = Math.random() > 0.5 ? 'normal' : 'reverse'
+  - const opacity = Math.random()
+  - const height = Math.random() * 10 + 5
+  - const width = Math.random() * 20 + 15
+  .scene__cloud(style=`--delay: ${delay}; --speed: ${speed}; --opacity: ${opacity}; --height: ${height}; --width: ${width}; --direction: ${direction}; --translation: ${translation};`)
+mixin rockOrHedge()
+  - const HUE = Math.random() * 35 + 90
+  - const SATURATION = Math.random() > 0.5 ? Math.random() * 25 + 75 : Math.random() * 25
+  - const LIGHTNESS = Math.random() * 50 + 25
+  - const SIZE = Math.random() * 5 + 1
+  - const DISTANCE = Math.random() * 100
+  .rock-or-hedge(style=`--hue: ${HUE}; --saturation: ${SATURATION}; --lightness: ${LIGHTNESS}; --size: ${SIZE}; --distance: ${DISTANCE};`)
+mixin cedar()
+  - const HUE = Math.random() * 35 + 90
+  - const SATURATION = Math.random() * 25 + 75
+  - const LIGHTNESS = Math.random() * 25 + 25
+  - const SIZE = Math.random() * 5 + 1
+  - const DISTANCE = Math.random() * 100
+  svg.cedar(xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 217' style=`--hue: ${HUE}; --saturation: ${SATURATION}; --lightness: ${LIGHTNESS}; --size: ${SIZE}; --distance: ${DISTANCE};`)
+    g(transform='translate(-39 -72)')
+      rect(width='30.2' height='103.6' x='74' y='185' ry='1.1')
+      path(d='M89 72l50 179H39L89 72z')
+mixin tree()
+  - const HUE = Math.random() * 35 + 90
+  - const SATURATION = Math.random() * 25 + 75
+  - const LIGHTNESS = Math.random() * 25 + 25
+  - const SIZE = Math.random() * 5 + 1
+  - const DISTANCE = Math.random() * 100
+  svg.tree(xmlns='http://www.w3.org/2000/svg' viewBox='0 0 135 209'  style=`--hue: ${HUE}; --saturation: ${SATURATION}; --lightness: ${LIGHTNESS}; --size: ${SIZE}; --distance: ${DISTANCE};`)
+    g(transform='translate(-20 -81)')
+      rect(ry='1.1' y='186' x='91' height='103.6' width='30.2')
+      rect(ry='48.4' y='81' x='58' height='139.1' width='96.8')
+      rect(transform='rotate(32)' ry='0' y='143' x='166' height='12.1' width='52.2')
+      circle(r='35.5' cy='199.5' cx='55.2')
+
+
+.scene
+  - let c = 0
+  while c < 5
+    +cloud()
+    - c++
+  - let h = 0
+  while h < 20
+    +rockOrHedge()
+    - h++
+  - let d = 0
+  while d < 10
+    +cedar()
+    - d++
+  - let t = 0
+  while t < 10
+    +tree()
+    - t++
+  svg.globe
+    path
+  svg.globe__face(xmlns='http://www.w3.org/2000/svg' viewBox='0 0 131 37')
+    g.face(transform='translate(-47 -216)')
+      g.face__eyes
+        g.face__eye
+          circle(cx='78.8' cy='228.6' r='8')
+          circle(cx='76.6' cy='226.5' r='2.8' fill='#fff')
+        g.face__eye(transform='translate(66)')
+          circle(r='8' cy='228.6' cx='78.8')
+          circle(r='2.8' cy='226.5' cx='76.6' fill='#fff')
+      g.face__mouth.face__mouth--thrilled
+        path(d='M99 232a13 13 0 0014 13 13 13 0 0013-13z')
+        path(d='M114 237a10 6 0 00-10 5 13 13 0 009 3 13 13 0 009-4 10 6 0 00-8-4z' fill='red')
+      circle.face__mouth.face__mouth--shocked(r='4.8' cy='237.5' cx='112.7')
+      path.face__mouth.face__mouth--smiley(d='M123 238a12 12 0 01-10 7 12 12 0 01-11-7' fill='none' stroke="#000" stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round')
   include train.pug
+  - let r = 0
+  while r < 20
+    +rockOrHedge()
+    - r++
+  - let l = 0
+  while l < 10
+    +cedar()
+    - l++
+  - let z = 0
+  while z < 10
+    +tree()
+    - z++
+  - let x = 0
+  while x < 5
+    +cloud()
+    - x++
+//- Train SVG
+h1 Tap 👇
+//- Sound button
+button.sound-toggle
+  svg(style='width:24px;height:24px' viewBox='0 0 24 24')
+    //- Mute path
+    path(fill='currentColor' d='M12,4L9.91,6.09L12,8.18M4.27,3L3,4.27L7.73,9H3V15H7L12,20V13.27L16.25,17.53C15.58,18.04 14.83,18.46 14,18.7V20.77C15.38,20.45 16.63,19.82 17.68,18.96L19.73,21L21,19.73L12,10.73M19,12C19,12.94 18.8,13.82 18.46,14.64L19.97,16.15C20.62,14.91 21,13.5 21,12C21,7.72 18,4.14 14,3.23V5.29C16.89,6.15 19,8.83 19,12M16.5,12C16.5,10.23 15.5,8.71 14,7.97V10.18L16.45,12.63C16.5,12.43 16.5,12.21 16.5,12Z')
+    //- Sound path
+    path(fill='currentColor' d='M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z')
