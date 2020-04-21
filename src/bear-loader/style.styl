@@ -1,0 +1,82 @@
+*
+  box-sizing border-box
+
+:root
+  --fur hsl(24, 100%, 20%) // base is 25 lightness
+  --ear hsl(24, 57%, 75%) // base is 80 lightness
+  --cap-strap--large hsl(0, 100%, 50%)
+  --cap-strap--small hsl(0, 100%, 30%)
+  --cap hsl(0, 0%, 5%)
+  --dots hsla(0, 0%, 95%, 0.6)
+  --frame hsl(0, 0%, 0%)
+  --shine hsla(0, 0%, 95%, 0.35)
+  --lens hsl(0, 0%, 35%)
+  --code-one hsla(90, 80%, 50%, 0.5)
+  --code-two hsla(60, 80%, 50%, 0.5)
+  --code-three hsla(330, 80%, 50%, 0.5)
+  --code-four hsla(190, 80%, 50%, 0.5)
+
+
+body
+  min-height 100vh
+  overflow hidden
+  background hsl(270, 50%, 8%)
+  display flex
+  align-items center
+  justify-content center
+
+svg
+  height 50vmin
+
+.code-block
+  animation read 1s infinite linear
+
+  rect
+    fill var(--code-one)
+
+    &:nth-of-type(5)
+      fill var(--code-four)
+
+    &:nth-of-type(8)
+    &:nth-of-type(9)
+      fill var(--code-two)
+
+    &:nth-of-type(12)
+      fill var(--code-three)
+
+
+.bear
+  &__fur
+  &__outer-ear
+    fill var(--fur)
+
+  &__inner-ear
+  &__muzzle
+    fill var(--ear)
+
+  &__cap-strap
+    fill var(--cap-strap--large)
+
+  &__small-cap-strap
+    fill var(--cap-strap--small)
+
+  &__cap
+    fill var(--cap)
+
+.lens
+  fill var(--lens)
+
+  &__shine
+    fill var(--shine)
+
+
+
+.shades-dot
+  fill var(--dots)
+
+.shades-frame
+  fill var(--frame)
+
+@keyframes read
+  to
+    transform translate(0, -100%)
