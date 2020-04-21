@@ -2,55 +2,174 @@
   box-sizing border-box
 
 :root
-  --train-size 50
+  --rotation-speed 60
+  --size 75
+  --train-size 10
+  --train-speed 25
 
 body
-  display flex
-  min-height 100vh
   align-items center
+  background hsl(0, 0%, 5%)
+  display flex
   justify-content center
-  background hsl(78, 60%, 50%)
-  background black
-  &:after
-    content ''
-    position fixed
+  min-height 100vh
+  overflow hidden
+  font-family sans-serif
 
-svg
+h1
+  margin 0
+  padding 0
+  font-size 1rem
+  font-weight bold
+  color #fff
+  position fixed
+  bottom 1rem
+  right 1rem
+  user-select none
+
+.scene
+  // animation rotate calc(var(--rotation-speed) * 1s) infinite linear
+  height calc(var(--size) * 1vmin)
+  position absolute
+  width calc(var(--size) * 1vmin)
+  background hsl(205, 80%, 50%)
+  border-radius 50%
+
+// Globe styling
+.globe
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
   height 100%
   width 100%
 
-.train__container
-  // background blue
+  path
+    fill hsl(80, 60%, 50%)
+    stroke hsl(40, 80%, 15%)
+    stroke-width 1vmin
+    transition all calc(var(--transition-speed) * 1s) ease
+
+// Train styling
+.train
+  animation travel calc(var(--train-speed) * 1s) infinite linear
   height calc(var(--train-size) * 1vmin)
+  left 50%
+  offset-path 'path(%s)' % var(--path)
+  position absolute
+  transition all .25s ease
+  transform translate(0%, -50%) rotateX(0deg) rotateY(0deg)
+  top 50%
   width calc(var(--train-size) * 1vmin)
-  svg
-    transform scale(1.5) translate(-17%, -13%)
 
-.bubbles
-  filter blur(10px)
 
-  // path
-  //   stroke hsl(225, 100%, 25%)
-  //   stroke-width 5px
-  //   fill hsl(225, 100%, 75%)
-  //   transition d 0.5s ease
+// Cloud styling
+.scene__cloud
+  height calc(var(--height, 10) * 1%)
+  width calc(var(--width, 25) * 1%)
+  background white
+  border-radius 25% / 50%
+  position absolute
+  top 50%
+  left 50%
+  opacity var(--opacity)
+  transform-origin center
+  animation float calc(var(--speed, 10) * 1s) calc(var(--delay, 2) * -1s) infinite linear var(--direction, normal)
 
-// .train
-//   // background red
-//   font-size 3rem
-//   animation train 10s infinite linear
-//   transform-origin center center
-//   margin-left -45px
-//   margin-top 0px
-//   transform translate(0%, -50%) rotateX(0deg) rotateY(180deg)
-//   offset-path 'path(%s)' % var(--path)
-//   position absolute
-//   top 50%
-//   left 50%
-//   transition all 0.5s ease
+// Bubble styling
+.bubble
+  circle
+  rect
+    fill 'hsl(0, 0%, %s)' % calc(var(--lightness) * 1%)
 
-// @keyframes train
-//   0%
-//     offset-distance 0%
-//   100%
-//     offset-distance 100%
+// Face styling
+.globe__face
+  width calc(var(--size) * 0.5vmin)
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+// Rock or Hedge
+.rock-or-hedge
+  position absolute
+  top 50%
+  left 50%
+  border-radius 50%
+  transform translate(-50%, -25%)
+  width calc(var(--size) * 1vmin)
+  height calc(var(--size) * 1vmin)
+  offset-path 'path(%s)' % var(--path)
+  offset-distance calc(var(--distance) * 1%)
+  transition all .25s ease
+  background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+
+// Cedar
+.cedar
+  transition all .25s ease
+  position absolute
+  top 50%
+  left 50%
+  width calc(var(--size) * 1vmin)
+  transform translate(-50%, calc(var(--lightness) * -1%))
+  offset-path 'path(%s)' % var(--path)
+  offset-distance calc(var(--distance) * 1%)
+
+  rect
+    fill 'hsl(20, %s, %s)' % (calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+  path
+    fill 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+
+.tree
+  transition all .25s ease
+  position absolute
+  top 50%
+  left 50%
+  width calc(var(--size) * 1vmin)
+  transform translate(-50%, calc(var(--lightness) * -1%))
+  offset-path 'path(%s)' % var(--path)
+  offset-distance calc(var(--distance) * 1%)
+
+  rect:nth-of-type(1)
+  rect:nth-of-type(3)
+    fill 'hsl(20, %s, %s)' % (calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+
+  rect:nth-of-type(2)
+  circle
+    fill 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+
+// Sound button
+.sound-toggle
+  position fixed
+  top 1rem
+  right 1rem
+  height 44px
+  width 44px
+  background transparent
+  border 0
+  cursor pointer
+
+  path
+    fill white
+    &:nth-of-type(2)
+      display none
+
+  &--active
+    path:nth-of-type(1)
+      display none
+    path:nth-of-type(2)
+      display block
+
+// Keyframes
+@keyframes rotate
+  to
+    transform rotate(-360deg)
+
+@keyframes travel
+  to
+    offset-distance 100%
+@keyframes float
+  from
+    transform translate(-50%, -50%) rotate(0deg) translate(0, calc((var(--size) * var(--translation)) * 1vmin))
+  to
+    transform translate(-50%, -50%) rotate(360deg) translate(0, calc((var(--size) * var(--translation)) * 1vmin))

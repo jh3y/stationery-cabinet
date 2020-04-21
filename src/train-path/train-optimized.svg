@@ -1,43 +1,65 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2962.3" height="2711" viewBox="0 0 784 717">
   <g transform="translate(810 332)">
-    <g stroke-linecap="round" stroke-linejoin="round">
-      <path d="M-223-17h107l-26 111h-55z" fill="#d35f5f" stroke="#000" stroke-width="2.6"/>
-      <rect width="54.9" height="20.7" x="-197" y="94" ry="0" fill="#a02c2c" stroke="#000" stroke-width="2.6"/>
-      <path d="M-525 306c-6 0-10 5-10 10v23a10 10 0 1020 0v-4h59v-15h-59v-4c0-5-5-10-10-10z" fill="#a02c2c" stroke="#000" stroke-width="2.6"/>
-      <circle cx="-302.3" cy="116.8" r="16.6" fill="#782121" stroke="#000" stroke-width="2.6"/>
-      <rect width="39.3" height="16.6" x="-322" y="120" ry="0" fill="#d35f5f" stroke="#000" stroke-width="2.6"/>
-      <rect width="257.6" height="126.2" x="-374" y="130" ry="8.4" fill="#d35f5f" stroke="#000" stroke-width="2.6"/>
-      <path d="M-365 130c-5 0-9 4-9 9v11h258v-11c0-5-4-9-8-9z" fill="#e9afaf" stroke="#000" stroke-width="2.6"/>
-      <path d="M-374 233v15c0 5 4 8 9 8h241c4 0 8-3 8-8v-15z" fill="#a02c2c" stroke="#000" stroke-width="2.6"/>
-      <rect width="401.7" height="36.1" x="-527" y="257" ry="6.7" fill="#999" stroke="#000" stroke-width="2.4"/>
-      <rect width="368.9" height="87" x="-494" y="271" ry="0" stroke="#000" stroke-width="3.3"/>
-      <path d="M-125 270v99h98v-3l-95-96z" fill="#d35f5f" stroke="#000" stroke-width="2.5"/>
-      <g stroke="#000" stroke-width="2.6">
-        <rect ry="8.4" y="114" x="-224" height="159.5" width="107.5" fill="#4d4d4d"/>
-        <path d="M-216 114c-4 0-8 3-8 8v11h108v-11c0-5-4-8-9-8z" fill="#e6e6e6" stroke-width="2.6458"/>
-        <path d="M-224 250v15c0 4 4 8 9 8h91c4 0 8-4 8-8v-15z" fill="#1a1a1a" stroke-width="2.6458"/>
-      </g>
-      <path d="M-494 47v216h145V47zm36 34h72c7 0 12 6 12 12v54c0 7-5 13-12 13h-72c-7 0-12-6-12-13V93c0-6 5-12 12-12z" fill="#d35f5f" stroke="#1a1a1a" stroke-width="2.6458"/>
-      <path d="M-517 21a18 18 0 100 37h168V40c1-20-18-19-18-19h-60z" fill="#de8787" stroke="#000" stroke-width="2.6458"/>
-      <circle cx="-433.5" cy="331.2" r="49.5" fill="#b3b3b3" stroke="gray" stroke-width="9.9"/>
-      <circle cx="-230.4" cy="356.3" r="24.8" fill="#ccc" stroke="#999" stroke-width="9.2"/>
-      <circle r="49.5" cy="331.2" cx="-317.5" fill="#b3b3b3" stroke="gray" stroke-width="9.9"/>
-      <circle r="24.8" cy="356.3" cx="-165.2" fill="#ccc" stroke="#999" stroke-width="9.2"/>
-      <g stroke="#000">
-        <rect ry="12.9" y="318" x="-474" height="25.8" width="192.1" fill="#4d4d4d" stroke-width="2.5"/>
-        <path d="M-461 318c-5 0-8 2-11 6h187c-2-4-6-6-10-6z" fill="#ccc" stroke-width="2.6458"/>
-        <path d="M-295 344c4 0 8-2 10-5h-187c3 3 6 5 11 5z" fill="#333" stroke-width="2.6"/>
-      </g>
-      <rect width="78" height="116.4" x="-299" y="257" ry="10.7" fill="gray" stroke="#000" stroke-width="2.6"/>
-      <path d="M-289 257c-6 0-10 5-10 11v9h78v-9c0-6-5-11-11-11z" fill="#ccc" stroke="#000" stroke-width="2.6458"/>
-      <path d="M-299 353v10c0 6 4 10 10 10h57c6 0 11-4 11-10v-10z" fill="#1a1a1a" stroke="#000" stroke-width="2.6458"/>
-      <path d="M-125 348v21h98v-3l-17-18z" fill="#a02c2c" stroke="#000" stroke-width="2.6458"/>
-      <path d="M-125 270v35h37l-34-35z" fill="#e9afaf" stroke="#000" stroke-width="2.354762"/>
-      <path d="M-494 234v29h145v-29z" fill="#a02c2c" stroke="#000" stroke-width="2.6458"/>
-      <path fill="#4d4d4d" stroke="#000" stroke-width="2.6" d="M-223-53h108v36h-108z"/>
-      <path d="M-223-53v9h107v-9z" fill="#ececec" stroke="#000" stroke-width="2.6458"/>
-      <path d="M-116-16v-9h-107v9z" fill="#1a1a1a" stroke="#000" stroke-width="2.6"/>
+    <path d="M-223-17h107l-26 111h-55z" fill="#d35f5f" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect width="54.9" height="20.7" x="-197" y="94" ry="0" fill="#a02c2c" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M-525 306c-6 0-10 5-10 10v23a10 10 0 1020 0v-4h59v-15h-59v-4c0-5-5-10-10-10z" fill="#a02c2c" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="-302.3" cy="116.8" r="16.6" fill="#782121" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect width="39.3" height="16.6" x="-322" y="120" ry="0" fill="#d35f5f" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect width="257.6" height="126.2" x="-374" y="130" ry="8.4" fill="#d35f5f" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M-365 130c-5 0-9 4-9 9v11h258v-11c0-5-4-9-8-9z" fill="#e9afaf" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M-374 233v15c0 5 4 8 9 8h241c4 0 8-3 8-8v-15z" fill="#a02c2c" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect width="401.7" height="36.1" x="-527" y="257" ry="6.7" fill="#999" stroke="#000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect width="368.9" height="87" x="-494" y="271" ry="0" stroke="#000" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M-125 270v99h98v-3l-95-96z" fill="#d35f5f" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <g stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+      <rect ry="8.4" y="114" x="-224" height="159.5" width="107.5" fill="#4d4d4d"/>
+      <path d="M-216 114c-4 0-8 3-8 8v11h108v-11c0-5-4-8-9-8z" fill="#e6e6e6" stroke-width="2.6458"/>
+      <path d="M-224 250v15c0 4 4 8 9 8h91c4 0 8-4 8-8v-15z" fill="#1a1a1a" stroke-width="2.6458"/>
     </g>
+    <path d="M-494 47v216h145V47zm36 34h72c7 0 12 6 12 12v54c0 7-5 13-12 13h-72c-7 0-12-6-12-13V93c0-6 5-12 12-12z" fill="#d35f5f" stroke="#1a1a1a" stroke-width="2.6458" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M-517 21a18 18 0 100 37h168V40c1-20-18-19-18-19h-60z" fill="#de8787" stroke="#000" stroke-width="2.6458" stroke-linecap="round" stroke-linejoin="round"/>
+    <g transform="translate(264 266)">
+      <circle cx="-698" cy="65" r="49.5" fill="#b3b3b3" stroke="gray" stroke-width="9.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M-698 15a50 50 0 00-5 1v98a50 50 0 005 1 50 50 0 005-1V16a50 50 0 00-5-1z" fill="gray"/>
+      <path d="M-667 26l-70 70a50 50 0 008 8l70-70a50 50 0 00-8-8z" fill="gray"/>
+      <path d="M-730 27a50 50 0 00-7 8l69 69a50 50 0 008-7z" fill="gray"/>
+      <path d="M-747 61a50 50 0 000 4 50 50 0 000 7h98a50 50 0 001-7 50 50 0 00-1-4z" fill="gray"/>
+    </g>
+    <g transform="translate(-70 -242)">
+      <circle cx="-160.8" cy="598.3" r="24.8" fill="#ccc" stroke="#999" stroke-width="9.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M-161 574a25 25 0 00-2 0v49a25 25 0 002 0 25 25 0 003 0v-49a25 25 0 00-3 0z" fill="#999"/>
+      <path d="M-185 596a25 25 0 00-1 2 25 25 0 001 3h49a25 25 0 000-3 25 25 0 000-2z" fill="#999"/>
+      <path d="M-176 579a25 25 0 00-4 4l35 35a25 25 0 003-4z" fill="#999"/>
+      <path d="M-145 579l-35 35a25 25 0 004 4l34-35a25 25 0 00-3-4z" fill="#999"/>
+    </g>
+    <g transform="translate(380 266)">
+      <circle r="49.5" cy="65" cx="-698" fill="#b3b3b3" stroke="gray" stroke-width="9.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M-698 15a50 50 0 00-5 1v98a50 50 0 005 1 50 50 0 005-1V16a50 50 0 00-5-1z" fill="gray"/>
+      <path d="M-667 26l-70 70a50 50 0 008 8l70-70a50 50 0 00-8-8z" fill="gray"/>
+      <path d="M-730 27a50 50 0 00-7 8l69 69a50 50 0 008-7z" fill="gray"/>
+      <path d="M-747 61a50 50 0 000 4 50 50 0 000 7h98a50 50 0 001-7 50 50 0 00-1-4z" fill="gray"/>
+    </g>
+    <g transform="translate(-4 -242)">
+      <circle r="24.8" cy="598.3" cx="-160.8" fill="#ccc" stroke="#999" stroke-width="9.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M-161 574a25 25 0 00-2 0v49a25 25 0 002 0 25 25 0 003 0v-49a25 25 0 00-3 0z" fill="#999"/>
+      <path d="M-185 596a25 25 0 00-1 2 25 25 0 001 3h49a25 25 0 000-3 25 25 0 000-2z" fill="#999"/>
+      <path d="M-176 579a25 25 0 00-4 4l35 35a25 25 0 003-4z" fill="#999"/>
+      <path d="M-145 579l-35 35a25 25 0 004 4l34-35a25 25 0 00-3-4z" fill="#999"/>
+    </g>
+    <g stroke="#000" stroke-linecap="round" stroke-linejoin="round">
+      <rect ry="12.9" y="318" x="-474" height="25.8" width="192.1" fill="#4d4d4d" stroke-width="2.5"/>
+      <path d="M-461 318c-5 0-8 2-11 6h187c-2-4-6-6-10-6z" fill="#ccc" stroke-width="2.6458"/>
+      <path d="M-295 344c4 0 8-2 10-5h-187c3 3 6 5 11 5z" fill="#333" stroke-width="2.6"/>
+    </g>
+    <rect width="78" height="116.4" x="-299" y="257" ry="10.7" fill="gray" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M-289 257c-6 0-10 5-10 11v9h78v-9c0-6-5-11-11-11z" fill="#ccc" stroke="#000" stroke-width="2.6458" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M-299 353v10c0 6 4 10 10 10h57c6 0 11-4 11-10v-10z" fill="#1a1a1a" stroke="#000" stroke-width="2.6458" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M-125 348v21h98v-3l-17-18z" fill="#a02c2c" stroke="#000" stroke-width="2.6458" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M-125 270v35h37l-34-35z" fill="#e9afaf" stroke="#000" stroke-width="2.354762" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M-494 234v29h145v-29z" fill="#a02c2c" stroke="#000" stroke-width="2.6458" stroke-linecap="round" stroke-linejoin="round"/>
+    <path fill="#4d4d4d" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M-223-53h108v36h-108z"/>
+    <path d="M-223-53v9h107v-9z" fill="#ececec" stroke="#000" stroke-width="2.6458" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M-116-16v-9h-107v9z" fill="#1a1a1a" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
     <rect ry="15.2" y="-41" x="-197" height="30.5" width="55.1" fill="#f0f"/>
     <circle r="17.6" cy="-24.8" cx="-169.5" fill="#0ff"/>
     <rect width="262.7" height="145.4" x="-810" y="-330" ry="72.7" fill="#f0f"/>
