@@ -1,0 +1,99 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+:root
+  --viewfinder-scale 4
+  --viewfinder-size-scale 0.5
+  --size 50
+
+body
+  align-items center
+  display flex
+  min-height 100vh
+  justify-content center
+  flex-direction column
+  background hsl(190, 80%, 75%)
+
+h1
+  position fixed
+  right 2rem
+  bottom 2rem
+  margin 0
+  font-family sans-serif
+  color hsl(190, 80%, 40%)
+
+.zoomer
+  box-shadow 1vmin 1vmin 2vmin 1vmin black
+  height calc(var(--size, 50) * 1vmin)
+  width calc(var(--size, 50) * 1vmin)
+  position relative
+  &__img
+    --color-one hsl(0, 0%, 95%)
+    --color-two hsl(0, 0%, 85%)
+    height 100%
+    width 100%
+    background linear-gradient(var(--color-one), var(--color-two), var(--color-one))
+
+    &:not([src])
+      animation roll 1s infinite linear
+
+      & ~ .zoomer__viewfinder
+        display none
+
+  &__viewfinder
+    --show 0
+    cursor none
+    height calc((var(--size) * var(--viewfinder-size-scale)) * 1vmin)
+    width calc((var(--size) * var(--viewfinder-size-scale)) * 1vmin)
+    position absolute
+    // overflow hidden
+    top calc(var(--y, 50) * 1%)
+    left calc(var(--x, 50) * 1%)
+    transition transform 0.25s ease
+    transform translate(-50%, -50%) scale(var(--show))
+
+  &__viewfinder-image-wrapper
+    border-radius 50%
+    height 100%
+    width 100%
+    overflow hidden
+    position relative
+
+  &__magnifying-glass
+    position absolute
+    top 0
+    left 0
+    transform scale(1.2) translate(4%, 5%)
+    z-index 2
+
+  &__viewfinder-img
+    height 100%
+    width 100%
+    position absolute
+    transform scale(var(--viewfinder-scale)) translate(calc(var(--x, 0) * 1%), calc(var(--y, 0) * 1%))
+    transform-origin center center
+
+    &:not([src])
+      display none
+
+.magnifying-glass
+  &__glass
+    fill hsla(190, 100%, 90%, 0.3)
+  &__frame
+    fill hsl(0, 0%, 60%)
+    stroke hsl(0, 0%, 0%)
+  &__handle
+    stroke hsl(0, 0%, 0%)
+    fill hsl(0, 0%, 45%)
+  &__grip
+    fill hsl(20, 80%, 20%)
+    stroke hsl(0, 0%, 0%)
+  &__shine
+    stroke hsla(190, 100%, 100%, 0.65)
+    fill none
+
+@keyframes roll
+  to
+    background-position 0 calc(var(--size, 50) * 1vmin)
