@@ -1,0 +1,44 @@
+*
+  box-sizing border-box
+
+:root
+  --size 50
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  flex-direction column
+
+.ditto
+  --hue 320
+  --lightness 75
+  --stroke 5
+  height calc(var(--size) * 1vmin)
+  width calc(var(--size) * 1vmin)
+
+  &__path
+    fill 'hsla(%s, 100%, %s, %s)' % (var(--hue) calc(var(--lightness) * 1%) var(--alpha, 1))
+    stroke #000
+    stroke-width calc(var(--stroke) * 1px)
+    transform translate(200px, 200px)
+    transition d .25s ease
+
+  &__body
+    // --hue 320
+    --lightness 50
+    --stroke 0
+
+  &__clone
+    // --hue 320
+    --lightness 75
+    --stroke 0
+    // transition all .25s ease
+
+  &__stroke
+    --hue 0
+    --alpha 0
+    --stroke 5
+    --lightness 50
+    fill none

@@ -1,0 +1,12 @@
+svg.ditto(viewBox='0 0 400 400')
+  defs
+    path#ditto__path.ditto__path
+    clipPath#ditto__clip
+      use(xlink:href="#ditto__path")
+  g.ditto__body
+    use(xlink:href="#ditto__path")
+  g.ditto__clone(clip-path="url(#ditto__clip)")
+    use(xlink:href="#ditto__path" transform='translate(0, -20)')
+  g.ditto__stroke
+    use(xlink:href="#ditto__path")
+button Regen
