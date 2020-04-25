@@ -2,6 +2,11 @@
 *
   box-sizing border-box
 
+:root
+  --bear-size 300
+  --rotation 0
+  --translation 0
+
 body
   min-height 100vh
   margin 0
@@ -13,25 +18,44 @@ body
   background hsl(0, 0%, 95%)
 
 .bear
+  height calc(var(--bear-size) * 1px)
+  width calc(var(--bear-size) * 1px)
   grid-row 1
   grid-column -1
+  margin 3rem auto
 
-  // @media(min-width 768px)
-  //   grid-row -1
+  // &__face--shades
+  // &__face--sweat-smile
+  // &__face--smile
+  // &__face--sob
+  // &__face--concerned
+  // &__face--tired
+  // &__face--unamused
+  // &__face--smile-no-teeth
+  // &__face--straight
+  // &__face--happy
+  // &__face--upset
+  //   display none
+
+.mouth
+  display none
 
 #app
   display grid
   width 100vw
   grid-template-rows auto 1fr
   padding 2rem
+  justify-content center
 
-  @media (min-width 768px)
+  @media (min-width 600px)
+    --rotation -15
+    --translation 20
     grid-template-columns 1fr auto
     grid-template-rows 1fr
     max-width 600px
 
 .notepad
-  --item-size 50
+  --item-size 55
   background hsl(190, 80%, 98%)
   border 5px solid black
   margin 0
@@ -39,7 +63,7 @@ body
   position relative
   font-size 1.5rem
   width 300px
-  transform rotate(-15deg)
+  transform rotate(calc(var(--rotation) * 1deg)) translate(calc(var(--translation) * -0.5%), calc(var(--translation) * 1%))
   display flex
   flex-direction column
   justify-content center
@@ -70,9 +94,12 @@ body
     clip-path $clip
 
   &__ring
+    --ring-size 30
     height 100%
-    width 5%
-    background black
+    width 10%
+    background linear-gradient(90deg, hsl(0, 0%, 85%) 30%, hsl(0, 0%, 55%) 50%)
+    border 5px solid black
+    position relative
 
   &__header
     height calc(var(--item-size) * 1px)
@@ -102,51 +129,68 @@ body
 
   &__item
     position relative
+    height calc(var(--item-size) * 1px)
+    display flex
+    align-items center
     [type='checkbox']
       display none
 
     &:hover
       .todo__remove
-        display inline-block
+        --scale 1
 
 .todo
   &__remove
-    display none
+    cursor pointer
     position absolute
     top 50%
     right -1rem
-    transform translate(0%, -50%)
+    transition transform 0.25s ease
+    transform translate(0%, -50%) scale(var(--scale, 0))
+    height 44px
+    width 44px
+    border-radius 50%
+    border 0
+    background hsla(190, 80%, 98%, 0.55)
+
+    svg
+      height 24px
+      width 24px
+      path
+        fill hsl(0, 80%, 50%)
 
 
-.todo__label
-  --strike 0
-  width 100%
-  display block
-  position relative
-  padding 0.5rem 0.5rem
-
-  &:after
-    content "*"
-    position absolute
-    left -1rem
-    top 50%
-    line-height 1.5rem
-    transform translate(0, calc((-50 + var(--offset)) * 1%))
-
-  span
+  &__label
+    --strike 0
+    cursor pointer
+    width 100%
+    display block
     position relative
-    &:after
-      content ''
-      position absolute
-      width calc(var(--width, 100) * 1%)
-      height 15%
-      top 50%
-      left 50%
-      background var(--color)
-      transform-origin left
-      transition transform .25s ease
-      transform translate(-50%, -50%) rotate(calc(var(--angle, 0) * 1deg)) scaleX(var(--strike)) skewX(calc(var(--skew, 0) * 1deg))
+    padding 0.5rem 0.5rem
 
-  &--complete
-    --strike 1
+    &:after
+      content "*"
+      position absolute
+      left -1rem
+      top 50%
+      line-height 1.5rem
+      transform translate(0, calc((-50 + var(--offset)) * 1%))
+
+    span
+      position relative
+      display block
+      &:after
+        content ''
+        position absolute
+        width calc(var(--width, 100) * 1%)
+        height 15%
+        top 50%
+        left calc(50% - 1rem)
+        background var(--color)
+        transform-origin left
+        transition transform .25s ease
+        transform translate(-50%, -50%) rotate(calc(var(--angle, 0) * 1deg)) scaleX(var(--strike)) skewX(calc(var(--skew, 0) * 1deg))
+
+    &--complete
+      --strike 1
 
