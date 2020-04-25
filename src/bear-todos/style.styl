@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css?family=Schoolbell&display=swap');
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  margin 0
+  padding 0
+  display flex
+  align-items center
+  justify-content center
+  font-family 'Schoolbell', cursive
+  background hsl(0, 0%, 95%)
+
+.bear
+  grid-row 1
+  grid-column -1
+
+  // @media(min-width 768px)
+  //   grid-row -1
+
+#app
+  display grid
+  width 100vw
+  grid-template-rows auto 1fr
+  padding 2rem
+
+  @media (min-width 768px)
+    grid-template-columns 1fr auto
+    grid-template-rows 1fr
+    max-width 600px
+
+.notepad
+  --item-size 50
+  background hsl(190, 80%, 98%)
+  border 5px solid black
+  margin 0
+  padding 2rem 0
+  position relative
+  font-size 1.5rem
+  width 300px
+  transform rotate(-15deg)
+  display flex
+  flex-direction column
+  justify-content center
+
+  &:before
+    content ''
+    position absolute
+    bottom -5px
+    right -5px
+    height 2rem
+    width 2rem
+    border 5px solid black
+    z-index 2
+
+  &:after
+    content ''
+    position absolute
+    height 4rem
+    width 4rem
+    border-radius 50% 50% 100% 50% / 50% 50% 100% 50%
+    border 5px solid black
+    position absolute
+    right -3px
+    bottom -3px
+    background hsl(190, 40%, 80%)
+    $clip = polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%)
+    -webkit-clip-path $clip
+    clip-path $clip
+
+  &__ring
+    height 100%
+    width 5%
+    background black
+
+  &__header
+    height calc(var(--item-size) * 1px)
+    position absolute
+    display flex
+    flex-direction row
+    justify-content space-between
+    padding 0 2rem
+    width 100%
+    left 50%
+    top 0
+    transform translate(-50%, -65%)
+
+  &__input
+    height calc(var(--item-size) * 1px)
+    background transparent
+    border 0
+    margin 0 2rem
+    padding-left 0.5rem
+
+  &__items
+    height calc(var(--item-size) * 5px)
+    overflow auto
+    margin 0
+    list-style-type none
+    padding 0 2rem
+
+  &__item
+    position relative
+    [type='checkbox']
+      display none
+
+    &:hover
+      .todo__remove
+        display inline-block
+
+.todo
+  &__remove
+    display none
+    position absolute
+    top 50%
+    right -1rem
+    transform translate(0%, -50%)
+
+
+.todo__label
+  --strike 0
+  width 100%
+  display block
+  position relative
+  padding 0.5rem 0.5rem
+
+  &:after
+    content "*"
+    position absolute
+    left -1rem
+    top 50%
+    line-height 1.5rem
+    transform translate(0, calc((-50 + var(--offset)) * 1%))
+
+  span
+    position relative
+    &:after
+      content ''
+      position absolute
+      width calc(var(--width, 100) * 1%)
+      height 15%
+      top 50%
+      left 50%
+      background var(--color)
+      transform-origin left
+      transition transform .25s ease
+      transform translate(-50%, -50%) rotate(calc(var(--angle, 0) * 1deg)) scaleX(var(--strike)) skewX(calc(var(--skew, 0) * 1deg))
+
+  &--complete
+    --strike 1
+
