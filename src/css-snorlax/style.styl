@@ -24,7 +24,6 @@ body
   justify-content center
 
 .snorlax
-
   *
   *:after
   *:before
@@ -86,14 +85,34 @@ body
       height 100%
       left 5%
       top 11%
-      border-radius 53% 47% 0 50% / 56% 31% 0 44%
+      border-radius 65% 47% 0 50%/70% 39% 0 44%
+
     &--right
-      width 50%
+      width 54%
       height 100%
-      right 5%
-      top 11%
-      transform rotateY(180deg)
-      border-radius 53% 47% 0 50% / 56% 31% 0 44%
+      right 4%
+      top 10%
+      overflow hidden
+      border-radius 45% 80% 0 50%/72% 77% 0 44%
+      &:before
+        content ''
+        right 0
+        height 100%
+        width 32%
+        bottom 0
+        background var(--dark-belly)
+        z-index 2
+
+      &:after
+        content ''
+        right 16%
+        height 100%
+        width 32%
+        bottom 36%
+        background var(--belly)
+        z-index 3
+        border-radius 0 0 75% 0 / 0 0 36% 0
+
 
 
   &__eye
@@ -101,6 +120,7 @@ body
     width 15%
     background black
     top 33%
+    z-index 5
 
     &--left
       left 21%
