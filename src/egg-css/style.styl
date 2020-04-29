@@ -1,0 +1,128 @@
+*
+*:before
+*:after
+  box-sizing border-box
+
+// Original image is 742x769
+:root
+  --size 50
+  --unit calc((var(--size) / 769) * 1vmin)
+
+body
+  background-color hsl(50, 100%, 50%)
+  display flex
+  align-items center
+  justify-content center
+  // animation shadow-party 2s infinite linear
+
+  // @keyframes shadow-party
+  //   for $frame in (0..100)
+  //     {$frame * 1%}
+  //       background hsl(($frame * 3.6), 100%, 50%)
+
+
+.egg
+  height calc(769 * var(--unit))
+  width calc(742 * var(--unit))
+  z-index 2
+  position relative
+
+  *
+    position absolute
+
+  &__shell
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    height 95%
+    width 74%
+
+    &:after
+    &:before
+      border calc(22 * var(--unit)) solid hsl(0, 0%, 35%)
+
+    &:before
+      content ''
+      top 0
+      left 50%
+      height 65%
+      position absolute
+      background white
+      width 92%
+      transform translate(-50%, 0%)
+      border-radius 50% 50% 0 0 / 100% 100% 0 0
+      $clip = inset(0 0 10% 0)
+      -webkit-clip-path $clip
+      clip-path $clip
+
+    &:after
+      content ''
+      bottom 0
+      width 100%
+      height 50%
+      background white
+      position absolute
+      border-radius 0 0 50% 50% / 0 0 78% 78%
+      $clip = inset(15% 0 0 0)
+      -webkit-clip-path $clip
+      clip-path $clip
+
+  &__specs
+    height 31%
+    width 95%
+    top 31%
+    left 50%
+    transform translate(-50%, 0)
+
+  &__spec-left
+    left 0
+    top 0
+    width 46%
+    height 95%
+    transform rotate(-12deg)
+    border calc(44 * var(--unit)) solid rgba(0,0,0,1)
+    border-radius 25% 60% 32% 38%/34% 37% 45% 30%
+    box-shadow calc(-5 * var(--unit)) calc(25 * var(--unit)) calc(10 * var(--unit)) hsla(0, 0%, 0%, 0.35) inset,
+      calc(-5 * var(--unit)) calc(25 * var(--unit)) calc(20 * var(--unit)) hsla(0, 0%, 0%, 0.25)
+
+  &__spec-right
+    right 0
+    top 0
+    width 46%
+    height 95%
+    transform rotate(12deg) rotateY(180deg)
+    border calc(44 * var(--unit)) solid rgba(0,0,0,1)
+    border-radius 25% 60% 32% 38%/34% 37% 45% 30%
+    box-shadow calc(-5 * var(--unit)) calc(25 * var(--unit)) calc(10 * var(--unit)) hsla(0, 0%, 0%, 0.35) inset,
+      calc(-5 * var(--unit)) calc(25 * var(--unit)) calc(20 * var(--unit)) hsla(0, 0%, 0%, 0.25)
+
+  &__spec-bridge
+    height 64%
+    width 24%
+    top 1%
+    left 50%
+    transform translate(-50%)
+    border-radius 50%/50%
+    border calc(55 * var(--unit)) solid rgba(0,0,0,1)
+    $clip = polygon(10% 0, 90% 0, 90% 50%, 10% 50%)
+    -webkit-clip-path $clip
+    clip-path $clip
+
+  &__specs-arm
+    height 14%
+    width 90%
+    background hsla(0, 0%, 0%, 1)
+    left 50%
+    top 35%
+    transform translate(-50%, 0)
+    $clip = polygon(-7% 0, 25% 55%, 75% 55%, 107% 0, 100% 79%, 76% 100%, 24% 100%, 0 79%)
+    -webkit-clip-path $clip
+    clip-path $clip
+
+img
+  height calc(var(--size) * 1vmin)
+  position fixed
+  top 50%
+  left 50%
+  opacity 0.5
+  transform translate(-50%, -50%)
