@@ -7,18 +7,24 @@
 :root
   --size 50
   --unit calc((var(--size) / 769) * 1vmin)
+  --specs hsl(0, 0%, 15%)
+  --shell-outline hsl(0, 0, 40%)
+  --bg hsl(50, 100%, 50%)
+  --shell hsl(0, 0%, 100%)
 
 body
-  background-color hsl(50, 100%, 50%)
+  background-color var(--bg)
   display flex
   align-items center
   justify-content center
-  // animation shadow-party 2s infinite linear
+  min-height 100vh
 
-  // @keyframes shadow-party
-  //   for $frame in (0..100)
-  //     {$frame * 1%}
-  //       background hsl(($frame * 3.6), 100%, 50%)
+  // animation shadow-party 1s infinite ease
+
+  @keyframes shadow-party
+    for $frame in (0..100)
+      {$frame * 1%}
+        background hsl(($frame * 3.6), 100%, 50%)
 
 
 .egg
@@ -39,15 +45,15 @@ body
 
     &:after
     &:before
-      border calc(22 * var(--unit)) solid hsl(0, 0%, 35%)
+      content ''
+      border calc(22 * var(--unit)) solid var(--shell-outline)
+      position absolute
+      background var(--shell)
 
     &:before
-      content ''
       top 0
       left 50%
       height 65%
-      position absolute
-      background white
       width 92%
       transform translate(-50%, 0%)
       border-radius 50% 50% 0 0 / 100% 100% 0 0
@@ -56,12 +62,9 @@ body
       clip-path $clip
 
     &:after
-      content ''
       bottom 0
       width 100%
       height 50%
-      background white
-      position absolute
       border-radius 0 0 50% 50% / 0 0 78% 78%
       $clip = inset(15% 0 0 0)
       -webkit-clip-path $clip
@@ -74,36 +77,47 @@ body
     left 50%
     transform translate(-50%, 0)
 
-  &__spec-left
-    left 0
+  &__spec
     top 0
     width 46%
     height 95%
-    transform rotate(-12deg)
-    border calc(44 * var(--unit)) solid rgba(0,0,0,1)
+    transform rotate(calc(var(--rotate) * 12deg)) rotateY(calc(var(--flip) * 180deg))
+    border calc(44 * var(--unit)) solid var(--specs)
     border-radius 25% 60% 32% 38%/34% 37% 45% 30%
-    box-shadow calc(-5 * var(--unit)) calc(25 * var(--unit)) calc(10 * var(--unit)) hsla(0, 0%, 0%, 0.35) inset,
-      calc(-5 * var(--unit)) calc(25 * var(--unit)) calc(20 * var(--unit)) hsla(0, 0%, 0%, 0.25)
 
-  &__spec-right
-    right 0
-    top 0
-    width 46%
-    height 95%
-    transform rotate(12deg) rotateY(180deg)
-    border calc(44 * var(--unit)) solid rgba(0,0,0,1)
-    border-radius 25% 60% 32% 38%/34% 37% 45% 30%
-    box-shadow calc(-5 * var(--unit)) calc(25 * var(--unit)) calc(10 * var(--unit)) hsla(0, 0%, 0%, 0.35) inset,
-      calc(-5 * var(--unit)) calc(25 * var(--unit)) calc(20 * var(--unit)) hsla(0, 0%, 0%, 0.25)
+    &:after
+      content ''
+      position absolute
+      height calc(100% + 88 * var(--unit))
+      width calc(100% + 88 * var(--unit))
+      top calc(-44 * var(--unit))
+      left calc(-44 * var(--unit))
+      border calc(44 * var(--unit)) solid var(--specs)
+      border-radius 25% 60% 32% 38%/34% 37% 45% 30%
+      box-shadow calc(0 * var(--unit)) calc(25 * var(--unit)) calc(10 * var(--unit)) hsla(0, 0%, 0%, 0.45) inset,
+        calc(-15 * var(--unit)) calc(25 * var(--unit)) calc(20 * var(--unit)) hsla(0, 0%, 0%, 0.45)
+      $clip = polygon(49% 0, 100% 0, 100% 160%, 90% 160%, 11% 150%, 17% 95%)
+      -webkit-clip-path $clip
+      clip-path $clip
+
+    &--left
+      --flip 0
+      --rotate -1
+      left 0
+
+    &--right
+      --flip 1
+      --rotate 1
+      right 0
 
   &__spec-bridge
     height 64%
-    width 24%
+    width 25%
     top 1%
     left 50%
     transform translate(-50%)
     border-radius 50%/50%
-    border calc(55 * var(--unit)) solid rgba(0,0,0,1)
+    border calc(55 * var(--unit)) solid var(--specs)
     $clip = polygon(10% 0, 90% 0, 90% 50%, 10% 50%)
     -webkit-clip-path $clip
     clip-path $clip
@@ -111,18 +125,10 @@ body
   &__specs-arm
     height 14%
     width 90%
-    background hsla(0, 0%, 0%, 1)
+    background var(--specs)
     left 50%
     top 35%
     transform translate(-50%, 0)
     $clip = polygon(-7% 0, 25% 55%, 75% 55%, 107% 0, 100% 79%, 76% 100%, 24% 100%, 0 79%)
     -webkit-clip-path $clip
     clip-path $clip
-
-img
-  height calc(var(--size) * 1vmin)
-  position fixed
-  top 50%
-  left 50%
-  opacity 0.5
-  transform translate(-50%, -50%)
