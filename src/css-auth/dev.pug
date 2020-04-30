@@ -1,5 +1,25 @@
 form(onsubmit=`return false;`)
-  input(type='password', pattern='password123', placeholder="Enter password", required, title="Wasn't your password \"password123\"? 🤫")
+  label(for='password') Password
+  input#password(type='password', pattern='password123', placeholder="Enter your password", required, title="Wasn't your password \"password123\"? 🤫")
+  input#login(type='checkbox')
+  label.login-button(for='login')
+    span Enter
+    svg
+      path(d="M10,17V14H3V10H10V7L15,12L10,17M7,2H17A2,2 0 0,1 19,4V20A2,2 0 0,1 17,22H7A2,2 0 0,1 5,20V16H7V20H17V4H7V8H5V4A2,2 0 0,1 7,2Z")
+  .padlock
+    .padlock__hook
+      .padlock__hook-body
+      .padlock__hook-body
+    .padlock__body
+      .padlock__face
+        .padlock__eye.padlock__eye--left
+        .padlock__eye.padlock__eye--right
+        .padlock__mouth.padlock__mouth--one
+        .padlock__mouth.padlock__mouth--two
+        .padlock__mouth.padlock__mouth--three
+
+
   .app
-    button(type='reset') Logout
-  .log-out You have logged out
+    h1 You logged in! 🎉
+    button.logout-button(type='reset') Logout
+  span.logout-message You have logged out.

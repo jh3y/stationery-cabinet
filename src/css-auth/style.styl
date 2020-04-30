@@ -1,26 +1,53 @@
 *
+*:after
+*:before
   box-sizing border-box
+
+:root
+  --transition 0.2
+  --bg-one hsl(280, 60%, 5%)
+  --bg-two hsl(280, 90%, 15%)
+  --stop 40
+  --angle 45
+  --border-width 5
+  --padlock-size 300
+  --border-radius 6
 
 body
   align-items center
   display flex
   justify-content center
   min-height 100vh
+  font-family sans-serif
+  background linear-gradient(calc(var(--angle) * 1deg), var(--bg-one) calc(var(--stop) * 1%), var(--bg-two) calc(var(--stop) * 1%))
+
+form
+  display grid
+  grid-template-columns auto
+  grid-gap 0.5rem 1rem
+  justify-items center
+  position relative
 
 [type='password']
-  &:valid
-    border 5px solid green
+  padding 12px 20px
+  font-size 1rem
+  border-width calc(var(--border-width) * 1px)
+  border-style solid
+  border-color var(--accent)
+  border-radius calc(var(--border-radius) * 1px)
+  text-align center
+  outline transparent
+  width 100%
+  transition border-color calc(var(--transition, 0.2) * 1s) ease
 
-    & ~ .app
-      --scale 1
+  &:valid
+    --accent hsla(100, 100%, 50%, 1)
+
+  &:invalid
+    --accent hsla(10, 100%, 50%, 0.5)
 
   &:placeholder-shown
-    border 0
-
-    & ~ .app
-      --scale 0
-      transition transform 0s 0s ease
-
+    --accent hsl(0, 0%, 100%)
 
 .app
   height 100vh
@@ -28,14 +55,290 @@ body
   position fixed
   top 0
   left 0
-  background hsla(0, 0%, 0%, 1)
-  transform scale(var(--scale, 0))
-  transition transform .25s 1s ease
+  display flex
+  align-items center
+  flex-direction column
+  justify-content center
+  background hsla(0, 0%, 95%, 1)
+  transform scale(var(--scale))
+  transition transform calc(var(--transition, 0.2) * 1s) ease
 
-  &:focus-within ~ .log-out
-    opacity 1
+[for='password']
+#login
+  height 0
+  width 0
+  transform scale(0)
+  position absolute
 
-.log-out
+.logout-button
+  --size 52
+  --lightness 45
+  height calc(var(--size) * 1px)
+  padding 12px 20px
+  text-transform uppercase
+  font-weight bold
+  color #fff
+  background 'hsl(10, 80%, %s)' % calc(var(--lightness) * 1%)
+  border 0
+  border-radius calc(var(--border-radius) * 1px)
+  cursor pointer
+
+  &:hover
+    --lightness 30
+
+  &:active
+    --lightness 20
+
+.login-button
+  --size 52
+  --lightness 45
+  align-items center
+  background 'hsl(100, 80%, %s)' % calc(var(--lightness) * 1%)
+  border-radius calc(var(--border-radius) * 1px)
+  cursor pointer
+  display flex
+  height calc(var(--size) * 1px)
+  justify-content center
+  padding 12px 20px
+  text-transform uppercase
+  font-weight bold
+  color #fff
+  width 100%
+  transition background calc(var(--transition, 0.2) * 1s) ease
+
+  svg
+    transform translate(50%, 0)
+
+  *
+    cursor pointer
+
+  &:hover
+    --lightness 30
+
+  &:active
+    --lightness 20
+
+  svg
+
+    height 24px
+    width 24px
+    path
+      fill white
+
+.padlock
+  --hue 65
+  --color hsl(50, 100%, 50%)
+  --color-one hsl(38, 100%, 50%)
+  --color-two hsl(0, 0%, 100%)
+  height calc(var(--padlock-size) * 1px)
+  width calc(var(--padlock-size) * 1px)
+  grid-row 1
+  position relative
+
+  &__body
+    border 8px solid black
+    border-radius 20px
+    position absolute
+    bottom 10%
+    width 66%
+    height 46%
+    left 50%
+    transform translate(-50%, 0)
+    background var(--color)
+    box-shadow -30px 0 0px 0px var(--color-one) inset,
+      10px 0 0px 0px var(--color-two) inset
+
+  &__face
+    height 25%
+    width 40%
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, 0)
+
+  &__eye
+    position absolute
+    height 15px
+    width 15px
+    background hsl(0, 0%, 0%)
+    top 0
+    border-radius 50%
+    animation blink 4s infinite linear
+
+    &:after
+      content ''
+      height 25%
+      width 25%
+      background hsl(0, 0%, 100%)
+      border-radius 50%
+      position absolute
+      top 50%
+      left 50%
+      transform translate(-100%, -100%)
+
+    &--left
+      left 0
+
+    &--right
+      right 0
+
+    @keyframes blink
+      0%, 24%, 27%, 100%
+        transform scaleY(1)
+      25%, 26%
+        transform scaleY(0)
+
+  &__mouth
+    width 25%
+    height 10px
+    position absolute
+    bottom 0
+    left 50%
+    transform translate(-50%, 0)
+
+    &--one
+      background black
+      height 5px
+      width 40%
+      left 45%
+      bottom 25%
+      display block
+
+    &--two
+    &--three
+      height 24px
+      width 20px
+      border-radius 50%
+      bottom 24%
+      $clip = inset(64% 0 0 0)
+      background transparent
+      -webkit-clip-path $clip
+      clip-path $clip
+      display none
+      overflow hidden
+
+      &:before
+        content ''
+        height 100%
+        width 100%
+        position absolute
+        top 0
+        left 0
+        border-radius 50%
+        border 4px solid hsl(0, 0%, 0%)
+
+    &--three
+      background hsl(0, 0%, 0%)
+
+      &:after
+        content ''
+        position absolute
+        height 6px
+        width 10px
+        border-radius 50%
+        bottom -2px
+        left 40%
+        background red
+
+  &__hook
+    --delay 1
+    --clip 40
+    width 50%
+    height 90%
+    position absolute
+    left 50%
+    top 50%
+    transform translate(-50%, calc(var(--pos, 40) * -1%))
+    $clip = inset(0 0 30% 0)
+    -webkit-clip-path $clip
+    clip-path $clip
+    transition transform calc(var(--transition, 0.2) * 1s) calc(((var(--transition, 0.2) * 1.5) * var(--delay, 0)) * 1s) cubic-bezier(.78, .16, .64, 1.8)
+
+    &:after
+      content ''
+      position absolute
+      top 50%
+      left 50%
+      width calc(100% - 16px)
+      height calc(100% - 16px)
+      border-radius 50% / 40%
+      transform translate(-50%, -50%)
+      box-shadow 5px 0 0 0 hsl(0, 0%, 100%) inset,
+        -10px 0 0 0 hsl(0, 0%, 40%) inset
+      $clip = polygon(0 0, 100% 0, 100% calc(var(--clip) * 1%), 50% calc(var(--clip) * 1%), 50% 100%, 0 100%)
+      -webkit-clip-path $clip
+      clip-path $clip
+
+    & > div
+      position absolute
+      top 50%
+      left 50%
+      transform translate(-50%, -50%)
+
+    & > div:nth-of-type(1)
+      width 100%
+      height 100%
+      border 36px solid #000
+      border-radius 50% / 40%
+      $clip = polygon(0 0, 100% 0, 100% calc(calc(var(--clip) * 1%) + 8px), 50% calc(calc(var(--clip) * 1%) + 8px), 50% 100%, 0 100%)
+      -webkit-clip-path $clip
+      clip-path $clip
+
+    & > div:nth-of-type(2)
+      width calc(100% - 16px)
+      height calc(100% - 16px)
+      border 20px solid hsl(0, 0%, 75%)
+      border-radius 50% / 40%
+      $clip = polygon(0 0, 100% 0, 100% calc(var(--clip) * 1%), 50% calc(var(--clip) * 1%), 50% 100%, 0 100%)
+      -webkit-clip-path $clip
+      clip-path $clip
+
+.logout-message
+  display block
+  width 100%
+  border-radius calc(var(--border-radius) * 1px)
   padding 1rem
-  opacity 0
-  color red
+  background white
+  text-align center
+  font-weight bold
+
+// Functionality
+#login:checked ~ .app
+  --scale 1
+
+[type='password']:valid
+  & ~ #login
+  & ~ [for='login']
+    visibility visible
+
+    &:hover ~ .padlock
+      .padlock__mouth--one
+      .padlock__mouth--two
+        display none
+      .padlock__mouth--three
+        display block
+  & ~ .padlock
+    .padlock__mouth--one
+      display none
+    .padlock__mouth--two
+      display block
+
+    .padlock__hook
+      --pos 60
+      --delay 0
+
+[type='password']:placeholder-shown
+  & ~ .app
+    transition transform 0s 0s ease
+
+.app:focus-within ~ .logout-message
+    visibility visible
+    grid-row 3
+
+#login
+[for='login']
+.logout-message
+  visibility hidden
+
+.app
+  --scale 0
