@@ -1,0 +1,40 @@
+*
+  box-sizing border-box
+
+body
+  align-items center
+  display flex
+  justify-content center
+  min-height 100vh
+
+[type='password']
+  &:valid
+    border 5px solid green
+
+    & ~ .app
+      --scale 1
+
+  &:placeholder-shown
+    border 0
+
+    & ~ .app
+      --scale 0
+
+
+.app
+  height 100vh
+  width 100vw
+  position fixed
+  top 0
+  left 0
+  background hsla(0, 0%, 0%, 1)
+  transform scale(var(--scale, 0))
+  transition transform .25s 1s ease
+
+  &:focus-within ~ .log-out
+    opacity 1
+
+.log-out
+  padding 1rem
+  opacity 0
+  color red
