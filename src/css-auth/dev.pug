@@ -1,5 +1,5 @@
-form
-  input(type='password', pattern='password123', placeholder="Enter password")
+form(onsubmit=`return false;`)
+  input(type='password', pattern='password123', placeholder="Enter password", required, title="Wasn't your password \"password123\"? 🤫")
   .app
     button(type='reset') Logout
   .log-out You have logged out
