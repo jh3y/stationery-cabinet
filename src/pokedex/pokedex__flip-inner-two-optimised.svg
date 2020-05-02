@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="268.9512" height="364.7207" viewBox="0 0 71.16 96.499">
+  <g transform="translate(-41.5125 -84.445)">
+    <path d="M42.174 85.1064v95.1761h69.8371V99.0973H73.1256l-11.145-13.9909H42.174z" fill="#a00" fill-opacity=".9041" stroke="#000" stroke-width="1.3229" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M-277.0738 232.737c-3.5989 0-6.4962 2.8968-6.4962 6.4957v98.133c0 3.5989 2.8973 6.4963 6.4962 6.4963h72.8788V232.737h-44.7084zM-127.2158 107.0401c-3.5988 0-6.4962 2.8969-6.4962 6.4957v98.133c0 3.599 2.8974 6.4963 6.4962 6.4963h72.8788v-111.125h-44.7084z" fill="none"/>
+    <path fill="#1a1a1a" fill-opacity=".9041" stroke="#000" stroke-width="1.235" stroke-linecap="round" stroke-linejoin="round" d="M50.6342 105.4055h52.9167v18.9177H50.6342z"/>
+    <g fill-opacity=".9041">
+      <path fill="#d4aa00" stroke="#000" stroke-width=".4811" stroke-linecap="round" stroke-linejoin="round" d="M82.3842 128.37h10.5833v10.5834H82.3842z"/>
+      <path fill="#ff0" d="M83.8394 129.8253h7.673v7.6729h-7.673z"/>
+      <path fill="#d4aa00" stroke="#000" stroke-width=".4811" stroke-linecap="round" stroke-linejoin="round" d="M92.9676 138.9534h10.5833v10.5833H92.9676z"/>
+      <path fill="#ff0" d="M94.4228 140.4086h7.6729v7.6729h-7.673z"/>
+      <path fill="#d4aa00" stroke="#000" stroke-width=".4811" stroke-linecap="round" stroke-linejoin="round" d="M82.3842 138.9534h10.5833v10.5833H82.3842z"/>
+      <path fill="#ff0" d="M83.8394 140.4086h7.673v7.6729h-7.673z"/>
+      <path fill="#d4aa00" stroke="#000" stroke-width=".4811" stroke-linecap="round" stroke-linejoin="round" d="M71.8009 138.9534h10.5833v10.5833H71.8009z"/>
+      <path fill="#ff0" d="M73.2561 140.4086h7.6729v7.6729h-7.6729z"/>
+      <path fill="#d4aa00" stroke="#000" stroke-width=".4811" stroke-linecap="round" stroke-linejoin="round" d="M61.2176 138.9534h10.5833v10.5833H61.2176z"/>
+      <path fill="#ff0" d="M62.6728 140.4086h7.6729v7.6729h-7.673z"/>
+      <g>
+        <path fill="#d4aa00" stroke="#000" stroke-width=".4811" stroke-linecap="round" stroke-linejoin="round" d="M50.6342 138.9534h10.5833v10.5833H50.6342z"/>
+        <path fill="#ff0" d="M52.0894 140.4086h7.673v7.6729h-7.673z"/>
+      </g>
+      <g>
+        <path fill="#d4aa00" stroke="#000" stroke-width=".4811" stroke-linecap="round" stroke-linejoin="round" d="M92.9676 128.37h10.5833v10.5834H92.9676z"/>
+        <path fill="#ff0" d="M94.4228 129.8253h7.6729v7.6729h-7.673z"/>
+      </g>
+      <g>
+        <path fill="#d4aa00" stroke="#000" stroke-width=".4811" stroke-linecap="round" stroke-linejoin="round" d="M50.6342 128.37h10.5833v10.5834H50.6342z"/>
+        <path fill="#ff0" d="M52.0894 129.8253h7.673v7.6729h-7.673z"/>
+      </g>
+      <g>
+        <path fill="#d4aa00" stroke="#000" stroke-width=".4811" stroke-linecap="round" stroke-linejoin="round" d="M61.2176 128.37h10.5833v10.5834H61.2176z"/>
+        <path fill="#ff0" d="M62.6728 129.8253h7.6729v7.6729h-7.673z"/>
+      </g>
+      <g>
+        <path fill="#d4aa00" stroke="#000" stroke-width=".4811" stroke-linecap="round" stroke-linejoin="round" d="M71.8009 128.37h10.5833v10.5834H71.8009z"/>
+        <path fill="#ff0" d="M73.2561 129.8253h7.6729v7.6729h-7.6729z"/>
+      </g>
+    </g>
+    <g fill-opacity=".9041">
+      <path fill="#d4aa00" stroke="#000" stroke-width=".4811" stroke-linecap="round" stroke-linejoin="round" d="M50.6342 153.8242h10.5833v10.5833H50.6342z"/>
+      <path fill="#ff0" d="M52.0894 155.2794h7.673v7.6729h-7.673z"/>
+      <g>
+        <path fill="#d4aa00" stroke="#000" stroke-width=".4811" stroke-linecap="round" stroke-linejoin="round" d="M61.2176 153.8242h10.5833v10.5833H61.2176z"/>
+        <path fill="#ff0" d="M62.6728 155.2794h7.6729v7.6729h-7.673z"/>
+      </g>
+    </g>
+    <rect width="23.2833" height="7.1437" x="51.1698" y="168.9055" ry="1.7198" fill="#1a1a1a" fill-opacity=".9041" stroke="#000" stroke-width="1.3229" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect ry="1.7198" y="168.9055" x="79.8466" height="7.1437" width="23.2833" fill="#1a1a1a" fill-opacity=".9041" stroke="#000" stroke-width="1.3229" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="99.2935" cy="159.1159" r="3.8365" fill="green" fill-opacity=".9041" stroke="#000" stroke-width="1.3229" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="99.1917" cy="157.9253" r="1.3229" fill="#fff" fill-opacity=".9041"/>
+    <circle cx="97.6042" cy="159.7773" r=".7937" fill="#fff" fill-opacity=".9041"/>
+  </g>
+</svg>
