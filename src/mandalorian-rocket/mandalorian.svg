@@ -49,7 +49,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -76,7 +76,7 @@
          onclick="">
         <g
            transform="rotate(0.3325508,4275.1992,-8787.1537)"
-           id="g1170">
+           id="jetPack">
           <g
              transform="translate(35.279578,-21.916101)"
              id="g1332">
@@ -651,7 +651,7 @@
            inkscape:transform-center-y="-5.3981541"
            inkscape:transform-center-x="-28.454734"
            transform="rotate(0.00128842,1517947.1,6987789.1)"
-           id="g1431">
+           id="rightArm">
           <g
              id="g1409">
             <circle

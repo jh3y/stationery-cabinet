@@ -1,0 +1,9 @@
+<svg class="backdrop" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 508 286">
+  <g transform="translate(0 -11)">
+    <path d="M508 98c-38 4-82 62-124 61-50 0-91-53-141-53-50-1-93 52-143 52-34 0-68-36-100-52v144h508V98z" fill="#677821"/>
+    <path d="M508 147c-71 5-157 57-230 67-97 12-157 20-278 31v40h508V147z" fill="#501616"/>
+    <path d="M0 153v144h508v-55c-101-21-298-23-508-89z" fill="#fc0"/>
+    <circle cx="33.1" cy="91.7" r="24.6" fill="#f60"/>
+    <circle cx="68.4" cy="56.5" r="10.7" fill="#ffd42a"/>
+  </g>
+</svg>

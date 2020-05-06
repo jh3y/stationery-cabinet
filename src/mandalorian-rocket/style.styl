@@ -1,37 +1,163 @@
 *
   box-sizing border-box
 
+:root
+  --size 20
+  --jetpack-silver hsl(0, 0%, 45%)
+  --stroke hsl(0, 0%, 10%)
+  --boot hsl(15, 100%, 10%)
+  --clothing hsl(30, 80%, 20%)
+  --armour hsl(0, 0%, 50%)
+  --glove hsl(10, 20%, 20%)
+  --dune-one hsl(30, 80%, 30%)
+  --dune-two hsl(40, 60%, 50%)
+  --sky-two hsl(215, 80%, 30%)
+  --sky-one hsl(205, 100%, 80%)
+  --sun-one hsl(45, 100%, 70%)
+  --sun-two hsl(30, 100%, 90%)
+
 body
   align-items center
   display flex
   min-height 100vh
   justify-content center
   overflow hidden
+  background linear-gradient(0deg, var(--sky-one), var(--sky-two))
 
 .mando
-  width 15vmin
+  width calc(var(--size) * 1vmin)
 
   &__container
-    position relative
+    position absolute
+    left 0
+    top 100%
+
+.blaster
+  stroke var(--stroke)
+  path:nth-of-type(2)
+    fill var(--boot)
+  path:nth-of-type(5)
+    fill var(--armour)
+
+
+.mandalorian__helmet
+  path:nth-of-type(1)
+    fill var(--armour)
+    stroke var(--stroke)
+  path:nth-of-type(2)
+    fill hsla(0, 0%, 100%, 0.8)
+  path:nth-of-type(3)
+    fill var(--armour)
+    stroke hsl(0, 0%, 30%)
+  path:nth-of-type(4)
+    fill var(--armour)
+    stroke var(--stroke)
+  path:nth-of-type(5)
+  path:nth-of-type(6)
+    fill hsl(0, 0%, 0%)
+  path:nth-of-type(7)
+  path:nth-of-type(9)
+    fill hsl(0, 0%, 20%)
+    stroke var(--stroke)
+  path:nth-of-type(8)
+  path:nth-of-type(10)
+    fill hsl(0, 0%, 35%)
+    stroke var(--stroke)
+  path:nth-of-type(11)
+    fill none
+    stroke var(--stroke)
+  path:nth-of-type(13)
+    fill hsl(0, 0%, 30%)
+    stroke var(--stroke)
+  ellipse
+    fill hsl(0, 0%, 15%)
+    stroke none
+  rect
+    stroke var(--stroke)
+    fill hsl(0, 0%, 75%)
+.mandalorian__torso
+  stroke var(--stroke)
+  fill var(--clothing)
+
+.mandalorian__ammo-sash
+.mandalorian__belt
+  stroke var(--stroke)
+  path:nth-of-type(1)
+    fill var(--boot)
+  path:nth-of-type(2)
+    fill var(--armour)
+
+
+.mandalorian__jets rect
+.mandalorian__jet-bubbles circle
+  fill 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+
+.mandalorian__jetpack
+.mandalorian__jetpack-pipe
+  fill var(--jetpack-silver)
+  stroke var(--stroke)
+
+.mandalorian__leg
+  stroke var(--stroke)
+
+  ellipse
+    fill var(--boot)
+
+  path:nth-of-type(1)
+    fill var(--clothing)
+
+  path:nth-of-type(2)
+    fill var(--armour)
+
+.mando__left-arm
+.mandalorian__right-arm
+  stroke var(--stroke)
+
+  & > path:nth-of-type(1)
+    fill var(--clothing)
+
+  & > path:nth-of-type(2)
+    fill var(--armour)
+
+.mandalorian__glove
+  fill var(--glove)
 
 .shot
-  background green
+  background red
   position absolute
-  top 0
-  left 0
+  top 22%
+  left 40%
+  height 10%
+  width 50%
 
-.mandalorian
-  height 100px
-  width 40px
-  background hsl(40, 50%, 50%)
+.shots
+  position absolute
+  top 27%
+  height 27%
+  width 62%
+  z-index 3
+  transform-origin 10% 60%
+  left 32%
+  z-index -1
+
+.backdrop
+  width 100vw
   position absolute
   left 0
-  top 100%
-  transform translate(-50%, -100%)
+  transform translate(0%, 5vmax)
+  bottom 0
+
+  path:nth-of-type(1)
+    fill var(--dune-one)
+  path:nth-of-type(2)
+    fill var(--dune-two)
+  circle:nth-of-type(1)
+    fill var(--sun-one)
+  circle:nth-of-type(2)
+    fill var(--sun-two)
 
 button
   position fixed
-  display none
   top 0
   left 0
   right 0
