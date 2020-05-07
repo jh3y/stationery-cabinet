@@ -1,21 +1,143 @@
 *
   box-sizing border-box
-  animation  fadeIn .5s
+
+:root
+  --road-lightness 40
+  --road-alpha 1
+  --tree-stump-hue 30
+  --tree-stump-saturation 60
+  --tree-stump-lightness 30
+  --tree-leaves-hue 80
+  --tree-leaves-saturation 60
+  --tree-leaves-lightness 40
+  --ground-hue 40
+  --ground-saturation 60
+  --ground-lightness 60
+  --building-hue 180
+  --building-saturation 0
+  --building-lightness 70
+  --mountain-hue 50
+  --mountain-saturation 75
+  --mountain-lightness 40
+  --glass-hue 180
+  --glass-saturation 90
+  --glass-lightness 85
+  --blackbird-offset 0
+  --sky-lightness 85
+  --sky-saturation 80
 
 body
-  background-color #e74c3c
-  color            #fafafa
   text-align       center
   display flex
   align-items center
   justify-content center
+  background 'hsl(190, %s, %s)' % (calc(var(--sky-saturation, 0) * 1%) calc(var(--sky-lightness, 85) * 1%))
 
 
 svg
-  width 50vmin
+  min-width 300px
+  width 40vmin
 
-@keyframes fadeIn
-  from
-    opacity 0
-  to
-    opacity 1
+
+.blackbird
+  &__shadow
+    opacity 0.5
+  &__spike
+    stroke-width 5
+    stroke 'hsl(0, 0%, %s)' % calc((20 - var(--blackbird-offset)) * 1%)
+
+
+  &__body-component
+    fill 'hsl(0, 0%, %s)' % calc((var(--base) - var(--blackbird-offset)) * 1%)
+
+  &__tail
+    --base 20
+  &__top-wing
+    --base 20
+  &__back-jet
+    --base 20
+  &__main-body
+    --base 10
+  &__back-side
+    --base 30
+  &__off-side
+    --base 60
+  &__side-jet--one
+    --base 14
+  &__top-jet--one
+    --base 30
+  &__jet-wing--one
+    --base 25
+  &__jet-front--one
+    --base 30
+  &__jet-spike--one
+    --base 50
+  &__side-jet--two
+    --base 14
+  &__top-jet--two
+    --base 30
+  &__jet-wing--two
+    --base 35
+  &__jet-front--two
+    --base 30
+  &__jet-spike--two
+    --base 50
+
+  &__glass
+    fill 'hsla(%s, %s, %s, %s)' % (var(--glass-hue) calc(var(--glass-saturation) * 1%) calc(var(--glass-lightness) * 1%) var(--road-alpha))
+  &__glare
+    fill 'hsla(0, 0%, 100%, %s)' % (calc(var(--road-alpha) / 2))
+
+.road
+  --lightness var(--road-lightness)
+  --alpha var(--road-alpha)
+  // reduce lightness to 5
+  fill 'hsl(%s, 0%, %s)' % (var(--hue, 0) calc(var(--lightness, 30) * 1%))
+  &__markings //reduce alpha to 0.2
+    stroke 'hsla(%s, 100%, %s, %s)' % (var(--hue, 60) calc(var(--lightness, 50) * 1%) var(--alpha, 1))
+    stroke-width 3
+
+.tree__stump
+  fill 'hsl(%s, %s, %s)' % (var(--tree-stump-hue) calc(var(--tree-stump-saturation) * 1%) calc(var(--tree-stump-lightness) * 1%))
+  &--two
+    fill 'hsl(%s, %s, %s)' % (var(--tree-stump-hue) calc(var(--tree-stump-saturation) * 1%) calc((var(--tree-stump-lightness) - 10) * 1%))
+
+.tree__leaves
+  fill 'hsl(%s, %s, %s)' % (var(--tree-leaves-hue) calc(var(--tree-leaves-saturation) * 1%) calc(var(--tree-leaves-lightness) * 1%))
+  &--two
+    fill 'hsl(%s, %s, %s)' % (var(--tree-leaves-hue) calc(var(--tree-leaves-saturation) * 1%) calc((var(--tree-leaves-lightness) - 10) * 1%))
+  &--three
+    fill 'hsl(%s, %s, %s)' % (var(--tree-leaves-hue) calc(var(--tree-leaves-saturation) * 1%) calc((var(--tree-leaves-lightness) - 20) * 1%))
+
+.ground__top
+  fill 'hsl(%s, %s, %s)' % (var(--ground-hue) calc(var(--ground-saturation) * 1%) calc((var(--ground-lightness)) * 1%))
+.ground__side
+  fill 'hsl(%s, %s, %s)' % (var(--ground-hue) calc(var(--ground-saturation) * 1%) calc((var(--ground-lightness) - 20) * 1%))
+
+.building
+  &__face
+    fill 'hsl(%s, %s, %s)' % (var(--building-hue) calc(var(--building-saturation) * 1%) calc((var(--building-lightness) - 15) * 1%))
+  &__top
+    fill 'hsl(%s, %s, %s)' % (var(--building-hue) calc(var(--building-saturation) * 1%) calc((var(--building-lightness)) * 1%))
+  &__side
+    fill 'hsl(%s, %s, %s)' % (var(--building-hue) calc(var(--building-saturation) * 1%) calc((var(--building-lightness) - 25) * 1%))
+  &__glass
+    fill 'hsl(%s, %s, %s)' % (var(--glass-hue) calc(var(--glass-saturation) * 1%) calc((var(--glass-lightness)) * 1%))
+  &__antennae
+    stroke hsl(0, 0, 25%)
+    stroke-width 5
+.mountain
+  &__face
+    fill 'hsl(%s, %s, %s)' % (var(--mountain-hue) calc(var(--mountain-saturation) * 1%) calc((var(--mountain-lightness) - 15) * 1%))
+  &__top
+    fill 'hsl(%s, %s, %s)' % (var(--mountain-hue) calc(var(--mountain-saturation) * 1%) calc((var(--mountain-lightness)) * 1%))
+  &__side
+    fill 'hsl(%s, %s, %s)' % (var(--mountain-hue) calc(var(--mountain-saturation) * 1%) calc((var(--mountain-lightness) - 25) * 1%))
+
+
+.antennae__flash
+  transform scale(0)
+  &--higher
+    fill hsl(0, 80%, 60%)
+  &--lower
+    fill hsl(10, 80%, 60%)

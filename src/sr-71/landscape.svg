@@ -26,7 +26,7 @@
      <clipPath id="clip">
           <path
        style="fill:#ffaaaa;fill-opacity:0.57534246;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 57.283951,-318.15623 206.222299,119.0625 0,158.750001 0,0 L -148.93835,197.78126 -355.16064,78.718765 V -225.55206 L 34.370363,-450.44789 Z"
+       d="m 103.11113,-410.76039 160.39512,92.60416 0,277.812501 v 0 L -194.76552,224.2396 -400.98782,105.1771 V -199.09373 L 34.370363,-450.44789 Z"
        id="path4597"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccccc" />
@@ -84,6 +84,12 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(355.42521,318.309)">
+     <path
+       style="fill:#ffaaaa;fill-opacity:0.57534246;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 103.11113,-410.76039 160.39512,92.60416 0,277.812501 v 0 L -194.76552,224.2396 -400.98782,105.1771 V -199.09373 L 34.370363,-450.44789 Z"
+       id="path4597"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccccc" />
     <path
        style="fill:#00ffff;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m -355.16063,78.718753 206.22231,119.062497 v 39.6875 l -206.22231,-119.0625 z"
