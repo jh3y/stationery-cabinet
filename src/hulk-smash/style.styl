@@ -1,0 +1,58 @@
+*
+  box-sizing border-box
+
+body
+  display flex
+  align-items center
+  justify-content center
+  min-height 100vh
+
+button
+  padding 0
+  margin 0
+  background hsl(90, 100%, 50%)
+  color hsl(0, 0%, 100%)
+  position absolute
+  left 10%
+  width 80%
+  border 5px solid black
+  bottom 0
+  height 35%
+  // display none
+
+.smash
+  min-width 300px
+  width 50vmin
+  // background red
+  position relative
+
+.hulk
+  &__body-part
+    stroke black
+    fill orange
+
+  &__chin
+    fill red
+
+  &__face
+    fill orange
+
+  &__eye
+  &__hair
+  &__mouth-open
+    fill black
+
+  &__eyebrow
+    stroke black
+
+  &__pupil
+  &__mouth
+  &__teeth
+    fill white
+
+  &__sweat
+    fill hsla(190, 100%, 50%, 0.75)
+
+  &__shorts
+    fill red
+    stroke brown
