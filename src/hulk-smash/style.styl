@@ -1,6 +1,13 @@
 *
   box-sizing border-box
 
+:root
+  --hulk-green hsl(120, 100%, 25%)
+  --hulk-outline hsl(120, 100%, 10%)
+  --hulk-stroke hsl(0, 0%, 10%)
+  --hulk-shorts hsl(279, 78%, 21%)
+  --hulk-shorts-outline hsl(279, 78%, 10%)
+
 body
   display flex
   align-items center
@@ -8,17 +15,81 @@ body
   min-height 100vh
 
 button
+  cursor pointer
   padding 0
   margin 0
-  background hsl(90, 100%, 50%)
+  background hsl(0, 0%, 50%)
   color hsl(0, 0%, 100%)
   position absolute
   left 10%
   width 80%
-  border 5px solid black
+  border 5px solid hsl(0, 0%, 25%)
+  border-radius 5px
   bottom 0
   height 35%
-  // display none
+  font-size 2rem
+  font-weight bold
+  font-family sans-serif
+  color hsl(0, 0%, 15%)
+  text-shadow 2px 2px hsl(0, 0%, 60%)
+  display flex
+  align-items center
+  justify-content center
+  grid-template-columns repeat(3, 1fr)
+  outline transparent
+
+  @media(min-width 768px) and (min-height 768px)
+    font-size 3rem
+
+  span
+    display inline-block
+
+.like-icon svg
+  height 3rem
+  width 3rem
+  filter drop-shadow(2px 2px hsl(0, 0%, 60%))
+
+  @media(min-width 768px) and (min-height 768px)
+    height 4rem
+    width 4rem
+
+.crack
+  overflow hidden
+  filter drop-shadow(2px 2px hsl(0, 0%, 60%))
+  -webkit-clip-path inset(0 0 0 0)
+  clip-path inset(0 0 0 0)
+
+.crack
+  position absolute
+  top -5px
+  left -5px
+  stroke hsl(0, 0%, 25%)
+  height calc(10px + 100%)
+  width calc(10px + 100%)
+  fill none
+  stroke-width 3
+  display none
+
+.fragments
+  display block
+  width 100%
+  position absolute
+  top 0
+  left 0
+
+.fragment
+  height calc(var(--size, 10) * 0.15vmin)
+  width calc(var(--size, 10) * 0.15vmin)
+  position absolute
+  display block
+  top 0
+  left calc(var(--x, 50) * 1%)
+  background 'hsl(0, 0%, %s)' % calc(var(--lightness, 30) * 1%)
+  border-radius calc(var(--radius, 50) * 1%)
+  transform scale(0) rotate(calc(var(--rotation, 0) * 1deg))
+
+.like-label
+  margin 0 1.5rem
 
 .smash
   min-width 300px
@@ -28,22 +99,23 @@ button
 
 .hulk
   &__body-part
-    stroke black
-    fill orange
+    stroke var(--hulk-outline)
+    fill var(--hulk-green)
 
   &__chin
-    fill red
+    fill var(--hulk-outline)
 
   &__face
-    fill orange
+  &__back-head
+    fill var(--hulk-green)
 
   &__eye
   &__hair
   &__mouth-open
-    fill black
+    fill var(--hulk-stroke)
 
   &__eyebrow
-    stroke black
+    stroke var(--hulk-stroke)
 
   &__pupil
   &__mouth
@@ -54,5 +126,5 @@ button
     fill hsla(190, 100%, 50%, 0.75)
 
   &__shorts
-    fill red
-    stroke brown
+    fill var(--hulk-shorts)
+    stroke var(--hulk-shorts-outline)
