@@ -1,0 +1,96 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+
+// Cup aspect ratio is 620 x 300
+:root
+  --size 500
+  --coefficient 1px
+  --unit calc((var(--size) / 620) * var(--coefficient))
+  --cup-base hsla(0, 100%, 50%, 0.5)
+
+c($clip)
+  -webkit-clip-path $clip
+  clip-path $clip
+
+body
+  display flex
+  align-items center
+  justify-content center
+  min-height 100vh
+
+
+img
+.cup
+  height calc(var(--unit) * 300)
+  width calc(var(--unit) * 620)
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-10%, -50%)
+
+img
+  opacity 0.5
+  z-index 2
+
+.cup
+  background hsla(0, 100%, 50%, 0.1)
+
+  *
+    position absolute
+
+  &__body
+    background rgba(128,255,0,0.2)
+    width 43.35%
+    height 82.5%
+    top 5.25%
+    left 4.8%
+    position absolute
+
+
+    // Cup top half body
+    & > div:nth-of-type(1)
+      height 108%
+      width 99.5%
+      background var(--cup-base)
+      border-radius 19% 20% 38% 31%/65% 52% 35% 44%
+      top -7%
+      c(inset(8% 0 10% 0))
+
+    & > div:nth-of-type(2)
+      bottom 0
+      left 50%
+      transform translate(-50%, 0)
+      background var(--cup-base)
+      height 18%
+      width 87.5%
+      border-radius 0 0 35% 35%/0 0 100% 100%
+
+      &:after
+        content ''
+        position absolute
+        background var(--cup-base)
+        height 54%
+        width 35%
+        border-radius 0 0 50% 50%/0 0 100% 100%
+        left 0
+        top 0
+        transform rotate(66deg) translate(-32%, 100%)
+
+    & > div:nth-of-type(3)
+      top 0
+      left 8.5%
+      width 83%
+      height 4%
+      background var(--cup-base)
+      border-radius 75% 25% 0 0 / 44% 50% 0 0
+
+  &__handle
+    background hsla(260, 100%, 50%, 0.5)
+    height 44.5%
+    width 16.5%
+    left 45%
+    top 17%
+
