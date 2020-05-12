@@ -1,12 +1,28 @@
+mixin flower($color, $x, $y, $size, $rotation)
+  .flower(style=`--x: ${$x}; --y: ${$y}; --size: ${$size}; --petal-color: ${$color}; --r: ${$rotation};`)
+    - let p = 0
+    while (p < 4)
+      .flower__petal(class=`flower__petal--${p}`)
+        div
+        div
+        div
+        div
+      - p++
+    .flower__core
 img(src='leif.png')
 .leif
+  .leif__cap
+    div
+      div
+      div
+      div
+      div
+      div
+      div
+    div
   .leif__head
     .leif__face
-      .leif__nose
-      .leif__mouth
-        div
-        div
-        div
+      .leif__face-border
         div
         div
         div
@@ -14,5 +30,24 @@ img(src='leif.png')
         div
           div
           div
+      .leif__eye.leif__eye--left
+        div
+          div
+          div
+      .leif__face-patch
+      .leif__mouth
+        div
+        div
+        div
+        div
+        div
+        div
+      .leif__mouth-patch
+      .leif__nose
       .leif__cheek.leif__cheek--left
       .leif__cheek.leif__cheek--right
+  +flower('hsl(190, 100%, 50%)', 0, 0, 125, 0)
+  +flower('hsl(320, 100%, 50%)', 140, -75, 75, 40)
+  +flower('hsl(30, 100%, 50%)', -140, -75, 75, 80)
+  +flower('hsl(0, 100%, 50%)', -170, -85, 105, 85)
+  +flower('hsl(260, 100%, 50%)', 170, -85, 105, -85)
