@@ -15,36 +15,251 @@ c($p)
   --min-size 200
   --unit calc((var(--size) / 493) * var(--coefficient))
   --stroke hsl(0, 0%, 5%)
-  --lip-color hsla(0, 100%, 85%, 1.2)
-  --cheek-color hsla(0, 100%, 75%, 1)
-  --cap-color hsla(100, 90%, 40%, 1)
-  --eye-shade hsla(20, 20%, 25%, 1.2)
-  --fur-color hsla(33, 23%, 62%, 1)
-  --face hsla(0, 0%, 95%,1.1)
+  --lip-color hsl(0, 100%, 85%)
+  --cheek-color hsl(0, 100%, 75%)
+  --tongue-color hsl(0, 100%, 60%)
+  --cap-color hsl(100, 90%, 40%)
+  --leaf-color hsl(100, 90%, 30%)
+  --backdrop hsl(140, 80%, 28%)
+  --eye-shade hsl(20, 20%, 25%)
+  --fur-color hsl(33, 23%, 62%)
+  --face hsl(0, 0%, 95%)
+  --eye hsl(0, 0%, 95%)
+  --outfit hsl(40, 90%, 50%)
+  --pupil hsl(205, 80%, 20%)
+  --pot-color hsl(40, 100%, 70%)
   --default-petal-color red
+  --cap-accent hsl(50, 100%, 50%)
+  --peak-color hsl(100, 90%, 25%)
+  --flower-core hsl(50, 90%, 50%)
   --stroke-border '%s solid var(--stroke)' % u(5)
+
+body
+  min-height 100vh
+  background hsl(0, 100%, 85%)
 
 img
 .leif
   height u(511)
   width u(493)
-  min-width calc(var(--min-size) * 1px)
-  min-height calc((var(--min-size) * (511 / 493)) * 1px)
   position absolute
   top 50%
   left 50%
   transform translate(-50%, -50%)
 
-img
-  opacity 0.35
-
 .leif
-  background hsla(0, 100%, 50%, 0.25)
 
   *
   *:after
   *:before
     position absolute
+
+  &__himself
+    height 100%
+    width 100%
+    c(circle(50% at 50% 38%))
+
+  &__container
+    height 100%
+    width 100%
+    animation pop-in 0.5s 1s both cubic-bezier(.58,.68,.71,1.41)
+
+  &__eye-closed
+    animation blink-closed 8s infinite steps(1)
+    border u(10) solid var(--stroke)
+    c(polygon(0 45%, 100% 60%, 100% 100%, 0 100%))
+    border-radius 50%
+
+    &--left
+      height 18%
+      left 12%
+      width 14%
+      bottom 51%
+    &--right
+      height 19%
+      left 48%
+      width 16%
+      bottom 45%
+
+  &__arch
+    height 100%
+    width 100%
+    border-radius 50%
+    background var(--backdrop)
+    bottom 12%
+    border var(--stroke-border)
+
+  &__eye-open
+    animation blink-open 8s infinite steps(1)
+
+    &--left
+      height 18%
+      left 12%
+      width 14%
+      border-radius 50%
+      background var(--eye)
+      bottom 51%
+
+      &:after
+        content ''
+        position absolute
+        top 35%
+        left 60%
+        height 50%
+        width 50%
+        transform translate(-50%, -50%)
+        border-radius 50%
+        background var(--pupil)
+
+    &--right
+      height 19%
+      left 48%
+      width 16%
+      border-radius 50%
+      background var(--eye)
+      bottom 45%
+
+      &:after
+        content ''
+        position absolute
+        top 34%
+        left 39%
+        height 50%
+        width 50%
+        transform translate(-50%, -50%)
+        border-radius 50%
+        background var(--pupil)
+
+  &__pot
+    height 17%
+    width 20%
+    background var(--stroke)
+    left 32%
+    top 60%
+    transform rotate(-4deg)
+    c(polygon(0 -100%, 100% -100%, 100% 25%, 90% 25%, 70% 100%, 30% 100%, 10% 25%, 0 25%))
+
+    &:after
+    &:before
+      content ''
+      background var(--pot-color)
+      left 50%
+      transform translate(-50%, 0)
+      z-index 3
+
+    &:before
+      height 15%
+      width 90%
+      top 5%
+
+    &:after
+      bottom 5%
+      height 70%
+      width 90%
+      c(polygon(0 -100%, 100% -100%, 100% 25%, 92% -10%, 70% 100%, 30% 100%, 8% -10%, 0 25%))
+
+    .flower__container
+      width 100%
+      height 100%
+      left 0
+      bottom 0
+      animation grow 2s 2s linear both
+
+    .flower__show
+      height 100%
+      width 100%
+      left 0
+      bottom 100%
+      c(inset(0 0 0 0))
+
+    .flower
+      bottom 0
+      --size 70
+      --r 40
+      --hue 210
+      z-index -2
+
+      &:before
+        content ''
+        width 10%
+        height 100%
+        background var(--stroke)
+        top 50%
+        left 50%
+        transform-origin 50% 0
+        transform rotate(calc(var(--r) * -1deg)) translate(-50%, 0)
+
+  &__arm--right
+    left 56%
+    top 58%
+    height 15%
+    transform rotate(7deg)
+    width 9%
+    border var(--stroke-border)
+    border-radius 30% 70%
+    background var(--fur-color)
+
+  &__body
+    height 50%
+    width 27%
+    background var(--outfit)
+    top 50%
+    left 36%
+    border var(--stroke-border)
+    border-radius 40% 60% 50% 50% / 62% 62% 30% 30%
+
+    &:after
+    &:before
+      content ''
+
+    &:before
+      height 20%
+      width 100%
+      top 15%
+      left 0
+      background var(--fur-color)
+
+    &:after
+      width 25%
+      height 30%
+      border var(--stroke-border)
+      border-radius 50%
+      right 10%
+      top 10%
+      background var(--outfit)
+      transform rotate(12deg) translate(15%, 0)
+
+
+  &__forearm
+    height 8%
+    width 20%
+    background var(--fur-color)
+    border var(--stroke-border)
+    top 65.25%
+    left 42%
+    transform-origin 100% 50%
+    transform rotate(-8deg)
+    border-radius 30% 0 0 30% / 25% 0 0 25%
+    c(polygon(-50% 0, 90% 0, 96% 100%, -50% 100%))
+
+    .claw
+      width 35%
+      height 35%
+      border-radius 50%
+      background var(--stroke)
+      top calc(var(--t, 5) * 1%)
+      right 95%
+      transform-origin 100% 50%
+      transform rotate(calc(var(--r, 1) * 1deg))
+      c(polygon(0 50%, 100% 0, 100% 100%))
+
+      &:nth-of-type(2)
+        --t 30
+        --r -3
+      &:nth-of-type(3)
+        --t 60
+        --r 2
+
 
   &__head
     top 13.5%
@@ -116,7 +331,7 @@ img
       content ''
       width 13%
       height 34%
-      background black
+      background hsl(0, 0%, 25%)
       border-radius 50% / 25%
 
     &:after
@@ -152,6 +367,30 @@ img
     transform-origin 0 100%
     transform rotate(5deg)
 
+  &__arm--left
+    height 30%
+    width 8%
+    top 56%
+    background var(--fur-color)
+    border var(--stroke-border)
+    left 40%
+    border-radius 100% 0 50% 50% / 50%
+    transform-origin 50% 0
+    transform rotate(34deg)
+
+    .claw
+      height 13%
+      width 10%
+      background var(--stroke)
+      border-radius 50%
+      top 95%
+      left calc(var(--x, 26) * 1%)
+
+      &:nth-of-type(2)
+        --x 37
+      &:nth-of-type(3)
+        --x 50
+
   &__mouth
     width 45%
     height 26%
@@ -172,7 +411,7 @@ img
       border-radius 0 0 50% 50%/0 0 100% 100%
 
     & > div:nth-of-type(2)
-      background hsla(0, 0%, 0%, 0.5)
+      background hsla(0, 0%, 0%, 1)
       bottom 21%
       width 133%
       height 200%
@@ -191,7 +430,7 @@ img
         bottom -2%
         left 50%
         transform translate(-50%, 0)
-        background var(--cheek-color)
+        background var(--tongue-color)
 
     & > div:nth-of-type(3)
       background var(--lip-color)
@@ -308,7 +547,6 @@ img
   &__cap
     height 20%
     width 30%
-    background hsla(320, 100%, 50%, 0.2)
     left 39%
     top 1%
 
@@ -328,7 +566,6 @@ img
         border-radius 50%
         top 13%
         left 31%
-        // z-index 2
 
       & > div:nth-of-type(1)
         z-index 2
@@ -338,7 +575,7 @@ img
       & > div:nth-of-type(4)
       & > div:nth-of-type(5)
       & > div:nth-of-type(6)
-        background hsla(50, 100%, 50%, 1)
+        background var(--cap-accent)
         transform translate(calc(var(--x, 0) * 1%), calc(var(--y, 0) * 1%)) rotate(calc(var(--r, 0) * 1deg))
 
       & > div:nth-of-type(2)
@@ -378,10 +615,11 @@ img
       border var(--stroke-border)
       border-radius 50%
       transform rotate(17deg) translate(-1%, 1%)
-      background var(--cap-color)
+      background var(--peak-color)
 
 
 .flower
+  --petal-color 'hsl(%s, 100%, 50%)' % var(--hue)
   height calc(var(--size, 125) * var(--unit))
   width calc(var(--size, 125) * var(--unit))
   bottom 1%
@@ -396,7 +634,7 @@ img
     border-radius 50%
     border var(--stroke-border)
     transform translate(-50%, -50%)
-    background hsla(60, 100%, 50%, 1)
+    background var(--flower-core)
     transform-style preserve-3d
 
     &:after
@@ -495,3 +733,196 @@ img
         transform translate(-50%, 0) rotate(37deg) translate(27%, 0%)
       &:after
         transform translate(-50%, 0) rotate(-37deg) translate(-27%, 0%)
+
+
+.flower--1
+  --hue 190
+  --x 0
+  --y 0
+  --size 125
+  --r 0
+.flower--2
+  --hue 320
+  --x 140
+  --y -75
+  --size 75
+  --r 40
+.flower--3
+  --hue 30
+  --x -140
+  --y -75
+  --size 75
+  --r 80
+.flower--4
+  --hue 0
+  --x -170
+  --y -85
+  --size 105
+  --r 85
+.flower--5
+  --hue 260
+  --x 170
+  --y -85
+  --size 105
+  --r -85
+
+.leaf
+  left calc(var(--x) * 1%)
+  top calc(var(--y) * 1%)
+  height 14%
+  width 7%
+  transform-origin 50% 100%
+  transform rotate(calc(var(--r) * 1deg)) scale(var(--scale, 1)) rotateY(calc(var(--flip, 0) * 180deg))
+
+  & > div:nth-of-type(1)
+    border-radius 90% 10% 50% 50% / 75% 10% 50% 25%
+    height 100%
+    width 100%
+    background var(--stroke)
+    c(polygon(0 0, 103% 0, 50% 50%, 100% 100%, 0 100%))
+
+  & > div:nth-of-type(2)
+    background var(--leaf-color)
+    width 100%
+    border-radius 50%
+    height 100%
+    border-radius 90% 10% 50% 50% / 75% 10% 50% 25%
+    transform scale(0.7) translate(6%, 0)
+    c(polygon(0 0, 90% 0, 75% 50%, 100% 100%, 0 100%))
+
+  & > div:nth-of-type(3)
+    height 100%
+    width 100%
+    left 100%
+    top 0
+    border-left var(--stroke-border)
+    border-width u(10)
+    // border-color orange
+    transform-origin bottom center
+    border-radius 90% 10% 50% 50% / 75% 10% 50% 25%
+    transform translate(-15%, 0) rotate(-18deg)
+    c(polygon(0 0, 71% 0, 100% 41%, 9% 81%))
+
+.leaf--1
+  --x 8
+  --y 52
+  --r 5
+  --flip 0
+  --scale 1
+.leaf--2
+  --x 9
+  --y 56
+  --r -45
+  --flip 1
+  --scale 1.1
+.leaf--3
+  --x 23
+  --y 68
+  --r -85
+  --flip 0
+  --scale 1
+.leaf--4
+  --x 26
+  --y 67
+  --r 70
+  --flip 1
+  --scale 1.05
+.leaf--5
+  --x 24
+  --y 68
+  --r -140
+  --flip 0
+  --scale 1
+.leaf--6
+  --x 66
+  --y 66
+  --r -65
+  --flip 0
+  --scale 1
+.leaf--7
+  --x 71
+  --y 68
+  --r 145
+  --flip 1
+  --scale 1
+.leaf--8
+  --x 71
+  --y 68
+  --r 90
+  --flip 1
+  --scale 1
+.leaf--9
+  --x 84
+  --y 52
+  --r 5
+  --flip 1
+  --scale 1
+.leaf--10
+  --x 86
+  --y 52
+  --r 40
+  --flip 1
+  --scale 1
+
+.star
+  height u(20)
+  width u(20)
+  top calc(var(--y, 50) * 1%)
+  left calc(var(--x, 50) * 1%)
+  animation sparkle 2s calc(var(--d, 0) * 1s) infinite both
+
+  &:after
+  &:before
+    content ''
+    height 100%
+    width 40%
+    border-radius 50% / 25%
+    background white
+    left 50%
+    top 0
+    transform translate(-50%, 0) rotate(calc(var(--r, 0) * 1deg))
+  &:after
+    --r 90
+
+  &--1
+    --x 30
+    --y 90
+    --d 2.25
+  &--2
+    --x 4
+    --y 51
+    --d 2
+  &--3
+    --x 92
+    --y 49
+    --d 3
+  &--4
+    --x 66
+    --y 92
+    --d 2.5
+
+@keyframes pop-in
+  from
+    transform translate(0, 100%)
+
+@keyframes sparkle
+  0%, 50%, 100%
+    transform scale(0) rotate(0)
+
+  25%
+    transform scale(1.2) rotate(450deg)
+
+@keyframes grow
+  from
+    transform translate(0, 100%)
+
+@keyframes blink-open
+  0%, 10%, 40%, 100%
+    transform scale(1)
+  25%
+    transform scale(0)
+@keyframes blink-closed
+  0%, 10%, 40%, 100%
+    transform scale(0)
+  25%
+    transform scale(1)

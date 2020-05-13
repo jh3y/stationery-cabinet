@@ -1,5 +1,10 @@
-mixin flower($color, $x, $y, $size, $rotation)
-  .flower(style=`--x: ${$x}; --y: ${$y}; --size: ${$size}; --petal-color: ${$color}; --r: ${$rotation};`)
+mixin leaf($index)
+  .leaf(class=`leaf--${$index}`)
+    div
+    div
+    div
+mixin flower($index)
+  .flower(class=`flower--${$index}`)
     - let p = 0
     while (p < 4)
       .flower__petal(class=`flower__petal--${p}`)
@@ -9,45 +14,72 @@ mixin flower($color, $x, $y, $size, $rotation)
         div
       - p++
     .flower__core
-img(src='leif.png')
 .leif
-  .leif__cap
-    div
-      div
-      div
-      div
-      div
-      div
-      div
-    div
-  .leif__head
-    .leif__face
-      .leif__face-border
-        div
-        div
-        div
-      .leif__eye.leif__eye--right
+  .leif__arch
+  .leif__himself
+    .leif__container
+      .leif__body
+      .leif__arm--left
+        .claw
+        .claw
+        .claw
+      .leif__arm--right
+      .leif__cap
         div
           div
           div
-      .leif__eye.leif__eye--left
-        div
           div
           div
-      .leif__face-patch
-      .leif__mouth
+          div
+          div
         div
-        div
-        div
-        div
-        div
-        div
-      .leif__mouth-patch
-      .leif__nose
-      .leif__cheek.leif__cheek--left
-      .leif__cheek.leif__cheek--right
-  +flower('hsl(190, 100%, 50%)', 0, 0, 125, 0)
-  +flower('hsl(320, 100%, 50%)', 140, -75, 75, 40)
-  +flower('hsl(30, 100%, 50%)', -140, -75, 75, 80)
-  +flower('hsl(0, 100%, 50%)', -170, -85, 105, 85)
-  +flower('hsl(260, 100%, 50%)', 170, -85, 105, -85)
+      .leif__head
+        .leif__face
+          .leif__face-border
+            div
+            div
+            div
+          .leif__eye.leif__eye--right
+            div
+              div
+              div
+          .leif__eye.leif__eye--left
+            div
+              div
+              div
+          .leif__face-patch
+          .leif__mouth
+            div
+            div
+            div
+            div
+            div
+            div
+          .leif__mouth-patch
+          .leif__nose
+          .leif__cheek.leif__cheek--left
+          .leif__cheek.leif__cheek--right
+        .leif__eye-open.leif__eye-open--left
+        .leif__eye-open.leif__eye-open--right
+        .leif__eye-closed.leif__eye-closed--left
+        .leif__eye-closed.leif__eye-closed--right
+      .leif__pot
+        .flower__show
+          .flower__container
+            +flower()
+      .leif__forearm
+        .claw
+        .claw
+        .claw
+  - let l = 1
+  while l < 11
+    +leaf(l)
+    - l++
+  - let f = 1
+  while f < 6
+    +flower(f)
+    - f++
+  - let s = 1
+  while s < 5
+    .star(class=`star--${s}`)
+    - s++
