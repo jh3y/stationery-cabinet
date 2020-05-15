@@ -1,0 +1,122 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+body
+  align-items center
+  display flex
+  justify-content center
+  min-height 100vh
+
+.launch-control
+  width 240px
+  height 100px
+  position absolute
+  background hsla(0, 100%, 50%, 0.3)
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+  &__button
+    position absolute
+    top 0
+    left 0
+    height 100%
+    width 100%
+
+.rocket
+.control-tower
+  width 100%
+  position absolute
+  bottom 0
+  // display none
+
+.launch-control__jets
+.launch-control__bubbles
+  position absolute
+  height 100%
+  width 100%
+
+.jet
+  background hsla(30, 100%, 50%, 0.6)
+  position absolute
+  bottom 24%
+
+  &--one
+  &--three
+    width 8%
+    height 38%
+  &--one
+    left 27%
+  &--three
+    right 27%
+  &--two
+    left 50%
+    width 20%
+    height 38%
+    transform translate(-50%, 0)
+
+.launch-control__bubbles--two
+  transform rotateY(180deg)
+
+.bubble
+  position absolute
+  left calc(var(--x, 50) * 1%)
+  bottom 24%
+  border-radius 50%
+  background 'hsl(0, 0%, %s)' % calc(var(--l, 80) * 1%)
+  height calc(var(--s, 10) * 1px)
+  width calc(var(--s, 10) * 1px)
+
+  &--0
+  &--10
+    --s 60
+    --l 94
+    --x 0
+  &--1
+  &--11
+    --s 40
+    --l 85
+    --x 15
+  &--2
+  &--12
+    --s 38
+    --l 98
+    --x 24
+  &--3
+  &--13
+    --s 28
+    --l 80
+    --x 32
+  &--4
+  &--14
+    --s 32
+    --l 98
+    --x 36
+  &--5
+  &--15
+    --s 40
+    --l 86
+    --x 42
+  &--6
+  &--16
+    --s 29
+    --l 93
+    --x 50
+  &--7
+  &--17
+    --s 35
+    --l 87
+    --x 56
+  &--8
+  &--18
+    --s 40
+    --l 98
+    --x 65
+  &--9
+  &--19
+    --s 60
+    --l 89
+    --x 72
+

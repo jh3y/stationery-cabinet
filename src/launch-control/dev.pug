@@ -1,0 +1,18 @@
+.launch-control
+  button.launch-control__button Launch
+  .launch-control__jets
+    .jet.jet--one
+    .jet.jet--two
+    .jet.jet--three
+  include rocket.pug
+  .launch-control__bubbles
+    - let c = 0
+    while c < 10
+      .launch-control__bubble.bubble(class=`bubble--${c}`)
+      - c++
+  include control-tower.pug
+  .launch-control__bubbles.launch-control__bubbles--two
+    - let d = 0
+    while d < 10
+      .launch-control__bubble.bubble(class=`bubble--${10 + d}`)
+      - d++
