@@ -2,21 +2,104 @@
 *:after
 *:before
   box-sizing border-box
+:root
+  --frame hsl(355, 6%, 53%)
+  --window hsl(184, 95%, 95%)
+  --building hsl(180, 2%, 55%)
+  --door hsl(200, 9%, 25%)
+  --cable hsl(0, 0%, 0%)
+  --walkway hsl(0, 0%, 75%)
+  --stroke hsl(0, 0%, 10%)
+  --pupil hsl(0, 0%, 100%)
+  --tongue hsl(0, 100%, 50%)
+  --aux hsl(355, 61%, 53%)
+  --rocket-shine hsla(0, 0%, 100%, 0.85)
+  --rocket-base hsl(0, 0%, 15%)
+  --rocket-wing hsl(0, 0%, 35%)
+  --rocket-body hsl(0, 0%, 80%)
+  --hatch hsl(0, 0%, 20%)
 
 body
   align-items center
   display flex
   justify-content center
   min-height 100vh
+  background hsl(295, 61%, 90%)
+
+.char
+  display inline-block
+
+.rocket
+  &__stroke
+    fill var(--stroke)
+    stroke var(--stroke)
+
+  &__face-takeoff path
+    fill none
+
+  &__base-shine
+    fill var(--rocket-shine)
+
+  &__base
+    fill var(--rocket-base)
+  &__windscreen
+    stroke var(--rocket-base)
+
+  &__wing
+    fill var(--rocket-wing)
+
+  &__ship
+    &-tip
+      fill var(--rocket-base)
+    &-body
+      fill var(--rocket-body)
+    &-shine
+      fill var(--rocket-shine)
+
+  &__aux
+    fill var(--aux)
+
+    &-shine
+      fill var(--rocket-shine)
+    &-base
+      fill var(--rocket-base)
+
+  &__pupil
+    fill var(--pupil)
+
+  &__tongue
+    fill var(--tongue)
+
 
 .launch-control
   width 240px
   height 100px
   position absolute
-  background hsla(0, 100%, 50%, 0.3)
   top 50%
   left 50%
   transform translate(-50%, -50%)
+
+  &__window
+    fill var(--window)
+
+  &__door
+    fill var(--door)
+
+  &__walkway
+    stroke var(--walkway)
+
+  &__cable
+    stroke var(--cable)
+
+  &__hatch
+    stroke var(--hatch)
+
+  &__frame
+  &__tower
+    stroke var(--frame)
+
+  &__tower
+    fill var(--building)
 
   &__button
     position absolute
@@ -24,22 +107,41 @@ body
     left 0
     height 100%
     width 100%
+    background 'hsl(%s, 65%, %s)' % (var(--h, 115) calc(var(--l, 50) * 1%))
+    color hsl(0, 0%, 100%)
+    font-weight bold
+    outline transparent
+    font-size 2rem
+    font-family sans-serif
+    cursor pointer
+    border-radius 6px
+    padding 0
+    border 0
+    margin 0
+    box-shadow '1px 4px 10px 0 hsla(%s, 53%, 6%, 0.5)' % var(--h, 116)
+
+    &:hover
+      --l 60
+
+    &:active
+      --l 40
 
 .rocket
 .control-tower
   width 100%
   position absolute
   bottom 0
-  // display none
+  display none
 
 .launch-control__jets
 .launch-control__bubbles
   position absolute
   height 100%
   width 100%
+  display none
 
 .jet
-  background hsla(30, 100%, 50%, 0.6)
+  background hsla(23, 94%, 54%, 0.75)
   position absolute
   bottom 24%
 
@@ -55,7 +157,6 @@ body
     left 50%
     width 20%
     height 38%
-    transform translate(-50%, 0)
 
 .launch-control__bubbles--two
   transform rotateY(180deg)
@@ -120,3 +221,34 @@ body
     --l 89
     --x 72
 
+label
+  height 44px
+  width 44px
+  position fixed
+  bottom 1rem
+  right 1rem
+  cursor pointer
+
+  & > svg
+    position absolute
+    height 100%
+    width 100%
+    top 0
+    left 0
+
+  path
+    fill hsl(297, 63%, 67%)
+
+  svg:nth-of-type(1)
+    display none
+
+[type='checkbox']
+  // opacity 0
+  height 0
+  width 0
+
+:checked ~ label
+  svg:nth-of-type(1)
+    display block
+  svg:nth-of-type(2)
+    display none

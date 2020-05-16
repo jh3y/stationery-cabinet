@@ -1,18 +1,80 @@
 .launch-control
-  button.launch-control__button Launch
+  button.launch-control__button
+    span(data-splitting='') Launch
   .launch-control__jets
     .jet.jet--one
     .jet.jet--two
     .jet.jet--three
-  include rocket.pug
+  svg.rocket(xmlns='http://www.w3.org/2000/svg' viewBox='0 0 63.5 65.593')
+    defs
+      clipPath#rocket-clip
+        rect#rocket-clip-rect(width='63.5' height='58.593' x='16.7083' fill='red' y='109.291')
+    g(transform='translate(-16.7083 -109.291)' clip-path="url(#rocket-clip)")
+      g.rocket__ship
+        path.rocket__aux(d='M36.383 130.8587a2.8863 2.8863 0 00-2.8928 2.8927v22.9307h5.7859v-22.9307c0-1.6026-1.2905-2.8927-2.8931-2.8927z')
+        path.rocket__aux-base(d='M33.4903 156.682h5.7858l1.1853 2.2577h-8.1565z')
+        path.rocket__aux-shine(d='M36.3833 156.682v2.2577h4.078l-1.1852-2.2576z')
+        path.rocket__aux(d='M60.5332 130.8587a2.8863 2.8863 0 00-2.8927 2.8927v22.9307h5.7858v-22.9307c0-1.6026-1.2905-2.8927-2.8931-2.8927z')
+        path.rocket__aux-base(d='M57.6405 156.682h5.7858l1.1853 2.2577h-8.1564z')
+        path.rocket__aux-shine(d='M60.5336 156.682v2.2577h4.078l-1.1853-2.2576z')
+        path.rocket__wing(d='M33.1619 146.646c1.756-4.0332 8.8335-9.804 8.8335-9.804h12.9258s7.0774 5.7708 8.8335 9.804c1.1974 2.75.7902 8.9636.7902 8.9636H32.3717s-.4072-6.2135.7902-8.9636z')
+        image.avatar(href='https://s3-us-west-2.amazonaws.com/s.cdpn.io/605876/bear-with-cap.svg' x='58' y='148' height='5' width='5')
+        path.rocket__ship-body(d='M48.458 109.291c-4.201 0-7.583 8.5189-7.583 12.72v33.5987h15.1666V122.011c0-4.2011-3.3824-12.72-7.5835-12.72z')
+        path.rocket__ship-shine(d='M48.4586 109.2912v46.3185h7.583v-33.5986c0-4.201-3.382-12.7194-7.583-12.72z')
+        path.rocket__ship-tip(d='M48.4582 109.2912c-2.7205 0-5.0961 3.572-6.4337 7.2308h12.8673c-1.3377-3.6587-3.7132-7.2308-6.4336-7.2308z')
+        rect.rocket__wing(width='1.9756' height='18.7677' x='47.4705' y='136.8419' ry='0')
+        path.rocket__base(d='M42.8505 155.6096H54.066l1.9756 4.939H40.875z')
+        path.rocket__windscreen(d='M44.0894 122.0853c.9012-.9715 2.5666-1.5699 4.3689-1.5699 1.8023 0 3.4677.5984 4.3688 1.5698' fill='none' stroke-width='1.5804' stroke-linecap='round' stroke-linejoin='round')
+        g.rocket__face
+          g.rocket__eyes
+            circle.rocket__stroke(cx='44.7541' cy='130.0122' r='1.27' stroke='none' stroke-width='0')
+            circle.rocket__pupil(cx='44.248' cy='129.6164' r='.3951')
+            circle.rocket__stroke(r='1.27' cy='130.0122' cx='52.1624' stroke='none' stroke-width='0')
+            circle.rocket__pupil(r='.3951' cy='129.6164' cx='51.6563')
+          g.rocket__mouth
+            path.rocket__stroke(d='M46.902 130.3855a1.5693 1.5693 0 00-.0132.1894 1.5693 1.5693 0 001.5693 1.5697 1.5693 1.5693 0 001.5696-1.5697 1.5693 1.5693 0 00-.0135-.1894z' stroke='none' stroke-width='0')
+            path.rocket__tongue(d='M49.1569 131.1012a1.5693 1.5693 0 00-1.405.8736 1.5693 1.5693 0 00.7062.1698 1.5693 1.5693 0 001.4049-.8736 1.5693 1.5693 0 00-.7061-.1698z')
+        g.rocket__face-takeoff
+          path.rocket__stroke(d='M53.0702 131.112l-1.8204-1.0998 1.8204-1.0999' fill='none' stroke-width='.7902' stroke-linecap='round' stroke-linejoin='round')
+          circle.rocket__stroke(r='.6713' cy='131.2651' cx='48.4583' stroke-width='0')
+          path.rocket__stroke(d='M43.8464 131.112l1.8203-1.0998-1.8203-1.0999' fill='none' stroke-width='.7902' stroke-linecap='round' stroke-linejoin='round')
+        path.rocket__base-shine(d='M48.4775 155.6097v4.9389h7.5642l-1.9756-4.9389z' fill='gray')
   .launch-control__bubbles
     - let c = 0
     while c < 10
       .launch-control__bubble.bubble(class=`bubble--${c}`)
       - c++
-  include control-tower.pug
+  svg.control-tower(xmlns='http://www.w3.org/2000/svg' viewBox='0 0 63.5 65.593')
+    defs
+      clipPath#body
+        rect#rocket-clip-rect(width='63.5' height='58.593' x='16.7083' y='109.291')
+    g(transform='translate(-16.7083 -109.291)' clip-path="url(#body)")
+      g.control-tower__body
+        path.launch-control__frame(d='M27.2143 169.244V138.25h7.7485v30.994z' fill='none' stroke-width='1.0583')
+        path.launch-control__frame(d='M27.2143 169.244l7.7485-7.7485-7.7485-7.7485 7.7485-7.7485-7.7485-7.7485' fill='none' stroke-width='.7937')
+        path.launch-control__frame(d='M34.9628 169.244l-7.7485-7.7485 7.7485-7.7485-7.7485-7.7485 7.7485-7.7485' fill='none' stroke-width='.7937')
+        path.launch-control__frame(d='M53.1057 169.2452h9.2604v-18.5209h-9.2604z' fill='none' stroke-width='1.0583')
+        path.launch-control__frame(d='M53.1057 169.2452l9.2604-9.2605-9.2604-9.2604' fill='none' stroke-width='.7937')
+        path.launch-control__cable(d='M71.695 169.2452v-39.9698' fill='none'  stroke-width='.2646')
+        path.launch-control__frame(d='M62.366 169.2452l-9.2603-9.2605 9.2604-9.2604' fill='none' stroke-width='.7937')
+        path.launch-control__frame(d='M68.9555 169.2452v-51.8503h4.8109v51.8503z' fill='none' stroke-width='1.0583')
+        path.launch-control__frame(d='M68.9555 169.2452l4.8109-4.8109-4.8109-4.8108 4.8109-4.8109-4.8109-4.8108 4.8109-4.8109-4.8109-4.8108 4.8109-4.8109-4.8109-4.8108 4.8109-4.8109' fill='none' stroke-width='.7937')
+        path.launch-control__tower(stroke-width='.7937' stroke-linecap='round' stroke-linejoin='round' d='M68.8305 117.2626h5.061v12.0128h-5.061z')
+        path.launch-control__walkway(d='M72.1636 125.413h-16.122' fill='none' stroke-width='.8869')
+        path.launch-control__door(d='M70.0469 124.9695h.9909v-1.7915h-.9909z')
+        path.launch-control__window(d='M68.4265 117.9294h5.869v2.6727h-5.869z')
+    g(transform='translate(-16.7083 -109.291)')
+      path.launch-control__hatch(d='M21.5217 169.2452h53.8731' stroke-width='3.1195')
   .launch-control__bubbles.launch-control__bubbles--two
     - let d = 0
     while d < 10
       .launch-control__bubble.bubble(class=`bubble--${10 + d}`)
       - d++
+input#volume(type='checkbox')
+label(for='volume', title='Toggle sound')
+  //- On
+  svg(viewBox="0 0 24 24")
+    path(d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z")
+  //- Off
+  svg(viewBox="0 0 24 24")
+    path(d="M12,4L9.91,6.09L12,8.18M4.27,3L3,4.27L7.73,9H3V15H7L12,20V13.27L16.25,17.53C15.58,18.04 14.83,18.46 14,18.7V20.77C15.38,20.45 16.63,19.82 17.68,18.96L19.73,21L21,19.73L12,10.73M19,12C19,12.94 18.8,13.82 18.46,14.64L19.97,16.15C20.62,14.91 21,13.5 21,12C21,7.72 18,4.14 14,3.23V5.29C16.89,6.15 19,8.83 19,12M16.5,12C16.5,10.23 15.5,8.71 14,7.97V10.18L16.45,12.63C16.5,12.43 16.5,12.21 16.5,12Z")
