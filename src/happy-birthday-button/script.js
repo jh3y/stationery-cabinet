@@ -23,26 +23,11 @@ const SOUNDS = {
   POP: new Audio(
     'https://s3-us-west-2.amazonaws.com/s.cdpn.io/605876/pop-trimmed.mp3'
   ),
+  HORN: new Audio(
+    'https://s3-us-west-2.amazonaws.com/s.cdpn.io/605876/horn.mp3'
+  ),
 }
 
-// set('.birthday-button__cake', { display: 'none' })
-// set('.cake__frosting--end', { opacity: 0 })
-// set('.cake__sprinkle', {})
-// set('#frosting', {
-//   transformOrigin: '50% 10%',
-//   scaleX: 0,
-//   scaleY: 0,
-// })
-// set('.cake__frosting-patch', { display: 'none' })
-// set(['.cake__frosting--duplicate', '.cake__sprinkles--duplicate'], { x: -65 })
-// set('.cake__face', { x: -110 })
-// set('.cake__face--straining', { display: 'none' })
-// set('.cake__sprinkle', {
-//   '--sprinkle-hue': () => Math.random() * 360,
-//   scale: 0,
-//   transformOrigin: '50% 50%',
-// })
-// set('.cake__candle', { scaleY: 0, transformOrigin: '50% 100%' })
 const EYES = document.querySelector('.cake__eyes')
 const BLINK = eyes => {
   gsap.set(eyes, { scaleY: 1 })
@@ -235,6 +220,7 @@ const MASTER_TL = timeline({
   })
   .to('.char', { '--char-sat': 70, '--char-light': 65, duration: 0.2 }, 0)
   .to('.char', {
+    onStart: () => SOUNDS.HORN.play(),
     delay: 0.75,
     y: () => gsap.utils.random(-100, -200),
     x: () => gsap.utils.random(-50, 50),
@@ -255,3 +241,12 @@ BTN.addEventListener('click', () => {
   BTN.setAttribute('disabled', true)
   MASTER_TL.restart()
 })
+
+SOUNDS.TUNE.muted = SOUNDS.MATCH.muted = SOUNDS.HORN.muted = SOUNDS.POP.muted = SOUNDS.CHEER.muted = SOUNDS.BLOW.muted = true
+
+const toggleAudio = () => {
+  SOUNDS.TUNE.muted = SOUNDS.MATCH.muted = SOUNDS.POP.muted = SOUNDS.HORN.muted = SOUNDS.CHEER.muted = SOUNDS.BLOW.muted = !SOUNDS
+    .BLOW.muted
+}
+
+document.querySelector('#volume').addEventListener('input', toggleAudio)
