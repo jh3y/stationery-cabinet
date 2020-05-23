@@ -2,17 +2,16 @@
   box-sizing border-box
 
 :root
-  --tongue red
-  --mouth black
-  --eye black
-  --pupil white
+  --tongue hsl(4, 80%, 42%)
+  --pupil hsl(0, 0%, 100%)
   --icing hsl(0, 0%, 95%)
+  --stroke hsl(0, 0%, 10%)
 
 body
   --frosting 'hsl(%s, 100%, 55%)' % var(--frosting-hue, 0)
   --lightness 50
   --flame 0
-  --glow-hue 65
+  --glow-hue 40
   --glow-saturation 50
   --glow-lightness 35
   --glow-alpha 0.4
@@ -23,6 +22,7 @@ body
   overflow hidden
   align-items center
   justify-content center
+  min-height 100vh
   background 'hsl(180, 30%, %s)' % calc(var(--lightness, 50) * 1%)
 
 .whitespace
@@ -89,20 +89,18 @@ body
     left 50%
     transform translate(-50%, 0)
     width 289.5px
-
-  // &__cloak
-
+    display none
 
 .cake
   &__eye-body
-    fill var(--eye)
+    fill var(--stroke)
   &__eye-pupil
     fill var(--pupil)
   &__tongue
     fill var(--tongue)
   &__mouth-opening
-    fill var(--mouth)
-    stroke var(--mouth)
+    fill var(--stroke)
+    stroke var(--stroke)
   &__sprinkle
     --sprinkle 'hsl(%s, 100%, 75%)' % var(--sprinkle-hue, 0)
     fill var(--sprinkle)
@@ -115,6 +113,14 @@ body
 .candle__flame
   opacity var(--flame, 0)
 
+  &-outer
+    fill hsl(22, 100%, 56%)
+  &-inner
+    fill hsl(50, 85%, 52%)
+
+.face__stroke
+  stroke var(--stroke)
+
 .cake__candle
   &:nth-of-type(1)
     --flame 0
@@ -122,3 +128,38 @@ body
     --flame 0
   &:nth-of-type(3)
     --flame 0
+
+label
+  height 44px
+  width 44px
+  position fixed
+  bottom 1rem
+  right 1rem
+  cursor pointer
+
+  & > svg
+    position absolute
+    height 100%
+    width 100%
+    top 0
+    left 0
+
+  path
+    fill hsl(180, 20%, 35%)
+
+  svg:nth-of-type(1)
+    display none
+
+[type='checkbox']
+  // opacity 0
+  height 0
+  width 0
+  position absolute
+  top 0
+  left 100%
+
+:checked ~ label
+  svg:nth-of-type(1)
+    display block
+  svg:nth-of-type(2)
+    display none
