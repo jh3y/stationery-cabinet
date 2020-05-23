@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="289.545" height="180.069" viewBox="0 0 76.609 47.643">
+  <defs>
+    <pattern xlink:href="#a" id="g" patternTransform="matrix(37.79528 0 0 37.79528 -113.214 -519.662)"/>
+    <pattern id="a" patternTransform="scale(10)" height="1" width="2.5" patternUnits="userSpaceOnUse">
+      <path fill="#fff" d="M0-.5h1v2H0z"/>
+    </pattern>
+    <pattern xlink:href="#b" id="f" patternTransform="matrix(37.79528 0 0 37.79528 -143.929 -500.377)"/>
+    <pattern xlink:href="#c" id="e" patternTransform="matrix(37.79528 0 0 37.79528 -160.714 -512.877)"/>
+    <pattern id="c" patternTransform="scale(10)" height="1" width="11" patternUnits="userSpaceOnUse">
+      <path d="M0-.5h1v2H0z"/>
+    </pattern>
+    <pattern xlink:href="#b" id="d" patternTransform="matrix(37.79528 0 0 37.79528 -160.982 -542.877)"/>
+    <pattern id="b" patternTransform="scale(10)" height="1" width="1.5" patternUnits="userSpaceOnUse">
+      <path d="M0-.5h1v2H0z"/>
+    </pattern>
+  </defs>
+  <g transform="translate(-45.04 -107.238)">
+    <rect ry="3.402" y="128.423" x="51.594" height="26.458" width="63.5" fill="#0ff"/>
+    <text y="138.566" x="83.054" style="line-height:1.25;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center" font-weight="700" font-size="8.467" font-family="sans-serif" letter-spacing="0" word-spacing="0" text-anchor="middle" stroke-width=".265">
+      <tspan style="-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center" y="138.566" x="83.054">Happy</tspan><tspan style="-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center" y="149.149" x="83.054">Birthday</tspan>
+    </text>
+  </g>
+  <g transform="translate(-48.82 -138.799)">
+    <rect ry="3.402" y="159.984" x="55.374" height="26.458" width="63.5" fill="#0ff"/>
+    <path d="M55.373 182.341v.699a3.394 3.394 0 003.402 3.402h56.697a3.394 3.394 0 003.401-3.402v-.699z" fill="#c87137"/>
+  </g>
+  <g transform="translate(-48.82 -138.799)">
+    <rect width="63.5" height="26.458" x="55.374" y="159.984" ry="3.402" fill="#0ff"/>
+    <path d="M58.311 159.194c-1.915 0-3.331 2.043-3.986 3.744-.779 2.021-.762 4.737.529 6.476.861 1.16 2.614 1.318 4.034 1.587 1.32.251 2.689 0 4.033 0H111.326c1.344 0 2.713.251 4.034 0 1.42-.269 3.172-.427 4.033-1.587 1.291-1.739 1.308-4.455.53-6.476-.656-1.701-2.072-3.744-3.987-3.744z" fill="#ff0041" fill-opacity=".534"/>
+    <g transform="translate(63.93)" fill="red" fill-opacity=".534">
+      <rect transform="rotate(-44.064)" ry=".567" y="167.592" x="-91.837" height="1.228" width="3.307"/>
+      <rect transform="rotate(27.01)" ry=".567" y="165.35" x="76.642" height="1.228" width="3.307"/>
+      <rect transform="rotate(85.232)" width="3.307" height="1.228" x="182.37" y="3.842" ry=".567"/>
+      <rect transform="rotate(136.794)" ry=".567" y="-137.013" x="122.349" height="1.228" width="3.307"/>
+      <rect transform="rotate(-28.569)" width="3.307" height="1.228" x="-90.997" y="160.466" ry=".567"/>
+      <rect transform="rotate(-134.37)" ry=".567" y="-124.272" x="-138.396" height="1.228" width="3.307"/>
+      <rect transform="rotate(-37.152)" width="3.307" height="1.228" x="-101.107" y="155.28" ry=".567"/>
+      <rect transform="rotate(-72.723)" ry=".567" y="77.322" x="-169.664" height="1.228" width="3.307"/>
+      <rect transform="rotate(36.566)" width="3.307" height="1.228" x="124.338" y="135.065" ry=".567"/>
+      <rect transform="rotate(-45)" ry=".567" y="150.009" x="-111.692" height="1.228" width="3.307"/>
+      <rect transform="rotate(30)" width="3.307" height="1.228" x="119.879" y="141.701" ry=".567"/>
+      <rect transform="rotate(-55.914)" ry=".567" y="139.024" x="-129.555" height="1.228" width="3.307"/>
+      <rect transform="rotate(-30)" width="3.307" height="1.228" x="-60.133" y="178.671" ry=".567"/>
+      <rect transform="rotate(45)" ry=".567" y="95.647" x="162.293" height="1.228" width="3.307"/>
+    </g>
+    <path d="M58.311 159.194c-1.915 0-3.283-.087-3.986 1.098-.392.661-.073 1.766.529 2.243 1.054.834 2.689 0 4.034 0H115.36c1.344 0 2.979.834 4.033 0 .602-.477.921-1.582.53-2.243-.703-1.185-2.072-1.098-3.987-1.098z" fill="#00f" fill-opacity=".534"/>
+  </g>
+  <g transform="translate(-48.82 -138.799)">
+    <rect width="63.5" height="26.458" x="55.374" y="159.984" ry="3.402" fill="#ff0041" fill-opacity=".534"/>
+    <g transform="matrix(1.38031 0 0 1.38031 34.723 -33.58)">
+      <circle cx="29.86" cy="149.022" r="2.457"/>
+      <circle cx="28.773" cy="148.162" r=".756" fill="#fff"/>
+    </g>
+    <g transform="matrix(1.38031 0 0 1.38031 57.092 -33.58)">
+      <circle r="2.457" cy="149.022" cx="29.86"/>
+      <circle r=".756" cy="148.162" cx="28.773" fill="#fff"/>
+    </g>
+    <path d="M100.673 173.886l-5.248-2.073 5.713-1.466M73.574 173.886l5.248-2.073-5.713-1.466" fill="none" stroke="#000" stroke-width="1.01590816" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M85.016 175.773h4.216" fill="none" stroke="#000" stroke-width=".86683468" stroke-linecap="round"/>
+    <g>
+      <path d="M83.607 174.436a3.652 3.652 0 003.518 2.674 3.652 3.652 0 003.515-2.674z" stroke="#000" stroke-width="1.1801650499999998" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M88.836 175.492a3.113 2.329 0 00-2.869 1.425 3.652 3.652 0 001.158.192 3.652 3.652 0 002.899-1.44 3.113 2.329 0 00-1.188-.177z" fill="red"/>
+    </g>
+  </g>
+  <g transform="translate(-48.82 -137.74)">
+    <rect ry=".567" y="147.888" x="72.548" height="12.001" width="4.252" fill="#ececec"/>
+    <path d="M76.186 146.5c0 1.351-.677 1.388-1.512 1.388s-1.512-.037-1.512-1.388c0-1.35.677-3.504 1.512-3.504s1.512 2.153 1.512 3.504z" fill="#f60"/>
+    <path d="M75.376 146.715c0 .627-.315.644-.702.644-.388 0-.702-.017-.702-.644s.314-1.626.702-1.626c.387 0 .702 1 .702 1.626z" fill="#ff0"/>
+    <g>
+      <path d="M75.672 145.92c.608 1.207.086 2.224-.749 2.224s-1.512-.037-1.512-1.388.558-3.566 1.98-3.973c1.007-.288-.855.884.281 3.138z" fill="#f60"/>
+      <path d="M75.081 146.449c.41.51.266 1.043-.13 1.128-.394.084-.682-.228-.822-.866 0 0-.13-1.382.502-1.719.447-.238-.315.505.45 1.457z" fill="#ff0"/>
+      <g>
+        <path d="M73.676 145.92c-.609 1.207-.086 2.224.749 2.224s1.511-.037 1.511-1.388-.557-3.566-1.98-3.973c-1.006-.288.856.884-.28 3.138z" fill="#f60"/>
+        <path d="M74.267 146.449c-.41.51-.266 1.043.129 1.128.395.084.683-.228.823-.866 0 0 .13-1.382-.502-1.719-.447-.238.315.505-.45 1.457z" fill="#ff0"/>
+      </g>
+    </g>
+  </g>
+  <g transform="translate(-48.82 -137.74)">
+    <path d="M101.085 146.5c0 1.351-.677 1.388-1.512 1.388s-1.512-.037-1.512-1.388c0-1.35.677-3.504 1.512-3.504s1.512 2.153 1.512 3.504z" fill="#f60"/>
+    <path d="M100.275 146.715c0 .627-.314.644-.702.644-.387 0-.702-.017-.702-.644s.315-1.626.702-1.626c.388 0 .702 1 .702 1.626z" fill="#ff0"/>
+    <rect width="4.252" height="12.001" x="97.447" y="147.888" ry=".567" fill="#ececec" fill-opacity=".982"/>
+    <g>
+      <path d="M100.571 145.92c.609 1.207.086 2.224-.749 2.224s-1.511-.037-1.511-1.388.557-3.566 1.98-3.973c1.006-.288-.856.884.28 3.138z" fill="#f60"/>
+      <path d="M99.98 146.449c.41.51.266 1.043-.129 1.128-.395.084-.683-.228-.823-.866 0 0-.13-1.382.502-1.719.448-.238-.315.505.45 1.457z" fill="#ff0"/>
+      <g>
+        <path d="M98.575 145.92c-.608 1.207-.086 2.224.749 2.224s1.512-.037 1.512-1.388-.558-3.566-1.98-3.973c-1.007-.288.855.884-.281 3.138z" fill="#f60"/>
+        <path d="M99.166 146.449c-.41.51-.266 1.043.13 1.128.394.084.682-.228.822-.866 0 0 .13-1.382-.502-1.719-.447-.238.315.505-.45 1.457z" fill="#ff0"/>
+      </g>
+    </g>
+  </g>
+  <g transform="translate(-48.82 -137.74)">
+    <path d="M88.635 146.5c0 1.351-.676 1.388-1.511 1.388-.835 0-1.512-.037-1.512-1.388 0-1.35.677-3.504 1.512-3.504s1.511 2.153 1.511 3.504z" fill="#f60"/>
+    <path d="M87.825 146.715c0 .627-.314.644-.701.644-.388 0-.702-.017-.702-.644s.314-1.626.702-1.626c.387 0 .701 1 .701 1.626z" fill="#ff0"/>
+    <rect width="4.252" height="12.001" x="84.997" y="147.888" ry=".567" fill="#ececec"/>
+    <g>
+      <path d="M88.122 145.92c.608 1.207.086 2.224-.75 2.224-.834 0-1.511-.037-1.511-1.388s.557-3.566 1.98-3.973c1.007-.288-.855.884.28 3.138z" fill="#f60"/>
+      <path d="M87.53 146.449c.41.51.267 1.043-.129 1.128-.395.084-.682-.228-.822-.866 0 0-.13-1.382.501-1.719.448-.238-.315.505.45 1.457z" fill="#ff0"/>
+      <g>
+        <path d="M86.125 145.92c-.608 1.207-.086 2.224.75 2.224.834 0 1.511-.037 1.511-1.388s-.557-3.566-1.98-3.973c-1.007-.288.855.884-.28 3.138z" fill="#f60"/>
+        <path d="M86.716 146.449c-.41.51-.266 1.043.13 1.128.395.084.682-.228.822-.866 0 0 .13-1.382-.501-1.719-.448-.238.315.505-.45 1.457z" fill="#ff0"/>
+      </g>
+    </g>
+  </g>
+</svg>
