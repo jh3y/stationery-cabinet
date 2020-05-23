@@ -1,0 +1,124 @@
+*
+  box-sizing border-box
+
+:root
+  --tongue red
+  --mouth black
+  --eye black
+  --pupil white
+  --icing hsl(0, 0%, 95%)
+
+body
+  --frosting 'hsl(%s, 100%, 55%)' % var(--frosting-hue, 0)
+  --lightness 50
+  --flame 0
+  --glow-hue 65
+  --glow-saturation 50
+  --glow-lightness 35
+  --glow-alpha 0.4
+  --transparency-alpha 0
+  --glow 'hsla(%s, %s, %s, %s)' % (var(--glow-hue) calc(var(--glow-saturation) * 1%) calc(var(--glow-lightness) * 1%) var(--glow-alpha))
+  --transparent 'hsla(0, 0%, 0%, %s)' % var(--transparency-alpha)
+  display flex
+  overflow hidden
+  align-items center
+  justify-content center
+  background 'hsl(180, 30%, %s)' % calc(var(--lightness, 50) * 1%)
+
+.whitespace
+  width 7px
+.birthday-button
+  position relative
+  transform scale(0.6)
+  cursor pointer
+
+  &__text
+    position absolute
+    top 0
+    left 0
+    height 100%
+    width 100%
+    display flex
+    text-align center
+    align-items center
+    justify-content center
+    font-size 1.5rem
+    font-family sans-serif
+    font-weight bold
+
+    .char
+      display inline-block
+      color 'hsl(%s, %s, %s)' % (var(--hue, 0) calc(var(--char-sat, 0) * 1%) calc(var(--char-light, 0) * 1%))
+
+  &:before
+    content ''
+    position absolute
+    height 240px
+    width 240px
+    background radial-gradient(var(--glow), var(--transparent) 30%), radial-gradient(var(--glow), var(--transparent) 50%)
+    border-radius 50%
+    top 50%
+    left 50%
+    transform translate(-50%, -70%) scale(calc(var(--flame) * 3))
+    z-index 2
+    filter blur(15px)
+    opacity var(--flame)
+  &:after
+    content ''
+    height 30px
+    width 400px
+    filter blur(15px)
+    position absolute
+    background radial-gradient(var(--glow), var(--transparent) 20%), radial-gradient(var(--glow), var(--transparent))
+    top 100%
+    left 50%
+    transform translate(-50%, -50%) scale(calc(var(--flame) * 1))
+    opacity var(--flame)
+
+  &__button
+    width 240px
+    height 100px
+    position relative
+    border 0
+    background var(--icing)
+    border-radius 14px
+
+  &__cake
+    position absolute
+    bottom 0
+    left 50%
+    transform translate(-50%, 0)
+    width 289.5px
+
+  // &__cloak
+
+
+.cake
+  &__eye-body
+    fill var(--eye)
+  &__eye-pupil
+    fill var(--pupil)
+  &__tongue
+    fill var(--tongue)
+  &__mouth-opening
+    fill var(--mouth)
+    stroke var(--mouth)
+  &__sprinkle
+    --sprinkle 'hsl(%s, 100%, 75%)' % var(--sprinkle-hue, 0)
+    fill var(--sprinkle)
+  &__frosting
+    &--start
+      fill var(--frosting)
+    &--duplicate
+      fill var(--frosting)
+
+.candle__flame
+  opacity var(--flame, 0)
+
+.cake__candle
+  &:nth-of-type(1)
+    --flame 0
+  &:nth-of-type(2)
+    --flame 0
+  &:nth-of-type(3)
+    --flame 0
