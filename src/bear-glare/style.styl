@@ -1,0 +1,31 @@
+*
+  box-sizing border-box
+
+body
+  background-color hsl(188, 54%, 23%)
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+
+.bear
+  height 50vmin
+
+.glare
+  // transform translate(0, 0)
+  animation glare 2s both ease-in-out infinite
+
+.sticker-base
+  fill hsl(0, 0% 100%)
+
+.lens
+  fill hsl(200, 4%, 13%)
+
+.glare
+  fill hsla(180, 2%, 100%, 0.85)
+
+@keyframes glare
+  0, 20%
+    transform translate(0, 100px)
+  80%, 100%
+    transform translate(-360px, 100px)
