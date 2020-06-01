@@ -12,30 +12,36 @@ const CONFIG = {
   width: 10,
   size: 10,
   color: '#e74c3c',
-  dark: false,
+  darkMode:
+    window.localStorage.getItem('pixelator') &&
+    JSON.parse(window.localStorage.getItem('pixelator')).darkMode
+      ? JSON.parse(window.localStorage.getItem('pixelator')).darkMode
+      : false,
   debug: false,
+  zoom: 1,
 }
 
 const Container = styled.div`
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
+  transform: scale(var(--zoom, 1));
+  max-height: 100vh;
   & > * + * {
     margin-top: 2rem;
   }
 `
 const Grid = styled.div`
   display: grid;
-  background: hsl(0, 0%, 85%);
+  background: hsl(0, 0%, calc(var(--darkness, 100) * 1%));
   grid-template-rows: repeat(${p => p.height}, ${p => p.size}px);
   grid-template-columns: repeat(${p => p.width}, ${p => p.size}px);
 `
 const Cell = styled.div`
   background: var(--color, transparent);
-  border: 1px solid var(--color, black);
+  border: 1px solid
+    var(--color, hsl(0, 0%, calc((50 - var(--darkness, 90)) * 1%)));
   color: red;
 `
 const PixelCanvas = ({ color, erase, cells, size, height, width }) => {
@@ -61,6 +67,7 @@ const PixelCanvas = ({ color, erase, cells, size, height, width }) => {
       e.preventDefault()
       erasing.current = true
     }
+    update(e)
     gridRef.current.addEventListener('pointermove', update)
     window.addEventListener('pointerup', end)
   }
@@ -109,8 +116,16 @@ PixelCanvas.propTypes = {
   height: T.number,
 }
 
-const OutputDrawer = styled.details``
-const OutputTitle = styled.summary``
+const OutputDrawer = styled.details`
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  outline: transparent;
+  color: hsl(0, 0%, calc((100 - var(--darkness, 90)) * 1%));
+`
+const OutputTitle = styled.summary`
+  outline: transparent;
+`
 
 const Controls = styled.div`
   display: flex;
@@ -122,7 +137,6 @@ const Controls = styled.div`
 const DebugContainer = styled.div`
   height: ${p => p.height * p.size}px;
   width: ${p => p.width * p.size}px;
-  border: 1px solid hsl(0, 0%, 25%);
   overflow: hidden;
   position: relative;
 `
@@ -177,6 +191,7 @@ const Snapshots = styled.div`
   flex-wrap: wrap;
 `
 const Snapshot = styled.button`
+  background: none;
   height: 44px;
   width: 44px;
   flex: 0 0 44px;
@@ -209,40 +224,43 @@ const ControllerSnapshots = ({ snapshots, onChange, parent }) => {
   if (!parent.current || !parent.current.domElement) return null
   return createPortal(
     <SnapshotsContainer className="cr snapshot-gallery">
-      <Snapshots>
-        {snapshots.map(snapshot => {
-          const {
-            created,
-            width,
-            height,
-            shadow,
-            size,
-            translateX,
-            translateY,
-            snapshotScale,
-          } = snapshot
-          return (
-            <Snapshot
-              onContextMenu={e => {
-                e.preventDefault()
-                return false
-              }}
-              onPointerDown={e => onChange(e, created, snapshot)}
-              scale={snapshotScale}
-              key={created}>
-              <DebugContainer width={width} height={height} size={size}>
-                <Debug
-                  shadow={shadow}
-                  width={size}
-                  height={size}
-                  translateX={translateX}
-                  translateY={translateY}
-                />
-              </DebugContainer>
-            </Snapshot>
-          )
-        })}
-      </Snapshots>
+      {snapshots.length === 0 && 'No stored snapshots'}
+      {snapshots.length > 0 && (
+        <Snapshots>
+          {snapshots.map(snapshot => {
+            const {
+              created,
+              width,
+              height,
+              shadow,
+              size,
+              translateX,
+              translateY,
+              snapshotScale,
+            } = snapshot
+            return (
+              <Snapshot
+                onContextMenu={e => {
+                  e.preventDefault()
+                  return false
+                }}
+                onPointerDown={e => onChange(e, created, snapshot)}
+                scale={snapshotScale}
+                key={created}>
+                <DebugContainer width={width} height={height} size={size}>
+                  <Debug
+                    shadow={shadow}
+                    width={size}
+                    height={size}
+                    translateX={translateX}
+                    translateY={translateY}
+                  />
+                </DebugContainer>
+              </Snapshot>
+            )
+          })}
+        </Snapshots>
+      )}
     </SnapshotsContainer>,
     parent.current.domElement.querySelector('ul')
   )
@@ -330,7 +348,7 @@ const Actions = ({ parent, onCss, onSvg, onSnapshot, onImage, onClear }) => {
       <li className="cr function">
         <ActionButton
           style={{ width: '100%' }}
-          onClick={onSnapshot}
+          onClick={onClear}
           className="property-name">
           Clear canvas
         </ActionButton>
@@ -347,7 +365,24 @@ Actions.propTypes = {
   onSnapshot: T.func,
   parent: T.node,
 }
-// opacity: 0.5;
+
+const Output = ({ height, width, size, shadow, translateX, translateY }) => {
+  return createPortal(
+    <OutputDrawer>
+      <OutputTitle>See output</OutputTitle>
+      <DebugContainer width={width} height={height} size={size}>
+        <Debug
+          shadow={shadow}
+          width={size}
+          height={size}
+          translateX={translateX}
+          translateY={translateY}
+        />
+      </DebugContainer>
+    </OutputDrawer>,
+    document.body
+  )
+}
 
 const App = () => {
   const [size, setSize] = useState(CONFIG.size)
@@ -355,6 +390,12 @@ const App = () => {
   const [height, setHeight] = useState(CONFIG.height)
   const [color, setColor] = useState(CONFIG.color)
   const [debugging, setDebugging] = useState(CONFIG.debug)
+  const [darkMode, setDarkMode] = useState(
+    window.localStorage.getItem('pixelator') &&
+      JSON.parse(window.localStorage.getItem('pixelator')).darkMode
+      ? JSON.parse(window.localStorage.getItem('pixelator')).darkMode
+      : CONFIG.darkMode
+  )
   // Purely as a placeholder to trigger a re-render
   const [viewing, setViewing] = useState(false)
   const [palette, setPalette] = useState(
@@ -391,6 +432,7 @@ const App = () => {
     window.localStorage.setItem(
       'pixelator',
       JSON.stringify({
+        darkMode,
         snapshots: newSnapshots,
         palette,
       })
@@ -415,6 +457,7 @@ const App = () => {
     window.localStorage.setItem(
       'pixelator',
       JSON.stringify({
+        darkMode,
         snapshots,
         palette: newPalette,
       })
@@ -423,7 +466,10 @@ const App = () => {
 
   const onCss = () => setProcessing(true)
   const onSvg = () => {}
-  const onClear = () => {}
+  const onClear = () => {
+    cellRef.current = [...new Array(height * width).fill().map(() => ({}))]
+    setViewing(new Date().getTime())
+  }
   const onSnapshot = () => {
     generateShadow()
     setProcessingSnapshot(true)
@@ -524,37 +570,64 @@ const App = () => {
     snapshotFolderRef.current = CONTROLLER.addFolder('Snapshots')
     settingsFolderRef.current = CONTROLLER.addFolder('Settings')
     settingsFolderRef.current
-      .add(CONFIG, 'dark')
-      .onChange(value => {
-        // eslint-disable-next-line
-        console.info('DARK MODE', value)
-      })
+      .add(CONFIG, 'darkMode')
+      .onChange(setDarkMode)
       .name('Dark mode')
     settingsFolderRef.current
       .add(CONFIG, 'debug')
-      .onChange(value => {
-        // eslint-disable-next-line
-        console.info('DEBUG MODE', value)
-        setDebugging(value)
-      })
+      .onChange(setDebugging)
       .name('Show debug output')
+    const updateZoom = value => {
+      document.documentElement.style.setProperty('--zoom', value)
+      // TODO: Should we store the zoom in localStorage
+    }
+    const ZOOM = settingsFolderRef.current
+      .add(CONFIG, 'zoom', 1, 10, 0.1)
+      .onChange(updateZoom)
+      .name('Zoom')
     // Add actions folder for buttons
     actionsFolderRef.current = CONTROLLER.addFolder('Actions')
-  }, [])
+
+    // Try wheel zoom
+    const handleZoom = e => {
+      const STEP = 0.1
+      const D = Math.max(-STEP, Math.min(STEP, e.wheelDeltaY || -e.detail))
+      CONFIG.zoom = Math.min(10, Math.max(CONFIG.zoom - D, 1))
+      ZOOM.updateDisplay()
+      updateZoom(CONFIG.zoom)
+    }
+    document.querySelector('#app').addEventListener('wheel', handleZoom)
+  }, [generateShadow])
 
   useEffect(() => {
+    window.localStorage.setItem(
+      'pixelator',
+      JSON.stringify({
+        darkMode,
+        palette: [...palette, color],
+        snapshots,
+      })
+    )
+  }, [color, darkMode, palette, snapshots])
+
+  useEffect(() => {
+    // eslint-disable-next-line
+    console.info(darkMode, 'DARK')
+    document.documentElement.style.setProperty(
+      '--darkness',
+      darkMode ? 10 : 100
+    )
     colorControllerRef.current.setValue(color)
-    if (palette.indexOf(color) === -1) {
-      window.localStorage.setItem(
-        'pixelator',
-        JSON.stringify({
-          palette: [...palette, color],
-          snapshots,
-        })
-      )
-      setPalette([...palette, color])
-    }
-  }, [color, palette, snapshots])
+    window.localStorage.setItem(
+      'pixelator',
+      JSON.stringify({
+        darkMode: darkMode ? true : false,
+        palette: palette.indexOf(color) === -1 ? [...palette, color] : palette,
+        snapshots,
+      })
+    )
+    if (palette.indexOf(color) === -1) setPalette([...palette, color])
+  }, [color, darkMode, palette, snapshots])
 
   useEffect(() => {
     if (processing) {
@@ -566,7 +639,8 @@ const App = () => {
     if (processingSnapshot) {
       if (
         snapshots.filter(snap => snap.cells === JSON.stringify(cellRef.current))
-          .length === 0
+          .length === 0 &&
+        cellRef.current.filter(c => c.color !== undefined).length !== 0
       ) {
         // Take all the current state, store it in localStorage.
         // Work out a scale. Save it as a snapshot.
@@ -641,18 +715,14 @@ const App = () => {
         />
       </Controls>
       {debugging && (
-        <OutputDrawer>
-          <OutputTitle>Debugger</OutputTitle>
-          <DebugContainer width={width} height={height} size={size}>
-            <Debug
-              shadow={shadow}
-              width={size}
-              height={size}
-              translateX={translateX}
-              translateY={translateY}
-            />
-          </DebugContainer>
-        </OutputDrawer>
+        <Output
+          shadow={shadow}
+          width={width}
+          height={height}
+          size={size}
+          translateX={translateX}
+          translateY={translateY}
+        />
       )}
     </Container>
   )

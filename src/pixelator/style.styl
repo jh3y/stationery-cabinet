@@ -4,8 +4,17 @@
 body
   color #111
   touch-action none
+  font-family sans-serif
+  font-weight bold
 
 .dg .closed .color-palette
 .dg .closed .snapshot-gallery
   height 0 !important
   overflow hidden
+
+#app
+  height 100vh
+  display flex
+  align-items center
+  justify-content center
+  background 'hsl(0, 0%, %s)' % calc(var(--darkness, 100%) * 1%)
