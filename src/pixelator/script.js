@@ -6,16 +6,20 @@ const {
   dat: { GUI },
   confirm,
 } = window
-
+const STORAGE_KEY = 'pixelator'
 const CONFIG = {
   height: 10,
   width: 10,
   size: 10,
-  color: '#e74c3c',
+  color:
+    window.localStorage.getItem(STORAGE_KEY) &&
+    JSON.parse(window.localStorage.getItem(STORAGE_KEY)).color
+      ? JSON.parse(window.localStorage.getItem(STORAGE_KEY)).color
+      : '#2ecc71',
   darkMode:
-    window.localStorage.getItem('pixelator') &&
-    JSON.parse(window.localStorage.getItem('pixelator')).darkMode
-      ? JSON.parse(window.localStorage.getItem('pixelator')).darkMode
+    window.localStorage.getItem(STORAGE_KEY) &&
+    JSON.parse(window.localStorage.getItem(STORAGE_KEY)).darkMode
+      ? JSON.parse(window.localStorage.getItem(STORAGE_KEY)).darkMode
       : false,
   debug: false,
   zoom: 1,
@@ -26,10 +30,11 @@ const downloadFile = (content, type, name) => {
   const FILE_URL = URL.createObjectURL(FILE)
   const link = document.createElement('a')
   link.href = FILE_URL
-  link.download = name || 'pixel-drawing'
+  link.download = name || `${STORAGE_KEY}-creation`
   document.body.appendChild(link)
   link.click()
   URL.revokeObjectURL(FILE_URL)
+  link.remove()
 }
 
 // App Container
@@ -174,7 +179,7 @@ const Debug = styled.div`
 const Output = ({ height, width, size, shadow, translateX, translateY }) => {
   return createPortal(
     <OutputDrawer>
-      <OutputTitle>See output</OutputTitle>
+      <OutputTitle>See CSS output (Run copy first)</OutputTitle>
       <DebugContainer width={width} height={height} size={size}>
         <Debug
           shadow={shadow}
@@ -345,14 +350,31 @@ const ActionButton = styled.button`
   color: #eee;
   outline: transparent;
 `
-const Actions = ({ parent, onCss, onSvg, onSnapshot, onImage, onClear }) => {
+const Actions = ({
+  parent,
+  onCss,
+  onSvg,
+  onSnapshot,
+  onImage,
+  onClear,
+  onExport,
+  onImport,
+}) => {
   if (!parent.current || !parent.current.domElement) return null
   return createPortal(
     <Fragment>
       <li className="cr function">
         <ActionButton
           style={{ width: '100%' }}
-          onClick={onCss}
+          onClick={() => onCss(true)}
+          className="property-name">
+          Save CSS
+        </ActionButton>
+      </li>
+      <li className="cr function">
+        <ActionButton
+          style={{ width: '100%' }}
+          onClick={() => onCss(false)}
           className="property-name">
           Copy CSS
         </ActionButton>
@@ -378,7 +400,7 @@ const Actions = ({ parent, onCss, onSvg, onSnapshot, onImage, onClear }) => {
           style={{ width: '100%' }}
           onClick={onSnapshot}
           className="property-name">
-          Store snapshot
+          Snapshot
         </ActionButton>
       </li>
       <li className="cr function">
@@ -387,6 +409,22 @@ const Actions = ({ parent, onCss, onSvg, onSnapshot, onImage, onClear }) => {
           onClick={onClear}
           className="property-name">
           Clear canvas
+        </ActionButton>
+      </li>
+      <li className="cr function">
+        <ActionButton
+          style={{ width: '100%' }}
+          onClick={onExport}
+          className="property-name">
+          Export
+        </ActionButton>
+      </li>
+      <li className="cr function">
+        <ActionButton
+          style={{ width: '100%' }}
+          onClick={onImport}
+          className="property-name">
+          Import
         </ActionButton>
       </li>
     </Fragment>,
@@ -399,6 +437,8 @@ Actions.propTypes = {
   onSvg: T.func,
   onImage: T.func,
   onSnapshot: T.func,
+  onExport: T.func,
+  onImport: T.func,
   parent: T.node,
 }
 
@@ -507,7 +547,6 @@ const App = () => {
     for (let c = 0; c < cellRef.current.length; c++) {
       const x = (c % width) + 1
       const y = Math.floor(c / width)
-      // console.info(x, y)
       if (cellRef.current[c].color) {
         // Create a box shadow string and append it to the str
         str += `${x * size}px ${y * size}px 0 0 ${cellRef.current[c].color},`
@@ -521,11 +560,11 @@ const App = () => {
     return SHADOW
   }, [height, size, width])
 
-  const onCss = () => {
+  const onCss = download => {
     const shadow = generateShadow()
     const FILE_CONTENT = `.element {
-  height: ${height}px;
-  width: ${width}px;
+  height: ${size}px;
+  width: ${size}px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -545,7 +584,18 @@ const App = () => {
   box-shadow: ${shadow};
 }
     `
-    downloadFile(FILE_CONTENT, 'text/css', 'box-shadow-pixel-sprite.css')
+    if (download) {
+      downloadFile(FILE_CONTENT, 'text/css', 'box-shadow-pixel-sprite.css')
+    } else {
+      // copy CSS to clipboard
+      const el = document.createElement('textarea')
+      el.value = FILE_CONTENT
+      el.height = el.width = 0
+      document.body.appendChild(el)
+      el.select()
+      document.execCommand('copy')
+      document.body.removeChild(el)
+    }
   }
   const onSvg = () => {
     // Generate an SVG File
@@ -574,12 +624,6 @@ const App = () => {
         SVG.appendChild(RECT)
       }
     }
-
-    // create a circle
-    // const cir1 = document.createElementNS(
-    //   'http://www.w3.org/2000/svg',
-    //   'circle'
-    // )
     downloadFile(SVG.outerHTML, 'text/svg', 'shadow.svg')
   }
   const onClear = () => {
@@ -590,7 +634,77 @@ const App = () => {
     generateShadow()
     setProcessingSnapshot(true)
   }
-  const onImage = () => {}
+  const onImage = () => {
+    // The process of creating an image is to draw the cells onto an off-page canvas, convert the context
+    // to a data URL and save as a png
+    const CANVAS = document.createElement('canvas')
+    CANVAS.width = width * size
+    CANVAS.height = height * size
+    const CONTEXT = CANVAS.getContext('2d')
+    for (let c = 0; c < cellRef.current.length; c++) {
+      if (cellRef.current[c].color) {
+        const x = c % width
+        const y = Math.floor(c / width)
+        CONTEXT.fillStyle = cellRef.current[c].color
+        CONTEXT.fillRect(x * size, y * size, size, size)
+      }
+    }
+    // create the image URL
+    const link = document.createElement('a')
+    link.href = CANVAS.toDataURL()
+    link.download = 'pixel-drawing.png'
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+  }
+
+  const onExport = () => {
+    const FILE_CONTENT = window.localStorage.getItem(STORAGE_KEY)
+    downloadFile(FILE_CONTENT, 'application/json', `${STORAGE_KEY}-export.json`)
+  }
+
+  const onImport = () => {
+    // Import is a little trickier. Need to read a file and then translate its content into new state variables.
+    const CHOOSE = document.createElement('input')
+    CHOOSE.type = 'file'
+    const importFile = e => {
+      CHOOSE.remove()
+      const READER = new FileReader()
+      READER.onload = e => {
+        // At this point loop over the imports and import any palette colors that don't exist
+        // Or any snapshots that don't exist.
+        const IMPORT = JSON.parse(e.target.result)
+        const { palette: importPalette, snapshots: importSnapshots } = IMPORT
+        if (importPalette && importPalette.length) {
+          const ADD_ONS = []
+          for (const COLOR of importPalette) {
+            if (palette.indexOf(COLOR.toLowerCase()) === -1)
+              ADD_ONS.push(COLOR.toLowerCase())
+          }
+          if (ADD_ONS.length > 0) {
+            setPalette([...palette, ...ADD_ONS])
+          }
+        }
+        if (importSnapshots && importSnapshots.length) {
+          const ADD_ONS = []
+          for (const SNAPSHOT of importSnapshots) {
+            // Quite lengthy. But make sure there are no snapshots with a cellset matching what's currently available
+            if (
+              snapshots.filter(s => s.cells === SNAPSHOT.cells).length === 0
+            ) {
+              ADD_ONS.push(SNAPSHOT)
+            }
+          }
+          if (ADD_ONS.length > 0) {
+            setSnapshots([...snapshots, ...ADD_ONS])
+          }
+        }
+      }
+      READER.readAsText(e.target.files[0])
+    }
+    CHOOSE.addEventListener('input', importFile)
+    CHOOSE.click()
+  }
 
   useEffect(() => {
     if (loadingSnapshot) {
@@ -599,6 +713,10 @@ const App = () => {
       setHeight(height)
       setWidth(width)
       setSize(size)
+      CONFIG.size = size
+      CONFIG.width = width
+      CONFIG.height = height
+      controllerRef.current.updateDisplay()
       setViewing(created)
       setLoadingSnapshot(false)
       generateShadow()
@@ -650,10 +768,6 @@ const App = () => {
       .add(CONFIG, 'darkMode')
       .onChange(setDarkMode)
       .name('Dark mode')
-    settingsFolderRef.current
-      .add(CONFIG, 'debug')
-      .onChange(setDebugging)
-      .name('Show debug output')
     const updateZoom = value => {
       document.documentElement.style.setProperty('--zoom', value)
       // TODO: Should we store the zoom in localStorage
@@ -662,6 +776,10 @@ const App = () => {
       .add(CONFIG, 'zoom', 1, 10, 0.1)
       .onChange(updateZoom)
       .name('Zoom')
+    settingsFolderRef.current
+      .add(CONFIG, 'debug')
+      .onChange(setDebugging)
+      .name('Show dev debug')
     // Add actions folder for buttons
     actionsFolderRef.current = controllerRef.current.addFolder('Actions')
 
@@ -707,12 +825,6 @@ const App = () => {
     )
     if (palette.indexOf(color) === -1) setPalette([...palette, color])
   }, [color, darkMode, palette, snapshots])
-
-  // useEffect(() => {
-  //   if (processing) {
-  //     generateShadow()
-  //   }
-  // }, [generateShadow, height, processing, size, width])
 
   useEffect(() => {
     if (processingSnapshot) {
@@ -789,6 +901,8 @@ const App = () => {
         onSnapshot={onSnapshot}
         onImage={onImage}
         onClear={onClear}
+        onExport={onExport}
+        onImport={onImport}
         parent={actionsFolderRef}
       />
       {debugging && (
