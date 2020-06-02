@@ -21,6 +21,19 @@ const CONFIG = {
   zoom: 1,
 }
 
+const downloadFile = (content, type, name) => {
+  const FILE = new Blob([content], { type: type })
+  const FILE_URL = URL.createObjectURL(FILE)
+  const link = document.createElement('a')
+  link.href = FILE_URL
+  link.download = name || 'pixel-drawing'
+  document.body.appendChild(link)
+  link.click()
+  URL.revokeObjectURL(FILE_URL)
+}
+
+// App Container
+
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -32,6 +45,10 @@ const Container = styled.div`
     margin-top: 2rem;
   }
 `
+
+// End App Container
+
+// Pixel Canvas Component
 const Grid = styled.div`
   display: grid;
   background: hsl(0, 0%, calc(var(--darkness, 100) * 1%));
@@ -40,8 +57,7 @@ const Grid = styled.div`
 `
 const Cell = styled.div`
   background: var(--color, transparent);
-  border: 1px solid
-    var(--color, hsl(0, 0%, calc((50 - var(--darkness, 90)) * 1%)));
+  border: 1px solid var(--color, hsl(0, 0%, 40%));
   color: red;
 `
 const PixelCanvas = ({ color, erase, cells, size, height, width }) => {
@@ -115,7 +131,9 @@ PixelCanvas.propTypes = {
   width: T.number,
   height: T.number,
 }
+// End Pixel Canvas Component
 
+// Output/Debugging components
 const OutputDrawer = styled.details`
   position: fixed;
   top: 1rem;
@@ -127,13 +145,6 @@ const OutputTitle = styled.summary`
   outline: transparent;
 `
 
-const Controls = styled.div`
-  display: flex;
-  flex-direction: column;
-  & > * + * {
-    margin-top: 2rem;
-  }
-`
 const DebugContainer = styled.div`
   height: ${p => p.height * p.size}px;
   width: ${p => p.width * p.size}px;
@@ -160,31 +171,27 @@ const Debug = styled.div`
   }
 `
 
-const PaletteContainer = styled.li`
-  height: auto !important;
-  border-left-color: ${p => p.color};
-`
+const Output = ({ height, width, size, shadow, translateX, translateY }) => {
+  return createPortal(
+    <OutputDrawer>
+      <OutputTitle>See output</OutputTitle>
+      <DebugContainer width={width} height={height} size={size}>
+        <Debug
+          shadow={shadow}
+          width={size}
+          height={size}
+          translateX={translateX}
+          translateY={translateY}
+        />
+      </DebugContainer>
+    </OutputDrawer>,
+    document.body
+  )
+}
 
-const Palette = styled.ul`
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-`
+// End Output/Debugging components
 
-const ColorSwatch = styled.button`
-  height: 44px;
-  width: 44px;
-  flex: 0 0 44px;
-  cursor: pointer;
-  background-color: ${p => p.color};
-  border: 2px solid ${p => (p.active ? 'white' : p.color)};
-  &:hover {
-    z-index: 2;
-    transform: scale(1.1);
-    transition: 0.15s ease 0s;
-  }
-`
-
+// Snapshots Component that is injected into Dat.GUI
 const Snapshots = styled.div`
   display: flex;
   align-items: center;
@@ -269,6 +276,33 @@ ControllerSnapshots.propTypes = {
   snapshots: T.arrayOf(T.shape({})),
   onChange: T.func,
 }
+// END Snapshots Components
+
+// Color Palette component that gets injected into Dat.GUI
+const PaletteContainer = styled.li`
+  height: auto !important;
+  border-left-color: ${p => p.color};
+`
+
+const Palette = styled.ul`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+`
+
+const ColorSwatch = styled.button`
+  height: 44px;
+  width: 44px;
+  flex: 0 0 44px;
+  cursor: pointer;
+  background-color: ${p => p.color};
+  border: 2px solid ${p => (p.active ? 'white' : p.color)};
+  &:hover {
+    z-index: 2;
+    transform: scale(1.1);
+    transition: 0.15s ease 0s;
+  }
+`
 const ControllerPalette = ({ palette, color, onChange, parent }) => {
   if (!parent.current || !parent.current.domElement) return null
   return createPortal(
@@ -298,6 +332,8 @@ ControllerPalette.propTypes = {
   palette: T.arrayOf(T.string),
   onChange: T.func,
 }
+// End Color Palette component
+
 const ActionButton = styled.button`
   background: transparent;
   width: 100%;
@@ -366,24 +402,6 @@ Actions.propTypes = {
   parent: T.node,
 }
 
-const Output = ({ height, width, size, shadow, translateX, translateY }) => {
-  return createPortal(
-    <OutputDrawer>
-      <OutputTitle>See output</OutputTitle>
-      <DebugContainer width={width} height={height} size={size}>
-        <Debug
-          shadow={shadow}
-          width={size}
-          height={size}
-          translateX={translateX}
-          translateY={translateY}
-        />
-      </DebugContainer>
-    </OutputDrawer>,
-    document.body
-  )
-}
-
 const App = () => {
   const [size, setSize] = useState(CONFIG.size)
   const [width, setWidth] = useState(CONFIG.width)
@@ -417,7 +435,8 @@ const App = () => {
   const snapshotFolderRef = useRef(null)
   const actionsFolderRef = useRef(null)
   const settingsFolderRef = useRef(null)
-  const [processing, setProcessing] = useState(false)
+  const controllerRef = useRef(null)
+  // const [processing, setProcessing] = useState(false)
   const [processingSnapshot, setProcessingSnapshot] = useState(false)
   const [translateX, setTranslateX] = useState(null)
   const [translateY, setTranslateY] = useState(null)
@@ -464,18 +483,6 @@ const App = () => {
     )
   }
 
-  const onCss = () => setProcessing(true)
-  const onSvg = () => {}
-  const onClear = () => {
-    cellRef.current = [...new Array(height * width).fill().map(() => ({}))]
-    setViewing(new Date().getTime())
-  }
-  const onSnapshot = () => {
-    generateShadow()
-    setProcessingSnapshot(true)
-  }
-  const onImage = () => {}
-
   const onPaletteChange = (e, c) => {
     e.preventDefault()
     if (e.button === 2) {
@@ -506,30 +513,100 @@ const App = () => {
         str += `${x * size}px ${y * size}px 0 0 ${cellRef.current[c].color},`
       }
     }
+    const SHADOW =
+      str.trim() === '' ? 'none' : str.substring(0, str.lastIndexOf(','))
     setTranslateX(translateX)
     setTranslateY(translateY)
-    setShadow(
-      str.trim() === '' ? 'none' : str.substring(0, str.lastIndexOf(','))
-    )
-    setProcessing(false)
+    setShadow(SHADOW)
+    return SHADOW
   }, [height, size, width])
+
+  const onCss = () => {
+    const shadow = generateShadow()
+    const FILE_CONTENT = `.element {
+  height: ${height}px;
+  width: ${width}px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.element:after {
+  content: '';
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-${width * size * 0.5 + size * 0.5}px, -${height *
+      size *
+      0.5 +
+      size * 0.5}px);
+  box-shadow: ${shadow};
+}
+    `
+    downloadFile(FILE_CONTENT, 'text/css', 'box-shadow-pixel-sprite.css')
+  }
+  const onSvg = () => {
+    // Generate an SVG File
+    // Create the SVG and then create a blob from outerHTML
+    const SVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+
+    // set width and height
+    SVG.setAttribute('width', width * size)
+    SVG.setAttribute('height', height * size)
+    SVG.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+    SVG.setAttribute('viewBox', `0 0 ${width * size} ${height * size}`)
+    for (let c = 0; c < cellRef.current.length; c++) {
+      const x = c % width
+      const y = Math.floor(c / width)
+      // console.info(x, y)
+      if (cellRef.current[c].color) {
+        const RECT = document.createElementNS(
+          'http://www.w3.org/2000/svg',
+          'rect'
+        )
+        RECT.setAttribute('width', size)
+        RECT.setAttribute('height', size)
+        RECT.setAttribute('fill', cellRef.current[c].color)
+        RECT.setAttribute('x', x * size)
+        RECT.setAttribute('y', y * size)
+        SVG.appendChild(RECT)
+      }
+    }
+
+    // create a circle
+    // const cir1 = document.createElementNS(
+    //   'http://www.w3.org/2000/svg',
+    //   'circle'
+    // )
+    downloadFile(SVG.outerHTML, 'text/svg', 'shadow.svg')
+  }
+  const onClear = () => {
+    cellRef.current = [...new Array(height * width).fill().map(() => ({}))]
+    setViewing(new Date().getTime())
+  }
+  const onSnapshot = () => {
+    generateShadow()
+    setProcessingSnapshot(true)
+  }
+  const onImage = () => {}
 
   useEffect(() => {
     if (loadingSnapshot) {
       const { height, created, width, size, cells } = snapshotRef.current
       cellRef.current = JSON.parse(cells)
-
       setHeight(height)
       setWidth(width)
       setSize(size)
       setViewing(created)
       setLoadingSnapshot(false)
-    } else {
       generateShadow()
     }
   }, [generateShadow, loadingSnapshot])
 
   useEffect(() => {
+    if (controllerRef.current) return
     const changeDimension = changer => dimension => {
       if (
         confirm(
@@ -543,8 +620,8 @@ const App = () => {
         setShadow(null)
       }
     }
-    const CONTROLLER = new GUI()
-    const DIMENSIONS = CONTROLLER.addFolder('Dimensions')
+    controllerRef.current = new GUI()
+    const DIMENSIONS = controllerRef.current.addFolder('Dimensions')
     DIMENSIONS.add(CONFIG, 'height', 0, 50, 1)
       .onFinishChange(changeDimension(setHeight))
       .name('Canvas height')
@@ -555,11 +632,11 @@ const App = () => {
       .onFinishChange(size => {
         setSize(size)
         // Will trigger shadow generation
-        setProcessing(true)
+        generateShadow()
       })
       .name('Pixel size')
 
-    colorFolderRef.current = CONTROLLER.addFolder('Color')
+    colorFolderRef.current = controllerRef.current.addFolder('Color')
     colorControllerRef.current = colorFolderRef.current
       .addColor(CONFIG, 'color')
       .onFinishChange(color => {
@@ -567,8 +644,8 @@ const App = () => {
       })
       .name('Color')
 
-    snapshotFolderRef.current = CONTROLLER.addFolder('Snapshots')
-    settingsFolderRef.current = CONTROLLER.addFolder('Settings')
+    snapshotFolderRef.current = controllerRef.current.addFolder('Snapshots')
+    settingsFolderRef.current = controllerRef.current.addFolder('Settings')
     settingsFolderRef.current
       .add(CONFIG, 'darkMode')
       .onChange(setDarkMode)
@@ -586,7 +663,7 @@ const App = () => {
       .onChange(updateZoom)
       .name('Zoom')
     // Add actions folder for buttons
-    actionsFolderRef.current = CONTROLLER.addFolder('Actions')
+    actionsFolderRef.current = controllerRef.current.addFolder('Actions')
 
     // Try wheel zoom
     const handleZoom = e => {
@@ -597,6 +674,9 @@ const App = () => {
       updateZoom(CONFIG.zoom)
     }
     document.querySelector('#app').addEventListener('wheel', handleZoom)
+
+    // set a state variable to trigger the intial view?
+    setViewing(new Date().getTime())
   }, [generateShadow])
 
   useEffect(() => {
@@ -612,7 +692,6 @@ const App = () => {
 
   useEffect(() => {
     // eslint-disable-next-line
-    console.info(darkMode, 'DARK')
     document.documentElement.style.setProperty(
       '--darkness',
       darkMode ? 10 : 100
@@ -629,11 +708,11 @@ const App = () => {
     if (palette.indexOf(color) === -1) setPalette([...palette, color])
   }, [color, darkMode, palette, snapshots])
 
-  useEffect(() => {
-    if (processing) {
-      generateShadow()
-    }
-  }, [generateShadow, height, processing, size, width])
+  // useEffect(() => {
+  //   if (processing) {
+  //     generateShadow()
+  //   }
+  // }, [generateShadow, height, processing, size, width])
 
   useEffect(() => {
     if (processingSnapshot) {
@@ -693,27 +772,25 @@ const App = () => {
         color={color}
         key={viewing}
       />
-      <Controls>
-        <ControllerPalette
-          color={color}
-          palette={palette}
-          parent={colorFolderRef}
-          onChange={onPaletteChange}
-        />
-        <ControllerSnapshots
-          snapshots={snapshots}
-          onChange={handleSnapshot}
-          parent={snapshotFolderRef}
-        />
-        <Actions
-          onCss={onCss}
-          onSvg={onSvg}
-          onSnapshot={onSnapshot}
-          onImage={onImage}
-          onClear={onClear}
-          parent={actionsFolderRef}
-        />
-      </Controls>
+      <ControllerPalette
+        color={color}
+        palette={palette}
+        parent={colorFolderRef}
+        onChange={onPaletteChange}
+      />
+      <ControllerSnapshots
+        snapshots={snapshots}
+        onChange={handleSnapshot}
+        parent={snapshotFolderRef}
+      />
+      <Actions
+        onCss={onCss}
+        onSvg={onSvg}
+        onSnapshot={onSnapshot}
+        onImage={onImage}
+        onClear={onClear}
+        parent={actionsFolderRef}
+      />
       {debugging && (
         <Output
           shadow={shadow}
