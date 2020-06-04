@@ -6,11 +6,28 @@ const {
   dat: { GUI },
   confirm,
 } = window
-const STORAGE_KEY = 'pixelator'
+const STORAGE_KEY = 'jh3y-pixelator'
 const CONFIG = {
-  height: 10,
-  width: 10,
-  size: 10,
+  height:
+    window.localStorage.getItem(STORAGE_KEY) &&
+    JSON.parse(window.localStorage.getItem(STORAGE_KEY)).height
+      ? JSON.parse(window.localStorage.getItem(STORAGE_KEY)).height
+      : 10,
+  width:
+    window.localStorage.getItem(STORAGE_KEY) &&
+    JSON.parse(window.localStorage.getItem(STORAGE_KEY)).width
+      ? JSON.parse(window.localStorage.getItem(STORAGE_KEY)).width
+      : 10,
+  size:
+    window.localStorage.getItem(STORAGE_KEY) &&
+    JSON.parse(window.localStorage.getItem(STORAGE_KEY)).size
+      ? JSON.parse(window.localStorage.getItem(STORAGE_KEY)).size
+      : 10,
+  radius:
+    window.localStorage.getItem(STORAGE_KEY) &&
+    JSON.parse(window.localStorage.getItem(STORAGE_KEY)).radius
+      ? JSON.parse(window.localStorage.getItem(STORAGE_KEY)).radius
+      : 0,
   color:
     window.localStorage.getItem(STORAGE_KEY) &&
     JSON.parse(window.localStorage.getItem(STORAGE_KEY)).color
@@ -20,7 +37,7 @@ const CONFIG = {
     window.localStorage.getItem(STORAGE_KEY) &&
     JSON.parse(window.localStorage.getItem(STORAGE_KEY)).darkMode
       ? JSON.parse(window.localStorage.getItem(STORAGE_KEY)).darkMode
-      : false,
+      : true,
   debug: false,
   zoom: 1,
 }
@@ -55,6 +72,7 @@ const Container = styled.div`
 
 // Pixel Canvas Component
 const Grid = styled.div`
+  --radius: ${p => p.radius};
   display: grid;
   background: hsl(0, 0%, calc(var(--darkness, 100) * 1%));
   grid-template-rows: repeat(${p => p.height}, ${p => p.size}px);
@@ -63,9 +81,9 @@ const Grid = styled.div`
 const Cell = styled.div`
   background: var(--color, transparent);
   border: 1px solid var(--color, hsl(0, 0%, 40%));
-  color: red;
+  border-radius: calc(var(--radius, 0) * 1%);
 `
-const PixelCanvas = ({ color, erase, cells, size, height, width }) => {
+const PixelCanvas = ({ color, cells, size, height, width, radius }) => {
   const gridRef = useRef(null)
   const erasing = useRef(false)
   const update = e => {
@@ -117,7 +135,8 @@ const PixelCanvas = ({ color, erase, cells, size, height, width }) => {
       ref={gridRef}
       width={width}
       height={height}
-      size={size}>
+      size={size}
+      radius={radius}>
       {cells.map((c, index) => {
         return <Cell key={index} data-index={index} index={index} />
       })}
@@ -126,13 +145,13 @@ const PixelCanvas = ({ color, erase, cells, size, height, width }) => {
 }
 PixelCanvas.propTypes = {
   color: T.string,
-  erase: T.bool,
   cells: T.arrayOf(
     T.shape({
       color: T.string,
     })
   ),
   size: T.number,
+  radius: T.number,
   width: T.number,
   height: T.number,
 }
@@ -201,6 +220,8 @@ const Snapshots = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  max-height: 194px;
+  overflow: auto;
 `
 const Snapshot = styled.button`
   background: none;
@@ -293,6 +314,8 @@ const Palette = styled.ul`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  max-height: 194px;
+  overflow: auto;
 `
 
 const ColorSwatch = styled.button`
@@ -339,6 +362,65 @@ ControllerPalette.propTypes = {
 }
 // End Color Palette component
 
+// About && Help component are statically portalled into dat.gui
+const List = styled.ul`
+  && {
+    padding: 0.5rem 0 0.5rem 1.5rem;
+  }
+
+  && li {
+    border-bottom: 0;
+    height: auto;
+    line-height: 1.5;
+  }
+
+  && > li + li {
+    margin-top: 0.5rem;
+  }
+`
+const Help = ({ parent }) => {
+  if (!parent.current || !parent.current.domElement) return null
+  return createPortal(
+    <List
+      className="help-list"
+      style={{
+        listStyle: 'disc',
+        background: '#1a1a1a',
+      }}>
+      <li>Draw with left mouse button.</li>
+      <li>Erase with right mouse button.</li>
+      <li>Colors are automatically stored in the palette.</li>
+      <li>{`Zoom in with mouse wheel or via "Settings".`}</li>
+      <li>{`Save your drawing by using the "Snapshot" action.`}</li>
+      <li>Delete a color or snapshot by right clicking it.</li>
+    </List>,
+    parent.current.domElement.querySelector('ul')
+  )
+}
+Help.propTypes = {
+  parent: T.node,
+}
+const About = ({ parent }) => {
+  if (!parent.current || !parent.current.domElement) return null
+  return createPortal(
+    <li>
+      Made by{' '}
+      <a
+        style={{ fontWeight: 'bold', color: 'white' }}
+        href="https://twitter.com/jh3yy"
+        target="_blank"
+        rel="noopener noreferrer">
+        Jhey
+      </a>{' '}
+      &copy; 2020
+    </li>,
+    parent.current.domElement.querySelector('ul')
+  )
+}
+About.propTypes = {
+  parent: T.node,
+}
+// End About && Help
 const ActionButton = styled.button`
   background: transparent;
   width: 100%;
@@ -363,7 +445,9 @@ const Actions = ({
   if (!parent.current || !parent.current.domElement) return null
   return createPortal(
     <Fragment>
-      <li className="cr function">
+      <li
+        className="cr"
+        style={{ borderLeft: '3px solid hsl(120, 100%, 50%)' }}>
         <ActionButton
           style={{ width: '100%' }}
           onClick={() => onCss(true)}
@@ -371,7 +455,9 @@ const Actions = ({
           Save CSS
         </ActionButton>
       </li>
-      <li className="cr function">
+      <li
+        className="cr"
+        style={{ borderLeft: '3px solid hsl(180, 100%, 50%)' }}>
         <ActionButton
           style={{ width: '100%' }}
           onClick={() => onCss(false)}
@@ -379,7 +465,9 @@ const Actions = ({
           Copy CSS
         </ActionButton>
       </li>
-      <li className="cr function">
+      <li
+        className="cr"
+        style={{ borderLeft: '3px solid hsl(120, 100%, 50%)' }}>
         <ActionButton
           style={{ width: '100%' }}
           onClick={onSvg}
@@ -387,7 +475,9 @@ const Actions = ({
           Save SVG
         </ActionButton>
       </li>
-      <li className="cr function">
+      <li
+        className="cr"
+        style={{ borderLeft: '3px solid hsl(120, 100%, 50%)' }}>
         <ActionButton
           style={{ width: '100%' }}
           onClick={onImage}
@@ -395,12 +485,28 @@ const Actions = ({
           Save PNG
         </ActionButton>
       </li>
-      <li className="cr function">
+      <li className="cr" style={{ borderLeft: '3px solid hsl(60, 100%, 50%)' }}>
         <ActionButton
           style={{ width: '100%' }}
           onClick={onSnapshot}
           className="property-name">
           Snapshot
+        </ActionButton>
+      </li>
+      <li className="cr" style={{ borderLeft: '3px solid hsl(60, 100%, 50%)' }}>
+        <ActionButton
+          style={{ width: '100%' }}
+          onClick={onExport}
+          className="property-name">
+          Export
+        </ActionButton>
+      </li>
+      <li className="cr" style={{ borderLeft: '3px solid hsl(60, 100%, 50%)' }}>
+        <ActionButton
+          style={{ width: '100%' }}
+          onClick={onImport}
+          className="property-name">
+          Import
         </ActionButton>
       </li>
       <li className="cr function">
@@ -409,22 +515,6 @@ const Actions = ({
           onClick={onClear}
           className="property-name">
           Clear canvas
-        </ActionButton>
-      </li>
-      <li className="cr function">
-        <ActionButton
-          style={{ width: '100%' }}
-          onClick={onExport}
-          className="property-name">
-          Export
-        </ActionButton>
-      </li>
-      <li className="cr function">
-        <ActionButton
-          style={{ width: '100%' }}
-          onClick={onImport}
-          className="property-name">
-          Import
         </ActionButton>
       </li>
     </Fragment>,
@@ -444,30 +534,31 @@ Actions.propTypes = {
 
 const App = () => {
   const [size, setSize] = useState(CONFIG.size)
+  const [radius, setRadius] = useState(CONFIG.radius)
   const [width, setWidth] = useState(CONFIG.width)
   const [height, setHeight] = useState(CONFIG.height)
   const [color, setColor] = useState(CONFIG.color)
   const [debugging, setDebugging] = useState(CONFIG.debug)
   const [darkMode, setDarkMode] = useState(
-    window.localStorage.getItem('pixelator') &&
-      JSON.parse(window.localStorage.getItem('pixelator')).darkMode
-      ? JSON.parse(window.localStorage.getItem('pixelator')).darkMode
+    window.localStorage.getItem(STORAGE_KEY) &&
+      JSON.parse(window.localStorage.getItem(STORAGE_KEY)).darkMode
+      ? JSON.parse(window.localStorage.getItem(STORAGE_KEY)).darkMode
       : CONFIG.darkMode
   )
   // Purely as a placeholder to trigger a re-render
   const [viewing, setViewing] = useState(false)
   const [palette, setPalette] = useState(
-    window.localStorage.getItem('pixelator') &&
-      JSON.parse(window.localStorage.getItem('pixelator')).palette
-      ? [...JSON.parse(window.localStorage.getItem('pixelator')).palette]
+    window.localStorage.getItem(STORAGE_KEY) &&
+      JSON.parse(window.localStorage.getItem(STORAGE_KEY)).palette
+      ? [...JSON.parse(window.localStorage.getItem(STORAGE_KEY)).palette]
       : [CONFIG.color]
   )
   const [shadow, setShadow] = useState('')
   const [loadingSnapshot, setLoadingSnapshot] = useState(false)
   const [snapshots, setSnapshots] = useState(
-    window.localStorage.getItem('pixelator') &&
-      JSON.parse(window.localStorage.getItem('pixelator')).snapshots
-      ? [...JSON.parse(window.localStorage.getItem('pixelator')).snapshots]
+    window.localStorage.getItem(STORAGE_KEY) &&
+      JSON.parse(window.localStorage.getItem(STORAGE_KEY)).snapshots
+      ? [...JSON.parse(window.localStorage.getItem(STORAGE_KEY)).snapshots]
       : []
   )
   const colorControllerRef = useRef(null)
@@ -475,6 +566,8 @@ const App = () => {
   const snapshotFolderRef = useRef(null)
   const actionsFolderRef = useRef(null)
   const settingsFolderRef = useRef(null)
+  const helpFolderRef = useRef(null)
+  const aboutFolderRef = useRef(null)
   const controllerRef = useRef(null)
   // const [processing, setProcessing] = useState(false)
   const [processingSnapshot, setProcessingSnapshot] = useState(false)
@@ -483,13 +576,33 @@ const App = () => {
   const snapshotRef = useRef(null)
   const cellRef = useRef([...new Array(height * width).fill().map(() => ({}))])
 
+  const saveToStorage = useCallback(
+    saveObj => {
+      window.localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          darkMode,
+          palette,
+          snapshots,
+          height,
+          width,
+          radius,
+          size,
+          color,
+          ...saveObj,
+        })
+      )
+    },
+    [darkMode, palette, snapshots, height, width, radius, size, color]
+  )
+
   const deleteSnapshot = created => {
     const newSnapshots = snapshots.filter(
       snapshot => snapshot.created !== created
     )
     setSnapshots(newSnapshots)
     window.localStorage.setItem(
-      'pixelator',
+      STORAGE_KEY,
       JSON.stringify({
         darkMode,
         snapshots: newSnapshots,
@@ -505,8 +618,10 @@ const App = () => {
         deleteSnapshot(created)
       }
     } else {
-      snapshotRef.current = snapshot
-      setLoadingSnapshot(true)
+      if (confirm('Loading a snapshot will wipe the current canvas')) {
+        snapshotRef.current = snapshot
+        setLoadingSnapshot(true)
+      }
     }
   }
 
@@ -514,8 +629,12 @@ const App = () => {
     const newPalette = palette.filter(c => c !== color)
     setPalette(newPalette)
     window.localStorage.setItem(
-      'pixelator',
+      STORAGE_KEY,
       JSON.stringify({
+        height,
+        width,
+        color,
+
         darkMode,
         snapshots,
         palette: newPalette,
@@ -586,6 +705,7 @@ const App = () => {
     `
     if (download) {
       downloadFile(FILE_CONTENT, 'text/css', 'box-shadow-pixel-sprite.css')
+      alert('CSS file saved!')
     } else {
       // copy CSS to clipboard
       const el = document.createElement('textarea')
@@ -595,6 +715,7 @@ const App = () => {
       el.select()
       document.execCommand('copy')
       document.body.removeChild(el)
+      alert('Image CSS saved to clipboard!')
     }
   }
   const onSvg = () => {
@@ -618,6 +739,7 @@ const App = () => {
         )
         RECT.setAttribute('width', size)
         RECT.setAttribute('height', size)
+        RECT.setAttribute('rx', size * (radius / 100))
         RECT.setAttribute('fill', cellRef.current[c].color)
         RECT.setAttribute('x', x * size)
         RECT.setAttribute('y', y * size)
@@ -625,6 +747,7 @@ const App = () => {
       }
     }
     downloadFile(SVG.outerHTML, 'text/svg', 'shadow.svg')
+    alert('Image saved in .svg format!')
   }
   const onClear = () => {
     cellRef.current = [...new Array(height * width).fill().map(() => ({}))]
@@ -656,11 +779,15 @@ const App = () => {
     document.body.appendChild(link)
     link.click()
     link.remove()
+    alert(
+      'Image saved in .png format! NOTE:: If your image uses a radius, this is not translated to the png format. If you need rounded corners, use SVG and then convert to png externally.'
+    )
   }
 
   const onExport = () => {
     const FILE_CONTENT = window.localStorage.getItem(STORAGE_KEY)
     downloadFile(FILE_CONTENT, 'application/json', `${STORAGE_KEY}-export.json`)
+    alert('Export complete!')
   }
 
   const onImport = () => {
@@ -699,6 +826,7 @@ const App = () => {
             setSnapshots([...snapshots, ...ADD_ONS])
           }
         }
+        alert('Snapshots and palette imported!')
       }
       READER.readAsText(e.target.files[0])
     }
@@ -708,18 +836,28 @@ const App = () => {
 
   useEffect(() => {
     if (loadingSnapshot) {
-      const { height, created, width, size, cells } = snapshotRef.current
+      const {
+        height,
+        radius,
+        created,
+        width,
+        size,
+        cells,
+      } = snapshotRef.current
       cellRef.current = JSON.parse(cells)
       setHeight(height)
       setWidth(width)
       setSize(size)
+      setRadius(radius)
       CONFIG.size = size
       CONFIG.width = width
       CONFIG.height = height
+      CONFIG.radius = radius
       controllerRef.current.updateDisplay()
       setViewing(created)
       setLoadingSnapshot(false)
       generateShadow()
+      alert('Snapshot loaded')
     }
   }, [generateShadow, loadingSnapshot])
 
@@ -739,20 +877,27 @@ const App = () => {
       }
     }
     controllerRef.current = new GUI()
-    const DIMENSIONS = controllerRef.current.addFolder('Dimensions')
-    DIMENSIONS.add(CONFIG, 'height', 0, 50, 1)
+    const CONFIGURATION = controllerRef.current.addFolder('Configuration')
+    CONFIGURATION.add(CONFIG, 'height', 2, 100, 1)
       .onFinishChange(changeDimension(setHeight))
       .name('Canvas height')
-    DIMENSIONS.add(CONFIG, 'width', 0, 50, 1)
+    CONFIGURATION.add(CONFIG, 'width', 2, 100, 1)
       .onFinishChange(changeDimension(setWidth))
       .name('Canvas width')
-    DIMENSIONS.add(CONFIG, 'size', 0, 20, 1)
+    CONFIGURATION.add(CONFIG, 'size', 0, 20, 1)
       .onFinishChange(size => {
         setSize(size)
         // Will trigger shadow generation
         generateShadow()
       })
       .name('Pixel size')
+    CONFIGURATION.add(CONFIG, 'radius', 0, 50, 1)
+      .onFinishChange(size => {
+        setRadius(size)
+        // Will trigger shadow generation
+        generateShadow()
+      })
+      .name('Pixel radius')
 
     colorFolderRef.current = controllerRef.current.addFolder('Color')
     colorControllerRef.current = colorFolderRef.current
@@ -792,39 +937,27 @@ const App = () => {
       updateZoom(CONFIG.zoom)
     }
     document.querySelector('#app').addEventListener('wheel', handleZoom)
-
+    helpFolderRef.current = controllerRef.current.addFolder('Help')
+    aboutFolderRef.current = controllerRef.current.addFolder('About')
     // set a state variable to trigger the intial view?
     setViewing(new Date().getTime())
   }, [generateShadow])
 
   useEffect(() => {
-    window.localStorage.setItem(
-      'pixelator',
-      JSON.stringify({
-        darkMode,
-        palette: [...palette, color],
-        snapshots,
-      })
-    )
-  }, [color, darkMode, palette, snapshots])
+    colorControllerRef.current.setValue(color)
+    if (palette.indexOf(color) === -1) setPalette([...palette, color])
+    saveToStorage({
+      palette: palette.indexOf(color) === -1 ? [...palette, color] : palette,
+    })
+  }, [saveToStorage, color, palette])
 
   useEffect(() => {
-    // eslint-disable-next-line
     document.documentElement.style.setProperty(
       '--darkness',
       darkMode ? 10 : 100
     )
-    colorControllerRef.current.setValue(color)
-    window.localStorage.setItem(
-      'pixelator',
-      JSON.stringify({
-        darkMode: darkMode ? true : false,
-        palette: palette.indexOf(color) === -1 ? [...palette, color] : palette,
-        snapshots,
-      })
-    )
-    if (palette.indexOf(color) === -1) setPalette([...palette, color])
-  }, [color, darkMode, palette, snapshots])
+    saveToStorage()
+  }, [saveToStorage, darkMode])
 
   useEffect(() => {
     if (processingSnapshot) {
@@ -840,6 +973,7 @@ const App = () => {
           width,
           size,
           color,
+          radius,
           created: new Date().getTime(),
           cells: JSON.stringify(cellRef.current),
           translateX,
@@ -850,13 +984,14 @@ const App = () => {
         }
 
         window.localStorage.setItem(
-          'pixelator',
+          STORAGE_KEY,
           JSON.stringify({
             palette,
             snapshots: [...snapshots, SNAPSHOT],
           })
         )
         setSnapshots([...snapshots, SNAPSHOT])
+        alert('Snapshot saved')
       }
       setProcessingSnapshot(false)
     }
@@ -872,12 +1007,14 @@ const App = () => {
     translateX,
     translateY,
     width,
+    radius,
   ])
 
   return (
     <Container>
       <PixelCanvas
         size={size}
+        radius={radius}
         width={width}
         height={height}
         cells={cellRef.current}
@@ -895,6 +1032,8 @@ const App = () => {
         onChange={handleSnapshot}
         parent={snapshotFolderRef}
       />
+      <Help parent={helpFolderRef} />
+      <About parent={aboutFolderRef} />
       <Actions
         onCss={onCss}
         onSvg={onSvg}
