@@ -6,6 +6,7 @@ const {
   dat: { GUI },
   confirm,
 } = window
+
 const STORAGE_KEY = 'jh3y-pixelator'
 const CONFIG = {
   height:
@@ -87,11 +88,16 @@ const PixelCanvas = ({ color, cells, size, height, width, radius }) => {
   const gridRef = useRef(null)
   const erasing = useRef(false)
   const update = e => {
-    if (e.target.parentNode === gridRef.current) {
-      e.target.style.setProperty('--color', erasing.current ? null : color)
-
+    const cell = e.x && e.y ? document.elementFromPoint(e.x, e.y) : e.target
+    // if (e.x && e.y) cell = document.elementFromPoint(e.x, e.y)
+    if (
+      e.target.parentNode === gridRef.current &&
+      cell &&
+      cell.hasAttribute('data-index')
+    ) {
+      cell.style.setProperty('--color', erasing.current ? null : color)
       cells[
-        parseInt(e.target.getAttribute('data-index'), 10)
+        parseInt(cell.getAttribute('data-index'), 10)
       ].color = erasing.current ? null : color
     }
   }
@@ -138,7 +144,17 @@ const PixelCanvas = ({ color, cells, size, height, width, radius }) => {
       size={size}
       radius={radius}>
       {cells.map((c, index) => {
-        return <Cell key={index} data-index={index} index={index} />
+        const x = index % width
+        const y = Math.floor(index / width)
+        return (
+          <Cell
+            key={index}
+            data-x={x}
+            data-y={y}
+            data-index={index}
+            index={index}
+          />
+        )
       })}
     </Grid>
   )
@@ -158,16 +174,16 @@ PixelCanvas.propTypes = {
 // End Pixel Canvas Component
 
 // Output/Debugging components
-const OutputDrawer = styled.details`
-  position: fixed;
-  top: 1rem;
-  left: 1rem;
-  outline: transparent;
-  color: hsl(0, 0%, calc((100 - var(--darkness, 90)) * 1%));
-`
-const OutputTitle = styled.summary`
-  outline: transparent;
-`
+// const OutputDrawer = styled.details`
+//   position: fixed;
+//   top: 1rem;
+//   left: 1rem;
+//   outline: transparent;
+//   color: hsl(0, 0%, calc((100 - var(--darkness, 90)) * 1%));
+// `
+// const OutputTitle = styled.summary`
+//   outline: transparent;
+// `
 
 const DebugContainer = styled.div`
   height: ${p => p.height * p.size}px;
@@ -195,23 +211,23 @@ const Debug = styled.div`
   }
 `
 
-const Output = ({ height, width, size, shadow, translateX, translateY }) => {
-  return createPortal(
-    <OutputDrawer>
-      <OutputTitle>See CSS output (Run copy first)</OutputTitle>
-      <DebugContainer width={width} height={height} size={size}>
-        <Debug
-          shadow={shadow}
-          width={size}
-          height={size}
-          translateX={translateX}
-          translateY={translateY}
-        />
-      </DebugContainer>
-    </OutputDrawer>,
-    document.body
-  )
-}
+// const Output = ({ height, width, size, shadow, translateX, translateY }) => {
+//   return createPortal(
+//     <OutputDrawer>
+//       <OutputTitle>See CSS output (Run copy first)</OutputTitle>
+//       <DebugContainer width={width} height={height} size={size}>
+//         <Debug
+//           shadow={shadow}
+//           width={size}
+//           height={size}
+//           translateX={translateX}
+//           translateY={translateY}
+//         />
+//       </DebugContainer>
+//     </OutputDrawer>,
+//     document.body
+//   )
+// }
 
 // End Output/Debugging components
 
@@ -393,6 +409,9 @@ const Help = ({ parent }) => {
       <li>{`Zoom in with mouse wheel or via "Settings".`}</li>
       <li>{`Save your drawing by using the "Snapshot" action.`}</li>
       <li>Delete a color or snapshot by right clicking it.</li>
+      <li>
+        Stores current state, snapshots, palette, settings, etc. in localStorage
+      </li>
     </List>,
     parent.current.domElement.querySelector('ul')
   )
@@ -441,6 +460,7 @@ const Actions = ({
   onClear,
   onExport,
   onImport,
+  onTrim,
 }) => {
   if (!parent.current || !parent.current.domElement) return null
   return createPortal(
@@ -512,6 +532,14 @@ const Actions = ({
       <li className="cr function">
         <ActionButton
           style={{ width: '100%' }}
+          onClick={onTrim}
+          className="property-name">
+          Trim canvas
+        </ActionButton>
+      </li>
+      <li className="cr function">
+        <ActionButton
+          style={{ width: '100%' }}
           onClick={onClear}
           className="property-name">
           Clear canvas
@@ -529,6 +557,7 @@ Actions.propTypes = {
   onSnapshot: T.func,
   onExport: T.func,
   onImport: T.func,
+  onTrim: T.func,
   parent: T.node,
 }
 
@@ -538,7 +567,9 @@ const App = () => {
   const [width, setWidth] = useState(CONFIG.width)
   const [height, setHeight] = useState(CONFIG.height)
   const [color, setColor] = useState(CONFIG.color)
-  const [debugging, setDebugging] = useState(CONFIG.debug)
+  const heightRef = useRef(CONFIG.height)
+  const widthRef = useRef(CONFIG.width)
+  // const [debugging, setDebugging] = useState(CONFIG.debug)
   const [darkMode, setDarkMode] = useState(
     window.localStorage.getItem(STORAGE_KEY) &&
       JSON.parse(window.localStorage.getItem(STORAGE_KEY)).darkMode
@@ -563,6 +594,7 @@ const App = () => {
   )
   const colorControllerRef = useRef(null)
   const colorFolderRef = useRef(null)
+  const darkModeRef = useRef(darkMode)
   const snapshotFolderRef = useRef(null)
   const actionsFolderRef = useRef(null)
   const settingsFolderRef = useRef(null)
@@ -578,6 +610,8 @@ const App = () => {
 
   const saveToStorage = useCallback(
     saveObj => {
+      heightRef.current = height
+      widthRef.current = width
       window.localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify({
@@ -651,6 +685,8 @@ const App = () => {
         deletePaletteColor(c)
       }
     } else {
+      CONFIG.color = c
+      controllerRef.current.updateDisplay()
       setColor(c)
     }
   }
@@ -668,7 +704,8 @@ const App = () => {
       const y = Math.floor(c / width)
       if (cellRef.current[c].color) {
         // Create a box shadow string and append it to the str
-        str += `${x * size}px ${y * size}px 0 0 ${cellRef.current[c].color},`
+        str += `calc(${x * size} * var(--coefficient, 1px)) calc(${y *
+          size} * var(--coefficient, 1px)) 0 0 ${cellRef.current[c].color},`
       }
     }
     const SHADOW =
@@ -682,8 +719,10 @@ const App = () => {
   const onCss = download => {
     const shadow = generateShadow()
     const FILE_CONTENT = `.element {
-  height: ${size}px;
-  width: ${size}px;
+  /* Change coefficient to make responsive */
+  --coefficient: 1px;
+  height: calc(${size} * var(--coefficient, 1px));
+  width: calc(${size} * var(--coefficient, 1px));
   position: absolute;
   top: 50%;
   left: 50%;
@@ -696,10 +735,9 @@ const App = () => {
   position: absolute;
   top: 0;
   left: 0;
-  transform: translate(-${width * size * 0.5 + size * 0.5}px, -${height *
-      size *
-      0.5 +
-      size * 0.5}px);
+  transform: translate(calc(-${width * size * 0.5 +
+    size * 0.5} * var(--coefficient, 1px)), calc(-${height * size * 0.5 +
+      size * 0.5} * var(--coefficient, 1px)));
   box-shadow: ${shadow};
 }
     `
@@ -731,7 +769,6 @@ const App = () => {
     for (let c = 0; c < cellRef.current.length; c++) {
       const x = c % width
       const y = Math.floor(c / width)
-      // console.info(x, y)
       if (cellRef.current[c].color) {
         const RECT = document.createElementNS(
           'http://www.w3.org/2000/svg',
@@ -750,8 +787,93 @@ const App = () => {
     alert('Image saved in .svg format!')
   }
   const onClear = () => {
-    cellRef.current = [...new Array(height * width).fill().map(() => ({}))]
-    setViewing(new Date().getTime())
+    if (confirm('Are you sure you wish to clear the canvas?')) {
+      cellRef.current = [...new Array(height * width).fill().map(() => ({}))]
+      setViewing(new Date().getTime())
+    }
+  }
+  const onTrim = () => {
+    if (
+      confirm(
+        'Are you sure you want to trim the canvas? Maybe snapshot the current canvas in case you want to go back.'
+      )
+    ) {
+      // Work out how many vertical rows are empty before content
+      // We know the width so go from 0 to width and check each column at a time
+      const TRIM = {
+        xStart: undefined,
+        xEnd: undefined,
+        yStart: undefined,
+        yEnd: undefined,
+      }
+      const setTrimmingPoints = (bound, start, end, posFunc) => {
+        for (let d = 0; d < bound - 1; d++) {
+          if (TRIM[start]) break
+          // Loop through all the cells checking for x === x and no color
+          for (let c = 0; c < cellRef.current.length; c++) {
+            if (TRIM[start]) break
+            const col = posFunc(c)
+            if (d === col && cellRef.current[c].color) {
+              TRIM[start] = d
+              break
+            }
+          }
+        }
+        for (let d = bound - 1; d > 0; d--) {
+          if (TRIM[end]) break
+          // Loop through all the cells checking for x === x and no color
+          for (let c = cellRef.current.length; c > 0; c--) {
+            if (TRIM[end]) break
+            const col = posFunc(c)
+            if (d === col && cellRef.current[c].color) {
+              TRIM[end] = d + 1
+              break
+            }
+          }
+        }
+      }
+      setTrimmingPoints(width - 1, 'xStart', 'xEnd', c => c % width)
+      setTrimmingPoints(height - 1, 'yStart', 'yEnd', c =>
+        Math.floor(c / width)
+      )
+      const newWidth = TRIM.xEnd - TRIM.xStart
+      const newHeight = TRIM.yEnd - TRIM.yStart
+      if (
+        TRIM.yStart === 1 &&
+        TRIM.yEnd === height - 1 &&
+        TRIM.xStart === 1 &&
+        TRIM.xEnd === width - 1
+      )
+        return
+      // Here you need to work out the new cell ref array based on the starting point and ending point...
+      // Iterate over the original cells and create a new cell Ref based on the xStart, yStart
+      const newCells = []
+      for (let c = 0; c < cellRef.current.length; c++) {
+        const x = c % width
+        const y = Math.floor(c / width)
+        if (
+          x < TRIM.xEnd &&
+          x >= TRIM.xStart &&
+          y < TRIM.yEnd &&
+          y >= TRIM.yStart
+        ) {
+          newCells.push({
+            ...(cellRef.current[c].color && {
+              color: cellRef.current[c].color,
+            }),
+          })
+        }
+      }
+      cellRef.current = newCells
+      CONFIG.height = newHeight
+      CONFIG.width = newWidth
+      heightRef.current = newHeight
+      widthRef.current = newWidth
+      controllerRef.current.updateDisplay()
+      setWidth(newWidth)
+      setHeight(newHeight)
+      saveToStorage()
+    }
   }
   const onSnapshot = () => {
     generateShadow()
@@ -853,49 +975,80 @@ const App = () => {
       CONFIG.width = width
       CONFIG.height = height
       CONFIG.radius = radius
+      heightRef.current = height
+      widthRef.current = width
       controllerRef.current.updateDisplay()
       setViewing(created)
       setLoadingSnapshot(false)
-      generateShadow()
       alert('Snapshot loaded')
     }
-  }, [generateShadow, loadingSnapshot])
+  }, [loadingSnapshot])
+
+  useEffect(() => {
+    if (height !== heightRef.current || width !== widthRef.current) {
+      saveToStorage()
+      heightRef.current = height
+      widthRef.current = width
+    }
+  }, [height, width, saveToStorage])
 
   useEffect(() => {
     if (controllerRef.current) return
-    const changeDimension = changer => dimension => {
-      if (
-        confirm(
-          'Are you sure? Making this change will wipe your current canvas.'
-        )
-      ) {
-        cellRef.current = [
-          ...new Array(CONFIG.height * CONFIG.width).fill().map(() => ({})),
-        ]
-        changer(dimension)
-        setShadow(null)
-      }
-    }
+    // Set dark mode up
+    document.documentElement.style.setProperty(
+      '--darkness',
+      darkMode ? 10 : 100
+    )
     controllerRef.current = new GUI()
     const CONFIGURATION = controllerRef.current.addFolder('Configuration')
     CONFIGURATION.add(CONFIG, 'height', 2, 100, 1)
-      .onFinishChange(changeDimension(setHeight))
+      .onFinishChange(value => {
+        if (
+          value !== heightRef.current &&
+          confirm(
+            'Are you sure? Making this change will wipe your current canvas.'
+          )
+        ) {
+          cellRef.current = [
+            ...new Array(CONFIG.height * CONFIG.width).fill().map(() => ({})),
+          ]
+          setHeight(value)
+          heightRef.current = value
+          saveToStorage()
+          // setShadow(null)
+        }
+      })
       .name('Canvas height')
     CONFIGURATION.add(CONFIG, 'width', 2, 100, 1)
-      .onFinishChange(changeDimension(setWidth))
+      .onFinishChange(value => {
+        if (
+          value !== widthRef.current &&
+          confirm(
+            'Are you sure? Making this change will wipe your current canvas.'
+          )
+        ) {
+          cellRef.current = [
+            ...new Array(CONFIG.height * CONFIG.width).fill().map(() => ({})),
+          ]
+          setWidth(value)
+          widthRef.current = value
+          saveToStorage()
+          // setShadow(null)
+        }
+      })
       .name('Canvas width')
     CONFIGURATION.add(CONFIG, 'size', 0, 20, 1)
       .onFinishChange(size => {
         setSize(size)
         // Will trigger shadow generation
-        generateShadow()
+        // generateShadow()
       })
       .name('Pixel size')
     CONFIGURATION.add(CONFIG, 'radius', 0, 50, 1)
       .onFinishChange(size => {
         setRadius(size)
         // Will trigger shadow generation
-        generateShadow()
+        // generateShadow()
       })
       .name('Pixel radius')
 
@@ -921,10 +1074,10 @@ const App = () => {
       .add(CONFIG, 'zoom', 1, 10, 0.1)
       .onChange(updateZoom)
       .name('Zoom')
-    settingsFolderRef.current
-      .add(CONFIG, 'debug')
-      .onChange(setDebugging)
-      .name('Show dev debug')
+    // settingsFolderRef.current
+    //   .add(CONFIG, 'debug')
+    //   .onChange(setDebugging)
+    //   .name('Show dev debug')
     // Add actions folder for buttons
     actionsFolderRef.current = controllerRef.current.addFolder('Actions')
 
@@ -941,23 +1094,29 @@ const App = () => {
     aboutFolderRef.current = controllerRef.current.addFolder('About')
     // set a state variable to trigger the intial view?
     setViewing(new Date().getTime())
-  }, [generateShadow])
+  }, [darkMode, saveToStorage])
 
   useEffect(() => {
-    colorControllerRef.current.setValue(color)
-    if (palette.indexOf(color) === -1) setPalette([...palette, color])
-    saveToStorage({
-      palette: palette.indexOf(color) === -1 ? [...palette, color] : palette,
-    })
+    if (palette.indexOf(color) === -1) {
+      colorControllerRef.current.setValue(color)
+      if (palette.indexOf(color) === -1) setPalette([...palette, color])
+      saveToStorage({
+        palette: palette.indexOf(color) === -1 ? [...palette, color] : palette,
+      })
+    }
   }, [saveToStorage, color, palette])
 
   useEffect(() => {
-    document.documentElement.style.setProperty(
-      '--darkness',
-      darkMode ? 10 : 100
-    )
-    saveToStorage()
-  }, [saveToStorage, darkMode])
+    if (darkModeRef.current !== darkMode) {
+      setDarkMode(darkMode)
+      document.documentElement.style.setProperty(
+        '--darkness',
+        darkMode ? 10 : 100
+      )
+      darkModeRef.current = darkMode
+      saveToStorage()
+    }
+  }, [darkMode, saveToStorage])
 
   useEffect(() => {
     if (processingSnapshot) {
@@ -997,7 +1156,6 @@ const App = () => {
     }
   }, [
     color,
-    generateShadow,
     height,
     palette,
     processingSnapshot,
@@ -1042,9 +1200,10 @@ const App = () => {
         onClear={onClear}
         onExport={onExport}
         onImport={onImport}
+        onTrim={onTrim}
         parent={actionsFolderRef}
       />
-      {debugging && (
+      {/* debugging && (
         <Output
           shadow={shadow}
           width={width}
@@ -1053,7 +1212,7 @@ const App = () => {
           translateX={translateX}
           translateY={translateY}
         />
-      )}
+      ) */}
     </Container>
   )
 }
