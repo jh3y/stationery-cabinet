@@ -1,0 +1,185 @@
+*
+  box-sizing border-box
+
+:root
+  --hue 160
+  --size 50
+  --record-shine hsla(0, 0%, 100%, 0.45)
+  --record-body hsl(0, 0%, 15%)
+  --player-base hsl(0, 0%, 35%)
+  --player-shine hsl(0, 0%, 30%)
+  --record-base hsl(0, 0%, 5%)
+  --stroke hsl(0, 0%, 5%)
+  --pupil hsl(0, 0%, 100%)
+  --tongue hsl(0, 100%, 50%)
+  --record-label-base hsl(0, 0%, 98%)
+  --record-label 'hsl(%s, 100%, 90%)' % var(--hue)
+  --knob-base hsl(0, 0%, 70%)
+  --knob-top hsl(0, 0%, 15%)
+  --player-accent hsl(0, 100%, 50%)
+  --needle hsl(0, 0%, 10%)
+  --counter hsl(0, 0%, 40%)
+  --arm-top hsl(0, 0%, 40%)
+
+body
+  width 100vw
+  height 250vh
+  background var(--record-label)
+  overflow-x hidden
+  transition background .25s ease
+
+.record-player
+  height calc(var(--size) * 1vmin)
+  width calc(var(--size) * 1vmin)
+  position fixed
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  display none
+
+.frame
+  &__shine
+    fill var(--player-shine)
+  &__base
+    fill var(--player-base)
+
+.record-base
+  fill var(--record-base)
+.record__body
+  fill var(--record-body)
+.record__shine
+  stroke var(--record-shine)
+
+.pupil
+  fill var(--pupil)
+.eye
+  fill var(--stroke)
+.mouth
+  &__opening
+    fill var(--stroke)
+  &__tongue
+    fill var(--tongue)
+
+.face--nauseous
+  display none
+  path
+    stroke var(--stroke)
+  circle
+    fill var(--stroke)
+
+.record__label-base
+  fill var(--record-label-base)
+.record__label
+  fill var(--record-label)
+  transition fill .25s ease
+
+.knob
+  &__shine
+    fill var(--record-shine)
+  &__top
+    fill var(--knob-top)
+  &__base
+    fill var(--knob-base)
+  &__indicator
+    fill var(--player-accent)
+
+.player-arm
+  &__needle
+    fill var(--needle)
+  &__counter
+    fill var(--counter)
+  &__top
+    fill var(--arm-top)
+
+.volume
+  &__levels
+    stroke var(--stroke)
+    stroke-width 1
+  &__base
+    fill var(--stroke)
+    stroke var(--knob-base)
+  &__slider
+    fill var(--knob-base)
+  &__indicator
+    fill var(--player-accent)
+    stroke var(--player-accent)
+
+.branding
+  rect
+    fill var(--player-accent)
+  path
+    fill var(--pupil)
+
+label
+  height 44px
+  width 44px
+  position fixed
+  bottom 1rem
+  right 1rem
+  cursor pointer
+
+  & > svg
+    position absolute
+    height 100%
+    width 100%
+    top 0
+    left 0
+
+  path
+    fill var(--stroke)
+
+  svg:nth-of-type(1)
+    display none
+
+[type='checkbox']
+  // opacity 0
+  display none
+  height 0
+  width 0
+
+:checked ~ label
+  svg:nth-of-type(1)
+    display block
+  svg:nth-of-type(2)
+    display none
+
+.genre-switch
+  display none
+  position fixed
+  top calc(50% + (var(--size) * 0.5vmin))
+  left 50%
+  transform translate(-50%, -50%)
+  margin-top 4rem
+
+  &:after
+    content ''
+    position absolute
+    top 50%
+    right 5%
+    height 10px
+    width 10px
+    background 'hsl(%s, 50%, 50%)' % var(--hue)
+    transform translate(-50%, -50%)
+    -webkit-clip-path polygon(0 0, 100% 0, 50% 100%)
+    clip-path polygon(0 0, 100% 0, 50% 60%)
+
+select
+  padding 1rem 2rem
+  font-family sans-serif
+  border-radius 10px
+  border '4px solid hsl(%s, 50%, 50%)' % var(--hue)
+  appearance none
+  -webkit-appearance none
+  background none
+  font-weight bold
+  outline transparent
+  color 'hsl(%s, 50%, 50%)' % var(--hue)
+  transition border .25s ease, color .25s ease
+
+
+  option
+    appearance none
+    -webkit-appearance none
+    background none
+    outline transparent
+    padding 1rem

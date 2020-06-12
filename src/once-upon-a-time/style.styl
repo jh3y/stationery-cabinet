@@ -1,0 +1,141 @@
+*
+  box-sizing border-box
+
+:root
+  --size 90
+  --ar calc(194.8 / 596.69)
+  --coeff 1vmin
+  --width calc(var(--size) * var(--coeff))
+  --height calc((var(--size) * var(--ar)) * var(--coeff))
+  --bg hsl(248, 28%, 55%)
+  --color hsl(0, 0%, 100%)
+  --body hsl(33, 74%, 74%)
+  --nose hsl(12, 71%, 74%)
+  --cap hsl(0, 0%, 20%)
+  --cap-accent hsl(58, 91%, 51%)
+  --hair hsl(32, 25%, 45%)
+  --shirt-one hsl(0, 0%, 29%)
+  --shirt-two hsl(0, 0%, 17%)
+  --short-one hsl(4, 80%, 39%)
+  --short-two hsl(4, 80%, 32%)
+  --shoe hsl(0, 0%, 5%)
+  --sole hsl(22, 21%, 52%)
+  --logo white
+  --cheek hsla(4, 57%, 74%, 0.5)
+  --pupil hsl(0, 0%, 95%)
+  --mouth hsl(0, 0%, 10%)
+
+body
+  width 100vw
+  font-family sans-serif
+  overflow-x hidden
+  background var(--bg)
+
+.cap
+  fill var(--cap)
+
+  &__accent
+    fill var(--cap-accent)
+
+.marionette
+  height 100%
+  width 100%
+
+  &__shoe
+    fill var(--shoe)
+  &__sole
+    fill var(--sole)
+  &__shirt-one
+    fill var(--shirt-one)
+  &__shirt-two
+    fill var(--shirt-two)
+  &__short-one
+    fill var(--short-one)
+  &__short-two
+    fill var(--short-two)
+  &__cheek
+    fill var(--cheek)
+  &__mouth
+  &__eye circle:nth-of-type(1)
+    fill var(--mouth)
+  &__pupil
+    fill var(--pupil)
+  &__hair
+    fill var(--hair)
+  &__logo
+    stroke var(--logo)
+
+  &__body
+    fill var(--body)
+
+  &__container
+    width var(--width)
+    position fixed
+    height var(--height)
+    left 50%
+    top 50%
+    transform translate(-50%, -50%) scale(0)
+    transform-origin 90% 50%
+
+  &__nose
+    position absolute
+    top 36%
+    right 15.5%
+    width 0
+    height 2.5vmin
+    background var(--nose)
+
+    &:after
+    &:before
+      content ''
+      position absolute
+      height 2.5vmin
+      width 2.5vmin
+      border-radius 50%
+      background var(--nose)
+    &:after
+      left 0
+      transform translate(-50%, 0)
+    &:before
+      transform translate(50%, 0)
+      right 0
+
+
+h1
+  font-size 2rem
+  font-weight 800
+  color var(--color)
+
+.story
+  height 100vh
+  width 100vw
+  position fixed
+  overflow hidden
+
+  &__content
+    position absolute
+    width var(--width)
+    left 50%
+    transform translate(-50%, var(--y))
+
+    &--bottom
+      top 50%
+      --y calc(0% + (var(--height) / 2))
+    &--top
+      bottom 50%
+      --y calc(0% - (var(--height) / 2))
+
+.story__content--bottom .blurb
+  top 0
+.story__content--top .blurb
+  bottom 0
+
+.blurb
+  position absolute
+  visibility hidden
+  &--two
+  &--three
+  &--four
+    .word
+      opacity 0
+
