@@ -1,0 +1,30 @@
+.container
+  section.section.section--apple
+    - let c = 1
+    while c < 11
+      img.apple-image.apple-image--complete(src=`https://assets.codepen.io/605876/apple-complete-stop-motion--${c}.png`)
+      - c++
+
+  section.section.section--intro
+    article.section__content
+      h1 Introducing
+      h1 this juicy,
+      h1 green
+      h1 Apple
+  section.section.section--rotater
+    article.section__content
+  section.section.section--clipper
+    article.section__content
+      video(muted loop autoplay src='https://assets.codepen.io/605876/juicy-apple.mp4')
+      svg.apple-video(xmlns='http://www.w3.org/2000/svg')
+        defs
+          mask#image-mask
+            g.logo
+              rect(fill='white' height='100%' width='100%')
+              path(fill='black' d="M20,10C22,13 17,22 15,22C13,22 13,21 12,21C11,21 11,22 9,22C7,22 2,13 4,10C6,7 9,7 11,8V5C5.38,8.07 4.11,3.78 4.11,3.78C4.11,3.78 6.77,0.19 11,5V3H13V8C15,7 18,7 20,10Z")
+        rect.backdrop(fill='red' height='100%' width='100%')
+        rect(mask='url(#image-mask)' fill='black' height='100%' width='100%')
+  section.section.section--outro
+    article.section__content
+      h1 Outro
+//- Video by Ylanite Koppens from Pexels
