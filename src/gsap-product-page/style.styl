@@ -1,17 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap')
+
 *
   box-sizing border-box
 
+:root
+  --l 7
+  --bg 'hsla(0, 0%, %s, 1)' % calc(var(--l) * 1%)
+  --white-text hsl(0, 0%, 100%)
+  --alpha 0
+
 body
+  background var(--bg)
   min-height 100vh
-  font-family sans-serif
+  font-family 'Roboto', sans-serif
   margin 0
   padding 0
+  line-height 1.5
   overflow-x hidden
 
 .apple-video
   height 100vh
   width 100vw
   position absolute
+
 video
   height 100vh
   width 100vw
@@ -20,40 +31,57 @@ video
   object-position 100% 50%
 
 
+.container
+  position relative
+  height 100vh
+  width 100vw
 
 
 .section
-  display none
+  // display none
   height 100vh
-  background hsl(180, 100%, 90%)
 
   &--apple
     background none
     position absolute
-    width 25vmin
-    height 25vmin
+    width 100vw
+    height 100vh
     top 50%
     left 50%
     transform translate(-50%, -50%)
 
-    img
+    &__apple
+      background none
       position absolute
-      display none
-      height 100%
-      width 100%
-      object-fit cover
+      width 25vmin
+      height 25vmin
+      top 50%
+      left 50%
+      transform translate(-50%, -50%)
+      z-index 3
 
-  &--intro
-    height 400vh
-    background none
-
-  &--rotater
-    background hsl(0, 0%, 5%)
-    height 400vh
+    .text
+      position absolute
+      top 50%
+      left 50%
+      transform translate(-50%, -50%)
+      whitespace nowrap
+      --clip 100
+      color var(--white-text)
+      -webkit-clip-path 'inset(0 %s 0 0)' % calc(var(--clip, 0) * 1%)
+      clip-path 'inset(0 %s 0 0)' % calc(var(--clip, 0) * 1%)
 
   &--clipper
-    height 400vh
+    height 200vh
     overflow hidden
+
+    .text
+      position absolute
+      top 50%
+      left 50%
+      transform translate(-50%, -50%) translate(0, 100%)
+      color var(--white-text)
+      opacity 0
 
   &__content
     height 100vh
@@ -63,5 +91,96 @@ video
     justify-content center
     position relative
 
-    & > h1 + h1
-      margin 0 0 1rem 0
+  &--outro
+    position relative
+    height 200vh
+    background 'hsla(0, 0%, 100%, %s)' % var(--a)
+
+
+    .section__content
+      background 'hsla(0, 0%, 100%, %s)' % var(--o, 0)
+
+    .section__apples
+      position absolute
+      top 50%
+      left 50%
+      height 25vmin
+      width 25vmin
+      transform translate(-50%, -50%)
+      overflow hidden
+
+    .section__outro
+      position absolute
+      top 0
+      left 0
+      height 100vh
+      width 100vw
+      display flex
+      align-items center
+      justify-content center
+      background 'hsla(0, 0%, 100%, %s)' % var(--oo, 0)
+
+      span
+        opacity 0
+        transform translate(0, 100%)
+
+      .section__content
+        top 100vh
+
+
+.apple-image
+  position absolute
+  display none
+  height 100%
+  width 100%
+  object-fit cover
+
+.section--intro
+  height 300vh
+  .section__content
+    background 'hsla(0, 0%, 7%, %s)' % var(--alpha)
+    color var(--white-text)
+
+  .text
+    opacity 0
+    transform translate(0, 100%)
+
+.section--dance
+  height 300vh
+
+.blurb
+  margin 0
+  display flex
+  align-items center
+  justify-content center
+  text-align center
+  position absolute
+  top 0
+  left 0
+  height 100%
+  width 100%
+
+  p
+    width 300px
+    opacity 0
+    transform translate(0, 100%)
+
+p
+  font-size 1.5rem
+  @media(min-width 768px)
+    font-size 2rem
+
+h1.text
+  font-size 2rem
+  @media(min-width 768px)
+    font-size 4rem
+
+h2.text
+  font-size 1.5rem
+  @media(min-width 768px)
+    font-size 2rem
+
+h1
+h2
+p
+  margin 0
