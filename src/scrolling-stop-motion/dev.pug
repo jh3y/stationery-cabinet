@@ -1,0 +1,15 @@
+mixin openers()
+  - let o = 1
+  while o < 12
+    img(src=`https://assets.codepen.io/605876/apple-complete-stop-motion--${o}.png`)
+    - o++
+mixin biters()
+  - let b = 1
+  while b < 12
+    img(src=`https://assets.codepen.io/605876/apple-bite-stop-motion--${b}.png`)
+    - b++
+
+.container
+  +openers()
+  img(src='https://assets.codepen.io/605876/apple-complete-stop-motion--1.png')
+  +biters()
