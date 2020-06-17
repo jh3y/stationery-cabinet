@@ -13,6 +13,7 @@ const CONFIG = {
   vtl: Math.floor(Math.random() * 100),
   vbr: Math.floor(Math.random() * 100),
   vbl: Math.floor(Math.random() * 100),
+  linked: true,
 }
 
 for (const key of Object.keys(CONFIG)) {
@@ -25,70 +26,52 @@ const renderOutput = () => {
   OUTPUT.innerHTML = `border-radius: ${CONFIG.htl}% ${CONFIG.htr}% ${CONFIG.hbr}% ${CONFIG.hbl}% / ${CONFIG.vtl}% ${CONFIG.vtr}% ${CONFIG.vbr}% ${CONFIG.vbl}%;`
 }
 renderOutput()
+
 const controls = new GUI()
+const update = (target, link) => value => {
+  document.documentElement.style.setProperty(`--${target}`, value)
+  if (CONFIG.linked && link) {
+    CONFIG[link] = value
+    document.documentElement.style.setProperty(`--${link}`, value)
+    controls.updateDisplay()
+  }
+  renderOutput()
+}
+
 controls
   .add(CONFIG, 'height', 1, 100, 1)
-  .onChange(value => {
-    document.documentElement.style.setProperty('--height', value)
-    renderOutput()
-  })
+  .onChange(update('height'))
   .name('Height')
 controls
   .add(CONFIG, 'width', 1, 100, 1)
-  .onChange(value => {
-    document.documentElement.style.setProperty('--width', value)
-    renderOutput()
-  })
+  .onChange(update('width'))
   .name('Width')
 
 const H = controls.addFolder('Horizontal Radius')
 H.add(CONFIG, 'htl', 0, 100, 1)
-  .onChange(value => {
-    document.documentElement.style.setProperty('--htl', value)
-    renderOutput()
-  })
+  .onChange(update('htl', 'vtl'))
   .name('Top Left')
 H.add(CONFIG, 'htr', 0, 100, 1)
-  .onChange(value => {
-    document.documentElement.style.setProperty('--htr', value)
-    renderOutput()
-  })
+  .onChange(update('htr', 'vtr'))
   .name('Top Right')
 H.add(CONFIG, 'hbl', 0, 100, 1)
-  .onChange(value => {
-    document.documentElement.style.setProperty('--hbl', value)
-    renderOutput()
-  })
+  .onChange(update('hbl', 'vbl'))
   .name('Bottom Left')
 H.add(CONFIG, 'hbr', 0, 100, 1)
-  .onChange(value => {
-    document.documentElement.style.setProperty('--hbr', value)
-    renderOutput()
-  })
+  .onChange(update('hbr', 'vbr'))
   .name('Bottom Right')
 
 const V = controls.addFolder('Vertical Radius')
 V.add(CONFIG, 'vtl', 0, 100, 1)
-  .onChange(value => {
-    document.documentElement.style.setProperty('--vtl', value)
-    renderOutput()
-  })
+  .onChange(update('vtl', 'htl'))
   .name('Top Left')
 V.add(CONFIG, 'vtr', 0, 100, 1)
-  .onChange(value => {
-    document.documentElement.style.setProperty('--vtr', value)
-    renderOutput()
-  })
+  .onChange(update('vtr', 'htr'))
   .name('Top Right')
 V.add(CONFIG, 'vbl', 0, 100, 1)
-  .onChange(value => {
-    document.documentElement.style.setProperty('--vbl', value)
-    renderOutput()
-  })
+  .onChange(update('vbl', 'hbl'))
   .name('Bottom Left')
 V.add(CONFIG, 'vbr', 0, 100, 1)
-  .onChange(value => {
-    document.documentElement.style.setProperty('--vbr', value)
-    renderOutput()
-  })
+  .onChange(update('vbr', 'hbr'))
   .name('Bottom Right')
+controls.add(CONFIG, 'linked').name('Linked radius')
