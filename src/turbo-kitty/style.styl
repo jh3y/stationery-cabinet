@@ -1,0 +1,100 @@
+*
+  box-sizing border-box
+
+body
+  --hue 12
+  --star hsl(42, 91%, 65%)
+  --bg hsl(0, 0%, 15%)
+  --strap hsl(0, 0%, 13%)
+  --red hsl(4, 80%, 65%)
+  --orange hsl(24, 80%, 65%)
+  --lime hsl(64, 80%, 65%)
+  --green hsl(104, 80%, 65%)
+  --turquoise hsl(184, 80%, 65%)
+  --purple hsl(244, 80%, 65%)
+  --indigo hsl(264, 80%, 65%)
+  --violet hsl(324, 80%, 65%)
+  --tail 'hsl(%s, 27%, 62%)' % var(--hue)
+  --stroke hsl(0, 0%, 10%)
+  --muzzle 'hsl(%s, 43%, 89%)' % var(--hue)
+  --dark 'hsl(%s, 33%, 67%)' % var(--hue)
+  --light 'hsl(%s, 65%, 79%)' % var(--hue)
+  --strap hsl(0, 0%, 20%)
+  background var(--bg)
+  display flex
+  align-items center
+  justify-content center
+  min-height 100vh
+  overflow hidden
+
+svg
+  height 100vmin
+  display none
+
+.stars
+  path
+    fill var(--star)
+
+.kitty
+  &__light
+    fill var(--light)
+
+  &__dark
+    fill var(--dark)
+
+  &__dark-stroke
+    stroke var(--dark)
+
+  &__stroke
+    stroke var(--stroke)
+
+  &__fill
+    fill var(--stroke)
+
+  &__muzzle
+    fill var(--muzzle)
+
+  &__tail
+    stroke var(--tail)
+
+.rocket
+  &__strap
+    fill var(--strap)
+
+  &__body
+    path:nth-of-type(1)
+      fill hsl(0, 0%, 65%)
+    path:nth-of-type(2)
+      fill hsl(0, 0%, 20%)
+    path:nth-of-type(3)
+      fill hsl(0, 0%, 85%)
+    path:nth-of-type(4)
+      fill hsl(0, 0%, 30%)
+
+  &__stream
+  &__bubbles
+    path
+      &:nth-of-type(1)
+      &:nth-of-type(8)
+        fill var(--red)
+      &:nth-of-type(2)
+      &:nth-of-type(9)
+        fill var(--orange)
+      &:nth-of-type(3)
+      &:nth-of-type(10)
+        fill var(--lime)
+      &:nth-of-type(4)
+      &:nth-of-type(11)
+        fill var(--green)
+      &:nth-of-type(5)
+      &:nth-of-type(12)
+        fill var(--turquoise)
+      &:nth-of-type(6)
+      &:nth-of-type(13)
+        fill var(--purple)
+      &:nth-of-type(7)
+      &:nth-of-type(14)
+        fill var(--indigo)
+      &:nth-of-type(8)
+      &:nth-of-type(15)
+        fill var(--violet)
