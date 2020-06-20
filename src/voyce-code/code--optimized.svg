@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 59.015 38.157">
+  <defs>
+    <path id='e' d="M40.207 27.59V10.567h8.543v4.002h-3.946v2.48h3.539v3.848h-3.54v2.601h3.947v4.09z" />
+    <path id='d' d="M30.031 27.59V10.567H34q3.406 0 5.303 1.83 2.491 2.392 2.491 6.692 0 4.233-2.106 6.537-1.796 1.962-5.357 1.962zm4.597-4.113q2.47-.121 2.47-4.255 0-2.04-.629-3.22-.628-1.19-1.697-1.19h-.144z" />
+    <path id='o' d="M31.619 19.14q0 3.89-1.775 6.327-1.764 2.425-4.597 2.425-2.514 0-4.31-1.863-2.26-2.359-2.26-7.077 0-4.52 2.358-6.912 1.753-1.775 4.156-1.775 2.944 0 4.686 2.403t1.742 6.471zm-4.774.032q0-4.619-1.631-4.619-.816 0-1.301 1.213-.474 1.124-.474 3.307 0 2.15.44 3.34.453 1.18 1.246 1.18.816 0 1.257-1.169.463-1.168.463-3.252z" />
+    <path id='c' d="M20.264 22.358l-.265 4.917q-1.532.617-2.745.617-2.855 0-4.807-2.094-2.182-2.348-2.182-6.648 0-4.024 2.05-6.46 2.05-2.425 5.48-2.425 1.113 0 2.27.419v4.861Q19.04 14.52 17.96 14.52q-1.412 0-2.205 1.202-.794 1.212-.794 3.351 0 1.036.198 1.852.199.816.563 1.378.374.562.915.86.54.298 1.234.298 1.191 0 2.393-1.103z" />
+    <path id='static-e' d="M40.207 27.59V10.567h8.543v4.002h-3.946v2.48h3.539v3.848h-3.54v2.601h3.947v4.09z" />
+    <path id='static-d' d="M30.031 27.59V10.567H34q3.406 0 5.303 1.83 2.491 2.392 2.491 6.692 0 4.233-2.106 6.537-1.796 1.962-5.357 1.962zm4.597-4.113q2.47-.121 2.47-4.255 0-2.04-.629-3.22-.628-1.19-1.697-1.19h-.144z" />
+    <path id='static-o' d="M31.619 19.14q0 3.89-1.775 6.327-1.764 2.425-4.597 2.425-2.514 0-4.31-1.863-2.26-2.359-2.26-7.077 0-4.52 2.358-6.912 1.753-1.775 4.156-1.775 2.944 0 4.686 2.403t1.742 6.471zm-4.774.032q0-4.619-1.631-4.619-.816 0-1.301 1.213-.474 1.124-.474 3.307 0 2.15.44 3.34.453 1.18 1.246 1.18.816 0 1.257-1.169.463-1.168.463-3.252z" />
+    <path id='static-c' d="M20.264 22.358l-.265 4.917q-1.532.617-2.745.617-2.855 0-4.807-2.094-2.182-2.348-2.182-6.648 0-4.024 2.05-6.46 2.05-2.425 5.48-2.425 1.113 0 2.27.419v4.861Q19.04 14.52 17.96 14.52q-1.412 0-2.205 1.202-.794 1.212-.794 3.351 0 1.036.198 1.852.199.816.563 1.378.374.562.915.86.54.298 1.234.298 1.191 0 2.393-1.103z" />
+
+    <clipPath id="e_clip">
+      <use href="#e" fill="#fff"/>
+    </clipPath>
+
+    <clipPath id="d_clip">
+      <use href="#d" fill="#fff"/>
+    </clipPath>
+
+    <clipPath id="o_clip">
+      <use href="#o" fill="#fff"/>
+    </clipPath>
+  </defs>
+
+  <g class='container' stroke="#000" stroke-width="0.25">
+    <g class='five'>
+      <use class='letter' href="#static-e"/>
+      <use class='letter' href="#static-d"/>
+      <use class='letter' href="#static-o"/>
+      <use class='letter' href="#static-c"/>
+    </g>
+    <g class='four'>
+      <use class='letter' href="#static-e"/>
+      <use class='letter' href="#static-d"/>
+      <use class='letter' href="#static-o"/>
+      <use class='letter' href="#static-c"/>
+    </g>
+    <g class='three'>
+      <use class='letter' href="#static-e"/>
+      <use class='letter' href="#static-d"/>
+      <use class='letter' href="#static-o"/>
+      <use class='letter' href="#static-c"/>
+    </g>
+    <g class='two'>
+      <use class='letter' href="#static-e"/>
+      <use class='letter' href="#static-d"/>
+      <use class='letter' href="#static-o"/>
+      <use class='letter' href="#static-c"/>
+    </g>
+    <g class='one'>
+      <use class='letter' href="#e"/>
+      <g clip-path='url(#e_clip)'>
+        <use href="#d" x="1" class='shadow'/>
+      </g>
+      <use class='letter' href="#d"/>
+      <g clip-path='url(#d_clip)'>
+        <use href="#o" x="1" class='shadow'/>
+      </g>
+      <use class='letter' href="#o"/>
+      <g clip-path='url(#o_clip)'>
+        <use href="#c" x="1" class='shadow'/>
+      </g>
+      <use class='letter' href="#c"/>
+    </g>
+  </g>
+</svg>

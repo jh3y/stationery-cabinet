@@ -1,0 +1,60 @@
+*
+  box-sizing border-box
+
+:root
+  --body hsl(0, 0%, 20%)
+  --body-shimmer hsla(0, 0%, 100%, 0.1)
+  --stroke hsl(0, 0%, 15%)
+  --button hsl(0, 0%, 60%)
+
+body
+  --saturation 40
+  --hue 170
+  background 'hsl(%s, %s, 30%)' % (var(--hue) calc(var(--saturation, 40) * 1%))
+  display flex
+  align-items center
+  justify-content center
+  min-height 100vh
+  // animation party 5s infinite linear
+
+@keyframes party
+  for $frame in (0..100)
+    {$frame * 1%}
+      background 'hsl(%s, 40%, 40%)' % ($frame * 3.6)
+
+.note
+  path
+    stroke 'hsl(%s, 60%, 60%)' % var(--hue, 0)
+  circle
+    fill 'hsl(%s, 60%, 60%)' % var(--hue, 0)
+
+.dot
+  fill hsl(0, 60%, 30%)
+
+.hifi
+  height 40vmin
+  border-bottom 4px solid 'hsl(%s, %s, 25%)' % (var(--hue) calc(var(--saturation, 40) * 1%))
+
+  &__body
+    fill var(--body)
+  &__shimmer
+    fill var(--body-shimmer)
+
+.shimmer
+  fill var(--body-shimmer)
+
+.stroked
+  stroke var(--stroke)
+
+.button
+  fill var(--button)
+
+.lcd__panel
+  fill hsl(10, 40%, 50%)
+
+.tweeter
+  &__outer
+    fill #313131
+    stroke var(--button)
+  &__inner
+    fill var(--body-shimmer)
