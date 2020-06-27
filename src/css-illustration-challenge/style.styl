@@ -1,0 +1,67 @@
+*
+*:after
+*:before
+  position absolute
+  box-sizing border-box
+
+:root
+  --glass hsl(180, 60%, 90%)
+  --stroke hsl(0, 0%, 10%)
+  --kool hsl(0, 80%, 40%)
+  --desired-size 50
+  --unit calc((var(--desired-size, 50) / 186) * 1vmin)
+
+u(d)
+  'calc(var(--unit) * %s)' % d
+
+c(path)
+  -webkit-clip-path path
+  clip-path path
+
+body
+  background hsl(180, 40%, 30%)
+  min-height 100vh
+
+img
+  display none
+  height u(186)
+  width u(276)
+  object-fit cover
+  position fixed
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  opacity 1
+
+
+.illustration
+  height u(186)
+  width u(276)
+  position fixed
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+.jug
+  height 100%
+  width 100%
+
+  &__body
+    height u(140)
+    width u(140)
+    border-radius 50%
+    background var(--glass)
+    left 35%
+    top 10%
+
+    &:after
+      content ''
+      background var(--kool)
+      position absolute
+      top 50%
+      left 50%
+      height 95%
+      width 95%
+      border-radius 50%
+      transform translate(-50%, -50%)
+      c(inset(15% 0 0 0))

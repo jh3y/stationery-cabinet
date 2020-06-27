@@ -1,0 +1,53 @@
+<svg class='elevator' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48.95 46.33">
+  <g transform="translate(-24.19 -107.24)">
+    <defs>
+      <clipPath id='doors'>
+        <rect y="121.28" x="35.57" height="32.28" width="32.81"/>
+      </clipPath>
+      <clipPath id='cursor'>
+        <rect y="121.28" x="35.57" height="32.28" width="38.81"/>
+      </clipPath>
+      <clipPath id='glass'>
+        <rect y="121.28" x="35.57" height="19" width="32.81"/>
+      </clipPath>
+    </defs>
+    <!-- <rect y="116.52" x="30.81" height="37.04" width="42.33"/> -->
+    <path class='elevator__frame' d="M30.8 116.5v37.06h4.77v-32.28h32.8v32.29h4.77V116.5H35.57v-.01z"/>
+    <g class='elevator__dial'>
+      <path class='elevator__dial-face' d="M51.97 107.24a6.61 6.61 0 00-6.61 6.61h13.23a6.61 6.61 0 00-6.62-6.61z"/>
+      <rect class='elevator__dial-dial' ry=".31" y="108.62" x="51.64" height="4.5" width=".66"/>
+    </g>
+    <g class='elevator__panel'>
+      <rect class='elevator__plate' y="138.6" x="24.19" height="5.29" width="3.97" />
+      <path class='elevator__call' d="M26.17 143.31l-1.32-1.59h2.65l-1.33 1.59z" />
+      <path class='elevator__call' d="M26.17 139.18l1.33 1.58h-2.65l1.32-1.58z" />
+    </g>
+    <g class='elevator__opening'>
+      <rect class='elevator__back' y="142.97" x="35.57" height="10.58" width="32.81"/>
+      <rect class='elevator__bar' y="138.31" x="35.57" height="5.72" width="32.81"/>
+      <rect class='elevator__glass' y="121.28" x="35.57" height="19" width="32.81"/>
+      <path class='elevator__up' d="M49.33 141.52l1.32 1.6H48l1.33-1.6z" />
+      <path class='elevator__down' d="M54.62 143.11l-1.33-1.59h2.65l-1.32 1.6z"/>
+      <g clip-path="url(#glass)">
+        <path class='elevator__cursor-reflection' d="M53.37 133.17a.53.53 0 01.7.26l1.21 2.63.95-.45-1.21-2.62a.52.52 0 01.25-.7l.15-.05 1.2-.24-4.34-3.65v5.68l.96-.77.13-.09m1.88 4.07a.52.52 0 01-.7-.25l-1.15-2.5-1.32 1.06a.5.5 0 01-.33.12.53.53 0 01-.53-.53v-7.9a.53.53 0 01.53-.54c.13 0 .25.05.34.13l6.06 5.07a.53.53 0 01-.23.93l-1.67.32 1.16 2.5c.14.26.02.57-.25.7z"/>
+      </g>
+      <path class='elevator__glass-shine' d="M39.45 121.28l-3.88 3.88v11.38l15.25-15.26z" />
+      <path class='elevator__glass-shine' d="M54.57 121.28l-19 19h5.82l19-19z" />
+      <g clip-path="url(#cursor)">
+        <path class='elevator__cursor' d="M49.46 141.44a.53.53 0 01.7.25l1.21 2.63.95-.44-1.22-2.63a.52.52 0 01.26-.7l.14-.04 1.22-.24-4.35-3.66v5.69l.96-.78.13-.08m1.88 4.06a.52.52 0 01-.7-.25l-1.15-2.5-1.32 1.07a.5.5 0 01-.33.11.53.53 0 01-.53-.52v-7.91a.53.53 0 01.53-.53c.13 0 .25.05.34.12l6.06 5.08a.53.53 0 01-.23.92l-1.67.33 1.16 2.5c.14.26.01.57-.25.69z"/>
+      </g>
+      <g clip-path="url(#doors)">
+        <g class='elevator__door elevator__door--left' transform="translate(-52.65 -7.63)">
+          <rect class='elevator__door-body' width="16.4" height="32.28" x="88.22" y="128.91" />
+          <path class='elevator__door-shine' d="M98.15 128.9l-9.93 9.93v9.64l16.4-16.4v-3.16z" />
+          <path class='elevator__door-shine' d="M104.62 135.8l-16.4 16.41v4.35l16.4-16.4z" />
+        </g>
+        <g class='elevator__door elevator__door--right' transform="translate(-52.65 -7.63)">
+          <rect class='elevator__door-body' y="128.91" x="104.62" height="32.28" width="16.4" />
+          <path class='elevator__door-shine' d="M111.53 128.9l-6.9 6.9v4.36l10.93-10.94-.32-.31z" />
+          <path class='elevator__door-shine' d="M104.62 128.9v3.17l3.17-3.16z"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
