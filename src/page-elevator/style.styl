@@ -1,0 +1,172 @@
+:root
+  --cursor url('https://assets.codepen.io/605876/default-cursor.png?width=20&height=30'), pointer
+  --frame hsl(30, 35%, 48%)
+  --shine hsla(0, 0%, 100%, 0.5)
+  --button hsl(0, 0%, 13%)
+  --active hsl(42, 90%, 85%)
+  --bar hsl(0, 0%, 70%)
+  --back hsl(0, 0%, 44%)
+  --door hsl(0, 0%, 48%)
+  --face hsl(0, 0%, 65%)
+  --glass hsl(180, 60%, 90%)
+  --dial hsl(0, 0%, 13%)
+*
+  cursor var(--cursor) !important
+  box-sizing border-box
+
+body
+  height 100vh
+  font-family sans-serif
+  line-height 1.5
+  background hsl(0, 0%, 95%)
+  color hsl(0, 0%, 20%)
+  font-weight 300
+  overflow auto
+  cursor url('https://assets.codepen.io/605876/default-cursor.png?width=20&height=30'), pointer !important
+
+main
+  height 100%
+  padding 3rem 0
+
+article
+  width 600px
+  max-width calc(100% - (140px + 0.5rem))
+  padding 0 1rem 80vh
+  overflow hidden
+  @media(min-width 992px)
+    padding 0 0 80vh
+    margin 0 auto
+
+// Original 185 x 175
+.elevator
+  height 100%
+
+  &__wrapper
+    width 896px
+    max-width 100%
+    position fixed
+    top 0
+    left 50%
+    transform translate(-50%, 0)
+    height 100vh
+
+  &__door-body
+    fill var(--door)
+
+  &__door-shine
+    fill var(--shine)
+
+  &__plate
+    fill var(--face)
+
+  &__call
+  &__up
+  &__down
+    fill var(--button)
+
+  &__frame
+    fill var(--frame)
+
+  &__dial-face
+    fill var(--face)
+  &__dial-dial
+    fill var(--dial)
+
+  &__glass
+    fill var(--glass)
+  &__glass-shine
+    fill var(--shine)
+
+  &__back
+    fill var(--back)
+
+  &__bar
+    fill var(--bar)
+
+  &__call-button
+    left -16px
+
+    &:hover ~ .elevator .elevator__call
+      fill var(--active)
+
+  &__cursor
+    fill #000
+  &__cursor-reflection
+    fill hsla(0, 0%, 0%, 0.5)
+
+  &__up-button
+  &__down-button
+  &__call-button
+    top 72px
+    position absolute
+    height 44px
+    width 44px
+
+  &__down-button
+    left 78px
+
+    &:hover ~ .elevator .elevator__down
+      fill var(--active)
+
+  &__up-button
+    left 34px
+
+    &:hover ~ .elevator .elevator__up
+      fill var(--active)
+
+  &__container
+    position fixed
+    right 0
+    top 5rem
+    height 130px
+
+  .elevator__cursor
+  .elevator__cursor-reflection
+    display none
+
+[data-elevator-open=true]
+
+  .elevator__opening *
+  .elevator__up-button:hover
+  .elevator__down-button:hover
+    cursor none !important
+
+  .elevator__up-button:hover ~ .elevator .elevator__cursor
+  .elevator__up-button:hover ~ .elevator .elevator__cursor-reflection
+  .elevator__down-button:hover ~ .elevator .elevator__cursor
+  .elevator__down-button:hover ~ .elevator .elevator__cursor-reflection
+  .elevator__opening:hover .elevator__cursor
+  .elevator__opening:hover .elevator__cursor-reflection
+    display block
+
+[data-elevator-elevating=true] *
+  cursor none !important
+
+[data-elevator-elevating=true]
+  .elevator .elevator__dial-face
+    fill var(--active)
+  .elevator__call-button:hover ~ .elevator .elevator__call
+    fill var(--button)
+
+footer
+  text-align right
+
+h2
+  font-size 2rem
+
+  @media(min-width 992px)
+    font-size 3rem
+
+.agree
+  padding 16px 32px
+  background hsl(90, 60%, 50%)
+  color hsl(0, 0%, 100%)
+  font-weight bold
+  transition background .15s ease
+  border 0
+
+  &:hover
+    background hsl(90, 60%, 40%)
+
+  &:active
+    background hsl(90, 60%, 30%)
