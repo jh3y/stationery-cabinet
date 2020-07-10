@@ -31,7 +31,7 @@ body
   background linear-gradient(90deg, hsl(58, 100%, 48%) 60%, hsl(58, 100%, 45%) 60%), hsl(58, 100%, 50%)
 
   & > * + *
-    margin-bottom 2rem
+    margin-top 2rem
 
 
 .cybr-btn
@@ -39,12 +39,14 @@ body
   --shadow-primary 'hsl(%s, 90%, 50%)' % (var(--shadow-primary-hue))
   --shadow-primary-alpha 'hsla(%s, 90%, 50%, 0.5)' % (var(--shadow-primary-hue))
   --shadow-secondary 'hsl(%s, 90%, 60%)' % (var(--shadow-secondary-hue))
+  font-family 'Cyber', sans-serif
   position relative
   text-transform uppercase
   background var(--primary)
   font-size var(--font-size)
   outline transparent
   border 0
+  min-width 300px
   c(polygon(-10% -10%, 110% -10%, 110% 110%, 10% 110%, -10% 40%))
   padding 32px 64px
   box-shadow -2px 0 1px 0px inset var(--shadow-primary)
@@ -98,6 +100,8 @@ body
       display none
       top 0
       left 0
+      width 100%
+      height 100%
       position absolute
       content attr(data-text)
       color var(--color)
