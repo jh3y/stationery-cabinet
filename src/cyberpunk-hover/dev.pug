@@ -1,0 +1,8 @@
+mixin cyberButton(text, primary = 0, primaryShadow = 180, secondaryShadow = 60)
+  button.cybr-btn(style=`--primary-hue: ${primary}; --primary-shadow-hue: ${primaryShadow}; --secondary-shadow-hue: ${secondaryShadow};`)
+    span.cybr-btn__text(data-text=text)= text
+    span.cybr-btn__glitch
+
++cyberButton('Cool_')
++cyberButton('Cyber_', 274)
++cyberButton('Punk_', 298)

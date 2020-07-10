@@ -1,0 +1,80 @@
+:root
+  --desired-height 30
+  --hue 270
+
+*
+  box-sizing border-box
+  user-select none
+
+img
+  pointer-events none
+
+body
+  min-height 100vh
+  background 'hsl(%s, 50%, 50%)' % var(--hue)
+
+img
+  position fixed
+  bottom 1rem
+  right 1rem
+
+h1
+  position fixed
+  right 1rem
+  bottom 1rem
+  margin 0
+  font-family sans-serif
+  color 'hsl(%s, 50%, 40%)' % var(--hue)
+
+.peep
+  height calc(var(--desired-height) * 1vmin)
+  width calc((var(--ar) * var(--desired-height)) * 1vmin)
+  position absolute
+  top 50%
+  left calc(var(--x, 50) * 1%)
+  transform translate(-50%, -50%)
+
+  canvas
+    position absolute
+    top 0
+    left 0
+    height 100%
+    width 100%
+
+  img
+    height 100%
+    width 100%
+    position absolute
+    top 0
+    left 0
+
+label
+  height 44px
+  width 44px
+  position fixed
+  bottom 1rem
+  left 1rem
+  cursor pointer
+
+  & > svg
+    position absolute
+    height 100%
+    width 100%
+    top 0
+    left 0
+
+  path
+    fill 'hsl(%s, 50%, 40%)' % var(--hue)
+
+  svg:nth-of-type(1)
+    display none
+
+[type='checkbox']
+  height 0
+  width 0
+
+:checked ~ label
+  svg:nth-of-type(1)
+    display block
+  svg:nth-of-type(2)
+    display none
