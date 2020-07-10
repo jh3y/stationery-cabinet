@@ -1,0 +1,183 @@
+@font-face
+  font-family Cyber
+  src url(https://assets.codepen.io/605876/Blender-Pro-Bold.otf)
+  font-display swap
+
+c($clip)
+  -webkit-clip-path $clip
+  clip-path $clip
+
+*
+  box-sizing border-box
+
+:root
+  --shimmy-distance 5
+  --primary-hue 0
+  --primary-lightness 50
+  --color hsl(0, 0%, 100%)
+  --black hsl(0, 0%, 5%)
+  --font-size 26px
+  --label-size 9px
+  --shadow-primary-hue 180
+  --shadow-secondary-hue 60
+
+body
+  display flex
+  align-items center
+  flex-direction column
+  justify-content center
+  min-height 100vh
+  font-family 'Cyber', sans-serif
+  background linear-gradient(90deg, hsl(58, 100%, 48%) 60%, hsl(58, 100%, 45%) 60%), hsl(58, 100%, 50%)
+
+  & > * + *
+    margin-bottom 2rem
+
+
+.cybr-btn
+  --primary 'hsl(%s, 85%, %s)' % (var(--primary-hue) calc(var(--primary-lightness, 50) * 1%))
+  --shadow-primary 'hsl(%s, 90%, 50%)' % (var(--shadow-primary-hue))
+  --shadow-primary-alpha 'hsla(%s, 90%, 50%, 0.5)' % (var(--shadow-primary-hue))
+  --shadow-secondary 'hsl(%s, 90%, 60%)' % (var(--shadow-secondary-hue))
+  position relative
+  text-transform uppercase
+  background var(--primary)
+  font-size var(--font-size)
+  outline transparent
+  border 0
+  c(polygon(-10% -10%, 110% -10%, 110% 110%, 10% 110%, -10% 40%))
+  padding 32px 64px
+  box-shadow -2px 0 1px 0px inset var(--shadow-primary)
+  transition background .1s ease
+
+  *
+  *:after
+    outline transparent
+
+  &:hover
+    .cybr-btn__text:after
+    .cybr-btn__glitch:after
+      display block
+
+  &:hover
+    --primary-lightness 40
+
+  &:active
+    --primary-lightness 30
+
+  &__glitch
+    height 100%
+    width 100%
+    display block
+    position absolute
+    top 0
+    left 0
+    filter drop-shadow(-2px 3px var(--shadow-primary)) drop-shadow(-1px -3px var(--shadow-primary-alpha)) drop-shadow(2px 1px var(--shadow-primary))
+
+    &:after
+      display none
+      background var(--primary)
+      animation shimmy-text 2s infinite alternate ease-in-out
+      content ''
+      height 98%
+      width 98%
+      position absolute
+      top 1%
+      left 1%
+
+  &__text
+    color var(--color)
+    display block
+    height 100%
+    width 100%
+    position relative
+    z-index 2
+    white-space nowrap
+
+    &:after
+      display none
+      top 0
+      left 0
+      position absolute
+      content attr(data-text)
+      color var(--color)
+      filter brightness(1)
+      animation shimmy-text 2s infinite alternate ease-in-out
+      text-shadow 2px 1px var(--shadow-primary), -2px -2px var(--shadow-secondary)
+
+  &:after
+    content 'R25'
+    position absolute
+    padding 10px
+    letter-spacing 1px
+    padding 1px 4px
+    line-height 1
+    bottom -5%
+    right 5%
+    background var(--shadow-secondary)
+    color var(--black)
+    font-size var(--label-size)
+    box-shadow 2px 0 1px 0 inset var(--shadow-primary)
+
+@keyframes shimmy-text
+  0%
+    c(inset(2% 0 95% 0))
+
+  2%, 8%
+    c(inset(78% 0 0 0))
+    transform translate(calc(var(--shimmy-distance) * -1%), 0)
+
+  6%
+    c(inset(78% 0 0 0))
+    transform translate(calc(var(--shimmy-distance) * 1%), 0)
+
+  9%
+    c(inset(78% 0 0 0))
+    transform translate(0, 0)
+
+  10%
+    c(inset(44% 0 46% 0))
+    transform translate(calc(var(--shimmy-distance) * 1%), 0)
+
+  13%
+    c(inset(44% 0 46% 0))
+    transform translate(0, 0)
+
+  13.1%, 20.1%
+    c(inset(0 0 100% 0))
+    transform translate(calc(var(--shimmy-distance) * 1%), 0)
+
+  15%, 20%
+    c(inset(40% 0 60% 0))
+    transform translate(calc(var(--shimmy-distance) * 1%), 0)
+
+  25%
+    c(inset(40% 0 15% 0))
+    transform translate(calc(var(--shimmy-distance) * 1%), 0)
+
+  30%
+    c(inset(40% 0 15% 0))
+    transform translate(calc(var(--shimmy-distance) * -1%), 0)
+
+  35%, 45%
+    c(inset(63% 0 20% 0))
+    transform translate(calc(var(--shimmy-distance) * -1%))
+
+  40%
+    c(inset(63% 0 20% 0))
+    transform translate(calc(var(--shimmy-distance) * 1%))
+
+  50%
+    c(inset(63% 0 20% 0))
+    transform translate(0, 0)
+
+  55%
+    c(inset(0 0 90% 0))
+    transform translate(calc(var(--shimmy-distance) * 1%), 0)
+
+  60%
+    c(inset(0 0 90% 0))
+    transform translate(0, 0)
+
+  30.1%, 60.1%, 100%
+    c(inset(0 0 100% 0))
