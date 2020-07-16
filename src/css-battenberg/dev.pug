@@ -1,0 +1,26 @@
+- const ARR = ['one', 'two', 'three', 'four', 'five', 'six']
+
+mixin cube(className, id)
+  label.cube(class=className for=id)
+    div
+    div
+    div
+    div
+    div
+    div
+
+for $input in ARR
+  input(type='checkbox' id=$input)
+for $label in ARR
+  label.label-mask(for=$label)
+
+.scene
+  .plane
+    +cube('plate')
+    .cake
+      for $slice in ARR
+        +cube('cake-slice', $slice)
+      for $shadow in ARR
+        span.cake-slice__shadow
+
+.backdrop
