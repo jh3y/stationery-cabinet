@@ -1,0 +1,30 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+
+canvas
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+.img
+  height 200px
+  width 200px
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+  &:hover img
+    display none
+
+  img
+    position absolute
+    height 100%
+    width 100%
+    top 0
+    left 0
+    z-index 2
