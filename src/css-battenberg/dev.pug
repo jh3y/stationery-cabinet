@@ -4,6 +4,7 @@ mixin cube(className, id)
   label.cube(class=className for=id)
     div
     div
+      block
     div
     div
     div
@@ -14,12 +15,27 @@ for $input in ARR
 for $label in ARR
   label.label-mask(for=$label)
 
+.spinner.spinner--left
+.spinner.spinner--right
+
 .scene
   .plane
     +cube('plate')
     .cake
       for $slice in ARR
-        +cube('cake-slice', $slice)
+        if ($slice !== 'six')
+          +cube('cake-slice', $slice)
+            if $slice === 'four'
+              span.css-label CSS is awesome
+        else
+          label.cube(class='cake-slice' for='six')
+            div
+            div
+            div
+              img.cake-bear(src='https://assets.codepen.io/605876/avatar.png')
+            div
+            div
+            div
       for $shadow in ARR
         span.cake-slice__shadow
 

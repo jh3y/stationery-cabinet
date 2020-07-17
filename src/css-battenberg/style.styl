@@ -124,11 +124,39 @@ body
   transform translate(-50%, -50%)
 
   & > div:nth-of-type(2)
+  & > div:nth-of-type(3)
+  & > div:nth-of-type(4)
     background hsl(0, 0%, 80%)
   & > div:nth-of-type(5)
     background hsl(0, 0%, 90%)
   & > div:nth-of-type(6)
     background hsl(0, 0%, 95%)
+
+  &:before
+    content ''
+    position absolute
+    left 100%
+    height 5vmin
+    width 1vmin
+    top 72%
+    transition transform 0.25s, opacity 0.25s
+    background hsl(0, 0%, 10%)
+    opacity 0
+    transform rotateY(-90deg) skewY(-20deg)
+    transform-origin 0 100%
+
+  &:after
+    content ''
+    position absolute
+    left 100%
+    height 20vmin
+    width 11.5vmin
+    transition transform 0.25s, opacity 0.25s
+    background hsl(0, 0%, 10%)
+    opacity 0
+    top 52%
+    transform-origin 0 50%
+    transform translate3d(0%, -50%, -0.2vmin) scaleX(0)
 
 .cake
   height 20vmin
@@ -161,7 +189,7 @@ body
   & > div:nth-of-type(3)
     background var(--marzipan)
   & > div:nth-of-type(4)
-    background var(--marzipan)
+    background var(--marzipan-light)
   & > div:nth-of-type(5)
     background var(--marzipan-light)
   & > div:nth-of-type(6)
@@ -186,6 +214,25 @@ body
       linear-gradient(var(--jammies), var(--jammies)) 90% 90% / 43% 43% no-repeat,
       linear-gradient(var(--cake), var(--cake)) 10% 90% / 43% 43% no-repeat,
       linear-gradient(var(--jammies-dark), var(--jammies-dark)) center center / 92% 92% no-repeat, var(--marzipan-light)
+
+.cake-slice:nth-of-type(6)
+  & > div:nth-of-type(3)
+    background linear-gradient(var(--jammies), var(--jammies)) 10% 10% / 43% 43% no-repeat,
+      linear-gradient(var(--cake), var(--cake)) 90% 10% / 43% 43% no-repeat,
+      linear-gradient(var(--jammies), var(--jammies)) 90% 90% / 43% 43% no-repeat,
+      linear-gradient(var(--cake), var(--cake)) 10% 90% / 43% 43% no-repeat,
+      linear-gradient(var(--jammies-dark), var(--jammies-dark)) center center / 92% 92% no-repeat, var(--marzipan-light)
+
+.css-label
+  display block
+  transform rotate(90deg) rotateY(180deg) translate(-25%, 15%)
+  position absolute
+  top 0
+  left 0
+  mix-blend-mode overlay
+  font-family sans-serif
+  font-weight bold
+  font-size 4vmin
 
 .backdrop
   height 200vh
@@ -222,7 +269,7 @@ body
         height 100vh
         width 100vw
         position fixed
-        z-index 3
+        z-index 11
         opacity 0.3
         transform translateZ(30vmin)
 
@@ -237,7 +284,86 @@ body
       animation party-drop 1s infinite linear
 
     &:nth-of-type(2):checked ~ .scene .plane .cake .cake-slice:nth-of-type(2)
-      animation cake-flip 1s 1s infinite linear
+      animation cake-flip 1s infinite linear
+    &:nth-of-type(2):checked ~ .scene .plane .cake .cake-slice__shadow:nth-of-type(2)
+      animation shadow-flip 1s infinite linear
+
+    &:nth-of-type(3):checked ~ .scene .plane .cake .cake-slice:nth-of-type(1)
+      animation cake-wave 1s 0.1s infinite both
+    &:nth-of-type(3):checked ~ .scene .plane .cake .cake-slice:nth-of-type(2)
+      animation cake-wave 1s 0.2s infinite both
+    &:nth-of-type(3):checked ~ .scene .plane .cake .cake-slice:nth-of-type(3)
+      transform translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)) translate3d(0, 0, 0) rotateX(0)
+      animation cake-wave 1s 0.3s infinite both
+    &:nth-of-type(3):checked ~ .scene .plane .cake .cake-slice:nth-of-type(4)
+      animation cake-wave 1s 0.4s infinite both
+    &:nth-of-type(3):checked ~ .scene .plane .cake .cake-slice:nth-of-type(5)
+      animation cake-wave 1s 0.5s infinite both
+    &:nth-of-type(3):checked ~ .scene .plane .cake .cake-slice:nth-of-type(6)
+      animation cake-wave 1s 0.6s infinite both
+    &:nth-of-type(3):checked ~ .scene .plane .cake .cake-slice__shadow:nth-of-type(1)
+      animation shadow-wave 1s 0.1s infinite both
+    &:nth-of-type(3):checked ~ .scene .plane .cake .cake-slice__shadow:nth-of-type(2)
+      animation shadow-wave 1s 0.2s infinite both
+    &:nth-of-type(3):checked ~ .scene .plane .cake .cake-slice__shadow:nth-of-type(3)
+      opacity 1
+      animation shadow-wave 1s 0.3s infinite both
+    &:nth-of-type(3):checked ~ .scene .plane .cake .cake-slice__shadow:nth-of-type(4)
+      animation shadow-wave 1s 0.4s infinite both
+    &:nth-of-type(3):checked ~ .scene .plane .cake .cake-slice__shadow:nth-of-type(5)
+      animation shadow-wave 1s 0.5s infinite both
+    &:nth-of-type(3):checked ~ .scene .plane .cake .cake-slice__shadow:nth-of-type(6)
+      animation shadow-wave 1s 0.6s infinite both
+
+    &:nth-of-type(4):checked ~ .scene .plane .cake .cake-slice:nth-of-type(4)
+      transform-origin 50% 50%
+      transform translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)) translate3d(0, var(--cake-active-y), var(--cake-active-z)) rotateX(var(--cake-active-rotate)) translate3d(0, 0, 20vmin) rotate(90deg)
+      // animation show-off 0.5s both
+    &:nth-of-type(4):checked ~ .scene .plane .cake .cake-slice__shadow:nth-of-type(4)
+      opacity 0
+
+    &:nth-of-type(5):checked ~ .scene .plane .cake .cake-slice:nth-of-type(5)
+      transform-origin 50% 50%
+      animation blast-off 2s
+    &:nth-of-type(5):checked ~ .scene .plane .cake .cake-slice__shadow:nth-of-type(5)
+      animation blast-shadow 2s
+
+    &:nth-of-type(6):checked ~ .scene .plane .cake .cake-slice:nth-of-type(6)
+      transform translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)) translate3d(0, 0, 0) rotateX(0) translate3d(0, 0, 0) scale(1) rotate(0deg) translate3d(calc((var(--width)) * 2vmin), 0, calc(var(--width) * -1vmin)) rotateY(100deg)
+    &:nth-of-type(6):checked ~ .scene .plane .cake .cake-slice__shadow:nth-of-type(6)
+      opacity 0.8
+      transform translateZ(0.00001vmin) translate(100%, 0)
+    &:nth-of-type(6):checked ~ .scene .plane .plate:before
+      opacity 0.8
+    &:nth-of-type(6):checked ~ .scene .plane .plate:after
+      opacity 0.8
+      transform translate3d(0%, -50%, -0.2vmin) scaleX(1)
+
+.spinner
+  height 100vh
+  width 15vw
+  position fixed
+  top 0
+  z-index 10
+
+  &:hover
+    ~ .scene .plane
+      animation-name cake-spin
+      animation-duration 1s
+      animation-iteration-count infinite
+      animation-timing-function linear
+
+  &--left
+    left 0
+
+
+  &--right
+    right 0
+
+    &:hover ~ .scene .plane
+      animation-direction reverse
+
+
 
 @keyframes party-drop
   for $frame in (0..100)
@@ -248,12 +374,66 @@ body
   0%
     transform-origin 50% 50%
     transform translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)) translate3d(0, var(--cake-active-y), var(--cake-active-z)) rotateX(var(--cake-active-rotate)) translate3d(0, 0, 0) scale(1) rotate(0deg)
-  15%, 25%
+  25%
     transform-origin 50% 50%
-    transform translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)) translate3d(0, var(--cake-active-y), var(--cake-active-z)) rotateX(var(--cake-active-rotate)) translate3d(0, 0, -1vmin) scale(0.9) rotate(0deg)
+    transform translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)) translate3d(0, var(--cake-active-y), var(--cake-active-z)) rotateX(var(--cake-active-rotate)) translate3d(0, 0, -1vmin) scale(0.95) rotate(0deg)
   50%
     transform-origin 50% 50%
-    transform translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)) translate3d(0, var(--cake-active-y), var(--cake-active-z)) rotateX(var(--cake-active-rotate)) translate3d(0, 0, 25vmin) scale(1.1) rotateX(-360deg)
+    transform translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)) translate3d(0, var(--cake-active-y), var(--cake-active-z)) rotateX(var(--cake-active-rotate)) translate3d(0, 0, 20vmin) scale(1.2)
+  75%
+    transform-origin 50% 50%
+    transform translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)) translate3d(0, var(--cake-active-y), var(--cake-active-z)) rotateX(var(--cake-active-rotate)) translate3d(0, 0, 20vmin) scale(1.1) rotateX(-360deg)
   100%
     transform-origin 50% 50%
     transform translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)) translate3d(0, var(--cake-active-y), var(--cake-active-z)) rotateX(var(--cake-active-rotate)) translate3d(0, 0, 0) scale(1) rotate(-360deg)
+
+@keyframes shadow-flip
+  25%
+    opacity 1
+  75%
+    opacity 0
+
+@keyframes cake-spin
+  to
+    transform rotateX(-24deg) rotateY(-24deg) rotateX(90deg) rotate(360deg)
+
+@keyframes show-off
+  50%
+    transform translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)) translate3d(0, var(--cake-active-y), var(--cake-active-z)) rotateX(var(--cake-active-rotate)) translate3d(0, 0, 15vmin) rotate(0deg)
+  100%
+    transform translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)) translate3d(0, var(--cake-active-y), var(--cake-active-z)) rotateX(var(--cake-active-rotate)) translate3d(0, 0, 15vmin) rotate(90deg)
+
+@keyframes blast-off
+  0%, 5%, 10%, 15%, 20%, 25%
+    transform translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)) translate3d(0, var(--cake-active-y), var(--cake-active-z)) rotateX(var(--cake-active-rotate)) rotateX(2deg) translate3d(0, 0, 0) scale(1)
+  2.5%, 7.5%, 12.5%, 17.5%, 22.5%
+    transform translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)) translate3d(0, var(--cake-active-y), var(--cake-active-z)) rotateX(var(--cake-active-rotate)) rotateX(-2deg) translate3d(0, 0, 0) scale(1)
+  80%
+    transform translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)) translate3d(0, var(--cake-active-y), var(--cake-active-z)) rotateX(var(--cake-active-rotate)) rotateX(0deg) translate3d(0, 0, 100vmin) scale(1)
+  80.1%
+    transform translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)) translate3d(0, var(--cake-active-y), var(--cake-active-z)) rotateX(var(--cake-active-rotate)) rotateX(0deg) translate3d(0, 0, 100vmin) scale(0)
+  80.2%
+    transform translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)) translate3d(0, var(--cake-active-y), var(--cake-active-z)) rotateX(var(--cake-active-rotate)) rotateX(0deg) translate3d(0, 0, 0) scale(0)
+  100%
+    transform translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)) translate3d(0, var(--cake-active-y), var(--cake-active-z)) rotateX(var(--cake-active-rotate)) rotateX(0deg) translate3d(0, 0, 0) scale(1)
+
+@keyframes blast-shadow
+  80%
+    opacity 0
+
+@keyframes cake-wave
+  0, 100%
+    transform translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)) translate3d(0, 0, 0) rotateX(0) translate3d(0, 0, 0)
+  50%
+    transform translate3d(0, 0, calc((var(--depth) / 2) * 1vmin)) translate3d(0, 0, 0) rotateX(0) translate3d(0, 0, 3vmin)
+@keyframes shadow-wave
+  50%
+    transform translateZ(0.00001vmin) translate(0, var(--shadow-active-translate))
+    opacity var(--shadow-active-opacity)
+
+
+.cake-bear
+  mix-blend-mode overlay
+  position absolute
+  width 100%
+  transform rotate(90deg) translate(15%, 0)
