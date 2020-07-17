@@ -1,0 +1,63 @@
+mixin cube(className, id)
+  .cube(class=className for=id)
+    div
+    div
+    div
+    div
+    div
+    div
+
+mixin tower-top
+  .tower-top
+    - let f = 0
+    while f < 6
+      .tower-top__face(style=`--index: ${f}`)
+      - f++
+    .tower-top__hat(style=`--count: ${50}`)
+      - let s = 0
+      while s < 50
+        .round-top__segment(style=`--index: ${s}`)
+        - s++
+    +cube('tower-top__hat-brim')
+
+
+
+mixin tower(className)
+  .tower(class=`tower--${className}`)
+    +cube('tower__ring tower__ring--lower')
+    +cube('tower__ring tower__ring--mid')
+    +cube('tower__ring tower__ring--upper')
+    +cube('tower__central')
+    +tower-top()
+
+mixin pillar(className)
+  .pillar(class=`pillar--${className}`)
+    +cube('pillar__body')
+    .pillar__top(style=`--count: ${50}`)
+      - let s = 0
+      while s < 50
+        .round-top__segment(style=`--index: ${s}`)
+        - s++
+
+.scene
+  .base
+    +tower('one')
+    +tower('two')
+    +tower('three')
+    +tower('four')
+    +cube('plinth')
+    +cube('plinth__front')
+    .path.strip
+    .pondylake.strip
+    .path-ring
+    +cube('main')
+    +pillar('one')
+    +pillar('two')
+    +pillar('three')
+    +pillar('four')
+    +cube('top-block')
+    .building-top(style=`--count: ${50}`)
+      - let s = 0
+      while s < 50
+        .round-top__segment(style=`--index: ${s}`)
+        - s++

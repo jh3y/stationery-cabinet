@@ -1,0 +1,402 @@
+*
+  box-sizing border-box
+
+:root
+  --grey-0 hsl(0, 0%, 50%)
+  --grey-1 hsl(0, 0%, 55%)
+  --grey-2 hsl(0, 0%, 60%)
+  --grey-3 hsl(0, 0%, 65%)
+  --grey-4 hsl(0, 0%, 70%)
+  --grey-5 hsl(0, 0%, 75%)
+  --grey-6 hsl(0, 0%, 80%)
+  --grey-7 hsl(0, 0%, 85%)
+  --grey-8 hsl(0, 0%, 90%)
+  --grey-9 hsl(0, 0%, 95%)
+  --path hsl(25, 35%, 50%)
+  --water hsl(190, 45%, 65%)
+  --bg hsl(90, 30%, 50%)
+
+body
+  min-height 100vh
+  background var(--bg)
+  overflow hidden
+
+.scene
+  transform scale(0.5)
+
+// Cube variables are scoped in here
+.cube
+  position absolute
+  height calc(var(--height) * 1vmin)
+  width calc(var(--width) * 1vmin)
+  transform-style preserve-3d
+
+  // Dupe base
+  & > div:nth-of-type(1)
+    height 100%
+    width 100%
+    transform translate3d(0, 0, var(--offset, 0))
+
+  // Right face
+  & > div:nth-of-type(2)
+    position absolute
+    top 0
+    left calc(var(--width) * 1vmin)
+    height 100%
+    width calc(var(--depth) * 1vmin)
+    transform rotateY(-90deg) translate(var(--offset, 0), 0)
+    transform-origin 0 50%
+
+  // Left face
+  & > div:nth-of-type(3)
+    position absolute
+    top 0
+    left 0
+    height 100%
+    width calc(var(--depth) * 1vmin)
+    transform rotateY(-90deg) translate(var(--offset, 0), 0)
+    transform-origin 0 50%
+
+  // Back face
+  & > div:nth-of-type(4)
+    position absolute
+    top 0
+    left 0
+    height calc(var(--depth) * 1vmin)
+    width 100%
+    transform-origin 50% 0
+    transform rotateX(90deg) translate3d(0, var(--offset, 0), 0)
+
+  // Front face
+  & > div:nth-of-type(5)
+    position absolute
+    top 100%
+    left 0
+    width 100%
+    height calc(var(--depth) * 1vmin)
+    transform-origin 50% 0
+    transform rotateX(90deg) translate3d(0, var(--offset, 0), 0) rotate(180deg) translate(0, -100%)
+
+  // The lid
+  & > div:nth-of-type(6)
+    height 100%
+    width 100%
+    position absolute
+    top 0
+    left 0
+    transform translateZ(calc(var(--depth) * 1vmin)) translate3d(0, 0, var(--offset, 0))
+
+
+.scene
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  perspective 800px
+  transform-style preserve-3d
+
+.base
+  height 40vmin
+  width 40vmin
+  transform rotateX(-24deg) rotateY(-24deg) rotateX(90deg)
+  position absolute
+  transform-style preserve-3d
+
+.round-top
+  position absolute
+  top 50%
+  left 50%
+  height 50%
+  width 50%
+  transform translate(-50%, -50%)
+  transform-style preserve-3d
+
+  &__segment
+    clip-path inset(50% 0 0 0)
+    height 100%
+    width 100%
+    background var(--grey-3)
+    border-radius 50%
+    position absolute
+    transform rotate(calc(((360 / var(--count)) * var(--index)) * 1deg)) rotateX(90deg)
+
+.tower
+  height 5vmin
+  width 5vmin
+  background var(--grey-0)
+  position absolute
+
+  .round-top__segment
+    -webkit-clip-path inset(60% 0 0 0)
+    clip-path inset(60% 0 0 0)
+
+  &--one
+    top 0
+    left 0
+  &--two
+    top 0
+    right 0
+  &--three
+    bottom 0
+    right 0
+  &--four
+    bottom 0
+    left 0
+
+  &__central
+    --width 2
+    --depth 20
+    --height 2
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+
+    div
+      background var(--grey-4)
+
+  &__ring
+    --width 3
+    --depth 0.5
+    --height 3
+    top 50%
+    left 50%
+    transform translate3d(-50%, -50%, calc(var(--elevation) * 1vmin))
+
+    &--lower
+      --elevation 6
+    &--mid
+      --elevation 14
+      div
+        background var(--grey-8)
+
+    &--upper
+      --width 2.5
+      --height 2.5
+      --elevation 20
+      div
+        background var(--grey-5)
+
+
+    div
+      background var(--grey-2)
+
+  .tower-top
+    transform translate3d(-50%, -50%, 20vmin)
+    position absolute
+    top 50%
+    left 50%
+
+.tower-top
+  height 2vmin
+  width 2vmin
+  transform-style preserve-3d
+
+  &__face
+    height 150%
+    width 60%
+    background var(--grey-3)
+    position absolute
+    top 50%
+    left 50%
+    transform-origin 50% 100%
+    transform translate(-50%, -100%) rotate(calc(((360 / 6) * var(--index)) * 1deg)) rotateX(-90deg) translate3d(0, 0, 0.85vmin)
+    &:after
+      content ''
+      width 80%
+      position absolute
+      top 50%
+      left 50%
+      height 50%
+      background var(--grey-1)
+      border-radius 50% 50% 0 0 / 100% 100% 0 0
+      transform translate(-50%, -50%)
+
+  &__hat
+    position absolute
+    top 50%
+    left 50%
+    height 200%
+    width 125%
+    transform translate3d(-50%, -50%, 3vmin)
+    transform-style preserve-3d
+
+    &-brim
+      --width 2.25
+      --height 2.25
+      --depth 0.5
+      transform translate3d(0, 0, 3vmin)
+      div
+        background var(--grey-0)
+
+.plinth
+  --height 36
+  --width 36
+  --depth 2
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+  div
+    background var(--grey-3)
+
+    &:nth-of-type(2)
+    &:nth-of-type(5)
+      background var(--grey-2)
+
+.plinth__front
+  --height 10
+  --width 2
+  --depth 2
+  position absolute
+  top 50%
+  right 0
+  transform translate(0, -50%)
+
+
+  div
+    background var(--grey-4)
+
+
+.strip
+  position absolute
+  top 50%
+  left calc(var(--left) * 1%)
+  height calc(var(--height) * 1vmin)
+  width calc(var(--width) * 1vmin)
+  background var(--color)
+  transform translate(0, -50%)
+
+.pondylake
+  --width 110
+  --height 10
+  --color var(--water)
+  --left 120
+
+.path
+  --color var(--path)
+  --left 100
+  --height 20
+  --width 120
+
+.path-ring
+  height 45vmin
+  width 45vmin
+  background var(--path)
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+.main
+  --width 20
+  --height 20
+  --depth 16
+  position absolute
+  top 50%
+  left 50%
+  transform translate3d(-50%, -50%, 2vmin)
+
+  div
+    background var(--grey-5)
+
+    &:nth-of-type(2)
+    &:nth-of-type(5)
+      &:after
+        content ''
+        position absolute
+        background var(--grey-0)
+        bottom 0
+        left 50%
+        transform translate(-50%, 0)
+        border-radius 50% 50% 0 0 / 40% 40% 0 0
+        height 70%
+        width 36%
+
+    &:nth-of-type(2):after
+      transform translate(-50%, 0) rotate(90deg) translate(-30%, 10%)
+
+.pillar
+  height 8vmin
+  width 8vmin
+  position absolute
+  background var(--grey-0)
+  transform translate3d(0, 0, 2vmin) rotate(45deg)
+  transform-style preserve-3d
+
+.pillar__body
+  --depth 16
+  --height 6
+  --width 6
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+  div
+    background var(--grey-3)
+
+.pillar__top
+  position absolute
+  top 50%
+  left 50%
+  height 80%
+  width 80%
+  transform translate3d(-50%, -50%, 16vmin)
+  transform-style preserve-3d
+
+.pillar--one
+  top 60%
+  left 20%
+.pillar--two
+  top 60%
+  left 60%
+.pillar--three
+  top 20%
+  left 60%
+.pillar--four
+  top 20%
+  left 20%
+
+.top-block
+  --width 11
+  --height 11
+  --depth 5
+  position absolute
+  top 50%
+  left 50%
+  transform translate3d(-50%, -50%, 16vmin)
+
+  div
+    background var(--grey-4)
+
+.building-top
+  height 11vmin
+  width 11vmin
+  position absolute
+  top 50%
+  left 50%
+  transform-style preserve-3d
+  transform translate3d(-50%, -50%, 21vmin)
+
+.pillar--two .pillar__body div:nth-of-type(2):after
+  content ''
+  background var(--grey-0)
+  position absolute
+  left 0
+  top 50%
+  transform translate(0, -50%)
+  height 60%
+  width 60%
+  border-radius 0 35% 35% 0 / 0 50% 50% 0
+
+.pillar--one .pillar__body div:nth-of-type(5):after
+  content ''
+  background var(--grey-0)
+  position absolute
+  bottom 0
+  left 50%
+  transform translate(-50%, 0)
+  height 60%
+  width 60%
+  border-radius 50% 50% 0 0 / 35% 35% 0 0
