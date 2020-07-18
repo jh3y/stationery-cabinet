@@ -1,0 +1,209 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  background hsl(195, 20%, 70%)
+
+:root
+  --toaster-width 18
+  --toaster-height 10
+  --toaster-depth 12
+
+
+.scene
+  perspective 800px
+  transform-style preserve-3d
+  height 100vh
+  width 100vw
+  display flex
+  align-items center
+  justify-content center
+
+.plane
+  height 20vmin
+  width 40vmin
+  background blue
+  transform-style preserve-3d
+  position absolute
+  transform rotateX(-24deg) rotateY(-24deg) rotateX(90deg)
+  // transform rotateX(-0deg) rotateY(-24deg) rotateX(90deg)
+
+.cube
+  --width 15
+  --height 10
+  --depth 4
+  height calc(var(--depth) * 1vmin)
+  width calc(var(--width) * 1vmin)
+  transform-style preserve-3d
+  position absolute
+  font-size 1rem
+  animation spin 1s infinite linear
+  transform translate3d(0, 0, 5vmin)
+
+  & > div:nth-of-type(1)
+    height calc(var(--height) * 1vmin)
+    width 100%
+    transform-origin 50% 50%
+    transform rotateX(-90deg)
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) rotateX(-90deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin))
+    // opacity 0
+
+  & > div:nth-of-type(2)
+    height calc(var(--height) * 1vmin)
+    width 100%
+    transform-origin 50% 50%
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(180deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(3)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--depth) * 1vmin)
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(4)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--depth) * 1vmin)
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(-90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(5)
+    height calc(var(--depth) * 1vmin)
+    width calc(var(--width) * 1vmin)
+    transform translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(6)
+    height calc(var(--depth) * 1vmin)
+    width calc(var(--width) * 1vmin)
+    transform translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * -1vmin)) rotateX(180deg)
+    position absolute
+    top 50%
+    left 50%
+
+.table
+  --height 2
+  --width 40
+  --depth 30
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+  div
+    --cloth-color-one hsla(320, 60%, 50%, 0.65)
+    background repeating-linear-gradient(90deg, var(--cloth-color-one) 2px, transparent 5px 9px, var(--cloth-color-one) 10px),
+      repeating-linear-gradient(0deg, var(--cloth-color-one) 5px, transparent 6px 12px, var(--cloth-color-one) 15px), hsl(0, 0%, 90%)
+
+.toaster
+  height calc(var(--toaster-depth) * 1vmin)
+  width calc(var(--toaster-width) * 1vmin)
+  top 50%
+  left 50%
+  position absolute
+  transform translate3d(-50%, -50%, 1vmin)
+  transform-style preserve-3d
+  // animation rock 0.2s infinite ease
+
+  &__shadow
+    height calc(var(--toaster-depth) * 1vmin)
+    width calc(var(--toaster-width) * 1vmin)
+    top 50%
+    left 50%
+    position absolute
+    transform translate3d(-50%, -50%, 1vmin)
+    background hsl(0, 0%, 25%)
+    filter blur(10px)
+
+  &__leg
+    --width 1
+    --depth 1
+    --height 1
+    position absolute
+    transform translate3d(0, 0, 0.5vmin)
+
+    --perimeter 5
+
+    &--tr
+      top calc(var(--perimeter) * 1%)
+      left calc(var(--perimeter) * 1%)
+    &--tl
+      top calc(var(--perimeter) * 1%)
+      right calc(var(--perimeter) * 1%)
+    &--br
+      bottom calc(var(--perimeter) * 1%)
+      right calc(var(--perimeter) * 1%)
+    &--bl
+      bottom calc(var(--perimeter) * 1%)
+      left calc(var(--perimeter) * 1%)
+
+    div
+      background black
+
+  &__body
+    --depth var(--toaster-depth)
+    --width var(--toaster-width)
+    --height var(--toaster-height)
+    position absolute
+    top 50%
+    left 50%
+    transform translate3d(-50%, -50%, 6vmin)
+
+    div
+      background red
+
+    div:nth-of-type(5)
+      background hsl(0, 0%, 65%)
+
+    div:nth-of-type(5):after
+      content ''
+      height 30%
+      width 65%
+      background hsl(0, 0%, 15%)
+      top 50%
+      left 50%
+      position absolute
+      transform translate(-50%, -50%)
+
+.toast
+  --depth 1
+  --height var(--toaster-height)
+  --width var(--toaster-height)
+
+  position absolute
+  top 50%
+  left 50%
+  transform translate3d(-50%, -50%, 7vmin)
+  animation flip 1s infinite ease-in-out
+
+  div
+    background hsl(30, 40%, 80%)
+
+// Keyframes that need to match up on the double
+// Bread jumps out and flips alternate ways
+@keyframes flip
+  0%, 100%
+    transform translate3d(-50%, -50%, 7vmin)
+  5%
+    transform translate3d(-50%, -50%, 6vmin)
+  50%
+    transform translate3d(-50%, -50%, 30vmin)
+
+// Toaster squish and then eject
+@keyframes rock
+  0, 100%
+    transform translate3d(-50%, -50%, 1vmin) rotateY(1deg)
+  50%
+    transform translate3d(-50%, -50%, 1vmin) rotateY(-1deg)

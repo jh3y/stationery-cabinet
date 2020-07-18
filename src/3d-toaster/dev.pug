@@ -1,0 +1,18 @@
+mixin cube(className)
+  .cube(class=className)
+    - let s = 0
+    while s < 6
+      .cube__side
+      - s++
+
+.scene
+  .plane
+    +cube('table')
+    .toaster__shadow
+    .toaster
+      +cube('toaster__leg toaster__leg--tl')
+      +cube('toaster__leg toaster__leg--tr')
+      +cube('toaster__leg toaster__leg--br')
+      +cube('toaster__leg toaster__leg--bl')
+      +cube('toaster__body')
+      +cube('toast')
