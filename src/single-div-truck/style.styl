@@ -1,0 +1,171 @@
+*
+  box-sizing border-box
+
+// Intrinsic sizing is 378 x 228
+:root
+  --desired-size 50
+  --unit calc((var(--desired-size) / 378) * 1vmin)
+  --tyre-base hsla(280, 0%, 30%, 1)
+  --tyre-front hsla(0, 0%, 45%, 1)
+  --tyre-hub hsla(0, 0%, 95%, 1)
+  --tyre-rear-base hsla(280, 0%, 20%, 1)
+  --tyre-rear-front hsla(0, 0%, 35%, 1)
+  --tyre-rear-hub hsla(0, 0%, 55%, 1)
+  --bumper-one hsla(0, 0%, 80%, 1)
+  --grill hsla(180, 0%, 90%, 1)
+  --bonnet hsla(280, 100%, 30%, 1)
+  --body hsla(280, 100%, 40%, 1)
+  --cab hsla(280, 100%, 40%, 1)
+  --chassis hsla(0, 0%, 0%, 1)
+  --glass hsla(180, 100%, 85%, 1);
+  --mirror hsla(280, 100%, 20%, 1)
+  --shine hsla(0, 0%, 100%, 0.8)
+  --taillight hsla(0, 100%, 40%, 1)
+  --headlight hsl(50, 100%, 90%)
+  --alloy hsl(0, 0%, 70%)
+  --rad hsl(0, 0%, 10%)
+  --indicator hsl(30, 80%, 50%)
+  --sign hsl(120, 30%, 40%)
+  --sign-border hsl(0, 0%, 98%)
+  --post hsl(30, 50%, 30%)
+  --post-shine hsla(0, 0%, 100%, 0.2)
+  --road hsla(160, 0%, 50%, 1)
+  --sky hsla(20, 80%, 80%, 1)
+  --ground hsla(45, 35%, 65%, 1)
+
+
+u($val)
+  'calc(%s * var(--unit))' % $val
+
+body
+  min-height 100vh
+  background linear-gradient(transparent 0 calc(50% - 6vmin), var(--ground) calc(50% - 6vmin) 50%, transparent 50%),
+            linear-gradient(var(--sky) 0 50%, transparent 50%),
+            linear-gradient(transparent 0 calc(50% + 10vmin), var(--ground) calc(50% + 10vmin)),
+            linear-gradient(var(--road) 0 calc(50% + 4.5vmin), transparent calc(50% + 4.5vmin)),
+            linear-gradient(transparent 0 calc(50% + 5.5vmin), var(--road) calc(50% + 5.5vmin)),
+            repeating-linear-gradient(90deg, white 5vmin 10vmin, transparent 10vmin 12.5vmin, white 12.5vmin 17.5vmin) 0 calc(50% + 4.5vmin) / 100vw 1vmin,
+            var(--road)
+  animation road 1s infinite linear
+
+// Position then size
+$bg-one = 'linear-gradient(30deg, transparent 0 5%, hsla(0, 50%, 50%, 0.5), hsla(0, 50%, 50%, 0.5)) %s %s / %s %s no-repeat' % (u(61.25) u(2.5) u(209) u(120))
+$tyre-one-base = 'radial-gradient(ellipse at center, var(--tyre-base) 0 50%, transparent 50%) %s %s / %s %s no-repeat' % (u(126) u(164) u(74) u(74))
+$tyre-one-front = 'radial-gradient(ellipse at center, var(--tyre-front) 0 50%, transparent 50%) %s %s / %s %s no-repeat' % (u(134) u(164) u(74) u(74))
+$tyre-one-hub = 'radial-gradient(ellipse at center, var(--tyre-hub) 0 30%, transparent 30%) %s %s / %s %s no-repeat' % (u(134) u(164) u(74) u(74))
+$alloy-one = 'radial-gradient(ellipse at center, var(--alloy) 0 10%, transparent 10%) %s %s / %s %s no-repeat' % (u(134) u(164) u(74) u(74))
+$tyre-two-base = 'radial-gradient(ellipse at center, var(--tyre-base) 0 50%, transparent 50%) %s %s / %s %s no-repeat' % (u(260) u(164) u(74) u(74))
+$tyre-two-front = 'radial-gradient(ellipse at center, var(--tyre-front) 0 50%, transparent 50%) %s %s / %s %s no-repeat' % (u(268) u(164) u(74) u(74))
+$tyre-two-hub = 'radial-gradient(ellipse at center, var(--tyre-hub) 0 30%, transparent 30%) %s %s / %s %s no-repeat' % (u(268) u(164) u(74) u(74))
+$alloy-two = 'radial-gradient(ellipse at center, var(--alloy) 0 10%, transparent 10%) %s %s / %s %s no-repeat' % (u(268) u(164) u(74) u(74))
+$tyre-three-base = 'radial-gradient(ellipse at center, var(--tyre-rear-base) 0 50%, transparent 50%) %s %s / %s %s no-repeat' % (u(15) u(164) u(74) u(74))
+$tyre-three-front = 'radial-gradient(ellipse at center, var(--tyre-rear-front) 0 50%, transparent 50%) %s %s / %s %s no-repeat' % (u(23) u(164) u(74) u(74))
+$tyre-three-hub = 'radial-gradient(ellipse at center, var(--tyre-rear-hub) 0 30%, transparent 30%) %s %s / %s %s no-repeat' % (u(23) u(164) u(74) u(74))
+$tyre-four-base = 'radial-gradient(ellipse at center, var(--tyre-rear-base) 0 50%, transparent 50%) %s %s / %s %s no-repeat' % (u(172) u(164) u(74) u(74))
+$tyre-four-front = 'radial-gradient(ellipse at center, var(--tyre-rear-front) 0 50%, transparent 50%) %s %s / %s %s no-repeat' % (u(180) u(164) u(74) u(74))
+$tyre-four-hub = 'radial-gradient(ellipse at center, var(--tyre-rear-hub) 0 30%, transparent 30%) %s %s / %s %s no-repeat' % (u(180) u(164) u(74) u(74))
+$bumper = 'linear-gradient(var(--bumper-one), var(--bumper-one)) %s %s / %s %s no-repeat' % (u(6) u(190) u(116) u(20))
+$front-grill = 'linear-gradient(var(--grill), var(--grill)) %s %s / %s %s no-repeat' % (u(12) u(150) u(108) u(36))
+$arch-front = 'linear-gradient(var(--chassis), var(--chassis)) %s %s / %s %s no-repeat' % (u(141) u(175) u(60) u(33))
+$arch-rear = 'linear-gradient(var(--chassis), var(--chassis)) %s %s / %s %s no-repeat' % (u(275) u(182) u(60) u(26))
+$bonnet = 'linear-gradient(var(--bonnet), var(--bonnet)) %s %s / %s %s no-repeat' % (u(12) u(145) u(200) u(5))
+$body = 'linear-gradient(var(--body), var(--body)) %s %s / %s %s no-repeat' % (u(12) u(145) u(358) u(63))
+$body-patch-one = 'linear-gradient(var(--body), var(--body)) %s %s / %s %s no-repeat' % (u(126) u(175) u(15) u(33))
+$body-patch-two = 'linear-gradient(var(--body), var(--body)) %s %s / %s %s no-repeat' % (u(260) u(182) u(15) u(26))
+$body-patch-three = 'linear-gradient(var(--body), var(--body)) %s %s / %s %s no-repeat' % (u(260) u(174) u(75) u(10))
+$cab-main = 'linear-gradient(var(--cab), var(--cab)) %s %s / %s %s no-repeat' % (u(120) u(88) u(154) u(60))
+$cab-top = 'linear-gradient(var(--cab), var(--cab)) %s %s / %s %s no-repeat' % (u(118) u(88) u(154) u(8))
+$side-window = 'linear-gradient(var(--glass), var(--glass)) %s %s / %s %s no-repeat' % (u(120) u(96) u(148) u(50))
+$cab-left = 'linear-gradient(117deg, transparent 50%, var(--body) 50%) %s %s / %s %s no-repeat' % (u(90) u(86) u(30) u(62))
+$cab-right = 'linear-gradient(117deg, transparent 50%, var(--body) 50%) %s %s / %s %s no-repeat' % (u(200) u(86) u(30) u(62))
+$front-glass = 'linear-gradient(117deg, transparent 50%, var(--glass) 50%) %s %s / %s %s no-repeat' % (u(93) u(90) u(30) u(62))
+$abs = 'linear-gradient(117deg, transparent 50%, var(--chassis) 50%) %s %s / %s %s no-repeat' % (u(196) u(104) u(30) u(62))
+$side-mirror = 'radial-gradient(ellipse at center, var(--mirror) 50%, transparent 50%) %s %s / %s %s no-repeat' % (u(214) u(130) u(32) u(20))
+$side-mirror-two = 'radial-gradient(ellipse at center, var(--mirror) 50%, transparent 50%) %s %s / %s %s no-repeat' % (u(76) u(130) u(32) u(20))
+$handle = 'linear-gradient(var(--mirror), var(--mirror)) %s %s / %s %s no-repeat' % (u(245) u(152) u(20) u(4))
+$window-shimmer = 'linear-gradient(113deg, transparent 32%, var(--shine) 32% 50%, transparent 50% 60%, var(--shine) 60% 70%, transparent 70%) %s %s / %s %s no-repeat' % (u(110) u(95) u(50) u(50))
+$grill-shimmer = 'linear-gradient(113deg, transparent 32%, var(--shine) 32% 50%, transparent 50% 60%, var(--shine) 60% 70%, transparent 70%) %s %s / %s %s no-repeat' % (u(10) u(150) u(50) u(36))
+$bumper-shimmer = 'linear-gradient(113deg, transparent 32%, var(--shine) 32% 50%, transparent 50% 60%, var(--shine) 60% 70%, transparent 70%) %s %s / %s %s no-repeat' % (u(-4) u(190) u(50) u(20))
+$rear-bumper = 'linear-gradient(var(--bumper-one), var(--bumper-one)) %s %s / %s %s no-repeat' % (u(350) u(190) u(30) u(20))
+$sideskirt = 'linear-gradient(var(--bumper-one), var(--bumper-one)) %s %s / %s %s no-repeat' % (u(230) u(202) u(40) u(10))
+$taillight = 'linear-gradient(var(--taillight), var(--taillight)) %s %s / %s %s no-repeat' % (u(362) u(150) u(10) u(20))
+$rad = 'linear-gradient(var(--rad) 0 20%, transparent 20% 40%, var(--rad) 40% 60%, transparent 60% 80%, var(--rad) 80% 100%) %s %s / %s %s no-repeat' % (u(35) u(153) u(60) u(20))
+$headlight-one = 'linear-gradient(var(--headlight), var(--headlight)) %s %s / %s %s no-repeat' % (u(14) u(152) u(18) u(18))
+$headlight-two = 'linear-gradient(var(--headlight), var(--headlight)) %s %s / %s %s no-repeat' % (u(100) u(152) u(18) u(18))
+$indicator-one = 'linear-gradient(var(--indicator), var(--indicator)) %s %s / %s %s no-repeat' % (u(14) u(172) u(18) u(6))
+$indicator-two = 'linear-gradient(var(--indicator), var(--indicator)) %s %s / %s %s no-repeat' % (u(100) u(172) u(18) u(6))
+
+
+body:after
+  content ''
+  position fixed
+  top 50%
+  left 50%
+  transform translate(-50%, -70%)
+  height u(228)
+  width u(378)
+  animation bump 5s infinite linear
+  background $bumper-shimmer, //bumper
+            $bumper,
+            $rad,
+            $headlight-one,
+            $headlight-two,
+            $indicator-one,
+            $indicator-two,
+            $grill-shimmer,
+            $taillight,
+            $side-mirror,
+            $bonnet,
+            $sideskirt,
+            $rear-bumper,
+            $body-patch-one, $body-patch-two, $body-patch-three,
+            $alloy-two, $tyre-two-hub, $tyre-two-front, $tyre-two-base, // nsr
+            $alloy-one, $tyre-one-hub, $tyre-one-front, $tyre-one-base, // nsf
+            $front-grill, // grill
+            $arch-front, $arch-rear,
+            $handle,
+            $body,
+            $abs, $cab-top, $window-shimmer, $front-glass, $cab-left, $cab-right, $side-window, $cab-main,
+            $side-mirror-two,
+            $tyre-three-hub, $tyre-three-front, $tyre-three-base, //osr
+            $tyre-four-hub, $tyre-four-front, $tyre-four-base
+
+// body:before
+
+$sign = 'linear-gradient(var(--sign), var(--sign)) %s %s / %s %s no-repeat' % (u(0) u(0) u(100) u(54))
+$sign-border = 'linear-gradient(var(--sign-border), var(--sign-border)) %s %s / %s %s no-repeat' % (u(2) u(2) u(96) u(50))
+$sign-face = 'linear-gradient(var(--sign), var(--sign)) %s %s / %s %s no-repeat' % (u(4) u(4) u(92) u(46))
+$post = 'linear-gradient(var(--post), var(--post)) %s %s / %s %s no-repeat' % (u(45) u(0) u(10) u(220))
+$post-shine = 'linear-gradient(var(--post-shine), var(--post-shine)) %s %s / %s %s no-repeat' % (u(45) u(0) u(2) u(220))
+$road = 'linear-gradient(var(--road), var(--road)) %s %s / %s %s no-repeat' % (-100vw u(200) 300vw u(100))
+
+body:before
+  content "Road to nowhere (10m)"
+  position absolute
+  height u(220)
+  width u(100)
+  font-family sans-serif
+  font-size u(10)
+  color #fafafa
+  text-align center
+  top 50%
+  left 50%
+  padding-top u(10)
+  transform translate(-50%, -105%)
+  overflow hidden
+  background $sign-face, $sign-border, $sign, $post-shine, $post
+  animation travel 2s infinite linear
+
+@keyframes travel
+  from
+    transform translate(-50%, -105%) translate(-100vw, 0)
+  to
+    transform translate(-50%, -105%) translate(100vw, 0)
+
+@keyframes bump
+  50%
+    transform translate(-50%, -75%)
+
+@keyframes road
+  to
+    background-position 100vw 0
