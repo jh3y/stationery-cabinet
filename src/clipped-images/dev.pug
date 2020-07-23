@@ -1,37 +1,53 @@
+- const SIZE = 150
+-
+  const IMAGES = [
+    `https://i.picsum.photos/id/21/200/200.jpg?hmac=a2iQ6UhOjpU6jn7QSsCpk1CiiKTxmW1R4UivDsv-n8o`,
+    `https://i.picsum.photos/id/139/200/200.jpg?hmac=FNSPvHsHcRzKQtNxKKauJgIXpoaAufCwYvr-1w5T3R4`,
+    `https://i.picsum.photos/id/642/200/200.jpg?hmac=MJkhEaTWaybCn0y7rKfh_irNHvVuqRHmxcpziWABTKw`,
+    `https://i.picsum.photos/id/253/200/200.jpg?hmac=_dceojr9yz5ZIKoye8I9HOqPCBHfn-jT9aRYdoLx1kQ`,
+    `https://i.picsum.photos/id/604/200/200.jpg?hmac=qgFjxODI1hMBMfHo68VvLeji-zvG9y-iPYhyW0EkvOs`,
+    `https://i.picsum.photos/id/119/200/200.jpg?hmac=JGrHG7yCKfebsm5jJSWw7F7x2oxeYnm5YE_74PhnRME`,
+    `https://i.picsum.photos/id/520/200/200.jpg?hmac=gq6GVKg64GMqsvk_d6gzXZ7L1htska1jEdgBnAwm4xU`,
+    `https://i.picsum.photos/id/553/200/200.jpg?hmac=HSLKzqqoxnajv4KjLxYSjZokWcuCCiZLGdRPUoryhXk`,
+    `https://i.picsum.photos/id/988/200/200.jpg?hmac=-lwK-i6PssD9WlUeVPDIhOxDVxlzJKeM4MgEx_fIqJg`
+
+  ]
 -
   const CLIPS = [
-    ['inset(100% 0 0 0)', 'inset(0 0 0 0)'],
-    ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
-    ['inset(0 0 100% 0)', 'inset(0 0 0 0)'],
-    ['inset(0 0 0 100%)', 'inset(0 0 0 0)'],
-    ['inset(100% 100% 0 0)', 'inset(0 0 0 0)'],
-    ['inset(0 100% 100% 0)', 'inset(0 0 0 0)'],
-    ['inset(0 0 100% 100%)', 'inset(0 0 0 0)'],
-    ['inset(100% 0 0 100%)', 'inset(0 0 0 0)'],
-    ['inset(100% 0 100% 0)', 'inset(0 0 0 0)'],
-    ['inset(0 100% 0 100%)', 'inset(0 0 0 0)'],
-    ['inset(100% 100% 100% 100%)', 'inset(0 0 0 0)'],
-    ['circle(0)', 'circle(125%)'],
     ['ellipse(0 0 at 0 0)', 'ellipse(150% 150% at 0 0)'],
+    ['inset(100% 0 0 0)', 'inset(0 0 0 0)'],
     ['ellipse(0 0 at 100% 0)', 'ellipse(150% 150% at 100% 0)'],
-    ['ellipse(0 0 at 100% 100%)', 'ellipse(150% 150% at 100% 100%)'],
+    ['polygon(50% 50%,  50% 50%,  50% 50%, 50% 50%)', 'polygon(-50% 50%, 50% -50%, 150% 50%, 50% 150%)'],
+    ['circle(0)', 'circle(125%)'],
+    ['inset(100% 100% 100% 100%)', 'inset(0 0 0 0)'],
     ['ellipse(0 0 at 0 100%)', 'ellipse(150% 150% at 0 100%)'],
-    ['polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%)', 'polygon(-70% 198%, 50% 114%, 170% 198%, 118% 54%, 234% -45%, 90% -10%, 50% -130%, 10% -10%, -134% -45%, -18% 54%)'],
-    ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
-    ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
-    ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
-    ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
-    ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
-    ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
-    ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
-    ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
+    ['inset(0 0 100% 0)', 'inset(0 0 0 0)'],
+    ['ellipse(0 0 at 100% 100%)', 'ellipse(150% 150% at 100% 100%)'],
+    //- Other shapes to play with!
+    //- ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
+    //- ['inset(100% 100% 0 0)', 'inset(0 0 0 0)'],
+    //- ['inset(0 0 0 100%)', 'inset(0 0 0 0)'],
+    //- ['inset(0 100% 100% 0)', 'inset(0 0 0 0)'],
+    //- ['inset(0 0 100% 100%)', 'inset(0 0 0 0)'],
+    //- ['inset(100% 0 0 100%)', 'inset(0 0 0 0)'],
+    //- ['inset(100% 0 100% 0)', 'inset(0 0 0 0)'],
+    //- ['inset(0 100% 0 100%)', 'inset(0 0 0 0)'],
+    //- ['polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%)', 'polygon(-70% 198%, 50% 114%, 170% 198%, 118% 54%, 234% -45%, 90% -10%, 50% -130%, 10% -10%, -134% -45%, -18% 54%)'],
+    //- ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
+    //- ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
+    //- ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
+    //- ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
+    //- ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
+    //- ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
+    //- ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
   ]
 mixin image(src, start, end)
-  .image(style=`--src: url(${src}); --clip-start: ${start}; --clip-end: ${end};`)
+  .image(style=`--clip-start: ${start}; --clip-end: ${end};`)
+    img(src=src)
     img(src=src)
 
 .image-container
   - let i = 0
-  while i < 25
-    +image(`https://picsum.photos/100/100?${i}`, CLIPS[i][0], CLIPS[i][1])
+  while i < 9
+    +image(IMAGES[i], CLIPS[i][0], CLIPS[i][1])
     - i++
