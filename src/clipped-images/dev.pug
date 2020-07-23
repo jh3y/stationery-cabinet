@@ -1,0 +1,37 @@
+-
+  const CLIPS = [
+    ['inset(100% 0 0 0)', 'inset(0 0 0 0)'],
+    ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
+    ['inset(0 0 100% 0)', 'inset(0 0 0 0)'],
+    ['inset(0 0 0 100%)', 'inset(0 0 0 0)'],
+    ['inset(100% 100% 0 0)', 'inset(0 0 0 0)'],
+    ['inset(0 100% 100% 0)', 'inset(0 0 0 0)'],
+    ['inset(0 0 100% 100%)', 'inset(0 0 0 0)'],
+    ['inset(100% 0 0 100%)', 'inset(0 0 0 0)'],
+    ['inset(100% 0 100% 0)', 'inset(0 0 0 0)'],
+    ['inset(0 100% 0 100%)', 'inset(0 0 0 0)'],
+    ['inset(100% 100% 100% 100%)', 'inset(0 0 0 0)'],
+    ['circle(0)', 'circle(125%)'],
+    ['ellipse(0 0 at 0 0)', 'ellipse(150% 150% at 0 0)'],
+    ['ellipse(0 0 at 100% 0)', 'ellipse(150% 150% at 100% 0)'],
+    ['ellipse(0 0 at 100% 100%)', 'ellipse(150% 150% at 100% 100%)'],
+    ['ellipse(0 0 at 0 100%)', 'ellipse(150% 150% at 0 100%)'],
+    ['polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%)', 'polygon(-70% 198%, 50% 114%, 170% 198%, 118% 54%, 234% -45%, 90% -10%, 50% -130%, 10% -10%, -134% -45%, -18% 54%)'],
+    ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
+    ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
+    ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
+    ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
+    ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
+    ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
+    ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
+    ['inset(0 100% 0 0)', 'inset(0 0 0 0)'],
+  ]
+mixin image(src, start, end)
+  .image(style=`--src: url(${src}); --clip-start: ${start}; --clip-end: ${end};`)
+    img(src=src)
+
+.image-container
+  - let i = 0
+  while i < 25
+    +image(`https://picsum.photos/100/100?${i}`, CLIPS[i][0], CLIPS[i][1])
+    - i++

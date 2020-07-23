@@ -1,0 +1,38 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+
+
+.image-container
+  display grid
+  grid-template-columns repeat(5, 1fr)
+  grid-template-rows repeat(5, 1fr)
+  grid-gap 0.5rem
+
+  .image
+    object-fit cover
+    height 100px
+    width 100px
+    position relative
+
+    &:before
+      background var(--src)
+      content ''
+      filter grayscale(1) brightness(40%)
+      height 100%
+      left 0
+      position absolute
+      top 0
+      width 100%
+
+    img
+      clip-path var(--clip-start)
+      transition clip-path 0.5s
+
+    &:hover img
+      clip-path var(--clip-end)

@@ -1,0 +1,97 @@
+*
+  box-sizing border-box
+
+:root
+  --jeans hsl(0, 0%, 45%)
+  --ground-hue 190
+  --belt hsl(0, 0%, 0%)
+  --fur-dark hsl(25, 80%, 25%)
+  --fur hsl(25, 80%, 30%)
+  --fur-light hsl(25, 60%, 45%)
+  --muzzle hsl(25, 60%, 75%)
+  --tank hsl(0, 0%, 85%)
+  --nose hsl(0, 0%, 5%)
+  --bandana hsl(0, 90%, 50%)
+  --keyboard-body hsl(0, 0%, 25%)
+  --keyboard-key hsl(0, 0%, 55%)
+  --keyboard-accent hsl(280, 30%, 50%)
+  --bg 'hsl(%s, 60%, 95%)' % var(--ground-hue)
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  background var(--bg)
+
+svg
+  width 60vmin
+
+.ground
+  --alpha 0.5
+  fill 'hsla(%s, 60%, 60%, %s)' % (var(--ground-hue) var(--alpha, 1))
+
+.bear
+  &__jeans
+    fill var(--jeans)
+  &__belt
+    fill var(--belt)
+  &__muzzle
+    fill var(--muzzle)
+  &__shoulder
+    &--left
+      fill var(--fur-dark)
+  &__tank
+    fill var(--tank)
+  &__nose
+    fill var(--nose)
+  &__bandana
+    fill var(--bandana)
+  &__fur
+  &__paw
+    fill var(--fur)
+    &--light
+      fill var(--fur-light)
+
+.keyboard
+  &__body
+    fill var(--keyboard-body)
+  &__key
+    fill var(--keyboard-key)
+    &--accented
+      fill var(--keyboard-accent)
+
+.code-block
+  fill 'hsl(%s, 100%, 50%)' % var(--hue)
+
+label
+  height 44px
+  width 44px
+  position fixed
+  bottom 1rem
+  right 1rem
+  cursor pointer
+
+  & > svg
+    position absolute
+    height 100%
+    width 100%
+    top 0
+    left 0
+
+  path
+    fill 'hsl(%s, 60%, 60%)' % var(--ground-hue)
+
+  svg:nth-of-type(1)
+    display none
+
+[type='checkbox']
+  // opacity 0
+  height 0
+  width 0
+
+:checked ~ label
+  svg:nth-of-type(1)
+    display block
+  svg:nth-of-type(2)
+    display none
