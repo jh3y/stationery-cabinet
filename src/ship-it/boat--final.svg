@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160.48 90.925" >
+<svg class='boat-svg' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160.48 90.925" >
   <defs>
     <filter id="steam" x="0" y="0">
       <feGaussianBlur in="SourceGraphic" stdDeviation="0.25" />
@@ -38,9 +38,10 @@
       <path class='container__line container__line--blank' d="M68.962 167.591v-4.458" style="fill:none;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"/>
     </g>
   </defs>
-  <g class='container container--dropped'>
+  <g class='container--unused container--dropped' style='display: none'>
     <use href='#container'/>
   </g>
+
   <g style="display:inline" transform="translate(8.349 -101.753)">
     <use href="#blankContainer" class='blank blank--1'/>
     <use href="#blankContainer" class='blank blank--2'/>
@@ -114,8 +115,8 @@
         <path style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" d="M89.154 860.456c-1.292.002-2.586 0-3.875.014-1.081.018-2.235.05-3.403.09l-17.662 59.853c1.729 1.827 3.77 3.172 6.025 4.148z"/>
       </g>
     </g>
-    <path d="M8.565 183.137a16.536 16.536 0 00.226.506 16.536 16.536 0 00.823 1.434 16.536 16.536 0 00.962 1.345 16.536 16.536 0 001.09 1.241 16.536 16.536 0 001.21 1.127 16.536 16.536 0 001.316 1 16.536 16.536 0 001.409.864 16.536 16.536 0 001.489.72 16.536 16.536 0 001.552.566 16.536 16.536 0 001.602.409 16.536 16.536 0 001.634.247 16.536 16.536 0 001.651.082h101.399a11.71 11.71 0 00.828-.029 11.71 11.71 0 001.163-.141 11.71 11.71 0 001.142-.256 11.71 11.71 0 001.11-.37 11.71 11.71 0 001.069-.477 11.71 11.71 0 001.015-.583 11.71 11.71 0 00.952-.68 11.71 11.71 0 00.88-.773 11.71 11.71 0 00.798-.857 11.71 11.71 0 00.708-.932 11.71 11.71 0 00.612-.998 11.71 11.71 0 00.509-1.053 11.71 11.71 0 00.401-1.1 11.71 11.71 0 00.29-1.134 11.71 11.71 0 00.024-.158z" style="opacity:1;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:10;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"/>
-    <path d="M9.833 185.382a16.536 16.536 0 00.743 1.04 16.536 16.536 0 001.09 1.241 16.536 16.536 0 001.21 1.127 16.536 16.536 0 001.316 1 16.536 16.536 0 001.409.864 16.536 16.536 0 001.489.72 16.536 16.536 0 001.552.566 16.536 16.536 0 001.602.409 16.536 16.536 0 001.634.247 16.536 16.536 0 001.651.082h101.399a11.71 11.71 0 00.828-.029 11.71 11.71 0 001.163-.141 11.71 11.71 0 001.142-.256 11.71 11.71 0 001.11-.37 11.71 11.71 0 001.069-.477 11.71 11.71 0 001.015-.583 11.71 11.71 0 00.952-.68 11.71 11.71 0 00.88-.773 11.71 11.71 0 00.798-.857 11.71 11.71 0 00.708-.932 11.71 11.71 0 00.612-.998 11.71 11.71 0 00.509-1.053 11.71 11.71 0 00.053-.147z" style="opacity:1;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:10;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"/>
+    <path class='boat__stripe' d="M8.565 183.137a16.536 16.536 0 00.226.506 16.536 16.536 0 00.823 1.434 16.536 16.536 0 00.962 1.345 16.536 16.536 0 001.09 1.241 16.536 16.536 0 001.21 1.127 16.536 16.536 0 001.316 1 16.536 16.536 0 001.409.864 16.536 16.536 0 001.489.72 16.536 16.536 0 001.552.566 16.536 16.536 0 001.602.409 16.536 16.536 0 001.634.247 16.536 16.536 0 001.651.082h101.399a11.71 11.71 0 00.828-.029 11.71 11.71 0 001.163-.141 11.71 11.71 0 001.142-.256 11.71 11.71 0 001.11-.37 11.71 11.71 0 001.069-.477 11.71 11.71 0 001.015-.583 11.71 11.71 0 00.952-.68 11.71 11.71 0 00.88-.773 11.71 11.71 0 00.798-.857 11.71 11.71 0 00.708-.932 11.71 11.71 0 00.612-.998 11.71 11.71 0 00.509-1.053 11.71 11.71 0 00.401-1.1 11.71 11.71 0 00.29-1.134 11.71 11.71 0 00.024-.158z" style="opacity:1;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:10;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"/>
+    <path class='boat__bottom' d="M9.833 185.382a16.536 16.536 0 00.743 1.04 16.536 16.536 0 001.09 1.241 16.536 16.536 0 001.21 1.127 16.536 16.536 0 001.316 1 16.536 16.536 0 001.409.864 16.536 16.536 0 001.489.72 16.536 16.536 0 001.552.566 16.536 16.536 0 001.602.409 16.536 16.536 0 001.634.247 16.536 16.536 0 001.651.082h101.399a11.71 11.71 0 00.828-.029 11.71 11.71 0 001.163-.141 11.71 11.71 0 001.142-.256 11.71 11.71 0 001.11-.37 11.71 11.71 0 001.069-.477 11.71 11.71 0 001.015-.583 11.71 11.71 0 00.952-.68 11.71 11.71 0 00.88-.773 11.71 11.71 0 00.798-.857 11.71 11.71 0 00.708-.932 11.71 11.71 0 00.612-.998 11.71 11.71 0 00.509-1.053 11.71 11.71 0 00.053-.147z" style="opacity:1;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:10;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"/>
     <!-- <circle class='boat__bubble' r="7.671" cy="109.424" cx="144.461" style="opacity:1;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.64583325;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"/> -->
     <rect class='boat__ring' ry=".935" y="152.642" x="103.021" height="1.871" width="32.553" style="opacity:1;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.39137292;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"/>
     <rect class='boat__glass' ry="0" y="126.636" x="104.611" height="3.929" width="13.283" style="opacity:1;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.60596001;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"/>
@@ -150,4 +151,7 @@
       <use href="#wave" class='wave wave--4'/>
     </g>
   </g>
+  <text class='boat__name' style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.78354168px;line-height:1.25;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill-opacity:1;stroke:none;stroke-width:0.09458692" x="127.383" y="79.47">
+    <tspan x="127.383" y="79.47" style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.78354168px;font-family:'JetBrains Mono';-inkscape-font-specification:'JetBrains Mono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.09458692">SS JH3Y</tspan>
+  </text>
 </svg>
