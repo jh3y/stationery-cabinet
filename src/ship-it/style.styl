@@ -50,6 +50,15 @@ svg
   fill 'hsla(%s, 0%, 80%, 0.75)' % var(--hue, 180)
 .container__vent
   fill 'hsl(%s, 60%, 15%)' % var(--hue, 180)
+.container__line
+  stroke-width 2
+  stroke 'hsla(%s, 50%, 25%, 0.35)' % var(--hue, 180)
+
+  &--blank
+    stroke-width 0.5
+
+.wave
+  fill 'hsl(%s, 80%, 50%)' % var(--hue, 180)
 
 .hazard-black
   fill hsl(0, 0%, 5%)
@@ -77,3 +86,18 @@ svg
   fill hsl(180, 80%, 60%)
 .boat__shimmer
   fill hsla(180, 80%, 100%, 0.75)
+
+.boat__tongue
+  fill hsl(0, 100%, 50%)
+
+.boat__mouth--open
+  fill hsl(0, 0%, 10%)
+
+.boat__eye
+  circle:nth-of-type(2)
+    fill hsl(0, 0%, 100%)
+  circle:nth-of-type(1)
+    fill hsl(0, 0%, 10%)
+
+.boat__bubble
+  fill 'hsla(0, 0%, %s, 0.75)' % calc(var(--lightness, 60) * 1%)
