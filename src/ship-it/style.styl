@@ -1,0 +1,79 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  overflow hidden
+  background hsl(280, 40%, 70%)
+
+svg
+  height 25vmin
+
+.ship-it
+  width 240px
+  height 100px
+  position relative
+  background hsla(0, 100%, 50%, 0.2)
+
+  svg
+    position absolute
+    bottom 0
+    left 50%
+    transform translate(-50%, 0%)
+    width 100%
+
+  button
+    position absolute
+    bottom 0
+    left 50%
+    transform translate(-50%, 0)
+    width 240px
+    height 100px
+
+
+.blank
+  --lightness 70
+
+.container__body
+  fill 'hsl(%s, 60%, %s)' % (var(--hue, 180) calc(var(--lightness, 40) * 1%))
+  stroke 'hsl(%s, 60%, 35%)' % var(--hue, 180)
+.container__block
+  fill 'hsl(%s, 60%, 50%)' % var(--hue, 180)
+.container__ring
+  fill 'hsl(%s, 30%, 25%)' % var(--hue, 180)
+.container__shade
+  fill 'hsla(%s, 60%, 5%, 0.5)' % var(--hue, 180)
+.container__label
+  fill 'hsla(%s, 0%, 80%, 0.75)' % var(--hue, 180)
+.container__vent
+  fill 'hsl(%s, 60%, 15%)' % var(--hue, 180)
+
+.hazard-black
+  fill hsl(0, 0%, 5%)
+.hazard-yellow
+  fill hsl(50, 90%, 50%)
+.corgo-stamp
+  fill hsl(0, 0%, 100%)
+
+.container__logo
+  opacity 0.5
+
+.boat__mast
+  fill hsl(0, 0%, 20%)
+
+.boat__body
+  fill hsl(0, 0%, 85%)
+
+.boat__bridge
+  fill hsl(0, 0%, 95%)
+
+.boat__ring
+  fill hsl(0, 0%, 65%)
+
+.boat__glass
+  fill hsl(180, 80%, 60%)
+.boat__shimmer
+  fill hsla(180, 80%, 100%, 0.75)
