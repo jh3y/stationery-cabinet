@@ -4,15 +4,47 @@ mixin cube(className)
     while s < 6
       .cube__side
       - s++
-
+input#toast(type='checkbox')
+.rotater.rotater--top
+.rotater.rotater--right
+.rotater.rotater--bottom
+.rotater.rotater--left
 .scene
   .plane
     +cube('table')
     .toaster__shadow
-    .toaster
-      +cube('toaster__leg toaster__leg--tl')
-      +cube('toaster__leg toaster__leg--tr')
-      +cube('toaster__leg toaster__leg--br')
-      +cube('toaster__leg toaster__leg--bl')
-      +cube('toaster__body')
-      +cube('toast')
+    label.toaster(for='toast')
+      .toaster__toaster
+        +cube('toaster__leg toaster__leg--tl')
+        +cube('toaster__leg toaster__leg--tr')
+        +cube('toaster__leg toaster__leg--br')
+        +cube('toaster__leg toaster__leg--bl')
+        .cube.toaster__body
+          .cube__side
+            img(src="https://assets.codepen.io/605876/bear-with-cap.svg")
+            .toaster__face
+              .eyes
+                .eye.eye--left
+                .eye.eye--right
+              .mouth
+          .cube__side
+          .cube__side
+            +cube('toaster__handle')
+          .cube__side
+          .cube__side
+          .cube__side
+      .toast__wrapper
+        .cube.toast
+          .cube__side
+          .cube__side
+            .toast__face
+              .eyes
+                .eye.eye--left
+                .eye.eye--right
+              .mouth
+          .cube__side
+          .cube__side
+          .cube__side
+          .cube__side
+label.cloak(for='toast')
+
