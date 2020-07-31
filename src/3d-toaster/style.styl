@@ -1,14 +1,77 @@
 *
+*:after
+*:before
   box-sizing border-box
 
 body
   min-height 100vh
   background hsl(195, 20%, 70%)
+  overflow hidden
+  margin 0
+  padding 0
 
 :root
   --toaster-width 18
   --toaster-height 10
   --toaster-depth 12
+  --toast-depth 1
+  --eye-size 1.75vmin
+  --feature hsl(0, 0%, 5%)
+  --shadow hsla(0, 0%, 25%, 1)
+  --cloth-color-one hsla(320, 60%, 50%, 0.65)
+  --speed 1
+  --transition 0.25
+  --handle hsl(0, 0%, 20%)
+  --shade-one hsl(0, 0%, 85%)
+  --shade-two hsl(0, 0%, 75%)
+  --shade-three hsl(0, 0%, 65%)
+  --shade-four hsl(0, 0%, 55%)
+  --shade-five hsl(0, 0%, 45%)
+  --shade-six hsl(0, 0%, 35%)
+  --shine hsla(0, 0%, 100%, 0.5)
+
+
+[type='checkbox']
+  position absolute
+  left 100%
+  opacity 0
+  height 0
+  width 0
+
+.rotater
+  position fixed
+  height 10vmin
+  width 100vmax
+  top 0
+  left 0
+  z-index 2
+
+  &:hover
+    & ~ .scene .plane
+      animation spin-y 1s infinite linear
+
+  &--bottom
+    transform translate(0, calc(100vh - 10vmin))
+
+    &:hover
+      & ~ .scene .plane
+        animation spin-y 1s infinite reverse linear
+
+  &--left
+    transform rotate(90deg)
+    transform-origin 0 100%
+
+    &:hover
+      & ~ .scene .plane
+        animation spin-x 1s infinite reverse linear
+
+  &--right
+    transform rotate(90deg) translate(0, calc(-100vw + 10vmin))
+    transform-origin 0 100%
+
+    &:hover
+      & ~ .scene .plane
+        animation spin-x 1s infinite linear
 
 
 .scene
@@ -23,11 +86,17 @@ body
 .plane
   height 20vmin
   width 40vmin
-  background blue
   transform-style preserve-3d
-  position absolute
   transform rotateX(-24deg) rotateY(-24deg) rotateX(90deg)
-  // transform rotateX(-0deg) rotateY(-24deg) rotateX(90deg)
+  // transform rotateX(-0deg) rotateY(-0deg) rotateX(90deg)
+
+@keyframes spin-x
+  to
+    transform rotateX(-24deg) rotateY(-24deg) rotateX(90deg) rotateZ(-360deg)
+@keyframes spin-y
+  to
+    transform rotateX(-24deg) rotateY(-24deg) rotateX(90deg) rotateX(360deg)
+
 
 .cube
   --width 15
@@ -50,7 +119,6 @@ body
     top 50%
     left 50%
     transform translate(-50%, -50%) rotateX(-90deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin))
-    // opacity 0
 
   & > div:nth-of-type(2)
     height calc(var(--height) * 1vmin)
@@ -103,9 +171,48 @@ body
   transform translate(-50%, -50%)
 
   div
-    --cloth-color-one hsla(320, 60%, 50%, 0.65)
     background repeating-linear-gradient(90deg, var(--cloth-color-one) 2px, transparent 5px 9px, var(--cloth-color-one) 10px),
       repeating-linear-gradient(0deg, var(--cloth-color-one) 5px, transparent 6px 12px, var(--cloth-color-one) 15px), hsl(0, 0%, 90%)
+
+img
+  position absolute
+  height 20%
+  right 0.5vmin
+  bottom 0.5vmin
+  mix-blend-mode overlay
+  filter grayscale(1)
+
+:checked ~ .scene
+  .toaster
+    animation none
+
+    .mouth
+      background var(--feature)
+      border 0
+
+      &:after
+        content ''
+
+    &__handle
+      transform translate3d(-50%, calc(var(--toaster-height) * 0.4vmin), calc(var(--height) * 0.5vmin))
+      animation switch calc(var(--speed) * 1s) calc(var(--transition) * 1s) infinite ease-in-out
+
+    .toast__wrapper
+      transform translate3d(-50%, -50%, calc(var(--toaster-height) * 0.3vmin))
+      animation jump calc(var(--speed) * 1s) calc(var(--transition) * 1s) infinite ease-in-out
+
+    .toast
+      animation flip calc(var(--speed) * 2s) calc(var(--transition) * 1s) infinite ease-in-out
+
+    .toaster__body
+      animation squish calc(var(--speed) * 1s) calc(var(--transition) * 1s) infinite ease-in-out
+
+:checked ~ .cloak
+  height 100vh
+  width 100vw
+  position absolute
+  top 0
+  left 0
 
 .toaster
   height calc(var(--toaster-depth) * 1vmin)
@@ -115,7 +222,14 @@ body
   position absolute
   transform translate3d(-50%, -50%, 1vmin)
   transform-style preserve-3d
-  // animation rock 0.2s infinite ease
+
+  &:hover
+    animation rock calc(var(--speed) * 0.1s) infinite
+
+    .mouth
+      border 0
+      &:before
+        content ''
 
   &__shadow
     height calc(var(--toaster-depth) * 1vmin)
@@ -124,7 +238,7 @@ body
     left 50%
     position absolute
     transform translate3d(-50%, -50%, 1vmin)
-    background hsl(0, 0%, 25%)
+    background var(--shadow)
     filter blur(10px)
 
   &__leg
@@ -150,7 +264,7 @@ body
       left calc(var(--perimeter) * 1%)
 
     div
-      background black
+      background var(--feature)
 
   &__body
     --depth var(--toaster-depth)
@@ -161,13 +275,35 @@ body
     left 50%
     transform translate3d(-50%, -50%, 6vmin)
 
-    div
-      background red
+    & > div:nth-of-type(1)
+      background linear-gradient(120deg, transparent 10%, var(--shine) 10% 20%, transparent 20% 25%, var(--shine) 25% 30%, transparent 30%), var(--shade-one)
+    & > div:nth-of-type(2)
+      background var(--shade-four)
+    & > div:nth-of-type(3)
+      background var(--shade-three)
+    & > div:nth-of-type(4)
+      background var(--shade-three)
+    & > div:nth-of-type(5)
+      background var(--shade-two)
+    & > div:nth-of-type(6)
+      background var(--shade-two)
 
-    div:nth-of-type(5)
-      background hsl(0, 0%, 65%)
+    & > div:nth-of-type(3)
+      transform-style preserve-3d
 
-    div:nth-of-type(5):after
+      // handle slot
+      &:after
+        content ''
+        position absolute
+        width 8%
+        height 50%
+        background hsl(0, 0%, 40%)
+        transform translate(-50%, 0)
+        left 50%
+        top 10%
+
+    // bread slot
+    & > div:nth-of-type(5):after
       content ''
       height 30%
       width 65%
@@ -177,29 +313,99 @@ body
       position absolute
       transform translate(-50%, -50%)
 
+  &__handle
+    transform-style preserve-3d
+    --height 1
+    --width 3
+    --depth 1
+    position absolute
+    top 10%
+    left 50%
+    transform translate3d(-50%, -50%, calc(var(--height) * 0.5vmin))
+    background-color var(--handle)
+    transition transform calc(var(--transition) * 1s) ease
+
+    & > div
+      background-color var(--handle)
+
+  &__face
+    height 25%
+    width 50%
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+
+  &__toaster
+  &__body
+  &__leg
+    transform-style preserve-3d
+
+  &__toaster
+    height calc(var(--toaster-depth) * 1vmin)
+    width calc(var(--toaster-width) * 1vmin)
+    top 50%
+    left 50%
+    position absolute
+    transform translate3d(-50%, -50%, 0)
+
+
 .toast
-  --depth 1
+  --depth var(--toast-depth)
   --height var(--toaster-height)
   --width var(--toaster-height)
 
   position absolute
   top 50%
   left 50%
-  transform translate3d(-50%, -50%, 7vmin)
-  animation flip 1s infinite ease-in-out
+  transform translate3d(-50%, -50%, calc(var(--toaster-height) * 0.5vmin))
 
-  div
+  &__face
+    height 30%
+    width 80%
+    top 50%
+    left 50%
+    position absolute
+    transform translate(-50%, -50%)
+
+  & > div
     background hsl(30, 40%, 80%)
+
+    &:nth-of-type(1)
+    &:nth-of-type(2)
+      border 0.25vmin solid hsl(30, 80%, 40%)
+
+    &:nth-of-type(3)
+    &:nth-of-type(4)
+    &:nth-of-type(5)
+    &:nth-of-type(6)
+      background hsl(30, 80%, 40%)
 
 // Keyframes that need to match up on the double
 // Bread jumps out and flips alternate ways
-@keyframes flip
+@keyframes jump
   0%, 100%
-    transform translate3d(-50%, -50%, 7vmin)
+    transform translate3d(-50%, -50%, 3vmin)
   5%
-    transform translate3d(-50%, -50%, 6vmin)
+    transform translate3d(-50%, -50%, 2vmin)
   50%
-    transform translate3d(-50%, -50%, 30vmin)
+    transform translate3d(-50%, -50%, 20vmin)
+
+@keyframes switch
+  0%, 100%
+    transform translate3d(-50%, calc(var(--toaster-height) * 0.4vmin), calc(var(--height) * 0.5vmin))
+  5%
+    transform translate3d(-50%, calc(var(--toaster-height) * 0.45vmin), calc(var(--height) * 0.5vmin))
+  50%
+    transform translate3d(-50%, -50%, calc(var(--height) * 0.5vmin))
+
+@keyframes flip
+  0%, 10%
+    transform translate3d(-50%, -50%, calc(var(--toaster-height) * 0.5vmin)) rotateX(0deg) rotateZ(0deg)
+  40%, 60%
+    transform translate3d(-50%, -50%, calc(var(--toaster-height) * 0.5vmin)) rotateX(360deg) rotateZ(0deg)
+  90%, 100%
+    transform translate3d(-50%, -50%, calc(var(--toaster-height) * 0.5vmin)) rotateX(360deg) rotateZ(360deg)
 
 // Toaster squish and then eject
 @keyframes rock
@@ -207,3 +413,88 @@ body
     transform translate3d(-50%, -50%, 1vmin) rotateY(1deg)
   50%
     transform translate3d(-50%, -50%, 1vmin) rotateY(-1deg)
+
+@keyframes squish
+  0%, 100%
+    transform translate3d(-50%, -50%, 6vmin) scaleZ(1)
+  5%
+    transform translate3d(-50%, -50%, 6vmin) scaleZ(1.02)
+  50%
+    transform translate3d(-50%, -50%, 6vmin) scaleZ(0.98)
+
+.toast__wrapper
+  height calc(var(--toast-depth) * 1vmin)
+  width calc(var(--toaster-height) * 1vmin)
+  transform-style preserve-3d
+  position absolute
+  top 50%
+  left 50%
+  transform translate3d(-50%, -50%, 6vmin)
+  transition transform calc(var(--transition) * 1s) ease
+  // animation jump 1s infinite ease-in-out
+
+.eye
+  position absolute
+  height var(--eye-size)
+  width var(--eye-size)
+  border-radius 50%
+  background #000
+  top 0
+  animation blink 5s infinite
+
+  &:after
+    content ''
+    height 25%
+    width 25%
+    position absolute
+    top 10%
+    left 10%
+    border-radius 50%
+    background hsl(0, 0%, 100%)
+
+  &--left
+    left 0
+
+  &--right
+    right 0
+
+@keyframes blink
+  0%, 49%, 51%, 100%
+    transform scaleY(1)
+  50%
+    transform scaleY(0)
+
+.mouth
+  height 2.5vmin
+  width 2.5vmin
+  position absolute
+  bottom 0
+  left 50%
+  transform translate(-50%, 0)
+  -webkit-clip-path inset(50% 0 0 0)
+  clip-path inset(50% 0 0 0)
+  background #000
+  border-radius 50%
+  overflow hidden
+  border 0.5vmin solid #000
+  background transparent
+
+  &:after
+    // content ''
+    height 60%
+    width 60%
+    position absolute
+    top 75%
+    left 50%
+    background red
+    border-radius 50%
+
+  &:before
+    height 50%
+    width 50%
+    border-radius 50%
+    background #000
+    top 50%
+    position absolute
+    left 50%
+    transform translate(-50%, 0)
