@@ -1,0 +1,36 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+
+.briefcase__stroke
+  stroke hsl(0, 0%, 20%)
+
+.snake
+  height 50vmin
+  z-index 2
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+  &__tie-band
+  &__tie-knot
+  &__tie-slip
+    fill hsl(0, 0%, 90%)
+
+  &__tie-stripe
+    fill hsl(210, 60%, 50%)
+
+  &__mouth
+    fill hsl(0, 0%, 20%)
+
+  &__stroke
+    stroke hsl(0, 0%, 20%)
+
+  &__glasses
+    stroke hsl(90, 50%, 10%)
