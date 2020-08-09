@@ -1,0 +1,73 @@
+*
+  box-sizing border-box
+
+:root
+  --backdrop-hue 200
+  --backdrop-lightness 70
+  --body hsl(90, 50%, 40%)
+  --shine hsl(90, 50%, 70%)
+  --stroke hsl(0, 0%, 10%)
+  --tie hsl(180, 80%, 90%)
+  --tie-accent hsl(280, 80%, 20%)
+  --rattle hsl(45, 80%, 50%)
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  background hsl(0, 5%, 95%)
+
+.briefcase
+  &__stroke
+    stroke hsl(0, 0%, 20%)
+  &__handle
+    stroke hsl(0, 0%, 5%)
+  &__body
+    fill hsl(30, 80%, 20%)
+  &__corner
+    fill hsl(45, 80%, 50%)
+    stroke hsl(0, 0%, 20%)
+  &__shine
+    fill hsl(30, 70%, 40%)
+
+.snake
+  height 50vmin
+  z-index 2
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)\
+
+  &__body
+  &__forehead
+    fill var(--body)
+
+  &__shine
+    fill var(--shine)
+
+  &__rattle-segment
+    fill var(--rattle)
+
+  &__eye
+    fill var(--stroke)
+
+  &__tie-band
+  &__tie-knot
+  &__tie-slip
+    fill var(--tie)
+
+  &__tie-stripe
+    fill var(--tie-accent)
+
+  &__mouth
+    fill var(--stroke)
+
+  &__stroke
+    stroke var(--stroke)
+
+  &__specs
+    stroke hsl(90, 50%, 10%)
+
+  &__backdrop
+    fill 'hsl(%s, 80%, %s)' % (var(--backdrop-hue) calc(var(--backdrop-lightness) * 1%))

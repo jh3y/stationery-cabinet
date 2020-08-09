@@ -1,0 +1,67 @@
+<svg xmlns:vectornator="http://vectornator.io" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 83.044 83.044" height="313.866" width="313.866">
+  <defs>
+    <path id="wiggle" d="M143.888 210.24c2.034 6.103 4.327 11.886 3.302 18.546-.884 5.748-4.455 11.107-6.859 16.259-9.086 19.469-14.865 45.645 3.811 61.986 7.652 6.696 30.26 20.712 40.646 13.21 11.293-8.155 16.775-20.452 30.74-24.642 17.443-5.233 34.11 11.132 51.57-.508 26.405-17.603 16.242-57.523 10.956-83.072-1.3-6.285-2.507-15.685-5.334-21.34-.023-.045-.293 2.8-.254 3.303.137 1.786.37 3.552.508 5.335.416 5.417.4 10.84.762 16.259 1.073 16.105 3.077 33.56-3.335 48.522-6.11 14.258-38.79-4.426-48.776-2.286-17.245 3.695-20.296 25.727-40.393 24.388-8.125-.542-7.929-14.831-7.367-20.07 2.51-23.421 18.86-41.36 6.097-65.29" fill="none" stroke="red" stroke-width="3.97" stroke-linecap="butt"/>
+    <clipPath id="circleClip">
+      <circle cx="164.785" cy="222.396" fill="purple" fill-rule="nonzero" r="88.827"/>
+    </clipPath>
+  </defs>
+  <g transform="matrix(.26458 0 0 .26458 -2.078 -17.32)" clip-rule="evenodd" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+    <!-- <circle cy="222.396" cx="164.785" fill="purple" fill-rule="nonzero" stroke="#000" stroke-width="5" r="144.433"/> -->
+    <circle class="snake__backdrop" cx="164.785" cy="222.396" fill-rule="nonzero" r="88.827"/>
+    <g class="briefcase" clip-path="url(#circleClip)">
+      <g transform="translate(50.508 -15.657)">
+        <rect class="briefcase__handle" width="18.569" height="14.287" x="59.02" y="271.23" ry="5.07" fill="none" stroke-width="4"/>
+        <path class="briefcase__shine" fill-rule="nonzero" d="M40.269 279.538H96.34v35H40.269z"/>
+        <path class="briefcase__body" fill-rule="nonzero" d="M53.324 279.461h43.094v35.155H53.324z"/>
+        <path class="briefcase__stroke" fill="none" stroke-width="1.911" d="M40.269 279.538H96.34v35H40.269z"/>
+        <path class="briefcase__corner" fill-rule="nonzero" d="M39.814 279.083h5.051v5.303h-5.051z"/>
+        <path class="briefcase__corner" fill-rule="nonzero" d="M91.745 279.083h5.051v5.303h-5.051z"/>
+        <path class="briefcase__corner" fill-rule="nonzero" d="M91.745 309.69h5.051v5.303h-5.051z"/>
+        <path class="briefcase__corner" fill-rule="nonzero" d="M39.814 309.69h5.051v5.303h-5.051z"/>
+      </g>
+    </g>
+    <g clip-path="url(#circleClip)">
+      <path class="snake__stroke snake__body" d="M143.888 210.24c2.034 6.103 4.327 11.886 3.302 18.546-.884 5.748-4.455 11.107-6.859 16.259-9.086 19.469-14.865 45.645 3.811 61.986 7.652 6.696 30.26 20.712 40.646 13.21 11.293-8.155 16.775-20.452 30.74-24.642 17.443-5.233 34.11 11.132 51.57-.508 26.405-17.603 18.242-57.523 12.956-83.072-1.3-6.285-2.507-15.685-5.334-21.34-.023-.045-.293 2.8-.254 3.303.137 1.786.37 3.552.508 5.335.416 5.417.4 10.84.762 16.259 1.073 16.105 1.077 33.56-5.335 48.522-6.11 14.258-38.79-4.426-48.776-2.286-17.245 3.695-20.296 25.727-40.393 24.388-8.125-.542-7.929-14.831-7.367-20.07 2.51-23.421 18.86-41.36 6.097-65.29" stroke-width="3.97" stroke-linecap="butt"/>
+      <path class="snake__shine" d="M186.81 318.688c-10.762-1.85-23.663-10.246-29.077-14.984-18.676-16.341-12.897-42.517-3.81-61.986 2.403-5.152 5.974-10.51 6.858-16.258 1.025-6.66-1.268-12.443-3.302-18.545l22.578-5.883c-.034-.064-.062-.127-.096-.191l-36.072 9.4c2.034 6.102 4.326 11.885 3.3 18.545-.883 5.748-4.455 11.106-6.859 16.258-9.086 19.469-14.863 45.645 3.813 61.986 7.652 6.696 30.257 20.713 40.644 13.21a45.685 45.685 0 002.024-1.552z"/>
+      <path class="snake__stroke snake__body-outline" d="M143.888 210.24c2.034 6.103 4.327 11.886 3.302 18.546-.884 5.748-4.455 11.107-6.859 16.259-9.086 19.469-14.865 45.645 3.811 61.986 7.652 6.696 30.26 20.712 40.646 13.21 11.293-8.155 16.775-20.452 30.74-24.642 17.443-5.233 34.11 11.132 51.57-.508 26.405-17.603 18.242-57.523 12.956-83.072-1.3-6.285-2.507-15.685-5.334-21.34-.023-.045-.293 2.8-.254 3.303.137 1.786.37 3.552.508 5.335.416 5.417.4 10.84.762 16.259 1.073 16.105 1.077 33.56-5.335 48.522-6.11 14.258-38.79-4.426-48.776-2.286-17.245 3.695-20.296 25.727-40.393 24.388-8.125-.542-7.929-14.831-7.367-20.07 2.51-23.421 18.86-41.36 6.097-65.29" fill="none" stroke-width="3.97" stroke-linecap="butt"/>
+      <g class="snake__rattle" transform="rotate(-3.865 215.384 183.148)">
+        <rect class="snake__stroke snake__rattle-segment" width="21.803" height="6.04" x="264.72" y="201.651" ry="3.02" fill-rule="nonzero" stroke-width="2"/>
+        <rect class="snake__stroke snake__rattle-segment" width="17.851" height="5.851" x="266.696" y="193.725" ry="2.926" fill-rule="nonzero" stroke-width="2.149"/>
+        <rect class="snake__stroke snake__rattle-segment" width="11.965" height="5.965" x="269.639" y="185.668" ry="2.729" fill-rule="nonzero" stroke-width="2.035"/>
+      </g>
+      <g class="snake__rattle-lines">
+        <path class="snake__stroke snake__motion-line snake__rattle-line" d="M259.839 201.008c-1.621 0-2.938-2.389-2.975-4.068-.04-1.827 1.415-4.564 3.036-4.564" fill="none" stroke="#000" stroke-width="2.149"/>
+        <path class="snake__stroke snake__motion-line snake__rattle-line" d="M290.334 191.3c1.62-.071 3.04 2.258 3.15 3.934.12 1.823-1.216 4.62-2.835 4.691" fill="none" stroke="#000" stroke-width="2.149"/>
+      </g>
+    </g>
+    <g class="snake__head">
+      <path class="snake__stroke snake__forehead" d="M96 146.601c19.294-24.199 57.084-31.434 84.407-16.159 27.324 15.276 33.833 47.277 14.539 71.477-19.294 24.2-57.084 31.434-84.407 16.159C83.216 202.802 76.707 170.801 96 146.601z" stroke-width="3.97" stroke-linecap="butt"/>
+      <path class="snake__shine" d="M149.696 122.444c-20.408-.298-41.034 8.276-53.696 24.156-19.293 24.2-12.784 56.203 14.54 71.479 12.06 6.742 26.158 9.09 39.806 7.539-8.317-.955-16.443-3.422-23.807-7.54C99.216 202.804 92.707 170.8 112 146.6c10.776-13.515 27.323-21.733 44.592-23.699a69.426 69.426 0 00-6.896-.457z"/>
+      <path class="snake__eye" d="M104.726 156.43a5 5 0 1110 0 5 5 0 01-10 0z"/>
+      <path class="snake__eye" d="M174.801 163.818a5 5 0 1110.001.001 5 5 0 01-10.001-.001z"/>
+      <path class="snake__stroke snake__mouth" d="M122.89 178.602c-12.477-5.696-23.132 5.501-22.337 16.792 1.088 15.444 50.883 26.733 58.464 12.748 10.251-18.91-24.412-24.192-36.127-29.54z" stroke="#000" stroke-width="3.97" stroke-linecap="butt"/>
+      <path class="snake__stroke" d="M96 146.601c19.294-24.199 57.084-31.434 84.407-16.159 27.324 15.276 33.833 47.277 14.539 71.477-19.294 24.2-57.084 31.434-84.407 16.159C83.216 202.802 76.707 170.801 96 146.601z" fill="none" stroke="#000" stroke-width="3.97" stroke-linecap="butt"/>
+      <path class="snake__stroke snake__brow snake__motion-line" d="M96.81 137.962l23.234 13.89" fill="none" stroke="#000" stroke-width="4" stroke-linecap="butt" stroke-linejoin="miter"/>
+      <path class="snake__stroke snake__brow snake__motion-line" d="M196.003 148.411l-25.65 8.65" fill="none" stroke="#000" stroke-width="4" stroke-linecap="butt" stroke-linejoin="miter"/>
+      <g class="snake__specs" fill="none">
+        <circle cx="109.726" cy="156.43" r="15.476" stroke-width="3" stroke-linecap="square"/>
+        <circle r="15.476" cy="163.818" cx="179.801" stroke-width="3" stroke-linecap="square"/>
+        <path d="M124.555 158.467s13.95-2.82 20.893-1.964c6.577.81 18.75 6.607 18.75 6.607" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter"/>
+        <path d="M194.555 159.253l12.714-4.929c5.405-1.889 9.928-3.42 10.179 6.071" stroke-width="2" stroke-linejoin="miter"/>
+      </g>
+      <path class="snake__stroke snake__motion-line" d="M41 181.904l32.324 4.04" fill="none" stroke="#000" stroke-width="4" stroke-linecap="butt" stroke-linejoin="miter"/>
+      <path class="snake__stroke snake__motion-line" d="M55.141 214.482l24.749-8.84" fill="none" stroke="#000" stroke-width="4" stroke-linecap="butt" stroke-linejoin="miter"/>
+      <path class="snake__stroke snake__motion-line" d="M61.455 247.311c2.02-1.01 30.557-27.526 30.557-27.526" fill="none" stroke="#000" stroke-width="4" stroke-linecap="butt" stroke-linejoin="miter"/>
+    </g>
+    <path class="snake__stroke snake__tie-band" d="M184.515 237.908l-46.016 1.387c-1.075 2.46-1.81 4.777-2.404 7.606l45.94-1.564c.85-2.574 1.698-4.89 2.48-7.43z" fill-rule="nonzero" stroke-width="2"/>
+    <g transform="matrix(.56275 -.04358 .04358 .56275 -44.308 141.357)" fill-rule="nonzero">
+      <rect class=" snake__tie-knot snake__stroke" width="18.176" height="18.176" x="331.835" y="197.151" ry="2.605" stroke-width="4"/>
+      <g class="snake__tie-drop">
+        <path class="snake__tie-slip" d="M334.503 215.327h12.84l5.284 57.259-11.704 8.02-12.461-8.02 6.04-57.259z" stroke-width="4"/>
+        <path class="snake__tie-stripe" d="M349.358 237.153l-17.993 7.91-.947 8.967 19.697-8.658z" />
+        <path class="snake__tie-stripe" d="M350.326 247.651l-20.17 8.867-.947 8.967 21.875-9.617z" />
+        <path class="snake__stroke" d="M334.503 215.327h12.84l5.284 57.259-11.704 8.02-12.461-8.02 6.04-57.259z" fill="none" stroke-width="4"/>
+      </g>
+    </g>
+  </g>
+</svg>
