@@ -1,0 +1,13 @@
+mixin cube(className)
+  .cube(class=className)
+    - let s = 0
+    while s < 6
+      .cube__side
+      - s++
+.scene
+  .plane
+    - let c = 0
+    while c < 8
+      +cube(`cube--${c}`)
+      .shadow(class=`shadow--${c}`)
+      - c++
