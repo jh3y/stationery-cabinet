@@ -1,0 +1,39 @@
+<svg class="button__heart" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 27.8 27.3">
+  <defs>
+    <circle class="heart__particle" id="heart__particle" cx="63.6" cy="129.9" r=".7" />
+  </defs>
+  <g class="heart" transform="translate(-49.7 -116.8)">
+    <path class="heart__stroke" d="M62.2 127.7c-.4 0-.8.2-1.1.5-.7.6-.6 1.7 0 2.5l2.5 2.5 2.5-2.5c.7-.8.7-1.9 0-2.5-.6-.7-1.7-.7-2.5 0a2 2 0 00-1.4-.5z" stroke-width=".6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="heart__fill" d="M62.2 127.7c-.4 0-.8.2-1.1.5-.7.6-.6 1.7 0 2.5l2.5 2.5 2.5-2.5c.7-.8.7-1.9 0-2.5-.6-.7-1.7-.7-2.5 0a2 2 0 00-1.4-.5z" stroke-width=".6" stroke-linecap="round" stroke-linejoin="round"/>
+    <g class="heart__particle-container">
+      <use href="#heart__particle"/>
+    </g>
+    <g class="heart__particle-container">
+      <use href="#heart__particle"/>
+    </g>
+    <g class="heart__particle-container">
+      <use href="#heart__particle"/>
+    </g>
+    <g class="heart__particle-container">
+      <use href="#heart__particle"/>
+    </g>
+    <g class="heart__particle-container">
+      <use href="#heart__particle"/>
+    </g>
+    <g class="heart__particle-container">
+      <use href="#heart__particle"/>
+    </g>
+    <g class="heart__particle-container">
+      <use href="#heart__particle"/>
+    </g>
+    <g class="heart__particle-container">
+      <use href="#heart__particle"/>
+    </g>
+    <g class="heart__particle-container">
+      <use href="#heart__particle"/>
+    </g>
+    <g class="heart__particle-container">
+      <use href="#heart__particle"/>
+    </g>
+  </g>
+</svg>
