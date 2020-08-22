@@ -1,0 +1,25 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  flex-direction column
+
+.spinner
+  height 10vmin
+  width 10vmin
+  border 2vmin solid hsl(280, 80%, 50%)
+  margin-bottom 2rem
+  animation spin 5s calc(var(--scrub, 0) * 1s) var(--state, running)
+
+label
+  margin-top 2rem
+  font-family sans-serif
+  font-variant tabular-nums
+
+@keyframes spin
+  to
+    transform rotate(360deg)
