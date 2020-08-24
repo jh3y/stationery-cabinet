@@ -8,14 +8,13 @@ SCRUBBER.addEventListener('input', () => {
   // And reapply them after updating the root.
   const STYLES = getComputedStyle(SPINNER)
   clearInterval(updater)
-  if (STYLES.animationPlayState === 'running') {
-    const ANIMATION = STYLES.animationName
-    SPINNER.style.animationName = 'none'
-    document.documentElement.style.setProperty('--state', 'paused')
-    requestAnimationFrame(() => {
-      SPINNER.style.animationName = ANIMATION
-    })
-  }
+  // if (STYLES.animationPlayState === 'running') {
+  //   const ANIMATION = STYLES.animationName
+  //   SPINNER.style.animationName = 'none'
+  //   requestAnimationFrame(() => {
+  //     SPINNER.style.animationName = ANIMATION
+  //   })
+  // }
   const SCRUB =
     (SCRUBBER.value / (100 / parseInt(STYLES.animationDuration, 10))) * -1
   LABEL.innerHTML = `animation-delay: ${SCRUB.toFixed(2)}s;`
@@ -34,6 +33,13 @@ const initiateUpdates = () => {
 
 SCRUBBER.addEventListener('mousedown', () => {
   clearInterval(updater)
+  document.documentElement.style.setProperty('--state', 'paused')
+  const STYLES = getComputedStyle(SPINNER)
+  const ANIMATION = STYLES.animationName
+  SPINNER.style.animationName = 'none'
+  requestAnimationFrame(() => {
+    SPINNER.style.animationName = ANIMATION
+  })
 })
 
 SCRUBBER.addEventListener('mouseup', () => {
