@@ -1,0 +1,319 @@
+*
+  box-sizing border-box
+  transition transform .2s
+
+:root
+  --base hsl(31, 100%, 50%)
+  --ear hsl(50, 100%, 50%)
+  --stroke hsl(3, 28%, 16%)
+  --white hsl(0, 0%, 100%)
+  // 600 x 729
+  --desired 40
+  --unit calc((var(--desired) / 729) * 1vmin)
+  --body 23
+  --arms 0
+  --legs 14
+  --ears -10
+  --head -25
+  --face -40
+
+h1
+  position fixed
+  font-family sans-serif
+  right 1rem
+  bottom 1rem
+  color hsl(0, 100%, 70%)
+  margin 0
+
+body
+  min-height 100vh
+  background hsl(0, 100%, 80%)
+  overflow hidden
+
+.rilakkuma
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  height calc(729 * var(--unit))
+  width calc(600 * var(--unit))
+
+label
+  height 100vh
+  width 100vw
+  position fixed
+  z-index 2
+
+input
+  height 0
+  width 0
+  opacity 0
+  left 100%
+  position fixed
+
+
+:checked ~ .rilakkuma
+  transform-style preserve-3d
+  perspective 1200px
+  transform translate(-50%, -50%) rotateX(10deg) rotateY(-65deg)
+
+  .rilakkuma__body
+    transform-style preserve-3d
+    transform translate(-50%, 0) translate3d(0, 0, calc(var(--body) * 1vmin))
+
+  .rilakkuma__leg
+    transform translate3d(0, 0, calc(var(--legs) * 1vmin))
+
+    &--right
+      transform rotateY(180deg) rotate(-6deg) translate(0, -3%) translate3d(0, 0, calc(var(--legs) * -1vmin))
+
+  .rilakkuma__arm
+    transform translate3d(0, 0, calc(var(--arms) * -1vmin))
+
+    &--right
+      transform rotateY(180deg) translate3d(0, 0, calc(var(--arms) * 1vmin))
+
+  .rilakkuma__head-container
+    transform-style preserve-3d
+
+    .rilakkuma__ear
+      transform translate3d(0, 0, calc(var(--ears) * 1vmin))
+
+      &--right
+        transform rotateY(180deg) translate3d(0, 0, calc(var(--ears) * -1vmin))
+
+    .rilakkuma__head
+      transform translate3d(0, 0, calc(var(--head) * 1vmin))
+
+    .rilakkuma__face
+      transform translate(-50%, 0) translate3d(0, 0, calc(var(--face) * 1vmin))
+    .rilakkuma__eye
+      animation-name blink-forward
+
+@keyframes blink-forward
+  0%, 49%, 51%, 100%
+    transform translate3d(0, 0, calc(var(--face, 0) * 1vmin)) scaleY(1)
+  50%
+    transform translate3d(0, 0, calc(var(--face, 0) * 1vmin)) scaleY(0)
+
+.rilakkuma
+  transform-style preserve-3d
+  *
+    position absolute
+
+  &__head-container
+    height 49.5%
+    width 78%
+    top 11.5%
+    left 50%
+    transform translate(-50%, 0)
+
+  &__head
+    background var(--base)
+    height 100%
+    width 100%
+    border-radius 50% 50% 35% 35%/ 65% 65% 35% 35%
+    border calc(var(--unit) * 13) solid var(--stroke)
+    transform translate3d(0, 0, 0)
+
+  &__ear
+    height 52%
+    width 40%
+    background var(--base)
+    top -15.5%
+    left -8%
+    border calc(var(--unit) * 13) solid var(--stroke)
+    border-radius 50%
+    overflow hidden
+
+    &:after
+      content ''
+      position absolute
+      top 41%
+      left -19%
+      background var(--ear)
+      height 60%
+      width 66%
+      border-radius 50%
+      border calc(var(--unit) * 13) solid var(--stroke)
+
+    &--right
+      left 68%
+      top -12%
+      transform rotateY(180deg)
+
+      &:after
+        top 32%
+
+
+  &__eye
+    background var(--stroke)
+    top 54.25%
+    left 21.5%
+    height calc(var(--unit) * 50)
+    width calc(var(--unit) * 50)
+    border-radius 50%
+    animation blink 5s infinite
+
+    @keyframes blink
+      0%, 49%, 51%, 100%
+        transform scaleY(1)
+      50%
+        transform scaleY(0)
+
+    &--right
+      left 66%
+      top 55.5%
+
+  &__face
+    height 28%
+    width 29.5%
+    background var(--white)
+    border-radius 50% 50% 35% 45% / 50% 50% 50% 50%
+    top 58.5%
+    left 49%
+    transform translate(-50%, 0) translate3d(0, 0, 0)
+
+  &__mouth
+    height calc(var(--unit) * 30)
+    width calc(var(--unit) * 30)
+    background var(--stroke)
+    border-radius 50%
+    top 21%
+    left 49%
+    transform translate(-50%, 0)
+
+    &:before
+    &:after
+      content ''
+      background var(--stroke)
+      position absolute
+      top 50%
+      left 50%
+      transform-origin 50% 0
+      transform translate(-50%, 0) rotate(calc(var(--r) * 1deg))
+      height 160%
+      width 50%
+      border-radius 50% / 25%
+
+    &:before
+      --r -35
+
+    &:after
+      --r 35
+
+  &__body
+    height 43%
+    width 47%
+    background var(--base)
+    opacity 1
+    top 49.25%
+    left 50%
+    transform translate(-50%, 0) translate3d(0, 0, -1px)
+    border-radius 0 0 50% 50% / 0 0 10% 10%
+    border calc(var(--unit) * 13) solid var(--stroke)
+
+    &:after
+      content ''
+      position absolute
+      background var(--white)
+      top 30%
+      left 50%
+      transform translate(-50%, 0)
+      height 65%
+      width 69%
+      border-radius 50% / 55% 55% 45% 45%
+
+  &__arm
+    height 29.5%
+    width 18%
+    top 56%
+    left 22%
+    transform translate3d(0, 0, 0)
+
+    &:after
+      content ''
+      position absolute
+      height 50%
+      width 50%
+      border calc(var(--unit) * 13) solid var(--stroke)
+      left 58%
+      top 12%
+      border-radius 50%
+      transform rotate(4deg)
+      -webkit-clip-path polygon(0 42%, 42% 42%, 42% 90%, 0 90%)
+      clip-path polygon(0 42%, 42% 42%, 42% 90%, 0 90%)
+
+    &-main
+      height 100%
+      width 100%
+      background var(--base)
+      border calc(var(--unit) * 13) solid var(--stroke)
+      border-radius 50% 50% 25% 50% / 60% 50% 15% 40%
+      -webkit-clip-path polygon(0 0, 50% 0, 50% 34%, 100% 95%, 100% 100%, 0 100%)
+      clip-path polygon(0 0, 50% 0, 50% 34%, 100% 95%, 100% 100%, 0 100%)
+
+    &-stroke
+      height 39%
+      width 88%
+      background var(--base)
+      border-radius 50% 50% 25% 50% / 50% 50% 34% 50%
+      border calc(var(--unit) * 13) solid var(--stroke)
+      bottom 0
+      right 0
+      -webkit-clip-path polygon(59% 0, 100% 0, 100% 100%, 39% 100%, 73% 50%)
+      clip-path polygon(59% 0, 100% 0, 100% 100%, 39% 100%, 73% 50%)
+
+    &--right
+      transform rotateY(180deg) translate3d(0, 0, 0)
+      left 62%
+      top 57%
+      width 16%
+
+  &__leg
+    bottom 3.5%
+    height 20%
+    width 25.75%
+    left 20.5%
+    transform translate3d(0, 0, 0)
+
+    &:after
+      content ''
+      position absolute
+      width 50%
+      height 33%
+      border calc(var(--unit) * 13) solid var(--stroke)
+      border-radius 50%
+      left 30%
+      top -3%
+      transform rotate(10deg)
+      clip-path polygon(0 0, 100% 100%, 0 100%)
+
+    &-main
+      height 100%
+      width 100%
+      background var(--base)
+      border calc(var(--unit) * 13) solid var(--stroke)
+      border-radius 34% 50% 40% 60%/50% 50% 30% 34%
+      -webkit-clip-path polygon(0 0, 48% 0, 48% 45%, 50% 52%, 80% 44%, 100% 100%, 0 100%)
+      clip-path polygon(0 0, 48% 0, 48% 45%, 50% 52%, 80% 44%, 100% 100%, 0 100%)
+
+    &-stroke
+      border calc(var(--unit) * 13) solid var(--stroke)
+      background var(--base)
+      height 62%
+      width 70%
+      border-radius 50% 30% 50% 50% / 50% 50% 50% 50%
+      right 0
+      bottom 0
+      -webkit-clip-path polygon(68% 0, 100% 0, 100% 100%, 50% 100%, 73% 20%)
+      clip-path polygon(68% 0, 100% 0, 100% 100%, 50% 100%, 73% 20%)
+
+    &--right
+      transform rotateY(180deg) rotate(-6deg) translate(0, -3%) translate3d(0, 0, 0)
+      left 51%
+      width 27%
+
+      .rilakkuma__leg-main
+        height 110%
+        bottom 0
