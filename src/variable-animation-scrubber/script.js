@@ -8,13 +8,6 @@ SCRUBBER.addEventListener('input', () => {
   // And reapply them after updating the root.
   const STYLES = getComputedStyle(SPINNER)
   clearInterval(updater)
-  // if (STYLES.animationPlayState === 'running') {
-  //   const ANIMATION = STYLES.animationName
-  //   SPINNER.style.animationName = 'none'
-  //   requestAnimationFrame(() => {
-  //     SPINNER.style.animationName = ANIMATION
-  //   })
-  // }
   const SCRUB =
     (SCRUBBER.value / (100 / parseInt(STYLES.animationDuration, 10))) * -1
   LABEL.innerHTML = `animation-delay: ${SCRUB.toFixed(2)}s;`
