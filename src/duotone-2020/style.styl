@@ -1,0 +1,105 @@
+*
+  box-sizing border-box
+
+:root
+  --saturation 100
+  --lightness 50
+
+body
+  background linear-gradient(45deg, hsl(0, 0%, 45%), hsl(0, 0%, 15%)), hsl(0, 0%, 15%)
+  min-height 100vh
+  overflow hidden
+  overflow-y scroll
+  display flex
+  align-items center
+  justify-content center
+  flex-direction column
+
+$duration = .25s
+$border = 4px
+
+.app
+  width 550px
+  height 550px
+  position relative
+
+.duotone
+  background var(--img, url('https://source.unsplash.com/220x220?bear,cat')), linear-gradient(-90deg, hsl(0, 0%, 45%), hsl(0, 0%, 15%))
+  background-size cover
+  border-radius 100%
+  height 220px
+  left 50%
+  overflow hidden
+  position absolute
+  top 50%
+  transform translate(-50%, -50%)
+  width 220px
+
+  &:after
+  &:before
+    bottom 0
+    content ''
+    left 0
+    position absolute
+    right 0
+    top 0
+    transition background $duration $duration
+
+  &:after
+    background 'hsl(%s, %s, %s)' % (var(--lighten) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+    mix-blend-mode lighten
+
+  &:before
+    background 'hsl(%s, %s, %s)' % (var(--darken) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
+    mix-blend-mode darken
+
+.indicator
+  height 40px
+  left 50%
+  position absolute
+  top 50%
+  transform translate(-50%, -260px)
+  width 40px
+  path
+    fill hsl(0, 0%, 100%)
+
+input
+  display none
+
+.chooser
+  position absolute
+  top 50%
+  left 50%
+  transform rotate(calc(((var(--selectedRotation, 0) * -1) - 90) * 1deg))
+  transition transform $duration ease
+
+label
+  background 'hsla(%s, %s, %s, %s)' % (var(--hue, 0) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) var(--alpha, 1))
+  border $border solid hsl(0, 0%, 100%)
+  border-radius 100%
+  cursor pointer
+  height 44px
+  left 50%
+  position absolute
+  top 50%
+  transform translate(-50%, -50%) rotate(calc(var(--angle) * 1deg)) translateX(150px)
+  width 44px
+
+  &.darken
+    transform translate(-50%, -50%) rotate(calc(var(--angle) * 1deg)) translateX(200px)
+
+.clear
+  border-color 'hsl(0, %s, %s)' % (calc(var(--saturation) * 1%) calc(var(--lightness, 50) * 1%))
+  border-width $border
+  overflow hidden
+
+  &:after
+    background 'hsl(0, %s, %s)' % (calc(var(--saturation) * 1%) calc(var(--lightness, 50) * 1%))
+    content ''
+    height $border
+    left 50%
+    position absolute
+    top 50%
+    transform translate(-50%, -50%) rotate(45deg)
+    width 100%
+
