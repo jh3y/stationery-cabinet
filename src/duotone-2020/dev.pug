@@ -1,0 +1,18 @@
+mixin chooserSet(version)
+  .chooser(class=`chooser--${version}`)
+    label(class=version title=`${version} w/ transparent` class=`clear` for=`${version}--transparent` style=`--alpha: 0; --angle: 0;`)
+    input(id=`${version}--transparent` type='radio' value=`transparent` name=version style=`--angle: 0;`)
+    - for (let i = 1; i < COLORS_LENGTH + 1; i++)
+      - let hue = (360 / (COLORS_LENGTH)) * (i - 1)
+      - let angle = (360 / (COLORS_LENGTH + 1)) * i
+      label(class=version title=`${version} w/ ${hue}` for=`${version}--${hue}` style=`--hue: ${hue}; --angle: ${angle};`)
+      input(id=`${version}--${hue}` type='radio' value=`${hue}` name=version style=`--angle: ${angle}`)
+
+.app
+  //- The colors
+  - const COLORS_LENGTH = 18
+  .duotone
+  +chooserSet('lighten')
+  +chooserSet('darken')
+  svg.indicator(preserveAspectRatio='xMinYMin', viewBox="0 0 24 24")
+    path(d="M7,10L12,15L17,10H7Z")
