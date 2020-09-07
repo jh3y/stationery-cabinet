@@ -1,0 +1,64 @@
+*
+  box-sizing border-box
+  line-height 1
+
+:root
+  --hue 0
+
+body
+  min-height 100vh
+  flex-direction column
+  display flex
+  align-items center
+  justify-content center
+  background 'hsl(%s, 80%, 95%)' % var(--hue)
+
+.panel
+  font-family sans-serif
+  font-weight bold
+  font-size 5vmin
+  color hsl(0, 0% 15%)
+  display inline-block
+  background 'hsl(%s, 100%, %s)' % (var(--hue) calc(var(--lightness) * 1%))
+  overflow hidden
+  height 15vmin
+  width 15vmin
+  transform-style preserve-3d
+  perspective 800px
+
+  &__content
+    height 100%
+    width 100%
+    display flex
+    align-items center
+    justify-content  center
+    animation slide 2s calc(var(--delay) * 1s) infinite both linear
+
+@keyframes slide
+  from
+    transform translate(0, -100%)
+  to
+    transform translate(0, 100%)
+
+.panel:nth-of-type(1)
+  --delay 0
+  --lightness 80
+  transform rotateX(32deg) rotateY(-32deg) rotateX(0deg) translate3d(-61%, 81%, 0)
+
+.panel:nth-of-type(2)
+  --delay -1
+  --lightness 90
+  transform rotateX(32deg) rotateY(-32deg) rotateX(-100deg) translate3d(-76%, 74%, 0)
+
+.panel:nth-of-type(3)
+  --delay -2
+  --lightness 85
+  transform rotateX(32deg) rotateY(-32deg)
+.panel:nth-of-type(4)
+  --delay -3
+  --lightness 90
+  transform rotateX(32deg) rotateY(-32deg) rotateX(-100deg) translate3d(76%, -74%, 0)
+.panel:nth-of-type(5)
+  --delay -4
+  --lightness 80
+  transform rotateX(32deg) rotateY(-32deg) rotateX(0deg) translate3d(61%, -81%, 0)
