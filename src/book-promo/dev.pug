@@ -1,0 +1,23 @@
+mixin cube(className)
+  .cube(class=className)
+    - let s = 0
+    while s < 6
+      .cube__side
+      - s++
+
+.scene
+  .plane
+    .book
+      +cube('book__cover book__cover--front')
+      +cube('book__cover book__cover--rear')
+      +cube('book__spine')
+      .cube.book__spine
+        .cube__side
+        .cube__side
+        .cube__side
+        .cube__side
+          .avatar__holder
+            img(src="https://assets.codepen.io/605876/avatar.png")
+        .cube__side
+        .cube__side
+      +cube('book__pages')
