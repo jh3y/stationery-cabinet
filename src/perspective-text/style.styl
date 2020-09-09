@@ -12,6 +12,34 @@ body
   align-items center
   justify-content center
   background 'hsl(%s, 80%, 95%)' % var(--hue)
+  overflow hidden
+
+label
+  height 100vh
+  width 100vw
+  position fixed
+
+input
+  height 0
+  width 0
+  position fixed
+  left 100%
+  opacity 0
+
+:checked ~ .panels
+  display block
+
+:checked ~ .panels .panel
+  overflow visible
+  border 2px solid black
+
+:checked ~ .panels .panel__content
+  border 2px solid black
+  transform translate3d(0, 0, 10px)
+
+.panels
+  display flex
+  flex-direction column
 
 .panel
   font-family sans-serif
@@ -36,9 +64,9 @@ body
 
 @keyframes slide
   from
-    transform translate(0, -100%)
+    transform translate3d(0, -100%, 1px)
   to
-    transform translate(0, 100%)
+    transform translate3d(0, 100%, 1px)
 
 .panel:nth-of-type(1)
   --delay 0
