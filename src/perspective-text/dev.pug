@@ -1,7 +1,10 @@
+label(for="toggle")
+input#toggle(type="checkbox")
 - const text = 'Cool!'
-- let p = 0
-while p < 5
-  .panel
-    .panel__content
-      span=text
-  - p++
+.panels
+  - let p = 0
+  while p < 5
+    .panel
+      .panel__content
+        span=text
+    - p++
