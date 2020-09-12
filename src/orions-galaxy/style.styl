@@ -1,14 +1,26 @@
 *
   box-sizing border-box
-  animation  fadeIn .5s
+
+:root
+  --aspect-ratio calc(5246.15/7462.26)
+  --height 30
+  --width calc(var(--height) * var(--aspect-ratio))
 
 body
-  background-color #e74c3c
-  color            #fafafa
-  text-align       center
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  overflow hidden
 
-@keyframes fadeIn
-  from
-    opacity 0
-  to
-    opacity 1
+.orion
+  height calc(var(--height) * 1vmin)
+  width calc(var(--width) * 1vmin)
+
+.turtle
+  height 50vmin
+  // opacity 0.25
+  position fixed
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
