@@ -1,62 +1,67 @@
-<svg class="orion" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5246.15 7462.26">
+<svg class="orion" xmlns="http://www.w3.org/2000/svg" viewBox="0 -200 5246.15 7862.26">
   <g transform="translate(3019.78 4163.38)">
-    <rect width="570.62" height="2198.29" x="-187.09" y="502.8" ry="4.08" fill="#ff7f2a"/>
-    <path d="M277.2-922.2c-148.3-.03-393.06.48-826.21 2.12V29.1c0 251.74 132.76 493.17 369.07 671.18 87.68 66.05 186.96 121.36 294.23 164.8v1483.7h1856.86V-45.62h-.14c-4.73-244.64-136.92-421.67-368.93-596.44-236.31-178.01-556.82-278.01-891.01-278.01-219.32 0-150.78-2.05-433.88-2.12z" fill="#d45500"/>
-    <path d="M942.67-4152.82C593.64-4281.95-55.9-3184.03-55.9-3184.03l259.88 873 744.22-217.3s402.95-1473.35-5.54-1624.49z" fill="#f60"/>
-    <path d="M794.75-4146.57c52.94-19.15 102.92-22.9 147.92-6.25a184.52 184.52 0 0134.97 17.35c211.68 369.1-104.47 1525.11-104.47 1525.11l-697.64 203.7-231.42-777.37s492.87-833.1 850.64-962.54z" fill="#f60"/>
-    <path d="M111.74-3238.47s385.24-651.17 664.87-752.33c41.38-14.97 80.45-17.9 115.62-4.89 9.69 3.59 18.79 8.13 27.34 13.56" fill="none" stroke="#000" stroke-width="52.92" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M-2586.3-3516.3c285.06-239.24 1266.7 575.46 1266.7 575.46l49.6 909.5-773.9 46.3s-876.04-1251.28-542.4-1531.27z" fill="#f95"/>
-    <path d="M-2444.93-3560.29c-56.3-.18-104.63 13.14-141.37 43.98a184.52 184.52 0 00-27.09 28.12c-74.86 418.87 612.48 1400.63 612.48 1400.63l725.48-43.4-44.18-809.88s-744.86-618.2-1125.32-619.45z" fill="#f60"/>
-    <path d="M-1495.79-2935.58s-582.2-483.2-879.56-484.17c-44-.14-81.78 10.27-110.5 34.37a144.23 144.23 0 00-21.17 21.98" fill="none" stroke="#000" stroke-width="52.92" stroke-linecap="round" stroke-linejoin="round"/>
-    <ellipse transform="rotate(-9.18)" ry="1389.06" rx="1686.72" cy="-1858.64" cx="-188.94" fill="#f95"/>
-    <path d="M-369.28-3202.1a2036.69 2036.69 0 00-335.23 26.1c-558.35 90.58-1072.48 379.87-1318.59 813.2-96.44 205.78-123 421.06-88.72 631.7 63.61 382.61 364.17 749.51 747.25 967C-981.49-546.64-497.67-466.63-19.53-541.7a2256.42 2256.42 0 00354.57-87.01c294.18-151.23 532.25-369.88 683.31-627.56 151.07-257.68 208.14-542.5 163.81-817.47-51.11-316.4-233.51-601.6-516.27-807.25-282.76-205.65-648.48-319.1-1035.17-321.13z" fill="#f60"/>
-    <circle r="158.75" cy="-1819.67" cx="-1574.27"/>
-    <circle cx="449.79" cy="-2295.92" r="158.75"/>
-    <ellipse transform="rotate(-10.81)" ry="476.25" rx="701.15" cy="-1352.56" cx="-132.23" fill="#fff"/>
-    <ellipse transform="rotate(-7.32)" ry="126.28" rx="164.72" cy="-1516.22" cx="-257.84" fill="#faa"/>
-    <path d="M-486.98-1095.73s20.34-114.21 101.7-123.6c81.35-9.39 240.93 42.24 280.05-3.13" fill="none" stroke="#000" stroke-width="53.1" stroke-linecap="round"/>
-    <path d="M1098.02-1978.42s787.14-291.04 1088.1-264.58" fill="none" stroke="#000" stroke-width="79.38" stroke-linecap="round"/>
-    <path d="M1107.94-1707.22s668.08-175.29 1071.57-85.99" fill="none" stroke="#000" stroke-width="79.38" stroke-linecap="round"/>
-    <path d="M1051.72-1452.56s608.54-92.6 1038.49 86" fill="none" stroke="#000" stroke-width="79.38" stroke-linecap="round"/>
-    <path d="M-1961.74-1216.17s-796.49-33.8-1017.94 170.4" fill="none" stroke="#000" stroke-width="79.38" stroke-linecap="round"/>
-    <path d="M-1835.45-1010.38s-740.36 12.98-980.52 324.75" fill="none" stroke="#000" stroke-width="79.38" stroke-linecap="round"/>
-    <path d="M-1643.68-809.26S-2374.7-646.6-2577.44-362.9" fill="none" stroke="#000" stroke-width="79.38" stroke-linecap="round"/>
-    <path d="M594 2439.17V848.9s280.64-196.44 350.8-781.1" fill="none" stroke="#803300" stroke-width="79.38" stroke-linecap="round"/>
-    <path d="M2039.24 2322.46c-47.77 153.04-257.92 194.44-403.25 262.13-250.99 116.89-536.86 140.76-794.65 241.75-206.38 80.84-293.32 179.62-598.36 290.05-308.25 111.59-524.08 118.82-637.08 116.75-496.82-9.07-452.88 106.84-669.24 49.98-175-45.99-275.76-199.77-451.52-301.33-316.86-192-868.27-196.8-859.77-534.07 8.65-342.94 557.85-515.06 900.5-498.28 316.03 15.47 250.82 503.42 781.7 538.52 379.06 25.06 456.8 4.7 772.75-271.09 297.5-259.69 933.94 223.7 1304.13 86.2 174.07-64.67 350.3-337.2 537.43-266.67 96.44 36.36 148.06 187.68 117.36 286.06z" fill="#a40"/>
-    <path d="M-535.78-258.57c219.83 78.46 431.05 59.3 707.6-17.97 200.29-56.36 384.63-150.32 527.6-268.95 142.97-118.62 221-199.84 254.12-337.15" fill="none" stroke="red" stroke-width="132.29" stroke-linecap="round" stroke-linejoin="round"/>
-  </g>
-  <g transform="translate(3019.78 4163.38)">
-    <g transform="matrix(1.62153 0 0 1.62153 250.25 -279.96)">
-      <circle r="35.81" cy="59.13" cx="-127.76" fill="none" stroke="#fc0" stroke-width="13.23" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle r="161.77" cy="262.98" cx="-127.76" fill="red" stroke="#fc0" stroke-width="7.94" stroke-linecap="square" stroke-linejoin="round"/>
-      <circle r="20.41" cy="447.81" cx="-127.76" fill="#fc0"/>
-      <rect ry="8.32" y="422.11" x="-160.64" height="16.63" width="65.77" fill="#fc0"/>
-      <circle cx="-27.21" cy="309.1" r="30.24" fill="#450" paint-order="markers stroke fill"/>
-      <path d="M-287.4 238.04a161.77 161.77 0 00-2.13 24.94 161.77 161.77 0 002.04 24.95H31.88a161.77 161.77 0 002.14-24.95 161.77 161.77 0 00-2.05-24.94z" fill="#fc0"/>
-      <rect ry="8.06" y="99.7" x="-145.14" height="337.15" width="34.77" fill="#fc0"/>
-      <circle r="27.97" cy="216.87" cx="-206" fill="#450" paint-order="markers stroke fill"/>
-      <path d="M-285.61 238.04a267.76 161.77 0 00-3.54 24.94 267.76 161.77 0 003.38 24.95H-144v-49.9z" fill="#fff6d5"/>
-      <path d="M-250.06 196.37a139.27 139.27 0 013.76-6.48" fill="#fff6d5" stroke="#fff6d5" stroke-width="15.88" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M-233.4 172.23a139.27 139.27 0 0169.5-43.75" fill="none" stroke="#fff6d5" stroke-width="15.88" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M-127.76 427.4a20.41 20.41 0 00-20.4 20.41 20.41 20.41 0 0020.4 20.41 20.41 20.41 0 004.77-.58 20.41 20.41 0 01-15.65-19.83A20.41 20.41 0 01-123 428a20.41 20.41 0 00-4.77-.59z" fill="#fff6d5"/>
-      <rect width="41.71" height="16.63" x="-160.64" y="422.11" ry="8.32" fill="#fff6d5"/>
-      <path d="M-124.05 424.71a161.77 161.77 0 01-143.37-80.1 161.77 161.77 0 01.56-164.22 161.77 161.77 0 01143.92-79.11" fill="none" stroke="#fff6d5" stroke-width="7.94" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M-8.52 262.98a119.24 162.33 0 01-98.66 159.9" fill="none" stroke="#fc0" stroke-width="7.94" stroke-linecap="square" stroke-linejoin="round"/>
-      <circle r="31.37" cy="351.43" cx="-206.37" fill="#450" paint-order="markers stroke fill"/>
-      <path d="M-123.16 425.2a119.24 162.33 0 01-87.28-45.26A119.24 162.33 0 01-247 262.93" fill="none" stroke="#fff6d5" stroke-width="7.94" stroke-linecap="square" stroke-linejoin="round"/>
-      <circle r="14.36" cy="379.78" cx="-71.44" fill="#450" paint-order="markers stroke fill"/>
-      <path d="M-61.74 257.3a66.06 163.2 0 01-50.17 164.11" fill="none" stroke="#fc0" stroke-width="7.94" stroke-linecap="square" stroke-linejoin="round"/>
-      <path d="M-123.3 425.8a66.06 163.2 0 01-49.39-43.2 66.06 163.2 0 01-21.12-118.48" fill="none" stroke="#fff6d5" stroke-width="7.94" stroke-linecap="square" stroke-linejoin="round"/>
-      <rect width="65.77" height="16.63" x="-160.64" y="88.02" ry="8.32" fill="#fc0"/>
-      <rect width="26.76" height="347.36" x="-145.14" y="89.49" ry="8.31" fill="#fff6d5"/>
-      <rect ry="8.32" y="88.02" x="-160.64" height="16.63" width="41.96" fill="#fff6d5"/>
-      <circle cx="-75.97" cy="167.73" r="21.92" fill="#450" paint-order="markers stroke fill"/>
-      <path d="M-126.49 94.92a35.81 35.81 0 01-31.84-17.14 35.81 35.81 0 01-.67-36.16 35.81 35.81 0 0131.2-18.3" fill="none" stroke="#fff6d5" stroke-width="13.23" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle r="14.36" cy="211.58" cx="-13.23" fill="#450" paint-order="markers stroke fill"/>
-      <circle cx="-66.98" cy="221.29" r="7.26" fill="#450" paint-order="markers stroke fill"/>
-      <circle r="7.26" cy="181.51" cx="-29.67" fill="#450" paint-order="markers stroke fill"/>
-      <circle cx="-95.97" cy="200.78" r="7.26" fill="#450" paint-order="markers stroke fill"/>
+    <g class="orion__body">
+      <rect class="orion--light" width="570.62" height="2198.29" x="-187.09" y="502.8" ry="4.08"/>
+      <path class="orion--medium" d="M277.2-922.2c-148.3-.03-393.06.48-826.21 2.12V29.1c0 251.74 132.76 493.17 369.07 671.18 87.68 66.05 186.96 121.36 294.23 164.8v1483.7h1856.86V-45.62h-.14c-4.73-244.64-136.92-421.67-368.93-596.44-236.31-178.01-556.82-278.01-891.01-278.01-219.32 0-150.78-2.05-433.88-2.12z"/>
+      <path class="orion__collar" d="M-535.78-258.57c219.83 78.46 431.05 59.3 707.6-17.97 200.29-56.36 384.63-150.32 527.6-268.95 142.97-118.62 221-199.84 254.12-337.15" fill="none" stroke-width="132.29" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="orion--stroke" d="M594 2439.17V848.9s280.64-196.44 350.8-781.1" fill="none" stroke-width="79.38" stroke-linecap="round"/>
+      <path class="orion__tail orion--dark" d="M2039.24 2322.46c-47.77 153.04-257.92 194.44-403.25 262.13-250.99 116.89-536.86 140.76-794.65 241.75-206.38 80.84-293.32 179.62-598.36 290.05-308.25 111.59-524.08 118.82-637.08 116.75-496.82-9.07-452.88 106.84-669.24 49.98-175-45.99-275.76-199.77-451.52-301.33-316.86-192-868.27-196.8-859.77-534.07 8.65-342.94 557.85-515.06 900.5-498.28 316.03 15.47 250.82 503.42 781.7 538.52 379.06 25.06 456.8 4.7 772.75-271.09 297.5-259.69 933.94 223.7 1304.13 86.2 174.07-64.67 350.3-337.2 537.43-266.67 96.44 36.36 148.06 187.68 117.36 286.06z"/>
     </g>
-    <rect width="44.65" height="88.47" x="62.44" y="-272.72" ry="21.44" transform="rotate(-11.57)" fill="#fc0"/>
+    <g class="orion__head">
+      <path class="orion--medium" d="M942.67-4152.82C593.64-4281.95-55.9-3184.03-55.9-3184.03l259.88 873 744.22-217.3s402.95-1473.35-5.54-1624.49z" />
+      <path d="M794.75-4146.57c52.94-19.15 102.92-22.9 147.92-6.25a184.52 184.52 0 0134.97 17.35c211.68 369.1-104.47 1525.11-104.47 1525.11l-697.64 203.7-231.42-777.37s492.87-833.1 850.64-962.54z" class="orion--medium"/>
+      <path class="orion--stroke" d="M111.74-3238.47s385.24-651.17 664.87-752.33c41.38-14.97 80.45-17.9 115.62-4.89 9.69 3.59 18.79 8.13 27.34 13.56" fill="none" stroke="#000" stroke-width="52.92" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="orion--light" d="M-2586.3-3516.3c285.06-239.24 1266.7 575.46 1266.7 575.46l49.6 909.5-773.9 46.3s-876.04-1251.28-542.4-1531.27z" />
+      <path d="M-2444.93-3560.29c-56.3-.18-104.63 13.14-141.37 43.98a184.52 184.52 0 00-27.09 28.12c-74.86 418.87 612.48 1400.63 612.48 1400.63l725.48-43.4-44.18-809.88s-744.86-618.2-1125.32-619.45z" class="orion--medium"/>
+      <path class="orion--stroke" d="M-1495.79-2935.58s-582.2-483.2-879.56-484.17c-44-.14-81.78 10.27-110.5 34.37a144.23 144.23 0 00-21.17 21.98" fill="none" stroke="#000" stroke-width="52.92" stroke-linecap="round" stroke-linejoin="round"/>
+      <ellipse class="orion--light" transform="rotate(-9.18)" ry="1389.06" rx="1686.72" cy="-1858.64" cx="-188.94" />
+      <path d="M-369.28-3202.1a2036.69 2036.69 0 00-335.23 26.1c-558.35 90.58-1072.48 379.87-1318.59 813.2-96.44 205.78-123 421.06-88.72 631.7 63.61 382.61 364.17 749.51 747.25 967C-981.49-546.64-497.67-466.63-19.53-541.7a2256.42 2256.42 0 00354.57-87.01c294.18-151.23 532.25-369.88 683.31-627.56 151.07-257.68 208.14-542.5 163.81-817.47-51.11-316.4-233.51-601.6-516.27-807.25-282.76-205.65-648.48-319.1-1035.17-321.13z" class="orion--medium"/>
+      <circle class="orion__eye orion__eye--left" r="158.75" cy="-1819.67" cx="-1574.27"/>
+      <circle class="orion__eye orion__eye--right" cx="449.79" cy="-2295.92" r="158.75"/>
+      <ellipse class="orion__muzzle" transform="rotate(-10.81)" ry="476.25" rx="701.15" cy="-1352.56" cx="-132.23" />
+      <ellipse class="orion__nose" transform="rotate(-7.32)" ry="126.28" rx="164.72" cy="-1516.22" cx="-257.84" />
+      <path class="stroke" d="M-486.98-1095.73s20.34-114.21 101.7-123.6c81.35-9.39 240.93 42.24 280.05-3.13" fill="none" stroke="#000" stroke-width="53.1" stroke-linecap="round"/>
+      <path class="orion--stroke" d="M1098.02-1978.42s787.14-291.04 1088.1-264.58" fill="none" stroke="#000" stroke-width="79.38" stroke-linecap="round"/>
+      <path class="orion--stroke" d="M1107.94-1707.22s668.08-175.29 1071.57-85.99" fill="none" stroke="#000" stroke-width="79.38" stroke-linecap="round"/>
+      <path class="orion--stroke" d="M1051.72-1452.56s608.54-92.6 1038.49 86" fill="none" stroke="#000" stroke-width="79.38" stroke-linecap="round"/>
+      <path class="orion--stroke" d="M-1961.74-1216.17s-796.49-33.8-1017.94 170.4" fill="none" stroke="#000" stroke-width="79.38" stroke-linecap="round"/>
+      <path class="orion--stroke" d="M-1835.45-1010.38s-740.36 12.98-980.52 324.75" fill="none" stroke="#000" stroke-width="79.38" stroke-linecap="round"/>
+      <path class="orion--stroke" d="M-1643.68-809.26S-2374.7-646.6-2577.44-362.9" fill="none" stroke="#000" stroke-width="79.38" stroke-linecap="round"/>
+    </g>
+
+  </g>
+  <g class="orion__belt" transform="translate(3019.78 4163.38)">
+    <g transform="matrix(1.62153 0 0 1.62153 250.25 -279.96)">
+      <circle r="35.81" cy="59.13" cx="-127.76" fill="none" class="belt--stroke" stroke-width="13.23" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle r="161.77" cy="262.98" cx="-127.76" class="space belt--stroke" stroke-width="7.94" stroke-linecap="square" stroke-linejoin="round"/>
+      <circle r="20.41" cy="447.81" cx="-127.76" class="belt--fill"/>
+      <rect ry="8.32" y="422.11" x="-160.64" height="16.63" width="65.77" class="belt--fill"/>
+      <circle cx="-27.21" cy="309.1" r="30.24" class="space-blob" paint-order="markers stroke fill"/>
+      <path d="M-287.4 238.04a161.77 161.77 0 00-2.13 24.94 161.77 161.77 0 002.04 24.95H31.88a161.77 161.77 0 002.14-24.95 161.77 161.77 0 00-2.05-24.94z" class="belt--fill"/>
+      <rect ry="8.06" y="99.7" x="-145.14" height="337.15" width="34.77" class="belt--fill"/>
+      <circle r="27.97" cy="216.87" cx="-206" class="space-blob" paint-order="markers stroke fill"/>
+      <path d="M-285.61 238.04a267.76 161.77 0 00-3.54 24.94 267.76 161.77 0 003.38 24.95H-144v-49.9z" class="belt--fill-light"/>
+      <path d="M-250.06 196.37a139.27 139.27 0 013.76-6.48" class="belt--fill-light" class="belt--stroke-light" stroke-width="15.88" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="shimmer-stroke" d="M-233.4 172.23a139.27 139.27 0 0169.5-43.75" fill="none" stroke-width="15.88" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M-127.76 427.4a20.41 20.41 0 00-20.4 20.41 20.41 20.41 0 0020.4 20.41 20.41 20.41 0 004.77-.58 20.41 20.41 0 01-15.65-19.83A20.41 20.41 0 01-123 428a20.41 20.41 0 00-4.77-.59z" class="belt--fill-light"/>
+      <rect width="41.71" height="16.63" x="-160.64" y="422.11" ry="8.32" class="belt--fill-light"/>
+      <path d="M-124.05 424.71a161.77 161.77 0 01-143.37-80.1 161.77 161.77 0 01.56-164.22 161.77 161.77 0 01143.92-79.11" fill="none" class="belt--stroke-light" stroke-width="7.94" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M-8.52 262.98a119.24 162.33 0 01-98.66 159.9" fill="none" class="belt--stroke" stroke-width="7.94" stroke-linecap="square" stroke-linejoin="round"/>
+      <circle r="31.37" cy="351.43" cx="-206.37" class="space-blob" paint-order="markers stroke fill"/>
+      <path d="M-123.16 425.2a119.24 162.33 0 01-87.28-45.26A119.24 162.33 0 01-247 262.93" fill="none" class="belt--stroke-light" stroke-width="7.94" stroke-linecap="square" stroke-linejoin="round"/>
+      <circle r="14.36" cy="379.78" cx="-71.44" class="space-blob" paint-order="markers stroke fill"/>
+      <path d="M-61.74 257.3a66.06 163.2 0 01-50.17 164.11" fill="none" class="belt--stroke" stroke-width="7.94" stroke-linecap="square" stroke-linejoin="round"/>
+      <path d="M-123.3 425.8a66.06 163.2 0 01-49.39-43.2 66.06 163.2 0 01-21.12-118.48" fill="none" class="belt--stroke-light" stroke-width="7.94" stroke-linecap="square" stroke-linejoin="round"/>
+      <rect width="65.77" height="16.63" x="-160.64" y="88.02" ry="8.32" class="belt--fill"/>
+      <rect width="26.76" height="347.36" x="-145.14" y="89.49" ry="8.31" class="belt--fill-light"/>
+      <rect ry="8.32" y="88.02" x="-160.64" height="16.63" width="41.96" class="belt--fill-light"/>
+      <circle cx="-75.97" cy="167.73" r="21.92" class="space-blob" paint-order="markers stroke fill"/>
+      <path d="M-126.49 94.92a35.81 35.81 0 01-31.84-17.14 35.81 35.81 0 01-.67-36.16 35.81 35.81 0 0131.2-18.3" fill="none" class="belt--stroke-light" stroke-width="13.23" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle r="14.36" cy="211.58" cx="-13.23" class="space-blob" paint-order="markers stroke fill"/>
+      <circle cx="-66.98" cy="221.29" r="7.26" class="space-blob" paint-order="markers stroke fill"/>
+      <circle r="7.26" cy="181.51" cx="-29.67" class="space-blob" paint-order="markers stroke fill"/>
+      <circle cx="-95.97" cy="200.78" r="7.26" class="space-blob" paint-order="markers stroke fill"/>
+    </g>
+    <rect width="44.65" height="88.47" x="62.44" y="-272.72" ry="21.44" transform="rotate(-11.57)" class="belt--fill"/>
   </g>
 </svg>
