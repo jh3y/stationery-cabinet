@@ -1,9 +1,12 @@
 *
   box-sizing border-box
   transform-style preserve-3d
+  touch-action none
 
 body
   min-height 100vh
+  overflow hidden
+  background hsl(214, 43%, 36%)
 
 .scene
   perspective 800px
@@ -15,31 +18,54 @@ body
   justify-content center
 
 .plane
-  background blue
+  // background blue
   height 20vmin
   width 40vmin
   transform-style preserve-3d
-  transform rotateX(-24deg) rotateY(-24deg) rotateX(90deg)
+  transform rotateX(-24deg) rotateY(-24deg) rotateX(90deg) rotateZ(-50deg)
   // transform rotateX(-75deg) rotateY(-24deg) rotateX(90deg)
-
-.confetti
-  position absolute
-  top 50%
 
 .confetti__content
   background 'hsl(%s, 100%, 70%)' % var(--hue, 0)
-  height 2vmin
-  width 4vmin
+  height calc(var(--height, 1) * 1vmin)
+  width calc(var(--width, 1) * 1vmin)
   transform rotate(-60deg)
 
-.confetti__wrapper
+.confetti
   transform-origin 0 50%
+  position absolute
+  top 50%
+  left 0
   transform rotateY(calc(var(--rotate, 0) * 1deg))
 
 .confetti__container
   height 100%
   width 100%
   bottom 50%
+  left 25%
   position absolute
   transform-origin bottom center
-  transform rotateX(-90deg)
+  transform rotateX(-90deg) translate(0, 50%)
+
+.confetti__gun
+  --size 6
+  height calc(var(--size) * 1vmin)
+  width calc(var(--size) * 1vmin)
+  background hsl(7deg, 23%, 22%)
+  position absolute
+  top 50%
+  border-radius 50%
+  left 0
+  transform translate3d(0, -50%, 0) rotateY(90deg) translate3d(0, 0, calc((var(--size) / 2) * -1vmin)) rotateX(60deg) translate3d(0, 0, calc(var(--z, 0) * -1px))
+
+  &:before
+    content ''
+    position absolute
+    height 150%
+    width 100%
+    background linear-gradient(-72deg, transparent 32%, hsla(0, 0%, 100%, 0.45) 40%, transparent 50%), hsl(35deg, 93%, 56%)
+    top 50%
+    transform-origin 50% 0%
+    transform rotateX(-90deg) rotateY(60deg) translate(0%, 0)
+    -webkit-clip-path polygon(0 0, 100% 0, 50% 100%)
+    clip-path polygon(0 0, 100% 0, 50% 100%)
