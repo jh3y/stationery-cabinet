@@ -1,0 +1,45 @@
+*
+  box-sizing border-box
+  transform-style preserve-3d
+
+body
+  min-height 100vh
+
+.scene
+  perspective 800px
+  transform-style preserve-3d
+  height 100vh
+  width 100vw
+  display flex
+  align-items center
+  justify-content center
+
+.plane
+  background blue
+  height 20vmin
+  width 40vmin
+  transform-style preserve-3d
+  transform rotateX(-24deg) rotateY(-24deg) rotateX(90deg)
+  // transform rotateX(-75deg) rotateY(-24deg) rotateX(90deg)
+
+.confetti
+  position absolute
+  top 50%
+
+.confetti__content
+  background 'hsl(%s, 100%, 70%)' % var(--hue, 0)
+  height 2vmin
+  width 4vmin
+  transform rotate(-60deg)
+
+.confetti__wrapper
+  transform-origin 0 50%
+  transform rotateY(calc(var(--rotate, 0) * 1deg))
+
+.confetti__container
+  height 100%
+  width 100%
+  bottom 50%
+  position absolute
+  transform-origin bottom center
+  transform rotateX(-90deg)
