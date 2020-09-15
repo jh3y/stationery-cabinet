@@ -74,6 +74,7 @@ const FIRE = () => {
     '--hue': () => gsap.utils.random(0, 359),
   })
   gsap.set('.confetti__content', {
+    '--radius': () => gsap.utils.random(0, 50),
     '--width': () => gsap.utils.random(SIZE_LOWER, SIZE_UPPER),
     '--height': () => gsap.utils.random(SIZE_LOWER, SIZE_UPPER),
   })
