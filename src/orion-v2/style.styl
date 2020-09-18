@@ -1,0 +1,199 @@
+*
+  box-sizing border-box
+
+:root
+  --aspect-ratio calc(5246.15/7462.26)
+  --height 60
+  --width calc(var(--height) * var(--aspect-ratio))
+  --stroke hsl(0, 0%, 10%)
+  --orion-light hsl(25, 90%, 70%)
+  --orion hsl(30, 75%, 50%)
+  --orion-dark hsl(28, 67%, 49%)
+  --orion-stroke hsl(40, 80%, 20%)
+  --collar hsl(0, 60%, 50%)
+  --nose hsl(10, 80%, 80%)
+  --white hsl(0, 0%, 99%)
+  --space-blob hsl(90, 80%, 30%)
+  --space-backdrop hsl(200, 50%, 10%)
+  --belt hsl(45, 80%, 50%)
+  --belt-light hsl(45, 90%, 80%)
+  --shimmer hsla(0, 0%, 100%, 0.95)
+  --turtle hsl(90, 60%, 45%)
+  --turtle-light hsl(90, 60%, 65%)
+  --turtle-dark hsl(90, 60%, 25%)
+  --turtle-darker hsl(90, 60%, 20%)
+  --turtle-darkest hsl(90, 60%, 15%)
+  --socket hsl(210, 80%, 80%)
+  --turtle-shell hsl(28, 68%, 21%)
+  --turtle-shell-light hsl(28, 70%, 80%)
+  --turtle-shell-groove hsl(28, 66%, 10%)
+  --turtle-shell-lip hsl(45, 80%, 50%)
+  --turtle-under-shell hsl(45, 80%, 30%)
+  --tank-shine hsl(0, 0%, 80%)
+  --tank-body hsl(0, 0%, 40%)
+  --tank-end hsl(0, 0%, 60%)
+  --tank-cable hsl(30, 90%, 70%)
+  --helmet-collar hsl(0, 0%, 40%)
+  --helmet-glass hsl(180, 80%, 80%)
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  overflow hidden
+  background hsl(180, 80%, 98%)
+
+.space
+  fill var(--space-backdrop)
+
+.space-blob
+  fill var(--space-blob)
+
+.shimmer-stroke
+  stroke var(--shimmer)
+
+.helmet
+  &__glass
+    fill var(--helmet-glass)
+  &__collar
+    stroke var(--helmet-collar)
+
+.tank
+  &__shine
+    fill var(--tank-shine)
+  &__body
+    fill var(--tank-body)
+  &__end
+    fill var(--tank-end)
+  &__socket
+    fill var(--socket)
+  &__cable
+    stroke var(--tank-cable)
+
+.blob
+  fill 'hsl(%s, 80%, %s)' % (var(--hue) calc(var(--lightness, 50) * 1%))
+.star
+  fill 'hsl(45, 80%, %s)' % calc(var(--lightness, 50) * 1%)
+
+.belt
+  &--fill
+    fill var(--belt)
+  &--stroke
+    stroke var(--belt)
+  &--fill-light
+    fill var(--belt-light)
+  &--stroke-light
+    stroke var(--belt-light)
+
+.stroke
+  stroke var(--stroke)
+
+.orion
+  height calc(var(--height) * 1vmin)
+  width calc(var(--width) * 1vmin)
+  opacity 0
+  overflow visible !important
+
+  &__eye
+    fill var(--stroke)
+
+  &__nose
+    fill var(--nose)
+
+  &__muzzle
+    fill var(--white)
+
+  &__collar
+    stroke var(--collar)
+
+  &--light
+    fill var(--orion-light)
+
+  &--medium
+    fill var(--orion)
+
+  &--dark
+    fill var(--orion-dark)
+
+  &--stroke
+    stroke var(--orion-stroke)
+
+.turtle
+
+  &__eye
+    fill var(--stroke)
+
+  &__mouth
+    fill var(--turtle-darkest)
+
+  &__shell
+    fill var(--turtle-shell)
+
+  &__shell-light
+    fill var(--turtle-shell-light)
+
+  &__under-shell
+    fill var(--turtle-under-shell)
+
+  &__shell-lip
+    stroke var(--turtle-shell-lip)
+
+  &__shell-groove
+    stroke var(--turtle-shell-groove)
+
+  &__flipper
+  &__head
+    path:nth-of-type(1)
+      fill var(--turtle-light)
+    path:nth-of-type(2)
+      fill var(--turtle-dark)
+
+    &--back
+      path:nth-of-type(1)
+        fill var(--turtle-darker)
+      path:nth-of-type(2)
+        fill var(--turtle-darkest)
+
+
+label
+  height 44px
+  width 44px
+  position fixed
+  bottom 1rem
+  right 1rem
+  cursor pointer
+
+  & > svg
+    position absolute
+    height 100%
+    width 100%
+    top 0
+    left 0
+
+  path
+    fill hsl(180, 40%, 80%)
+
+  svg:nth-of-type(1)
+    display none
+
+[type='checkbox']
+  // opacity 0
+  height 0
+  width 0
+
+:checked ~ label
+  svg:nth-of-type(1)
+    display block
+  svg:nth-of-type(2)
+    display none
+
+h1
+  font-family sans-serif
+  font-size 4rem
+  position fixed
+  bottom 1rem
+  left 1rem
+  margin 0
+  color hsl(180, 40%, 80%)
+  z-index -1

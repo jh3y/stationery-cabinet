@@ -1,0 +1,52 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  background hsl(214, 14%, 10%)
+  display flex
+  align-items center
+  justify-content center
+
+:root
+  --size 100px
+
+button
+  height var(--size)
+  width var(--size)
+  border-radius 50%
+  transition background-color 0.25s
+  border 0
+  display flex
+  align-items center
+  justify-content center
+  cursor pointer
+  background-color transparent
+  outline transparent
+
+  &:hover
+    background-color hsla(339, 91%, 46%, 0.15)
+
+    .heart__stroke
+      fill hsl(339, 91%, 46%)
+
+  &.active:hover
+    background-color transparent
+
+svg
+  height 50%
+  width 50%
+
+.heart
+  // These two handle the gradient
+  overflow visible
+  &__fragment
+    opacity 0
+    fill 'hsl(%s, 95%, 50%)' % var(--hue)
+  &__stroke
+    fill hsl(0, 0%, 50%)
+  &__fill
+    fill hsl(339, 91%, 46%)
+    display none
+  &__segment
+    fill 'hsl(%s, 90%, %s)' % (var(--hue, 0) calc(var(--lightness, 50) * 1%))
