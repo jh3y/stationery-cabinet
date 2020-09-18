@@ -1,0 +1,150 @@
+*
+  box-sizing border-box
+
+:root
+  --font-size 2.75
+
+body
+  min-height 100vh
+  background hsl(0, 0%, 90%)
+
+.dimension-label
+  position absolute
+  margin 0
+  padding 0
+  font-family sans-serif
+  font-weight bold
+  color hsl(0, 0%, 40%)
+  font-size calc(var(--font-size) * 1vmin)
+
+  &--width
+    top 100%
+    left 50%
+    transform translate(-50%)
+    margin-top 1rem
+
+  &--height
+    top 50%
+    left 0
+    transform translate(-50%, -1rem) rotateX(-90deg) translate3d(0, 0, -1rem) rotate(-90deg) translate(0, 100%)
+    transform-origin 0 100%
+
+  &--depth
+    // Calculate things in 3D space.
+    // Here makes sense to translate along the border
+    // Then rotate it, then use that half to align.
+    left 100%
+    top 50%
+    transform translate(-50%, -50%) rotate(-90deg) translate(0, 50%)
+    margin-left 1rem
+
+.scene
+  perspective calc(var(--perspective, 800) * 1px)
+  transform-style preserve-3d
+  height 100vh
+  width 100vw
+  display flex
+  align-items center
+  justify-content center
+
+.plane
+  background hsla(280, 80%, 50%, 0.25)
+  height calc(var(--plane-height, 25) * 1vmin)
+  width calc(var(--plane-width, 25) * 1vmin)
+  transform-style preserve-3d
+  // Rotate X, then Y, then X again so the plane is a flat
+  // Surface to work on.
+  transform rotateX(calc(var(--rotate-x, -24) * 1deg)) rotateY(calc(var(--rotate-y, -24) * 1deg)) rotateX(90deg)
+
+  &:after
+    content 'Plane'
+    font-size calc(var(--font-size) * 1vmin)
+    font-family sans-serif
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    font-weight bold
+    color hsla(280, 80%, 50%, 0.5)
+
+// This is what makes the CSS variable powered cuboid
+.cuboid
+  --width var(--cuboid-width, 15)
+  --height var(--cuboid-height, 10)
+  --depth var(--cuboid-depth, 4)
+  height calc(var(--depth) * 1vmin)
+  width calc(var(--width) * 1vmin)
+  transform-style preserve-3d
+  position absolute
+  transform translate3d(calc(var(--x, 4) * 1vmin), calc(var(--y, 5) * 1vmin), calc(var(--z, 0) * 1vmin)) rotateX(calc(var(--rotate-cuboid-x, 0) * 1deg)) rotateY(calc(var(--rotate-cuboid-y, 0) * 1deg)) rotateZ(calc(var(--rotate-cuboid-z, 0) * 1deg))
+
+  & > div:nth-of-type(1)
+    height calc(var(--height) * 1vmin)
+    width 100%
+    transform-origin 50% 50%
+    transform rotateX(-90deg)
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) rotateX(-90deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin))
+
+  & > div:nth-of-type(2)
+    height calc(var(--height) * 1vmin)
+    width 100%
+    transform-origin 50% 50%
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(180deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(3)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--depth) * 1vmin)
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(4)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--depth) * 1vmin)
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(-90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(5)
+    height calc(var(--depth) * 1vmin)
+    width calc(var(--width) * 1vmin)
+    transform translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(6)
+    height calc(var(--depth) * 1vmin)
+    width calc(var(--width) * 1vmin)
+    transform translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * -1vmin)) rotateX(180deg)
+    position absolute
+    top 50%
+    left 50%
+
+// Purely for aesthetics...
+.demo-cuboid
+  background hsla(280, 80%, 50%, 0.25)
+
+  &:after
+    content "Center"
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    font-weight bold
+    font-family sans-serif
+    font-size calc(var(--font-size) * 1vmin)
+    max-width 100%
+    overflow hidden
+    color hsla(280, 80%, 50%, 0.5)
+  div
+    background hsla(200, 80%, 50%, 0.15)
+    border 1px solid hsl(0, 0%, 25%)

@@ -1,0 +1,15 @@
+mixin cuboid(className)
+  .cuboid(class=className)
+    - let s = 0
+    while s < 6
+      .cuboid__side
+      - s++
+
+//- Container for the scene!
+.scene
+  //- Plane that all the 3D stuff sits on
+  .plane
+    h1.dimension-label.dimension-label--width width
+    h1.dimension-label.dimension-label--height height
+    h1.dimension-label.dimension-label--depth depth
+    +cuboid('demo-cuboid')
