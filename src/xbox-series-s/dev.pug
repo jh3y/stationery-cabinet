@@ -1,0 +1,19 @@
+mixin cuboid(className)
+  .cuboid(class=className)
+    - let s = 0
+    while s < 6
+      .cuboid__side
+      - s++
+
+//- Container for the scene!
+.scene
+  //- Plane that all the 3D stuff sits on
+  .plane
+    .cuboid.xbox
+      .cuboid__side
+      .cuboid__side
+      .cuboid__side
+        include ./xbox.svg
+      .cuboid__side
+      .cuboid__side
+      .cuboid__side
