@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="7.25in"
-   height="10.5in"
-   viewBox="0 0 184.15 266.7"
+   width="5246.1504mm"
+   height="7462.2642mm"
+   viewBox="0 0 5246.1504 7462.2642"
    version="1.1"
    id="svg821"
    inkscape:version="0.92.2 5c3e80d, 2017-08-06"
@@ -25,22 +25,21 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.9625703"
-     inkscape:cx="11978.407"
+     inkscape:zoom="0.021890315"
+     inkscape:cx="12035.182"
      inkscape:cy="12297.888"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g877"
      showgrid="false"
      inkscape:window-width="2236"
      inkscape:window-height="1141"
-     inkscape:window-x="0"
-     inkscape:window-y="660"
+     inkscape:window-x="1081"
+     inkscape:window-y="723"
      inkscape:window-maximized="0"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0"
-     units="in" />
+     fit-margin-bottom="0" />
   <metadata
      id="metadata818">
     <rdf:RDF>
@@ -57,7 +56,7 @@
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="Kitty"
-     transform="translate(3019.78,-3032.1867)">
+     transform="translate(3019.78,4163.3775)">
     <rect
        style="opacity:1;fill:#ff7f2a;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:79.375;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect993"
@@ -226,7 +225,7 @@
      inkscape:label="Belt"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(3019.78,-3032.1867)">
+     transform="translate(3019.78,4163.3775)">
     <g
        id="g877"
        transform="matrix(1.621526,0,0,1.621526,250.24888,-279.96426)">
@@ -479,10 +478,10 @@
      id="layer2"
      inkscape:label="Turtle"
      style="display:inline;opacity:1"
-     transform="translate(3019.78,-3032.1867)">
+     transform="translate(3019.78,4163.3775)">
     <g
        id="g1279"
-       transform="matrix(0.18223412,0,0,0.18223412,125.38395,39.549665)">
+       transform="matrix(0.50001471,0,0,0.50001471,74.009518,29.201136)">
       <ellipse
          transform="rotate(32.471194)"
          ry="0.86862594"
@@ -742,28 +741,5 @@
            style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#333333;stroke-width:3.57927513;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
       </g>
     </g>
-    <path
-       sodipodi:type="star"
-       style="opacity:1;fill:#ffcc00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.92053038;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="path915"
-       sodipodi:sides="5"
-       sodipodi:cx="137.8699"
-       sodipodi:cy="45.56979"
-       sodipodi:r1="1.1540742"
-       sodipodi:r2="0.5770371"
-       sodipodi:arg1="0.87090346"
-       sodipodi:arg2="1.499222"
-       inkscape:flatsided="false"
-       inkscape:rounded="0"
-       inkscape:randomized="0"
-       d="m 138.61328,46.452554 -0.70211,-0.307204 -0.65111,0.404226 0.0752,-0.762682 -0.58565,-0.494327 0.74859,-0.164159 0.28916,-0.709737 0.38745,0.661226 0.76436,0.05568 -0.50913,0.57282 z"
-       inkscape:transform-center-x="0.025528173"
-       inkscape:transform-center-y="-0.085704394" />
-    <circle
-       style="opacity:1;fill:#008000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.32291663;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="path920"
-       cx="137.84441"
-       cy="45.484123"
-       r="1.0015595" />
   </g>
 </svg>
