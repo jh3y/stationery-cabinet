@@ -1,3 +1,9 @@
+//- Front
+//- Back
+//- Right
+//- Left
+//- Top
+//- Bottom
 mixin cuboid(className)
   .cuboid(class=className)
     - let s = 0
@@ -6,14 +12,37 @@ mixin cuboid(className)
       - s++
 
 //- Container for the scene!
+input#tilt(type="checkbox")
 .scene
   //- Plane that all the 3D stuff sits on
   .plane
-    .cuboid.xbox
-      .cuboid__side
-      .cuboid__side
-      .cuboid__side
-        include ./xbox.svg
-      .cuboid__side
-      .cuboid__side
-      .cuboid__side
+    .xbox__shadow
+    .xbox__plane
+      .cuboid.xbox
+        .cuboid__side
+          +cuboid('xbox__leg')
+          +cuboid('xbox__leg')
+          +cuboid('xbox__leg')
+          +cuboid('xbox__leg')
+          label.tilter(for="tilt" title="Toggle orientation")
+        .cuboid__side
+        .cuboid__side
+          include ./xbox.svg
+          .xbox__face
+            .xbox__eye.xbox__eye--left
+            .xbox__eye.xbox__eye--right
+            .xbox__mouth
+            .xbox__sleep.xbox__sleep--one Z
+            .xbox__sleep.xbox__sleep--two Z
+            .xbox__sleep.xbox__sleep--three Z
+          button.xbox__power(title="Power on/off")
+        .cuboid__side
+        .cuboid__side
+          include ./xbox.svg
+          span.xbox__label XBOX
+          label.tilter.tilter--vertical(for="tilt" title="Toggle orientation")
+        .cuboid__side
+          +cuboid('xbox__leg')
+          +cuboid('xbox__leg')
+          +cuboid('xbox__leg')
+          +cuboid('xbox__leg')
