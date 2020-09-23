@@ -1,0 +1,444 @@
+*
+  box-sizing border-box
+  transform-style preserve-3d
+
+:root
+  --perspective 2000
+  --rotate-x -20
+  --rotate-y -45
+  --plane-height 50
+  --plane-width 50
+  --scale 1.25
+  --wall-thickness 4
+  --one-cm calc((var(--plane-height) / 240))
+  // Colors
+  --floor-shade-one hsl(30, 40%, 40%)
+  --floor-shade-two hsl(30, 40%, 60%)
+  --floor-shade-three hsl(30, 40%, 80%)
+  --windowsill-shade-one hsl(35, 50%, 50%)
+  --windowsill-shade-two hsl(35, 50%, 40%)
+  --windowsill-shade-three hsl(35, 50%, 30%)
+  --wall-shade-one hsl(0, 0%, 98%)
+  --wall-shade-two hsl(0, 0%, 95%)
+  --wall-shade-three hsl(0, 0%, 90%)
+  --wall-shade-four hsl(0, 0%, 85%)
+  --skirting-one hsl(0, 0%, 93%)
+  --skirting-two hsl(0, 0%, 88%)
+  --fade-one hsl(0, 80%, 90%)
+  --fade-two hsl(200, 80%, 90%)
+  --fade-three hsl(280, 80%, 90%)
+  --fade-four hsl(120, 80%, 90%)
+  --leg-one hsl(0, 0%, 10%)
+  --leg-two hsl(0, 0%, 12%)
+  --leg-three hsl(0, 0%, 14%)
+  --leg-four hsl(0, 0%, 16%)
+  --rug hsl(210, 40%, 10%)
+
+// We're saying that 50vmin === 240cm
+
+body
+  min-height 100vh
+  // overflow hidden
+  background hsl(210, 80%, 90%)
+
+.scene
+  perspective calc(var(--perspective, 800) * 1px)
+  transform-style preserve-3d
+  height 100vh
+  width 100vw
+  display flex
+  align-items center
+  justify-content center
+  transform scale(var(--scale))
+
+.plane
+  background hsla(180, 50%, 50%, 0.15)
+  height calc(var(--plane-height, 25) * 1vmin)
+  width calc(var(--plane-width, 25) * 1vmin)
+  transform-style preserve-3d
+  transform rotateX(calc(var(--rotate-x, -24) * 1deg)) rotateY(calc(var(--rotate-y, -24) * 1deg)) rotateX(90deg) translate3d(0, 0, 0)
+
+
+// This is what makes the CSS variable powered cuboid
+.cuboid
+  --width var(--cuboid-width, 15)
+  --height var(--cuboid-height, 10)
+  --depth var(--cuboid-depth, 4)
+  height calc(var(--depth) * 1vmin)
+  width calc(var(--width) * 1vmin)
+  position absolute
+  transform translate3d(calc(var(--x, 0) * 1vmin), calc(var(--y, 0) * 1vmin), calc(var(--z, 0) * 1vmin)) rotateX(calc(var(--rotate-cuboid-x, 0) * 1deg)) rotateY(calc(var(--rotate-cuboid-y, 0) * 1deg)) rotateZ(calc(var(--rotate-cuboid-z, 0) * 1deg))
+  transform-style preserve-3d
+
+  &__side
+    transform-style preserve-3d
+
+  & > div:nth-of-type(1)
+    height calc(var(--height) * 1vmin)
+    width 100%
+    transform-origin 50% 50%
+    transform rotateX(-90deg)
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) rotateX(-90deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin))
+
+  & > div:nth-of-type(2)
+    height calc(var(--height) * 1vmin)
+    width 100%
+    transform-origin 50% 50%
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(180deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(3)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--depth) * 1vmin)
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(4)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--depth) * 1vmin)
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(-90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(5)
+    height calc(var(--depth) * 1vmin)
+    width calc(var(--width) * 1vmin)
+    transform translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(6)
+    height calc(var(--depth) * 1vmin)
+    width calc(var(--width) * 1vmin)
+    transform translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * -1vmin)) rotateX(180deg)
+    position absolute
+    top 50%
+    left 50%
+
+.studio
+  height 100%
+  width 100%
+  transform translate3d(0, 0, -10vmin)
+
+.floor
+  --height 1
+  --width calc(50 + var(--wall-thickness))
+  --depth calc(50 + var(--wall-thickness))
+  --z -0.5
+  --y calc(var(--wall-thickness) * -1)
+  --x calc(var(--wall-thickness) * -1)
+
+  div
+    background var(--floor-shade-three)
+
+  div:nth-of-type(1)
+    background var(--floor-shade-one)
+  div:nth-of-type(3)
+    background var(--floor-shade-two)
+
+  div:nth-of-type(5)
+    filter brightness(1)
+
+    &:after
+      content ''
+      position absolute
+      top 0
+      left 0
+      height 100%
+      width 100%
+      transform rotate(90deg)
+      background url('https://images.pexels.com/photos/235994/pexels-photo-235994.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260') 0 0 / 15vmin 15vmin
+
+.wall
+
+  &--left
+    --height calc(220 * var(--one-cm))
+    --width var(--wall-thickness)
+    --depth calc((240 * var(--one-cm)) + var(--wall-thickness))
+    --z calc(110 * var(--one-cm))
+    --x calc(var(--wall-thickness) * -1)
+    --y calc(var(--wall-thickness) * -1)
+
+    div
+      &:nth-of-type(1)
+        background var(--wall-shade-four)
+      &:nth-of-type(2)
+      &:nth-of-type(3)
+        background var(--wall-shade-one)
+      &:nth-of-type(5)
+        background var(--wall-shade-three)
+      background var(--wall-shade-two)
+
+  &--right-lower
+    --height calc(100 * var(--one-cm))
+    --width 50
+    --depth var(--wall-thickness)
+    --z calc(50 * var(--one-cm))
+    --y calc(var(--wall-thickness) * -1)
+
+    div
+      background var(--wall-shade-four)
+      &:nth-of-type(5)
+        background var(--wall-shade-three)
+      &:nth-of-type(2)
+      &:nth-of-type(3)
+        background var(--wall-shade-one)
+
+  &--right-left
+    --height calc(220 * var(--one-cm))
+    --width calc(22 * var(--one-cm))
+    --depth var(--wall-thickness)
+    --z calc(110 * var(--one-cm))
+    --y calc(var(--wall-thickness) * -1)
+
+    div
+      background var(--wall-shade-four)
+      &:nth-of-type(3)
+        background var(--wall-shade-two)
+      &:nth-of-type(2)
+        background var(--wall-shade-one)
+
+
+  &--right-upper
+    --height calc(22 * var(--one-cm))
+    --width calc(240 * var(--one-cm))
+    --depth var(--wall-thickness)
+    --z calc(209 * var(--one-cm))
+    --y calc(var(--wall-thickness) * -1)
+
+    div
+      background var(--wall-shade-four)
+
+      &:nth-of-type(2)
+      &:nth-of-type(3)
+        background var(--wall-shade-one)
+      &:nth-of-type(5)
+        background var(--wall-shade-three)
+
+  &--right-right
+    --height calc(220 * var(--one-cm))
+    --width calc((240 - 136) * var(--one-cm))
+    --depth var(--wall-thickness)
+    --z calc(110 * var(--one-cm))
+    --y calc(var(--wall-thickness) * -1)
+    --x calc(136 * var(--one-cm))
+
+    div
+      background var(--wall-shade-four)
+
+      &:nth-of-type(2)
+      &:nth-of-type(3)
+        background var(--wall-shade-one)
+      &:nth-of-type(5)
+        background var(--wall-shade-three)
+
+.windowsill
+  --height calc(2 * var(--one-cm))
+  --depth calc(22 * var(--one-cm))
+  --width calc(114 * var(--one-cm))
+  --z calc(100 * var(--one-cm) )
+  --x calc(22 * var(--one-cm))
+  --y calc(var(--wall-thickness) * -1)
+
+  div
+    background var(--windowsill-shade-one)
+
+    &:nth-of-type(1)
+      background var(--windowsill-shade-two)
+    &:nth-of-type(6)
+      background var(--windowsill-shade-three)
+
+.desk
+  height calc((180 * var(--one-cm)) * 1vmin)
+  width calc((68 * var(--one-cm)) * 1vmin)
+  top calc((30 * var(--one-cm)) * 1vmin)
+  position absolute
+  background hsla(0, 0%, 10%, 0.25)
+
+  &__leg
+    --width calc(8 * var(--one-cm))
+    --depth calc(5 * var(--one-cm))
+    --height calc(64 * var(--one-cm))
+    --z calc(32 * var(--one-cm))
+    --x calc(20 * var(--one-cm))
+
+    &--right
+      --y calc(15 * var(--one-cm))
+    &--left
+      --y calc(160 * var(--one-cm))
+    &--bottom-right
+      --width calc(50 * var(--one-cm))
+      --height calc(2 * var(--one-cm))
+      --y calc(15 * var(--one-cm))
+      --x calc(5 * var(--one-cm))
+      --z calc(1 * var(--one-cm))
+    &--bottom-left
+      --width calc(50 * var(--one-cm))
+      --height calc(2 * var(--one-cm))
+      --x calc(5 * var(--one-cm))
+      --y calc(160 * var(--one-cm))
+      --z calc(1 * var(--one-cm))
+
+    div
+      background var(--leg-one)
+
+      &:nth-of-type(1)
+        background var(--leg-two)
+
+
+  &__top
+    --height calc(4 * var(--one-cm))
+    --width calc(68 * var(--one-cm))
+    --depth calc(180 * var(--one-cm))
+    --z calc(64 * var(--one-cm))
+
+    div
+      background url('https://images.pexels.com/photos/978484/pexels-photo-978484.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940') 0 0 / 20vmin 30vmin
+
+      &:nth-of-type(1)
+        filter brightness(0.25)
+      &:nth-of-type(5)
+        filter brightness(0.5)
+      &:nth-of-type(6)
+        background var(--floor-shade-three)
+
+.jfdi
+  --height calc(40 * var(--one-cm))
+  --width calc(2 * var(--one-cm))
+  --depth calc(60 * var(--one-cm))
+  --y calc(90 * var(--one-cm))
+  --z calc(190 * var(--one-cm))
+
+  div
+    background black
+
+    &:nth-of-type(4):after
+      content ''
+      background hsla(0, 0%, 0%, 0.5)
+      position absolute
+      top 8%
+      left 4%
+      height 100%
+      width 100%
+      filter blur(2px)
+
+    &:nth-of-type(3)
+      background hsl(0, 0%, 15%)
+
+    &:nth-of-type(3):after
+      content 'JFDI'
+      position absolute
+      top 0
+      left 0
+      height 100%
+      width 100%
+      color hsl(0, 0%, 100%)
+      font-weight bold
+      font-family sans-serif
+      font-size calc((22 * var(--one-cm)) * 1vmin)
+      text-align center
+      line-height calc((40 * var(--one-cm) * 1vmin))
+
+
+.shelf
+  --height calc(5 * var(--one-cm))
+  --depth calc(26 * var(--one-cm))
+  --width calc(60 * var(--one-cm))
+  --z calc(144 * var(--one-cm))
+  --x calc(170 * var(--one-cm))
+
+  div
+    background var(--wall-shade-three)
+
+    &:nth-of-type(5)
+      background var(--wall-shade-one)
+    &:nth-of-type(3)
+      background var(--wall-shade-two)
+
+    &:nth-of-type(2):after
+      content ''
+      width 100%
+      height 250%
+      position absolute
+      top 100%
+      left 4%
+      background hsla(0, 0%, 0%, 0.5)
+      transform-origin 50% 0
+      transform skewX(15deg)
+      filter blur(5px)
+
+.light-cube
+  --height calc(15 * var(--one-cm))
+  --width calc(15 * var(--one-cm))
+  --depth calc(15 * var(--one-cm))
+  --z calc(155 * var(--one-cm))
+  --x calc(190 * var(--one-cm))
+  --y calc(5 * var(--one-cm))
+  --rotate-cuboid-z 40
+
+  &:after
+    content ''
+    height 200%
+    width 200%
+    position absolute
+    top 50%
+    left 50%
+    border-radius 50%
+    transform translate3d(-50%, -50%, calc((5 * var(--one-cm)) * 1vmin)) rotateX(90deg) rotateY(100deg) translate3d(0, -8%, 0)
+    animation fade 10s infinite linear
+    filter blur(10px)
+    opacity 0.5
+
+  div
+    animation fade 10s infinite linear
+    filter blur(1px)
+
+@keyframes fade
+  0%, 100%
+    background var(--fade-four)
+  25%
+    background var(--fade-one)
+  50%
+    background var(--fade-two)
+  75%
+    background var(--fade-three)
+
+.skirting
+  &--left
+    --height calc(8 * var(--one-cm))
+    --width calc(2 * var(--one-cm))
+    --depth calc(240 * var(--one-cm))
+    --z calc(4 * var(--one-cm))
+    div
+      background var(--skirting-one)
+  &--right
+    --height calc(8 * var(--one-cm))
+    --width calc(240 * var(--one-cm))
+    --depth calc(2 * var(--one-cm))
+    --z calc(4 * var(--one-cm))
+    div
+      background var(--skirting-two)
+
+.rug
+  --height calc(1 * var(--one-cm))
+  --width calc(140 * var(--one-cm))
+  --depth calc(140 * var(--one-cm))
+  --x calc(80 * var(--one-cm))
+  --y calc(50 * var(--one-cm))
+  --z calc(0.5 * var(--one-cm))
+
+  div
+    background var(--rug)
+
+    &:nth-of-type(5)
+      background url('https://images.pexels.com/photos/3707669/pexels-photo-3707669.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')
+      background-size cover
