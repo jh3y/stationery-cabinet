@@ -17,13 +17,24 @@ mixin cuboid(className)
       +cuboid('floor')
       +cuboid('rug')
       +cuboid('wall wall--left')
-      +cuboid('wall wall--right-lower')
+      .window
+        +cuboid('window__frame window__frame--top')
+        +cuboid('window__frame window__frame--left')
+        +cuboid('window__frame window__frame--right')
+        +cuboid('window__frame window__frame--bottom')
+        +cuboid('window__frame window__frame--middle')
+        .blinds
+          - let b = 0
+          while b < 11
+            .blind(style=`--index: ${b}`)
+            - b++
       +cuboid('wall wall--right-left')
       +cuboid('wall wall--right-upper')
       +cuboid('wall wall--right-right')
       +cuboid('skirting skirting--left')
       +cuboid('skirting skirting--right')
       +cuboid('windowsill')
+      +cuboid('wall wall--right-lower')
       +cuboid('jfdi')
       +cuboid('shelf')
       +cuboid('light-cube')
@@ -32,4 +43,29 @@ mixin cuboid(className)
         +cuboid('desk__leg desk__leg--right')
         +cuboid('desk__leg desk__leg--bottom-left')
         +cuboid('desk__leg desk__leg--bottom-right')
+        +cuboid('mac')
         +cuboid('desk__top')
+        +cuboid('monitor__arm monitor__arm--main')
+        +cuboid('monitor__arm monitor__arm--portrait')
+        .cuboid.monitor.monitor--main
+          .cuboid__side
+          .cuboid__side
+          .cuboid__side
+            iframe(src="https://css-tricks.com")
+          .cuboid__side
+          .cuboid__side
+          .cuboid__side
+        .cuboid.monitor.monitor--portrait
+          .cuboid__side
+          .cuboid__side
+          .cuboid__side
+            iframe(src="https://jhey.dev")
+          .cuboid__side
+          .cuboid__side
+          .cuboid__side
+        .keyboard__base
+          .mousemat
+          +cuboid('mouse')
+          +cuboid('keyboard')
+          +cuboid('keyboard__keys')
+      +cuboid('bear-canvas')
