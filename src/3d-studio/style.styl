@@ -3,14 +3,17 @@
   transform-style preserve-3d
 
 :root
+  --blur 10px
   --perspective 2000
   --rotate-x -20
   --rotate-y -45
   --plane-height 50
   --plane-width 50
-  --scale 0.5
+  --dark 0
+  --zoomed 0
+  --scale calc(0.75 + (var(--zoomed) * 4))
   --wall-thickness 4
-  --one-cm calc((var(--plane-height) / 240))
+  --cm calc((var(--plane-height) / 240))
   // Colors
   --floor-shade-one hsl(30, 40%, 40%)
   --floor-shade-two hsl(30, 40%, 60%)
@@ -40,6 +43,15 @@
   --mac-one hsl(0, 0%, 80%)
   --mac-two hsl(0, 0%, 70%)
   --mac-three hsl(0, 0%, 60%)
+  --pot-one hsl(20, 50%, 50%)
+  --pot-two hsl(20, 50%, 40%)
+  --pot-three hsl(20, 50%, 30%)
+  --chair-one hsl(0, 0%, 0%)
+  --chair-two hsl(0, 0%, 10%)
+  --chair-three hsl(0, 0%, 20%)
+  --chair-four hsl(0, 0%, 30%)
+  --chair-accent-one hsl(0, 0%, 80%)
+  --chair-accent-two hsl(0, 60%, 60%)
 
 // We're saying that 50vmin === 240cm
 
@@ -47,6 +59,10 @@ body
   min-height 100vh
   // overflow hidden
   background hsl(210, 80%, 90%)
+
+.dg.ac
+  z-index 100
+  transform translate3d(0, 0, 50vmin)
 
 .scene
   perspective calc(var(--perspective, 800) * 1px)
@@ -56,15 +72,36 @@ body
   display flex
   align-items center
   justify-content center
-  transform scale(var(--scale))
+  transform scale(var(--scale)) translate3d(0, 0, 50vmin)
+
+.scene
+.studio
+.plane
+  transition transform .5s
+.chair
+  transition opacity .2s
+
+// .light-cube div
+// .light-cube:after
+//   animation fade 10s infinite linear
+//   filter blur(calc(0.5 * var(--blur)))
 
 .plane
-  // background hsla(180, 50%, 50%, 0.15)
   height calc(var(--plane-height, 25) * 1vmin)
   width calc(var(--plane-width, 25) * 1vmin)
   transform-style preserve-3d
-  transform rotateX(calc(var(--rotate-x, -24) * 1deg)) rotateY(calc(var(--rotate-y, -24) * 1deg)) rotateX(90deg) translate3d(0, 0, 0)
+  transform rotateX(calc((var(--rotate-x, -24) - (var(--zoomed) * var(--rotate-x, -24))) * 1deg)) rotateY(calc(((var(--rotate-y, -24) - (var(--zoomed) * var(--rotate-y, -24))) + (var(--zoomed) * -90)) * 1deg)) rotateX(90deg) translate3d(0, 0, 0)
 
+  &:after
+    content ''
+    background hsla(0, 0%, 0%, 0.5)
+    filter blur(var(--blur))
+    height 112%
+    width 112%
+    position absolute
+    top -8%
+    left -10%
+    transform translate3d(0, 0, -11vmin)
 
 // This is what makes the CSS variable powered cuboid
 .cuboid
@@ -74,7 +111,7 @@ body
   height calc(var(--depth) * 1vmin)
   width calc(var(--width) * 1vmin)
   position absolute
-  transform translate3d(calc(var(--x, 0) * 1vmin), calc(var(--y, 0) * 1vmin), calc(var(--z, 0) * 1vmin)) rotateX(calc(var(--rotate-cuboid-x, 0) * 1deg)) rotateY(calc(var(--rotate-cuboid-y, 0) * 1deg)) rotateZ(calc(var(--rotate-cuboid-z, 0) * 1deg))
+  transform rotateZ(calc(var(--starting-rotation, 0) * 1deg)) translate3d(calc(var(--x, 0) * 1vmin), calc(var(--y, 0) * 1vmin), calc(var(--z, 0) * 1vmin)) rotateX(calc(var(--rotate-cuboid-x, 0) * 1deg)) rotateY(calc(var(--rotate-cuboid-y, 0) * 1deg)) rotateZ(calc(var(--rotate-cuboid-z, 0) * 1deg))
   transform-style preserve-3d
 
   &__side
@@ -84,7 +121,6 @@ body
     height calc(var(--height) * 1vmin)
     width 100%
     transform-origin 50% 50%
-    transform rotateX(-90deg)
     position absolute
     top 50%
     left 50%
@@ -134,7 +170,7 @@ body
 .studio
   height 100%
   width 100%
-  transform translate3d(0, 0, -10vmin)
+  transform translate3d(0, 0, calc((-10 + (var(--zoomed) * -10)) * 1vmin))
 
 .floor
   --height 1
@@ -144,7 +180,7 @@ body
   --y calc(var(--wall-thickness) * -1)
   --x calc(var(--wall-thickness) * -1)
 
-  div
+  div:not(.studio__shadow)
     background var(--floor-shade-three)
 
   div:nth-of-type(1)
@@ -166,12 +202,16 @@ body
       background url('https://images.pexels.com/photos/235994/pexels-photo-235994.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260') 0 0 / 15vmin 15vmin
 
 .wall
+  // --height calc(4 * var(--cm))
+  //   --width calc(68 * var(--cm))
+  //   --depth calc(180 * var(--cm))
+  //   --z calc(64 * var(--cm))
 
   &--left
-    --height calc(220 * var(--one-cm))
+    --height calc(220 * var(--cm))
     --width var(--wall-thickness)
-    --depth calc((240 * var(--one-cm)) + var(--wall-thickness))
-    --z calc(110 * var(--one-cm))
+    --depth calc((240 * var(--cm)) + var(--wall-thickness))
+    --z calc(110 * var(--cm))
     --x calc(var(--wall-thickness) * -1)
     --y calc(var(--wall-thickness) * -1)
 
@@ -179,18 +219,43 @@ body
       &:nth-of-type(1)
         background var(--wall-shade-four)
       &:nth-of-type(2)
+        background var(--wall-shade-one)
       &:nth-of-type(3)
         background var(--wall-shade-one)
+        &:after
+          content ''
+          position absolute
+          top 0
+          left 0
+          height 100%
+          width 100%
+          filter blur(var(--blur))
+          background radial-gradient(rgba(0,0,0,0.5), transparent 100%) 36% 100%/64% 30% no-repeat, var(--wall-shade-one)
+
       &:nth-of-type(5)
         background var(--wall-shade-three)
-      background var(--wall-shade-two)
+      &:nth-of-type(4)
+      &:nth-of-type(6)
+        background var(--wall-shade-two)
 
   &--right-lower
-    --height calc(100 * var(--one-cm))
+    --height calc(100 * var(--cm))
     --width 50
     --depth var(--wall-thickness)
-    --z calc(50 * var(--one-cm))
+    --z calc(50 * var(--cm))
     --y calc(var(--wall-thickness) * -1)
+
+    &:after
+      content ''
+      height 30%
+      width calc((114 * var(--cm)) * 1vmin)
+      top 102%
+      left calc((22 * var(--cm)) * 1vmin)
+      filter blur(calc(0.75 * var(--blur)))
+      background hsla(0, 0%, 0%, 0.5)
+      position absolute
+      transform-origin 50% 0
+      transform rotateX(90deg) translate(0, calc((44 * var(--cm)) * 1vmin))
 
     div
       background var(--wall-shade-four)
@@ -201,10 +266,10 @@ body
         background var(--wall-shade-one)
 
   &--right-left
-    --height calc(220 * var(--one-cm))
-    --width calc(22 * var(--one-cm))
+    --height calc(220 * var(--cm))
+    --width calc(22 * var(--cm))
     --depth var(--wall-thickness)
-    --z calc(110 * var(--one-cm))
+    --z calc(110 * var(--cm))
     --y calc(var(--wall-thickness) * -1)
 
     div
@@ -216,10 +281,10 @@ body
 
 
   &--right-upper
-    --height calc(22 * var(--one-cm))
-    --width calc(240 * var(--one-cm))
+    --height calc(22 * var(--cm))
+    --width calc(240 * var(--cm))
     --depth var(--wall-thickness)
-    --z calc(209 * var(--one-cm))
+    --z calc(209 * var(--cm))
     --y calc(var(--wall-thickness) * -1)
 
     div
@@ -232,12 +297,12 @@ body
         background var(--wall-shade-three)
 
   &--right-right
-    --height calc(220 * var(--one-cm))
-    --width calc((240 - 136) * var(--one-cm))
+    --height calc(220 * var(--cm))
+    --width calc((240 - 136) * var(--cm))
     --depth var(--wall-thickness)
-    --z calc(110 * var(--one-cm))
+    --z calc(110 * var(--cm))
     --y calc(var(--wall-thickness) * -1)
-    --x calc(136 * var(--one-cm))
+    --x calc(136 * var(--cm))
 
     div
       background var(--wall-shade-four)
@@ -246,16 +311,16 @@ body
       &:nth-of-type(3)
         background var(--wall-shade-one)
       &:nth-of-type(4)
-        background var(--wall-shade-two)
+        background var(--wall-shade-four)
       &:nth-of-type(5)
         background var(--wall-shade-three)
 
 .windowsill
-  --height calc(2 * var(--one-cm))
-  --depth calc(22 * var(--one-cm))
-  --width calc(114 * var(--one-cm))
-  --z calc(100 * var(--one-cm) )
-  --x calc(22 * var(--one-cm))
+  --height calc(2 * var(--cm))
+  --depth calc(22 * var(--cm))
+  --width calc(114 * var(--cm))
+  --z calc(100 * var(--cm) )
+  --x calc(22 * var(--cm))
   --y calc(var(--wall-thickness) * -0.8)
 
   div
@@ -272,35 +337,53 @@ body
       background var(--windowsill-shade-three)
 
 .desk
-  height calc((180 * var(--one-cm)) * 1vmin)
-  width calc((68 * var(--one-cm)) * 1vmin)
-  top calc((30 * var(--one-cm)) * 1vmin)
+  height calc((180 * var(--cm)) * 1vmin)
+  width calc((68 * var(--cm)) * 1vmin)
+  top calc((30 * var(--cm)) * 1vmin)
+  left calc((5 * var(--cm)) * 1vmin)
   position absolute
-  background hsla(0, 0%, 10%, 0.25)
+
+  &__shadow
+    background hsla(0, 0%, 0%, 0.5)
+    filter blur(var(--blur))
+    position absolute
+
+    &--floor
+      background radial-gradient(circle at 0 50%, hsla(0, 0%, 0%, 0.5) 50%, transparent 80%)
+      height 110%
+      width 80%
+      top 5%
+
+    &--wall
+      background red
+      height 100%
+      width 100%
+      transform-origin 0 50%
+      transform rotateY(-90deg) translate3d(0, 0, calc(var(--cm) * -1vmin))
 
   &__leg
-    --width calc(8 * var(--one-cm))
-    --depth calc(5 * var(--one-cm))
-    --height calc(64 * var(--one-cm))
-    --z calc(32 * var(--one-cm))
-    --x calc(20 * var(--one-cm))
+    --width calc(8 * var(--cm))
+    --depth calc(5 * var(--cm))
+    --height calc(64 * var(--cm))
+    --z calc(32 * var(--cm))
+    --x calc(20 * var(--cm))
 
     &--right
-      --y calc(15 * var(--one-cm))
+      --y calc(15 * var(--cm))
     &--left
-      --y calc(160 * var(--one-cm))
+      --y calc(160 * var(--cm))
     &--bottom-right
-      --width calc(50 * var(--one-cm))
-      --height calc(2 * var(--one-cm))
-      --y calc(15 * var(--one-cm))
-      --x calc(5 * var(--one-cm))
-      --z calc(1 * var(--one-cm))
+      --width calc(50 * var(--cm))
+      --height calc(2 * var(--cm))
+      --y calc(15 * var(--cm))
+      --x calc(5 * var(--cm))
+      --z calc(1 * var(--cm))
     &--bottom-left
-      --width calc(50 * var(--one-cm))
-      --height calc(2 * var(--one-cm))
-      --x calc(5 * var(--one-cm))
-      --y calc(160 * var(--one-cm))
-      --z calc(1 * var(--one-cm))
+      --width calc(50 * var(--cm))
+      --height calc(2 * var(--cm))
+      --x calc(5 * var(--cm))
+      --y calc(160 * var(--cm))
+      --z calc(1 * var(--cm))
 
     div
       background var(--leg-one)
@@ -310,10 +393,10 @@ body
 
 
   &__top
-    --height calc(4 * var(--one-cm))
-    --width calc(68 * var(--one-cm))
-    --depth calc(180 * var(--one-cm))
-    --z calc(64 * var(--one-cm))
+    --height calc(4 * var(--cm))
+    --width calc(68 * var(--cm))
+    --depth calc(180 * var(--cm))
+    --z calc(64 * var(--cm))
 
     div
       background url('https://images.pexels.com/photos/978484/pexels-photo-978484.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940') 0 0 / 20vmin 30vmin
@@ -326,11 +409,12 @@ body
         background var(--floor-shade-three)
 
 .jfdi
-  --height calc(40 * var(--one-cm))
-  --width calc(2 * var(--one-cm))
-  --depth calc(60 * var(--one-cm))
-  --y calc(90 * var(--one-cm))
-  --z calc(190 * var(--one-cm))
+  --height calc(40 * var(--cm))
+  --width calc(2 * var(--cm))
+  --depth calc(60 * var(--cm))
+  --y calc(90 * var(--cm))
+  --x var(--cm)
+  --z calc(190 * var(--cm))
 
   div
     background black
@@ -343,7 +427,7 @@ body
       left 4%
       height 100%
       width 100%
-      filter blur(10px)
+      filter blur(var(--blur))
 
     &:nth-of-type(3)
       background hsl(0, 0%, 15%)
@@ -358,17 +442,18 @@ body
       color hsl(0, 0%, 100%)
       font-weight bold
       font-family sans-serif
-      font-size calc((22 * var(--one-cm)) * 1vmin)
+      font-size calc((22 * var(--cm)) * 1vmin)
       text-align center
-      line-height calc((40 * var(--one-cm) * 1vmin))
+      line-height calc((40 * var(--cm) * 1vmin))
 
 
 .shelf
-  --height calc(5 * var(--one-cm))
-  --depth calc(26 * var(--one-cm))
-  --width calc(60 * var(--one-cm))
-  --z calc(144 * var(--one-cm))
-  --x calc(170 * var(--one-cm))
+  --height calc(5 * var(--cm))
+  --depth calc(26 * var(--cm))
+  --width calc(60 * var(--cm))
+  --z calc(144 * var(--cm))
+  --y var(--cm)
+  --x calc(170 * var(--cm))
 
   div
     background var(--wall-shade-three)
@@ -388,33 +473,36 @@ body
       background hsla(0, 0%, 0%, 0.5)
       transform-origin 50% 0
       transform skewX(-5deg)
-      filter blur(10px)
+      filter blur(var(--blur))
 
 .light-cube
-  --height calc(15 * var(--one-cm))
-  --width calc(15 * var(--one-cm))
-  --depth calc(15 * var(--one-cm))
-  --z calc(155 * var(--one-cm))
-  --x calc(190 * var(--one-cm))
-  --y calc(5 * var(--one-cm))
+  --height calc(15 * var(--cm))
+  --width calc(15 * var(--cm))
+  --depth calc(15 * var(--cm))
+  --z calc(155 * var(--cm))
+  --x calc(180 * var(--cm))
+  --y calc(5 * var(--cm))
   --rotate-cuboid-z 40
 
   &:after
     content ''
-    height 200%
-    width 200%
+    height 150%
+    width 150%
     position absolute
     top 50%
     left 50%
     border-radius 50%
-    transform translate3d(-50%, -50%, calc((5 * var(--one-cm)) * 1vmin)) rotateX(90deg) rotateY(100deg) translate3d(0, -8%, 0)
-    animation fade 10s infinite linear
-    filter blur(10px)
+    transform translate3d(-50%, -50%, calc((5 * var(--cm)) * 1vmin)) rotateX(90deg) rotateY(100deg) translate3d(0, -8%, 0)
     opacity 0.5
 
   div
-    animation fade 10s infinite linear
-    filter blur(1px)
+    background hsl(0, 0%, 98%)
+
+    &:nth-of-type(1)
+      background hsl(0, 0%, 93%)
+    &:nth-of-type(3)
+      background hsl(0, 0%, 96%)
+
 
 @keyframes fade
   0%, 100%
@@ -428,27 +516,27 @@ body
 
 .skirting
   &--left
-    --height calc(8 * var(--one-cm))
-    --width calc(2 * var(--one-cm))
-    --depth calc(240 * var(--one-cm))
-    --z calc(4 * var(--one-cm))
+    --height calc(8 * var(--cm))
+    --width calc(2 * var(--cm))
+    --depth calc(240 * var(--cm))
+    --z calc(4 * var(--cm))
     div
       background var(--skirting-one)
   &--right
-    --height calc(8 * var(--one-cm))
-    --width calc(240 * var(--one-cm))
-    --depth calc(2 * var(--one-cm))
-    --z calc(4 * var(--one-cm))
+    --height calc(8 * var(--cm))
+    --width calc(240 * var(--cm))
+    --depth calc(2 * var(--cm))
+    --z calc(4 * var(--cm))
     div
       background var(--skirting-two)
 
 .rug
-  --height calc(1 * var(--one-cm))
-  --width calc(140 * var(--one-cm))
-  --depth calc(140 * var(--one-cm))
-  --x calc(80 * var(--one-cm))
-  --y calc(50 * var(--one-cm))
-  --z calc(0.5 * var(--one-cm))
+  --height calc(1 * var(--cm))
+  --width calc(140 * var(--cm))
+  --depth calc(140 * var(--cm))
+  --x calc(80 * var(--cm))
+  --y calc(50 * var(--cm))
+  --z calc(0.5 * var(--cm))
 
   div
     background var(--rug)
@@ -459,20 +547,20 @@ body
 
 .monitor
   &--main
-    --width calc(3 * var(--one-cm))
-    --depth calc(86 * var(--one-cm))
-    --height calc(36 * var(--one-cm))
-    --z calc(106 * var(--one-cm))
-    --y calc(-43 * var(--one-cm))
-    --x calc(10 * var(--one-cm))
+    --width calc(3 * var(--cm))
+    --depth calc(86 * var(--cm))
+    --height calc(36 * var(--cm))
+    --z calc(106 * var(--cm))
+    --y calc(-43 * var(--cm))
+    --x calc(10 * var(--cm))
     top 50%
 
   &--portrait
-    --depth calc(34 * var(--one-cm))
-    --width calc(3 * var(--one-cm))
-    --height calc(56 * var(--one-cm))
-    --z calc(104 * var(--one-cm))
-    --x calc(20 * var(--one-cm))
+    --depth calc(34 * var(--cm))
+    --width calc(3 * var(--cm))
+    --height calc(56 * var(--cm))
+    --z calc(104 * var(--cm))
+    --x calc(20 * var(--cm))
     --rotate-cuboid-z 30
     top 8%
 
@@ -494,15 +582,15 @@ body
     transform translate(-50%, -50%) scale(0.125)
 
   &__arm
-    --width calc(4 * var(--one-cm))
-    --depth calc(4 * var(--one-cm))
-    --height calc(30 * var(--one-cm))
-    --z calc(80 * var(--one-cm))
+    --width calc(4 * var(--cm))
+    --depth calc(4 * var(--cm))
+    --height calc(30 * var(--cm))
+    --z calc(80 * var(--cm))
     &--main
-      --x calc(6 * var(--one-cm))
+      --x calc(6 * var(--cm))
       top 65%
     &--portrait
-      --x calc(20 * var(--one-cm))
+      --x calc(20 * var(--cm))
       --rotate-cuboid-z 30
       top 10%
 
@@ -515,11 +603,11 @@ body
         background var(--peripheral-one)
 
 .mac
-  --width calc(20 * var(--one-cm))
-  --height calc(5 * var(--one-cm))
-  --depth calc(20 * var(--one-cm))
-  --z calc(60 * var(--one-cm))
-  --x calc(44 * var(--one-cm))
+  --width calc(20 * var(--cm))
+  --height calc(5 * var(--cm))
+  --depth calc(20 * var(--cm))
+  --z calc(60 * var(--cm))
+  --x calc(44 * var(--cm))
   top 10%
   div
     background var(--mac-three)
@@ -529,10 +617,10 @@ body
       background var(--mac-two)
 
 .keyboard
-  --depth calc(38 * var(--one-cm))
-  --width calc(14 * var(--one-cm))
-  --height calc(2 * var(--one-cm))
-  --z calc(1 * var(--one-cm))
+  --depth calc(38 * var(--cm))
+  --width calc(14 * var(--cm))
+  --height calc(2 * var(--cm))
+  --z calc(1 * var(--cm))
 
   div
     background var(--peripheral-two)
@@ -541,12 +629,12 @@ body
       background var(--peripheral-one)
 
   &__keys
-    --depth calc(36 * var(--one-cm))
-    --width calc(12 * var(--one-cm))
-    --height calc(4 * var(--one-cm))
-    --z calc(2 * var(--one-cm))
-    --x calc(1 * var(--one-cm))
-    --y calc(1 * var(--one-cm))
+    --depth calc(36 * var(--cm))
+    --width calc(12 * var(--cm))
+    --height calc(3 * var(--cm))
+    --z calc(1.5 * var(--cm))
+    --x calc(1 * var(--cm))
+    --y calc(1 * var(--cm))
     div
       background hsl(0, 0%, 60%)
 
@@ -556,20 +644,20 @@ body
         top 0%
         left 0%
         transform-origin 0% 0%
-        width calc((36 * var(--one-cm)) * 1vmin)
-        height calc((12 * var(--one-cm)) * 1vmin)
+        width calc((36 * var(--cm)) * 1vmin)
+        height calc((12 * var(--cm)) * 1vmin)
         transform rotate(270deg) translate(-100%, 0%)
         background url('https://assets.codepen.io/605876/keychron-keys.png?width=338&height=109&format=auto')
         background-size cover
 
   &__base
     transform-style preserve-3d
-    height calc((38 * var(--one-cm)) * 1vmin)
-    width calc((14 * var(--one-cm)) * 1vmin)
+    height calc((38 * var(--cm)) * 1vmin)
+    width calc((14 * var(--cm)) * 1vmin)
     top 50%
     left 60%
     position absolute
-    transform translate3d(0, -50%, calc((66 * var(--one-cm)) * 1vmin))
+    transform translate3d(0, -50%, calc((66 * var(--cm)) * 1vmin))
 
 .mousemat
   height 260%
@@ -581,9 +669,10 @@ body
   transform translate(-50%, -50%)
 
 .mouse
-  --depth calc(6 * var(--one-cm))
-  --width calc(10 * var(--one-cm))
-  --height calc(8 * var(--one-cm))
+  --depth calc(6 * var(--cm))
+  --width calc(10 * var(--cm))
+  --height calc(4 * var(--cm))
+  --z calc(2 * var(--cm))
   top -40%
   left 20%
 
@@ -606,11 +695,12 @@ body
       transform translate(-50%, -50%)
 
 .bear-canvas
-  --width calc(60 * var(--one-cm))
-  --height calc(60 * var(--one-cm))
-  --depth calc(2 * var(--one-cm))
-  --z calc(80 * var(--one-cm))
-  --x calc(168 * var(--one-cm))
+  --width calc(60 * var(--cm))
+  --height calc(60 * var(--cm))
+  --depth calc(2 * var(--cm))
+  --z calc(80 * var(--cm))
+  --x calc(168 * var(--cm))
+  --y var(--cm)
 
   div
     background hsl(0, 0%, 95%)
@@ -627,25 +717,26 @@ body
       height 100%
       width 100%
       background hsla(0, 0%, 0%, 0.5)
-      filter blur(10px)
+      filter blur(var(--blur))
       position absolute
       top 10%
       left -5%
+
 .window
-  width calc((114 * var(--one-cm)) * 1vmin)
+  width calc((114 * var(--cm)) * 1vmin)
   background linear-gradient(40deg, transparent 20%, hsla(0, 0%, 100%, 0.5), transparent 50%), linear-gradient(40deg, transparent 50%, hsla(0, 0%, 100%, 0.25), transparent 60%), hsla(190, 80%, 90%, 0.25)
-  height calc((95 * var(--one-cm)) * 1vmin)
+  height calc((95 * var(--cm)) * 1vmin)
   position absolute
-  transform rotateX(90deg) translate3d(calc((22 * var(--one-cm)) * 1vmin), calc((102 * var(--one-cm)) * 1vmin), calc((18 * var(--one-cm)) * 1vmin))
+  transform rotateX(90deg) translate3d(calc((22 * var(--cm)) * 1vmin), calc((102 * var(--cm)) * 1vmin), calc((18 * var(--cm)) * 1vmin))
   transform-origin 50% 0%
 
   &__frame
     &--top
     &--middle
     &--bottom
-      --depth calc(4 * var(--one-cm))
-      --width calc(115 * var(--one-cm))
-      --height calc(4 * var(--one-cm))
+      --depth calc(4 * var(--cm))
+      --width calc(115 * var(--cm))
+      --height calc(4 * var(--cm))
 
       div
         background hsl(0, 0%, 98%)
@@ -662,9 +753,9 @@ body
 
     &--left
     &--right
-      --depth calc(95 * var(--one-cm))
-      --width calc(4 * var(--one-cm))
-      --height calc(4 * var(--one-cm))
+      --depth calc(95 * var(--cm))
+      --width calc(4 * var(--cm))
+      --height calc(4 * var(--cm))
 
       div
         background hsl(0, 0%, 98%)
@@ -676,14 +767,24 @@ body
       right 0
 
 .blinds
-  background 'hsla(0, 0%, 50%, %s)' % calc(var(--dark) * 0.1)
   height 100%
   width 100%
   position absolute
   top 0
   left 0
-  transition background 0.2s
-  transform translate3d(0, 0, calc((-10 * var(--one-cm)) * 1vmin)) rotate(180deg)
+  transform translate3d(0, 0, calc((-10 * var(--cm)) * 1vmin)) rotate(180deg)
+
+  &:after
+    content ""
+    background hsla(0, 0%, 50%, 0.1)
+    height 100%
+    width 100%
+    position absolute
+    top 0
+    left 0
+    transform-origin 50% 0%
+    transition transform 0.2s
+    transform scaleY(var(--dark))
 
 .blind
   height 10%
@@ -691,9 +792,296 @@ body
   position absolute
   top -5%
   left 0
-  background hsl(30, 50%, 85%)
+  background hsl(30, 50%, 90%)
   transform-origin 50% 50%
   transition transform 0.2s
   // Can be translated by 100% or 1%
   // Can be rotated by -2deg or -90deg
   transform translate(0, calc((var(--index) * (100 * var(--dark))) * 1%)) rotateX(calc((-85 + (var(--dark) * 83)) * 1deg))
+
+.plant
+  height calc((14 * var(--cm)) * 1vmin)
+  width calc((14 * var(--cm)) * 1vmin)
+  position absolute
+  transform translate3d(calc((208 * var(--cm)) * 1vmin), calc((6 * var(--cm)) * 1vmin), calc((146 * var(--cm)) * 1vmin))
+
+  &__plant
+    height calc((50 * var(--cm)) * 1vmin)
+    position absolute
+    bottom 50%
+    left 50%
+    transform-origin 50% 100%
+    transform translate(-50%, 0) rotateX(-90deg) translate3d(0, calc((var(--cm) * 10) * -1vmin), 0) rotateY(calc(var(--r, 0) * 1deg))
+
+    &:nth-of-type(2)
+      --r 90
+    &:nth-of-type(3)
+      --r 220
+
+  &__pot
+    --height calc(10 * var(--cm))
+    --width calc(14 * var(--cm))
+    --depth calc(14 * var(--cm))
+    --z calc(6 * var(--cm))
+
+    div
+      background var(--pot-three)
+
+      &:nth-of-type(1)
+        background var(--pot-two)
+
+      &:nth-of-type(3)
+        background var(--pot-one)
+
+      &:nth-of-type(5)
+        background #111
+
+.chair
+  &__base
+    opacity calc(1 - var(--zoomed))
+    height calc((66 * var(--cm)) * 1vmin)
+    width calc((66 * var(--cm)) * 1vmin)
+    position absolute
+    top 50%
+    left 50%
+    transform translate3d(-30%, -70%, calc((2 * var(--cm)) * 1vmin)) rotateZ(-25deg)
+
+  &__shadow
+    background hsla(0, 0%, 0%, 0.75)
+    height 115%
+    width 115%
+    border-radius 50%
+    filter blur(calc(1.5 * var(--blur)))
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-55%, -45%)
+
+  &__wheel
+    --height calc(6 * var(--cm))
+    --width calc(6 * var(--cm))
+    --depth calc(6 * var(--cm))
+    --z calc(3 * var(--cm))
+    --x calc(30 * var(--cm))
+
+    top 50%
+    left 50%
+    margin-left calc((-3 * var(--cm)) * 1vmin)
+    margin-top calc((-3 * var(--cm)) * 1vmin)
+
+    &--one
+      --starting-rotation 0
+    &--two
+      --starting-rotation 72
+    &--three
+      --starting-rotation 144
+    &--four
+      --starting-rotation 216
+    &--five
+      --starting-rotation 288
+
+
+    div
+      background var(--peripheral-three)
+
+      &:nth-of-type(1)
+      &:nth-of-type(2)
+        background black
+
+  &__spine
+    --height calc(30 * var(--cm))
+    --width calc(6 * var(--cm))
+    --depth calc(6 * var(--cm))
+    --z calc(20 * var(--cm))
+
+    top 50%
+    left 50%
+    margin-left calc((-3 * var(--cm)) * 1vmin)
+    margin-top calc((-3 * var(--cm)) * 1vmin)
+
+    div
+      background black
+
+      &:nth-of-type(1)
+        background var(--peripheral-four)
+
+  &__leg
+    --height calc(4 * var(--cm))
+    --width calc(30 * var(--cm))
+    --depth calc(6 * var(--cm))
+    --z calc(8 * var(--cm))
+    --x calc(18 * var(--cm))
+
+    top 50%
+    left 50%
+    margin-left calc((-15 * var(--cm)) * 1vmin)
+    margin-top calc((-3 * var(--cm)) * 1vmin)
+
+    &--one
+      --starting-rotation 0
+    &--two
+      --starting-rotation 72
+    &--three
+      --starting-rotation 144
+    &--four
+      --starting-rotation 216
+    &--five
+      --starting-rotation 288
+
+
+    div
+      background var(--mac-one)
+
+      &:nth-of-type(1)
+      &:nth-of-type(2)
+        background var(--mac-three)
+
+  &__seat
+    --height calc(10 * var(--cm))
+    --width calc(50 * var(--cm))
+    --depth calc(40 * var(--cm))
+    --z calc(32 * var(--cm))
+
+    top 50%
+    left 50%
+    margin-left calc((-25 * var(--cm)) * 1vmin)
+    margin-top calc((-20 * var(--cm)) * 1vmin)
+
+    div
+      background var(--chair-one)
+
+      &:nth-of-type(1)
+      &:nth-of-type(2)
+        background var(--chair-accent-one)
+
+  &__wing
+    --height calc(10 * var(--cm))
+    --width calc(50 * var(--cm))
+    --depth calc(16 * var(--cm))
+    --z calc(34 * var(--cm))
+    top 50%
+    left 50%
+    margin-left calc((-25 * var(--cm)) * 1vmin)
+
+    &--right
+      margin-top calc((-28 * var(--cm)) * 1vmin)
+      --rotate-cuboid-x -15
+
+      div:nth-of-type(2)
+        background var(--chair-accent-one)
+        border calc((1 * var(--cm)) * 1vmin) solid var(--chair-accent-two)
+
+    &--left
+      margin-top calc((12 * var(--cm)) * 1vmin)
+      --rotate-cuboid-x 15
+
+      div:nth-of-type(1)
+        background var(--chair-accent-one)
+        border calc((1 * var(--cm)) * 1vmin) solid var(--chair-accent-two)
+
+    div
+      background var(--chair-two)
+
+  &__back
+    --height calc(66 * var(--cm))
+    --depth calc(48 * var(--cm))
+    --width calc(10 * var(--cm))
+    --z calc(64 * var(--cm))
+    --rotate-cuboid-y 10
+
+    right 0%
+    top 50%
+    margin-top calc((-24 * var(--cm)) * 1vmin)
+
+    div
+      background var(--chair-three)
+
+      &:nth-of-type(1)
+      &:nth-of-type(2)
+        background var(--chair-two)
+        border calc((1 * var(--cm)) * 1vmin) solid var(--chair-accent-two)
+
+      &:nth-of-type(3):after
+        content ''
+        position absolute
+        top 25%
+        left 50%
+        transform translate(-50%, -50%)
+        height 40%
+        width 40%
+        background url("https://assets.codepen.io/605876/avatar.png")
+        background-size contain
+        background-repeat no-repeat
+
+
+  &__top
+    height 100%
+    width 100%
+    position absolute
+    animation-name spin
+    animation-iteration-count infinite
+    animation-timing-function linear
+    animation-duration calc(var(--spin, 0) * 1s)
+
+    @keyframes spin
+      to
+        transform rotateZ(360deg)
+
+  &__headrest
+    --height calc(20 * var(--cm))
+    --depth calc(40 * var(--cm))
+    --width calc(10 * var(--cm))
+    --z calc(100 * var(--cm))
+
+    top 50%
+    right -5%
+    margin-top calc((-20 * var(--cm)) * 1vmin)
+
+    div
+      background var(--chair-two)
+
+      &:nth-of-type(1)
+      &:nth-of-type(2)
+        border calc((1 * var(--cm)) * 1vmin) solid var(--chair-accent-two)
+
+      &:nth-of-type(5)
+        background var(--chair-three)
+
+  &__armrest
+    &--horizontal
+      --height calc(4 * var(--cm))
+      --width calc(30 * var(--cm))
+      --depth calc(8 * var(--cm))
+      --z calc(52 * var(--cm))
+
+      left 20%
+
+      &--right
+        top -5%
+      &--left
+        bottom -5%
+
+      div
+        background var(--chair-four)
+
+        &:nth-of-type(1)
+          background var(--chair-three)
+
+    &--vertical
+      --height calc(20 * var(--cm))
+      --depth calc(6 * var(--cm))
+      --width calc(6 * var(--cm))
+      --z calc(40 * var(--cm))
+      left 35%
+
+      &--right
+        top -4%
+      &--left
+        bottom -4%
+
+      div
+        background var(--chair-three)
+
+        &:nth-of-type(1)
+          background var(--chair-one)
+

@@ -1,3 +1,4 @@
+- const URL = ''
 //- Front
 //- Back
 //- Right
@@ -14,9 +15,24 @@ mixin cuboid(className)
   //- Plane that all the 3D stuff sits on
   .plane
     .studio
-      +cuboid('floor')
+      .floor.cuboid
+        .cuboid__side
+        .cuboid__side
+        .cuboid__side
+        .cuboid__side
+        .cuboid__side
+        .cuboid__side
       +cuboid('rug')
-      +cuboid('wall wall--left')
+      .wall.wall--left.cuboid
+        .cuboid__side
+        .cuboid__side
+        .cuboid__side
+        .cuboid__side
+        .cuboid__side
+        .cuboid__side
+        .wall__shadow.wall__shadow--desk
+        //- .wall__shadow.wall__shadow--monitor
+        //- .wall__shadow.wall__shadow--monitor-two
       .window
         +cuboid('window__frame window__frame--top')
         +cuboid('window__frame window__frame--left')
@@ -37,8 +53,16 @@ mixin cuboid(className)
       +cuboid('wall wall--right-lower')
       +cuboid('jfdi')
       +cuboid('shelf')
+      .plant
+        img.plant__plant(src="https://assets.codepen.io/605876/plant.png?width=204&height=306&format=auto")
+        img.plant__plant(src="https://assets.codepen.io/605876/plant.png?width=204&height=306&format=auto")
+        img.plant__plant(src="https://assets.codepen.io/605876/plant.png?width=204&height=306&format=auto")
+        +cuboid('plant__pot')
       +cuboid('light-cube')
+
       .desk
+        .desk__shadow.desk__shadow--floor
+        //- .desk__shadow.desk__shadow--wall
         +cuboid('desk__leg desk__leg--left')
         +cuboid('desk__leg desk__leg--right')
         +cuboid('desk__leg desk__leg--bottom-left')
@@ -69,3 +93,26 @@ mixin cuboid(className)
           +cuboid('keyboard')
           +cuboid('keyboard__keys')
       +cuboid('bear-canvas')
+      .chair__base
+        .chair__shadow
+        +cuboid('chair__wheel chair__wheel--one')
+        +cuboid('chair__wheel chair__wheel--two')
+        +cuboid('chair__wheel chair__wheel--three')
+        +cuboid('chair__wheel chair__wheel--four')
+        +cuboid('chair__wheel chair__wheel--five')
+        +cuboid('chair__leg chair__leg--one')
+        +cuboid('chair__leg chair__leg--two')
+        +cuboid('chair__leg chair__leg--three')
+        +cuboid('chair__leg chair__leg--four')
+        +cuboid('chair__leg chair__leg--five')
+        +cuboid('chair__spine')
+        .chair__top
+          +cuboid('chair__seat')
+          +cuboid('chair__wing chair__wing--left')
+          +cuboid('chair__wing chair__wing--right')
+          +cuboid('chair__back')
+          +cuboid('chair__headrest')
+          +cuboid('chair__armrest chair__armrest--vertical chair__armrest--vertical--left')
+          +cuboid('chair__armrest chair__armrest--vertical chair__armrest--vertical--right')
+          +cuboid('chair__armrest chair__armrest--horizontal chair__armrest--horizontal--left')
+          +cuboid('chair__armrest chair__armrest--horizontal chair__armrest--horizontal--right')
