@@ -1,4 +1,4 @@
-- const URL = ''
+- const URL = "https://css-tricks.com"
 //- Front
 //- Back
 //- Right
@@ -11,7 +11,7 @@ mixin cuboid(className)
     while s < 6
       .cuboid__side
       - s++
-audio.ambience(src="https://assets.codepen.io/605876/loyalty-freak-music_everyone.mp3" autoplay loop muted)
+audio.ambience(src="https://assets.codepen.io/605876/loyalty-freak-music_everyone.mp3" muted playsinline autoplay loop)
 input#zoom(type='checkbox')
 label(for="zoom" title="Toggle zoom")
   svg(viewBox="0 0 24 24")
@@ -86,7 +86,7 @@ label(for="spin" title="Toggle chair spin")
             .cuboid__side
             .cuboid__side
             .cuboid__side
-              iframe(src="https://css-tricks.com")
+              iframe(src=URL)
             .cuboid__side
             .cuboid__side
             .cuboid__side

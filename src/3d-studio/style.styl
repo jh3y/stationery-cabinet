@@ -3,7 +3,7 @@
   transform-style preserve-3d
 
 :root
-  --blur 10px
+  --blur 1vmin
   --perspective 2000
   --rotate-x -20
   --rotate-y -45
@@ -264,7 +264,7 @@ label svg:last-of-type
   transform-style preserve-3d
   transform rotateX(calc((var(--rotate-x, -24) - (var(--zoomed) * var(--rotate-x, -24))) * 1deg)) rotateY(calc(((var(--rotate-y, -24) - (var(--zoomed) * var(--rotate-y, -24))) + (var(--zoomed) * -90)) * 1deg)) rotateX(90deg) translate3d(0, 0, 0)
 
-  &:after
+  &:before
     content ''
     background hsla(0, 0%, 0%, 0.5)
     filter blur(var(--blur))
@@ -274,6 +274,7 @@ label svg:last-of-type
     top -8%
     left -10%
     transform translate3d(0, 0, -11vmin)
+    z-index -1
 
 // This is what makes the CSS variable powered cuboid
 .cuboid
