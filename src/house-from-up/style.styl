@@ -1,0 +1,518 @@
+*
+  box-sizing border-box
+  transform-style preserve-3d
+
+:root
+  --perspective 0
+  --rotate-x -15
+  --rotate-y -40
+  --house-height 12
+  --scale 0.75
+
+body
+  min-height 100vh
+  // overflow hidden
+  background hsl(0, 0%, 90%)
+
+.scene
+  perspective calc(var(--perspective, 800) * 1px)
+  transform-style preserve-3d
+  height 100vh
+  width 100vw
+  display flex
+  align-items center
+  justify-content center
+  transform scale(var(--scale))
+
+.plane
+  background hsla(180, 50%, 50%, 0.5)
+  height calc(var(--plane-height, 30) * 1vmin)
+  width calc(var(--plane-width, 25) * 1vmin)
+  transform-style preserve-3d
+  transform rotateX(calc(var(--rotate-x, -24) * 1deg)) rotateY(calc(var(--rotate-y, -24) * 1deg)) rotateX(90deg) translate3d(0, 0, 0)
+
+
+// This is what makes the CSS variable powered cuboid
+.cuboid
+  --width var(--cuboid-width, 15)
+  --height var(--cuboid-height, 10)
+  --depth var(--cuboid-depth, 4)
+  height calc(var(--depth) * 1vmin)
+  width calc(var(--width) * 1vmin)
+  position absolute
+  transform translate3d(calc(var(--x, 0) * 1vmin), calc(var(--y, 0) * 1vmin), calc(var(--z, 0) * 1vmin)) rotateX(calc(var(--rotate-cuboid-x, 0) * 1deg)) rotateY(calc(var(--rotate-cuboid-y, 0) * 1deg)) rotateZ(calc(var(--rotate-cuboid-z, 0) * 1deg))
+  transform-style preserve-3d
+
+  &__side
+    transform-style preserve-3d
+
+  & > div:nth-of-type(1)
+    height calc(var(--height) * 1vmin)
+    width 100%
+    transform-origin 50% 50%
+    transform rotateX(-90deg)
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) rotateX(-90deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin))
+
+  & > div:nth-of-type(2)
+    height calc(var(--height) * 1vmin)
+    width 100%
+    transform-origin 50% 50%
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(180deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(3)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--depth) * 1vmin)
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(4)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--depth) * 1vmin)
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(-90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(5)
+    height calc(var(--depth) * 1vmin)
+    width calc(var(--width) * 1vmin)
+    transform translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(6)
+    height calc(var(--depth) * 1vmin)
+    width calc(var(--width) * 1vmin)
+    transform translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * -1vmin)) rotateX(180deg)
+    position absolute
+    top 50%
+    left 50%
+
+// 30 x 25
+.house
+
+  &--yellow
+    div
+      background hsl(65, 80%, 50%)
+
+      &:nth-of-type(1)
+        background hsl(65, 80%, 30%)
+
+      &:nth-of-type(2)
+        background hsl(65, 80%, 60%)
+
+  &--orange
+    div
+      background hsl(28, 80%, 50%)
+
+      &:nth-of-type(1)
+        background hsl(28, 80%, 30%)
+
+      &:nth-of-type(2)
+        background hsl(28, 80%, 60%)
+  &--pink
+    div
+      background hsl(10, 80%, 50%)
+
+      &:nth-of-type(1)
+        background hsl(10, 80%, 30%)
+
+      &:nth-of-type(2)
+        background hsl(10, 80%, 60%)
+
+  &__mini-pitch
+    --width 10
+    --height 4
+    --depth 6
+    --z 19
+    --y 20
+    --x 9
+
+  &__mini-pitch-top
+    --width 10
+    --height 4
+    --depth 6
+    --z 23
+    --y 20
+    --x 9
+
+    div:nth-of-type(1)
+    div:nth-of-type(2)
+    div:nth-of-type(5)
+      background transparent
+
+    div:nth-of-type(3)
+      $clip = polygon(0 100%, 50% 0, 100% 100%)
+      -webkit-clip-path $clip
+      clip-path $clip
+
+  &__side
+    --width 8
+    --x 5
+    --y -4
+    --depth 4
+    --height 10
+    --z 7
+
+  &__side-pitch-body
+    --width 8
+    --x 5
+    --y -4
+    --depth 10
+    --height 10
+    --z 15
+
+  &__side-pitch-pitch
+    --width 8
+    --x 5
+    --y -4
+    --depth 10
+    --height 10
+    --z 25
+
+    div:nth-of-type(2)
+      $clip = polygon(0 100%, 50% 0, 100% 100%)
+      -webkit-clip-path $clip
+      clip-path $clip
+
+    div:nth-of-type(1)
+    div:nth-of-type(3)
+    div:nth-of-type(4)
+    div:nth-of-type(5)
+    div:nth-of-type(6)
+      background transparent
+
+  &__side-trim
+    --width 10
+    --x 4
+    --depth 5
+    --y -5
+    --height 1.5
+    --z 12.25
+
+    div
+      background red
+
+  &__main
+    --width 14
+    --depth 30
+    --height var(--house-height)
+    --z calc((var(--house-height) / 2) + 2)
+
+  &__top
+    --width 20
+    --depth 30
+    --height 2
+    --z calc(var(--house-height) + 2)
+
+  &__front
+    --width 22
+    --height calc(var(--house-height) + 1)
+    --depth 15
+    --z calc((var(--house-height) / 2) + 2.5)
+    --x -2
+
+  &__pitch-main-body
+    --width 25
+    --depth 15
+    --height 8
+    --z 16
+    --x -2
+
+    div
+      background grey
+
+  &__pitch-main-pitch
+    --width 25
+    --depth 15
+    --height 15
+    --z 27.5
+    --x -2
+
+    div
+      background orange
+
+      &:nth-of-type(1)
+      &:nth-of-type(2)
+      &:nth-of-type(5)
+      &:nth-of-type(6)
+        background transparent
+
+      &:nth-of-type(3)
+      &:nth-of-type(4)
+        $clip = polygon(0 100%, 50% 0, 100% 100%)
+        -webkit-clip-path $clip
+        clip-path $clip
+
+  &__pitch-left
+    --width 20
+    --depth 20
+    --height var(--house-height)
+    --z calc(var(--house-height) + (var(--house-height) / 2) + 3)
+    --y 10
+
+    div
+      background transparent
+
+      &:nth-of-type(1)
+      &:nth-of-type(2)
+        $clip = polygon(0 100%, 50% 0, 100% 100%)
+        -webkit-clip-path $clip
+        clip-path $clip
+
+.pitch
+  position absolute
+  background hsla(280, 80%, 50%, 0.5)
+
+  &--side
+    height 12vmin
+    width 8vmin
+    left 5vmin
+    top -4vmin
+    transform translate3d(0, 0, 30vmin)
+
+    .cuboid
+      --depth 10
+      --height 1
+      --width 15
+      --y -1
+
+      div
+        background-color purple
+
+    &-front
+      transform-origin 0% 0%
+      transform translate3d(50%, 0, 30vmin) rotateY(68deg) translate(-0.5vmin, 0)
+
+    &-back
+      transform-origin 100% 0%
+      transform translate3d(-50%, 0, 30vmin) rotateY(-68deg) translate(0.5vmin, 0)
+
+      .cuboid
+        right 0
+
+  &--main
+    height 15vmin
+    width 27vmin
+    left -3vmin
+
+    &-left
+      transform-origin 50% 0
+      transform translate3d(0, 50%, 35vmin) rotateX(-67deg) translate(0, -0.5vmin)
+
+      .cuboid
+        top 0
+
+    &-right
+      transform-origin 50% 100%
+      transform translate3d(0, -50%, 35vmin) rotateX(67deg) translate(0, 0.5vmin)
+
+      .cuboid
+        bottom 0
+
+    .cuboid
+      --depth 23
+      --width 27
+      --height 2
+      --z 0.25
+
+      div
+        background red
+
+  &--mini
+    height 6vmin
+    width 10vmin
+    top 20vmin
+    transform translate3d(0, 0, 25vmin)
+    left 9vmin
+
+    .cuboid
+      --height 0.5
+      --width 10
+      --depth 6
+
+      div
+        background pink
+
+    &-left
+      transform-origin 50% 0
+      transform translate3d(0.5vmin, 50%, 25vmin) rotateX(-54deg) translate(0, -0.2vmin)
+    &-right
+      transform-origin 50% 100%
+      transform translate3d(0.5vmin, -50%, 25vmin) rotateX(54deg) translate(0, 0.2vmin)
+
+  &--left
+    height 20vmin
+    width 17vmin
+    position absolute
+    transform translate3d(0, 0, 27vmin)
+    top 11vmin
+
+    &-front
+      transform-origin 0% 50%
+      transform translate3d(10vmin, 0, 27vmin) rotateY(50deg) translate(-1vmin, 0)
+    &-back
+      transform-origin 100% 50%
+      transform translate3d(-7vmin, 0, 27vmin) rotateY(-50deg) translate(1vmin, 0)
+
+    .cuboid
+      --width 17
+      --height 1
+      --depth 20
+      --y 0
+      --z 0.5
+
+      div
+        background blue
+
+.bay-window
+  --height 10
+  --width 5
+  --depth 15
+  --x 20
+  --z 7
+
+  div
+    background hsla(180, 50%, 50%, 0.5)
+
+    &:nth-of-type(3)
+      $clip = inset(0 25% 0 25%)
+      -webkit-clip-path $clip
+      clip-path $clip
+
+    &:nth-of-type(1)
+    &:nth-of-type(2)
+    &:nth-of-type(5)
+    &:nth-of-type(6)
+      background-color transparent
+
+    &:nth-of-type(1):after
+      content ''
+      position absolute
+      left 0
+      top 0
+      transform-origin 0 50%
+      width 126%
+      height 100%
+      background hsla(280, 50%, 50%, 0.5)
+      transform rotateY(37deg)
+    &:nth-of-type(2):after
+      content ''
+      position absolute
+      right 0
+      top 0
+      transform-origin 100% 50%
+      width 126%
+      height 100%
+      background hsla(280, 50%, 50%, 0.5)
+      transform rotateY(-37deg)
+
+
+.bay-trim
+  --height 1.5
+  --width 6
+  --depth 17
+  --y -1
+  --x 20
+  --z calc((var(--house-height) + 0.25))
+
+  div
+    background red
+
+
+
+.base
+  &--main
+    --height 2
+    --width 20
+    --depth 30
+    --z 1
+
+  div
+    background orange
+
+  &--back
+    --depth 15
+    --width 2
+    --height 2
+    --x -2
+    --z 1
+
+  &--front
+    --x 20
+    --z 1
+    --height 2
+    --width 5
+    --depth 15
+
+    div
+      &:nth-of-type(3)
+        $clip = inset(0 25% 0 25%)
+        -webkit-clip-path $clip
+        clip-path $clip
+
+      &:nth-of-type(1)
+      &:nth-of-type(2)
+      &:nth-of-type(5)
+      &:nth-of-type(6)
+        background-color transparent
+
+      &:nth-of-type(1):after
+        content ''
+        position absolute
+        left 0
+        top 0
+        transform-origin 0 50%
+        width 126%
+        height 100%
+        background hsla(0, 50%, 50%, 0.5)
+        transform rotateY(37deg)
+      &:nth-of-type(2):after
+        content ''
+        position absolute
+        right 0
+        top 0
+        transform-origin 100% 50%
+        width 126%
+        height 100%
+        background hsla(0, 50%, 50%, 0.5)
+        transform rotateY(-37deg)
+
+  &--side
+    --z 1
+    --height 2
+    --width 8
+    --depth 4
+    --y -4
+    --x 5
+
+.chimney
+  --width 6
+  --height 16
+  --depth 4
+  --z 32
+  --x 7
+  --y 13
+
+  div
+    background green
+
+.chimney__skirt
+  --width 7
+  --height 1
+  --depth 5
+  --z 37
+  --x 6.5
+  --y 12.5
+
+  div
+    background orange
