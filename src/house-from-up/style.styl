@@ -1,4 +1,5 @@
 *
+*:after
   box-sizing border-box
   transform-style preserve-3d
 
@@ -7,7 +8,27 @@
   --rotate-x -15
   --rotate-y -40
   --house-height 12
-  --scale 0.75
+  --scale 1.5
+  // colors
+  --brick hsl(15, 60%, 40%)
+  --pitch-top hsl(20, 50%, 30%)
+  --pitch-under hsl(180, 60%, 50%)
+  --pitch-back hsl(180, 60%, 30%)
+  --yellow-one hsl(65, 80%, 50%)
+  --yellow-two hsl(65, 80%, 40%)
+  --yellow-three hsl(65, 80%, 30%)
+  --pink-one hsl(10, 80%, 75%)
+  --pink-two hsl(10, 80%, 65%)
+  --pink-three hsl(10, 80%, 55%)
+  --orange-one hsl(20, 80%, 70%)
+  --orange-two hsl(20, 80%, 60%)
+  --orange-three hsl(20, 80%, 50%)
+  --blue-one hsl(190, 80%, 50%)
+  --blue-two hsl(190, 80%, 40%)
+  --blue-three hsl(190, 80%, 30%)
+  --windowsill hsl(0, 0%, 90%)
+  --internal hsl(180, 80%, 8%)
+  --panel-shade hsla(0, 0%, 0%, 0.25)
 
 body
   min-height 100vh
@@ -25,7 +46,6 @@ body
   transform scale(var(--scale))
 
 .plane
-  background hsla(180, 50%, 50%, 0.5)
   height calc(var(--plane-height, 30) * 1vmin)
   width calc(var(--plane-width, 25) * 1vmin)
   transform-style preserve-3d
@@ -100,35 +120,6 @@ body
 // 30 x 25
 .house
 
-  &--yellow
-    div
-      background hsl(65, 80%, 50%)
-
-      &:nth-of-type(1)
-        background hsl(65, 80%, 30%)
-
-      &:nth-of-type(2)
-        background hsl(65, 80%, 60%)
-
-  &--orange
-    div
-      background hsl(28, 80%, 50%)
-
-      &:nth-of-type(1)
-        background hsl(28, 80%, 30%)
-
-      &:nth-of-type(2)
-        background hsl(28, 80%, 60%)
-  &--pink
-    div
-      background hsl(10, 80%, 50%)
-
-      &:nth-of-type(1)
-        background hsl(10, 80%, 30%)
-
-      &:nth-of-type(2)
-        background hsl(10, 80%, 60%)
-
   &__mini-pitch
     --width 10
     --height 4
@@ -137,6 +128,26 @@ body
     --y 20
     --x 9
 
+    div
+      --bg var(--orange-one)
+      background linear-gradient(transparent 90%, var(--panel-shade)) 0 0 / 100% 1vmin, var(--bg)
+
+      &:nth-of-type(1)
+        --bg var(--orange-three)
+
+      &:nth-of-type(3):after
+        content ''
+        height 90%
+        width 50%
+        border 0.25vmin solid var(--windowsill)
+        background linear-gradient(var(--yellow-three), var(--yellow-three)) 0.25vmin 83%/82% 36% no-repeat,
+                  linear-gradient(var(--yellow-three), var(--yellow-three)) 0.25vmin 0.25vmin/82% 40% no-repeat,
+                  var(--pink-one)
+        position absolute
+        bottom 40%
+        left 50%
+        transform translate3d(-50%, 0, 1px)
+
   &__mini-pitch-top
     --width 10
     --height 4
@@ -144,6 +155,10 @@ body
     --z 23
     --y 20
     --x 9
+
+    div
+      --bg var(--orange-one)
+      background linear-gradient(transparent 90%, var(--panel-shade)) 0 0 / 100% 1vmin, var(--bg)
 
     div:nth-of-type(1)
     div:nth-of-type(2)
@@ -163,13 +178,66 @@ body
     --height 10
     --z 7
 
+    div
+      --bg var(--pink-one)
+      background linear-gradient(transparent 90%, var(--panel-shade)) 0 0 / 100% 1vmin, var(--bg)
+
+      &:nth-of-type(1)
+      &:nth-of-type(5)
+      &:nth-of-type(6)
+        background var(--transparent)
+
+      &:nth-of-type(3)
+        --bg var(--pink-three)
+
+      &:nth-of-type(2):after
+        content ''
+        position absolute
+        top 10%
+        left 50%
+        width 50%
+        height 60%
+        transform translate3d(-50%, 0, 1px)
+        border 0.25vmin solid var(--windowsill)
+        background linear-gradient(var(--internal), var(--internal)) 0.25vmin 83%/82% 36% no-repeat,
+                  linear-gradient(var(--internal), var(--internal)) 0.25vmin 0.25vmin/82% 40% no-repeat,
+                  var(--pink-one)
+
+
   &__side-pitch-body
     --width 8
     --x 5
     --y -4
     --depth 10
-    --height 10
-    --z 15
+    --height 8
+    --z 17
+
+    div
+      background var(--pink-one)
+      filter brightness(var(--b, 1))
+
+      &:nth-of-type(3)
+        --b 0.5
+
+      &:nth-of-type(2)
+        --b 0.95
+
+      &:nth-of-type(1)
+      &:nth-of-type(5)
+      &:nth-of-type(6)
+      &:nth-of-type(1):after
+      &:nth-of-type(5):after
+      &:nth-of-type(6):after
+        display none
+
+      &:after
+        content ''
+        background url('https://assets.codepen.io/605876/house-roof-tile--pink.png')
+        position absolute
+        height 100%
+        width 100%
+        left 0
+        top 0
 
   &__side-pitch-pitch
     --width 8
@@ -183,6 +251,17 @@ body
       $clip = polygon(0 100%, 50% 0, 100% 100%)
       -webkit-clip-path $clip
       clip-path $clip
+      background var(--pink-one)
+      filter brightness(0.95)
+
+      &:before
+        content ''
+        background url('https://assets.codepen.io/605876/house-roof-tile--pink.png')
+        position absolute
+        height 100%
+        width 100%
+        left 0
+        top 0
 
     div:nth-of-type(1)
     div:nth-of-type(3)
@@ -220,6 +299,48 @@ body
     --depth 15
     --z calc((var(--house-height) / 2) + 2.5)
     --x -2
+
+  &__front-slant
+    --width 5
+    --depth 16
+    --height 4
+    --z 15
+    --x 20
+    --y -0.5
+
+    div
+      &:nth-of-type(1):after
+        --clip polygon(50% 0, 100% 100%, 0 100%, 0 0)
+      &:nth-of-type(2):after
+        --clip polygon(100% 0%, 100% 100%, 0 100%, 50% 0)
+      &:nth-of-type(1):after
+      &:nth-of-type(2):after
+        content ''
+        position absolute
+        top 0
+        left 0
+        width 100%
+        height 100%
+        transform-origin 50% 100%
+        transform rotateX(13deg)
+        background orange
+        -webkit-clip-path var(--clip)
+        clip-path var(--clip)
+
+
+      &:nth-of-type(3):after
+        content ''
+        background blue
+        position absolute
+        height 100%
+        width 100%
+        top 0
+        left 0
+        transform-origin 50% 100%
+        transform rotateX(30deg)
+        $clip = polygon(0 100%, 5% 0, 95% 0, 100% 100%)
+        -webkit-clip-path $clip
+        clip-path $clip
 
   &__pitch-main-body
     --width 25
@@ -271,7 +392,6 @@ body
 
 .pitch
   position absolute
-  background hsla(280, 80%, 50%, 0.5)
 
   &--side
     height 12vmin
@@ -283,19 +403,16 @@ body
     .cuboid
       --depth 10
       --height 1
-      --width 15
+      --width 12.5
       --y -1
-
-      div
-        background-color purple
 
     &-front
       transform-origin 0% 0%
-      transform translate3d(50%, 0, 30vmin) rotateY(68deg) translate(-0.5vmin, 0)
+      transform translate3d(50%, 0, 30vmin) rotateY(68deg) translate(-0.25vmin, 0)
 
     &-back
       transform-origin 100% 0%
-      transform translate3d(-50%, 0, 30vmin) rotateY(-68deg) translate(0.5vmin, 0)
+      transform translate3d(-50%, 0, 30vmin) rotateY(-68deg) translate(0.25vmin, 0)
 
       .cuboid
         right 0
@@ -304,6 +421,12 @@ body
     height 15vmin
     width 27vmin
     left -3vmin
+
+    .cuboid
+      --depth 23
+      --width 27
+      --height 2
+      --z 0.25
 
     &-left
       transform-origin 50% 0
@@ -319,15 +442,6 @@ body
       .cuboid
         bottom 0
 
-    .cuboid
-      --depth 23
-      --width 27
-      --height 2
-      --z 0.25
-
-      div
-        background red
-
   &--mini
     height 6vmin
     width 10vmin
@@ -339,9 +453,6 @@ body
       --height 0.5
       --width 10
       --depth 6
-
-      div
-        background pink
 
     &-left
       transform-origin 50% 0
@@ -504,7 +615,27 @@ body
   --y 13
 
   div
-    background green
+    background var(--brick)
+
+    &:nth-of-type(1)
+      filter brightness(0.5)
+    &:nth-of-type(3)
+      filter brightness(0.75)
+
+    &:nth-of-type(5)
+      border 1vmin solid var(--pitch-top)
+      background #111
+
+      &:after
+        display none
+    &:after
+      content ''
+      position absolute
+      height 100%
+      width 100%
+      top 0
+      left 0
+      background url('https://assets.codepen.io/605876/bricks.png')
 
 .chimney__skirt
   --width 7
@@ -515,4 +646,287 @@ body
   --y 12.5
 
   div
-    background orange
+    background var(--brick)
+    &:after
+      content ''
+      position absolute
+      height 100%
+      width 100%
+      top 0
+      left 0
+      background url('https://assets.codepen.io/605876/bricks.png')
+      filter brightness(0.5)
+
+.post
+  &--left
+    --depth 1
+    --width 1
+    --height 12
+    --y 29
+    --x 19
+    --z 8
+  &--right
+    --depth 1
+    --width 1
+    --height 12
+    --y 23
+    --x 19
+    --z 8
+  &--back
+    --depth 1
+    --width 1
+    --height 12
+    --y 29
+    --x 14
+    --z 8
+  &--front-top
+    --depth 15
+    --width 1
+    --height 1
+    --y 15
+    --x 19
+    --z 13
+  &--front-side
+    --depth 1
+    --width 6
+    --height 1
+    --y 29
+    --x 14
+    --z 13
+  &--top-support
+    --depth 15
+    --width 0.5
+    --height 0.5
+    --y 15
+    --x 19.5
+    --z 11.5
+  &--top-side-support
+    --depth 0.5
+    --width 5
+    --height 0.5
+    --y 29.5
+    --x 15
+    --z 11.5
+  &--bottom-side-support
+    --depth 0.5
+    --width 5
+    --height 0.5
+    --y 29.5
+    --x 15
+    --z 6
+  &--bottom-support
+    --depth 7
+    --width 0.5
+    --height 0.5
+    --y 23
+    --x 19.5
+    --z 6
+  &--stair
+    --depth 1
+    --width 1
+    --height 4
+    --x 24
+    --y 23
+    --z 2
+  &--handrail
+    --depth 1
+    --height 1
+    --width 6
+    --rotate-cuboid-y 30
+    --x 19
+    --y 23
+    --z 5
+
+  div
+    background blue
+
+.steps
+  background hsla(290, 50%, 50%, 0.5)
+  position absolute
+
+  &--front
+    top 15vmin
+    left 20vmin
+    width 5vmin
+    height 8vmin
+
+    & > div:nth-of-type(1)
+      --height 1.5
+      --width calc(5 / 3)
+      --depth 8
+      --z 0.75
+    & > div:nth-of-type(2)
+      --height 1
+      --width calc(5 / 3)
+      --depth 8
+      --z 0.5
+      --x calc(5 / 3)
+    & > div:nth-of-type(3)
+      --height 0.5
+      --width calc(5 / 3)
+      --depth 8
+      --z 0.25
+      --x calc((5 / 3) * 2)
+
+
+
+    & > div div
+        background-color red
+
+
+  &--back
+    top 15vmin
+    left -2vmin
+    height 8vmin
+    width 2vmin
+
+    & > div
+      --height 1
+      --width 2
+      --depth 8
+      --z 0.5
+
+      div
+        background-color red
+
+.rafter
+  --z 36
+  --x -3
+  --y 6.5
+  --width 27
+  --height 1
+  --depth 2
+
+  div
+    background var(--pitch-top)
+
+.fence
+  position absolute
+  &--front-top
+    background linear-gradient(transparent 50%, blue 50%) 0 0 / 100% 1vmin
+    width 1.5vmin
+    height 15vmin
+    top 15vmin
+    left 19vmin
+    transform translate3d(0, 0, 12.5vmin) rotateY(90deg)
+  &--side-top
+    background linear-gradient(transparent 50%, blue 50%) 0 0 / 100% 1vmin
+    width 1.5vmin
+    height 6vmin
+    top 27vmin
+    left 19vmin
+    transform translate3d(0, 0, 12.5vmin) rotateY(90deg) rotateX(90deg) translate(0, -50%)
+  &--side-bottom
+    background linear-gradient(90deg, transparent 50%, blue 50%) 0 0 / 1vmin 100%
+    width 5vmin
+    height 4vmin
+    top 25.5vmin
+    left 14.5vmin
+    transform-origin 50% 100%
+    transform translate3d(0, 0, 2vmin) rotateX(-90deg)
+  &--front-bottom
+    background linear-gradient(transparent 50%, blue 50%) 0 0 / 100% 1vmin
+    width 4vmin
+    height 6vmin
+    top 23.5vmin
+    left 19.5vmin
+    transform-origin 0% 50%
+    transform translate3d(0, 0, 2vmin) rotateY(-90deg)
+  &--handrail
+    height 8vmin
+    width 5vmin
+    top 23.5vmin
+    left 20vmin
+    background linear-gradient(90deg, transparent 50%, blue 50%) 0 0 / 1vmin 100%
+    transform-origin 50% 0
+    transform rotateX(90deg)
+    $clip = polygon(0 0, 0 80%, 100% 40%, 100% 0%)
+    -webkit-clip-path $clip
+    clip-path $clip
+
+.pipe
+  div
+    background-color pink
+
+  &--vertical
+    --depth 0.5
+    --width 0.5
+    --height 18
+    --z 11
+    --x -2.5
+    --y 13
+  &--horizontal
+    --depth 12
+    --width 0.5
+    --height 0.5
+    --z 16
+    --x -2.5
+    --y 2
+    --rotate-cuboid-x -15
+
+.pitch .cuboid
+  div
+    background var(--pitch-under)
+    overflow hidden
+
+    &:nth-of-type(1)
+    &:nth-of-type(2)
+      background var(--pitch-top)
+
+    &:nth-of-type(6)
+      background var(--pitch-back)
+
+    &:nth-of-type(5)
+      filter brightness(var(--b, 1))
+
+    &:nth-of-type(5):after
+      content ''
+      position absolute
+      top 50%
+      left 50%
+      width 200%
+      height 200%
+      transform translate(-50%, -50%) rotate(calc(var(--r, 0) * 1deg))
+      background url('https://assets.codepen.io/605876/house-roof-tile.png')
+
+.pitch--left .cuboid div
+.pitch--side .cuboid div
+  &:nth-of-type(1)
+  &:nth-of-type(2)
+    background var(--pitch-under)
+  &:nth-of-type(3)
+  &:nth-of-type(4)
+    background var(--pitch-top)
+
+
+.pitch--mini-left
+  --b 0.5
+.pitch--mini-right
+  --r 180
+.pitch--left-front
+  --b 0.75
+  --r -90
+.pitch--left-back
+  --r 90
+.pitch--main-left
+  --b 0.5
+.pitch--main-right
+  --r 180
+  --b 0.75
+.pitch--side-front
+  --b 0.5
+  --r -90
+.pitch--side-back
+  --r 90
+
+.window
+  position absolute
+  background var(--internal)
+
+  &--side
+    width 3vmin
+    height 6vmin
+    left 7.5vmin
+    top -4.1vmin
+    transform-origin 50% 0
+    transform rotateX(90deg) translate(0, 18vmin)
