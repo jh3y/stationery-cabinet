@@ -28,69 +28,71 @@ mixin cuboid(className)
 .scene
   //- Plane that all the 3D stuff sits on
   .plane
-    +cuboid('base base--main')
-    +cuboid('base base--back')
-    +cuboid('base base--front')
-    +cuboid('base base--side')
-    +cuboid('house__main house--yellow')
-    +cuboid('house__front house--yellow')
-    +cuboid('house__top house--yellow')
-    +cuboid('house__pitch-left house--yellow')
-    .pitch.pitch--left.pitch--left-front
-      +cuboid()
-    .pitch.pitch--left.pitch--left-back
-      +cuboid()
-    +cuboid('house__mini-pitch house--orange')
-    +cuboid('house__mini-pitch-top house--orange')
-    .pitch.pitch--mini.pitch--mini-left
-      +cuboid()
-    .pitch.pitch--mini.pitch--mini-right
-      +cuboid()
-    +cuboid('bay-window')
-    +cuboid('bay-trim')
-    +cuboid('house__pitch-main-body house--yellow')
-    +cuboid('house__pitch-main-pitch house--yellow')
-    .pitch.pitch--main.pitch--main-left
-      +cuboid()
-    .pitch.pitch--main.pitch--main-right
-      +cuboid()
-    +cuboid('house__side house--pink')
-    +cuboid('house__side-trim')
-    +cuboid('house__side-pitch-body house--pink')
-    +cuboid('house__side-pitch-pitch house--pink')
-    .pitch.pitch--side.pitch--side-front
-      +cuboid()
-    .pitch.pitch--side.pitch--side-back
-      +cuboid()
-    +cuboid('chimney__skirt')
-    +cuboid('chimney')
-    +cuboid('post post--left')
-    +cuboid('post post--right')
-    +cuboid('post post--back')
-    +cuboid('post post--front-top')
-    +cuboid('post post--front-side')
-    +cuboid('post post--top-support')
-    +cuboid('post post--top-side-support')
-    +cuboid('post post--bottom-support')
-    +cuboid('post post--bottom-side-support')
-    +cuboid('post post--stair')
-    +cuboid('post post--handrail')
-    .steps.steps--front
-      +cuboid('step')
-      +cuboid('step')
-      +cuboid('step')
-    .steps.steps--back
-      +cuboid('step')
-    +cuboid('house__front-slant')
-    +cuboid('rafter')
-    .fence.fence--front-top
-    .fence.fence--front-bottom
-    .fence.fence--side-top
-    .fence.fence--side-bottom
-    .fence.fence--handrail
-    +cuboid('pipe pipe--vertical')
-    +cuboid('pipe pipe--horizontal')
-    .window.window--side
+    .house
+      +cuboid('base base--main')
+      +cuboid('base base--back')
+      +cuboid('base base--front')
+      +cuboid('base base--side')
+      +cuboid('house__main house--yellow')
+      +cuboid('house__front house--yellow')
+      +cuboid('house__top house--yellow')
+      +cuboid('house__pitch-left house--yellow')
+      .pitch.pitch--left.pitch--left-front
+        +cuboid()
+      .pitch.pitch--left.pitch--left-back
+        +cuboid()
+      +cuboid('house__mini-pitch house--orange')
+      +cuboid('house__mini-pitch-top house--orange')
+      .pitch.pitch--mini.pitch--mini-left
+        +cuboid()
+      .pitch.pitch--mini.pitch--mini-right
+        +cuboid()
+      +cuboid('bay-window')
+      +cuboid('bay-trim')
+      +cuboid('house__pitch-main-body house--yellow')
+      +cuboid('house__pitch-main-pitch house--yellow')
+      .pitch.pitch--main.pitch--main-left
+        +cuboid()
+      .pitch.pitch--main.pitch--main-right
+        +cuboid()
+      +cuboid('house__side house--pink')
+      +cuboid('house__side-trim')
+      +cuboid('house__side-pitch-body house--pink')
+      +cuboid('house__side-pitch-pitch house--pink')
+      .pitch.pitch--side.pitch--side-front
+        +cuboid()
+      .pitch.pitch--side.pitch--side-back
+        +cuboid()
+      +cuboid('chimney__skirt')
+      +cuboid('chimney')
+      +cuboid('post post--left')
+      +cuboid('post post--right')
+      +cuboid('post post--back')
+      +cuboid('post post--front-top')
+      +cuboid('post post--front-side')
+      +cuboid('post post--top-support')
+      +cuboid('post post--top-side-support')
+      +cuboid('post post--bottom-support')
+      +cuboid('post post--bottom-side-support')
+      +cuboid('post post--stair')
+      +cuboid('post post--handrail')
+      .steps.steps--front
+        +cuboid('step')
+        +cuboid('step')
+        +cuboid('step')
+      .steps.steps--back
+        +cuboid('step')
+      +cuboid('house__front-slant')
+      +cuboid('rafter')
+      .fence.fence--front-top
+      .fence.fence--front-bottom
+      .fence.fence--side-top
+      .fence.fence--side-bottom
+      .fence.fence--handrail
+      +cuboid('pipe pipe--vertical')
+      +cuboid('pipe pipe--horizontal')
+      .window.window--side
+  .balloon-plane
     .balloons
       - let s = 0
       while s < BALLOON_COUNT

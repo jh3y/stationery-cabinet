@@ -9,7 +9,7 @@
   --rotate-y -40
   --house-height 12
   --scale 0.75
-  --speed 20
+  --speed 30
   // colors
   --shine hsla(0, 0%, 100%, 0.5)
   --brick hsl(15, 60%, 40%)
@@ -65,12 +65,23 @@ body
   justify-content center
   transform scale(var(--scale))
 
+.house
+  position absolute
+  height 100%
+  width 100%
+  transform translate(10%, 0)
+
 .plane
   height calc(var(--plane-height, 30) * 1vmin)
   width calc(var(--plane-width, 25) * 1vmin)
   transform-style preserve-3d
-  animation rotate calc(var(--speed) * 1s) infinite linear
+  position absolute
   transform rotateX(calc(var(--rotate-x, -24) * 1deg)) rotateY(calc(var(--rotate-y, -24) * 1deg)) rotateX(90deg) translate3d(0, 0, -30vmin)
+
+.balloon-plane
+  position absolute
+  transform-style preserve-3d
+  transform rotateX(calc(var(--rotate-x, -24) * 1deg)) rotateY(calc(var(--rotate-y, -24) * 1deg)) rotateX(90deg) translate3d(0, 0, -31vmin)
 
 @keyframes rotate
   from
@@ -1344,13 +1355,7 @@ body
   top 49%
   left 42%
   transform translate3d(-50%, -50%, 40vmin)
-  animation rotate-balloons calc(var(--speed) * 1s) infinite linear
 
-  @keyframes rotate-balloons
-    from
-      transform translate3d(-50%, -50%, 40vmin) rotate(0deg)
-    to
-      transform translate3d(-50%, -50%, 40vmin) rotate(-360deg)
 
 .balloon__string
   width 0.25vmin
