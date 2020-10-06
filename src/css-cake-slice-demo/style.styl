@@ -1,0 +1,259 @@
+*
+  box-sizing border-box
+
+$starting-hue = 190
+
+:root
+  --plate-depth 1
+  --marzipan hsl(50, 85%, 69%)
+  --marzipan-dark hsl(50, 85%, 50%)
+  --marzipan-light hsl(50, 85%, 78%)
+  --jammies hsl(7, 87%, 75%)
+  --jammies-dark hsl(7, 70%, 55%)
+  --cake hsl(43, 91%, 80%)
+  --cake-hover-y 2vmin
+  --cake-hover-z 3vmin
+  --cake-hover-rotate -10deg
+  --cake-active-y 3vmin
+  --cake-active-z 4vmin
+  --cake-active-rotate -10deg
+  --shadow-hover-translate -5%
+  --shadow-hover-opacity 0.15
+  --shadow-active-translate -8%
+  --shadow-active-opacity 0.05
+  --bg-hue $starting-hue
+
+body
+  min-height 100vh
+  padding 0
+  margin 0
+
+.scene
+  display flex
+  align-items center
+  justify-content center
+  perspective 800px
+  transform-style preserve-3d
+  margin 0
+  padding 0
+  height 100vh
+  width 100vw
+
+
+// Used as a 3D set for the cake plate
+.plane
+  height 25vmin
+  width 20vmin
+  transform rotateX(-24deg) rotateY(-24deg) rotateX(90deg) rotateX(calc(var(--rotate-x) * 1deg)) rotateY(calc(var(--rotate-y) * 1deg))
+  transform-style preserve-3d
+
+// cuboid variables are scoped in here
+.cuboid
+  position absolute
+  height calc(var(--height) * 1vmin)
+  width calc(var(--width) * 1vmin)
+  transform-style preserve-3d
+
+  // Dupe base
+  & > div:nth-of-type(1)
+    height 100%
+    width 100%
+    transform translate3d(0, 0, var(--offset, 0))
+
+  // Right face
+  & > div:nth-of-type(2)
+    position absolute
+    top 0
+    left calc(var(--width) * 1vmin)
+    height 100%
+    width calc(var(--depth) * 1vmin)
+    transform rotateY(-90deg) translate(var(--offset, 0), 0)
+    transform-origin 0 50%
+
+  // Left face
+  & > div:nth-of-type(3)
+    position absolute
+    top 0
+    left 0
+    height 100%
+    width calc(var(--depth) * 1vmin)
+    transform rotateY(-90deg) translate(var(--offset, 0), 0)
+    transform-origin 0 50%
+
+  // Back face
+  & > div:nth-of-type(4)
+    position absolute
+    top 0
+    left 0
+    height calc(var(--depth) * 1vmin)
+    width 100%
+    transform-origin 50% 0
+    transform rotateX(90deg) translate3d(0, var(--offset, 0), 0)
+
+  // Front face
+  & > div:nth-of-type(5)
+    position absolute
+    top 100%
+    left 0
+    width 100%
+    height calc(var(--depth) * 1vmin)
+    transform-origin 50% 0
+    transform rotateX(90deg) translate3d(0, var(--offset, 0), 0)
+
+  // The lid
+  & > div:nth-of-type(6)
+    height 100%
+    width 100%
+    position absolute
+    top 0
+    left 0
+    transform translateZ(calc(var(--depth) * 1vmin)) translate3d(0, 0, var(--offset, 0))
+
+.plate
+  --height 25
+  --width 20
+  --depth 1
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+  & > div:nth-of-type(2)
+  & > div:nth-of-type(3)
+  & > div:nth-of-type(4)
+    background hsl(0, 0%, 80%)
+  & > div:nth-of-type(5)
+    background hsl(0, 0%, 90%)
+  & > div:nth-of-type(6)
+    background hsl(0, 0%, 95%)
+
+  &:before
+    content ''
+    position absolute
+    left 100%
+    height 5vmin
+    width 1vmin
+    top 72%
+    transition transform 0.25s, opacity 0.25s
+    background hsl(0, 0%, 10%)
+    opacity 0
+    transform rotateY(-90deg) skewY(-20deg)
+    transform-origin 0 100%
+
+  &:after
+    content ''
+    position absolute
+    left 100%
+    height 20vmin
+    width 11.5vmin
+    transition transform 0.25s, opacity 0.25s
+    background hsl(0, 0%, 10%)
+    opacity 0
+    top 52%
+    transform-origin 0 50%
+    transform translate3d(0%, -50%, -0.2vmin) scaleX(0)
+
+.cake
+  height 20vmin
+  width 15vmin
+  position absolute
+  top 50%
+  left 50%
+  transform-style preserve-3d
+  transform translate(-50%, -50%) translateZ(calc(var(--plate-depth) * 1vmin))
+
+.cake-slice
+  --depth 15
+  --height 20
+  --width 5
+  --offset calc(((var(--depth) / 2) * (1 - var(--center))) * -1vmin)
+  position absolute
+  top 0
+  transition transform 0.25s
+  transform-origin 50% 100%
+  z-index 2
+  transform translate3d(0, 0, calc(((var(--depth) / 2) * (1 - var(--center))) * 1vmin))
+  background 'hsla(280, 50%, 50%, %s)' % var(--show)
+  &:hover
+    transform translate3d(0, 0, calc(((var(--depth) / 2) * (1 - var(--center))) * 1vmin)) translate3d(0, var(--cake-hover-y), var(--cake-hover-z)) rotateX(var(--cake-hover-rotate))
+
+  & > div:nth-of-type(1)
+    background var(--marzipan-light)
+  & > div:nth-of-type(2)
+    background var(--marzipan-dark)
+  & > div:nth-of-type(3)
+    background var(--marzipan)
+  & > div:nth-of-type(4)
+    background var(--marzipan-light)
+  & > div:nth-of-type(5)
+    background var(--marzipan-light)
+  & > div:nth-of-type(6)
+    background var(--marzipan)
+
+  & > div
+    opacity calc(1 - (var(--show) * 0.75))
+
+  &:hover ~ span:nth-of-type(1)
+    transform translateZ(0.00001vmin) translate(0, var(--shadow-hover-translate))
+    opacity var(--shadow-hover-opacity)
+
+.cake-slice
+  & > div:nth-of-type(2)
+    background linear-gradient(var(--jammies), var(--jammies)) 10% 10% / 43% 43% no-repeat,
+      linear-gradient(var(--cake), var(--cake)) 90% 10% / 43% 43% no-repeat,
+      linear-gradient(var(--jammies), var(--jammies)) 90% 90% / 43% 43% no-repeat,
+      linear-gradient(var(--cake), var(--cake)) 10% 90% / 43% 43% no-repeat,
+      linear-gradient(var(--jammies-dark), var(--jammies-dark)) center center / 92% 92% no-repeat, var(--marzipan-light)
+
+.backdrop
+  height 200vh
+  width 200vw
+  position fixed
+  top 0
+  left 0
+  right 0
+  bottom 0
+  background 'hsl(%s, 20%, 40%)' % var(--bg-hue)
+  transform translateZ(-30vmin)
+  z-index -1
+
+.cake-slice__shadow
+  --width 5
+  --alpha 1
+  display block
+  position absolute
+  height 100%
+  width calc(var(--width) * 1vmin)
+  background hsl(0, 0%, 10%)
+  transition transform 0.25s, opacity 0.25s
+  top 0
+  transform translateZ(0.00001vmin)
+
+
+
+.cake-slice
+  animation cake-flip calc(var(--animate, 0) * 1s) infinite linear
+.cake-slice__shadow
+  animation shadow-flip calc(var(--animate, 0) * 1s) infinite linear
+
+@keyframes cake-flip
+  0%
+    transform-origin 50% 50%
+    transform translate3d(0, 0, calc(((var(--depth) / 2) * (1 - var(--center))) * 1vmin)) translate3d(0, var(--cake-active-y), var(--cake-active-z)) rotateX(var(--cake-active-rotate)) translate3d(0, 0, 0) scale(1) rotate(0deg)
+  25%
+    transform-origin 50% 50%
+    transform translate3d(0, 0, calc(((var(--depth) / 2) * (1 - var(--center))) * 1vmin)) translate3d(0, var(--cake-active-y), var(--cake-active-z)) rotateX(var(--cake-active-rotate)) translate3d(0, 0, -1vmin) scale(0.95) rotate(0deg)
+  50%
+    transform-origin 50% 50%
+    transform translate3d(0, 0, calc(((var(--depth) / 2) * (1 - var(--center))) * 1vmin)) translate3d(0, var(--cake-active-y), var(--cake-active-z)) rotateX(var(--cake-active-rotate)) translate3d(0, 0, 20vmin) scale(1.2)
+  75%
+    transform-origin 50% 50%
+    transform translate3d(0, 0, calc(((var(--depth) / 2) * (1 - var(--center))) * 1vmin)) translate3d(0, var(--cake-active-y), var(--cake-active-z)) rotateX(var(--cake-active-rotate)) translate3d(0, 0, 20vmin) scale(1.1) rotateX(-360deg)
+  100%
+    transform-origin 50% 50%
+    transform translate3d(0, 0, calc(((var(--depth) / 2) * (1 - var(--center))) * 1vmin)) translate3d(0, var(--cake-active-y), var(--cake-active-z)) rotateX(var(--cake-active-rotate)) translate3d(0, 0, 0) scale(1) rotate(-360deg)
+
+@keyframes shadow-flip
+  25%
+    opacity 1
+  75%
+    opacity 0

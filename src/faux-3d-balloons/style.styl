@@ -1,0 +1,74 @@
+*
+  box-sizing border-box
+  transform-style preserve-3d
+
+:root
+  --perspective 1200
+  --rotate-x -15
+  --rotate-y -40
+  --shine hsla(0, 0%, 100%, 0.5)
+  --plane-height 10
+  --plane-width 10
+
+body
+  min-height 100vh
+  overflow hidden
+  background hsl(180, 90%, 90%)
+
+.scene
+  perspective calc(var(--perspective, 800) * 1px)
+  transform-style preserve-3d
+  height 100vh
+  width 100vw
+  display flex
+  align-items center
+  justify-content center
+
+.plane
+  background hsla(96, 50%, 50%, 0.5)
+  height calc(var(--plane-height, 25) * 1vmin)
+  width calc(var(--plane-width, 25) * 1vmin)
+  transform-style preserve-3d
+  border-radius 50%
+  transform rotateX(calc(var(--rotate-x, -24) * 1deg)) rotateY(calc(var(--rotate-y, -24) * 1deg)) rotateX(90deg) translate3d(0, 0, -20vmin)
+
+
+.balloons
+  position absolute
+  top 50%
+  left 50%
+  transform translate3d(-50%, -50%, 0)
+
+.balloon__string
+  width 0.25vmin
+  height calc(var(--length) * 1vmin)
+  position absolute
+  background hsla(0, 0%, 25%, 0.25)
+  bottom 50%
+  left 50%
+  transform-origin 50% 100%
+  transform translate(-50%, 0) rotateX(-90deg) rotateY(calc(var(--rotate) * 1deg)) rotateX(calc(var(--tilt) * 1deg))
+
+.balloon
+  height 12vmin
+  width 10vmin
+  background 'hsla(%s, 90%, 50%, 0.75)' % var(--hue, 0)
+  border-radius 50% 50% 50% 50% / 45% 45% 55% 55%
+  position absolute
+  bottom 50%
+  left 50%
+  transform-origin 50% 100%
+  transform translate(-50%, 0) rotateX(-90deg) rotateY(calc(var(--rotate) * 1deg)) rotateX(calc(var(--tilt) * 1deg)) translate(0, calc(var(--length) * -1vmin)) rotateX(calc(var(--tilt) * -1deg)) rotateY(calc((var(--rotate) + (var(--counter) * var(--rotate-y))) * -1deg)) rotateX(calc((var(--counter) * var(--rotate-x)) * -1deg))
+
+
+  &:before
+    content ''
+    position absolute
+    width 20%
+    height 30%
+    background blue
+    top 8%
+    left 16%
+    border-radius 50%
+    transform rotate(40deg)
+    background var(--shine)
