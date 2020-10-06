@@ -1,0 +1,28 @@
+- const BALLOON_COUNT = 25
+-
+  const random = (min, max) => {
+    min = Math.ceil(min)
+    max = Math.floor(max)
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+  const STRINGS = new Array(BALLOON_COUNT).fill().map(() => ({
+    len: random(15, 40),
+    rotate: random(0, 360),
+    tilt: random(0, 25),
+    hue: random(0, 359)
+  }))
+
+.scene
+  //- Plane that all the 3D stuff sits on
+  .plane
+    .balloons
+      - let s = 0
+      while s < BALLOON_COUNT
+        - const { len, rotate, tilt } = STRINGS[s]
+        .balloon__string(style=`--length: ${len}; --rotate: ${rotate}; --tilt: ${tilt};`)
+        - s++
+      - let b = 0
+      while b < BALLOON_COUNT
+        - const { hue, len, rotate, tilt } = STRINGS[b]
+        .balloon(style=`--hue: ${hue}; --length: ${len}; --rotate: ${rotate}; --tilt: ${tilt};`)
+        - b++

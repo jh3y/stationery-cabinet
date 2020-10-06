@@ -1,0 +1,180 @@
+*
+  box-sizing border-box
+
+:root
+  --primary hsl(165, 67%, 43%)
+  --secondary hsl(175, 85%, 28%)
+  --tertiary hsl(165, 67%, 38%)
+  --exploded 1
+  --start-x -32
+  --start-y -42
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  overflow hidden
+  background hsl(245, 50%, 15%)
+
+.scene
+  perspective 800px
+  transform-style preserve-3d
+  height 100vh
+  width 100vw
+  display flex
+  align-items center
+  justify-content center
+
+.plane
+  height 2vmin
+  width 14.8vmin
+  transform-style preserve-3d
+  // transform rotateX(-24deg) rotateY(-24deg) rotateX(90deg)
+  transform scale(var(--scale, 2)) rotateX(calc(var(--start-x) * 1deg)) rotateY(calc(var(--start-y) * 1deg)) rotateX(90deg) rotateX(calc(var(--x, 0) * 1deg)) rotateY(calc(var(--y, 0) * 1deg)) rotateZ(calc(var(--z, 0) * 1deg))
+  animation spin 2s infinite linear var(--state, paused)
+
+@keyframes spin
+  from
+    transform scale(var(--scale, 2)) rotateX(calc(var(--start-x) * 1deg)) rotateY(calc(var(--start-y) * 1deg)) rotateX(90deg) rotateX(calc(var(--x, 0) * 1deg)) rotateY(calc(var(--y, 0) * 1deg)) rotateZ(calc(var(--z, 0) * 1deg))
+  to
+    transform scale(var(--scale, 2)) rotateX(calc(var(--start-x) * 1deg)) rotateY(calc(var(--start-y) * 1deg)) rotateX(90deg) rotateX(calc(var(--x, 0) * 1deg)) rotateY(calc(var(--y, 0) * 1deg)) rotateZ(calc(var(--z, 0) * 1deg)) rotateX(360deg) rotateY(360deg) rotateZ(360deg)
+
+.cube
+  --width 15
+  --height 10
+  --depth 4
+  height calc(var(--depth) * 1vmin)
+  width calc(var(--width) * 1vmin)
+  transform-style preserve-3d
+  position absolute
+  font-size 1rem
+  transform translate3d(0, 0, 5vmin)
+
+  & > div:nth-of-type(1)
+    height calc(var(--height) * 1vmin)
+    width 100%
+    transform-origin 50% 50%
+    transform rotateX(-90deg)
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) rotateX(-90deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin))
+
+  & > div:nth-of-type(2)
+    height calc(var(--height) * 1vmin)
+    width 100%
+    transform-origin 50% 50%
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(180deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(3)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--depth) * 1vmin)
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(4)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--depth) * 1vmin)
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(-90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(5)
+    height calc(var(--depth) * 1vmin)
+    width calc(var(--width) * 1vmin)
+    transform translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(6)
+    height calc(var(--depth) * 1vmin)
+    width calc(var(--width) * 1vmin)
+    transform translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * -1vmin)) rotateX(180deg)
+    position absolute
+    top 50%
+    left 50%
+
+.book
+
+  div
+    transition transform 0.25s
+
+  &__cover
+    --height 21
+    --width 14.8
+    --depth 0.2
+    top 50%
+    left 50%
+
+    div
+      background-color var(--primary)
+      background-size cover
+
+    &--front
+      transform translate3d(-50%, calc(((var(--exploded) * 5) + 1.1) * 1vmin), 0)
+      div:nth-of-type(1)
+        background-image url('https://assets.codepen.io/605876/How+to+Move+Things+with+CSS+-+Cover.png')
+    &--rear
+      transform translate3d(-50%, calc(((var(--exploded) * -5) - 1.1) * 1vmin), 0)
+      div:nth-of-type(2)
+        background-image url('https://assets.codepen.io/605876/How+to+Move+Things+with+CSS+-+Rear.png')
+
+    div:nth-of-type(3)
+    div:nth-of-type(4)
+      background-image linear-gradient(var(--tertiary) 80.1%, var(--secondary) 80.1%)
+    div:nth-of-type(6)
+      background-color var(--secondary)
+
+  &__pages
+    --height 20.5
+    --width 14.4
+    --depth 2
+    top 50%
+    left 50%
+    transform translate3d(-50%, -50%, 0)
+
+    div
+      &:nth-of-type(3)
+      &:nth-of-type(4)
+        background repeating-linear-gradient(90deg, hsl(0, 0%, 70%) 1px 2px, transparent 2px 4px), hsl(0, 0%, 95%)
+      &:nth-of-type(5)
+      &:nth-of-type(6)
+        background repeating-linear-gradient(0deg, hsl(0, 0%, 70%) 1px 2px, transparent 2px 4px), hsl(0, 0%, 95%)
+
+  &__spine
+    --height 21
+    --depth 2.2
+    --width 0.1
+    left 0
+    top 50%
+    transform translate3d(calc((var(--exploded) * 5) * -1vmin), -50%, 0)
+
+    div:not(.avatar__holder)
+      background var(--tertiary)
+
+      &:nth-of-type(4)
+        background linear-gradient(var(--tertiary) 80.1%, var(--secondary) 80.1%)
+
+.avatar__holder
+  width 1.5vmin
+  height 1.5vmin
+  border-radius 50%
+  background-color hsl(0, 0%, 100%)
+  position absolute
+  top 90%
+  left 50%
+  transform translate(-50%, -50%)
+  display flex
+  align-items center
+  justify-content center
+
+  img
+    height 75%

@@ -1,0 +1,30 @@
+*
+  box-sizing border-box
+  transform-style preserve-3d
+
+:root
+  --perspective 1200
+  --rotate-x -15
+  --rotate-y -40
+
+body
+  min-height 100vh
+  // overflow hidden
+  background hsl(0, 0%, 90%)
+
+.scene
+  perspective calc(var(--perspective, 800) * 1px)
+  transform-style preserve-3d
+  height 100vh
+  width 100vw
+  display flex
+  align-items center
+  justify-content center
+
+.plane
+  background hsla(180, 50%, 50%, 0.5)
+  height calc(var(--plane-height, 25) * 1vmin)
+  width calc(var(--plane-width, 25) * 1vmin)
+  transform-style preserve-3d
+  transform rotateX(calc(var(--rotate-x, -24) * 1deg)) rotateY(calc(var(--rotate-y, -24) * 1deg)) rotateX(90deg) translate3d(0, 0, 0)
+

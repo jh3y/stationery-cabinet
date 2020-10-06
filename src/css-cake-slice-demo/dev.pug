@@ -1,0 +1,18 @@
+mixin cuboid(className, id)
+  label.cuboid(class=className for=id)
+    div
+    div
+      block
+    div
+    div
+    div
+    div
+
+.scene
+  .plane
+    +cuboid('plate')
+    .cake
+      +cuboid('cake-slice', 'one')
+      span.cake-slice__shadow
+
+.backdrop

@@ -1,0 +1,57 @@
+- const URL = "https://css-tricks.com"
+//- Front
+//- Back
+//- Right
+//- Left
+//- Top
+//- Bottom
+mixin cuboid(className)
+  .cuboid(class=className)
+    - let s = 0
+    while s < 6
+      .cuboid__side
+      - s++
+.scene__wrapper
+  .scene
+    //- Plane that all the 3D stuff sits on
+    .plane
+      .studio
+        +cuboid('floor')
+        +cuboid('rug')
+        +cuboid('wall wall--left')
+        .window
+          +cuboid('window__frame window__frame--top')
+          +cuboid('window__frame window__frame--left')
+          +cuboid('window__frame window__frame--right')
+          +cuboid('window__frame window__frame--bottom')
+          +cuboid('window__frame window__frame--middle')
+        +cuboid('wall wall--right-left')
+        +cuboid('wall wall--right-upper')
+        +cuboid('wall wall--right-right')
+        +cuboid('skirting skirting--left')
+        +cuboid('skirting skirting--right')
+        +cuboid('windowsill')
+        +cuboid('wall wall--right-lower')
+        +cuboid('bear-canvas')
+        .chair__base
+          +cuboid('chair__wheel chair__wheel--one')
+          +cuboid('chair__wheel chair__wheel--two')
+          +cuboid('chair__wheel chair__wheel--three')
+          +cuboid('chair__wheel chair__wheel--four')
+          +cuboid('chair__wheel chair__wheel--five')
+          +cuboid('chair__leg chair__leg--one')
+          +cuboid('chair__leg chair__leg--two')
+          +cuboid('chair__leg chair__leg--three')
+          +cuboid('chair__leg chair__leg--four')
+          +cuboid('chair__leg chair__leg--five')
+          +cuboid('chair__spine')
+          .chair__top
+            +cuboid('chair__seat')
+            +cuboid('chair__wing chair__wing--left')
+            +cuboid('chair__wing chair__wing--right')
+            +cuboid('chair__back')
+            +cuboid('chair__headrest')
+            +cuboid('chair__armrest chair__armrest--vertical chair__armrest--vertical--left')
+            +cuboid('chair__armrest chair__armrest--vertical chair__armrest--vertical--right')
+            +cuboid('chair__armrest chair__armrest--horizontal chair__armrest--horizontal--left')
+            +cuboid('chair__armrest chair__armrest--horizontal chair__armrest--horizontal--right')
