@@ -1,0 +1,136 @@
+*
+  box-sizing border-box
+  transform-style preserve-3d
+
+:root
+  --perspective 1200
+  --rotate-x -15
+  --rotate-y -40
+  --body hsl(0, 0%, 60%)
+  --wings hsl(0, 0%, 40%)
+  --base hsl(0, 50%, 50%)
+  --flame hsl(30, 80%, 50%)
+  --accent hsl(0, 50%, 80%)
+  --window hsl(180, 80%, 90%)
+  --window-frame hsl(0, 0%, 80%)
+  --bottom hsl(0, 0%, 30%)
+
+body
+  min-height 100vh
+  // overflow hidden
+  background hsl(220, 60%, 10%)
+
+.scene
+  perspective calc(var(--perspective, 800) * 1px)
+  transform-style preserve-3d
+  height 100vh
+  width 100vw
+  display flex
+  align-items center
+  justify-content center
+  transform scale(1)
+
+.plane
+  height calc(var(--plane-height, 15) * 1vmin)
+  width calc(var(--plane-width, 15) * 1vmin)
+  transform-style preserve-3d
+  transform rotateX(calc(var(--rotate-x, -24) * 1deg)) rotateY(calc(var(--rotate-y, -24) * 1deg)) rotateZ(calc(var(--rotate-z, 0) * 1deg)) rotateX(90deg) translate3d(0, 0, 0)
+
+
+.rocket
+  height 100%
+  width 100%
+
+  &:after
+    content ''
+    position absolute
+    height 20%
+    width 20%
+    background linear-gradient(40deg, transparent, hsla(0, 0%, 100%, 0.5), transparent), var(--window)
+    border-radius 50%
+    border 1vmin solid var(--window-frame)
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) rotateX(-90deg) translate3d(0, -50%, 5.6vmin) rotateX(5deg)
+
+  &__bottom
+    height 105%
+    width 105%
+    border-radius 50%
+    background var(--bottom)
+    position absolute
+    top 50%
+    left 50%
+    transform translate3d(-50%, -50%, -15vmin)
+
+    &:before
+      content ''
+      height 100%
+      width 100%
+      position absolute
+      top 0
+      left 0
+      border-radius 50%
+      background radial-gradient(var(--flame) 50%, transparent 50%) 10% 10% / 50% 50% no-repeat,
+                  radial-gradient(var(--flame) 50%, transparent 50%) 90% 90% / 50% 50% no-repeat,
+                  radial-gradient(var(--flame) 50%, transparent 50%) 10% 90% / 50% 50% no-repeat,
+                  radial-gradient(var(--flame) 50%, transparent 50%) 90% 10% / 50% 50% no-repeat,
+                  var(--bottom)
+      transform translate3d(0, 0, -3px)
+
+    &:after
+      content ''
+      position absolute
+      top 50%
+      left 50%
+      height 72%
+      width 72%
+      background var(--body)
+      border-radius 50%
+      transform translate3d(-50%, -50%, 4.25vmin)
+
+  &__body
+    width 75%
+    height 200%
+    top 50%
+    left 50%
+    position absolute
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(calc(var(--rotate, 0) * 1deg))
+    background linear-gradient(0deg, var(--accent), var(--accent)) center 76% / 100% 6% no-repeat, var(--body)
+    border-radius 50% 50% 0 0 / 55% 55% 0 0
+
+    &:after
+      content ''
+      position absolute
+      bottom 0
+      left 50%
+      background var(--bottom)
+      transform translate(-50%, 0)
+      width 140%
+      height 15%
+      $clip = polygon(15% 0, 85% 0, 100% 100%, 0 100%)
+      -webkit-clip-path $clip
+      clip-path $clip
+
+  &__wings
+    width 150%
+    height 50%
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) rotateX(-90deg) translate(0, 90%)
+    &:after
+    &:before
+      content ''
+      position absolute
+      height 100%
+      width 100%
+      top 0
+      left 0
+      background var(--base)
+      $clip = polygon(0 100%, 20% 0, 80% 0, 100% 100%)
+      -webkit-clip-path $clip
+      clip-path $clip
+
+    &:after
+      transform rotateY(90deg)

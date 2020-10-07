@@ -1,0 +1,11 @@
+.scene
+  //- Plane that all the 3D stuff sits on
+  .plane
+    .rocket
+      - const COUNT = 100
+      - let b = 0
+      while b < COUNT
+        .rocket__body(style=`--rotate: ${(360 / COUNT) * b}`)
+        - b++
+      .rocket__bottom
+      .rocket__wings
