@@ -1,0 +1,83 @@
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+:root {
+  --size: 100px;
+  --backdrop: #daa3f5;
+  --pixel: 5px;
+  --skin: #ebd6ad;
+  --clothes: hsl(180, 50%, 25%);
+  --footwear: hsl(0, 60%, 50%);
+  --sleeve: hsl(200, 50%, 50%);
+  --mouth-color: hsl(0, 0%, 100%);
+  --eye: hsl(0, 0%, 0%);
+}
+body {
+  min-height: 100vh;
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  margin: auto auto;
+  grid-template-columns: repeat(auto-fit, var(--size));
+  grid-gap: 10px;
+  padding: 10px 0;
+  max-width: calc(90px + (10 * var(--size)));
+  grid-template-rows: repeat(auto-fit, var(--size));
+  align-items: center;
+  justify-items: center;
+}
+hr {
+  --ears: linear-gradient(var(--skin), var(--skin)) calc(5 * var(--pixel)) calc(6 * var(--pixel)) / calc(10 * var(--pixel)) calc(1 * var(--pixel)) no-repeat;
+  --head: linear-gradient(var(--skin), var(--skin)) calc(6 * var(--pixel)) calc(3 * var(--pixel)) / calc(8 * var(--pixel)) calc(7 * var(--pixel)) no-repeat;
+  --body: linear-gradient(var(--clothes), var(--clothes)) calc(6 * var(--pixel)) calc(11 * var(--pixel)) / calc(8 * var(--pixel)) calc(5 * var(--pixel)) no-repeat;
+  --neck: linear-gradient(var(--skin), var(--skin)) calc(7 * var(--pixel)) calc(10 * var(--pixel)) / calc(5 * var(--pixel)) calc(1 * var(--pixel)) no-repeat;
+  --leg--left: linear-gradient(var(--skin), var(--skin)) calc(6 * var(--pixel)) calc(16 * var(--pixel)) / calc(1 * var(--pixel)) calc(1 * var(--pixel)) no-repeat;
+  --leg--right: linear-gradient(var(--skin), var(--skin)) calc(13 * var(--pixel)) calc(16 * var(--pixel)) / calc(1 * var(--pixel)) calc(1 * var(--pixel)) no-repeat;
+  --foot--left: linear-gradient(var(--footwear), var(--footwear)) calc(12 * var(--pixel)) calc(17 * var(--pixel)) / calc(2 * var(--pixel)) calc(1 * var(--pixel)) no-repeat;
+  --foot--right: linear-gradient(var(--footwear), var(--footwear)) calc(5 * var(--pixel)) calc(17 * var(--pixel)) / calc(2 * var(--pixel)) calc(1 * var(--pixel)) no-repeat;
+  --sleeve--left: linear-gradient(var(--sleeve), var(--sleeve)) calc(5 * var(--pixel)) calc(11 * var(--pixel)) / calc(1 * var(--pixel)) calc(2 * var(--pixel)) no-repeat;
+  --sleeve--right: linear-gradient(var(--sleeve), var(--sleeve)) calc(14 * var(--pixel)) calc(11 * var(--pixel)) / calc(1 * var(--pixel)) calc(2 * var(--pixel)) no-repeat;
+  --arm--left: linear-gradient(var(--skin), var(--skin)) calc(5 * var(--pixel)) calc(11 * var(--pixel)) / calc(1 * var(--pixel)) calc(4 * var(--pixel)) no-repeat;
+  --arm--right: linear-gradient(var(--skin), var(--skin)) calc(14 * var(--pixel)) calc(11 * var(--pixel)) / calc(1 * var(--pixel)) calc(4 * var(--pixel)) no-repeat;
+  --mouth: linear-gradient(var(--mouth-color), var(--mouth-color)) calc(8 * var(--pixel)) calc(8 * var(--pixel)) / calc(4 * var(--pixel)) calc(1 * var(--pixel)) no-repeat;
+  height: var(--size);
+  box-sizing: border-box;
+  width: var(--size);
+  margin: 0;
+  position: relative;
+  border: 0;
+  background: var(--mouth),
+              var(--ears),
+              var(--head),
+              var(--body),
+              var(--neck),
+              var(--leg--left),
+              var(--leg--right),
+              var(--foot--left),
+              var(--foot--right),
+              var(--sleeve--left),
+              var(--sleeve--right),
+              var(--arm--left),
+              var(--arm--right),
+              var(--backdrop);
+}
+
+hr:after,
+hr:before {
+  content: '';
+  height: var(--pixel);
+  width: var(--pixel);
+  position: absolute;
+  background: var(--eye);
+  top: calc(5 * var(--pixel));
+}
+
+hr:after {
+  left: calc(7 * var(--pixel));
+}
+
+hr:before {
+  left: calc(12 * var(--pixel));
+}
