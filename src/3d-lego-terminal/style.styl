@@ -1,0 +1,218 @@
+*
+*:after
+*:before
+  box-sizing border-box
+  transform-style preserve-3d
+
+:root
+  --perspective 1200
+  --rotate-x -15
+  --rotate-y -40
+  --terminal-one hsl(0, 0%, 75%)
+  --terminal-two hsl(0, 0%, 55%)
+  --terminal-three hsl(0, 0%, 45%)
+  --terminal-four hsl(0, 0%, 35%)
+  --terminal-five hsl(0, 0%, 25%)
+  --terminal-white hsl(0, 0%, 85%)
+  --terminal-red hsl(0, 80%, 35%)
+  --terminal-yellow hsl(45, 85%, 45%)
+  --terminal-green hsl(90, 80%, 20%)
+  --wireframe 0
+
+body
+  min-height 100vh
+  // overflow hidden
+  background hsl(0, 0%, 90%)
+
+.scene
+  perspective calc(var(--perspective, 800) * 1px)
+  transform-style preserve-3d
+  height 100vh
+  width 100vw
+  display flex
+  align-items center
+  justify-content center
+
+.plane
+  height calc(var(--plane-height, 25) * 1vmin)
+  width calc(var(--plane-width, 25) * 1vmin)
+  transform-style preserve-3d
+  transform rotateX(calc(var(--rotate-x, -24) * 1deg)) rotateY(calc(var(--rotate-y, -24) * 1deg)) rotateX(90deg) translate3d(0, 0, 0)
+
+
+// This is what makes the CSS variable powered cuboid
+.cuboid
+  --width var(--cuboid-width, 15)
+  --height var(--cuboid-height, 10)
+  --depth var(--cuboid-depth, 4)
+  height calc(var(--depth) * 1vmin)
+  width calc(var(--width) * 1vmin)
+  position absolute
+  transform translate3d(calc(var(--x, 0) * 1vmin), calc(var(--y, 0) * 1vmin), calc(var(--z, 0) * 1vmin)) rotateX(calc(var(--rotate-cuboid-x, 0) * 1deg)) rotateY(calc(var(--rotate-cuboid-y, 0) * 1deg)) rotateZ(calc(var(--rotate-cuboid-z, 0) * 1deg))
+  transform-style preserve-3d
+
+  &__side
+    transform-style preserve-3d
+    border calc(var(--wireframe) * 1vmin) solid hsla(0, 40%, 50%, 0.75)
+
+  & > div:nth-of-type(1)
+    height calc(var(--height) * 1vmin)
+    width 100%
+    transform-origin 50% 50%
+    transform rotateX(-90deg)
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) rotateX(-90deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin))
+
+  & > div:nth-of-type(2)
+    height calc(var(--height) * 1vmin)
+    width 100%
+    transform-origin 50% 50%
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(180deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(3)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--depth) * 1vmin)
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(4)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--depth) * 1vmin)
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(-90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(5)
+    height calc(var(--depth) * 1vmin)
+    width calc(var(--width) * 1vmin)
+    transform translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(6)
+    height calc(var(--depth) * 1vmin)
+    width calc(var(--width) * 1vmin)
+    transform translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * -1vmin)) rotateX(180deg)
+    position absolute
+    top 50%
+    left 50%
+
+.terminal
+  --width 20
+  --height 10
+  --depth 20
+
+  top 50%
+  left 50%
+  transform translate3d(-50%, -50%, 5vmin)
+
+  &:after
+    content ''
+    position absolute
+    top 0
+    left 0
+    width 100%
+    height 150%
+    background hsla(0, 0%, 0%, 0.2)
+    filter blur(10px)
+    transform translate3d(0, 0, -5vmin)
+    $clip = polygon(0 0, 0 100%, 50% 100%, 100% 66%, 100% 0)
+    -webkit-clip-path $clip
+    clip-path $clip
+
+
+  div
+    background var(--terminal-one)
+
+    &:nth-of-type(1)
+      background transparent
+      &:after
+        content ''
+        position absolute
+        left 0
+        top 0
+        height 100%
+        width 100%
+        opacity calc(1 - (var(--wireframe) * 0.5))
+        $clip = polygon(0 0, 50% 0, 100% 80%, 100% 100%, 0 100%)
+        -webkit-clip-path $clip
+        clip-path $clip
+        background var(--terminal-five)
+
+    &:nth-of-type(2)
+      background transparent
+      &:after
+        content ''
+        content ''
+        position absolute
+        left 0
+        top 0
+        height 100%
+        width 100%
+        opacity calc(1 - (var(--wireframe) * 0.5))
+        $clip = polygon(50% 0, 100% 0, 100% 100%, 0 100%, 0 80%)
+        -webkit-clip-path $clip
+        clip-path $clip
+        background var(--terminal-one)
+
+    &:nth-of-type(4)
+    &:nth-of-type(6)
+      background var(--terminal-three)
+      opacity calc(1 - (var(--wireframe) * 0.5))
+
+    &:nth-of-type(5)
+      background transparent
+      &:after
+        content ''
+        background var(--terminal-two)
+        opacity calc(1 - (var(--wireframe) * 0.5))
+        position absolute
+        left 0
+        top 0
+        height 100%
+        width 100%
+        $clip = inset(0 50% 0 0)
+        -webkit-clip-path $clip
+        clip-path $clip
+
+    &:nth-of-type(3)
+      background transparent
+
+      &:after
+      &:before
+        content ''
+        position absolute
+        width 100%
+
+      &:before
+        height 20%
+        background var(--terminal-four)
+        bottom 0
+        opacity calc(1 - (var(--wireframe) * 0.5))
+
+      &:after
+        opacity calc(1 - (var(--wireframe) * 0.5))
+        height 12.8vmin
+        background linear-gradient(white, white) 30% 25% / 30% 6% no-repeat,
+                  linear-gradient(white, white) 40% 38% / 35% 6% no-repeat,
+                  linear-gradient(white, white) 30% 51% / 35% 6% no-repeat,
+                  linear-gradient(white, white) 40% 64% / 20% 6% no-repeat,
+                  linear-gradient(white, white) 30% 77% / 35% 6% no-repeat,
+                  linear-gradient(var(--terminal-yellow), var(--terminal-yellow)) 90% 20% / 12% 16% no-repeat,
+                  linear-gradient(var(--terminal-green), var(--terminal-green)) 90% 50% / 12% 16% no-repeat,
+                  linear-gradient(var(--terminal-red), var(--terminal-red)) 90% 80% / 12% 16% no-repeat,
+                  linear-gradient(var(--terminal-green), var(--terminal-green)) 30% center / 60% 70% no-repeat,
+                  linear-gradient(var(--terminal-white), var(--terminal-white)) center center / 90% 90% no-repeat,
+                  var(--terminal-one)
+        bottom 20%
+        transform-origin 50% 100%
+        transform rotateX(calc(var(--rotate) * 51.75deg))

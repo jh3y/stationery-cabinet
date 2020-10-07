@@ -1,0 +1,150 @@
+*
+  box-sizing border-box
+  transform-style preserve-3d
+
+:root
+  --perspective 1200
+  --rotate-x -15
+  --rotate-y -40
+  --pot-one hsl(30, 60%, 35%)
+  --pot-two hsl(30, 60%, 25%)
+  --pot-three hsl(30, 60%, 15%)
+
+body
+  min-height 100vh
+  // overflow hidden
+  background hsl(0, 0%, 90%)
+
+.scene
+  perspective calc(var(--perspective, 800) * 1px)
+  transform-style preserve-3d
+  height 100vh
+  width 100vw
+  display flex
+  align-items center
+  justify-content center
+
+.plane
+  height calc(var(--plane-height, 25) * 1vmin)
+  width calc(var(--plane-width, 25) * 1vmin)
+  transform-style preserve-3d
+  transform rotateX(calc(var(--rotate-x, -24) * 1deg)) rotateY(calc(var(--rotate-y, -24) * 1deg)) rotateX(90deg) translate3d(0, 0, 0)
+
+
+// This is what makes the CSS variable powered cuboid
+.cuboid
+  --width var(--cuboid-width, 15)
+  --height var(--cuboid-height, 10)
+  --depth var(--cuboid-depth, 4)
+  height calc(var(--depth) * 1vmin)
+  width calc(var(--width) * 1vmin)
+  position absolute
+  transform translate3d(calc(var(--x, 0) * 1vmin), calc(var(--y, 0) * 1vmin), calc(var(--z, 0) * 1vmin)) rotateX(calc(var(--rotate-cuboid-x, 0) * 1deg)) rotateY(calc(var(--rotate-cuboid-y, 0) * 1deg)) rotateZ(calc(var(--rotate-cuboid-z, 0) * 1deg))
+  transform-style preserve-3d
+
+  &__side
+    transform-style preserve-3d
+
+  & > div:nth-of-type(1)
+    height calc(var(--height) * 1vmin)
+    width 100%
+    transform-origin 50% 50%
+    transform rotateX(-90deg)
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) rotateX(-90deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin))
+
+  & > div:nth-of-type(2)
+    height calc(var(--height) * 1vmin)
+    width 100%
+    transform-origin 50% 50%
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(180deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(3)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--depth) * 1vmin)
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(4)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--depth) * 1vmin)
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(-90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(5)
+    height calc(var(--depth) * 1vmin)
+    width calc(var(--width) * 1vmin)
+    transform translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(6)
+    height calc(var(--depth) * 1vmin)
+    width calc(var(--width) * 1vmin)
+    transform translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * -1vmin)) rotateX(180deg)
+    position absolute
+    top 50%
+    left 50%
+
+.plant-pot
+  --width 10
+  --depth 10
+  --height 10
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+.plant-pot div
+  background var(--pot-one)
+
+  &:nth-of-type(1)
+    background var(--pot-three)
+  &:nth-of-type(3)
+    background var(--pot-two)
+
+  &:nth-of-type(5)
+    border 1.5vmin solid var(--pot-one)
+    background #111
+
+.plant
+  height 6vmin
+  width 6vmin
+  position absolute
+  top 50%
+  left 50%
+  transform translate3d(-50%, -50%, 5vmin)
+
+  img
+    position absolute
+    left 50%
+    bottom 0
+    height calc(var(--height, 15) * 1vmin)
+    width 12vmin
+    transform-origin 50% 100%
+    transform translate(-50%, 0) rotateX(-90deg) translate3d(0, 0, -3vmin) rotateY(calc(var(--rotate, 0) * 1deg))
+
+    &:nth-of-type(1)
+      --height 15
+      --rotate 0
+    &:nth-of-type(2)
+      --height 10
+      --rotate 45
+    &:nth-of-type(3)
+      --height 20
+      --rotate 120
+    &:nth-of-type(4)
+      --height 30
+      --rotate 75
+    &:nth-of-type(5)
+      --height 5
+      --rotate 10
