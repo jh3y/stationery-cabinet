@@ -4,6 +4,7 @@
   box-sizing: border-box;
 }
 :root {
+  --short: 0;
   --size: 100px;
   --backdrop: #daa3f5;
   --pixel: 5px;
@@ -13,6 +14,7 @@
   --sleeve: hsl(200, 50%, 50%);
   --mouth-color: hsl(0, 0%, 100%);
   --eye: hsl(0, 0%, 0%);
+  --specs: red;
 }
 body {
   min-height: 100vh;
@@ -29,8 +31,8 @@ body {
   justify-items: center;
 }
 hr {
-  --ears: linear-gradient(var(--skin), var(--skin)) calc(5 * var(--pixel)) calc(6 * var(--pixel)) / calc(10 * var(--pixel)) calc(1 * var(--pixel)) no-repeat;
-  --head: linear-gradient(var(--skin), var(--skin)) calc(6 * var(--pixel)) calc(3 * var(--pixel)) / calc(8 * var(--pixel)) calc(7 * var(--pixel)) no-repeat;
+  --ears: linear-gradient(var(--skin), var(--skin)) calc(5 * var(--pixel)) calc((6 + var(--short)) * var(--pixel)) / calc(10 * var(--pixel)) calc(1 * var(--pixel)) no-repeat;
+  --head: linear-gradient(var(--skin), var(--skin)) calc(6 * var(--pixel)) calc((3 + var(--short)) * var(--pixel)) / calc(8 * var(--pixel)) calc((7 - var(--short)) * var(--pixel)) no-repeat;
   --body: linear-gradient(var(--clothes), var(--clothes)) calc(6 * var(--pixel)) calc(11 * var(--pixel)) / calc(8 * var(--pixel)) calc(5 * var(--pixel)) no-repeat;
   --neck: linear-gradient(var(--skin), var(--skin)) calc(7 * var(--pixel)) calc(10 * var(--pixel)) / calc(5 * var(--pixel)) calc(1 * var(--pixel)) no-repeat;
   --leg--left: linear-gradient(var(--skin), var(--skin)) calc(6 * var(--pixel)) calc(16 * var(--pixel)) / calc(1 * var(--pixel)) calc(1 * var(--pixel)) no-repeat;
@@ -42,6 +44,15 @@ hr {
   --arm--left: linear-gradient(var(--skin), var(--skin)) calc(5 * var(--pixel)) calc(11 * var(--pixel)) / calc(1 * var(--pixel)) calc(4 * var(--pixel)) no-repeat;
   --arm--right: linear-gradient(var(--skin), var(--skin)) calc(14 * var(--pixel)) calc(11 * var(--pixel)) / calc(1 * var(--pixel)) calc(4 * var(--pixel)) no-repeat;
   --mouth: linear-gradient(var(--mouth-color), var(--mouth-color)) calc(8 * var(--pixel)) calc(8 * var(--pixel)) / calc(4 * var(--pixel)) calc(1 * var(--pixel)) no-repeat;
+  --glasses--left-top: linear-gradient(var(--specs), var(--specs)) calc(6 * var(--pixel)) calc((var(--short) + 4) * var(--pixel)) / calc(3 * var(--pixel)) calc(0.5 * var(--pixel)) no-repeat;
+  --glasses--left-right: linear-gradient(var(--specs), var(--specs)) calc(8.5 * var(--pixel)) calc((var(--short) + 4) * var(--pixel)) / calc(0.5 * var(--pixel)) calc(3 * var(--pixel)) no-repeat;
+  --glasses--left-bottom: linear-gradient(var(--specs), var(--specs)) calc(6 * var(--pixel)) calc((var(--short) + 6.5) * var(--pixel)) / calc(3 * var(--pixel)) calc(0.5 * var(--pixel)) no-repeat;
+  --glasses--left-left: linear-gradient(var(--specs), var(--specs)) calc(6 * var(--pixel)) calc((var(--short) + 4) * var(--pixel)) / calc(0.5 * var(--pixel)) calc(3 * var(--pixel)) no-repeat;
+  --glasses--right-top: linear-gradient(var(--specs), var(--specs)) calc(11 * var(--pixel)) calc((var(--short) + 4) * var(--pixel)) / calc(3 * var(--pixel)) calc(0.5 * var(--pixel)) no-repeat;
+  --glasses--right-right: linear-gradient(var(--specs), var(--specs)) calc(13.5 * var(--pixel)) calc((var(--short) + 4) * var(--pixel)) / calc(0.5 * var(--pixel)) calc(3 * var(--pixel)) no-repeat;
+  --glasses--right-bottom: linear-gradient(var(--specs), var(--specs)) calc(11 * var(--pixel)) calc((var(--short) + 6.5) * var(--pixel)) / calc(3 * var(--pixel)) calc(0.5 * var(--pixel)) no-repeat;
+  --glasses--right-left: linear-gradient(var(--specs), var(--specs)) calc(11 * var(--pixel)) calc((var(--short) + 4) * var(--pixel)) / calc(0.5 * var(--pixel)) calc(3 * var(--pixel)) no-repeat;
+  --glasses--bridge: linear-gradient(var(--specs), var(--specs)) calc(8.5 * var(--pixel)) calc((var(--short) + 5) * var(--pixel)) / calc(3 * var(--pixel)) calc(0.5 * var(--pixel)) no-repeat;
   height: var(--size);
   box-sizing: border-box;
   width: var(--size);
@@ -49,6 +60,15 @@ hr {
   position: relative;
   border: 0;
   background: var(--mouth),
+              var(--glasses--left-top),
+              var(--glasses--left-right),
+              var(--glasses--left-bottom),
+              var(--glasses--left-left),
+              var(--glasses--right-top),
+              var(--glasses--right-right),
+              var(--glasses--right-bottom),
+              var(--glasses--right-left),
+              var(--glasses--bridge),
               var(--ears),
               var(--head),
               var(--body),
@@ -71,7 +91,7 @@ hr:before {
   width: var(--pixel);
   position: absolute;
   background: var(--eye);
-  top: calc(5 * var(--pixel));
+  top: calc((5 + var(--short)) * var(--pixel));
 }
 
 hr:after {
