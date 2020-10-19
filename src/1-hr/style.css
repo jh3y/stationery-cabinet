@@ -1,0 +1,219 @@
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: hsl(190, 30%, 90%);
+  --backdrop: hsl(190, 30%, 75%);
+  --short: 0;
+  --size: 400px;
+  --backdrop: hsl(190, 30%, 75%);
+  --bg: hsl(190, 30%, 90%);
+  --pixel: 20px;
+  --skin: #ebd6ad;
+  --top: hsl(180, 50%, 25%);
+  --footwear: hsl(0, 60%, 50%);
+  --hair-color: red;
+  --sleeve: hsl(200, 50%, 50%);
+  --mouth-color: hsl(0, 0%, 100%);
+  --eye: hsl(0, 0%, 0%);
+  --bottoms: hsl(280, 90%, 50%);
+  --lens: hsl(180, 90%, 90%);
+  --specs: #111;
+  --glasses: 0;
+  --shades: 0;
+  --sleeves: 0;
+  --trousers: 0;
+  --shorts: 0;
+  --left-turn: 0;
+  --right-turn: 0;
+  --left-eye: 0;
+  --right-eye: 0;
+  --neck-shift: 0;
+  --neck-slim: 0;
+  --beard-color: red;
+  --moustache: 0;
+  --chinstrap: 0;
+  --sideburns: 0;
+  --beard: 0;
+  --moustache-full: 0;
+  --beard-long: 0;
+  --mouth-position: 9;
+  --mouth-width: 2;
+  --shirt-top: 0;
+  --shirt: 0;
+  --tie: 0;
+  --tie-color: green;
+  --shirt-bottom: 0;
+  --hair-top-width: 8;
+  --hair-top-position: 0;
+  --fringe-width-left: 0;
+  --fringe-position-left: 0;
+  --fringe-width-right: 0;
+  --fringe-position-right: 0;
+  --sides: 0;
+  --side-length: 0;
+  --hair-length: 0;
+  --hair-bangs-length: 0;
+  --hair-bangs-position: 0;
+  --ponytail: 0;
+  --hat-color: pink;
+  --hat-peak-color: red;
+  --cap: 0;
+  --trilby: 0;
+  --beanie: 0;
+  --sides-position: 0;
+  --hat-peak-offset: 0;
+}
+
+body {
+  background: var(--bg);
+  min-height: 100vh;
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  margin: auto auto;
+  grid-template-columns: repeat(auto-fit, var(--size));
+  grid-gap: 10px;
+  padding: 10px 0;
+  max-width: calc(90px + (10 * var(--size)));
+  grid-template-rows: repeat(auto-fit, var(--size));
+  align-items: center;
+  justify-items: center;
+}
+
+label {
+  font-size: 2rem;
+  font-family: sans-serif;
+  margin-top: 1rem;
+  text-align: center;
+  display: block;
+}
+
+hr {
+  --ears: linear-gradient(var(--skin), var(--skin)) calc(5 * var(--pixel)) calc((6 + var(--short)) * var(--pixel)) / calc(10 * var(--pixel)) calc(1 * var(--pixel));
+  --head: linear-gradient(var(--skin), var(--skin)) calc(6 * var(--pixel)) calc((3 + var(--short)) * var(--pixel)) / calc(8 * var(--pixel)) calc((7 - var(--short)) * var(--pixel));
+  --body: linear-gradient(var(--top), var(--top)) calc(6 * var(--pixel)) calc(11 * var(--pixel)) / calc(8 * var(--pixel)) calc(5 * var(--pixel));
+  --neck: linear-gradient(var(--skin), var(--skin)) calc((var(--neck-shift) + 7) * var(--pixel)) calc(10 * var(--pixel)) / calc((5 - var(--neck-slim)) * var(--pixel)) calc(1 * var(--pixel));
+  --leg--left: linear-gradient(var(--skin), var(--skin)) calc(6 * var(--pixel)) calc(16 * var(--pixel)) / calc(1 * var(--pixel)) calc(1 * var(--pixel));
+  --leg--right: linear-gradient(var(--skin), var(--skin)) calc(13 * var(--pixel)) calc(16 * var(--pixel)) / calc(1 * var(--pixel)) calc(1 * var(--pixel));
+  --foot--right: linear-gradient(var(--footwear), var(--footwear)) calc((13 - var(--right-turn)) * var(--pixel)) calc(17 * var(--pixel)) / calc(2 * var(--pixel)) calc(1 * var(--pixel));
+  --foot--left: linear-gradient(var(--footwear), var(--footwear)) calc((var(--left-turn) + 5) * var(--pixel)) calc(17 * var(--pixel)) / calc(2 * var(--pixel)) calc(1 * var(--pixel));
+  --sleeve--left: linear-gradient(var(--sleeve), var(--sleeve)) calc(5 * var(--pixel)) calc(11 * var(--pixel)) / calc(1 * var(--pixel)) calc(var(--sleeves) * var(--pixel));
+  --sleeve--right: linear-gradient(var(--sleeve), var(--sleeve)) calc(14 * var(--pixel)) calc(11 * var(--pixel)) / calc(1 * var(--pixel)) calc(var(--sleeves) * var(--pixel));
+  --arm--left: linear-gradient(var(--skin), var(--skin)) calc(5 * var(--pixel)) calc(11 * var(--pixel)) / calc(1 * var(--pixel)) calc(4 * var(--pixel));
+  --arm--right: linear-gradient(var(--skin), var(--skin)) calc(14 * var(--pixel)) calc(11 * var(--pixel)) / calc(1 * var(--pixel)) calc(4 * var(--pixel));
+  --mouth: linear-gradient(var(--mouth-color), var(--mouth-color)) calc(var(--mouth-position) * var(--pixel)) calc(8 * var(--pixel)) / calc(var(--mouth-width) * var(--pixel)) calc(1 * var(--pixel));
+  --glasses--left-top: linear-gradient(var(--specs), var(--specs)) calc(6 * var(--pixel)) calc((var(--short) + 4) * var(--pixel)) / calc((3 * var(--pixel)) * var(--glasses)) calc((0.5 * var(--pixel)) * var(--glasses));
+  --glasses--left-right: linear-gradient(var(--specs), var(--specs)) calc(8.5 * var(--pixel)) calc((var(--short) + 4) * var(--pixel)) / calc((0.5 * var(--pixel)) * var(--glasses)) calc((3 * var(--pixel)) * var(--glasses));
+  --glasses--left-bottom: linear-gradient(var(--specs), var(--specs)) calc(6 * var(--pixel)) calc((var(--short) + 6.5) * var(--pixel)) / calc((3 * var(--pixel)) * var(--glasses)) calc((0.5 * var(--pixel)) * var(--glasses));
+  --glasses--left-left: linear-gradient(var(--specs), var(--specs)) calc(6 * var(--pixel)) calc((var(--short) + 4) * var(--pixel)) / calc((0.5 * var(--pixel)) * var(--glasses)) calc((3 * var(--pixel)) * var(--glasses));
+  --glasses--right-top: linear-gradient(var(--specs), var(--specs)) calc(11 * var(--pixel)) calc((var(--short) + 4) * var(--pixel)) / calc((3 * var(--pixel)) * var(--glasses)) calc((0.5 * var(--pixel)) * var(--glasses));
+  --glasses--right-right: linear-gradient(var(--specs), var(--specs)) calc(13.5 * var(--pixel)) calc((var(--short) + 4) * var(--pixel)) / calc((0.5 * var(--pixel)) * var(--glasses)) calc((3 * var(--pixel)) * var(--glasses));
+  --glasses--right-bottom: linear-gradient(var(--specs), var(--specs)) calc(11 * var(--pixel)) calc((var(--short) + 6.5) * var(--pixel)) / calc((3 * var(--pixel)) * var(--glasses)) calc((0.5 * var(--pixel)) * var(--glasses));
+  --glasses--right-left: linear-gradient(var(--specs), var(--specs)) calc(11 * var(--pixel)) calc((var(--short) + 4) * var(--pixel)) / calc((0.5 * var(--pixel)) * var(--glasses)) calc((3 * var(--pixel)) * var(--glasses));
+  --glasses--lens-left: linear-gradient(var(--lens), var(--lens)) calc(6 * var(--pixel)) calc((var(--short) + 4) * var(--pixel)) / calc((3 * var(--pixel)) * var(--glasses)) calc((3 * var(--pixel)) * var(--glasses));
+  --glasses--lens-right: linear-gradient(var(--lens), var(--lens)) calc(11 * var(--pixel)) calc((var(--short) + 4) * var(--pixel)) / calc((3 * var(--pixel)) * var(--glasses)) calc((3 * var(--pixel)) * var(--glasses));
+  --glasses--bridge: linear-gradient(var(--specs), var(--specs)) calc(8.5 * var(--pixel)) calc((var(--short) + 5) * var(--pixel)) / calc((3 * var(--pixel)) * var(--glasses)) calc((0.5 * var(--pixel)) * var(--glasses));
+  --shades--left: linear-gradient(var(--specs), var(--specs)) calc(6 * var(--pixel)) calc((var(--short) + 4) * var(--pixel)) / calc((3 * var(--pixel)) * var(--shades)) calc((3 * var(--pixel)) * var(--shades));
+  --shades--right: linear-gradient(var(--specs), var(--specs)) calc(11 * var(--pixel)) calc((var(--short) + 4) * var(--pixel)) / calc((3 * var(--pixel)) * var(--shades)) calc((3 * var(--pixel)) * var(--shades));
+  --shades--bridge: linear-gradient(var(--specs), var(--specs)) calc(8.5 * var(--pixel)) calc((var(--short) + 5) * var(--pixel)) / calc((3 * var(--pixel)) * var(--shades)) calc((0.5 * var(--pixel)) * var(--shades));
+  --eye--left: linear-gradient(var(--eye), var(--eye)) calc((var(--left-eye) + 7) * var(--pixel)) calc((5 + var(--short)) * var(--pixel)) / var(--pixel) var(--pixel);
+  --eye--right: linear-gradient(var(--eye), var(--eye)) calc((12 - var(--right-eye)) * var(--pixel)) calc((5 + var(--short)) * var(--pixel)) / var(--pixel) var(--pixel);
+  --shorts--top: linear-gradient(var(--bottoms), var(--bottoms)) calc(6 * var(--pixel)) calc(15 * var(--pixel)) / calc(var(--shorts) * (8 * var(--pixel))) calc(var(--shorts) * var(--pixel));
+  --trouser--top: linear-gradient(var(--bottoms), var(--bottoms)) calc(6 * var(--pixel)) calc(15 * var(--pixel)) / calc(var(--trousers) * (8 * var(--pixel))) calc(var(--trousers) * var(--pixel));
+  --trouser--left: linear-gradient(var(--bottoms), var(--bottoms)) calc(6 * var(--pixel)) calc(15 * var(--pixel)) / calc(var(--trousers) * var(--pixel)) calc((2 * var(--trousers)) * var(--pixel));
+  --trouser--right: linear-gradient(var(--bottoms), var(--bottoms)) calc(13 * var(--pixel)) calc(15 * var(--pixel)) / calc(var(--trousers) * var(--pixel)) calc((2 * var(--trousers)) * var(--pixel));
+  --beard--top: linear-gradient(var(--beard-color), var(--beard-color)) calc((8 - var(--moustache-full)) * var(--pixel)) calc(7 * var(--pixel)) / calc(((var(--moustache-full) * 2) + (var(--moustache) * 4)) * var(--pixel)) calc(var(--moustache) * var(--pixel));
+  --beard--bottom: linear-gradient(var(--beard-color), var(--beard-color)) calc(6 * var(--pixel)) calc(9 * var(--pixel)) / calc((8 * var(--chinstrap)) * var(--pixel)) calc((var(--chinstrap) + var(--beard-long)) * var(--pixel));
+  --beard--left: linear-gradient(var(--beard-color), var(--beard-color)) calc(6 * var(--pixel)) calc(7 * var(--pixel)) / calc(var(--sideburns) * var(--pixel)) calc((3 * var(--sideburns)) * var(--pixel));
+  --beard--right: linear-gradient(var(--beard-color), var(--beard-color)) calc(13 * var(--pixel)) calc(7 * var(--pixel)) / calc(var(--sideburns) * var(--pixel)) calc((3 * var(--sideburns)) * var(--pixel));
+  --beard--middle: linear-gradient(var(--beard-color), var(--beard-color)) calc(6 * var(--pixel)) calc(7 * var(--pixel)) / calc((8 * var(--beard)) * var(--pixel)) calc((3 * var(--beard)) * var(--pixel));
+  --shirt-top: linear-gradient(var(--shirt-color), var(--shirt-color)) calc(8 * var(--pixel)) calc(11 * var(--pixel)) / calc((4 * var(--shirt)) * var(--pixel)) calc(var(--shirt) * var(--pixel));
+  --shirt-bottom: linear-gradient(var(--shirt-color), var(--shirt-color)) calc(9 * var(--pixel)) calc(12 * var(--pixel)) / calc((2 * var(--shirt)) * var(--pixel)) calc(var(--shirt) * var(--pixel));
+  --tie-strip: linear-gradient(var(--tie-color), var(--tie-color)) calc(9.5 * var(--pixel)) calc(11 * var(--pixel)) / calc(var(--tie) * var(--pixel)) calc((3 * var(--tie)) * var(--pixel));
+  --hair-center: linear-gradient(var(--hair-color), var(--hair-color)) calc(6 * var(--pixel)) calc((var(--short) + 2) * var(--pixel)) / calc(8 * var(--pixel)) var(--pixel);
+  --hair-top: linear-gradient(var(--hair-color), var(--hair-color)) calc((6 + var(--hair-top-position)) * var(--pixel)) calc((var(--short) + 1) * var(--pixel)) / calc(var(--hair-top-width) * var(--pixel)) var(--pixel);
+  --hair-fringe-left: linear-gradient(var(--hair-color), var(--hair-color)) calc((6 + var(--fringe-position-left)) * var(--pixel)) calc((var(--short) + 3) * var(--pixel)) / calc(var(--fringe-width-left) * var(--pixel)) var(--pixel);
+  --hair-fringe-right: linear-gradient(var(--hair-color), var(--hair-color)) calc((6 + var(--fringe-position-right)) * var(--pixel)) calc((var(--short) + 3) * var(--pixel)) / calc(var(--fringe-width-right) * var(--pixel)) var(--pixel);
+  --hair-side-left: linear-gradient(var(--hair-color), var(--hair-color)) calc(5 * var(--pixel)) calc(((var(--short) + 2) + var(--sides-position)) * var(--pixel)) / calc(var(--sides) * var(--pixel)) calc(var(--side-length) * var(--pixel));
+  --hair-side-right: linear-gradient(var(--hair-color), var(--hair-color)) calc(14 * var(--pixel)) calc(((var(--short) + 2) + var(--sides-position)) * var(--pixel)) / calc(var(--sides) * var(--pixel)) calc(var(--side-length) * var(--pixel));
+  --hair-bottom: linear-gradient(var(--hair-color), var(--hair-color)) calc((var(--ponytail) + 5) * var(--pixel)) calc((var(--short) + 6) * var(--pixel)) / calc((10 - (2 * var(--ponytail))) * var(--pixel)) calc(var(--hair-length) * var(--pixel));
+  --hair-bangs: linear-gradient(var(--hair-color), var(--hair-color)) calc(4 * var(--pixel)) calc((var(--short) + 2 + var(--hair-bangs-position)) * var(--pixel)) / calc(12 * var(--pixel)) calc(var(--hair-bangs-length) * var(--pixel));
+  --cap-top: linear-gradient(var(--hat-color), var(--hat-color)) calc(6 * var(--pixel)) calc((var(--short) + 1) * var(--pixel)) / calc((8 * var(--cap)) * var(--pixel)) calc(2 * var(--pixel));
+  --cap-peak: linear-gradient(var(--hat-peak-color), var(--hat-peak-color)) calc((4 + var(--hat-peak-offset)) * var(--pixel)) calc((var(--short) + 2) * var(--pixel)) / calc((8 * var(--cap)) * var(--pixel)) calc(1 * var(--pixel));
+  --hat-top: linear-gradient(var(--hat-color), var(--hat-color)) calc(6 * var(--pixel)) calc((var(--short) + 1) * var(--pixel)) / calc((8 * var(--trilby)) * var(--pixel)) calc(2 * var(--pixel));
+  --hat-peak: linear-gradient(var(--hat-peak-color), var(--hat-peak-color)) calc((4 + var(--hat-peak-offset)) * var(--pixel)) calc((var(--short) + 2) * var(--pixel)) / calc((10 * var(--trilby)) * var(--pixel)) calc(1 * var(--pixel));
+  --beanie-top: linear-gradient(var(--hat-color), var(--hat-color)) calc(6 * var(--pixel)) calc((var(--short) + 1) * var(--pixel)) / calc((8 * var(--beanie)) * var(--pixel)) calc(2 * var(--pixel));
+  --beanie-peak: linear-gradient(var(--hat-peak-color), var(--hat-peak-color)) calc(5 * var(--pixel)) calc((var(--short) + 2) * var(--pixel)) / calc((10 * var(--beanie)) * var(--pixel)) calc(1 * var(--pixel));
+  --beanie-left: linear-gradient(var(--hat-color), var(--hat-color)) calc(5 * var(--pixel)) calc(((var(--short) + 2) + var(--sides-position)) * var(--pixel)) / calc(var(--beanie) * var(--pixel)) calc(3 * var(--pixel));
+  --beanie-right: linear-gradient(var(--hat-color), var(--hat-color)) calc(14 * var(--pixel)) calc(((var(--short) + 2) + var(--sides-position)) * var(--pixel)) / calc(var(--beanie) * var(--pixel)) calc(3 * var(--pixel));
+
+  background:
+    var(--mouth),
+    var(--hat-peak),
+    var(--hat-top),
+    var(--cap-peak),
+    var(--cap-top),
+    var(--beanie-peak),
+    var(--beanie-top),
+    var(--beanie-left),
+    var(--beanie-right),
+    var(--beard--top),
+    var(--beard--bottom),
+    var(--beard--left),
+    var(--beard--middle),
+    var(--beard--right),
+    var(--shades--left),
+    var(--shades--right),
+    var(--shades--bridge),
+    var(--tie-strip),
+    var(--shirt-top),
+    var(--shirt-bottom),
+    var(--hair-top),
+    var(--hair-center),
+    var(--hair-fringe-left),
+    var(--hair-fringe-right),
+    var(--hair-side-left),
+    var(--hair-side-right),
+    var(--glasses--left-top),
+    var(--glasses--left-right),
+    var(--glasses--left-bottom),
+    var(--glasses--left-left),
+    var(--glasses--right-top),
+    var(--glasses--right-right),
+    var(--glasses--right-bottom),
+    var(--glasses--right-left),
+    var(--glasses--bridge),
+    var(--eye--left),
+    var(--eye--right),
+    var(--glasses--lens-left),
+    var(--glasses--lens-right),
+    var(--ears),
+    var(--head),
+    var(--neck),
+    var(--trouser--top),
+    var(--trouser--left),
+    var(--trouser--right),
+    var(--shorts--top),
+    var(--body),
+    var(--leg--left),
+    var(--leg--right),
+    var(--foot--left),
+    var(--foot--right),
+    var(--sleeve--left),
+    var(--sleeve--right),
+    var(--arm--left),
+    var(--arm--right),
+    var(--hair-bottom),
+    var(--hair-bangs),
+    var(--backdrop);
+  background-repeat: no-repeat;
+  height: var(--size);
+  width: var(--size);
+  margin: 0;
+  position: relative;
+  border: 0;
+}
