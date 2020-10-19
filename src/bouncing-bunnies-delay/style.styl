@@ -1,0 +1,77 @@
+*
+  box-sizing border-box
+
+:root
+  --delay 0
+  --duration 1
+  --stagger-step 0
+  --coefficient 1
+  --offset 0
+
+body
+  background linear-gradient(-45deg, hsl(100, 50%, 40%), hsl(100, 40%, 70%))
+  min-height 100vh
+  display flex
+  color hsl(0, 0%, 100%)
+  align-items center
+  font-family sans-serif
+  font-size 1.2rem
+  justify-content center
+  flex-direction column
+  text-align center
+
+pre
+code
+  background hsl(0, 0%, 10%)
+  font-weight bold
+  font-size 1.25rem
+  font-family monospace
+pre
+  padding 1rem
+  border-radius 6px
+
+.bunny
+  height 50px
+  width 50px
+  background-image url("https://assets.codepen.io/605876/bunny-ready.png")
+  background-size contain
+  background-position center
+  background-repeat no-repeat
+  transform-origin 50% 100%
+  animation jump calc(var(--duration) * 1s) infinite both
+  animation-delay calc((((var(--delay, 0) + (var(--index) * var(--stagger-step))) + var(--offset)) * var(--coefficient)) * 1s)
+
+@keyframes jump
+  10%, 90%
+    transform translate(0, 0) scaleX(1.1) scaleY(0.8)
+  50%
+    background-image url("https://assets.codepen.io/605876/bunny-jump.png")
+    transform translate(0, -60px) scaleX(0.9) scaleY(1.2)
+
+.reversed .bunny
+  animation-delay calc((((var(--delay, 0) + ((5 - var(--index)) * var(--stagger-step))) + var(--offset)) * var(--coefficient)) * 1s)
+
+.container
+  display grid
+  grid-template-columns repeat(5, 1fr)
+  grid-gap 1vmin
+  margin 4rem 0
+
+h1
+p
+pre
+  display none
+  text-align left
+
+h1
+  margin-bottom 0.25rem
+
+p
+  max-width 550px
+
+code
+  line-height 1.75
+  display block
+
+[hidden] *
+  animation none

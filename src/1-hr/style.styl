@@ -1,0 +1,51 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+// size is 4 * 20
+:root
+  --size 80px
+  --backdrop hsl(280, 80%, 80%)
+  --pixel 4px
+  --skin hsl(40, 60%, 80%)
+  --eye hsl(0, 0%, 0%)
+
+body
+  min-height 100vh
+  display grid
+  align-content center
+  justify-content center
+  margin auto auto
+  grid-template-columns repeat(auto-fit, var(--size))
+  grid-gap 10px
+  padding 10px 0
+  max-width calc(90px + (10 * var(--size)))
+  grid-template-rows repeat(auto-fit, var(--size))
+  align-items center
+  justify-items center
+
+hr
+  height var(--size)
+  width var(--size)
+  margin 0
+  border 0
+  position relative
+  background linear-gradient(var(--skin), var(--skin)) calc(5 * var(--pixel)) calc(6 * var(--pixel)) / calc(10 * var(--pixel)) calc(1 * var(--pixel)) no-repeat,
+            linear-gradient(var(--skin), var(--skin)) calc(6 * var(--pixel)) calc(3 * var(--pixel)) / calc(8 * var(--pixel)) calc(7 * var(--pixel)) no-repeat,
+            var(--backdrop)
+
+  &:after
+  &:before
+    content ''
+    height var(--pixel)
+    width var(--pixel)
+    position absolute
+    background var(--eye)
+    top calc(5 * var(--pixel))
+
+  &:after
+    left calc(7 * var(--pixel))
+
+  &:before
+    left calc(17 * var(--pixel))

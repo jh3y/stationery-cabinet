@@ -1,0 +1,50 @@
+.container
+  - let b = 0
+  while (b < 5)
+    .bunny(style=`--index: ${b};`)
+    - b++
+
+input(type='range', min="0", max="6", value="0")
+
+h1 No delay
+h1 Delay
+h1 Negative Delay
+h1 Staggered
+h1 Staggered w/ Negative Delay
+h1 Reverse Stagger
+h1 Reverse Stagger w/ Negative Delay
+p Animate simulataneously with no delay
+p Animate simulataneously with a delay
+p Animate simulataneously with a negative delay
+p Use a variable to create a stagger
+p Use an offset to make the delays negative so that the elements retain stagger but don't stagger in
+p Use the total amount of bunnies to reverse the stagger
+p Use a negative coefficient to create a stagger in the opposite direction
+pre
+  code .bunny {
+  code   animation-delay: 0s;
+  code }
+pre
+  code .bunny {
+  code   animation-delay: 2s;
+  code }
+pre
+  code .bunny {
+  code   animation-delay: -0.5s;
+  code }
+pre
+  code .bunny {
+  code   animation-delay: calc(var(--index) * 0.15s);
+  code }
+pre
+  code .bunny {
+  code   animation-delay: calc((var(--index) - 5) * 0.15s);
+  code }
+pre
+  code .bunny {
+  code   animation-delay: calc((5 - var(--index)) * 0.15s);
+  code }
+pre
+  code .bunny {
+  code   animation-delay: calc(var(--index) * -0.15s);
+  code }

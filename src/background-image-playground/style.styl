@@ -1,0 +1,39 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: hsl(0, 10%, 90%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+label {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.head {
+  --twinkle--left: radial-gradient(circle at 40% 40%, #FFF 10%, transparent 10%) 25% 35% / 5vmin 5vmin;
+  --eye--left: radial-gradient(#000 50%, transparent 50%) 25% 35% / 5vmin 5vmin;
+  --twinkle--right: radial-gradient(circle at 40% 40%, #FFF 10%, transparent 10%) 75% 35% / 5vmin 5vmin;
+  --eye--right: radial-gradient(#000 50%, transparent 50%) 75% 35% / 5vmin 5vmin;
+  --mouth: radial-gradient(circle at 50% 0, #FFF 44%, transparent 44%) 50% 100% / 10vmin 10vmin;
+  // --mouth: radial-gradient(circle at 50% 0, #FFF 44%, hsla(0, 0%, 50%, var(--mouth-back)) 44%) 50% 100% / 10vmin 10vmin;
+  height: 25vmin;
+  width: 25vmin;
+  background:
+    var(--twinkle--left),
+    var(--eye--left),
+    var(--twinkle--right),
+    var(--eye--right),
+    var(--mouth),
+    #ffe330;
+  background-repeat: no-repeat;
+  margin-bottom: 2rem;
+}
