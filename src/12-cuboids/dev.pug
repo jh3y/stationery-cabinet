@@ -1,0 +1,21 @@
+//- Front
+//- Back
+//- Right
+//- Left
+//- Top
+//- Bottom
+mixin cuboid(className)
+  .cuboid(class=className)
+    - let s = 0
+    while s < 6
+      .cuboid__side
+      - s++
+.scene
+  //- Plane that all the 3D stuff sits on
+  .plane
+    - let c = 0
+    while c < 12
+      .cuboid-wrapper
+        .cuboid-spinner
+          +cuboid()
+      - c++
