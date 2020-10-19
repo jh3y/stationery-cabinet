@@ -1,0 +1,237 @@
+*
+  box-sizing border-box
+  transform-style preserve-3d
+
+:root
+  --perspective 1200
+  --rotate-x -15
+  --rotate-y -40
+  --plane-height 44
+  --ease cubic-bezier(0.84, 0, 0.2, 1)
+  --duration 4
+  --plane-width 8
+  --one-one hsl(0, 50%, 50%)
+  --one-two hsl(0, 50%, 40%)
+  --one-three hsl(0, 50%, 30%)
+  --two-one hsl(180, 50%, 50%)
+  --two-two hsl(180, 50%, 40%)
+  --two-three hsl(180, 50%, 30%)
+  --three-one hsl(90, 50%, 50%)
+  --three-two hsl(90, 50%, 40%)
+  --three-three hsl(90, 50%, 30%)
+
+body
+  min-height 100vh
+  // overflow hidden
+  background hsl(0, 0%, 90%)
+
+.scene
+  perspective calc(var(--perspective, 800) * 1px)
+  transform-style preserve-3d
+  height 100vh
+  width 100vw
+  display flex
+  align-items center
+  justify-content center
+
+.plane
+  background hsla(180, 50%, 50%, 0.5)
+  height calc(var(--plane-height, 25) * 1vmin)
+  width calc(var(--plane-width, 25) * 1vmin)
+  transform-style preserve-3d
+  transform rotateX(calc(var(--rotate-x, -24) * 1deg)) rotateY(calc(var(--rotate-y, -24) * 1deg)) rotateX(90deg) translate3d(0, 0, 0)
+
+
+// This is what makes the CSS variable powered cuboid
+.cuboid-wrapper
+  --width var(--cuboid-width, 15)
+  --height var(--cuboid-height, 10)
+  --depth var(--cuboid-depth, 4)
+  height calc(var(--height) * 1vmin)
+  width calc(var(--width) * 1vmin)
+  position absolute
+  // transform-origin 50% 0
+  transform translate3d(0, -50%, 0) rotateX(90deg) translate3d(0, 50%, calc(var(--y) * -2vmin)) scaleX(1) scaleY(1) scaleZ(1)
+  transform-style preserve-3d
+
+.cuboid
+  height 100%
+  width 100%
+  position absolute
+  transform-origin 50% 0
+  transform translate3d(0, 0, 0) rotateX(0deg) translate3d(0, 0, 0) scaleX(0.25) scaleY(0.25) scaleZ(1)
+  transform-style preserve-3d
+  animation flow calc(var(--duration) * 1s) infinite var(--ease)
+
+  &__side
+    transform-style preserve-3d
+    position absolute
+
+  & > div:nth-of-type(1)
+    height 100%
+    width 100%
+    transform translate3d(0, 0, calc((var(--depth) / 2) * -1vmin))
+
+  & > div:nth-of-type(2)
+    height 100%
+    width 100%
+    transform translate3d(0, 0, calc((var(--depth) / 2) * 1vmin))
+
+  & > div:nth-of-type(3)
+    height 100%
+    width calc(var(--depth) * 1vmin)
+    transform-origin 100% 50%
+    right 0
+    transform rotateY(90deg) translate3d(50%, 0, 0)
+
+  & > div:nth-of-type(4)
+    height 100%
+    width calc(var(--depth) * 1vmin)
+    transform-origin 0 50%
+    transform rotateY(90deg) translate3d(-50%, 0, 0)
+
+  & > div:nth-of-type(5)
+    height calc(var(--depth) * 1vmin)
+    width 100%
+    top 50%
+    transform translate(0, -50%) rotateX(90deg) translate3d(0, 0, calc(var(--height) * -0.5vmin))
+
+  & > div:nth-of-type(6)
+    height calc(var(--depth) * 1vmin)
+    width 100%
+    top 50%
+    transform translate(0, -50%) rotateX(90deg) translate3d(0, 0, calc(var(--height) * 0.5vmin))
+
+.cuboid-wrapper:nth-of-type(1)
+  --index 1
+.cuboid-wrapper:nth-of-type(2)
+  --index 2
+.cuboid-wrapper:nth-of-type(3)
+  --index 3
+.cuboid-wrapper:nth-of-type(4)
+  --index 4
+.cuboid-wrapper:nth-of-type(5)
+  --index 5
+.cuboid-wrapper:nth-of-type(6)
+  --index 6
+.cuboid-wrapper:nth-of-type(7)
+  --index 7
+.cuboid-wrapper:nth-of-type(8)
+  --index 8
+.cuboid-wrapper:nth-of-type(9)
+  --index 9
+.cuboid-wrapper:nth-of-type(10)
+  --index 10
+.cuboid-wrapper:nth-of-type(11)
+  --index 11
+.cuboid-wrapper:nth-of-type(12)
+  --index 12
+
+.cuboid-wrapper:nth-of-type(1n)
+  --shade-one var(--one-one)
+  --shade-two var(--one-two)
+  --shade-three var(--one-three)
+.cuboid-wrapper:nth-of-type(2n)
+  --shade-one var(--two-one)
+  --shade-two var(--two-two)
+  --shade-three var(--two-three)
+.cuboid-wrapper:nth-of-type(3n)
+  --shade-one var(--three-one)
+  --shade-two var(--three-two)
+  --shade-three var(--three-three)
+
+.cuboid-wrapper
+  --height 8
+  --width 8
+  --depth 1
+  --z 4
+  --y calc((var(--index) - 1) * (var(--depth) * 2))
+  background red
+
+
+.cuboid
+  .cuboid__side
+    opacity 0.5
+
+  & > div
+    background var(--shade-one)
+
+  & > div:nth-of-type(1)
+    background var(--shade-three)
+  & > div:nth-of-type(2)
+    background var(--shade-two)
+  & > div:nth-of-type(3)
+    background var(--shade-one)
+
+.cuboid-spinner
+  height 100%
+  width 100%
+  position absolute
+  animation spin calc(var(--duration) * 1s) infinite
+//   --width var(--cuboid-width, 15)
+//   --height var(--cuboid-height, 10)
+//   --depth var(--cuboid-depth, 4)
+//   height calc(var(--height) * 1vmin)
+//   width calc(var(--width) * 1vmin)
+//   background blue
+//   transform translate3d(0, calc(var(--y, 0) * 2vmin), 0) rotateX(90deg) translate3d(0, 0, calc(var(--depth) * -0.5vmin)) scaleX(0.25) scaleY(0.25) scaleZ(1)
+
+@keyframes spin
+  0%
+    transform rotate(0deg)
+  10%
+    transform rotate(0deg)
+  20%
+    transform rotate(0deg)
+  30%
+    transform rotate(0deg)
+  40%
+    transform rotate(0deg)
+  50%
+    transform rotate(0deg)
+  60%
+    transform rotate(-360deg)
+  70%
+    transform rotate(-360deg)
+  80%
+    transform rotate(-360deg)
+  90%
+    transform rotate(-360deg)
+  100%
+    transform rotate(-360deg)
+
+
+@keyframes flow
+  0%
+    transform translate3d(0, 0, 0) rotateX(0deg) translate3d(0, 0, 0) scaleX(0.25) scaleY(0.25) scaleZ(1)
+  10%
+    transform translate3d(0, 0, 0) rotateX(0deg) translate3d(0, 0, 0) scaleX(1) scaleY(0.25) scaleZ(1)
+  20%
+    transform translate3d(0, 0, 0) rotateX(0deg) translate3d(0, 0, 0) scaleX(1) scaleY(1) scaleZ(1)
+  30%
+    transform translate3d(0, 0, 0) rotateX(0deg) translate3d(0, 0, 0) scaleX(1) scaleY(1) scaleZ(1)
+  40%
+    transform translate3d(0, 0, 0) rotateX(0deg) translate3d(0, 0, 0) scaleX(1) scaleY(1) scaleZ(1)
+  50%
+    transform translate3d(0, 0, 0) rotateX(0deg) translate3d(0, 0, 0) scaleX(1) scaleY(1) scaleZ(1)
+  60%
+    transform translate3d(0, 0, 0) rotateX(0deg) translate3d(0, 0, 0) scaleX(1) scaleY(1) scaleZ(1)
+  70%
+    transform translate3d(0, 0, 0) rotateX(0deg) translate3d(0, 0, 0) scaleX(0.25) scaleY(0.25) scaleZ(1)
+  80%
+    transform translate3d(0, 0, 0) rotateX(0deg) translate3d(0, 0, 0) scaleX(0.25) scaleY(0.25) scaleZ(1)
+  90%
+    transform translate3d(0, 0, 0) rotateX(0deg) translate3d(0, 0, 0) scaleX(0.25) scaleY(0.25) scaleZ(1)
+  100%
+    transform translate3d(0, 0, 0) rotateX(0deg) translate3d(0, 0, 0) scaleX(0.25) scaleY(0.25) scaleZ(1)
+// Start small
+// Grow width
+// Grow small
+// Grow tall
+// Grow wide
+// Grow short and translate
+// Translate back and scale down more
+// Scale up width and translate back
+// Scale back up height
+// Scale in width
+// Scale down height
