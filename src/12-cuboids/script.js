@@ -6,7 +6,7 @@ const {
 const CONTROLLER = new GUI()
 const CONFIG = {
   'rotate-x': -24,
-  'rotate-y': -40,
+  'rotate-y': -215,
 }
 const UPDATE = () => {
   Object.entries(CONFIG).forEach(([key, value]) => {
