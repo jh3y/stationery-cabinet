@@ -1,0 +1,100 @@
+*
+  box-sizing border-box
+
+:root
+  --green-one hsl(130, 64%, 76%)
+  --green-two hsl(136, 53%, 51%)
+  --green-three hsl(136, 54%, 41%)
+  --green-four hsl(139, 54%, 28%)
+  --grey hsl(216, 14%, 93%)
+  --shirt var(--green-one)
+  --shirt-shade var(--green-two)
+  --skin hsl(0, 20%, 90%)
+  --skin-shade hsl(0, 20%, 70%)
+  --stroke hsl(0, 0%, 20%)
+  --laptop hsl(0, 0%, 78%)
+  --laptop-main hsl(60, 1%, 30%)
+  --laptop-shade hsla(240, 1%, 23%, 0.5)
+  --laptop-badge hsl(0, 0%, 100%)
+  --beard hsl(30, 50%, 50%)
+  --beard-light hsl(30, 50%, 70%)
+  --eyes hsl(0, 0%, 0%)
+  --strap hsl(0, 50%, 50%)
+  --cheeks hsl(0, 50%, 75%)
+  --cap hsl(0, 0%, 25%)
+  --sparks hsla(60, 100%, 60%, 0.5)
+  --bulb hsla(60, 100%, 60%, 0.25)
+  --filament hsl(0, 0%, 0%)
+  --screw hsl(0, 0%, 80%)
+
+body
+  display flex
+  align-items center
+  justify-content center
+  min-height 100vh
+  background var(--grey)
+
+.vvg
+  height 50vmin
+  overflow visible !important
+
+  &__code-block
+    fill 'hsl(%s, 80%, 50%)' % var(--hue, 0)
+
+  &__bulb
+    &-bulb
+      fill var(--bulb)
+    &-dashes
+      stroke var(--sparks)
+      stroke-width 4px
+    &-filament
+      stroke var(--filament)
+    &-screw
+      fill var(--screw)
+
+  &__cheeks
+    fill var(--cheeks)
+
+  &__cap
+    &-body
+      fill var(--cap)
+    &-strap
+      fill var(--strap)
+
+  &-stroke
+    stroke var(--stroke)
+    stroke-width 2px
+
+  &__eyes
+    fill var(--eyes)
+    stroke var(--eyes)
+
+  &-hair
+    fill var(--beard)
+
+    &--light
+      fill var(--beard-light)
+
+
+  &__shirt
+    fill var(--shirt)
+
+    &--shade
+      fill var(--shirt-shade)
+
+  &-skin
+    fill var(--skin)
+    &--shade
+      fill var(--skin-shade)
+
+  &__laptop
+    &-badge
+      fill var(--laptop-badge)
+    &-shell
+      fill var(--laptop)
+
+      &--main
+        fill var(--laptop-main)
+
+      &--shade
+        fill var(--laptop-shade)
