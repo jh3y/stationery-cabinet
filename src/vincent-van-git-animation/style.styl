@@ -17,29 +17,40 @@
   --laptop-shade hsla(240, 1%, 23%, 0.5)
   --laptop-badge hsl(0, 0%, 100%)
   --beard hsl(30, 50%, 50%)
+  --beard hsl(30, 80%, 38%)
   --beard-light hsl(30, 50%, 70%)
-  --eyes hsl(0, 0%, 0%)
+  --beard-light hsl(30, 80%, 58%)
+  --eyes var(--stroke)
   --strap hsl(0, 50%, 50%)
+  --strap var(--green-four)
   --cheeks hsl(0, 50%, 75%)
   --cap hsl(0, 0%, 25%)
-  --sparks hsla(60, 100%, 60%, 0.5)
-  --bulb hsla(60, 100%, 60%, 0.25)
+  --sparks hsla(60, 100%, 80%, 0.85)
+  --bulb hsla(60, 100%, 80%, 0.85)
   --filament hsl(0, 0%, 0%)
   --screw hsl(0, 0%, 80%)
+  --bg hsl(216, 14%, 50%)
+  // Night Owl Colors
+  --owl-1 hsl(50, 98%, 78%)
+  --owl-2 hsl(76, 68%, 67%)
+  --owl-3 hsl(14, 91%, 69%)
+  --owl-4 hsl(175, 42%, 65%)
+  --owl-5 hsl(275, 70%, 75%)
+
 
 body
   display flex
   align-items center
   justify-content center
   min-height 100vh
-  background var(--grey)
+  background var(--bg)
 
 .vvg
   height 50vmin
   overflow visible !important
 
   &__code-block
-    fill 'hsl(%s, 80%, 50%)' % var(--hue, 0)
+    fill var(--block-color, var(--owl-1))
 
   &__bulb
     &-bulb
@@ -60,6 +71,8 @@ body
       fill var(--cap)
     &-strap
       fill var(--strap)
+    &-notch
+      fill var(--stroke)
 
   &-stroke
     stroke var(--stroke)
@@ -98,3 +111,36 @@ body
 
       &--shade
         fill var(--laptop-shade)
+
+
+label
+  height 44px
+  width 44px
+  position fixed
+  bottom 1rem
+  right 1rem
+  cursor pointer
+
+  & > svg
+    position absolute
+    height 100%
+    width 100%
+    top 0
+    left 0
+
+  path
+    fill hsl(216, 14%, 30%)
+
+  svg:nth-of-type(1)
+    display none
+
+[type='checkbox']
+  // opacity 0
+  height 0
+  width 0
+
+:checked ~ label
+  svg:nth-of-type(1)
+    display block
+  svg:nth-of-type(2)
+    display none
