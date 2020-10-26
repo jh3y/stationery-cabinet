@@ -7,13 +7,36 @@ const {
   },
 } = window
 
-const AUDIO = {
-  TADA: new Audio('https://assets.codepen.io/605876/trumpet-fanfare.mp3'),
-}
-AUDIO.TADA.muted = true
+/**
+ * Audio Attribution
+ * Towel Defence Ingame[https://freemusicarchive.org/music/sawsquarenoise/Towel_Defence_OST/Towel_Defence_Ingame] by sawsquarenoise[https://freemusicarchive.org/music/sawsquarenoise]. Licensed under CC BY 4.0[https://creativecommons.org/licenses/by/4.0/]
+ * Keyboard Typing[https://freesound.org/people/Trollarch2/sounds/331656/] by Trollarch2[https://freesound.org/people/Trollarch2/]. Licensed under CC 0[https://creativecommons.org/publicdomain/zero/1.0/]
+ * success_02.wav[https://freesound.org/people/gamer127/sounds/463067/] by gamer127[https://freesound.org/people/gamer127/]. Licensed under CC 0[http://creativecommons.org/publicdomain/zero/1.0/]
+ */
 
-const STATE = {
-  CODING: false,
+const AUDIO = {
+  TADA: new Audio('https://assets.codepen.io/605876/chip--success.mp3'),
+  CLACKING: new Audio(
+    'https://assets.codepen.io/605876/keyboard-typing-mechanical.mp3'
+  ),
+  TUNE: new Audio(
+    'https://assets.codepen.io/605876/ChipTune-SawSquareNoise--TRIMMED.mp3'
+  ),
+}
+AUDIO.TADA.muted = AUDIO.CLACKING.muted = AUDIO.TUNE.muted = true
+AUDIO.TUNE.volume = 0.75
+AUDIO.CLACKING.playbackRate = 2
+AUDIO.TUNE.loop = AUDIO.CLACKING.loop = true
+
+const toggleAudio = () => {
+  AUDIO.TADA.muted = AUDIO.CLACKING.muted = AUDIO.TUNE.muted = !AUDIO.TUNE.muted
+}
+
+document.querySelector('#volume').addEventListener('input', toggleAudio)
+
+const TIMING = {
+  DOWN: 0.2,
+  UP: 0.5,
 }
 
 const BLINK = () => {
@@ -34,14 +57,50 @@ const RESET = () => {
   set(['.vvg__eyes', '.vvg__ear', '.vvg__eyes-group', '.vvg__code-block'], {
     transformOrigin: '50% 50%',
   })
+  set('.vvg__head-group', { transformOrigin: '50% 60%' })
   set('.vvg__bulb-dashes', { transformOrigin: '50% 50%', scale: 0, opacity: 1 })
   set('.vvg__bulb', { display: 'none' })
   set('.vvg__code-block', { scale: 0 })
   set('.vvg__code-block', {
-    '--hue': () => random(0, 359),
+    '--block-color': () => `var(--owl-${Math.floor(random(1, 6))})`,
     rotation: () => random(-45, 45),
   })
 }
+
+const LAPTOP_ROCK = timeline({
+  paused: true,
+})
+  .to('.vvg__laptop', {
+    repeatRefresh: true,
+    repeat: -1,
+    yoyo: true,
+    duration: 0.1,
+    xPercent: () => random(-4, 4),
+    yPercent: () => random(-4, -1),
+  })
+  .to('.vvg__head-group', {
+    repeat: -1,
+    yoyo: true,
+    duration: 0.1,
+    yPercent: '+=1',
+  })
+
+let THINK_TL
+const THINK = () => {
+  const delay = random(1, 3)
+  const repeatDelay = random(2, 5)
+  THINK_TL = timeline().to('.vvg__head-group', {
+    delay,
+    repeatDelay,
+    onComplete: () => THINK(),
+    rotate: () => random(-10, 10),
+    repeat: 1,
+    yoyo: true,
+    duration: () => random(1, 3),
+  })
+}
+THINK()
+
 const FIRE_BLOCKS = timeline({
   paused: true,
 })
@@ -55,7 +114,7 @@ for (const BLOCK of BLOCKS) {
     .to(
       BLOCK,
       {
-        duration: () => random(0.5, 2),
+        duration: () => random(0.25, 2),
         scale: () => random(0.5, 2),
         xPercent: () =>
           BLOCK.classList.contains('vvg__code-block--left')
@@ -86,8 +145,15 @@ RESET()
 const SHOCK_TL = () =>
   timeline()
     .set(['.vvg__bulb', '.vvg__eyebrows'], { display: 'block' })
-    .to('.vvg__bulb-dashes', { scale: 1.5, duration: 1 })
-    .to('.vvg__bulb-dashes', { opacity: 0 }, '>-0.25')
+    .to('.vvg__head-group', {
+      rotate: 0,
+      duration: 0.2,
+      onStart: () => {
+        THINK_TL.kill()
+      },
+    })
+    .to('.vvg__bulb-dashes', { scale: 1.5, duration: 0.35 })
+    .to('.vvg__bulb-dashes', { opacity: 0, duration: 0.2 }, '>-0.1')
 
 const EYE_MOVEMENT = 3
 const EYE_ROCK = timeline({
@@ -101,36 +167,53 @@ const DOWN = () =>
   timeline({
     onComplete: () => {
       EYE_ROCK.play()
-      STATE.CODING = true
+      LAPTOP_ROCK.restart()
       FIRE_BLOCKS.restart()
+      AUDIO.CLACKING.play()
+      AUDIO.TUNE.play()
     },
     onStart: () => {
       set(['.vvg__eyebrows', '.vvg__bulb'], { display: 'none' })
     },
   })
-    .to('.vvg__head-group', { yPercent: 10 }, 0)
-    .to('.vvg__eyes', { scaleY: 0.9, yPercent: 75 }, 0)
-    .to(['.vvg__cheeks'], { yPercent: 55 }, 0)
-    .to('.vvg__cap', { yPercent: 10 }, 0)
-    .to('.vvg__moustache', { yPercent: 20 }, 0)
-    .to('.vvg__ear', { yPercent: -40, scaleY: 0.85 }, 0)
+    .to('.vvg__head-group', { duration: TIMING.DOWN, yPercent: 10 }, 0)
+    .to('.vvg__eyes', { duration: TIMING.DOWN, scaleY: 0.9, yPercent: 75 }, 0)
+    .to(['.vvg__cheeks'], { duration: TIMING.DOWN, yPercent: 55 }, 0)
+    .to('.vvg__cap', { duration: TIMING.DOWN, yPercent: 10 }, 0)
+    .to('.vvg__moustache', { duration: TIMING.DOWN, yPercent: 20 }, 0)
+    .to('.vvg__ear', { duration: TIMING.DOWN, yPercent: -40, scaleY: 0.85 }, 0)
 
 const UP = delay =>
   timeline({
     delay,
     onStart: () => {
       EYE_ROCK.pause()
+      EYE_ROCK.time(0)
+      LAPTOP_ROCK.pause()
+      LAPTOP_ROCK.time(0)
       FIRE_BLOCKS.pause()
       FIRE_BLOCKS.time(0)
+      AUDIO.CLACKING.pause()
+      AUDIO.CLACKING.currentTime = 0
+      to(AUDIO.TUNE, {
+        volume: 0,
+        duration: 1,
+        onComplete: () => {
+          AUDIO.TUNE.pause()
+          AUDIO.TUNE.currentTime = 0
+          AUDIO.TUNE.volume = 0.75
+        },
+      })
       to('.vvg__eyes-group', { xPercent: 0 })
+      THINK()
     },
   })
-    .to('.vvg__head-group', { yPercent: 0 }, 0)
-    .to('.vvg__eyes', { scaleY: 1 }, 0)
-    .to(['.vvg__eyes', '.vvg__cheeks'], { yPercent: 0 }, 0)
-    .to('.vvg__cap', { yPercent: 0 }, 0)
-    .to('.vvg__moustache', { yPercent: 0 }, 0)
-    .to('.vvg__ear', { yPercent: 0, scaleY: 1 }, 0)
+    .to('.vvg__head-group', { duration: TIMING.UP, yPercent: 0 }, 0)
+    .to('.vvg__eyes', { duration: TIMING.UP, scaleY: 1 }, 0)
+    .to(['.vvg__eyes', '.vvg__cheeks'], { duration: TIMING.UP, yPercent: 0 }, 0)
+    .to('.vvg__cap', { duration: TIMING.UP, yPercent: 0 }, 0)
+    .to('.vvg__moustache', { duration: TIMING.UP, yPercent: 0 }, 0)
+    .to('.vvg__ear', { duration: TIMING.UP, yPercent: 0, scaleY: 1 }, 0)
 
 // HEAD_TL()
 
