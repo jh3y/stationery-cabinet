@@ -75,9 +75,10 @@ const FIRING_SWEETS = document.querySelectorAll('.firing-sweets .sweet')
 const FIRE = () => {
   // const VMIN = Math.min(window.innerHeight, window.innerWidth) / 100
   FIRING_SWEETS.forEach(sweet => {
-    to(sweet, {
+    let tween
+    tween = to(sweet, {
       onComplete: () => {
-        set(sweet, { x: 0, y: 0 })
+        tween.pause(0)
       },
       ease: 'power3.out',
       duration: () => random(0.1, 1),
