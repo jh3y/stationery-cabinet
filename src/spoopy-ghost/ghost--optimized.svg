@@ -1,0 +1,223 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="ghost" viewBox="0 0 87.69 133.803">
+  <defs>
+    <clipPath id="bowlClip">
+      <path d="M163.233 149.467a33.073 5.578 0 00-33.073 5.579 33.073 5.578 0 00.482.948 33.073 5.578 0 01-.482-.948v9.03a33.81 30.602 0 0033.073 24.413 33.81 30.602 0 0033.073-24.301v-9.142a33.073 5.578 0 00-33.073-5.579z" fill="#f60" stroke-width="1.847" stroke-linecap="round" stroke-linejoin="round"/>
+    </clipPath>
+    <clipPath id="sweetClip">
+      <path d="M120.333 123.506v31.54h9.827a33.073 5.578 0 0033.073 5.578 33.073 5.578 0 0033.072-5.577h9.829v-31.541z" fill="#ff2a2a"/>
+    </clipPath>
+    <clipPath id="bodyClip">
+      <path class="ghost__tails" d="M.08 0A.079.079 0 000 .08v122.084l.044-.002c5.322 0 5.622 11.62 10.935 11.64h.03c5.313-.02 5.613-11.64 10.935-11.64 5.323 0 5.623 11.62 10.936 11.64h.03c5.313-.02 5.612-11.64 10.935-11.64s5.622 11.62 10.936 11.64h.029c5.313-.02 5.613-11.64 10.936-11.64 5.323 0 5.622 11.62 10.936 11.64h.029c5.313-.02 5.613-11.64 10.936-11.64.014 0 .028 0 .043.002V.08a.079.079 0 00-.08-.08H43.846z" />
+      <path class="ghost__tails--two" d="M.08 0A.079.079 0 000 .08v122.084l.044-.002c5.322 0 5.622 11.62 10.935 11.64h.03c5.313-.02 5.613-11.64 10.935-11.64 5.323 0 5.623 11.62 10.936 11.64h.03c5.313-.02 5.612-11.64 10.935-11.64s5.622 11.62 10.936 11.64h.029c5.313-.02 5.613-11.64 10.936-11.64 5.323 0 5.622 11.62 10.936 11.64h.029c5.313-.02 5.613-11.64 10.936-11.64.014 0 .028 0 .043.002V.08a.079.079 0 00-.08-.08H43.846z" />
+    </clipPath>
+    <!-- <clipPath id="bodyClipTwo">
+    </clipPath> -->
+  </defs>
+  <g class="sweet-bowl" transform="translate(-119.388 -68.988)">
+    <path class="sweet-bowl__body" d="M163.233 149.467a33.073 5.578 0 00-33.073 5.579 33.073 5.578 0 00.482.948 33.073 5.578 0 01-.482-.948v9.03a33.81 30.602 0 0033.073 24.413 33.81 30.602 0 0033.073-24.301v-9.142a33.073 5.578 0 00-33.073-5.579z" />
+    <g class="sweet-bowl__eyes" transform="translate(-.069)">
+      <circle class="sweet-bowl__eye" r="2.94" cy="168.176" cx="149.136"/>
+      <circle class="sweet-bowl__eye" cx="177.467" cy="168.443" r="2.94"/>
+    </g>
+    <path class="sweet-bowl__mouth" d="M147.63 171.956c.126 3.627 3.06 6.96 7.79 8.78 4.835 1.86 10.791 1.86 15.626 0 4.73-1.82 7.664-5.153 7.79-8.78-.093.058-.17.124-.265.181a22.38 22.38 0 01-2.128 1.116c-.754.346-1.551.664-2.388.952-.837.288-1.699.54-2.578.755a32.74 32.74 0 01-2.688.54c-.91.145-1.832.253-2.76.325a36.18 36.18 0 01-8.352-.324 32.741 32.741 0 01-2.688-.54 29.708 29.708 0 01-2.578-.756 26.028 26.028 0 01-2.388-.952 22.062 22.062 0 01-2.128-1.116c-.095-.057-.172-.123-.265-.181z"/>
+    <path class="sweet-bowl__tongue" d="M170.94 178.032a7.96 4.134 0 00-7.956 4.093c2.78.03 5.57-.43 8.062-1.39 1.491-.573 2.804-1.298 3.906-2.135a7.96 4.134 0 00-4.012-.568z" />
+    <path class="sweet-bowl__groove" d="M139.381 155.347s-1.53 11.059-.776 16.52c1.278 9.252 7.19 17.387 7.19 17.387" clip-path="url(#bowlClip)" fill="none" stroke-width="1.058"/>
+    <path class="sweet-bowl__groove" d="M187.603 155.347s1.53 11.059.776 16.52c-1.278 9.252-7.189 17.387-7.189 17.387" clip-path="url(#bowlClip)" fill="none" stroke-width="1.058"/>
+    <ellipse class="sweet-bowl__opening" cx="163.233" cy="155.046" rx="33.073" ry="5.578" />
+    <g class="static-sweets" clip-path="url(#sweetClip)">
+      <g class="sweet sweet--sweet" transform="translate(9.373 60.293)">
+        <g>
+          <path d="M164.104 77.274v8.996l-8.995-4.498 8.995-4.498z"/>
+          <path d="M143.616 77.274v8.996l8.996-4.498-8.996-4.498z"/>
+        </g>
+        <circle r="4.498" cy="81.772" cx="153.86"/>
+      </g>
+      <g class="sweet sweet--lolly" transform="translate(-13.093 67.622)">
+        <path d="M175.783 70.781h1.087v13.654h-1.087z"/>
+        <circle r="3.969" cy="68.419" cx="176.326"/>
+      </g>
+      <g class="sweet sweet--sweet" transform="translate(9.373 60.293)">
+        <g>
+          <path d="M164.104 77.274v8.996l-8.995-4.498 8.995-4.498z"/>
+          <path d="M143.616 77.274v8.996l8.996-4.498-8.996-4.498z"/>
+        </g>
+        <circle r="4.498" cy="81.772" cx="153.86"/>
+      </g>
+      <g class="sweet sweet--lolly" transform="translate(-13.093 67.622)">
+        <path d="M175.783 70.781h1.087v13.654h-1.087z"/>
+        <circle r="3.969" cy="68.419" cx="176.326"/>
+      </g>
+      <g class="sweet sweet--sweet" transform="translate(9.373 60.293)">
+        <g>
+          <path d="M164.104 77.274v8.996l-8.995-4.498 8.995-4.498z"/>
+          <path d="M143.616 77.274v8.996l8.996-4.498-8.996-4.498z"/>
+        </g>
+        <circle r="4.498" cy="81.772" cx="153.86"/>
+      </g>
+      <g class="sweet sweet--lolly" transform="translate(-13.093 67.622)">
+        <path d="M175.783 70.781h1.087v13.654h-1.087z"/>
+        <circle r="3.969" cy="68.419" cx="176.326"/>
+      </g>
+      <g class="sweet sweet--sweet" transform="translate(9.373 60.293)">
+        <g>
+          <path d="M164.104 77.274v8.996l-8.995-4.498 8.995-4.498z"/>
+          <path d="M143.616 77.274v8.996l8.996-4.498-8.996-4.498z"/>
+        </g>
+        <circle r="4.498" cy="81.772" cx="153.86"/>
+      </g>
+      <g class="sweet sweet--lolly" transform="translate(-13.093 67.622)">
+        <path d="M175.783 70.781h1.087v13.654h-1.087z"/>
+        <circle r="3.969" cy="68.419" cx="176.326"/>
+      </g>
+      <g class="sweet sweet--sweet" transform="translate(9.373 60.293)">
+        <g>
+          <path d="M164.104 77.274v8.996l-8.995-4.498 8.995-4.498z"/>
+          <path d="M143.616 77.274v8.996l8.996-4.498-8.996-4.498z"/>
+        </g>
+        <circle r="4.498" cy="81.772" cx="153.86"/>
+      </g>
+      <g class="sweet sweet--lolly" transform="translate(-13.093 67.622)">
+        <path d="M175.783 70.781h1.087v13.654h-1.087z"/>
+        <circle r="3.969" cy="68.419" cx="176.326"/>
+      </g>
+      <g class="sweet sweet--sweet" transform="translate(9.373 60.293)">
+        <g>
+          <path d="M164.104 77.274v8.996l-8.995-4.498 8.995-4.498z"/>
+          <path d="M143.616 77.274v8.996l8.996-4.498-8.996-4.498z"/>
+        </g>
+        <circle r="4.498" cy="81.772" cx="153.86"/>
+      </g>
+      <g class="sweet sweet--lolly" transform="translate(-13.093 67.622)">
+        <path d="M175.783 70.781h1.087v13.654h-1.087z"/>
+        <circle r="3.969" cy="68.419" cx="176.326"/>
+      </g>
+      <g class="sweet sweet--sweet" transform="translate(9.373 60.293)">
+        <g>
+          <path d="M164.104 77.274v8.996l-8.995-4.498 8.995-4.498z"/>
+          <path d="M143.616 77.274v8.996l8.996-4.498-8.996-4.498z"/>
+        </g>
+        <circle r="4.498" cy="81.772" cx="153.86"/>
+      </g>
+      <g class="sweet sweet--lolly" transform="translate(-13.093 67.622)">
+        <path d="M175.783 70.781h1.087v13.654h-1.087z"/>
+        <circle r="3.969" cy="68.419" cx="176.326"/>
+      </g>
+      <g class="sweet sweet--sweet" transform="translate(9.373 60.293)">
+        <g>
+          <path d="M164.104 77.274v8.996l-8.995-4.498 8.995-4.498z"/>
+          <path d="M143.616 77.274v8.996l8.996-4.498-8.996-4.498z"/>
+        </g>
+        <circle r="4.498" cy="81.772" cx="153.86"/>
+      </g>
+      <g class="sweet sweet--lolly" transform="translate(-13.093 67.622)">
+        <path d="M175.783 70.781h1.087v13.654h-1.087z"/>
+        <circle r="3.969" cy="68.419" cx="176.326"/>
+      </g>
+      <g class="sweet sweet--sweet" transform="translate(9.373 60.293)">
+        <g>
+          <path d="M164.104 77.274v8.996l-8.995-4.498 8.995-4.498z"/>
+          <path d="M143.616 77.274v8.996l8.996-4.498-8.996-4.498z"/>
+        </g>
+        <circle r="4.498" cy="81.772" cx="153.86"/>
+      </g>
+      <g class="sweet sweet--lolly" transform="translate(-13.093 67.622)">
+        <path d="M175.783 70.781h1.087v13.654h-1.087z"/>
+        <circle r="3.969" cy="68.419" cx="176.326"/>
+      </g>
+      <g class="sweet sweet--sweet" transform="translate(9.373 60.293)">
+        <g>
+          <path d="M164.104 77.274v8.996l-8.995-4.498 8.995-4.498z"/>
+          <path d="M143.616 77.274v8.996l8.996-4.498-8.996-4.498z"/>
+        </g>
+        <circle r="4.498" cy="81.772" cx="153.86"/>
+      </g>
+      <g class="sweet sweet--lolly" transform="translate(-13.093 67.622)">
+        <path d="M175.783 70.781h1.087v13.654h-1.087z"/>
+        <circle r="3.969" cy="68.419" cx="176.326"/>
+      </g>
+    </g>
+    <g class="firing-sweets">
+      <g class="sweet sweet--sweet" transform="translate(9.373 60.293)">
+        <g>
+          <path d="M164.104 77.274v8.996l-8.995-4.498 8.995-4.498z"/>
+          <path d="M143.616 77.274v8.996l8.996-4.498-8.996-4.498z"/>
+        </g>
+        <circle r="4.498" cy="81.772" cx="153.86"/>
+      </g>
+      <g class="sweet sweet--lolly" transform="translate(-13.093 67.622)">
+        <path d="M175.783 70.781h1.087v13.654h-1.087z"/>
+        <circle r="3.969" cy="68.419" cx="176.326"/>
+      </g>
+      <g class="sweet sweet--sweet" transform="translate(9.373 60.293)">
+        <g>
+          <path d="M164.104 77.274v8.996l-8.995-4.498 8.995-4.498z"/>
+          <path d="M143.616 77.274v8.996l8.996-4.498-8.996-4.498z"/>
+        </g>
+        <circle r="4.498" cy="81.772" cx="153.86"/>
+      </g>
+      <g class="sweet sweet--lolly" transform="translate(-13.093 67.622)">
+        <path d="M175.783 70.781h1.087v13.654h-1.087z"/>
+        <circle r="3.969" cy="68.419" cx="176.326"/>
+      </g>
+      <g class="sweet sweet--sweet" transform="translate(9.373 60.293)">
+        <g>
+          <path d="M164.104 77.274v8.996l-8.995-4.498 8.995-4.498z"/>
+          <path d="M143.616 77.274v8.996l8.996-4.498-8.996-4.498z"/>
+        </g>
+        <circle r="4.498" cy="81.772" cx="153.86"/>
+      </g>
+      <g class="sweet sweet--lolly" transform="translate(-13.093 67.622)">
+        <path d="M175.783 70.781h1.087v13.654h-1.087z"/>
+        <circle r="3.969" cy="68.419" cx="176.326"/>
+      </g>
+      <g class="sweet sweet--sweet" transform="translate(9.373 60.293)">
+        <g>
+          <path d="M164.104 77.274v8.996l-8.995-4.498 8.995-4.498z"/>
+          <path d="M143.616 77.274v8.996l8.996-4.498-8.996-4.498z"/>
+        </g>
+        <circle r="4.498" cy="81.772" cx="153.86"/>
+      </g>
+      <g class="sweet sweet--lolly" transform="translate(-13.093 67.622)">
+        <path d="M175.783 70.781h1.087v13.654h-1.087z"/>
+        <circle r="3.969" cy="68.419" cx="176.326"/>
+      </g>
+      <g class="sweet sweet--sweet" transform="translate(9.373 60.293)">
+        <g>
+          <path d="M164.104 77.274v8.996l-8.995-4.498 8.995-4.498z"/>
+          <path d="M143.616 77.274v8.996l8.996-4.498-8.996-4.498z"/>
+        </g>
+        <circle r="4.498" cy="81.772" cx="153.86"/>
+      </g>
+      <g class="sweet sweet--lolly" transform="translate(-13.093 67.622)">
+        <path d="M175.783 70.781h1.087v13.654h-1.087z"/>
+        <circle r="3.969" cy="68.419" cx="176.326"/>
+      </g>
+    </g>
+  </g>
+  <g class="ghost__ghost">
+    <g clip-path="url(#bodyClip)">
+      <path class="ghost__body" d="M43.845 0C19.555 0 0 16.028 0 49.742v81.416c0 .887.017 1.768.043 2.645h87.604c.027-.877.043-1.758.043-2.645V49.742C87.69 16.028 68.135 0 43.845 0z"/>
+    </g>
+    <g class="ghost__eyes">
+      <g class="ghost__eye" transform="translate(-14.366 -64.075)">
+        <circle r="5.292" cy="109.431" cx="31.751"/>
+        <!-- <circle class="ghost__pupil" r="1.323" cy="109.431" cx="31.751" fill="#fff"/> -->
+        <circle class="ghost__pupil" cx="29.751" cy="107.431" r="1.323" />
+      </g>
+      <g class="ghost__eye" transform="translate(38.553 -64.075)">
+        <circle cx="31.751" cy="109.431" r="5.292"/>
+        <!-- <circle class="ghost__pupil" cx="31.751" cy="109.431" r="1.323" fill="#fff"/> -->
+        <circle class="ghost__pupil" r="1.323" cy="107.431" cx="29.751" />
+      </g>
+    </g>
+    <g class="ghost__cheeks" transform="translate(-14.526 -64.075)">
+      <circle cx="23.226" cy="117.689" r="2.646"/>
+      <circle r="2.646" cy="117.689" cx="93.517"/>
+    </g>
+    <path class="ghost__mouth" d="M49.992 48.558a6.147 6.147 0 01-3.073 5.323 6.147 6.147 0 01-6.147 0 6.147 6.147 0 01-3.074-5.323h6.147z"/>
+    <path class="ghost__tongue" d="M46.276 50.864a2.91 2.91 0 00-2.91 2.91 2.91 2.91 0 00.151.917 6.147 6.147 0 003.402-.81 6.147 6.147 0 001.833-1.633 2.91 2.91 0 00-2.476-1.384z" />
+    <path class="ghost__teeth" d="M39.235 51.373l1.537-2.116 1.536 2.116 1.537-2.116 1.537 2.116 1.537-2.116 1.537 2.116 1.536-2.815H37.698z" />
+    <path class="ghost__brow" d="M22.944 39.021c0 1.297-1.06 2.495-2.78 3.144-1.72.648-3.838.648-5.558 0-1.72-.649-2.78-1.847-2.78-3.144" stroke-width=".756" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="ghost__brow" d="M75.863 39.02c0 1.298-1.059 2.497-2.779 3.146-1.72.65-3.839.65-5.559 0-1.72-.649-2.779-1.848-2.779-3.147" stroke-width=".757" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
