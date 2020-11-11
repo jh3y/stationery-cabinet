@@ -1,0 +1,119 @@
+*
+  box-sizing border-box
+
+:root
+  --spread 20vmin
+  --radius 0
+  --blend-mode--one darken
+  --blend-mode--two lighten
+  --bg--one #5100ff
+  --bg--two #ad00ff
+  --exploded 1
+  --blended 0
+  --rotateX -30
+  --rotateY 45
+
+body
+  min-height 100vh
+  background hsl(198, 30%, 15%)
+  display flex
+  align-items center
+  justify-content center
+  perspective 2000vmin
+
+.duotone-card
+  border-radius var(--radius)
+  width 25vmin
+  height 35vmin
+  position absolute
+  transform-style preserve-3d
+  transform translate3d(0, 0, -50vmin) rotateX(calc(var(--rotateX) * 1deg)) rotateY(calc(var(--rotateY) * 1deg))
+
+  img
+    height 100%
+    width 100%
+    object-fit cover
+    position absolute
+    top 0
+    left 0
+    transition transform 0.2s
+
+  &__plate
+    position absolute
+    height 100%
+    width 100%
+    top 0
+    border-radius var(--radius)
+    overflow hidden
+    transition opacity 0.2s, transform 0.2s
+
+    &:nth-of-type(3)
+      transform translate3d(0, 0, calc((var(--exploded) * var(--spread)) * -1))
+
+      .duotone-card__layer:nth-of-type(1)
+        opacity calc(1 - (var(--exploded) + var(--hide--one)))
+        mix-blend-mode var(--blend-mode--one)
+        background var(--bg--one)
+
+      .duotone-card__layer:nth-of-type(2)
+        opacity calc(1 - (var(--exploded) + var(--hide--two)))
+        mix-blend-mode var(--blend-mode--two)
+        background var(--bg--two)
+
+    &:nth-of-type(2)
+      transform translate3d(calc(var(--exploded) * 50%), 0, 0px)
+      opacity calc(1 - var(--hide--one))
+
+      .duotone-card__layer
+        mix-blend-mode var(--blend-mode--one)
+        background var(--bg--one)
+
+      img
+        transform translate(calc(var(--exploded) * -50%), 0)
+
+    &:nth-of-type(1)
+      left 0
+      transform translate3d(calc((var(--exploded) - var(--blended)) * -50%), 0, calc(var(--exploded) * var(--spread)))
+      opacity calc(1 - var(--hide--two))
+
+      img
+        transform translate(calc((var(--exploded) - var(--blended)) * 50%), 0)
+
+      .duotone-card__layer:nth-of-type(1)
+        background var(--bg--one)
+        mix-blend-mode var(--blend-mode--one)
+        transform translate(calc(50% + ((1 - var(--blended)) * 50%)), 0)
+        border-radius var(--radius)
+        opacity calc(1 - var(--hide--one))
+
+      .duotone-card__layer:nth-of-type(2)
+        background var(--bg--two)
+        mix-blend-mode var(--blend-mode--two)
+        transform translate(calc(50% + ((1 - var(--blended)) * 50%)), 0)
+        border-radius var(--radius)
+
+      .duotone-card__layer:nth-of-type(3)
+        background var(--bg--two)
+        mix-blend-mode var(--blend-mode--two)
+        transform translate(calc(var(--blended) * -50%), 0)
+
+  &__layer
+    position absolute
+    height 100%
+    width 100%
+    top 0
+    left 0
+    transition transform 0.2s, opacity 0.2s
+
+
+.dg li.css-output:not(.folder)
+  height auto
+  line-height 1rem
+  font-weight bold
+  font-family monospace
+  padding 0.5rem
+  font-size 1rem
+
+.dg .closed li.css-output:not(.folder)
+  height 0
+  padding 0
