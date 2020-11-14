@@ -1,15 +1,14 @@
 <svg
-  className="bear__arm"
   viewBox="0 0 250.00001 99.999997"
   preserveAspectRatio="xMinYMin">
   <g transform="translate(868.57141,-900.93359)" id="layer1">
     <path
-      style={{ fill: '#784421', fillOpacity: 1 }}
+      style="fill: #784421"
       d="m -619.43416,945.05124 c 4.18776,73.01076 -78.25474,53.24342 -150.21568,52.94118 -82.38711,-0.34602 -98.92158,-19.44459 -98.92157,-47.05883 0,-27.61424 4.78794,-42.54902 73.82353,-42.54902 69.03559,0 171.43607,-30.93764 175.31372,36.66667 z"
       id="path4971"
     />
     <ellipse
-      style={{ fill: '#deaa87', fillOpacity: 1 }}
+      style="fill: #deaa87;"
       id="path4974"
       cx="-683.02264"
       cy="950.98572"
