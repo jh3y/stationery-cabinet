@@ -1,0 +1,129 @@
+*
+  -webkit-tap-highlight-color transparent
+  box-sizing border-box
+
+:root
+  --hue floor(math(0, 'random') * 360)
+  --light 37.5
+  --transition 0.1
+
+body
+  background 'hsl(%s, 50%, %s)' % (var(--hue) calc(var(--light) * 1%))
+  transition background var(--transition)
+  cursor var(--cursor)
+  min-height 100vh
+  touch-action none
+
+.switch
+  --size 200
+  --panel-hue 55
+  --panel-saturation 10
+  --faceplate 'hsl(55, 10%, %s)' % calc((30 + var(--light)) * 1%)
+  --faceplate-light 'hsl(55, 10%, %s)' % calc((50 + var(--light)) * 1%)
+  --faceplate-dark 'hsl(55, 10%, %s)' % calc((0 + var(--light)) * 1%)
+  --pressed 0
+  background linear-gradient(0deg, var(--faceplate-dark), var(--faceplate-light))
+  border-radius 5%
+  height calc(var(--size) * 1px)
+  overflow hidden
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  width calc(var(--size) * 1px)
+  box-shadow '0px 10px 0px 0px hsl(%s, 50%, %s)' % (var(--hue) calc((var(--light) - 10) * 1%))
+  transition background var(--transition), box-shadow var(--transition)
+  &__faceplate
+    background var(--faceplate)
+    height calc(100% - 10px)
+    width calc(100% - 10px)
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    border-radius 5%
+    transition background var(--transition)
+
+    &:after
+    &:before
+      --screw 'hsl(0, 0%, %s)' % calc((20 + var(--light)) * 1%)
+      --screw-dark 'hsl(0, 0%, %s)' % calc((0 + var(--light)) * 1%)
+      --screw-darkest 'hsl(0, 0%, %s)' % calc((-20 + var(--light)) * 1%)
+      content ''
+      height 8%
+      width 8%
+      background linear-gradient(calc(var(--rotation, 30) * 1deg), var(--screw) 0%, var(--screw) 45%, var(--screw-dark) 45%, var(--screw-dark) 55%, var(--screw) 55%)
+      box-shadow 0px 1px 0px 1px var(--screw-darkest) inset
+      border-radius 50%
+      top 50%
+      transform translate(0, -50%)
+      position absolute
+      transition background var(--transition), box-shadow var(--transition)
+
+    &:after
+      --rotation 120
+      right 10%
+
+    &:before
+      left 10%
+
+  &__button
+    height 35%
+    width 35%
+    border 0
+    background var(--faceplate)
+    border-radius 50%
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    outline transparent
+    padding 0
+    cursor pointer
+    transition background var(--transition)
+
+    &:before
+      content ''
+      height 99%
+      width 99%
+      background var(--faceplate-dark)
+      position absolute
+      border-radius 50%
+      top 50%
+      left 50%
+      transform translate(-50%, -50%) translate(0, calc((10 - (var(--pressed) * 10)) * 1px))
+      transition transform var(--transition), background var(--transition)
+      z-index -1
+
+    &-face
+      border 4px solid var(--faceplate-light)
+      height 100%
+      width 100%
+      background var(--faceplate)
+      border-radius 100%
+      transform rotate(calc(var(--rotation, 0) * 1deg))
+      transition background var(--transition)
+
+    &-dim-marker
+      position absolute
+      left 50%
+      height 44px
+      width 44px
+      border-radius 50%
+      top 10%
+      transform translate(-50%, -90%)
+      cursor var(--cursor, 'grab')
+
+      &:after
+        content ''
+        background 'hsl(0, 100%, %s)' % calc((0 + var(--light)) * 1%)
+        height 10px
+        width 10px
+        border-radius 100%
+        position absolute
+        top 100%
+        left 50%
+        transition background var(--transition)
+        transform translate(-50%, -50%)
+
+
