@@ -40,7 +40,9 @@ const CORD_TL = timeline({
   paused: true,
   onStart: () => {
     STATE.ON = !STATE.ON
-    set(document.documentElement, { '--on': STATE.ON ? 1 : 0 })
+    INPUT.checked = !INPUT.checked
+    set(document.documentElement, { '--on': INPUT.checked ? 1 : 0 })
+    // INPUT.checked = STATE.ON
     set(DUMMY, { display: 'none' })
     set(CORDS[0], { display: 'block' })
     AUDIO.CLICK.play()
