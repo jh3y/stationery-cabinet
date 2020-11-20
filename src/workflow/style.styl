@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  font-family 'Patrick Hand', cursive
+  font-size 2rem
+  background hsl(180, 25%, 25%)
+
+.board
+  display flex
+  width 80%
+  height calc(100vh - 2rem)
+  border 1rem solid hsl(35, 40%, 40%)
+  overflow-y hidden
+
+  &__column
+    flex 1 1 100%
+
+.column
+  background hsl(0, 0%, 98%)
+  display flex
+  flex-direction column
+  flex 1 0 300px
+  overflow auto
+
+  &__content
+    flex 1
+    overflow auto
+    display flex
+    flex-direction column
+
+  &__tasks
+    flex 1 1 auto
+    overflow-y auto
+
+  &__add
+    position relative
+    height 44px
+    background transparent
+    color transparent
+    border 0
+    opacity 0.25
+    cursor pointer
+    flex 0 0 44px
+
+    &:hover
+      opacity 1
+      transition opacity .2s
+
+    svg
+      position absolute
+      top 50%
+      left 50%
+      transform translate(-50%, -50%)
+
+  &__title
+    text-align center
+    padding 1rem
+    flex 0 0 auto
+    font-weight bold
+    text-decoration underline
+
+.task
+  width 90%
+  min-height 100px
+  background hsl(50, 90%, 70%)
+  margin 0.5rem auto
+  position relative
+  -webkit-clip-path polygon(0 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%)
+  clip-path polygon(0 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%)
+
+  &__content
+    padding 2rem
+
+  &:after
+    content ''
+    height 30px
+    width 30px
+    background linear-gradient(135deg, hsl(50, 90%, 30%) 49%, hsl(0, 0%, 98%) 50%)
+    position absolute
+    right 0
+    bottom 0
+
+
+  &__remove
+    cursor pointer
+    background transparent
+    border 0
+    opacity 0.25
+    height 44px
+    width 44px
+    position absolute
+    top 0
+    right 0
+    color transparent
+    overflow hidden
+
+    &:hover
+      opacity 1
+      transition opacity 0.2s
+
+    svg
+      position absolute
+      top 50%
+      left 50%
+      transform translate(-50%, -50%)
+
+
