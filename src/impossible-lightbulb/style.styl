@@ -1,7 +1,9 @@
 *
   box-sizing border-box
+  transform-style preserve-3d
 
 :root
+  --depth 5vmin
   --on 0
   --size 25vmin
   --bg 'hsl(%s, %s, %s)' % (calc(200 - (var(--on) * 160)) calc((20 + (var(--on) * 50)) * 1%) calc((20 + (var(--on) * 60)) * 1%))
@@ -16,6 +18,8 @@ body
   align-items center
   justify-content center
   background var(--bg)
+  overflow hidden
+  // perspective 800px
 
 label
   position absolute
@@ -36,20 +40,18 @@ input
 .toggle
   height var(--size)
   width var(--size)
-  position relative
-  transform translate(0, -50%)
+  transform translate(-50%, -100%)
+  z-index 2
   position absolute
-  // top 0
-  // right 0
-  // transform translate(0, 0)
-  background red
+  top 50%
+  left 50%
+  transform translate3d(-50%, -100%, calc(var(--depth) * 3))
 
 .toggle-scene
   // !important for CodePen
   overflow visible !important
   width 100%
   position absolute
-  background green
 
   &__cord
     stroke var(--cord)
@@ -93,8 +95,104 @@ input
       stroke var(--stroke)
 
 .bear
+  display none
   &__fur
-    fill orange
     fill #784421
   &__pad
     fill #deaa87
+
+.doorway
+  position absolute
+  top 50%
+  height calc(var(--size) * 4)
+  width calc(var(--size) * 1.5)
+  transform translate(0, calc(var(--size) * -0.75))
+  left calc(50% + (var(--size) * 0.5))
+  $clip = inset(0 0 0 -200%)
+  -webkit-clip-path $clip
+  clip-path $clip
+
+  &__opening
+    height 100%
+    width 100%
+    position absolute
+    background hsl(0, 0%, 10%)
+    transform translate3d(0, 0, calc(var(--depth) * -1))
+
+.bear
+  position absolute
+  top 10%
+  width var(--size)
+
+.door
+  --panel 'hsl(30, 20%, %s)' % calc(12% + (var(--on) * 40%))
+  height 100%
+  position absolute
+  width 100%
+  transform-origin 100% 50%
+  transform-style preserve-3d
+  transform rotateY(0deg)
+  // opacity 0.5
+
+  &__panel
+    width 30%
+    height 35%
+    position absolute
+    border 1vmin var(--panel) solid
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) translate(var(--x), var(--y))
+
+    &:nth-of-type(1)
+      --x -70%
+      --y -70%
+    &:nth-of-type(2)
+      --x 70%
+      --y -70%
+    &:nth-of-type(3)
+      --x -70%
+      --y 70%
+    &:nth-of-type(4)
+      --x 70%
+      --y 70%
+
+  &__handle
+    height 4vmin
+    width 4vmin
+    position absolute
+    left 10%
+    top 50%
+    transform translate3d(0, -50%, 1vmin)
+
+    & > div
+      position absolute
+      height 100%
+      width 100%
+      background-color 'hsl(45, 70%, %s)' % calc((var(--lightness, 20%)) + (var(--on) * 40%))
+
+      &:nth-of-type(1)
+        --lightness 20%
+
+      &:nth-of-type(2)
+        --lightness 30%
+        transform translate3d(0, 0, calc(var(--depth) * 1))
+
+
+  &__side
+    position absolute
+
+    &:nth-of-type(1)
+      --lightness 20%
+      height 100%
+      width 100%
+      transform translate3d(0, 0, 0)
+      z-index 3
+      background-color 'hsl(30, 20%, %s)' % calc((var(--lightness, 20%)) + (var(--on) * 40%))
+    &:nth-of-type(2)
+      --lightness 10%
+      height 100%
+      width 100%
+      transform translate3d(0, 0, calc(var(--depth) * -1))
+
+.door__side
+  background-color 'hsl(30, 20%, %s)' % calc((var(--lightness, 20%)) + (var(--on) * 40%))

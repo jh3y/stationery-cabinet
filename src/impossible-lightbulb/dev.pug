@@ -1,4 +1,20 @@
 .toggle
   input#light-mode(type='checkbox')
-  label(for='light-mode')
   include light.pug
+.doorway
+  .doorway__opening
+  include angry.pug
+  .doorway__door.door
+    - let s = 0
+    while s < 2
+      .door__side
+        if s === 0
+
+          .door__panel
+          .door__panel
+          .door__panel
+          .door__panel
+          .door__handle
+            div
+            div
+      - s++
