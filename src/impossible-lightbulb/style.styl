@@ -53,6 +53,9 @@ input
   width 100%
   position absolute
 
+  &__arm
+    display none
+
   &__cord
     stroke var(--cord)
     cursor move
@@ -171,7 +174,7 @@ input
       background-color 'hsl(45, 70%, %s)' % calc((var(--lightness, 20%)) + (var(--on) * 40%))
 
       &:nth-of-type(1)
-        --lightness 20%
+        --lightness 25%
 
       &:nth-of-type(2)
         --lightness 30%
@@ -196,3 +199,40 @@ input
 
 .door__side
   background-color 'hsl(30, 20%, %s)' % calc((var(--lightness, 20%)) + (var(--on) * 40%))
+
+.social-links
+  width 44px
+  position fixed
+  left 1rem
+  bottom 1rem
+
+  > a + a
+    margin-top 0.5rem
+
+.social-link
+  height 44px
+  width 44px
+  display inline-block
+
+  &--jhey
+    --saturation 49%
+    img
+      transition filter 0.2s
+      filter saturate(var(--saturation))
+
+    &:hover
+      --saturation 100%
+
+  &--twitter
+    --saturation 49%
+    transition fill 0.2s
+    path
+      fill 'hsl(203, %s, 53%)' % var(--saturation)
+    &:hover
+      --saturation 89%
+
+
+
+  img, svg
+    height 100%
+    width 100%
