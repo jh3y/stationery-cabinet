@@ -4,6 +4,7 @@ const {
     set,
     to,
     timeline,
+    delayedCall,
     utils: { random },
   },
   MorphSVGPlugin,
@@ -35,6 +36,12 @@ const RESET = () => {
 }
 
 const AUDIO = {
+  BEAR_LONG: new Audio('https://assets.codepen.io/605876/bear-groan-long.mp3'),
+  BEAR_SHORT: new Audio(
+    'https://assets.codepen.io/605876/bear-groan-short.mp3'
+  ),
+  DOOR_OPEN: new Audio('https://assets.codepen.io/605876/door-open.mp3'),
+  DOOR_CLOSE: new Audio('https://assets.codepen.io/605876/door-close.mp3'),
   CLICK: new Audio('https://assets.codepen.io/605876/click.mp3'),
 }
 const STATE = {
@@ -51,6 +58,7 @@ set(ARMS, {
   rotation: -90,
   transformOrigin: '100% 50%',
   yPercent: -2,
+  display: 'block',
 })
 const CONFIG = {
   ARM_DUR: 0.4,
@@ -111,26 +119,43 @@ const CORD_TL = () => {
  * Mess around with the actial input toggling here.
  */
 const BEAR_TL = () => {
-  const CLOSE_DELAY = STATE.ANGER >= CONFIG.INTRO_DELAY ? random(0.2, 3) : 0
+  const ARM_SWING = STATE.ANGER > 4 ? 0.2 : CONFIG.ARM_DUR
+  const SLIDE = STATE.ANGER > CONFIG.BROWS + 3 ? 0.2 : random(0.2, 0.6)
+  const CLOSE_DELAY = STATE.ANGER >= CONFIG.INTRO_DELAY ? random(0.2, 2) : 0
   const TL = timeline({
     paused: false,
   })
-    .to('.door', { rotateY: 25, duration: 0.2 })
+    .to('.door', {
+      onStart: () => AUDIO.DOOR_OPEN.play(),
+      rotateY: 25,
+      duration: 0.2,
+    })
     .add(
-      STATE.ANGER >= CONFIG.BEAR_APPEARANCE
+      STATE.ANGER >= CONFIG.BEAR_APPEARANCE && Math.random() > 0.25
         ? to('.bear', {
-            onStart: () => set('.bear', { scale: 1 }),
+            onStart: () => {
+              if (Math.random() > 0.5) {
+                delayedCall(random(0, 1.5), () => {
+                  AUDIO[
+                    STATE.ANGER >= CONFIG.BROWS && Math.random() > 0.5
+                      ? 'BEAR_LONG'
+                      : 'BEAR_SHORT'
+                  ].play()
+                })
+              }
+              set('.bear', { scale: 1 })
+            },
             xPercent: CONFIG.BEAR_FINISH,
             repeat: 1,
             repeatDelay: 1,
             yoyo: true,
-            duration: 0.2,
+            duration: SLIDE,
           })
         : () => {}
     )
     .to(ARMS, {
       delay: CLOSE_DELAY,
-      duration: CONFIG.ARM_DUR,
+      duration: ARM_SWING,
       rotation: 0,
       xPercent: 0,
       yPercent: 0,
@@ -141,18 +166,19 @@ const BEAR_TL = () => {
         duration: CONFIG.CLENCH_DUR,
         xPercent: (_, target) => (target.id === 'knuckles' ? 10 : 0),
       },
-      '>-0.2'
+      `>-${ARM_SWING * 0.5}`
     )
     .to(ARMS, {
-      duration: CONFIG.ARM_DUR * 0.5,
+      duration: ARM_SWING * 0.5,
       rotation: 5,
     })
     .to(ARMS, {
       rotation: -90,
       xPercent: 10,
-      duration: CONFIG.ARM_DUR,
+      duration: ARM_SWING,
       onComplete: () => {
         to('.door', {
+          onComplete: () => AUDIO.DOOR_CLOSE.play(),
           duration: 0.2,
           rotateY: 0,
         })
