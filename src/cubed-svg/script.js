@@ -33,7 +33,7 @@ set('[data-position="2"', {
   yPercent: '+=25',
 })
 
-set('.cube', { transformOrigin: '50% 50%', scale: 1.1 })
+set(['.cube', '.cube__holder'], { transformOrigin: '50% 50%', scale: 1.02 })
 
 timeline({ repeat: -1, yoyo: true, repeatDelay: 1 })
   .to('[data-row="0"]', {
