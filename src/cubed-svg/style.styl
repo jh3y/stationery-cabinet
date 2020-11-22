@@ -1,0 +1,31 @@
+*
+  box-sizing border-box
+
+:root
+  --bg hsl(0, 0%, 6%)
+  --one hsl(47, 100%, 65%)
+  --two hsl(167, 100%, 65%)
+  --three hsl(287, 100%, 65%)
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  background var(--bg)
+
+svg
+  width 25vmin
+  overflow visible !important
+
+.cube
+  path
+    stroke-width 0.15
+    stroke var(--panel)
+    fill var(--panel)
+    &:nth-of-type(1)
+      --panel var(--one)
+    &:nth-of-type(2)
+      --panel var(--two)
+    &:nth-of-type(3)
+      --panel var(--three)
