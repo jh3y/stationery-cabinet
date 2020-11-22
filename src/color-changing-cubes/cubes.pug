@@ -1,0 +1,12 @@
+svg(xmlns='http://www.w3.org/2000/svg' viewBox='0 0 25.981 30')
+  defs
+    g#cube.cube
+      path(d='M8.66 12.5v5l4.33 2.5v-5z')
+      path(d='M12.99 15v5l4.33-2.5v-5z')
+      path(d='M8.66 12.5l4.33-2.5 4.33 2.5-4.33 2.5z')
+  - for (let c = 0; c < 27; c++)
+    - const layer = Math.floor(c / 9)
+    - const row = c % 3
+    - const position = (Math.floor(c / 3)) % 3
+    g.cube__holder(data-layer=layer data-row=row data-position=position data-index=c)
+      use(href="#cube")
