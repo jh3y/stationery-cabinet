@@ -1,0 +1,34 @@
+*
+  box-sizing border-box
+
+:root
+  --bg hsl(0, 0%, 6%)
+  --hue-one 47
+  --hue-two 167
+  --hue-three 287
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  background var(--bg)
+
+svg
+  width 25vmin
+  overflow visible !important
+
+.cube
+  path
+    stroke-width 0.1
+    stroke var(--panel)
+    fill var(--panel)
+    &:nth-of-type(1)
+      --color 'hsl(%s, 100%, 65%)' % var(--hue-one)
+      --panel var(--color)
+    &:nth-of-type(2)
+      --color 'hsl(%s, 100%, 65%)' % var(--hue-two)
+      --panel var(--color)
+    &:nth-of-type(3)
+      --color 'hsl(%s, 100%, 65%)' % var(--hue-three)
+      --panel var(--color)
