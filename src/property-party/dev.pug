@@ -1,0 +1,24 @@
+mixin cuboid(className)
+  .cuboid(class=className)
+    - let s = 0
+    while s < 6
+      .cuboid__side
+        if s === 4
+          .cuboid__eyes
+            .cuboid__eye
+            .cubdoi__eye
+          .cuboid__mouth
+      - s++
+
+//- Container for the scene!
+input#party(type="checkbox")
+label(for="party" title="Activate party mode!")
+  span(role="img") 🎉
+.scene
+  //- Plane that all the 3D stuff sits on
+  .plane
+    .cube-squish
+      .cube-spin
+        .cube-shadow
+        .cube-wrap
+          +cuboid('demo-cuboid')
