@@ -8,6 +8,9 @@ const {
 } = window
 
 let FIRING = false
+const AUDIO = {
+  SPARKLE: new Audio('https://assets.codepen.io/605876/sparkle.mp3'),
+}
 const TIMING = {
   TAILS: 1,
 }
@@ -113,9 +116,10 @@ const FIRE = onComplete => {
   // if (FIRING) return
   const VMIN = Math.max(window.innerHeight, window.innerWidth) / 100
   const FIRING_TL = timeline({
-    // onStart: () => {
-    //   FIRING = true
-    // },
+    onStart: () => {
+      // FIRING = true
+      AUDIO.SPARKLE.play()
+    },
     // paused: true,
     onComplete: () => {
       // FIRING = false
@@ -165,6 +169,9 @@ const FIRE = onComplete => {
 
 const LOWER = timeline({
   paused: true,
+  onComplete: () => {
+    FIRING = false
+  },
 })
   .to('.ghost__ghost', { yPercent: 0 })
   .to('.ghost__mouth-clip', { scale: 1, duration: 0.1 }, '<')
@@ -173,9 +180,6 @@ const MAIN = timeline({
   paused: true,
   onStart: () => {
     FIRING = true
-  },
-  onComplete: () => {
-    FIRING = false
   },
 })
   .to(TAILS_TL, { duration: 0.5, timeScale: 2 })
@@ -188,9 +192,7 @@ const MAIN = timeline({
   )
 
 document.addEventListener('click', () => {
-  if (!FIRING) {
-    MAIN.restart()
-  }
+  if (!FIRING) MAIN.restart()
 })
 
 // to('.ghost__mouth-clip', {
