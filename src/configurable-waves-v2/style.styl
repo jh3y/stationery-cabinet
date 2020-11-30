@@ -1,0 +1,84 @@
+*
+  box-sizing border-box
+
+:root
+  --wave white
+  --bg #366336
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  flex-direction column
+  justify-content center
+
+main
+  background var(--bg)
+  flex 1
+  width 100vw
+  position relative
+  overflow hidden
+
+footer
+  background var(--wave)
+  width 100vw
+  flex 1
+
+.wave
+  animation wave calc(var(--speed, 0) * 1s) calc(var(--delay, 0) * 1s) infinite linear backwards
+  background-image var(--bg-img)
+  background-size 50% 100%
+  bottom -1%
+  height calc(var(--height, 0) * 1vh)
+  left 0
+  opacity var(--opacity)
+  position absolute
+  right 0
+  transform translate(calc(var(--offset, -20) * 1%), 0)
+  width calc(var(--width, 0) * 1vw)
+
+  @media(max-width 480px)
+    height calc(var(--height, 0) * 0.75vh)
+
+
+.vector-wave
+  display none
+
+
+@keyframes wave
+  from
+    transform translate(0, 0)
+  to
+    transform translate(-50%, 0)
+
+
+.social-links
+  width 44px
+  position fixed
+  left 1rem
+  bottom 1rem
+
+  > a + a
+    margin-top 0.5rem
+
+.social-link
+  height 44px
+  width 44px
+  display inline-block
+
+  &--twitter
+    --saturation 49%
+    transition fill 0.2s
+    display flex
+    align-items center
+    justify-content center
+    path
+      fill 'hsl(203, %s, 53%)' % var(--saturation)
+    &:hover
+      --saturation 89%
+
+
+
+  img, svg
+    height 60%
+    width 60%
