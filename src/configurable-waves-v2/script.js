@@ -1,4 +1,63 @@
 import { GUI } from 'https://cdn.skypack.dev/dat.gui'
+import * as d3 from 'https://cdn.skypack.dev/d3'
+
+const COLORS = {
+  bg: '#366336',
+  wave: '#FFFFFF',
+}
+const BG_IMG = document.querySelector('.vector-wave')
+const UPPER_BOUNDS = -125
+const LOWER_BOUNDS = 50
+// const COORDINATES = [
+//   [-10, -100],
+//   [0, -50],
+//   [10, -100],
+//   [20, -50],
+//   [30, -120],
+//   [40, -50],
+//   [50, -125],
+//   [60, -50],
+//   [70, -100],
+//   [80, -50],
+//   [90, -100],
+//   [100, -50],
+//   [110, -100],
+// ]
+
+const createWave = () => {
+  BG_IMG.querySelector('path').setAttribute('fill', COLORS.wave)
+  document.documentElement.style.setProperty(
+    '--bg-img',
+    `url(data:image/svg+xml;base64,${btoa(BG_IMG.outerHTML)}`
+  )
+}
+
+const generateWave = () => {
+  const RANDOMS = []
+  // for (let i = 1; i < 10; i++)
+  for (let i = 1; i < 10; i++)
+    RANDOMS.push([
+      i * 10,
+      Math.floor(Math.random() * UPPER_BOUNDS - LOWER_BOUNDS + 1) +
+        LOWER_BOUNDS,
+    ])
+  const COORDS = [
+    [-10, -100],
+    [0, -50],
+    [10, -100],
+    ...RANDOMS,
+    [90, -100],
+    [100, -50],
+    [110, -100],
+  ]
+  const LINE = d3.area().curve(d3.curveBasis)(COORDS)
+
+  d3.select('.vector-wave path')
+    .attr('d', LINE)
+    .attr('clip-path', 'url(#view)')
+  createWave()
+}
+generateWave()
 
 const WAVES = document.querySelectorAll('.wave')
 const CONFIG = [
@@ -28,27 +87,7 @@ const CONFIG = [
   },
 ]
 const UTILS = {
-  copyCSS: () => {
-    const el = document.createElement('textarea')
-    el.value = grabCSS()
-    el.height = el.width = 0
-    document.body.appendChild(el)
-    el.select()
-    document.execCommand('copy')
-    document.body.removeChild(el)
-    alert('CSS Saved To Clipboard!')
-  },
   downloadCSS: () => {
-    const el = document.createElement('textarea')
-    el.value = grabCSS()
-    el.height = el.width = 0
-    document.body.appendChild(el)
-    el.select()
-    document.execCommand('copy')
-    document.body.removeChild(el)
-    alert('CSS Saved To Clipboard!')
-  },
-  copySVG: () => {
     const el = document.createElement('textarea')
     el.value = grabCSS()
     el.height = el.width = 0
@@ -68,22 +107,8 @@ const UTILS = {
     document.body.removeChild(el)
     alert('CSS Saved To Clipboard!')
   },
+  generateWave,
 }
-
-const COLORS = {
-  bg: '#366336',
-  wave: '#FFFFFF',
-}
-const BG_IMG = document.querySelector('.vector-wave')
-
-const createWave = () => {
-  BG_IMG.querySelector('path').setAttribute('fill', COLORS.wave)
-  document.documentElement.style.setProperty(
-    '--bg-img',
-    `url(data:image/svg+xml;base64,${btoa(BG_IMG.outerHTML)}`
-  )
-}
-createWave()
 
 const updateWave = index => () => {
   for (const key of Object.keys(CONFIG[index])) {
@@ -168,7 +193,7 @@ WAVES.forEach((_, index) => {
   WAVE.add(CONFIG[index], 'height', 5, 50, 1)
     .name('Height')
     .onChange(updateWave(index))
-  WAVE.add(CONFIG[index], 'width', 200, 2000, 100)
+  WAVE.add(CONFIG[index], 'width', 100, 2000, 100)
     .name('Width')
     .onChange(updateWave(index))
 })
@@ -184,7 +209,6 @@ COLOR.addColor(COLORS, 'wave')
     createWave()
   })
 const ACTIONS = CONTROLLER.addFolder('Actions')
-ACTIONS.add(UTILS, 'copyCSS').name('Copy CSS')
 ACTIONS.add(UTILS, 'downloadCSS').name('Download CSS')
-ACTIONS.add(UTILS, 'copySVG').name('Copy SVG')
 ACTIONS.add(UTILS, 'downloadSVG').name('Download SVG')
+ACTIONS.add(UTILS, 'generateWave').name('Generate Wave')
