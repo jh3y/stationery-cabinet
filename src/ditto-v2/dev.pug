@@ -1,0 +1,23 @@
+svg.ditto(viewBox='0 0 400 400')
+  defs
+    path#ditto__path.ditto__path
+    clipPath#ditto__clip
+      use(xlink:href="#ditto__path")
+  g.ditto__real
+    g.ditto__body
+      use(xlink:href="#ditto__path")
+    g.ditto__clone(clip-path="url(#ditto__clip)")
+      use(xlink:href="#ditto__path" transform='translate(0, -20)')
+    g.ditto__stroke
+      use(xlink:href="#ditto__path")
+    g.ditto__face
+      g.ditto__eyes
+        circle.ditto__eye(cx="-35" cy="-65" r="5" fill='#000' stroke='none')
+        circle.ditto__eye(cx="35" cy="-60" r="5" fill='#000' stroke='none')
+      path.ditto__mouth(d="M -40 -35 q -20 -0 80 0" stroke-width="4" stroke='#000' fill='none' stroke-linecap='round')
+  g.ditto__outline
+    use(xlink:href="#ditto__path")
+.pokeball__wrapper
+  span.pokeball__beam
+  button.pokeball(title='Change Ditto')
+    span.pokeball__face
