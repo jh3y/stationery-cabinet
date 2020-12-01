@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas&display=swap')
+
+*
+  box-sizing border-box
+  transform-style preserve-3d
+
+:root
+  --bg #344d2f
+  --font #a81817
+  --card #f0f4f7
+  --size 35vmin
+  --width var(--size)
+  --height calc(var(--size) * 1.4)
+  --read 0
+
+body
+  align-items center
+  background var(--bg)
+  display flex
+  justify-content center
+  perspective 800px
+  overflow hidden
+  font-family 'Mountains of Christmas', cursive
+
+input
+  height 0
+  width 0
+  position fixed
+  opacity 0
+  appearance none
+  left 100%
+
+label
+  position fixed
+  top 0
+  right 0
+  bottom 0
+  left 0
+  z-index 10
+
+
+.greeting-card
+  transform-style preserve-3d
+  color var(--font)
+  height var(--height)
+  font-size clamp(2rem, 5vmin, 10rem)
+  position relative
+  width var(--width)
+  min-width 250px
+  min-height calc(250px * 1.4)
+  transform rotateY(-25deg) rotateX(10deg) rotateY(calc(var(--read, 0) * -180deg))
+  transition transform 0.2s
+
+  &__front
+  &__back
+    background-color var(--card)
+    height 100%
+    position absolute
+    width 100%
+
+  &__front
+    backface-visibility hidden
+    display flex
+    flex-direction column
+    padding 2rem
+
+    span:nth-of-type(2)
+      font-size 2rem
+      position absolute
+      white-space nowrap
+      top 50%
+      left 50%
+      transform translate(-50%, -50%)
+
+    span:nth-of-type(3)
+      position absolute
+      right 2rem
+      bottom 2rem
+
+
+  &__back
+    display flex
+    align-items center
+    justify-content center
+    transform rotateY(180deg)
+
+:checked ~ .greeting-card
+  --read 1
