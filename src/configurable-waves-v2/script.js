@@ -6,8 +6,8 @@ const COLORS = {
   wave: '#FFFFFF',
 }
 const BG_IMG = document.querySelector('.vector-wave')
-const UPPER_BOUNDS = -125
-const LOWER_BOUNDS = 50
+// const UPPER_BOUNDS = 100
+// const LOWER_BOUNDS = 50
 // const COORDINATES = [
 //   [-10, -100],
 //   [0, -50],
@@ -33,24 +33,30 @@ const createWave = () => {
 }
 
 const generateWave = () => {
-  const RANDOMS = []
+  const length = 5
+  const WAVE_SCALE = d3
+    .scaleLinear()
+    .domain([0, length])
+    .range([0, 100])
+  const W = Array.from({ length: length + 1 }, (_, index) => {
+    return [
+      WAVE_SCALE(index),
+      index === 0 || index === 1 || index === length - 1 || index === length
+        ? 50
+        : d3.randomUniform(0, 100)(),
+    ]
+  })
+  // const RANDOMS = []
+  // // for (let i = 1; i < 10; i++)
   // for (let i = 1; i < 10; i++)
-  for (let i = 1; i < 10; i++)
-    RANDOMS.push([
-      i * 10,
-      Math.floor(Math.random() * UPPER_BOUNDS - LOWER_BOUNDS + 1) +
-        LOWER_BOUNDS,
-    ])
-  const COORDS = [
-    [-10, -100],
-    [0, -50],
-    [10, -100],
-    ...RANDOMS,
-    [90, -100],
-    [100, -50],
-    [110, -100],
-  ]
-  const LINE = d3.area().curve(d3.curveBasis)(COORDS)
+  //   RANDOMS.push([
+  //     i * 10,
+  //     Math.floor(Math.random() * UPPER_BOUNDS - LOWER_BOUNDS + 1) +
+  //       LOWER_BOUNDS,
+  //   ])
+  // const COORDS = [[0, 50], [10, 50], ...RANDOMS, [90, 50], [100, 50]]
+  // console.info(COORDS)
+  const LINE = d3.area().curve(d3.curveBasis)(W)
 
   d3.select('.vector-wave path')
     .attr('d', LINE)
