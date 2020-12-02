@@ -11,6 +11,7 @@ body
   align-items center
   flex-direction column
   justify-content center
+  background hsl(270, 30%, 30%)
 
 main
   background var(--bg)
@@ -42,7 +43,14 @@ footer
 
 
 .vector-wave
-  display none
+  border 1px solid black
+  width 50vmin
+  overflow visible
+  position absolute
+  left 0
+  path
+    transition all 0.2s
+//   display none
 
 @keyframes wave
   from
