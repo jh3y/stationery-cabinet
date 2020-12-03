@@ -5,6 +5,55 @@ const COLORS = {
   bg: '#366336',
   wave: '#FFFFFF',
 }
+
+const STYLE_KEYS = {
+  CURVE: 'CURVE',
+  STEP: 'STEP',
+  LINEAR: 'LINEAR',
+}
+const STYLES = {
+  CURVE: d3.curveBasis,
+  STEP: d3.curveStep,
+  LINEAR: d3.curveLinear,
+}
+
+const WAVE_CONFIG = {
+  invert: false,
+  uniform: false,
+  style: STYLE_KEYS.LINEAR,
+  width: 100,
+  height: 100,
+  backgroundWidth: 50,
+  backgroundHeight: 100,
+}
+
+const CONFIG = [
+  {
+    speed: 0,
+    offset: 0,
+    delay: -10,
+    opacity: 0.3,
+    height: 12,
+    width: 800,
+  },
+  {
+    speed: 0,
+    offset: 0,
+    delay: 0,
+    opacity: 0.6,
+    height: 8,
+    width: 1000,
+  },
+  {
+    speed: 0,
+    offset: 0,
+    delay: 0,
+    opacity: 1,
+    height: 6,
+    width: 600,
+  },
+]
+
 const BG_IMG = document.querySelector('.vector-wave')
 // const UPPER_BOUNDS = 100
 // const LOWER_BOUNDS = 50
@@ -32,66 +81,74 @@ const createWave = () => {
   )
 }
 
-const generateWave = () => {
+let CURRENT_WAVE
+const generate = (flip = false) => {
   const length = 5
   const WAVE_SCALE = d3
     .scaleLinear()
     .domain([0, length])
-    .range([0, 100])
-  const W = Array.from({ length: length + 1 }, (_, index) => {
-    return [
-      WAVE_SCALE(index),
-      index === 0 || index === 1 || index === length - 1 || index === length
-        ? 50
-        : d3.randomUniform(0, 100)(),
-    ]
-  })
-  // const RANDOMS = []
-  // // for (let i = 1; i < 10; i++)
-  // for (let i = 1; i < 10; i++)
-  //   RANDOMS.push([
-  //     i * 10,
-  //     Math.floor(Math.random() * UPPER_BOUNDS - LOWER_BOUNDS + 1) +
-  //       LOWER_BOUNDS,
-  //   ])
-  // const COORDS = [[0, 50], [10, 50], ...RANDOMS, [90, 50], [100, 50]]
-  // console.info(COORDS)
-  const LINE = d3.area().curve(d3.curveBasis)(W)
+    .range([0, WAVE_CONFIG.width])
+
+  const exclude = index => {
+    if (WAVE_CONFIG.style === STYLE_KEYS.CURVE) {
+      return (
+        index === 0 || index === 1 || index === length - 1 || index === length
+      )
+    } else if (WAVE_CONFIG.style === STYLE_KEYS.LINEAR) {
+      return index === 0 || index === length
+    } else {
+      return false
+    }
+  }
+
+  /**
+   * TODO: When the curve changes, manipulate the points, don't regenerate.
+   * Regnerate when the amount of points or viewbox changes.
+   */
+  const MID_POINT = WAVE_CONFIG.invert
+    ? WAVE_CONFIG.height / 2
+    : (WAVE_CONFIG.height / 2) * -1
+  const RANGE = WAVE_CONFIG.invert
+    ? d3.randomUniform(0, WAVE_CONFIG.height)
+    : d3.randomUniform(WAVE_CONFIG.height * -1, 0)
+  if (!flip) {
+    const W = Array.from({ length: length + 1 }, (_, index) => {
+      return [WAVE_SCALE(index), exclude(index) ? MID_POINT : RANGE()]
+    })
+    CURRENT_WAVE = W
+  } else if (flip) {
+    // console.info('Flip all the current values')
+    CURRENT_WAVE = CURRENT_WAVE.map(point => [point[0], point[1] * -1])
+  }
+  // console.info(CURRENT_WAVE)
+
+  const LINE = d3.area().curve(STYLES[WAVE_CONFIG.style])(CURRENT_WAVE)
+
+  d3.select('.vector-wave').attr(
+    'viewBox',
+    `0 ${WAVE_CONFIG.invert ? 0 : WAVE_CONFIG.height * -1} ${
+      WAVE_CONFIG.width
+    } ${WAVE_CONFIG.height}`
+  )
+
+  d3.select('#view rect')
+    .attr('x', 0)
+    .attr('y', WAVE_CONFIG.invert ? 0 : WAVE_CONFIG.height * -1)
+    .attr('height', WAVE_CONFIG.height)
+    .attr('width', WAVE_CONFIG.width)
+
+  d3.select('g').attr('transform', `translate(${WAVE_CONFIG.width} 0)`)
 
   d3.select('.vector-wave path')
     .attr('d', LINE)
     .attr('clip-path', 'url(#view)')
   createWave()
 }
-generateWave()
+WAVE_CONFIG.generate = generate
+generate()
 
 const WAVES = document.querySelectorAll('.wave')
-const CONFIG = [
-  {
-    speed: 0,
-    offset: 0,
-    delay: -10,
-    opacity: 0.3,
-    height: 12,
-    width: 800,
-  },
-  {
-    speed: 0,
-    offset: 0,
-    delay: 0,
-    opacity: 0.6,
-    height: 8,
-    width: 1000,
-  },
-  {
-    speed: 0,
-    offset: 0,
-    delay: 0,
-    opacity: 1,
-    height: 6,
-    width: 600,
-  },
-]
+
 const UTILS = {
   downloadCSS: () => {
     const el = document.createElement('textarea')
@@ -113,7 +170,6 @@ const UTILS = {
     document.body.removeChild(el)
     alert('CSS Saved To Clipboard!')
   },
-  generateWave,
 }
 
 const updateWave = index => () => {
@@ -214,7 +270,31 @@ COLOR.addColor(COLORS, 'wave')
     document.documentElement.style.setProperty('--wave', COLORS.wave)
     createWave()
   })
+
+const WAVE = CONTROLLER.addFolder('Wave')
+WAVE.add(WAVE_CONFIG, 'invert')
+  .name('Invert')
+  .onChange(() => generate(true))
+WAVE.add(WAVE_CONFIG, 'uniform')
+  .name('Uniform')
+  .onChange(() => generate())
+// Dropdown for style
+WAVE.add(WAVE_CONFIG, 'style', [
+  STYLE_KEYS.CURVE,
+  STYLE_KEYS.STEP,
+  STYLE_KEYS.LINEAR,
+])
+  .name('Style')
+  .onChange(() => generate())
+const VIEWBOX = WAVE.addFolder('Viewbox')
+VIEWBOX.add(WAVE_CONFIG, 'height', 10, 1000, 1)
+  .name('Height')
+  .onChange(() => generate())
+VIEWBOX.add(WAVE_CONFIG, 'width', 10, 1000, 1)
+  .name('Width')
+  .onChange(() => generate())
+WAVE.add(WAVE_CONFIG, 'generate').name('Generate')
+
 const ACTIONS = CONTROLLER.addFolder('Actions')
 ACTIONS.add(UTILS, 'downloadCSS').name('Download CSS')
 ACTIONS.add(UTILS, 'downloadSVG').name('Download SVG')
-ACTIONS.add(UTILS, 'generateWave').name('Generate Wave')
