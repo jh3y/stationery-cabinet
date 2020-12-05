@@ -1,0 +1,66 @@
+//- Front
+//- Back
+//- Right
+//- Left
+//- Top
+//- Bottom
+- const randomInRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+mixin cuboid(className)
+  .cuboid(class=className)
+    - let s = 0
+    while s < 6
+      .cuboid__side
+      - s++
+html
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    title Some cool pen
+    meta(name="viewport", content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1.0")
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css')
+    link(rel='stylesheet', href='style.css')
+  body
+    .scene__wrapper
+      .scene
+        .truck
+          .truck__front
+            +cuboid('truck__chassis')
+            +cuboid('truck__wheels truck__wheels--rear')
+            +cuboid('truck__wheels truck__wheels--nsf')
+            +cuboid('truck__wheels truck__wheels--osf')
+
+            +cuboid('truck__body truck__rear-cab')
+            +cuboid('truck__body truck__cab')
+            +cuboid('truck__body truck__bonnet')
+            +cuboid('truck__bumper truck__bumper--front')
+            +cuboid('truck__bumper truck__bumper--rear')
+            +cuboid('truck__headlight truck__headlight--nsf')
+            +cuboid('truck__headlight truck__headlight--osf')
+            +cuboid('truck__pipe truck__pipe--nsf')
+            +cuboid('truck__pipe truck__pipe--osf')
+            +cuboid('truck__cab-top')
+          .truck__back
+            +cuboid('trailer__bottom')
+            +cuboid('trailer__mid')
+            .cuboid.trailer__top
+              .cuboid__side
+                include logo.svg
+              .cuboid__side
+                include logo.svg
+              .cuboid__side
+              .cuboid__side
+              .cuboid__side
+              .cuboid__side
+            +cuboid('truck__wheels truck__wheels--trailer')
+        .snow
+          - let s = 0
+          while s < 10
+            -
+              const speed = randomInRange(5, 10)
+              const delay = randomInRange(2, 10)
+              const x = Math.random() * 100
+              const y = Math.random() * 100
+              const size = randomInRange(0.1, 1)
+            .snowball(style=`--s: ${speed}; --d: ${delay}; --x: ${x}; --y: ${y}; --size: ${size};`)
+            - s++
+    script(type="module" src="script.js")

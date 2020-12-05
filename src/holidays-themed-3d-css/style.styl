@@ -1,0 +1,525 @@
+*
+  box-sizing border-box
+  transform-style preserve-3d
+
+:root
+  --red-one hsl(358, 100%, 48%)
+  --red-two hsl(358, 100%, 38%)
+  --red-three hsl(358, 100%, 28%)
+  --grey-one hsl(0, 0%, 90%)
+  --grey-two hsl(0, 0%, 80%)
+  --grey-three hsl(0, 0%, 70%)
+  --grey-four hsl(0, 0%, 60%)
+  --grey-five hsl(0, 0%, 50%)
+  --windscreen hsl(200, 32%, 30%)
+  --glow hsl(45, 80%, 80%)
+  --bg hsl(0, 0%, 5%)
+  --perspective 1000
+  --rotate-x -15
+  --rotate-y -95
+  --scene-width 100
+  --scene-height 100
+  --drive 5
+  --offset -0.25
+
+
+.cuboid {
+  // Defaults
+  --width: 15;
+  --height: 10;
+  --depth: 4;
+  height: calc(var(--depth) * 1vmin);
+  width: calc(var(--width) * 1vmin);
+  transform-style: preserve-3d;
+  position: absolute;
+  font-size: 1rem;
+  transform: translate3d(calc(var(--x, 0) * 1vmin), calc(var(--y, 0) * 1vmin), calc(var(--z, 0) * 1vmin));
+}
+.cuboid > div:nth-of-type(1) {
+  height: calc(var(--height) * 1vmin);
+  width: 100%;
+  transform-origin: 50% 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotateX(-90deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin));
+}
+.cuboid > div:nth-of-type(2) {
+  height: calc(var(--height) * 1vmin);
+  width: 100%;
+  transform-origin: 50% 50%;
+  transform: translate(-50%, -50%) rotateX(-90deg) rotateY(180deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin));
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.cuboid > div:nth-of-type(3) {
+  height: calc(var(--height) * 1vmin);
+  width: calc(var(--depth) * 1vmin);
+  transform: translate(-50%, -50%) rotateX(-90deg) rotateY(90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin));
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.cuboid > div:nth-of-type(4) {
+  height: calc(var(--height) * 1vmin);
+  width: calc(var(--depth) * 1vmin);
+  transform: translate(-50%, -50%) rotateX(-90deg) rotateY(-90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin));
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.cuboid > div:nth-of-type(5) {
+  height: calc(var(--depth) * 1vmin);
+  width: calc(var(--width) * 1vmin);
+  transform: translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * 1vmin));
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.cuboid > div:nth-of-type(6) {
+  height: calc(var(--depth) * 1vmin);
+  width: calc(var(--width) * 1vmin);
+  transform: translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * -1vmin)) rotateX(180deg);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+body
+  min-height 100vh
+  background var(--bg)
+  display flex
+  align-items center
+  justify-content center
+  overflow hidden
+  perspective calc(var(--perspective, 1000) * 1px)
+
+.scene__wrapper
+  transform scale(.8)
+.scene
+  height calc(var(--scene-height, 50) * 1vmin)
+  width calc(var(--scene-width, 50) * 1vmin)
+  transform rotateX(calc(var(--rotate-x, -34) * 1deg)) rotateY(calc(var(--rotate-y, 34) * 1deg)) rotateX(90deg) rotate(180deg)
+
+.snow
+  height 100%
+  width 100%
+  position absolute
+  transform translate3d(0, 0, 100vmax)
+
+.snowball
+  position absolute
+  background white
+  border-radius 50%
+  left calc(var(--x) * 1%)
+  top calc(var(--y) * 1%)
+  height calc(var(--size) * 1%)
+  width calc(var(--size) * 1%)
+  animation fall calc(var(--s) * 1s) calc(var(--d) * -1s) infinite linear
+
+@keyframes fall
+  from
+    transform translate3d(0, 0, 0) rotateX(90deg)
+  to
+    transform translate3d(0, 0, -100vmax) rotateX(90deg)
+
+
+.truck
+  &__front
+    height 8vmin
+    width 17vmin
+    position absolute
+    // display none
+    // offset-distance 92%
+    // opacity 0.5
+    offset-path path(var(--path))
+    animation travel calc(var(--drive) * 1s) calc(var(--offset) * 1s) infinite linear
+
+    &:before
+      content ''
+      position absolute
+      top 0
+      right 0
+      bottom 0
+      left 0
+      background hsla(45, 80%, 80%, 0.75)
+      filter brightness(1.2) blur(10px)
+      border-radius 50%
+      transform scale(1.25)
+
+
+  &__back
+    height 8vmin
+    width 26vmin
+    position absolute
+    // opacity 0.5
+    offset-path path(var(--path))
+    offset-distance 0%
+    animation travel calc(var(--drive) * 1s) infinite linear
+    // transform translate(0, 0)
+
+    &:before
+      content ''
+      position absolute
+      top 0
+      right 0
+      bottom 0
+      left 0
+      background hsla(45, 80%, 80%, 0.75)
+      filter brightness(1.2) blur(10px)
+      border-radius 50%
+      transform scale(1.25)
+
+  &__logo
+    position absolute
+    width 70%
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+
+  &__wheels
+
+    div
+      background var(--red-two)
+
+    div:nth-of-type(1)
+    div:nth-of-type(2)
+      background radial-gradient(var(--red-one) 0 30%, black 32% 65%, transparent 70%) 0 0 / 2vmin 100%
+      background-color var(--bg)
+
+    div:nth-of-type(3)
+    div:nth-of-type(4)
+      background linear-gradient(var(--red-three) 65%, var(--bg) 70%)
+
+    div:nth-of-type(6)
+      background transparent
+
+    &--nsf
+      --height 2
+      --width 2
+      --depth 1
+      --z 1
+      --x 1
+      --y 0.5
+    &--osf
+      --height 2
+      --width 2
+      --depth 1
+      --z 1
+      --x 1
+      --y 6.5
+
+    &--rear
+      --height 2
+      --width 4
+      --depth 7
+      --z 1
+      --y 0.5
+      --x 13
+
+    &--trailer
+      --height 2
+      --width 6
+      --depth 7
+      --z 1
+      --y 0.5
+      --x 19
+
+
+
+  &__bonnet
+    --height 3
+    --z 2
+    --depth 5
+    --y 1.5
+    --x 0.5
+    --width 7
+
+    div
+      background var(--red-one)
+
+      &:nth-of-type(3)
+      &:nth-of-type(4)
+        background var(--red-three)
+
+      &:nth-of-type(4)
+        background repeating-linear-gradient(90deg, var(--grey-four) 0 2%, var(--grey-two) 2% 6%, var(--grey-four) 6% 8%) 50% 50% / 80% 80%
+        background-repeat no-repeat
+        background-color var(--red-three)
+
+      &:nth-of-type(5)
+        background var(--red-two)
+
+  &__rear-cab
+    --height 6
+    --width 3
+    --depth 6
+    --x 7
+    --y 1
+    --z 4.5
+
+    div
+      background var(--red-one)
+
+      &:nth-of-type(1)
+      &:nth-of-type(2)
+        &:after
+          content ''
+          position absolute
+          top 0
+          right 0
+          bottom 0
+          left 0
+          border 0.5vmin solid var(--glow)
+          filter blur(1.5px)
+          transform scale(1.025)
+
+      &:nth-of-type(3)
+      &:nth-of-type(4)
+        background var(--red-three)
+
+      &:nth-of-type(5)
+        background var(--red-two)
+
+  &__cab
+    --height 4
+    --width 3
+    --depth 5
+    --z 3.5
+    --y 1.5
+    --x 4
+    div
+      background var(--red-one)
+
+      &:nth-of-type(3)
+      &:nth-of-type(4)
+        background var(--red-three)
+
+      &:nth-of-type(1):after
+      &:nth-of-type(2):after
+        content ''
+        position absolute
+        top 5%
+        right 15%
+        left 10%
+        height 40%
+        background radial-gradient(transparent 0 50%, hsla(0, 0%, 100%, 0.25)) no-repeat
+        background-color var(--windscreen)
+
+      &:nth-of-type(4):after
+        content ''
+        position absolute
+        top 5%
+        left 5%
+        right 5%
+        height 40%
+        background radial-gradient(transparent 0 65%, hsla(0, 0%, 100%, 0.25)) no-repeat
+        background-color var(--windscreen)
+
+      &:nth-of-type(5)
+        background var(--red-two)
+
+  &__cab-top
+    --height 1
+    --width 2
+    --depth 5
+    --z 6
+    --y 1.5
+    --x 5
+    div
+
+      &:nth-of-type(3)
+      &:nth-of-type(4)
+      &:nth-of-type(5)
+      &:nth-of-type(6)
+        background transparent
+
+      &:nth-of-type(4):after
+        content ''
+        position absolute
+        bottom 0
+        left 0
+        right 0
+        height 220%
+        background-image url("https://assets.codepen.io/605876/cola-logo.svg")
+        background-size contain
+        background-position center
+        background-color var(--red-two)
+        background-repeat no-repeat
+        transform-origin 50% 100%
+        transform rotateX(65deg)
+
+      &:nth-of-type(1)
+        background linear-gradient(155deg, transparent 0 50%, var(--red-one) 50% 100%)
+      &:nth-of-type(2)
+        background linear-gradient(-155deg, transparent 0 50%, var(--red-one) 50% 100%)
+
+  &__chassis
+    --height 1
+    --width 14
+    --z 1
+    --depth 5.5
+    --y 1.25
+    --x 2
+
+    div
+      background var(--grey-three)
+
+      &:nth-of-type(5)
+      &:nth-of-type(6)
+        background var(--grey-four)
+
+  &__bumper
+    div
+      background var(--grey-two)
+
+      &:nth-of-type(5)
+      &:nth-of-type(6)
+        background var(--grey-five)
+      &:nth-of-type(1)
+      &:nth-of-type(2)
+        background var(--grey-four)
+
+    &--front
+      --depth 7
+      --height 0.75
+      --y 0.5
+      --width 0.5
+      --z 0.75
+
+    &--rear
+      --depth 7
+      --height 0.75
+      --y 0.5
+      --width 0.5
+      --z 0.75
+      --x 17
+
+  &__headlight
+    --depth 1
+    --height 0.5
+    --width 0.5
+    --z 1.5
+
+    div
+      background var(--grey-five)
+
+      &:nth-of-type(1)
+      &:nth-of-type(2)
+        background var(--grey-three)
+      &:nth-of-type(5)
+      &:nth-of-type(6)
+        background var(--grey-four)
+
+      &:nth-of-type(4)
+        background white
+
+        &:after
+          content ''
+          height 100%
+          width 100%
+          background white
+          position absolute
+          top 0
+          left 0
+          filter blur(5px)
+
+    &--nsf
+      --y 0.5
+    &--osf
+      --y 6.5
+
+  &__pipe
+    --width 0.5
+    --depth 0.5
+    --height 7
+    --x 9.5
+    --z 5.5
+
+    &--nsf
+      --y 0.5
+    &--osf
+      --y 7
+
+    div
+      background var(--grey-two)
+
+      &:nth-of-type(3)
+      &:nth-of-type(4)
+        background var(--grey-three)
+      &:nth-of-type(5)
+        background linear-gradient(black, black) 30% 30% / 60% 60% no-repeat
+        background-color var(--grey-five)
+
+.trailer
+  &__bottom
+    --height 0.5
+    --width 15
+    --depth 6
+    --z 1.5
+    --x 9
+    --y 1
+
+    div
+      background var(--grey-five)
+
+  &__mid
+    --height 1
+    --width 17
+    --depth 6
+    --y 1
+    --z 2.5
+    --x 9
+
+    div
+      background var(--red-three)
+
+  &__top
+    --height 8
+    --width 23
+    --depth 8
+    --z 6.5
+    --x 4
+
+    div
+      border 0.5vmin solid var(--glow)
+      background var(--red-one)
+
+      &:nth-of-type(3):after
+        content ''
+        background-image url('https://p7.hiclipart.com/preview/764/971/762/the-coca-cola-company-fizzy-drinks-santa-claus-santa-s-sleigh.jpg')
+        background-size contain
+        background-color white
+        background-repeat no-repeat
+        border-radius 50%
+        overflow hidden
+        position absolute
+        top 50%
+        left 50%
+        transform translate(-50%, -50%) scale(0.8)
+        height 100%
+        width 100%
+
+
+
+      &:nth-of-type(3)
+      &:nth-of-type(4)
+        background var(--red-three)
+
+      &:nth-of-type(5)
+      &:nth-of-type(6)
+        background var(--red-two)
+
+.holiday-road
+  height 50vmin
+  width 50vmin
+  // Purely for CodePen
+  overflow visible !important
+
+  path
+    stroke red
+
+@keyframes travel
+  from
+    offset-distance 100%
