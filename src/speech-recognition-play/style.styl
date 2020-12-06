@@ -1,0 +1,20 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  font-family sans-serif
+  display flex
+  align-items center
+  justify-content center
+  flex-direction column
+
+  & > * + *
+    margin-top 1rem
+
+.box
+  height 20vmin
+  width 20vmin
+  border 1vmin solid black
+  transition transform 0.2s
+  transform rotate(calc(var(--rotate, 0) * 1deg))
