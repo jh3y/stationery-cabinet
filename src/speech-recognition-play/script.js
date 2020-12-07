@@ -72,7 +72,7 @@ const LISTEN_FOR_ACTIVATION = res => {
   }
 }
 
-const KEYWORD = 'styler'
+const KEYWORD = 'smithers'
 RECOG.onresult = LISTEN_FOR_ACTIVATION
 RECOG.onend = () => {
   console.info('restarting')
