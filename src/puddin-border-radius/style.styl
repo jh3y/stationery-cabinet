@@ -1,0 +1,136 @@
+*
+  box-sizing border-box
+
+:root
+  --pud-one hsl(29, 40%, 40%)
+  --pud-two hsl(29, 40%, 10%)
+  --pud-two-a hsla(29, 40%, 10%, 0.5)
+  --bg hsl(144, 82%, 28%)
+  --leaf hsl(90, 80%, 15%)
+  --berry-one hsl(0, 100%, 50%)
+  --berry-two hsl(0, 100%, 40%)
+
+body
+  background var(--bg)
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  flex-direction column
+
+.box
+  height calc(var(--height, 50) * 1vmin)
+  width calc(var(--width, 50) * 1vmin)
+  background radial-gradient(var(--pud-two-a) 0 10%, transparent 15%) 0 0 / 10% 10%, var(--pud-one)
+  box-shadow inset 0 0 calc(var(--width) * 0.25vmin) var(--pud-two)
+  position relative
+  overflow hidden
+  border-radius 'calc(%s * 1%) calc(%s * 1%) calc(%s * 1%) calc(%s * 1%) / calc(%s * 1%) calc(%s * 1%) calc(%s * 1%) calc(%s * 1%)' % (var(--htl) var(--htr) var(--hbr) var(--hbl) var(--vtl) var(--vtr) var(--vbr) var(--vbl))
+
+  &__container
+    height calc(var(--height, 50) * 1vmin)
+    width calc(var(--width, 50) * 1vmin)
+    position relative
+
+    &:before
+      content ''
+      position absolute
+      width calc(var(--width) * 0.25vmin)
+      height calc(var(--width) * 0.25vmin)
+      border-radius 50% 0
+      background var(--leaf)
+      bottom 100%
+      left 50%
+      transform-origin 0 100%
+      transform rotate(20deg)
+      z-index 2
+
+    &:after
+      z-index 3
+      content ''
+      position absolute
+      top 0
+      left 50%
+      width calc(var(--width) * 0.25vmin)
+      height calc(var(--width) * 0.25vmin)
+      background radial-gradient(hsla(0, 0%, 100%, 0.25) 0 60%, transparent 65%) 40% 75% / 15% 15% no-repeat,
+        radial-gradient(transparent 0 15%, var(--berry-two) 60%, transparent 65%) 50% 80% / 50% 50% no-repeat,
+        radial-gradient(var(--berry-one) 0 60%, transparent 65%) 50% 80% / 50% 50% no-repeat,
+        radial-gradient(hsla(0, 0%, 100%, 0.25) 0 60%, transparent 65%) 50% 25% / 15% 15% no-repeat,
+        radial-gradient(transparent 0 15%, var(--berry-two) 60%, transparent 65%) 100% 20% / 70% 70% no-repeat,
+        radial-gradient(var(--berry-one) 0 60%, transparent 65%) 100% 20% / 70% 70% no-repeat,
+        radial-gradient(hsla(0, 0%, 100%, 0.25) 0 60%, transparent 65%) 10% 45% / 15% 15% no-repeat,
+        radial-gradient(transparent 0 15%, var(--berry-two) 60%, transparent 65%) 0 50% / 50% 50% no-repeat,
+        radial-gradient(var(--berry-one) 0 60%, transparent 65%) 0 50% / 50% 50% no-repeat
+      transform translate(-50%, -50%)
+
+  &:after
+    content ''
+    position absolute
+    top 0
+    height calc(var(--height) * 0.3vmin)
+    transform rotate(180deg)
+    left 0
+    right 0
+    background-image url("https://assets.codepen.io/605876/wave--infinite.svg")
+    background-size 150% 100%
+    background-position 0 0
+
+.face
+  position absolute
+  top 50%
+  left 50%
+  width calc(var(--width) * 0.5vmin)
+  height calc(var(--height) * 0.1vmin)
+  transform translate(-50%, 0)
+
+  &__eyes
+    height 100%
+    width 100%
+    animation blink 5s infinite
+
+    @keyframes blink
+      0%, 47%, 49%, 51%, 100%
+        transform scaleY(1)
+      48%, 50%
+        transform scaleY(0.1)
+
+    &:before
+    &:after
+      content ''
+      height calc(var(--height) * 0.1vmin)
+      width calc(var(--height) * 0.1vmin)
+      background radial-gradient(white 0 65%, transparent 70%) 30% 30% / 15% 15% no-repeat
+      background-color black
+      border-radius 50%
+      position absolute
+      top 0
+
+    &:after
+      right 0
+
+    &:before
+      left 0
+
+  &__mouth
+    height calc(var(--height) * 0.05vmin)
+    width calc(var(--height) * 0.05vmin)
+    background black
+    border-radius 50%
+    position absolute
+    top 100%
+    left 50%
+    transform translate(-50%, -50%)
+
+.output
+  position absolute
+  top calc(50% + (var(--height) * 0.5vmin))
+  font-family sans-serif
+  max-width 50vw
+  transform translate(-50%, 0)
+  left 50%
+  margin-top 2rem
+  font-size clamp(1rem, 4vmin, 2rem)
+  color white
+  font-weight bold
+
