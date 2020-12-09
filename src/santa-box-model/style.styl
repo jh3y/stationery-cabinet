@@ -1,0 +1,280 @@
+*
+  box-sizing border-box
+
+:root
+  --red-one hsl(0, 80%, 50%)
+  --red-two hsl(0, 80%, 40%)
+  --red-three hsl(0, 80%, 30%)
+  --red-four hsl(0, 80%, 20%)
+  --face hsl(0, 80%, 90%)
+  --border-color hsl(35, 80%, 70%)
+  --margin-color hsl(35, 80%, 40%)
+  --padding-color hsl(140, 50%, 50%)
+  --content-color hsl(190, 50%, 50%)
+  --stroke hsl(0, 0%, 5%)
+  --buckle hsl(50, 80%, 50%)
+  --bg hsl(180, 60%, 50%)
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  flex-direction column
+  background var(--bg)
+
+.santa
+  --size 60
+  height calc(var(--size) * 1vmin)
+  width calc(var(--size) * 0.5vmin)
+  position relative
+
+  &__legs
+    height 40%
+    width 60%
+    position absolute
+    bottom 0
+    left 50%
+    transform translate(-50%, 0)
+    background var(--red-two)
+    $clip = polygon(0 0, 100% 0, 70% 100%, 30% 100%)
+    -webkit-clip-path $clip
+    clip-path $clip
+    opacity calc(1- (var(--show-box-model, 0) * 0.35))
+
+    &:after
+      content ''
+      background var(--red-four)
+      position absolute
+      top 0
+      bottom 0
+      left 50%
+      transform translate(-50%, 0)
+      width 0.5vmin
+
+  &__body-container
+  .box-model-container
+    height 60%
+    width 100%
+    position absolute
+    transform translate(-50%, 0)
+    top 25%
+    left 50%
+
+  &__arm
+    height 45%
+    width 30%
+    left 50%
+    top 5%
+    border-radius 50% / 70% 70% 30% 30%
+    background var(--red-one)
+    box-shadow inset 0 0 1vmin var(--red-four)
+    position absolute
+    opacity calc(1- (var(--show-box-model, 0) * 0.35))
+
+    --multiplier calc(var(--body-width) * 0.005)
+
+    &--left
+      transform translate(-50%, -10%) translate(calc(((var(--size) * 0.5) * var(--multiplier)) * -1vmin), 0) translate(60%, 10%) rotate(35deg)
+    &--right
+      transform translate(-50%, -10%) translate(calc(((var(--size) * 0.5) * var(--multiplier)) * 1vmin), 0) translate(-60%, 10%) rotate(-35deg)
+
+  &__body
+    background var(--red-one)
+    box-shadow inset 0 0 1vmin var(--red-four)
+    width calc(var(--body-width) * 1%)
+    height 100%
+    border calc(var(--body-border) * 1vmin) solid var(--red-three)
+    padding 0 calc(var(--body-padding) * 1%)
+    margin calc(var(--body-margin) * 1vmin)
+    box-sizing var(--box-sizing)
+    position absolute
+    border-radius 50% 50% 50% 50% / 70% 70% 40% 40%
+    overflow hidden
+    top 0
+    left 50%
+    opacity calc(1- (var(--show-box-model, 0) * 0.35))
+    transform translate(calc(-50% - (var(--body-margin) * 1vmin)), calc(var(--body-margin) * -1vmin))
+
+    &:before
+      content ''
+      position absolute
+      background hsl(0, 0%, 10%)
+      height calc(var(--size) * 0.075vmin)
+      top 60%
+      left 0
+      right 0
+      opacity var(--belt)
+
+    &:after
+      content ''
+      position absolute
+      opacity var(--belt)
+      height calc(var(--size) * 0.1vmin)
+      top 57.5%
+      left 50%
+      transform translate(-50%, 0)
+      background linear-gradient(hsl(0, 0%, 10%), hsl(0, 0%, 10%)) 50% 50% / 50% 50% no-repeat, var(--buckle)
+      width calc(var(--size) * 0.1vmin)
+
+  &__head
+    position absolute
+    bottom 70%
+    left 50%
+    transform translate(-50%, 0)
+    height calc(var(--size) * 0.25vmin)
+    width calc(var(--size) * 0.25vmin)
+
+  &__beard
+    position absolute
+    height 200%
+    width 120%
+    // opacity 0.65
+    left 50%
+    transform translate(-50%, 0)
+    background white
+    box-shadow inset 0 0 1vmin hsla(0, 0%, 50%, 0.5)
+    border-radius 50% / 60% 60% 40% 40%
+
+  &__hat
+    bottom 65%
+    width 90%
+    height calc(var(--size) * 0.25vmin)
+    position absolute
+    left 50%
+    transform translate(-50%, 0)
+
+    &:after
+      content ''
+      height calc(var(--size) * 0.05vmin)
+      width calc(var(--size) * 0.05vmin)
+      background white
+      box-shadow inset 0 0 0.5vmin hsla(0, 0%, 50%, 0.5)
+      position absolute
+      bottom 100%
+      transform translate(0, 50%)
+      border-radius 50%
+      left 65%
+
+    &:before
+      content ''
+      background linear-gradient(55deg, red 40%, var(--red-three)), var(--red-one)
+      position absolute
+      height 100%
+      width 100%
+      $clip = polygon(0 95%, 70% 0, 100% 95%)
+      -webkit-clip-path $clip
+      clip-path $clip
+
+  &__hat-brim
+    position absolute
+    left -5%
+    right -5%
+    bottom 0
+    height 25%
+    background white
+    box-shadow inset 0 0 0.5vmin hsla(0, 0%, 50%, 0.5)
+    border-radius 10% / 25%
+
+  &__face
+    height 45%
+    width 70%
+    background var(--face)
+    position absolute
+    left 50%
+    top 20%
+    border-radius 15%
+    transform translate(-50%, 0)
+
+  &__eye
+    height calc(var(--size) * 0.035vmin)
+    width calc(var(--size) * 0.035vmin)
+    border-radius 50%
+    border calc(var(--size) * 0.0075vmin) solid var(--stroke)
+    $clip = inset(0 0 50% 0)
+    -webkit-clip-path $clip
+    clip-path $clip
+    position absolute
+    top 55%
+    left 50%
+
+    &--left
+      transform translate(-50%, 0) translate(-100%, 0) scale(var(--scale, 1))
+    &--right
+      transform translate(-50%, 0) translate(100%, 0) scale(var(--scale, 1))
+
+  &__mouth
+    height calc(var(--size) * 0.05vmin)
+    width calc(var(--size) * 0.065vmin)
+    position absolute
+    top 100%
+    left 50%
+    transform translate(-50%, 0) scale(var(--scale, 1))
+    border-radius 50%
+    border calc(var(--size) * 0.0085vmin) solid var(--stroke)
+    $clip = inset(50% 0 0 0)
+    -webkit-clip-path $clip
+    clip-path $clip
+
+  &__feet
+    position absolute
+    bottom 0
+    left 50%
+    transform translate(-50%, 0)
+    background var(--stroke)
+    height 10%
+    width 34%
+    opacity calc(1- (var(--show-box-model, 0) * 0.35))
+
+  &__foot
+    width 80%
+    position absolute
+    bottom 0
+    height 80%
+    left 50%
+    background var(--stroke)
+    border-radius 50% 50% 0 0 / 100% 100% 0 0
+    box-shadow inset 0 0 calc(var(--size) * 0.0085vmin) white
+
+    &--left
+      transform translate(-50%, 0) translate(-50%, 0)
+    &--right
+      transform translate(-50%, 0) translate(50%, 0)
+
+
+.box-model
+  --bg-width calc((100 - var(--body-padding, 0)) * 1%)
+  background 'linear-gradient(%s, %s) 50% 50% / %s 100% no-repeat' % (var(--content-color) var(--content-color) var(--bg-width))
+  background-color var(--padding-color)
+  width calc(var(--body-width) * 1%)
+  height 100%
+  border calc(var(--body-border) * 1vmin) solid var(--border-color)
+  padding 0 calc(var(--body-padding) * 1%)
+  margin calc(var(--body-margin) * 1vmin)
+  box-shadow 0 0 0 calc(var(--body-margin) * 1vmin) var(--margin-color)
+  box-sizing var(--box-sizing)
+  position absolute
+  overflow hidden
+  opacity calc(var(--show-box-model, 0) * 0.75)
+  top 0
+  left 50%
+  transform translate(calc(-50% - (var(--body-margin) * 1vmin)), calc(var(--body-margin) * -1vmin))
+
+.output
+  font-size 2rem
+  font-family sans-serif
+  line-height 1.5
+  font-weight bold
+
+.santa--embarrassed
+  .santa__eye
+    clip-path none
+    border 0
+    background var(--stroke)
+    --scale 0.5
+
+  .santa__mouth
+    clip-path none
+    border 0
+    background var(--stroke)
+    --scale 0.25
