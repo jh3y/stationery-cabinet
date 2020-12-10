@@ -1,0 +1,86 @@
+*
+  box-sizing border-box
+
+:root
+  --base hsl(0, 0%, 10%)
+  --red hsl(0, 80%, 50%)
+  --bg repeating-linear-gradient(-45deg, var(--red) 0 0.5vmin, white 0.5vmin 1.5vmin, var(--red) 1.5vmin 2vmin)
+  --shadow inset 0 0 3vmin hsl(220, 30%, 30%)
+
+body
+  background-color hsl(240, 30%, 20%)
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  flex-direction column
+
+  & > * + *
+    margin 2rem 0 0 0
+
+pre
+  background var(--base)
+  padding 1rem
+  font-family monospace
+  color hsl(0, 0%, 100%)
+  font-weight bold
+  max-width 100%
+
+  code
+    max-width 100%
+
+[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 44px;
+  background: linear-gradient(transparent 0 20px, hsl(0, 0%, 100%) 20px 24px, transparent 24px 44px);
+  outline: hsla(0, 0%, 100%, 0);
+}
+
+[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  background: hsl(0, 0%, 100%);
+  border: 4px solid hsl(240, 30%, 20%);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+[type='range']::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  background: hsl(0, 0%, 100%);
+  border: 4px solid hsl(240, 30%, 20%);
+  border-radius: 50%;
+}
+
+progress
+  appearance none
+  transition all 0.1s
+  height 5vmin
+  width 40vmin
+  background var(--base)
+  color var(--bg)
+  border 0
+  border-radius 2.5vmin
+  overflow hidden
+
+  &::-moz-progress-bar
+    box-shadow var(--shadow)
+    background var(--bg)
+    transition all 0.1s ease
+
+  &:not([value])::-moz-progress-bar
+    box-shadow none
+    background var(--base)
+
+  &::-webkit-progress-bar
+    background var(--base)
+
+  &::-webkit-progress-value
+    transition all 0.1s
+    box-shadow var(--shadow)
+    background var(--bg)
