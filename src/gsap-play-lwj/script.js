@@ -1,7 +1,38 @@
-/* eslint-disable */
-const CLEAR = document.querySelector('.clear')
-const STARTER = document.querySelector('.start')
-const BOX = document.querySelector('.box')
+import gsap from 'https://cdn.skypack.dev/gsap'
+
+const {
+  timeline,
+  set,
+  utils: { mapRange },
+} = gsap
+
+const BOUND = 10
+
+const moveEyes = ({ x, y }) => {
+  const newX = mapRange(0, window.innerWidth, -BOUND, BOUND, x)
+  const newY = mapRange(0, window.innerHeight, -BOUND, BOUND, y)
+  set('.peep__eyes', { x: newX, y: newY })
+}
+
+set('.peep__party', {
+  xPercent: -50,
+  rotate: -45,
+  yPercent: 20,
+})
+
+set('.peep', { display: 'block' })
+
+const PARTY = timeline({ paused: true }).to('#lines', {
+  yPercent: -100,
+  repeat: -1,
+  duration: 0.5,
+  ease: 'none',
+})
+
+window.addEventListener('pointermove', moveEyes)
+
+// Speech Recognition stuff
+
 window.SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition
 
@@ -25,38 +56,17 @@ const START = () => {
   }
 }
 
-const STOP = () => {
-  STATE.RUNNING = false
-  const RESULTS = RECOG.stop()
-  console.info(RESULTS)
-  document.body.style.backgroundColor = 'white'
-}
-
 const COMMANDS = {
-  SPIN: 'spin',
-  COLOR: 'color',
-  COLOUR: 'colour',
+  PARTY: 'party',
 }
 const LISTEN_FOR_ACTIVATION = res => {
   const TRANSCRIPT = res.results[res.results.length - 1][0].transcript
     .toLowerCase()
     .trim()
-  console.info(TRANSCRIPT.trim(), KEYWORD)
+  // console.info(TRANSCRIPT)
   if (STATE.ACTIVATED) {
-    if (TRANSCRIPT === COMMANDS.SPIN) {
-      console.info('spin it')
-      STATE.ROTATE = STATE.ROTATE + 360
-      BOX.style.setProperty('--rotate', STATE.ROTATE)
-    } else if (
-      TRANSCRIPT.split(' ')[0] === COMMANDS.COLOR ||
-      TRANSCRIPT.split(' ')[0] === COMMANDS.COLOUR
-    ) {
-      console.info(TRANSCRIPT.split(' '), 'COLOR')
-      BOX.style.backgroundColor = TRANSCRIPT.split(' ')
-        .slice(1)
-        .join(' ')
-    } else {
-      console.info('hello', TRANSCRIPT)
+    if (TRANSCRIPT === COMMANDS.PARTY) {
+      PARTY.play()
     }
   }
   // Listen for a keyword that we can do something with??
@@ -68,17 +78,17 @@ const LISTEN_FOR_ACTIVATION = res => {
     setTimeout(() => {
       document.body.style.backgroundColor = 'hsl(210, 50%, 50%)'
       STATE.ACTIVATED = false
-    }, 5000)
+      PARTY.pause()
+    }, 10000)
   }
 }
 
-const KEYWORD = 'smithers'
+const KEYWORD = 'corgi'
 RECOG.onresult = LISTEN_FOR_ACTIVATION
 RECOG.onend = () => {
-  console.info('restarting')
+  // console.info('restarting')
   // Shouldn't end, restart.
   // Only restart if state is still running.
   if (STATE.RUNNING) RECOG.start()
 }
-STARTER.addEventListener('click', START)
-CLEAR.addEventListener('click', STOP)
+START()
