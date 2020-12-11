@@ -1,0 +1,32 @@
+.list__container
+  .list
+    h1.list__title Santa's List
+    ul.list__children
+.rule
+form
+  .form__section
+    input#evenodd(type='radio' name='type' value="evenodd")
+    label(for='evenodd') even or odd
+    select.evenodd-selector
+      option even
+      option odd
+  .form__section
+    input#nthchild(type='radio' name='type' value="nthchild")
+    label(for='nthchild') nth-child(n)
+    input.nthchild-selector(type='range' min="0" max="12" step="1" value="1")
+  .form__section
+    input#ab(type='radio' name='type' value="ab")
+    label(for='ab') nth-child(An + B)
+    input.a-selector(type='range' min="-12" max="12" step="1" value="0")
+    input.b-selector(type='range' min="-12" max="12" step="1" value="0")
+  .form__section
+    input.dummy(type='radio' aria-hidden)
+    .chain
+      input#chain(type='checkbox')
+      label(for='chain') Chain?
+    input.a2-selector(type='range' min="-12" max="12" step="1" value="0")
+    input.b2-selector(type='range' min="-12" max="12" step="1" value="0")
+  hr
+  .form__section
+    input#shownumber(type='checkbox')
+    label(for='shownumber') Show numbers
