@@ -1,0 +1,84 @@
+// This is where we use the custom properties
+@property --noise-trip {
+  syntax: '<integer>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@keyframes scale {
+  0%, 100% {
+    --noise-trip: 0;
+  }
+  50% {
+    --noise-trip: 100;
+  }
+}
+
+@supports (background: paint(something)) {
+  button {
+    /*
+      Optionally set property values.
+      This can be done at root or local scope
+    */
+    --noise: var(--noise-trip); /* Animated noise with property */
+    --noise-cell-size: 2;
+    --noise-hue-lower: 0;
+    --noise-hue-upper: 0;
+    --noise-saturation-lower: 0;
+    --noise-saturation-upper: 0;
+    --noise-lightness-lower: 30;
+    --noise-lightness-upper: 70;
+    background: paint(noise);
+  }
+
+  button:hover {
+    animation: scale 5s infinite linear;
+  }
+}
+
+// Additional Styling
+
+body {
+  font-family: sans-serif;
+  height: 100vh;
+  width: 100vw;
+  min-height: 100vh;
+  text-align: center;
+  padding: 0;
+  position: relative;
+  margin: 0;
+  background-color: hsl(0, 0%, 5%);
+}
+
+button {
+  --lightness: 50;
+  --spread: 10;
+  border: 0;
+  font-size: 2rem;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  font-weight: bold;
+  font-family: sans-serif;
+  cursor: pointer;
+  color: hsl(0, 0%, 100%);
+  outline: transparent;
+  box-shadow: '0 0px %s 0 hsl(0, 0%, calc(var(--lightness) * 1%));' % (calc(var(--spread) * 1px) calc(var(--lightness) * 1%))
+  transition: box-shadow 0.1s, transform 0.1s;
+}
+
+button:hover {
+  --lightness: 100;
+}
+
+button:active {
+  --spread: 0;
+  transform: scale(0.99);
+}
+
+.container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

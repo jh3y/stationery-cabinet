@@ -1,0 +1,124 @@
+// This is where we use the custom properties
+@property --eq-trip {
+  syntax: '<integer>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@keyframes trip {
+  0%, 25%, 50%, 75%, 100% {
+    --eq-1: 0;
+    --eq-2: 0;
+    --eq-3: 0;
+    --eq-4: 0;
+    --eq-5: 0;
+    --eq-6: 0;
+    --eq-7: 0;
+  }
+  12.5% {
+    --eq-1: 10;
+    --eq-2: 80;
+    --eq-3: 30;
+    --eq-4: 28;
+    --eq-5: 20;
+    --eq-6: 95;
+    --eq-7: 4;
+  }
+  37.5% {
+    --eq-1: 43;
+    --eq-2: 15;
+    --eq-3: 74;
+    --eq-4: 54;
+    --eq-5: 55;
+    --eq-6: 26;
+    --eq-7: 82;
+  }
+  62.5% {
+    --eq-1: 56;
+    --eq-2: 34;
+    --eq-3: 84;
+    --eq-4: 14;
+    --eq-5: 88;
+    --eq-6: 66;
+    --eq-7: 25;
+  }
+  87.5% {
+    --eq-1: 14;
+    --eq-2: 84;
+    --eq-3: 68;
+    --eq-4: 48;
+    --eq-5: 28;
+    --eq-6: 63;
+    --eq-7: 42;
+  }
+}
+
+@supports (background: paint(something)) {
+  button {
+    /*
+      Optionally set property values.
+      This can be done at root or local scope
+    */
+    --eq: var(--eq-trip); /* Animated noise with property */
+    --eq-1: 2;
+    --eq-2: 2;
+    --eq-3: 2;
+    --eq-4: 2;
+    --eq-5: 2;
+    --eq-6: 2;
+    --eq-7: 2;
+    background: paint(eq);
+  }
+
+  button:hover {
+    animation: trip 1s infinite linear;
+  }
+}
+
+// Additional Styling
+
+body {
+  font-family: sans-serif;
+  height: 100vh;
+  width: 100vw;
+  min-height: 100vh;
+  text-align: center;
+  padding: 0;
+  position: relative;
+  margin: 0;
+  background-color: hsl(200, 30%, 30%);
+}
+
+button {
+  --lightness: 50;
+  --spread: 10;
+  border: 0;
+  font-size: 2rem;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  font-weight: bold;
+  font-family: sans-serif;
+  cursor: pointer;
+  color: hsl(0, 0%, 100%);
+  outline: transparent;
+  box-shadow: '0 0px %s 0 hsl(0, 0%, calc(var(--lightness) * 1%));' % (calc(var(--spread) * 1px) calc(var(--lightness) * 1%))
+  transition: box-shadow 0.1s, transform 0.1s;
+  background-color: hsl(0, 0%, 10%);
+}
+
+button:hover {
+  --lightness: 100;
+}
+
+button:active {
+  --spread: 0;
+  transform: scale(0.99);
+}
+
+.container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
