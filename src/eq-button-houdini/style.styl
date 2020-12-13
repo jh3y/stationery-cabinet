@@ -10,28 +10,26 @@
     --noise-trip: 0;
   }
   50% {
-    --noise-trip: 100;
+    --noise-trip: var(--noise-variance);
   }
 }
 
 @supports (background: paint(something)) {
-  button {
+  .wand {
     /*
       Optionally set property values.
       This can be done at root or local scope
     */
-    --noise: var(--noise-trip); /* Animated noise with property */
-    --noise-cell-size: 2;
-    --noise-hue-lower: 0;
-    --noise-hue-upper: 0;
-    --noise-saturation-lower: 0;
-    --noise-saturation-upper: 0;
-    --noise-lightness-lower: 30;
-    --noise-lightness-upper: 70;
+    --noise: var(--noise-trip); /* Animated noise with property, hack to animate? */
+    --noise-cell-size: 1;
+    --noise-hue: 330;
+    --noise-saturation: 100;
+    --noise-lightness: 0 80;
+    --noise-variance: 10000;
     background: paint(noise);
   }
 
-  button:hover {
+  .wand:hover {
     animation: scale 5s infinite linear;
   }
 }
@@ -50,7 +48,7 @@ body {
   background-color: hsl(0, 0%, 5%);
 }
 
-button {
+.wand {
   --lightness: 50;
   --spread: 10;
   border: 0;
@@ -66,11 +64,11 @@ button {
   transition: box-shadow 0.1s, transform 0.1s;
 }
 
-button:hover {
+.wand:hover {
   --lightness: 100;
 }
 
-button:active {
+.wand:active {
   --spread: 0;
   transform: scale(0.99);
 }

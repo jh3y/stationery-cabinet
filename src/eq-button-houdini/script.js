@@ -12,46 +12,26 @@ CSS.registerProperty({
   initialValue: 2,
 })
 
-CSS.registerProperty({
-  name: '--noise-hue-lower',
-  syntax: '<number>',
-  inherits: false,
-  initialValue: 20,
-})
+// CSS.registerProperty({
+//   name: '--noise-hue',
+//   syntax: '<number>',
+//   inherits: false,
+//   initialValue: 80,
+// })
 
-CSS.registerProperty({
-  name: '--noise-hue-upper',
-  syntax: '<number>',
-  inherits: false,
-  initialValue: 80,
-})
+// CSS.registerProperty({
+//   name: '--noise-saturation',
+//   syntax: '<number>',
+//   inherits: false,
+//   initialValue: 80,
+// })
 
-CSS.registerProperty({
-  name: '--noise-saturation-lower',
-  syntax: '<number>',
-  inherits: false,
-  initialValue: 80,
-})
-CSS.registerProperty({
-  name: '--noise-saturation-upper',
-  syntax: '<number>',
-  inherits: false,
-  initialValue: 80,
-})
-
-CSS.registerProperty({
-  name: '--noise-lightness-lower',
-  syntax: '<number>',
-  inherits: false,
-  initialValue: 20,
-})
-
-CSS.registerProperty({
-  name: '--noise-lightness-upper',
-  syntax: '<number>',
-  inherits: false,
-  initialValue: 80,
-})
+// CSS.registerProperty({
+//   name: '--noise-lightness',
+//   syntax: '<custom-ident>',
+//   inherits: false,
+//   initialValue: 30 80,
+// })
 
 const worklet = `
 const getRandom = (min, max) => {
@@ -64,28 +44,33 @@ if (typeof registerPaint !== 'undefined') {
       return [
         '--noise',
         '--noise-cell-size',
-        '--noise-hue-lower',
-        '--noise-hue-upper',
-        '--noise-saturation-lower',
-        '--noise-saturation-upper',
-        '--noise-lightness-lower',
-        '--noise-lightness-upper',
+        '--noise-hue',
+        '--noise-saturation',
+        '--noise-lightness',
       ]
     }
 
     paint(ctx, size, properties) {
       const CELL_SIZE = parseInt(properties.get('--noise-cell-size'));
-      const HUE_LOWER = parseInt(properties.get('--noise-hue-lower'));
-      const HUE_UPPER = parseInt(properties.get('--noise-hue-upper'));
-      const SATURATION_LOWER = parseInt(properties.get('--noise-saturation-lower'));
-      const SATURATION_UPPER = parseInt(properties.get('--noise-saturation-upper'));
-      const LIGHTNESS_LOWER = parseInt(properties.get('--noise-lightness-lower'));
-      const LIGHTNESS_UPPER = parseInt(properties.get('--noise-lightness-upper'));
+      const HUE = properties.get('--noise-hue').toString();
+      const SATURATION = properties.get('--noise-saturation').toString();
+      const LIGHTNESS = properties.get('--noise-lightness').toString();
+
+      const HUE_RANGE = HUE.split(' ').filter(v => v.trim() !== '').map(v => parseInt(v, 10))
+      const getHue = HUE_RANGE.length > 1 ? () => getRandom(HUE_RANGE[0], HUE_RANGE[1]) : () => HUE_RANGE[0]
+      const SATURATION_RANGE = SATURATION.split(' ').filter(v => v.trim() !== '').map(v => parseInt(v, 10))
+      const getSaturation = SATURATION_RANGE.length > 1 ? () => getRandom(SATURATION_RANGE[0], SATURATION_RANGE[1]) : () => SATURATION_RANGE[0]
+      const LIGHTNESS_RANGE = LIGHTNESS.split(' ').filter(v => v.trim() !== '').map(v => parseInt(v, 10))
+      const getLightness = LIGHTNESS_RANGE.length > 1 ? () => getRandom(LIGHTNESS_RANGE[0], LIGHTNESS_RANGE[1]) : () => LIGHTNESS_RANGE[0]
+
       for (var p = 0; p < size.height * size.width; p++) {
         const x = p % size.width
         const y = Math.floor(p / size.width)
         if (x % CELL_SIZE === 0 && y % CELL_SIZE === 0) {
-          ctx.fillStyle = 'hsl(' + getRandom(HUE_LOWER, HUE_UPPER) + ', ' + getRandom(SATURATION_LOWER, SATURATION_UPPER) + '%, ' + getRandom(LIGHTNESS_LOWER, LIGHTNESS_UPPER) + '%)'
+          const H = getHue()
+          const S = getSaturation()
+          const L = getLightness()
+          ctx.fillStyle = 'hsl(' + H + ', ' + S + '%, ' + L + '%)'
           ctx.fillRect(x, y, CELL_SIZE, CELL_SIZE)
         }
       }
