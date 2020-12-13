@@ -1,0 +1,107 @@
+*
+  box-sizing border-box
+
+:root
+  --height 60
+  --width 30
+  --clip polygon(0 100%, 50% 0, 100% 100%)
+  --bg hsl(30, 34%, 72%)
+  --tree hsl(130, 40%, 40%)
+  --pot hsl(35, 80%, 25%)
+  --pot-brim hsl(35, 80%, 30%)
+  --stump hsl(40, 20%, 40%)
+  --light hsl(45, 80%, 90%)
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  background-color var(--bg)
+
+.tree
+  height calc(var(--height) * 1vmin)
+  position relative
+  width calc(var(--width) * 1vmin)
+
+  &__body
+    height 80%
+    position absolute
+    top 0
+    left 0
+    right 0
+
+  &__lights
+    position relative
+    height 100%
+    width 100%
+    -webkit-clip-path var(--clip)
+    clip-path var(--clip)
+
+    &:after
+      content ''
+      position absolute
+      transform rotate(25deg) translate(0, -40%)
+      height 100%
+      width 100%
+      border-width 2vmin
+      border-style solid
+      border-image radial-gradient(var(--light) 0 20%, transparent 35%) 70% 0% round
+
+  &__branches
+    position absolute
+    height calc(var(--height) * 1%)
+    width calc(var(--width) * 1%)
+    left 50%
+    bottom calc(var(--bottom) * 1%)
+    transform translate(-50%, 0)
+
+    &:before
+      -webkit-clip-path var(--clip)
+      clip-path var(--clip)
+      content ''
+      position absolute
+      height 100%
+      width 100%
+      background var(--tree)
+
+    &--top
+      --width 50
+      --bottom 56
+      --height 30
+    &--middle
+      --width 80
+      --height 40
+      --bottom 30
+    &--bottom
+      --height 60
+      --width 100
+      --bottom 0
+
+  &__pot
+    position absolute
+    bottom 0
+    left 50%
+    transform translate(-50%, 0)
+    background var(--pot)
+    height 15%
+    width 30%
+    border-radius 0 0 10% 10%
+
+    &:after
+      content ''
+      position absolute
+      top 0
+      left -10%
+      right -10%
+      height 20%
+      background var(--pot-brim)
+
+  &__stump
+    position absolute
+    width 15%
+    height 60%
+    bottom 10%
+    left 50%
+    transform translate(-50%, 0)
+    background var(--stump)
