@@ -1,0 +1,79 @@
+*
+  box-sizing border-box
+
+body
+  display flex
+  align-items center
+  justify-content center
+  min-height 100vh
+  background hsl(130, 50%, 40%)
+
+.corgi
+  height 50vmin
+
+  &__shadow
+    opacity 0.5
+    fill hsl(0, 10%, 10%)
+
+  &__stroke
+    stroke hsl(0, 0%, 10%)
+    stroke-width 1px
+
+  &__cracker-primary
+    fill hsl(280, 40%, 75%)
+
+  &__cracker-accent
+    fill hsl(45, 90%, 70%)
+
+  &__hat-body
+    fill hsl(10, 90%, 50%)
+
+  &__fine-stroke
+    stroke-width 0.65px
+
+  &__cracker-stroke
+    stroke-width 0.5px
+    stroke hsl(0, 0%, 10%)
+
+  &__brows
+    display none
+
+  &__hat-white
+    fill hsl(0, 0%, 100%)
+
+  &__ear
+    fill hsl(35, 45%, 80%)
+
+  &__fur
+    fill hsl(38, 70%, 50%)
+
+  &__tongue rect
+    fill hsl(0, 95%, 50%)
+
+  &__feature
+    fill hsl(0, 0%, 10%)
+
+  &__clear
+    fill none
+
+  &__white
+    fill hsl(0, 0%, 100%)
+
+  &__party
+    rect
+      fill 'hsl(%s, 80%, 50%)' % var(--hue)
+
+    rect:nth-of-type(1)
+      --hue 10
+    rect:nth-of-type(2)
+      --hue 40
+    rect:nth-of-type(3)
+      --hue 60
+    rect:nth-of-type(4)
+      --hue 80
+    rect:nth-of-type(5)
+      --hue 180
+    rect:nth-of-type(6)
+      --hue 260
+    rect:nth-of-type(7)
+      --hue 300
