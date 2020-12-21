@@ -1,0 +1,14 @@
+-
+  const ITEMS = new Array(10).fill().map(i => ({
+    title: "Movie Title",
+    link: "https://www.imdb.com/list/ls000096828/"
+  }))
+
+.top-picks
+  ul.top-picks__track
+    for ITEM, index in ITEMS
+      li.item.top-picks__item(style=`--index: ${index};`)
+        a.item__card(href=ITEM.link target="_blank" rel="noopener noreferrer")
+          img(src=ITEM.src)
+          span= ITEM.title
+
