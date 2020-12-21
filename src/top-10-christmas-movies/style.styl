@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&display=swap');
+
+*
+*:before
+*:after
+  box-sizing border-box
+
+:root
+  --bg hsl(150, 50%, 28%)
+  --size 50vmin
+  --height var(--size)
+  --width calc(0.6875 * var(--size))
+  --font-size calc(0.74 * var(--size))
+  --gap calc(0.22 * var(--size))
+
+
+body
+  background var(--bg)
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content start
+
+
+.top-picks
+  max-width 100%
+  padding-left 2rem
+
+  &__track
+    height var(--height)
+    margin 0
+    padding 0
+    display flex
+    list-style-type none
+    padding 0 var(--gap)
+    max-width 100%
+    overflow-x auto
+    overflow-y hidden
+    counter-reset index
+    transform-style preserve-3d
+    scroll-snap-type x mandatory
+
+  &__title
+    color hsl(0, 0%, 100%)
+    font-size clamp(1.2rem, 5vmin, 3rem)
+    font-weight 700
+    font-family sans-serif
+
+  &__item
+    overflow hidden
+    width calc(var(--width) + var(--gap))
+    flex 0 0 calc(var(--width) + var(--gap))
+    position relative
+    list-style none
+    counter-increment index
+    transform-style preserve-3d
+    z-index calc(var(--index) * -1)
+    transform translate3d(0, 0, calc(var(--index) * -1px))
+    padding-left var(--gap)
+    scroll-snap-align center
+    scroll-snap-stop always
+
+    .item__card
+      width var(--width)
+      position absolute
+      right 0
+      top 0
+      bottom 0
+      background hsl(0, 0%, 14%)
+      overflow hidden
+
+      img
+        position absolute
+        height 100%
+        width 100%
+        object-fit cover
+
+      span
+        text-decoration none
+        position absolute
+        top 2rem
+        right 2rem
+        max-width 50%
+        text-align right
+        color white
+        font-weight bold
+        font-size clamp(1rem, 2vmin, 2rem)
+
+    &:after
+      content counter(index)
+      position absolute
+      color var(--bg)
+      font-size var(--font-size)
+      line-height 1
+      bottom 0
+      font-weight bold
+      letter-spacing -2vmin
+      font-family "Mountains of Christmas", cursive
+      left 0
+      -webkit-text-stroke 0.5vmin hsl(0, 0%, 100%)
+      text-shadow 1vmin 0 4vmin var(--bg)
+      transform translate(-2%, 6%)
+
+
+
+.item
+  &:nth-child(3n - 0)
+    --bg #77dd78
+  &:nth-child(3n - 1)
+    --bg #f8b229
+  &:nth-child(3n - 2)
+    --bg #ea4630
