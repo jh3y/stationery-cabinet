@@ -5,16 +5,10 @@
 :root
   --player-one "M61.27.5c45.13.16 68.384 25.592 96.354 57.072 27.98 31.47 41.564 54.925 75.536 54.478 33.972-.447 50.78-22.13 50.78-50.78 0-28.65-14.587-51.595-50.78-50.77-36.193.825-60.4 17.052-88.2 47.072-27.8 30.01-40.15 64.308-83.68 64.478C17.74 122.21.5 89.93.5 61.28.5 32.63 16.14.34 61.27.5z"
   --player-two "M61.27 10.5c35.51-.132 57.97 19.3 85.94 50.78 27.98 31.47 41.78 60.92 85.95 60.77 44.18-.16 60.78-32.13 60.78-60.78S275.48.55 233.16.5C190.85.45 179.091 35.76 151.291 65.78c-27.8 30.01-56.388 46.395-90.011 46.269-33.623-.127-50.78-22.12-50.78-50.77 0-28.65 15.26-50.649 50.77-50.78z"
-  --bridge-height 20
+  --bridge-height 16
   --scale 1
-  --angle -48
-  --bank 150
-
-  @media(min-width 768px)
-    --bridge-height 40
-    --scale 2
-    --angle -33
-    --bank 120
+  --angle -56
+  --bank 180
 
 .cuboid {
   // Defaults
@@ -95,7 +89,7 @@
     &--center
       --height 4
       --depth 44
-      --z calc((var(--bridge-height) + 4) * -1)
+      --z calc((var(--bridge-height) + 2) * -1)
       --y 0
       --r 0
 
@@ -132,9 +126,9 @@
 
   &__ramp
     --depth 44
-    --height calc(var(--bridge-height) + 7)
+    --height calc(var(--bridge-height) +4)
     --width 26
-    --z calc((var(--bridge-height) + 6) * -0.5)
+    --z calc((var(--bridge-height) + 4) * -0.5)
 
     &--one
       --x 0
@@ -188,8 +182,9 @@
           transform rotateX(calc(var(--angle) * 1deg))
 
 .race
-  transform rotateX(-34deg) rotateY(-34deg) rotateX(-90deg) scale(var(--scale))
-  // transform rotateX(-0deg) rotateY(0deg) rotateX(180deg) scale(3)
+  transform rotateX(-34deg) rotateY(-34deg) rotateX(-90deg)
+  // transform rotateX(0deg) rotateY(-34deg) rotateX(-90deg)
+  // transform rotateX(-0deg) rotateY(0deg) rotateX(180deg)
 
 .track
   // 294.438 x 122.550
@@ -263,6 +258,7 @@
   &__plane
     position relative
     height 100%
+    background yellow
     width 100%
     animation-duration calc(var(--speed, 0) * 1s)
     animation-delay calc(var(--delay, 0) * 1s)
@@ -270,10 +266,10 @@
     animation-timing-function linear
 
   &__body
-    --height 10
+    --height 8
     --width 12
     --depth 8
-    --z -6
+    --z -4
     --x -2
     --y 1
     div
@@ -289,35 +285,35 @@
   0%, 7%, 21%, 100%
     transform translate3d(0, 0, -1px)
   11%, 17.5%
-    transform translate3d(0, 0, calc((var(--bridge-height) + 9) * -1px))
+    transform translate3d(0, 0, calc((var(--bridge-height) + 5) * -1px))
 
 @keyframes bridge--two
   0%, 6.25%, 20%, 100%
     transform translate3d(0, 0, -1px)
   10%, 16.5%
-    transform translate3d(0, 0, calc((var(--bridge-height) + 9) * -1px))
+    transform translate3d(0, 0, calc((var(--bridge-height) + 5) * -1px))
 
 @keyframes rock--one
   0%, 6.9%, 11.1%, 17.4%, 21.1%, 100%
     transform-origin 50% 50%
-    transform rotateY(0deg)
+    transform rotateY(0deg) translate3d(0, 0, 0)
   7%, 11%
     transform-origin 0 50%
-    transform rotateY(45deg)
+    transform rotateY(50deg) translate3d(8px, 0, 8px)
   17.5%, 21%
     transform-origin 100% 50%
-    transform rotateY(-45deg)
+    transform rotateY(-50deg) translate3d(-8px, 0, 8px)
 
 @keyframes rock--two
   0%, 6.15%, 10.1%, 16.4%, 20.1%, 100%
     transform-origin 50% 50%
-    transform rotateY(0deg)
+    transform rotateY(0deg) translate3d(0, 0, 0)
   6.25%, 10%
     transform-origin 0 50%
-    transform rotateY(45deg)
+    transform rotateY(50deg) translate3d(8px, 0, 8px)
   16.5%, 20%
     transform-origin 100% 50%
-    transform rotateY(-45deg)
+    transform rotateY(-50deg) translate3d(-8px, 0, 8px)
 
 
 
@@ -327,3 +323,4 @@ body
   align-items center
   justify-content center
   perspective 1000px
+  transform scale(1)
