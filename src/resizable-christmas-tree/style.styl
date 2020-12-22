@@ -1,0 +1,168 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  background hsl(280, 50%, 15%)
+
+:root
+  --pot hsl(35, 80%, 25%)
+  --pot-brim hsl(35, 80%, 30%)
+
+.tree
+  --size 40
+  height calc(var(--size) * 1vmin)
+  width calc(var(--size) * 0.5vmin)
+  position relative
+  background 'hsla(180, 50%, 50%, %s)' % var(--show-container, 0)
+  resize both
+  overflow hidden
+  min-height calc(var(--size) * 0.7vmin)
+  max-width 50vmin
+  max-height 90vmin
+  min-width calc(var(--size) * 0.5vmin)
+  display flex
+  flex-direction column
+
+  &:before
+    content ''
+    position absolute
+    bottom 1%
+    left 50%
+    transform translate(-50%, 0)
+    width 2vmin
+    height calc(100% - 12vmin)
+    background hsl(40, 40%, 45%)
+    z-index -1
+
+  &:active .tree__arrow
+    display none
+
+  &__bauble
+    height 2vmin
+    width 2vmin
+    border-radius 50%
+    position absolute
+    background red
+    z-index 3
+    animation flash 1s calc(var(--d, 0) * 1s) infinite linear
+
+    &:nth-of-type(1)
+      --d 0.3
+      top 64%
+      left 50%
+      transform translate(-50%, 0)
+    &:nth-of-type(2)
+      --d 0.2
+      top 80%
+      left 50%
+      transform translate(-50%, 0) translate(-140%, 0)
+    &:nth-of-type(3)
+      --d 0.4
+      top 80%
+      left 50%
+      transform translate(-50%, 0) translate(140%, 0)
+
+  &__arrow
+    height 30px
+    width 20px
+    background white
+    position absolute
+    bottom 15px
+    right 0
+    transform-origin 50% 100%
+    transform rotate(-15deg)
+    $clip = polygon(50% 100%, 100% 60%, 60% 60%, 65% 0, 35% 0, 35% 60%, 0 60%)
+    -webkit-clip-path $clip
+    clip-path $clip
+
+  &__star
+    height 6vmin
+    stroke hsl(40, 80%, 70%)
+    stroke-width 0.5vmin
+    fill hsl(45, 90%, 50%)
+    position absolute
+    left 50%
+    top 12%
+    z-index 3
+    transform translate(-50%, 0)
+
+  &__top
+    flex 0 1 calc(var(--size) * 0.2vmin)
+    position absolute
+    top 0
+    height 15vmin
+    left 50%
+    transform translate(-50%, 0)
+    min-height calc(var(--size) * 0.2vmin)
+    z-index 2
+    width 100%
+
+    &:after
+      content ''
+      position absolute
+      background #1A9B18
+      top 66%
+      left 50%
+      width 10vmin
+      height 10vmin
+      transform translate(-50%, 0)
+      border-left #295C17 1vmin solid
+      box-sizing border-box
+      $clip = polygon(0 0, 0 100%, 100% 0)
+      -webkit-clip-path $clip
+      clip-path $clip
+      z-index 2
+      transform-origin 50% 50%
+      transform translate(-50%, 0) rotate(45deg)
+
+  &__middle
+    background-image url(https://assets.codepen.io/605876/christmas-tree-layers.svg)
+    background-position 0 0
+    background-size 150% calc(var(--size) * 0.25vmin)
+    background-repeat round
+    min-height calc(var(--size) * 0.2vmin)
+    flex 1
+    margin-top 15vmin
+    background-color 'hsla(10, 50%, 50%, %s)' % var(--show-middle, 0)
+
+  &__bottom
+    flex 0 1 calc(var(--size) * 0.2vmin)
+    min-height calc(var(--size) * 0.2vmin)
+    position relative
+
+    &:before
+      content ''
+      position absolute
+      bottom 0
+      left 50%
+      transform translate(-50%, 0)
+      width 30%
+      height 100%
+      max-width 8vmin
+      background linear-gradient(var(--pot-brim), var(--pot-brim)) 50% 20% / 100% 20% no-repeat,
+          linear-gradient(var(--pot), var(--pot)) 50% 100% / 80% 80% no-repeat
+
+// @keyframes bounce
+//   0, 100%
+//     transform rotate(-15deg) translate(0, 0) scale(1)
+//   50%
+//     transform rotate(-15deg) translate(0, -15%) scale(1.15)
+@keyframes flash
+  0%, 100%
+    background #4F60F6
+
+  20%
+    background #F64F4F
+
+  40%
+    background #4FECF6
+
+  60%
+    background #F6DB4F
+
+  80%
+    background #F64FE5
