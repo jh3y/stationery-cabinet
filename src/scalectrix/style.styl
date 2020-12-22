@@ -1,0 +1,66 @@
+*
+  box-sizing border-box
+
+:root
+  --path "M61.27.5c45.13.16 57.97 29.3 85.94 60.78 27.98 31.47 41.78 60.92 85.95 60.77 44.18-.16 60.78-32.13 60.78-60.78S275.48.55 233.16.5c-42.31-.05-58.15 30.76-85.95 60.78-27.8 30.01-42.4 60.6-85.93 60.77C17.74 122.21.5 89.93.5 61.28.5 32.63 16.14.34 61.27.5z"
+
+.race
+  // 294.438 x 122.550
+  --width 294.438px
+  --height 122.550px
+  height var(--height)
+  width var(--width)
+  background hsla(280, 50%, 50%, 0.5)
+  position relative
+  transform scale(3)
+
+
+.road
+.burm
+.markings
+  position absolute
+  height 100%
+  width 100%
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  overflow visible
+  path
+    stroke var(--color)
+    stroke-width var(--width)
+
+.road
+  --width 20px
+  --color hsl(0, 0%, 50%)
+
+.markings
+  --width 1px
+  --color hsl(45, 80%, 50%)
+
+.burm
+  --width 24px
+  --color hsl(130, 80%, 50%)
+
+.car
+  height 10px
+  width 10px
+  background red
+  offset-path path(var(--path))
+  // animation travel 10s infinite linear
+  offset-distance 1%
+  position absolute
+  transform translate(0, 0)
+  top 0px
+  left 0px
+
+@keyframes travel
+  from
+    offset-distance 0
+  to
+    offset-distance 300%
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
