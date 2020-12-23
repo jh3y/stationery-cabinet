@@ -1,17 +1,29 @@
 *
   box-sizing border-box
-  animation  fadeIn .5s
+
+:root
+  --bg hsl(250, 30%, 10%)
+  --size 50vmin
 
 body
-  background-color #e74c3c
-  color            #fafafa
-  text-align       center
+  background-color var(--bg)
+  min-height 100vh
 
-@keyframes fadeIn
-  from
-    opacity 0
-  to
-    opacity 1
+.globe
+  height var(--size)
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+.food
+  position absolute
+  height 5vmin
+  width 5vmin
+  border-radius 50%
+  background red
+  top calc(var(--y) * 1px)
+  left calc(var(--x) * 1px)
 
 // #player
 //   height 0
