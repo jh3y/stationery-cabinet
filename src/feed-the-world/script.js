@@ -1,63 +1,68 @@
-// const IFRAME = document.querySelector('iframe')
-const ID = '8NLLAeNhH3k'
-// let time = 13
-// const CHUNK = 5000
-// let timer
-// window.addEventListener('click', () => {
-//   // console.info(timer, time)
-//   if (!timer)
-//     IFRAME.setAttribute(
-//       'src',
-//       `https://www.youtube.com/embed/8NLLAeNhH3k?start=${time}&autoplay=1`
-//     )
-//   clearTimeout(timer)
-//   timer = null
-//   time += 1
-//   timer = setTimeout(() => {
-//     IFRAME.removeAttribute('src')
-//     timer = null
-//     time += (CHUNK / 1000)
-//   }, CHUNK)
-// })
+// YouTube Video ID
+const videoId = '8NLLAeNhH3k'
 
-// console.info(YT)
+const TIMER_LABEL = document.querySelector('h1')
+const REDUCER_LABEL = document.querySelector('h2')
 
 const STATE = {
   PLAYING: false,
+  TIMER: 0,
+  TIMEOUT: null,
+  REDUCER: null,
 }
+
+const shutOff = () => {
+  window.PLAYER.pauseVideo()
+  STATE.PLAYING = false
+  STATE.TIMER = 0
+  STATE.TIMEOUT = null
+  TIMER_LABEL.innerText = REDUCER_LABEL.innerText = 0
+  if (STATE.REDUCER) clearInterval(STATE.REDUCER)
+  STATE.REDUCER = null
+}
+
+const UPDATE = () => {
+  STATE.TIMER -= 10
+  REDUCER_LABEL.innerText = STATE.TIMER
+}
+const topUp = () => {
+  STATE.PLAYING = true
+  window.PLAYER.playVideo()
+  STATE.TIMER += 1000
+  TIMER_LABEL.innerText = STATE.TIMER
+  if (STATE.TIMEOUT) clearTimeout(STATE.TIMEOUT)
+  STATE.TIMEOUT = setTimeout(shutOff, STATE.TIMER)
+  if (!STATE.REDUCER) STATE.REDUCER = setInterval(UPDATE, 10)
+  // window.PLAYER[`${STATE.PLAYING ? 'pause' : 'play'}Video`]()
+}
+
 const onReady = () => {
-  // console.info(window.PLAYER, 'READY')
-  // console.info(player.playVideo)
-  // window.PLAYER.playVideo()
+  // Mute the player by default/for streaming
+  // TODO: Remove!
+  window.PLAYER.mute()
   // seekTo can skip to miss the gap at the start
   window.PLAYER.seekTo(10)
+  // Pause it as seek starts playing
   window.PLAYER.pauseVideo()
+  // Bind event listeners
+  window.addEventListener('click', topUp)
 }
 const onStateChange = e => {
-  // console.info(window.PLAYER, e, 'change')
+  // Track has ended
   if (e.data === 0) {
-    // Track has ended
     window.PLAYER.seekTo(10)
     window.PLAYER.pauseVideo()
     STATE.PLAYING = false
   }
 }
 window.onYouTubeIframeAPIReady = () => {
-  // console.info('RUN THIS')
   window.PLAYER = new window.YT.Player('player', {
     height: 200,
     width: 200,
-    videoId: ID,
-    startSeconds: 5,
-    loop: true,
+    videoId,
     events: {
       onReady,
       onStateChange,
     },
-  })
-  window.addEventListener('click', () => {
-    STATE.PLAYING = !STATE.PLAYING
-    if (STATE.PLAYING) window.PLAYER.playVideo()
-    else window.PLAYER.pauseVideo()
   })
 }
