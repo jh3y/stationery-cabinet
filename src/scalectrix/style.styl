@@ -9,6 +9,27 @@
   --scale 1
   --angle -56
   --bank 180
+  // Colors
+  --guide hsl(220, 20%, 10%)
+  --track hsl(220, 10%, 40%)
+  --track--two hsl(220, 10%, 50%)
+  --track--three hsl(220, 10%, 60%)
+  --burm hsl(0, 0%, 90%)
+  --burm-dash hsl(0, 50%, 50%)
+  --bg hsl(120, 30%, 30%)
+  --dirt hsl(45, 40%, 60%)
+  --bridge--one hsl(0, 0%, 40%)
+  --bridge--two hsl(0, 0%, 50%)
+  --bridge--three hsl(0, 0%, 75%)
+  --tail hsl(0, 80%, 50%)
+  --head hsl(40, 80%, 80%)
+  --tyre hsl(0, 0%, 5%)
+  --rim hsl(0, 0%, 75%)
+  --decal hsl(0, 0%, 100%)
+  --glass hsl(220, 50%, 80%)
+  --bumper hsl(0, 0%, 50%)
+  --check hsla(0, 0%, 5%, 0.5)
+  --off-check transparent
 
 .cuboid {
   // Defaults
@@ -76,7 +97,6 @@
 .bridge
   height 44px
   width 100px
-  background hsla(180, 50%, 50%, 0.5)
   position absolute
   top 50%
   left 50%
@@ -94,20 +114,48 @@
       --r 0
 
       div
-        background red
+        background linear-gradient(90deg, var(--guide), var(--guide)) 50% 36% / 100% 1px no-repeat,
+          linear-gradient(90deg, var(--guide), var(--guide)) 50% 58% / 100% 1px no-repeat, var(--track--two)
 
     &--fence
       --height 10
-      --depth 5
+      --depth 2
       --z calc((var(--bridge-height) + 6) * -1)
       --y 0
       --r 0
 
       div
-        background purple
+        background var(--bridge--two)
+
+        &:nth-of-type(1)
+          background var(--bridge--one)
+        &:nth-of-type(2)
+          background var(--bridge--three)
+
+          &:after
+            content "GO!"
+            position absolute
+            top 0
+            left 0
+            height 100%
+            width 100%
+            text-align center
+            transform rotate(180deg)
+            font-size 8px
+            line-height 12px
+            font-family sans-serif
+            font-weight bold
+            color hsl(0, 0%, 100%)
+            background-image linear-gradient(45deg, var(--check) 25%, var(--off-check) 25%), linear-gradient(-45deg, var(--check) 25%, var(--off-check) 25%), linear-gradient(45deg, var(--off-check) 75%, var(--check) 75%), linear-gradient(-45deg, var(--off-check) 75%, var(--check) 75%)
+            background-size 2px 2px
+            background-position 0 0, 0 1px, 1px -1px, -1px 0px
+            text-transform uppercase
 
     &--right
-      --y 39
+      --y 42
+
+      div:nth-of-type(2):after
+        opacity 0
 
   &__pillar
     --width 4
@@ -115,7 +163,12 @@
     --height var(--bridge-height)
     --z calc(var(--bridge-height) * -0.5)
     div
-      background blue
+      background var(--bridge--one)
+
+      &:nth-of-type(2)
+        background var(--bridge--three)
+      &:nth-of-type(4)
+        background hsl(0, 0%, 20%)
 
     &--one
       --x 30
@@ -124,25 +177,14 @@
       --x 66
       --y 0
 
-  &__ramp
-    --depth 44
-    --height calc(var(--bridge-height) +4)
-    --width 26
-    --z calc((var(--bridge-height) + 4) * -0.5)
-
-    &--one
-      --x 0
-      --width 30
-      --y 0
-
-    &--two
-      --x 70
-      --width 30
-      --y 0
-      --r 180
+  &__rail
+    --depth 2
+    --height calc(var(--bridge-height) + 11)
+    --width 36
+    --x -6
+    --z calc((var(--bridge-height) + 11) * -0.5)
 
     div
-      background pink
 
       &:nth-of-type(1)
       &:nth-of-type(2)
@@ -164,7 +206,70 @@
           left 0
           right 0
           bottom 0
-          background red
+          background var(--bridge--three)
+          -webkit-clip-path var(--clip)
+          clip-path var(--clip)
+
+      &:nth-of-type(4)
+        background transparent
+        &:after
+          content ''
+          position absolute
+          top 0
+          left 0
+          right 0
+          height 168%
+          background var(--bridge--one)
+          transform-origin 50% 0%
+          transform rotateX(-53deg)
+
+    &--two
+      --y 42
+    &--three
+      --y 0
+      --x 70
+      --r 180
+    &--four
+      --y 42
+      --x 70
+      --r 180
+
+  &__ramp
+    --depth 44
+    --height calc(var(--bridge-height) +4)
+    --width 30
+    --y 0
+    --z calc((var(--bridge-height) + 4) * -0.5)
+
+    &--one
+      --x 0
+
+    &--two
+      --x 70
+      --r 180
+
+    div
+
+      &:nth-of-type(1)
+      &:nth-of-type(2)
+      &:nth-of-type(5)
+      &:nth-of-type(6)
+        background transparent
+
+      &:nth-of-type(1)
+        --clip polygon(0 0, 100% 100%, 100% 0)
+      &:nth-of-type(2)
+        --clip polygon(100% 0, 0 100%, 0 0)
+
+      &:nth-of-type(1)
+      &:nth-of-type(2)
+        &:after
+          content ''
+          position absolute
+          top 0
+          left 0
+          right 0
+          bottom 0
           -webkit-clip-path var(--clip)
           clip-path var(--clip)
 
@@ -177,14 +282,12 @@
           left 0
           right 0
           height calc(var(--bank, 100) * 1%)
-          background purple
+          background linear-gradient(var(--guide), var(--guide)) 41% 50% / 1px 100% no-repeat, linear-gradient(var(--guide), var(--guide)) 64% 50% / 1px 100% no-repeat, var(--track--three)
           transform-origin 50% 0%
           transform rotateX(calc(var(--angle) * 1deg))
 
 .race
-  transform rotateX(-34deg) rotateY(-34deg) rotateX(-90deg)
-  // transform rotateX(0deg) rotateY(-34deg) rotateX(-90deg)
-  // transform rotateX(-0deg) rotateY(0deg) rotateX(180deg)
+  transform rotateX(-34deg) rotateY(-34deg) rotateX(-90deg) translate(-2%, 0)
 
 .track
   // 294.438 x 122.550
@@ -192,14 +295,15 @@
   --height 122.550px
   height var(--height)
   width var(--width)
-  background hsla(280, 50%, 50%, 0.5)
   position relative
 
 .track__piece
   transform translate3d(0, 0, 0)
 .road
 .burm
+.burm__dashes
 .markings
+.dirt
   position absolute
   height 100%
   width 100%
@@ -211,32 +315,52 @@
     stroke var(--color)
     stroke-width var(--width)
 
+.start
+  --check hsl(0, 0%, 5%)
+  position absolute
+  height 20px
+  width 40px
+  left 98%
+  top 50%
+  transform translate(-50%, -50%)
+  background-image linear-gradient(45deg, var(--check) 25%, var(--off-check) 25%), linear-gradient(-45deg, var(--check) 25%, var(--off-check) 25%), linear-gradient(45deg, var(--off-check) 75%, var(--check) 75%), linear-gradient(-45deg, var(--off-check) 75%, var(--check) 75%)
+  background-size 4px 4px
+  background-position 0 0, 0 2px, 2px -2px, -2px 0px
+  background-color hsl(0, 0%, 90%)
+
+.dirt
+  --width 50px
+  --color var(--dirt)
+
 .road
   --width 20px
-  --color hsl(0, 0%, 50%)
+  --color var(--track)
 
 .markings
   --width 1px
-  --color hsl(45, 80%, 50%)
+  --color var(--guide)
 
 .burm
-  --width 50px
-  --color hsl(130, 80%, 50%)
+  --width 30px
+  --color var(--burm)
+
+  &__dashes
+    --width 30px
+    --color var(--burm-dash)
+    stroke-dasharray 4
 
 .car
   height 10px
   width 10px
-  background 'hsl(%s, 80%, 50%)' % var(--hue, 0)
   offset-path path(var(--path))
-  animation-iteration-count infinite
-  offset-distance 1%
+  offset-distance 5%
   position absolute
   transform-style preserve-3d
   top 0px
   left 0px
 
   &--one
-    --hue 280
+    --hue 10
     --speed 3
     --delay -0.3
     --path var(--player-one)
@@ -245,7 +369,7 @@
     .car__plane
       animation-name rock--one
   &--two
-    --hue 180
+    --hue 220
     --speed 3
     --delay -0.8
     --path var(--player-two)
@@ -258,7 +382,6 @@
   &__plane
     position relative
     height 100%
-    background yellow
     width 100%
     animation-duration calc(var(--speed, 0) * 1s)
     animation-delay calc(var(--delay, 0) * 1s)
@@ -266,14 +389,83 @@
     animation-timing-function linear
 
   &__body
-    --height 8
-    --width 12
+    --height 3
+    --width 14
     --depth 8
-    --z -4
+    --z -1.5
     --x -2
     --y 1
     div
-      background orange
+      background 'hsl(%s, 50%, 50%)' % var(--hue)
+
+      &:nth-of-type(1)
+      &:nth-of-type(2)
+        background linear-gradient(var(--decal), var(--decal)) 50% 50% / 2px 2px no-repeat, 'hsl(%s, 50%, 30%)' % var(--hue)
+      &:nth-of-type(3)
+      &:nth-of-type(4)
+        background linear-gradient(var(--bumper), var(--bumper)) 50% 0% / 100% 1px no-repeat, 'hsl(%s, 50%, 70%)' % var(--hue)
+      &:nth-of-type(3):after
+        content ''
+        position absolute
+        top 0
+        right 0
+        bottom 0
+        left 0
+        background linear-gradient(var(--head), var(--head)) 0 100% / 2px 1px no-repeat, linear-gradient(var(--head), var(--head)) 100% 100% / 2px 1px no-repeat
+      &:nth-of-type(4):after
+        content ''
+        position absolute
+        top 0
+        right 0
+        bottom 0
+        left 0
+        background linear-gradient(var(--tail), var(--tail)) 0 100% / 2px 1px no-repeat, linear-gradient(var(--tail), var(--tail)) 100% 100% / 2px 1px no-repeat
+
+  &__cab
+    --height 2
+    --z -4
+    --depth 8
+    --width 7
+    --x 0
+    --y 1
+
+    div
+      background 'hsl(%s, 50%, 50%)' % var(--hue)
+
+      &:nth-of-type(1)
+      &:nth-of-type(2)
+        background linear-gradient(var(--glass), var(--glass)) 75% 50% / 2px 2px no-repeat, linear-gradient(var(--glass), var(--glass)) 25% 50% / 2px 2px no-repeat, 'hsl(%s, 50%, 30%)' % var(--hue)
+      &:nth-of-type(3)
+      &:nth-of-type(4)
+        background linear-gradient(var(--glass), var(--glass)) 50% 50% / 6px 2px no-repeat, 'hsl(%s, 50%, 70%)' % var(--hue)
+
+  &__spoiler
+    --height 1
+    --width 1
+    --depth 8
+    --y 1
+    --x -3
+    --z -4
+
+    div
+      background-color black
+
+  &__wheels
+    --height 2
+    --width 2
+    --depth 10
+    --z -1
+
+
+    &--rear
+      --x 8
+
+    div
+      background var(--tyre)
+
+      &:nth-of-type(1)
+      &:nth-of-type(2)
+        background linear-gradient(var(--rim), var(--rim)) 50% 50% / 1px 1px no-repeat, var(--tyre)
 
 @keyframes travel
   from
@@ -285,13 +477,13 @@
   0%, 7%, 21%, 100%
     transform translate3d(0, 0, -1px)
   11%, 17.5%
-    transform translate3d(0, 0, calc((var(--bridge-height) + 5) * -1px))
+    transform translate3d(0, 0, calc((var(--bridge-height) + 6) * -1px))
 
 @keyframes bridge--two
   0%, 6.25%, 20%, 100%
     transform translate3d(0, 0, -1px)
   10%, 16.5%
-    transform translate3d(0, 0, calc((var(--bridge-height) + 5) * -1px))
+    transform translate3d(0, 0, calc((var(--bridge-height) + 6) * -1px))
 
 @keyframes rock--one
   0%, 6.9%, 11.1%, 17.4%, 21.1%, 100%
@@ -315,12 +507,18 @@
     transform-origin 100% 50%
     transform rotateY(-50deg) translate3d(-8px, 0, 8px)
 
-
-
 body
+  background-color var(--bg)
   min-height 100vh
   display flex
   align-items center
   justify-content center
   perspective 1000px
   transform scale(1)
+  overflow hidden
+
+  @media(min-width 768px)
+    transform scale(2)
+
+  @media(min-width 1200px)
+    transform scale(3)

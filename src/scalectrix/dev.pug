@@ -13,9 +13,14 @@ mixin cuboid(className)
 
 .race
   .track
+    +track('dirt', true)
     +track('burm', true)
+    svg.track__piece.burm__dashes(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 294.44 122.55")
+      path(d="M61.27.5c45.13.16 68.384 25.592 96.354 57.072 27.98 31.47 41.564 54.925 75.536 54.478 33.972-.447 50.78-22.13 50.78-50.78 0-28.65-14.587-51.595-50.78-50.77-36.193.825-60.4 17.052-88.2 47.072-27.8 30.01-40.15 64.308-83.68 64.478C17.74 122.21.5 89.93.5 61.28.5 32.63 16.14.34 61.27.5z" fill="none")
+      path(d="M61.27 10.5c35.51-.132 57.97 19.3 85.94 50.78 27.98 31.47 41.78 60.92 85.95 60.77 44.18-.16 60.78-32.13 60.78-60.78S275.48.55 233.16.5C190.85.45 179.091 35.76 151.291 65.78c-27.8 30.01-56.388 46.395-90.011 46.269-33.623-.127-50.78-22.12-50.78-50.77 0-28.65 15.26-50.649 50.77-50.78z" fill="none")
     +track('road', true)
     +track('markings', true)
+    .start
     .bridge
       +cuboid('bridge__top bridge__top--center')
       +cuboid('bridge__top bridge__top--left bridge__top--fence')
@@ -24,9 +29,21 @@ mixin cuboid(className)
       +cuboid('bridge__pillar bridge__pillar--two')
       +cuboid('bridge__ramp bridge__ramp--one')
       +cuboid('bridge__ramp bridge__ramp--two')
+      +cuboid('bridge__rail bridge__rail--one')
+      +cuboid('bridge__rail bridge__rail--two')
+      +cuboid('bridge__rail bridge__rail--three')
+      +cuboid('bridge__rail bridge__rail--four')
     .car.car--one
       .car__plane
-        //- +cuboid('car__body')
+        +cuboid('car__wheels car__wheels--front')
+        +cuboid('car__wheels car__wheels--rear')
+        +cuboid('car__body')
+        +cuboid('car__cab')
+        +cuboid('car__spoiler')
     .car.car--two
       .car__plane
-        //- +cuboid('car__body')
+        +cuboid('car__wheels car__wheels--front')
+        +cuboid('car__wheels car__wheels--rear')
+        +cuboid('car__body')
+        +cuboid('car__cab')
+        +cuboid('car__spoiler')
