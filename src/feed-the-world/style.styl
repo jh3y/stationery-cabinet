@@ -3,29 +3,150 @@
 
 :root
   --bg hsl(250, 30%, 10%)
-  --size 50vmin
+  --glow hsl(45, 80%, 90%)
+  --size 40vmin
 
 body
   background-color var(--bg)
   min-height 100vh
+  overflow hidden
+
+.star
+  position absolute
+  top calc(var(--y) * 1%)
+  left calc(var(--x) * 1%)
+  height calc(var(--size) * 1px)
+  width calc(var(--size) * 1px)
+  border-radius 50%
+  background var(--glow)
+  box-shadow 0 0 calc(var(--size) * 1.5px) calc(var(--size) * 0.5px) var(--glow)
 
 .globe
-  height var(--size)
-  position absolute
-  top 50%
-  left 50%
-  transform translate(-50%, -50%)
+  height 100%
+  width 100%
+  // For CodePen
+  overflow visible !important
+
+  &__stroke
+    stroke hsl(0, 0%, 5%)
+
+  &__feature
+    fill hsl(0, 0%, 5%)
+
+  &__pupil
+    fill hsl(0, 0%, 100%)
+
+  &__drop-zone
+    opacity 0
+    fill none
+
+  &__tongue
+    fill hsl(10, 80%, 46%)
+
+  &__hat-body
+    fill hsl(10, 80%, 50%)
+
+  &__hat-trim
+    fill hsl(0, 0%, 99%)
+
+  &__cheeks
+    fill hsl(10, 100%, 85%)
+
+  &__land
+    fill hsl(130, 50%, 50%)
+  &__water
+    fill hsl(220, 90%, 75%)
+
+  &__container
+    height var(--size)
+    width var(--size)
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+
+    &:before
+      content ''
+      position absolute
+      top 50%
+      left 50%
+      transform translate(-50%, -50%)
+      height 105%
+      width 105%
+      border-radius 50%
+      filter blur(10px)
+      z-index -1
+      background radial-gradient(var(--glow) 50%, transparent 80%) no-repeat
 
 .food
   position absolute
-  height 5vmin
-  width 5vmin
+  height 48px
+  width 48px
   border-radius 50%
-  background red
   top calc(var(--y) * 1px)
   left calc(var(--x) * 1px)
 
-// #player
-//   height 0
-//   width 0
-//   opacity 0
+  &:after
+    content ''
+    background-image url("https://assets.codepen.io/605876/food-spritesheet.png")
+    background-repeat no-repeat
+    background-position calc(var(--bx) * 1px) calc(var(--by) * 1px)
+    position absolute
+    height 72px
+    width 72px
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+
+#player
+  transform-origin 0 0
+  position fixed
+  top 0
+  left 0
+  transform scale(var(--scale, 0))
+  transition transform 0.2s
+
+h1
+h2
+  color white
+
+label
+  height 44px
+  width 44px
+  position fixed
+  cursor pointer
+  z-index 10
+
+  & > svg
+    position absolute
+    height 100%
+    width 100%
+    top 0
+    left 0
+
+  path
+    fill var(--glow)
+
+  svg:nth-of-type(1)
+    display none
+
+[type='checkbox']
+  // opacity 0
+  height 0
+  width 0
+
+[for="volume"]
+  bottom 1rem
+  right 1rem
+[for="vision"]
+  bottom 4rem
+  right 1rem
+
+#vision:checked ~ #player
+  --scale 1
+
+:checked + label
+  svg:nth-of-type(1)
+    display block
+  svg:nth-of-type(2)
+    display none
