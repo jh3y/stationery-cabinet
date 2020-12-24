@@ -468,3 +468,4 @@ window.PLAYER = new window.YT.Player('player', {
   },
 })
 // }
+gsap.set(SELECTORS.CONTAINER, { display: 'block' })
