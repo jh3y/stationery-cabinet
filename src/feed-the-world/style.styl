@@ -2,8 +2,11 @@
   box-sizing border-box
 
 :root
-  --bg hsl(250, 30%, 10%)
-  --glow hsl(45, 80%, 90%)
+  --hue 45
+  --saturation 80
+  --lightness 90
+  --bg hsl(250, 30, 10)
+  --glow 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%))
   --size 40vmin
 
 body
@@ -99,6 +102,9 @@ body
     left 50%
     transform translate(-50%, -50%)
 
+  &--santa:after
+    background-image url("https://assets.codepen.io/605876/people-spritesheet.png")
+
 #player
   transform-origin 0 0
   position fixed
@@ -126,7 +132,7 @@ label
     left 0
 
   path
-    fill var(--glow)
+    fill hsl(45, 80%, 90%)
 
   svg:nth-of-type(1)
     display none

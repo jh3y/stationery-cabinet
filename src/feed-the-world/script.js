@@ -83,7 +83,7 @@ const FOODS = [
   {
     name: 'Fries',
     position: [15, 2],
-    score: 0.5,
+    score: 1,
     chew: 8,
   },
   {
@@ -317,6 +317,25 @@ const onDrag = function(e) {
   }
 }
 
+const PARTY = gsap
+  .timeline({
+    paused: true,
+    repeat: 5,
+    onComplete: () => {
+      gsap.set(document.documentElement, {
+        '--hue': 45,
+        '--saturation': 80,
+        '--lightness': 90,
+      })
+    },
+  })
+  .set(document.documentElement, {
+    '--hue': 0,
+    '--saturation': 90,
+    '--lightness': 50,
+  })
+  .to(document.documentElement, { '--hue': 360, duration: 1, ease: 'none' })
+
 const onRelease = function(e) {
   if (this.hitTest(document.querySelector('.globe__drop-zone'), '50%')) {
     AUDIO.HOOVER.play()
@@ -325,9 +344,14 @@ const onRelease = function(e) {
     gsap.to(e.target, {
       scale: 0,
       onComplete: () => {
+        e.target.remove()
         AUDIO.HOOVER.pause()
         AUDIO.HOOVER.currentTime = 0
         topUp(parseInt(e.target.getAttribute('data-score'), 10) * 1000)
+        if (e.target.className.includes('food--santa')) {
+          // Play party mode for ten seconds
+          PARTY.restart()
+        }
         if (blinkTween) {
           gsap.set(SELECTORS.EYES, { scaleY: 1 })
           blinkTween.kill()
@@ -393,12 +417,20 @@ const onRelease = function(e) {
   }
 }
 
-const POPULATE_FOOD = () => {
+const POPULATE_FOOD = initial => {
   const ITEM = document.createElement('div')
   ITEM.className = 'food'
   const { x, y } = genPoint(0.1)
   const INDEX = Math.floor(Math.random() * (FOODS.length - 1))
-  const CHOSEN = FOODS[INDEX]
+  const CHOSEN =
+    Math.random() > 0.9 && !initial
+      ? {
+          name: 'Santa',
+          position: [6, 0],
+          score: 30,
+          chew: 5,
+        }
+      : FOODS[INDEX]
   ITEM.style.setProperty('--x', x)
   ITEM.style.setProperty('--y', y)
   ITEM.style.setProperty('--bx', CHOSEN.position[0] * -72)
@@ -406,6 +438,7 @@ const POPULATE_FOOD = () => {
   ITEM.setAttribute('title', CHOSEN.name)
   ITEM.setAttribute('data-chew', CHOSEN.chew)
   ITEM.setAttribute('data-score', CHOSEN.score)
+  if (CHOSEN.name === 'Santa') ITEM.className += ' food--santa'
   window.Draggable.create(ITEM, {
     onDrag,
     onRelease,
@@ -422,8 +455,9 @@ const POPULATE_FOOD = () => {
   document.body.appendChild(ITEM)
   gsap.from(ITEM, { onStart: () => AUDIO.POP.play(), scale: 0, duration: 0.2 })
 }
+gsap.set(SELECTORS.CONTAINER, { display: 'block' })
 for (let i = 0; i < 5; i++) {
-  POPULATE_FOOD()
+  POPULATE_FOOD(true)
 }
 // Start YouTube Embed Code
 
@@ -468,4 +502,3 @@ window.PLAYER = new window.YT.Player('player', {
   },
 })
 // }
-gsap.set(SELECTORS.CONTAINER, { display: 'block' })
