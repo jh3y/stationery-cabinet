@@ -1,0 +1,48 @@
+*
+  box-sizing border-box
+
+:root
+  --d 0.12s
+  --s calc(48 * var(--d))
+  --b 150%
+  --e 600%
+  --a 22.5deg
+  --co hsl(0, 0%, 100%)
+  --bg hsl(0, 0%, 10%)
+
+body
+  min-height 100vh
+  background var(--bg)
+
+.c
+.c:after
+  position absolute
+  animation m var(--s) calc(var(--i) * var(--d)) infinite linear both
+  height 5vmin
+  width 5vmin
+
+.c
+  top 50%
+  left 50%
+
+  &:after
+    animation-name s
+    content ''
+    border-radius 50%
+    background var(--co)
+
+@keyframes m
+  0%
+    transform translate(-50%, -50%) rotate(calc(var(--i) * var(--a))) translate(0, var(--b))
+  100%
+    transform translate(-50%, -50%) rotate(calc(var(--i) * var(--a))) translate(0, var(--e))
+
+@keyframes s
+  0%
+    transform-origin 50% 100%
+    transform translate(-50%, -50%) scale(0)
+  50%
+    transform translate(-50%, -50%) scale(1)
+  100%
+    transform-origin 50% 0%
+    transform translate(-50%, -50%) scale(0)

@@ -1,0 +1,303 @@
+*
+  box-sizing border-box
+  transform-style preserve-3d
+
+:root
+  --perspective 1200
+  --rotate-x -40
+  --rotate-y -45
+  --transform-style preserve-3d
+  --cuboid-width 30
+  --cuboid-height calc((270 / 480) * var(--cuboid-width))
+  --cuboid-depth calc((270 / 480) * var(--cuboid-width))
+  --plane-width var(--cuboid-width)
+  --plane-height calc((270 / 480) * var(--cuboid-width))
+  --exploded 0
+  --transition 0.2s
+  --speed 0.5s
+  --stagger -0.1s
+  --bg 'hsl(205, 32%, %s)' % calc((10 + (var(--toggled, 0) * 20)) * 1%)
+
+// gif 480 x 270
+
+body
+  min-height 100vh
+  overflow hidden
+  background var(--bg)
+  margin 0
+
+[type="checkbox"]
+  height 0
+  width 0
+  position absolute
+  left 100%
+
+label
+  height 100vh
+  width 100vw
+  position absolute
+  // background hsla(280, 50%, 50%, 0.4)
+  z-index 10
+
+:checked ~ .scene
+:checked ~ .backdrop
+  --toggled 1
+
+
+.seat
+  height 100%
+  width 100%
+  transform-origin 50% 0
+  transform translate(0, 50%) rotateX(calc(var(--toggled, 0) * 90deg))
+  transition transform 0.2s
+
+.scene
+  perspective calc(var(--perspective, 800) * 1px)
+  transform-style var(--transform-style)
+  height 100vh
+  width 100vw
+  display flex
+  align-items center
+  justify-content center
+  transform translate3d(0, 0, calc((1 * var(--cuboid-depth)) * 2vmin))
+
+.backdrop
+  --bg 'hsl(205, 32%, %s)' % calc((5 + (var(--toggled, 0) * 5)) * 1%)
+  height 100vh
+  width 100vw
+  background var(--bg)
+  position fixed
+  top 0
+  left 0
+  transition background var(--transition)
+
+.plane
+  height calc(var(--plane-height, 25) * 1vmin)
+  width calc(var(--plane-width, 25) * 1vmin)
+  transform-style var(--transform-style)
+  transform rotateX(calc(var(--rotate-x, -24) * 1deg)) rotateY(calc(var(--rotate-y, -24) * 1deg)) rotateX(90deg) translate3d(0, 0, 0)
+
+
+// This is what makes the CSS variable powered cuboid
+.cuboid
+  --width var(--cuboid-width, 15)
+  --height var(--cuboid-height, 10)
+  --depth var(--cuboid-depth, 4)
+  height calc(var(--depth) * 1vmin)
+  width calc(var(--width) * 1vmin)
+  position absolute
+  transform translate3d(calc(var(--x, 0) * 1vmin), calc(var(--y, 0) * 1vmin), calc(var(--z, 0) * 1vmin)) rotateX(calc(var(--rotate-cuboid-x, 0) * 1deg)) rotateY(calc(var(--rotate-cuboid-y, 0) * 1deg)) rotateZ(calc(var(--rotate-cuboid-z, 0) * 1deg))
+  transform-style var(--transform-style)
+
+  &__side
+    transform-style var(--transform-style)
+    transition transform 0.25s ease
+
+  & > div:nth-of-type(1)
+    height calc(var(--height) * 1vmin)
+    width 100%
+    transform-origin 50% 50%
+    transform rotateX(-90deg)
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) rotateX(-90deg) translate3d(0, 0, calc((var(--depth) / (2 - var(--exploded))) * 1vmin))
+
+  & > div:nth-of-type(2)
+    height calc(var(--height) * 1vmin)
+    width 100%
+    transform-origin 50% 50%
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(180deg) translate3d(0, 0, calc((var(--depth) / (2 - var(--exploded))) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(3)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--depth) * 1vmin)
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(90deg) translate3d(0, 0, calc((var(--width) / (2 - var(--exploded))) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(4)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--depth) * 1vmin)
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(-90deg) translate3d(0, 0, calc((var(--width) / (2 - var(--exploded))) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(5)
+    height calc(var(--depth) * 1vmin)
+    width calc(var(--width) * 1vmin)
+    transform translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / (2 - var(--exploded))) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(6)
+    height calc(var(--depth) * 1vmin)
+    width calc(var(--width) * 1vmin)
+    transform translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / (2 - var(--exploded))) * -1vmin)) rotateX(180deg)
+    position absolute
+    top 50%
+    left 50%
+
+.cuboid
+  --z calc(var(--cuboid-height) / 2)
+
+.cuboid div
+  background hsl(0, 0%, 3%)
+
+  &:nth-of-type(2):after
+    content ''
+    height 100%
+    width 100%
+    background hsla(45, 90%, 90%, 0.25)
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    filter blur(25px)
+    opacity var(--toggled, 0)
+    transition opacity 0.2s
+
+
+  &:nth-of-type(1)
+  &:nth-of-type(3)
+  &:nth-of-type(4)
+  &:nth-of-type(6)
+    overflow hidden
+
+    &:before
+      content ''
+      height calc((2 * var(--cuboid-height)) * 1vmin)
+      width calc((2 * var(--cuboid-width)) * 1vmin)
+      position absolute
+      background-size cover
+
+  &:nth-of-type(1)
+    filter brightness(calc(1 + (var(--toggled, 0) * 1)))
+    background-color hsl(0, 0%, 5%)
+    h1
+      opacity calc(1 - var(--toggled, 0))
+      transition opacity var(--transition) calc((1 - var(--toggled, 0)) * var(--transition))
+
+    &:before
+      top 0
+      left 50%
+      transform translate(-50%, 0)
+      transform-origin 0 0
+
+  &:nth-of-type(3)
+    filter brightness(calc(1 + (var(--toggled, 0) * 2)))
+    background-color hsl(0, 0%, 8%)
+    &:before
+      bottom 100%
+      left 0
+      transform rotate(-90deg) translate(-100%, 50%)
+      transform-origin 0 100%
+
+  &:nth-of-type(4)
+    &:before
+      top 0
+      left 100%
+      transform rotate(90deg) translate(0, -50%)
+      transform-origin 0 0
+
+  &:nth-of-type(6)
+    h1
+      opacity var(--toggled, 0)
+
+    &:before
+      bottom 0
+      left 50%
+      transform translate(-50%, 0)
+
+:checked ~ .scene .cuboid div
+  &:nth-of-type(1):before
+  &:nth-of-type(3):before
+  &:nth-of-type(4):before
+  &:nth-of-type(6):before
+    background-size cover
+    background-image url(https://media.giphy.com/media/PmSQHu3vBiWG5CbUZh/giphy.gif)
+
+h1
+  margin 0
+  position absolute
+  font-size 10vmin
+  font-weight bold
+  color hsl(0, 0%, 100%)
+  font-family sans-serif
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  white-space nowrap
+
+  span
+    display inline-block
+    animation jump calc(var(--toggled, 0) * var(--speed)) calc(var(--index) * var(--stagger)) infinite
+
+    &:nth-of-type(1)
+      --index 0
+    &:nth-of-type(2)
+      --index 1
+    &:nth-of-type(3)
+      --index 2
+    &:nth-of-type(4)
+      --index 3
+
+.cuboid__side:nth-of-type(1) h1
+  color hsl(0, 0%, 70%)
+  span
+    filter drop-shadow(0 0 2px hsl(0, 0%, 100%))
+  span:nth-of-type(4)
+    animation blinkers 5s infinite
+
+.cuboid__side:nth-of-type(6) h1
+  color hsl(0, 0%, 1000%)
+  span
+    filter drop-shadow(0 0 5px var(--light, hsl(0, 100%, 50%)))
+
+    &:nth-of-type(1)
+      --light hsl(0, 80%, 70%)
+    &:nth-of-type(2)
+      --light hsl(140, 80%, 70%)
+    &:nth-of-type(3)
+      --light hsl(210, 80%, 70%)
+    &:nth-of-type(4)
+      --light hsl(290, 80%, 70%)
+
+.cuboid > div:nth-of-type(6)
+  overflow visible
+
+  &:after
+    content ''
+    height 100%
+    width 100%
+    background hsl(0, 0%, 0%)
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) scale(1.1)
+    filter blur(25px)
+    opacity calc(1 - var(--toggled, 0))
+    // transition opacity 0.2s
+
+:checked ~ .scene .cuboid > div:nth-of-type(6)
+  overflow hidden
+
+@keyframes jump
+  0%, 100%
+    transform translate(0, 0)
+  50%
+    transform translate(0, -30%)
+
+@keyframes blinkers
+  52%, 54%, 56%
+    opacity .1
+    filter none
+  50%, 53%, 55%, 57%, 100%
+    filter drop-shadow(0 0 2px hsl(0, 0%, 100%))
+    opacity 1
