@@ -43,6 +43,16 @@ label
 :checked ~ .backdrop
   --toggled 1
 
+.shadow
+  --bg 'hsl(45, 80%, %s)' % calc((0 + (var(--toggled, 0) * 90)) * 1%)
+  height 100%
+  width 100%
+  position absolute
+  background radial-gradient(ellipse, var(--bg), transparent)
+  transform translate3d(0, calc((50 - (var(--toggled, 0) * 100)) * 1%), 1px) scale(1.15, 1.3)
+  will-change transform
+  transition transform 0.2s, background 0.2s
+  filter blur(10px)
 
 .seat
   height 100%
@@ -76,7 +86,6 @@ label
   width calc(var(--plane-width, 25) * 1vmin)
   transform-style var(--transform-style)
   transform rotateX(calc(var(--rotate-x, -24) * 1deg)) rotateY(calc(var(--rotate-y, -24) * 1deg)) rotateX(90deg) translate3d(0, 0, 0)
-
 
 // This is what makes the CSS variable powered cuboid
 .cuboid
@@ -149,20 +158,6 @@ label
 
 .cuboid div
   background hsl(0, 0%, 3%)
-
-  &:nth-of-type(2):after
-    content ''
-    height 100%
-    width 100%
-    background hsla(45, 90%, 90%, 0.25)
-    position absolute
-    top 50%
-    left 50%
-    transform translate(-50%, -50%)
-    filter blur(25px)
-    opacity var(--toggled, 0)
-    transition opacity 0.2s
-
 
   &:nth-of-type(1)
   &:nth-of-type(3)
@@ -268,25 +263,6 @@ h1
       --light hsl(210, 80%, 70%)
     &:nth-of-type(4)
       --light hsl(290, 80%, 70%)
-
-.cuboid > div:nth-of-type(6)
-  overflow visible
-
-  &:after
-    content ''
-    height 100%
-    width 100%
-    background hsl(0, 0%, 0%)
-    position absolute
-    top 50%
-    left 50%
-    transform translate(-50%, -50%) scale(1.1)
-    filter blur(25px)
-    opacity calc(1 - var(--toggled, 0))
-    // transition opacity 0.2s
-
-:checked ~ .scene .cuboid > div:nth-of-type(6)
-  overflow hidden
 
 @keyframes jump
   0%, 100%
