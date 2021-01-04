@@ -1,0 +1,68 @@
+*
+  box-sizing border-box
+  transform-style preserve-3d
+
+:root
+  --bg hsl(210, 32%, 24%)
+  --paper hsl(0, 0%, 80%)
+  --size 35vmin
+  --height var(--size)
+  --width calc(var(--size) * 1.4)
+  --read 0
+  --transition 0.2s
+
+body
+  background var(--bg)
+  min-height 100vh
+  perspective 2000px
+
+:checked ~ .scene
+  --read 1
+
+.scene
+  // background var(--bg)
+  display flex
+  align-items center
+  justify-content center
+  height 100vh
+  width 100vw
+  transform rotateY(calc(var(--x, 0) * 1deg)) rotateX(calc(var(--y, 0) * 1deg))
+
+.card
+  height calc(var(--height))
+  width var(--width)
+  // background hsla(0, 50%, 50%, 0.25)
+
+  &__sleeve
+    height 100%
+    width 100%
+
+.sleeve
+  --closed 2
+  --open 85
+  position relative
+  background hsla(180, 50%, 50%, 0.2)
+  transform-origin 50% 0
+  --rotate calc((var(--closed) * -1) + (var(--read, 0) * (var(--open) + var(--closed))))
+  --translate-y calc(var(--read, 0) * -50%)
+  --translate-z calc((var(--read, 0) * var(--size)) * -0.75)
+  transform rotateX(calc(var(--rotate) * 1deg)) translate3d(0, var(--translate-y), var(--translate-z))
+  transition var(--transition)
+
+  &__section
+    position absolute
+    height 100%
+    width 100%
+    top 0
+    left 0
+    background hsla(90, 50%, 50%, 0.2)
+    transition var(--transition)
+
+    &--front
+      --open 90
+      --closed 176
+      transform translate(0, -100%) rotateX(calc(((var(--closed) * -1) + (var(--read, 0) * (var(--closed) - var(--open)))) * 1deg))
+      transform-origin 50% 100%
+
+    &--rear
+      transform-origin 50% 0
