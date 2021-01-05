@@ -1,0 +1,27 @@
+//- Front
+//- Back
+//- Right
+//- Left
+//- Top
+//- Bottom
+mixin cuboid()
+  .cuboid(class!=attributes.class style!=attributes.style)
+    - let s = 0
+    while s < 6
+      .cuboid__side
+      - s++
+-
+  const X = [
+    1, 2, 3, 3, 3, 2, 1, 1
+  ]
+  const Y = [
+    1, 1, 1, 2, 3, 3, 3, 2
+  ]
+.scene
+  //- Plane that all the 3D stuff sits on
+  .plane
+    .towers
+      - let t = 0
+      while t < 8
+        +cuboid()(class=`tower tower--${t}` style=`--i: ${t}; --x: ${X[t]}; --y: ${Y[t]};`)
+        - t++
