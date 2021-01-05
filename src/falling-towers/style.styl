@@ -1,0 +1,127 @@
+*
+  box-sizing border-box
+  transform-style preserve-3d
+
+:root
+  --perspective 800
+  --rotate-x -15
+  --rotate-y -40
+  --cuboid-width 10
+  --cuboid-height 20
+  --cuboid-depth 10
+  --scene 20vmin
+  --gap 3vmin
+  --duration 8s
+  --travel -10vmin
+  --hue 280
+  --s-1 'hsl(%s, 30%, 50%)' % var(--hue)
+  --s-2 'hsl(%s, 30%, 60%)' % var(--hue)
+  --s-3 'hsl(%s, 30%, 70%)' % var(--hue)
+
+body
+  min-height 100vh
+  background hsl(0, 0%, 10%)
+
+.scene
+  perspective calc(var(--perspective, 800) * 1px)
+  height 100vh
+  width 100vw
+  display flex
+  align-items center
+  justify-content center
+
+.plane
+  height var(--scene)
+  width var(--scene)
+  transform rotateX(-32deg) rotateY(-34deg) rotateX(90deg) translate3d(0, 0, 0)
+  // transform none
+
+.towers
+  display grid
+  grid-template-columns repeat(3, 1fr)
+  grid-template-rows repeat(3, 1fr)
+  grid-gap var(--gap)
+  height var(--scene)
+  width var(--scene)
+  animation lower var(--duration) infinite linear
+
+// This is what makes the CSS variable powered cuboid
+.cuboid
+  --width 100
+  --height var(--cuboid-height, 10)
+  --depth 100
+  height 100%
+  width 100%
+  position relative
+  transform none
+
+  &__side
+    transition transform 0.25s ease
+
+  & > div:nth-of-type(1)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--width) * 1%)
+    position absolute
+    bottom 0
+    left 50%
+    transform-origin 50% 100%
+    transform translate(-50%, 0) rotateX(-90deg)
+    background linear-gradient(var(--s-1), transparent)
+
+  & > div:nth-of-type(2)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--width) * 1%)
+    position absolute
+    top 0
+    left 50%
+    transform-origin 50% 0%
+    transform translate(-50%, 0) rotateX(90deg)
+    background linear-gradient(transparent, var(--s-2))
+
+  & > div:nth-of-type(3)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--width) * 1%)
+    position absolute
+    top 0
+    left 50%
+    transform-origin 0% 0%
+    transform translate(-50%, 0) rotateX(90deg) rotateY(90deg)
+    background linear-gradient(transparent, var(--s-1))
+
+  & > div:nth-of-type(4)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--width) * 1%)
+    position absolute
+    top 0
+    left 50%
+    transform-origin 100% 0%
+    transform translate(-50%, 0) rotateX(90deg) rotateY(-90deg)
+    background linear-gradient(transparent, var(--s-2))
+
+  & > div:nth-of-type(5)
+    height calc(var(--width) * 1%)
+    width calc(var(--width) * 1%)
+    transform translate3d(-50%, -50%, calc(var(--cuboid-height) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+    background var(--s-3)
+
+.tower
+  grid-column var(--x)
+  grid-row var(--y)
+  transform translate3d(0, 0, calc(var(--cuboid-height) * -1vmin))
+
+  for $t in (0..7)
+    &--{$t}
+      animation 'tower-%s var(--duration) infinite linear' % $t
+
+      @keyframes tower-{$t}
+        0%, {($t * (100 / 8)) * 1%}
+          transform translate3d(0, 0, var(--travel))
+        {(($t * (100 / 8)) + (100 / 8)) * 1%}, 100%
+          transform translate3d(0, 0, 0)
+
+@keyframes lower
+  to
+    transform translate3d(0, 0, var(--travel))
