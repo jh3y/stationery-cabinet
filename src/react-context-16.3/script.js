@@ -1,9 +1,13 @@
+/* eslint-disable */
+const {
+  React,
+  ReactDOM,
+  styled: { default: styled, keyframes },
+} = window
+
 const { createContext, Component } = React
 
 const { render } = ReactDOM
-
-const keyframes = styled.keyframes
-const styled = styled.default
 
 const THEME_CONSTANTS = {
   NIGHT: 'night',
