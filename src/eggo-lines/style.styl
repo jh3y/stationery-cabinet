@@ -1,0 +1,19 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  background hsl(220, 32%, 22%)
+
+.eggo
+  height 50vmin
+
+  &__lines
+    animation code 1s infinite linear
+
+@keyframes code
+  to
+    transform translate(0, -125px)
