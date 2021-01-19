@@ -1,10 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap')
 *
   box-sizing border-box
-  transform-style preserve-3d
+  // transform-style preserve-3d
 
 :root
   --bg hsl(210, 32%, 24%)
   --paper hsl(0, 0%, 80%)
+  --paper-2 hsl(0, 0%, 90%)
+  --card hsl(0, 0%, 98%)
+  --insert hsl(210, 80%, 50%)
   --size 35vmin
   --height var(--size)
   --width calc(var(--size) * 1.4)
@@ -14,55 +18,279 @@
 body
   background var(--bg)
   min-height 100vh
-  perspective 2000px
+  perspective 1000px
+  transform-style preserve-3d
+  overflow hidden
+
+label
+  height 100vh
+  width 100vw
+  position fixed
+  top 0
+  left 0
+  z-index 2
+  transform-style preserve-3d
+  transform translate3d(0, 0, 100px)
 
 :checked ~ .scene
   --read 1
 
+  .hide-back
+    -webkit-backface-visibility hidden
+    backface-visibility hidden
+
 .scene
-  // background var(--bg)
   display flex
   align-items center
   justify-content center
+  transform rotateY(calc(var(--x, 0) * 1deg)) rotateX(calc(var(--y, 0) * 1deg))
   height 100vh
   width 100vw
-  transform rotateY(calc(var(--x, 0) * 1deg)) rotateX(calc(var(--y, 0) * 1deg))
+  transform-style preserve-3d
 
 .card
   height calc(var(--height))
+  position relative
   width var(--width)
-  // background hsla(0, 50%, 50%, 0.25)
+  transform-style preserve-3d
+  transform translate(0, calc(var(--read, 0) * 25%)) rotateX(calc(var(--read, 0) * 90deg))
+  transition transform var(--transition)
+
+  &__content
+    transform-style preserve-3d
+    height 100%
+    width 100%
+    &--bottom
+      // transform-style preserve-3d
+      &:before
+        content ""
+        position absolute
+        top 0
+        left 0
+        height 100%
+        width 100%
+        background var(--insert)
+        $clip = polygon(0 0, 15% 0, 15% 30%, 85% 30%, 85% 0, 100% 0, 100% 100%, 0 100%)
+        -webkit-clip-path $clip
+        clip-path $clip
+    &--top
+      // transform-style preserve-3d
+      &:before
+        content ""
+        position absolute
+        top 0
+        left 0
+        height 100%
+        width 100%
+        background var(--insert)
+        $clip = polygon(0 0, 100% 0, 100% 100%, 85% 100%, 85% 70%, 78% 70%, 78% 46%, 72.4% 46%, 72.4% 26.8%, 27.6% 26.8%, 27.6% 46%, 22% 46%, 22% 70%, 15% 70%, 15% 100%, 0 100%)
+        -webkit-clip-path $clip
+        clip-path $clip
+
+  &__message
+    position absolute
+    padding 1rem
+    font-family sans-serif
+    bottom 0
+    left 50%
+    transform translate(-50%, 0)
+
+  &__part
+    height var(--h, 100%)
+    width var(--w, 100%)
+    position absolute
+    top 0%
+    left 50%
+    transform translate(-50%, 0)
+    transform-style preserve-3d
+
+  &__inner
+    --h 96%
+    --w 95%
+    transform translate3d(-50%, 0, calc(var(--height) * 0))
 
   &__sleeve
     height 100%
     width 100%
 
-.sleeve
-  --closed 2
-  --open 85
-  position relative
-  background hsla(180, 50%, 50%, 0.2)
-  transform-origin 50% 0
-  --rotate calc((var(--closed) * -1) + (var(--read, 0) * (var(--open) + var(--closed))))
-  --translate-y calc(var(--read, 0) * -50%)
-  --translate-z calc((var(--read, 0) * var(--size)) * -0.75)
-  transform rotateX(calc(var(--rotate) * 1deg)) translate3d(0, var(--translate-y), var(--translate-z))
+.message
+  font-family "Fredoka One", cursive
+  color hsl(0, 0%, 10%)
+  display flex
+  flex-direction column
+  position absolute
+  top 50%
+  left 20%
+  transform translate(0, -50%)
+  margin 0
+
+.flip
+  transform-style preserve-3d
+
+  &__piece
+    height 100%
+    position absolute
+    width 100%
+    transform-origin 50% 0
+    transform-style preserve-3d
+    transition transform var(--transition)
+
+    &--front
+      transform rotateX(calc(var(--front) * 1deg))
+    &--back
+      transform rotateX(calc(var(--rear) * 1deg))
+
+.card__inner
+  // Either 1.75 or 89.75
+  --rear calc(-1.75 + (var(--read, 0) * 2))
+  --front calc(1.75 + (var(--read, 0) * 88))
+
+.card__outer
+  --rear calc(-2 + (var(--read, 0) * 2))
+  --front calc(2 + (var(--read, 0) * 88))
+
+.card__content-container
+  transform-style preserve-3d
+  height 100%
+  width 100%
+  top 0
+  left 0
+  position absolute
+  &--inner-top
+    transform rotate(180deg) translate3d(0, 0, 0)
+  &--inner-bottom
+    transform translate3d(0, 0, 0)
+
+.cover__content
+  height 100%
+  width 100%
+  background var(--card)
+  position absolute
+  font-size 2vmin
+
+.front-cover__front
+.rear-cover__front
+  background var(--card)
+
+.cake__section
+  position absolute
+  transform-style preserve-3d
   transition var(--transition)
 
-  &__section
+  &--top
+    height 80%
+    width 80%
+    background purple
+    left 50%
+    bottom 0
+
+    &-top
+      transform translate(-50%, 0) rotateX(calc(var(--read, 0) * 90deg)) translate3d(0, -100%, calc(var(--read, 0) * 0px)) rotateX(calc(var(--read, 0) * -90deg))
+      transform-origin 50% 100%
+    &-front
+      transform-origin 50% 100%
+      transform translate(-50%, -100%) rotateX(calc(var(--read, 0) * 90deg))
+
+
+
+  &--mid
+    height 80%
+    width 80%
+    background pink
+    left 50%
+
+    &-front
+      bottom 0
+      transform-origin 50% 0
+      transform translate3d(-50%, 0, 0) rotateX(calc((180 - (var(--read, 0) * -90)) * 1deg))
+
+    &-top
+      background transparent
+      bottom 0
+      transform-origin 50% 100%
+      transform translate(-50%, 0) rotateX(calc(var(--read, 0) * 90deg)) translate3d(0, -100%, calc(var(--read, 0) * 0px)) rotateX(calc(var(--read, 0) * -90deg))
+
+      &:before
+        content ''
+        position absolute
+        height 100%
+        width 100%
+        $clip = polygon(0 0, 10% 0, 10% 80%, 90% 80%, 90% 0, 100% 0, 100% 100%, 0 100%)
+        -webkit-clip-path $clip
+        clip-path $clip
+        transform rotate(180deg)
+        background var(--paper)
+
+  &--bottom
+    height 30%
+    width 70%
+    left 50%
+    background var(--paper)
+    transition var(--transition)
+
+    &-top
+      background transparent
+      transform-origin 50% 100%
+      bottom 0
+      transform translate(-50%, -100%) rotateX(calc(var(--read, 0) * -90deg))
+
+      &:before
+        content ''
+        position absolute
+        height 100%
+        width 100%
+        $clip = polygon(0 0, 10% 0, 10% 80%, 90% 80%, 90% 0, 100% 0, 100% 100%, 0 100%)
+        -webkit-clip-path $clip
+        clip-path $clip
+        transform rotate(180deg)
+        background var(--paper-2)
+
+    &-front
+      top 0
+      transform-origin 50% 0
+      transform translate(-50%, 100%) rotateX(calc(var(--read, 0) * 90deg))
+
+.section
+  height 100%
+  width 100%
+
+  &__piece
     position absolute
     height 100%
     width 100%
-    top 0
-    left 0
-    background hsla(90, 50%, 50%, 0.2)
-    transition var(--transition)
+    transform-style preserve-3d
 
-    &--front
-      --open 90
-      --closed 176
-      transform translate(0, -100%) rotateX(calc(((var(--closed) * -1) + (var(--read, 0) * (var(--closed) - var(--open)))) * 1deg))
-      transform-origin 50% 100%
+    &--back
+      transform rotateY(180deg)
 
-    &--rear
-      transform-origin 50% 0
+.balloon
+  overflow visible !important
+  height 6vmin
+  position absolute
+  left calc(var(--x, 0) * 1%)
+  top calc(var(--y, 0) * 1%)
+
+  &__body
+    fill 'hsla(%s, 80%, 50%, 0.75)' % var(--hue, 0)
+
+  &__glare
+    fill hsla(0, 0%, 100%, 0.75)
+
+  &__shadow
+    fill 'hsla(%s, 80%, 30%, 0.75)' % var(--hue, 0)
+
+  &__string
+    stroke hsl(40, 40%, 50%)
+
+  &:nth-of-type(1)
+    --hue 210
+    --x 58
+    --y 28
+  &:nth-of-type(2)
+    --hue 90
+    --x 68
+    --y 20
+  &:nth-of-type(3)
+    --hue 10
+    --x 65
+    --y 40
