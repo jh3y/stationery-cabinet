@@ -1,6 +1,6 @@
 import gsap from 'https://cdn.skypack.dev/gsap'
 
-const BOUNDS = 40
+const BOUNDS = 45
 const UPDATE = ({ x: pointerX, y: pointerY }) => {
   const x = gsap.utils.mapRange(0, window.innerWidth, -BOUNDS, BOUNDS, pointerX)
   const y = gsap.utils.mapRange(
