@@ -3,12 +3,33 @@
   box-sizing border-box
   // transform-style preserve-3d
 
+h1
+  position fixed
+  bottom 2rem
+  right 2rem
+  margin 0
+  font-size 3rem
+  font-family "Fredoka One", cursive
+  color hsl(210, 32%, 15%)
+
+
 :root
   --bg hsl(210, 32%, 24%)
-  --paper hsl(0, 0%, 80%)
-  --paper-2 hsl(0, 0%, 90%)
+  --body hsl(0, 0%, 100%)
+  --stripes hsl(10, 80%, 80%)
+  --flame-1 hsl(30, 80%, 60%)
+  --flame-2 hsl(45, 90%, 80%)
+  --paper hsl(210, 80%, 85%)
+  --paper-2 hsl(210, 80%, 95%)
+  --paper-3 hsl(210, 80%, 60%)
   --card hsl(0, 0%, 98%)
-  --insert hsl(210, 80%, 50%)
+  --insert hsl(210, 80%, 85%)
+  --bottom-frosting hsl(10, 80%, 80%)
+  --mid-frosting hsl(180, 80%, 80%)
+  --top-frosting hsl(90, 80%, 80%)
+  --balloon-3 10
+  --balloon-2 180
+  --balloon-1 90
   --size 35vmin
   --height var(--size)
   --width calc(var(--size) * 1.4)
@@ -21,6 +42,11 @@ body
   perspective 1000px
   transform-style preserve-3d
   overflow hidden
+
+input
+  opacity 0
+  position fixed
+  right 100%
 
 label
   height 100vh
@@ -39,6 +65,27 @@ label
     -webkit-backface-visibility hidden
     backface-visibility hidden
 
+  .cake__candle
+    transform translate(0, 0)
+
+.stamp
+  height 8vmin
+  position absolute
+  top 50%
+  left 50%
+  transform translate3d(-50%, -50%, 1px)
+  filter saturate(0.5)
+
+.barcode
+  height 6vmin
+  width 8vmin
+  position absolute
+  bottom 2vmin
+  right 2vmin
+  transform translate3d(0, 0, 1px)
+  --l hsl(0, 0%, 50%)
+  background repeating-linear-gradient(90deg, var(--l) 0 1%, transparent 1% 2%, var(--l) 2% 4%, transparent 4% 5%, var(--l) 5% 10%)
+
 .scene
   display flex
   align-items center
@@ -55,6 +102,26 @@ label
   transform-style preserve-3d
   transform translate(0, calc(var(--read, 0) * 25%)) rotateX(calc(var(--read, 0) * 90deg))
   transition transform var(--transition)
+
+  &__confetti
+    --size calc(var(--s) * 1vmin)
+    height var(--size)
+    width var(--size)
+    position absolute
+    top 0%
+    left 50%
+    transition transform calc(var(--read) * var(--transition)) calc(var(--read) * var(--transition)), opacity calc(var(--read) * var(--transition)) calc((var(--read) * var(--transition)) * 2)
+    transform scale(var(--read)) translate(-50%, 10%) rotate(calc(var(--r) * 1deg)) rotateX(calc(var(--a) * 1deg)) skew(calc(var(--sk) * 1deg)) translate(0, calc(var(--height) * (var(--read, 0) * 1.5)))
+    opacity calc(1 - var(--read))
+
+    &:after
+      background 'hsl(%s, 80%, 80%)' % var(--hue)
+      content ''
+      position absolute
+      height 100%
+      width 100%
+      transition transform calc(var(--read) * var(--transition)) calc(var(--read) * var(--transition))
+      transform rotateX(calc((var(--rx) * var(--read)) * 1deg)) rotateY(calc((var(--ry) * var(--read)) * 1deg))
 
   &__content
     transform-style preserve-3d
@@ -114,6 +181,7 @@ label
     width 100%
 
 .message
+  font-size 4.5vmin
   font-family "Fredoka One", cursive
   color hsl(0, 0%, 10%)
   display flex
@@ -121,8 +189,18 @@ label
   position absolute
   top 50%
   left 20%
-  transform translate(0, -50%)
+  transform translate3d(0, -50%, 0)
   margin 0
+
+.card__message
+  font-family "Fredoka One", cursive
+  color hsl(0, 0%, 10%)
+  font-size 4vmin
+  white-space nowrap
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, 0)
 
 .flip
   transform-style preserve-3d
@@ -167,10 +245,28 @@ label
   background var(--card)
   position absolute
   font-size 2vmin
+  transform-style preserve-3d
+
+  &--front
+  &--rear
+    transform translate3d(0, 0, 1px)
 
 .front-cover__front
 .rear-cover__front
   background var(--card)
+
+.front-cover__front:after
+.rear-cover__front:after
+  content ''
+  position absolute
+  top 0%
+  left 50%
+  transform translate3d(-50%, 0, 0px)
+  background var(--paper-3)
+  height 95%
+  width 95%
+.rear-cover__front:after
+  transform translate(-50%, 0, 2px)
 
 .cake__section
   position absolute
@@ -180,29 +276,28 @@ label
   &--top
     height 80%
     width 80%
-    background purple
     left 50%
     bottom 0
 
     &-top
       transform translate(-50%, 0) rotateX(calc(var(--read, 0) * 90deg)) translate3d(0, -100%, calc(var(--read, 0) * 0px)) rotateX(calc(var(--read, 0) * -90deg))
       transform-origin 50% 100%
+      background var(--paper)
     &-front
+      background var(--paper-2)
       transform-origin 50% 100%
       transform translate(-50%, -100%) rotateX(calc(var(--read, 0) * 90deg))
-
-
 
   &--mid
     height 80%
     width 80%
-    background pink
     left 50%
 
     &-front
       bottom 0
       transform-origin 50% 0
       transform translate3d(-50%, 0, 0) rotateX(calc((180 - (var(--read, 0) * -90)) * 1deg))
+      background var(--paper-2)
 
     &-top
       background transparent
@@ -225,7 +320,6 @@ label
     height 30%
     width 70%
     left 50%
-    background var(--paper)
     transition var(--transition)
 
     &-top
@@ -243,9 +337,10 @@ label
         -webkit-clip-path $clip
         clip-path $clip
         transform rotate(180deg)
-        background var(--paper-2)
+        background var(--paper)
 
     &-front
+      background var(--paper-2)
       top 0
       transform-origin 50% 0
       transform translate(-50%, 100%) rotateX(calc(var(--read, 0) * 90deg))
@@ -269,6 +364,7 @@ label
   position absolute
   left calc(var(--x, 0) * 1%)
   top calc(var(--y, 0) * 1%)
+  animation float calc(var(--s, 0) * 1s) calc(var(--d, 0) * 1s) infinite
 
   &__body
     fill 'hsla(%s, 80%, 50%, 0.75)' % var(--hue, 0)
@@ -283,14 +379,91 @@ label
     stroke hsl(40, 40%, 50%)
 
   &:nth-of-type(1)
-    --hue 210
+    --hue var(--balloon-1)
     --x 58
     --y 28
   &:nth-of-type(2)
-    --hue 90
+    --hue var(--balloon-2)
     --x 68
     --y 20
   &:nth-of-type(3)
-    --hue 10
+    --hue var(--balloon-3)
     --x 65
     --y 40
+
+.cake
+  overflow visible !important
+  width 100%
+  height 100%
+  transform translate3d(0, 0, 1px)
+
+  &__frosting
+    fill var(--frosting)
+
+  &__eyes
+    transform-origin 50% 24px
+    animation blink 5s infinite
+
+  &__body
+    fill var(--body)
+
+  &--bottom
+    --frosting var(--bottom-frosting)
+  &--mid
+    --frosting var(--mid-frosting)
+  &--top
+    --frosting var(--top-frosting)
+
+  &--bottom
+  &--mid
+    transform translate3d(0, 0, -1px) rotate(180deg)
+
+  &--mid
+  &--top
+    .cake__sprinkles
+      transform translate(0, -8px)
+
+  &__candle
+    transform translate(0, 12px)
+    transition var(--transition)
+
+
+  &__sprinkle
+    fill 'hsl(%s, 80%, 70%)' % var(--hue)
+
+.candle
+  &__body
+    fill var(--body)
+  &__stripes
+    fill var(--stripes)
+  &__flame
+    animation scribble 0.5s infinite
+  &__flame-outer
+    fill var(--flame-1)
+  &__flame-inner
+    fill var(--flame-2)
+
+@keyframes blink
+  0%, 47%, 49%, 51%, 100%
+    transform scaleY(1)
+  48%, 50%
+    transform scaleY(0.1)
+
+
+@keyframes float
+  0%, 100%
+    transform translate3d(0, 0, calc(var(--s) * 1px))
+  50%
+    transform translate3d(0, -25%, calc(var(--s) * 1px))
+
+@keyframes scribble
+  0%
+    filter url('#scribble--0')
+  25%
+    filter url('#scribble--1')
+  50%
+    filter url('#scribble--2')
+  75%
+    filter url('#scribble--3')
+  100%
+    filter url('#scribble--4')
