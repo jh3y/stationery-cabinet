@@ -1,21 +1,78 @@
 mixin balloon()
-  svg.balloon(xmlns='http://www.w3.org/2000/svg' viewbox='0 0 117.9 124.8')
+  svg.balloon(xmlns='http://www.w3.org/2000/svg' viewbox='0 0 117.9 124.8' style=`--s: ${Math.random() * 10 + 2}; --d: ${Math.random() * -10};`)
     path.balloon__string(d='M59 121v170' stroke-width='2.4')
     path.balloon__body(d='M59 0A59 59 0 000 59a59 59 0 0050 58 6 6 0 005 8h7a6 6 0 006-8 59 59 0 0050-58A59 59 0 0059 0z')
     path.balloon__glare(d='M14 42a45 45 0 0127-26' stroke-width='7.9' stroke-linecap='round' stroke-linejoin='round')
     path.balloon__shadow(d='M59 0a59 59 0 00-5 0 59 59 0 0157 59 59 59 0 01-58 59 59 59 0 01-3 0v1c0 3 2 6 5 6h7a6 6 0 006-8 59 59 0 0050-58A59 59 0 0059 0zm-5 0a59 59 0 00-6 1 59 59 0 016-1zm-6 1a59 59 0 00-6 2 59 59 0 016-2zm-6 2zm0 0a59 59 0 00-5 1 59 59 0 015-1zm-5 1a59 59 0 00-1 1 59 59 0 011-1zm-1 1a59 59 0 00-5 2 59 59 0 015-2zm-5 2zm0 0a59 59 0 00-5 3 59 59 0 015-3zm-5 3zm0 0a59 59 0 00-4 3 59 59 0 014-3zm-4 3a59 59 0 00-1 1 59 59 0 011-1zm-1 1a59 59 0 00-3 3 59 59 0 013-3zm-3 3a59 59 0 00-1 1 59 59 0 011-1zm-1 1a59 59 0 00-3 3 59 59 0 013-3zm-3 3a59 59 0 00-1 1 59 59 0 011-1zm-1 1a59 59 0 00-3 4 59 59 0 013-4zm-3 4a59 59 0 000 1 59 59 0 010-1zm0 1a59 59 0 00-3 4 59 59 0 013-4zm-3 4a59 59 0 000 1 59 59 0 010-1zm0 1a59 59 0 00-2 4 59 59 0 012-4zm-2 4a59 59 0 00-1 1 59 59 0 011-1zm-1 1a59 59 0 00-1 4 59 59 0 011-4zm-1 4a59 59 0 00-1 2 59 59 0 011-2zm-1 2a59 59 0 00-1 3 59 59 0 011-3zm-1 3a59 59 0 000 3 59 59 0 010-3zm0 3a59 59 0 00-1 3 59 59 0 011-3zm-1 3a59 59 0 000 3 59 59 0 010-3zm0 3a59 59 0 000 4 59 59 0 010-4z')
 
+mixin cake(face, candles)
+  svg.cake(class!=attributes.class xmlns='http://www.w3.org/2000/svg' viewBox='0 0 105.8 45.4' preserveAspectRatio="none")
+    path.cake__body(d='M0 0h106v45H0z')
+    path.cake__frosting(d='M1-8h104c4 0 8 4 8 9s-4 8-8 9c-5 0-8-8-13-8s-8 8-13 8-8-8-13-8-8 8-13 8-8-8-13-8-8 8-13 8-8-8-13-8-8 8-13 8c-4-1-8-4-8-9s3-9 8-9z' fill='purple')
+    if (face)
+      g.cake__face
+        g.cake__eyes
+          g(transform='translate(-8 -237)')
+            circle(cx='38.6' cy='259.2' r='4.5')
+            circle(cx='36.3' cy='257.1' r='.8' fill='#fff')
+          g(transform='translate(37 -237)')
+            circle(r='4.5' cy='259.2' cx='38.6')
+            circle(r='.8' cy='257.1' cx='36.3' fill='#fff')
+        g.cake__mouth
+          path(d='M57 25a4 4 0 11-8 0')
+          path(d='M55 26a3 3 0 00-3 2 4 4 0 004-1 3 3 0 00-1-1z' fill='red')
+        g.cake__cheeks(transform='translate(-13 -237)' fill='#ffd5d5')
+          circle(r='3.7' cy='265.5' cx='28.6')
+          circle(cx='102.9' cy='265.5' r='3.7')
+    if (candles)
+      g.cake__candle
+        g(transform='translate(-13 -238)')
+          rect.candle__body(ry='0' y='212.2' x='34.2' height='21.8' width='6.8')
+          path.candle__stripes(d='M34 224v3l7 7v-3zM34 218v4l7 6v-3zM34 212v4l7 7v-4z')
+        g.candle__flame
+          path.candle__flame-outer(d='M29-30a4 4 0 01-8 0c0-2 4-2 4-7s4 5 4 7z')
+          path.candle__flame-inner(d='M27-29a2 2 0 01-4-1c0-1 2-1 2-3 1-2 2 3 2 4z')
+      g.cake__candle
+        g(transform='translate(43 -238)')
+          rect.candle__body(width='6.8' height='21.8' x='34.2' y='212.2' ry='0')
+          path.candle__stripes(d='M34 224v3l7 7v-3zM34 218v4l7 6v-3zM34 212v4l7 7v-4z')
+        g.candle__flame
+          path.candle__flame-outer(d='M85-29a4 4 0 01-8 0c0-3 4-3 4-7 0-6 4 4 4 7z')
+          path.candle__flame-inner(d='M83-29a2 2 0 01-4-1c0-1 2 0 2-3 1-2 2 3 2 4z')
+      g.cake__candle
+        g(transform='translate(15 -232)')
+          rect.candle__body(width='6.8' height='21.8' x='34.2' y='212.2' ry='0')
+          path.candle__stripes(d='M34 224v3l7 7v-3zM34 218v4l7 6v-3zM34 212v4l7 7v-4z')
+        g.candle__flame
+          path.candle__flame-outer(d='M57-24a4 4 0 01-8 0c0-2 4-2 4-7s4 5 4 7z')
+          path.candle__flame-inner(d='M55-24a2 2 0 01-4 0c0-1 2-1 2-3 1-2 2 2 2 3z')
+    g.cake__sprinkles
+      g(transform='translate(-10 -237)')
+        rect.cake__sprinkle(style=`--hue: ${Math.random() * 359}` transform='rotate(39)' ry='1.2' y='199.6' x='185.8' height='6.3' width='2.4')
+        rect.cake__sprinkle(style=`--hue: ${Math.random() * 359}` width='2.4' height='6.3' x='-141.5' y='236.8' ry='1.2' transform='rotate(-36)')
+        rect.cake__sprinkle(style=`--hue: ${Math.random() * 359}` transform='rotate(-72)' ry='1.2' y='185.1' x='-231.3' height='6.3' width='2.4')
+        rect.cake__sprinkle(style=`--hue: ${Math.random() * 359}` width='2.4' height='6.3' x='220' y='190.4' ry='1.2' transform='rotate(30)')
+        rect.cake__sprinkle(style=`--hue: ${Math.random() * 359}` transform='rotate(46)' ry='1.2' y='128.8' x='257.6' height='6.3' width='2.4')
+        rect.cake__sprinkle(style=`--hue: ${Math.random() * 359}` width='2.4' height='6.3' x='-186.3' y='216.6' ry='1.2' transform='rotate(-56)')
+        rect.cake__sprinkle(style=`--hue: ${Math.random() * 359}` transform='rotate(30)' ry='1.2' y='212.4' x='178.7' height='6.3' width='2.4')
+        rect.cake__sprinkle(style=`--hue: ${Math.random() * 359}` width='2.4' height='6.3' x='-191.8' y='199.2' ry='1.2' transform='rotate(-51)')
+        rect.cake__sprinkle(style=`--hue: ${Math.random() * 359}` transform='rotate(77)' ry='1.2' y='-7.4' x='284.7' height='6.3' width='2.4')
+        rect.cake__sprinkle(style=`--hue: ${Math.random() * 359}` width='2.4' height='6.3' x='-218.9' y='174.7' ry='1.2' transform='rotate(-63)')
 
-input#read(type="checkbox" checked="true")
+input#read(type="checkbox")
 label(for="read") Read Card
 .scene
   .card
+    - let c = 0
+    while c < 50
+      .card__confetti(style=`--rx: ${Math.random() * 360}; --ry: ${Math.random() * 360}; --a: ${Math.random() * 90}; --hue: ${Math.random() * 360}; --r: ${Math.random() * 180 - 90}; --s:${Math.random() * 5}; --sk: ${Math.random() * 20};`)
+      - c++
     .card__outer.card__part.flip
       .flip__piece.flip__piece--front.section
         .section__piece.section__piece--front.front-cover.front-cover__front
         .section__piece.section__piece--rear.front-cover.hide-back
-          .cover__content.cover__content--front
-            h1.message
+          .cover__content.cover__content--front.hide-back
+            h1.message.hide-back
               span Happy
               span Birthday!
             +balloon()
@@ -25,7 +82,8 @@ label(for="read") Read Card
         .section__piece.section__piece--front.rear-cover.rear-cover__front
         .section__piece.section__piece--back.hide-back
           .cover__content.cover__content--rear
-            h1.message REAR COVER
+            .barcode
+            img.stamp(src="https://assets.codepen.io/605876/avatar.png" alt="jh3y avatar")
     .card__inner.card__part.flip
       .flip__piece.flip__piece--front.section
         .section__piece.section__piece--back.inner-top
@@ -35,10 +93,31 @@ label(for="read") Read Card
                 .cake__section.cake__section--mid-top.cake__section--mid
                   .cake__section.cake__section--top-top.cake__section--top
                   .cake__section.cake__section--top-front.cake__section--top
+                    +cake(false, true)(class="cake--top")
                 .cake__section.cake__section--mid-front.cake__section--mid
+                  +cake(false, false)(class="cake--mid")
       .flip__piece.flip__piece--back.section
         .section__piece.section__piece--front.inner-bottom
           .card__content-container.card__content-container--inner-bottom
             .card__content.card__content--bottom
               .cake__section.cake__section--bottom-front.cake__section--bottom
-              h2.card__message Happy Birthday!
+                +cake(true, false)(class="cake--bottom")
+              h2.card__message Eat some cake!
+svg
+  filter#scribble--0
+    feturbulence(basefrequency='0.02', numoctaves='3', result='noise', seed='0')
+    fedisplacementmap#displacement(in='SourceGraphic', in2='noise', scale='2')
+  filter#scribble--1
+    feturbulence(basefrequency='0.02', numoctaves='3', result='noise', seed='1')
+    fedisplacementmap(in='SourceGraphic', in2='noise', scale='3')
+  filter#scribble--2
+    feturbulence(basefrequency='0.02', numoctaves='3', result='noise', seed='2')
+    fedisplacementmap(in='SourceGraphic', in2='noise', scale='2')
+  filter#scribble--3
+    feturbulence(basefrequency='0.02', numoctaves='3', result='noise', seed='3')
+    fedisplacementmap(in='SourceGraphic', in2='noise', scale='3')
+  filter#scribble--4
+    feturbulence(basefrequency='0.02', numoctaves='3', result='noise', seed='4')
+    fedisplacementmap(in='SourceGraphic', in2='noise', scale='2')
+
+h1 Open!
