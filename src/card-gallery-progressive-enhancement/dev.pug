@@ -2,17 +2,19 @@
   const PICS = [
     'https://images.unsplash.com/photo-1542662565-7e4b66bae529?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=282&q=80',
     'https://images.unsplash.com/photo-1525153537143-f88592837fb1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=332&q=80',
+    'https://images.unsplash.com/photo-1477346611705-65d1883cee1e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80',
     'https://images.unsplash.com/photo-1507400492013-162706c8c05e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=309&q=80',
-    'https://images.unsplash.com/photo-1436891620584-47fd0e565afb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80'
+    'https://images.unsplash.com/photo-1436891620584-47fd0e565afb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
+    'https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80'
   ]
-  const TITLES = ['Mountain', 'Stars', 'Skies', 'Water']
+  const TITLES = ['Mountain', 'Stars', 'Skies', 'Water', 'Trips']
   const TYPE = ['Guide', 'Planner', 'Discuss']
 mixin cardContent(idx, reflection)
   .card__content.bg-gray-800.overflow-hidden.relative.h-full.w-full.rounded-md.font-sans
-    img.card__image.transform.absolute.h-full.w-full.inset-0.transform.scale-110(src=PICS[idx % 4])
+    img.card__image.transform.absolute.h-full.w-full.inset-0.transform.scale-110(src=PICS[idx % PICS.length])
     .card__details.absolute.inset-0.pt-52.flex.items-center.justify-center.flex-col
       .card__type.text-gray-300.top-0.uppercase.text-xs.p-0.w-full.text-center= TYPE[Math.floor(Math.random() * TYPE.length)]
-      h2.card__title.p-2.text-white.font-black.text-xl.text-center.w-full.pb-12= TITLES[idx % 4]
+      h2.card__title.p-2.text-white.font-black.text-xl.text-center.w-full.pb-12= TITLES[idx % TITLES.length]
   .card__overlay.z-50.absolute.h-full.w-full.inset-0(class=`${reflection ? 'card__overlay--reflection' : ''}`)
 
 mixin card(idx)
