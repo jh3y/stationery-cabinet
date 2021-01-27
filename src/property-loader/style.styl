@@ -1,0 +1,42 @@
+*
+  box-sizing border-box
+
+:root
+  --bg hsl(0, 10%, 10%)
+
+body
+  min-height 100vh
+  background var(--bg)
+  display grid
+  place-items center
+
+@property --a
+  initial-value 0deg
+  inherits false
+  syntax '<angle>'
+@property --h
+  initial-value 0
+  inherits false
+  syntax '<number>'
+
+.loader
+  padding 2rem 4rem
+  font-family monospace
+  font-weight bold
+  color hsl(0, 0%, 100%)
+  border-style solid
+  border-width 1vmin
+  font-size 2rem
+  --charge 'hsl(%s, 80%, 50%)' % var(--h, 0)
+  border-image conic-gradient(var(--charge) var(--a), transparent calc(var(--a) + 0.5deg)) 30
+  border-radius 50%
+
+  animation load 2s infinite ease-in-out
+
+@keyframes load
+  0%, 10%
+    --a 0deg
+    --h 0
+  100%
+    --a 360deg
+    --h 100

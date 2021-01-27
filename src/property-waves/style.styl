@@ -1,0 +1,27 @@
+*
+  box-sizing border-box
+
+:root
+  --sand hsl(45, 40%, 50%)
+  --wave-one hsl(200, 50%, 100%)
+  --wave-two hsl(200, 50%, 90%)
+  --wave-three hsl(210, 50%, 60%)
+  --wave-four hsl(210, 80%, 25%)
+  // --wave-four red
+
+@property --wave
+  inherits false
+  initial-value 0%
+  syntax '<percentage>'
+
+body
+  background linear-gradient(transparent 0 calc(35% + (var(--wave) * 0.5)), var(--wave-four) calc(75% + var(--wave)) 100%),
+             linear-gradient(transparent 0 calc(35% + (var(--wave) * 0.5)), var(--wave-three) calc(50% + var(--wave)) calc(75% + var(--wave))),
+             linear-gradient(transparent 0 calc(20% + (var(--wave) * 0.5)), var(--wave-two) calc(35% + var(--wave)) calc(50% + var(--wave))),
+             linear-gradient(transparent 0 calc(15% + (var(--wave) * 0.5)), var(--wave-one) calc(25% + var(--wave)) calc(35% + var(--wave))),
+             var(--sand)
+  animation waves 5s infinite ease-in-out
+
+@keyframes waves
+  50%
+    --wave 25%

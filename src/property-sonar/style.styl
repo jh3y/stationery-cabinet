@@ -1,0 +1,89 @@
+*
+  box-sizing border-box
+
+
+:root
+  --scan hsla(100, 90%, 38%, 0.75)
+  --line hsla(100, 90%, 38%, 0.5)
+  --dot hsl(90, 90%, 50%)
+  --bg hsl(0, 0%, 0%)
+
+body
+  background var(--bg)
+  min-height 100vh
+  display grid
+  place-items center
+
+
+@property --a-1
+  initial-value 0
+  inherits false
+  syntax '<number>'
+@property --a-2
+  initial-value 0
+  inherits false
+  syntax '<number>'
+@property --a-3
+  initial-value 0
+  inherits false
+  syntax '<number>'
+
+@keyframes scan
+  to
+    transform rotate(360deg)
+
+@keyframes dot-one
+  0%, 76%, 100%
+    --a-1 0
+  77%
+    --a-1 1
+@keyframes dot-two
+  0%, 40%, 75%
+    --a-2 0
+  41%
+    --a-2 1
+@keyframes dot-three
+  0%, 10%, 35%
+    --a-3 0
+  11%
+    --a-3 1
+
+.sonar
+  border 0.5vmin solid var(--line)
+  border-radius 50%
+  height 25vmin
+  width 25vmin
+  position relative
+  --dot-one 'hsla(90, 90%, 50%, %s)' % var(--a-1)
+  --dot-two 'hsla(90, 90%, 50%, %s)' % var(--a-2)
+  --dot-three 'hsla(90, 90%, 50%, %s)' % var(--a-3)
+  animation dot-one 3s infinite linear, dot-two 3s infinite linear, dot-three 3s infinite linear
+  background radial-gradient(var(--dot-one), transparent 50%) 24% 20% / 10% 10% no-repeat,
+            radial-gradient(var(--dot-two), transparent 50%) 48% 73% / 10% 10% no-repeat,
+            radial-gradient(var(--dot-three), transparent 50%) 88% 45% / 10% 10% no-repeat,
+            radial-gradient(transparent 0 48.5%, var(--line) 49% 50%, transparent 50.5%) 50% 50% / 40% 40% no-repeat,
+            radial-gradient(transparent 0 48.5%, var(--line) 49% 50%, transparent 50.5%) 50% 50% / 80% 80% no-repeat,
+            radial-gradient(transparent 0 48.5%, var(--line) 49% 50%, transparent 50.5%) 50% 50% / 120% 120% no-repeat,
+            radial-gradient(transparent 0 48.5%, var(--line) 49% 50%, transparent 50.5%) 50% 50% / 160% 160% no-repeat,
+            var(--bg)
+
+  &:after
+    content ''
+    background conic-gradient(transparent 0deg, var(--scan) 45deg, transparent 45.5deg)
+    position absolute
+    height 100%
+    width 100%
+    animation scan 3s infinite linear
+    border-radius 50%
+
+  &:before
+    content ''
+    position absolute
+    height 110%
+    width 110%
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    background repeating-conic-gradient(var(--line) 0 1deg, transparent 1deg 10deg)
+    border-radius 50%
+    z-index -1
