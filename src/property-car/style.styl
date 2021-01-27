@@ -1,0 +1,164 @@
+*
+  box-sizing border-box
+
+:root
+  --road hsl(220, 8%, 50%)
+  --grass hsl(90, 40%, 50%)
+  --island hsl(45, 40%, 50%)
+  --lines hsl(45, 80%, 90%)
+
+@property --x
+  inherits false
+  initial-value -22.5
+  syntax '<number>'
+
+@property --y
+  inherits false
+  initial-value 0
+  syntax '<number>'
+
+@property --r
+  inherits false
+  initial-value 0deg
+  syntax '<angle>'
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  background var(--grass)
+
+.car
+  animation journey 5s infinite linear
+  transform translate(calc(var(--x) * 1vmin), calc(var(--y) * 1vmin)) rotate(var(--r))
+  width 3vmin
+  object-fit cover
+
+.road
+  height 50vmin
+  width 50vmin
+  border-radius 12.5%
+  border 5vmin solid var(--road)
+  background var(--road)
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+  &:before
+    content ''
+    position absolute
+    height 44vmin
+    width 44vmin
+    border-radius 11%
+    border 0.5vmin dashed var(--lines)
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+
+  &:after
+    content ''
+    position absolute
+    height 40vmin
+    width 40vmin
+    background var(--island)
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    border-radius 10%
+
+// @keyframes journey
+//   0%, 100%
+//     --x -22.5
+//   25%
+//     --x 0
+//   50%
+//     --x 22.5
+//   75%
+//     --x 0
+
+// @keyframes journey
+//   0%, 100%
+//     --x -22.5
+//     --y 0
+//   25%
+//     --x 0
+//     --y -22.5
+//   50%
+//     --x 22.5
+//     --y 0
+//   75%
+//     --x 0
+//     --y 22.5
+// @keyframes journey
+//   0%, 100%
+//     --x -22.5
+//     --y 0
+//   12.5%
+//     --x -22.5
+//     --y -22.5
+//   25%
+//     --x 0
+//     --y -22.5
+//   37.5%
+//     --y -22.5
+//     --x 22.5
+//   50%
+//     --x 22.5
+//     --y 0
+//   62.5%
+//     --x 22.5
+//     --y 22.5
+//   75%
+//     --x 0
+//     --y 22.5
+//   87.5%
+//     --x -22.5
+//     --y 22.5
+@keyframes journey
+  0%
+    --x -22.5
+    --y 0
+    --r 0deg
+  10%
+    --r 0deg
+  12.5%
+    --x -22.5
+    --y -22.5
+  15%
+    --r 90deg
+  25%
+    --x 0
+    --y -22.5
+  35%
+    --r 90deg
+  37.5%
+    --y -22.5
+    --x 22.5
+  40%
+    --r 180deg
+  50%
+    --x 22.5
+    --y 0
+  60%
+    --r 180deg
+  62.5%
+    --x 22.5
+    --y 22.5
+  65%
+    --r 270deg
+  75%
+    --x 0
+    --y 22.5
+  85%
+    --r 270deg
+  87.5%
+    --x -22.5
+    --y 22.5
+  90%
+    --r 360deg
+  100%
+    --x -22.5
+    --y 0
+    --r 360deg
+
