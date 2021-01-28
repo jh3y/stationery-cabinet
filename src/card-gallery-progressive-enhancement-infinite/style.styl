@@ -1,0 +1,40 @@
+*
+  box-sizing border-box
+
+:root
+  --bg hsl(220, 34%, 5%)
+
+body
+  background var(--bg)
+  min-height 100vh
+
+img
+  object-fit cover
+
+.card
+  &[data-current="true"] > .card__card .card__overlay
+    display none
+
+  &[data-current="true"]:hover
+    --y -2%
+
+
+  .card__card
+    transition 0.1s ease
+    transform translate3d(0, var(--y, 0), 0)
+
+  &__overlay
+    &--reflection
+      background linear-gradient(var(--bg) 50%, transparent)
+      clip-path inset(50% 0 0 0)
+
+  &__reflection
+    filter blur(5px)
+    transition 0.2s ease
+    transform translate3d(0, 0, 0) rotate(180deg) translate(0, -100%) rotateY(180deg) translate(0, var(--y, 0))
+
+    .card__details
+      background transparent
+
+    .card__content
+      clip-path inset(50% 0 0 0)
