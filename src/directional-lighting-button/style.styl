@@ -1,0 +1,93 @@
+*
+  box-sizing border-box
+  transform-style preserve-3d
+
+:root
+  --blur 8px
+  --shine-blur calc(var(--blur) * 4)
+  --size 25vmin
+  --transition 0.1s
+  --depth 3vmin
+  --icon-size 75%
+  --radius 24%
+  --shine hsla(0, 0%, 100%, 0.5)
+  --button-bg hsla(0, 0%, 0%, 0.025)
+  --shadow-bg hsla(0, 0%, 0%, 0.115)
+  --shadow-icon hsla(0, 0%, 0%, 0.35)
+  --bg hsl(206, 82%, 95%)
+
+body
+  min-height 100vh
+  display grid
+  background var(--bg)
+  place-items center
+  transform-style preserve-3d
+  touch-action none
+
+.scene
+  height var(--size)
+  position relative
+  width var(--size)
+  transform rotateX(-40deg) rotateY(18deg) rotateX(90deg)
+
+.button
+  cursor pointer
+  outline transparent
+  position absolute
+  height 100%
+  width 100%
+  transform-style preserve-3d
+  appearance none
+  border 0
+  background none
+
+  &__content
+  &__shadow
+    height 100%
+    left 50%
+    position absolute
+    top 50%
+    transform translate3d(-50%, -50%, 0)
+    width 100%
+    display grid
+    place-items center
+    border-radius var(--radius)
+
+  &__content
+    // --fill hsl(195, 80%, 65%)
+    --fill hsl(206, 82%, 63%)
+    background var(--button-bg)
+    overflow hidden
+    backdrop-filter blur(2px)
+    transition transform var(--transition)
+    transform translate3d(-50%, -50%, var(--depth))
+
+  &__shadow
+    --fill var(--shadow-icon)
+    transition filter var(--transition)
+    background var(--shadow-bg)
+    filter blur(var(--blur))
+
+  &__shine
+    height calc(var(--size) * 0.5)
+    position absolute
+    width calc(var(--size) * 0.5)
+    background var(--shine)
+    border-radius 50%
+    top calc(var(--y, -150) * 1%)
+    left calc(var(--x, -150) * 1%)
+    filter blur(var(--shine-blur)) brightness(1.25)
+    transform translate3d(-50%, -50%, 1vmin)
+    z-index 2
+
+  &__icon
+    height var(--icon-size)
+    fill var(--fill)
+    width var(--icon-size)
+
+  &:active
+    --blur 0px
+    --depth 0vmin
+    --scale 1
+
+
