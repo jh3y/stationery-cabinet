@@ -1,0 +1,40 @@
+mixin notes()
+  - let n = 0
+  while n < 5
+    svg.note(viewBox="0 0 24 24" style=`--speed: ${Math.random() + 0.25}; --delay: ${Math.random()}; --index: ${n}; --travel: ${Math.random() * 50 + 50}; --rotate: ${(Math.random() * 80) + 50};`)
+      path(d="M12 3V13.55C11.41 13.21 10.73 13 10 13C7.79 13 6 14.79 6 17S7.79 21 10 21 14 19.21 14 17V7H18V3H12Z")
+    - n++
+- const SEGMENTS = 10
+.scene
+  .caterpillar(style=`--parts: ${SEGMENTS + 1};`)
+    .caterpillar__body
+      - let l = 0
+      while l < SEGMENTS
+        .legs(style=`--index: ${l}; --hue: ${(360 / SEGMENTS) * l}`)
+          .leg__container
+            .leg.leg--left
+              .shoe
+            .leg.leg--right
+              .shoe
+        - l++
+      - let s = 0
+      while s < SEGMENTS
+        .segment(style=`--index: ${s}; --hue: ${(360 / SEGMENTS) * s}`)
+        - s++
+      .segment.tail(style=`--index: ${SEGMENTS - 0.5}; --hue: 180;`)
+        .tail__content
+          .tail__wag
+      .segment.head(style=`--index: -1.5; --scale: 1.25; --hue: 45;`)
+        .head__content
+          .head__face
+            .eye.eye--left
+            .eye.eye--right
+            .nose
+            .antennae.antennae--left
+            .antennae.antennae--right
+            .headphones
+              .headphones__band
+              .headphones__cup.headphones__cup--left
+                +notes()
+              .headphones__cup.headphones__cup--right
+                +notes()
