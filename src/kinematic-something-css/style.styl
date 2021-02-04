@@ -1,0 +1,312 @@
+@property --h
+  initial-value 0
+  inherits false
+  syntax '<number>'
+
+*
+  box-sizing border-box
+
+:root
+  --path "M566.002 292.9c0 35.34-7.316 71.32-20.904 103.923-13.118 31.474-32.971 60.74-57.007 84.865-24.035 24.124-53.193 44.05-84.551 57.217-32.482 13.639-68.33 20.981-103.54 20.981-35.21 0-71.058-7.342-103.54-20.981-31.358-13.167-60.516-33.093-84.551-57.217-24.036-24.125-43.889-53.391-57.007-84.865-13.588-32.603-20.904-68.584-20.904-103.924s7.316-71.32 20.904-103.923c13.118-31.474 29.842-64.357 57.007-84.865 49.441-37.326 119.493-81.033 176.629-57.217C418.17 100.927 561.59 308.982 479.77 423.459c-70.072 98.04-328.017 64.77-356.847-52.367C86.807 224.353 339.773 77.94 488.09 104.112c33.478 5.906 43.889 53.39 57.007 84.864 13.588 32.602 20.904 68.583 20.904 103.923z"
+
+svg
+  position fixed
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  z-index -1
+  opacity 0.25
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  background hsl(0, 0%, 2%)
+  transform scale(0.5)
+
+  @media(min-width 768px)
+    transform scale(1)
+
+.scene
+  height 600px
+  width 600px
+  position relative
+
+.segment
+.legs
+  --body 50px
+  height var(--body)
+  width var(--body)
+  animation travel 30s calc((var(--parts) - var(--index)) * -0.3s) infinite linear
+  offset-path path(var(--path))
+  offset-distance calc(var(--index) * 1%)
+  transform rotate(90deg)
+  position absolute
+  top 0
+  left 0
+
+.segment
+  --color 'hsl(%s, 80%, 70%)' % var(--hue)
+  border-radius 50%
+  filter drop-shadow(0 0 5px var(--color)) brightness(1.2)
+  &:after
+    --color 'hsl(%s, 80%, 70%)' % var(--h)
+    content ''
+    background var(--color)
+    position absolute
+    top 0
+    left 0
+    height 100%
+    width 100%
+    border-radius 50%
+    animation wiggle 0.25s calc(var(--index) * -0.2s) infinite alternate-reverse, party 1s calc(var(--index) * -0.2s) infinite linear
+
+.head
+.tail
+  &:after
+    display none
+
+.nose
+  position absolute
+  height 35%
+  width 35%
+  border-radius 50%
+  background hsl(0, 80%, 40%)
+  top 5%
+  left 50%
+  transform translate(-50%, -50%)
+
+.eye
+  height 15%
+  width 15%
+  background hsl(0, 10%, 10%)
+  border-radius 50%
+  position absolute
+  top 30%
+  left 50%
+  animation blink 10s infinite
+
+  @keyframes blink
+    0%, 48%, 50%, 52%, 100%
+      transform translate(-50%, -50%) translateX(calc(var(--offset, 0) * 1%)) scale(1)
+    49%, 51%
+      transform translate(-50%, -50%) translateX(calc(var(--offset, 0) * 1%)) scale(0)
+
+  &--left
+    --offset -100
+  &--right
+    --offset 100
+
+  &:after
+    content ''
+    position absolute
+    background white
+    height 25%
+    width 25%
+    top 15%
+    left 15%
+
+.shoe
+  height 12px
+  width 10px
+  background linear-gradient(white, white) 50% 50% / 10% 50% no-repeat,
+             linear-gradient(white, white) 80% 50% / 10% 50% no-repeat,
+             linear-gradient(white, white) 30% 50% / 10% 50% no-repeat,
+            hsl(210, 60%, 40%)
+  border-radius 25% / 50%
+  position absolute
+  top 50%
+  transform translate(-50%, -50%)
+
+.note
+  --color 'hsl(%s, 90%, 50%)' % var(--h)
+  height 24px
+  width 24px
+  filter brightness(2)
+  position absolute
+  animation play calc(var(--speed) * 1s) calc(var(--delay) * -1s) infinite linear, party 0.2s infinite linear
+  transform rotate(calc(var(--rotate) * -1deg)) scale(2.5) translateY(calc(var(--travel) * -1px))
+
+  path
+    fill var(--color)
+
+@keyframes play
+  0%
+    transform rotate(calc(var(--rotate) * -1deg)) scale(0) translateY(calc(var(--travel) * -1px))
+  40%
+    opacity 1
+  100%
+    opacity 0
+
+
+.antennae
+  position absolute
+  height 40%
+  width 5%
+  bottom 60%
+  left 50%
+  background hsl(45, 50%, 50%)
+  transform-origin 50% 100%
+  transform translate(-50%, 0) translateX(calc(var(--offset) * 1%)) rotate(calc(var(--rotate) * 1deg))
+
+  &:after
+    content ''
+    height 10px
+    width 10px
+    border-radius 50%
+    background 'hsl(%s, 60%, 50%)' % var(--h)
+    animation party 1s calc(var(--delay, 0) * 1s) infinite linear
+    position absolute
+    bottom 100%
+    left 50%
+    transform translate(-50%, 50%)
+
+  &--left
+    --delay 0.3
+    --offset -400
+    --rotate -55
+  &--right
+    --offset 400
+    --rotate 75
+
+.headphones
+  height 10%
+  width 100%
+  background hsl(0, 0%, 60%)
+  position absolute
+  top 55%
+  left 50%
+  transform translate(-50%, -50%)
+
+  &__band
+    height 180%
+    width 80%
+    left 50%
+    position absolute
+    top 50%
+    transform translate(-50%, -50%)
+    background hsl(0, 10%, 10%)
+
+  &__cup
+    height 280%
+    width 10%
+    background hsl(0, 10%, 5%)
+    position absolute
+    top 50%
+    transform translate(0%, -50%)
+
+    &--right
+      right 100%
+
+    &--left
+      transform translate(0, -50%) rotate(180deg)
+      left 100%
+
+.head
+  animation travel 30s calc((var(--parts) - var(--index)) * -0.3s) infinite linear
+
+  &__face
+    position relative
+    height 100%
+    width 100%
+    border-radius 50%
+    animation bop 1s infinite alternate
+
+
+
+  &__content
+    background var(--color)
+    height 130%
+    width 130%
+    border-radius 50%
+    animation wiggle 0.25s calc(var(--index) * -0.2s) infinite alternate-reverse
+
+@keyframes bop
+  0%
+    transform rotate(-35deg)
+  100%
+    transform rotate(35deg)
+
+.tail
+  animation travel 30s calc((var(--parts) - var(--index)) * -0.3s) infinite linear
+  &__content
+    height 100%
+    width 100%
+    animation wiggle 0.25s calc(var(--index) * -0.2s) infinite alternate-reverse
+  &__wag
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    animation party 0.5s infinite linear
+    height 80%
+    width 80%
+    border-radius 50%
+    background 'hsl(%s, 80%, 80%)' % var(--h)
+
+    &:after
+      content ''
+      position absolute
+
+@keyframes party
+  to
+    --h 360
+
+.leg
+  position absolute
+  width 60%
+  height 8%
+  background hsl(45, 50%, 80%)
+  top 50%
+  animation legs 0.25s calc(var(--index) * 0.2s) infinite alternate-reverse
+
+  &__container
+    position absolute
+    width 100%
+    height 100%
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    animation stride 0.2s calc(var(--index) * -0.2s) infinite alternate-reverse
+
+  &--left
+    right 50%
+    transform-origin 100% 50%
+    animation-delay calc(var(--index) * -0.2s)
+
+    .shoe
+      right 100%
+      transform translate(50%, -50%)
+
+  &--right
+    left 50%
+    transform-origin 0 50%
+    animation-delay calc(var(--index) * -0.4s)
+
+    .shoe
+      left 100%
+      transform translate(-50%, -50%)
+
+@keyframes stride
+  0%
+    transform translate(-50%, -50%) rotate(20deg)
+  100%
+    transform translate(-50%,-50%) rotate(-20deg)
+
+@keyframes legs
+  0%
+    transform rotate(5deg)
+  100%
+    transform rotate(-5deg)
+
+@keyframes wiggle
+  0%
+    transform translate(-8%, 0)
+  100%
+    transform translate(8%, 0)
+
+@keyframes travel
+  0%
+    offset-distance 0%
+  100%
+    offset-distance 100%
