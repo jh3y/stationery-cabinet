@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@699;700&display=swap')
+*
+  box-sizing border-box
+
+:root
+  --pink hsl(326, 98%, 82%)
+  --pink-light hsl(325, 93%, 95%)
+  --pink-dark hsl(326, 78%, 65%)
+  --stroke hsl(0, 0%, 60%)
+  --stroke-active hsl(0, 0%, 5%)
+
+body
+  display grid
+  place-items center
+  min-height 100vh
+  font-family "Roboto", sans-serif
+
+button
+  --hovered 0
+  height 100px
+  padding 0
+  margin 0
+  border 0
+  appearance none
+  background transparent
+  width 250px
+
+img
+  position fixed
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  width 250px
+  height 100px
+  z-index -1
+  opacity 0.35
+
+.like
+  font-size 26px
+  // transform scale(0.5)
+
+  &__container
+    display inline-flex
+    align-items center
+    justify-content center
+    border 4px solid var(--stroke)
+    border-radius 10px
+    height 100%
+    padding 26px 36px
+    overflow hidden
+    position relative
+
+  &__text
+    color hsl(0, 0%, 20%)
+    font-variation-settings 'wght' 400
+    font-size 2rem
+    margin-left 24px
+    opacity 0
+
+    &--traveller
+      display inline-block
+      position absolute
+      top 50%
+      left 50%
+      opacity calc(1 - var(--hovered))
+      margin 0
+      transform translate(-50%, -50%) translate(0, calc(var(--hovered) * 200%))
+      transition transform 0.2s, opacity 0.2s
+
+  &__number
+    font-variation-settings 'wght' 700
+    color hsl(0, 0%, 50%)
+    font-size 2rem
+    letter-spacing -2px
+    margin-left 14px
+
+  &__feature
+    height 34px
+    width 34px
+    background hsla(0, 100%, 50%, 0.25)
+    transform translate(-6px, 0) translate(calc(var(--hovered) * 150%), 0)
+    transition transform 0.2s
+
+  &__heart
+    height 100%
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+
+button:hover
+  --hovered 1
+
+.heart
+  overflow visible !important
+  &__outline
+    stroke var(--stroke-active)
+    stroke-width 1.25px
+    opacity 0
+  &__baseline
+    stroke var(--stroke)
+    stroke-width 1.25px
+  &__body
+    opacity 0
+    fill var(--pink)
+  &__shine
+    opacity 0
+    fill var(--pink-light)
+  &__shadow
+    opacity 0
+    fill var(--pink-dark)
