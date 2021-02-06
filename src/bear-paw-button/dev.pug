@@ -1,8 +1,30 @@
-//- img(src="./base.png")
-button.like
-  .like__container
-    .like__feature
-      include heart.svg
-    span.like__text.like__text--spacer(aria-hidden="true") Like
-    span.like__text.like__text--traveller Like
-    span.like__number 12
+
+//- button.like
+//-   .like__container
+//-     .like__feature
+//-       include heart.svg
+//-     span.like__text.like__text--spacer(aria-hidden="true") Like
+//-     span.like__text.like__text--traveller Like
+//-     span.like__number 12
+button.transformer
+  span.transformer__container
+    span.transformer__front.transformer__segment
+      span.transformer__feature
+        include heart.svg
+        .paw.paw--left
+          include bear-palm.pug
+    include slap.pug
+    .paw.paw--right
+      include bear-palm--back.pug
+    span.transformer__middle.transformer__segment
+      span.transformer__text Like
+    span.transformer__back.transformer__segment
+      span.transformer__number
+        span.number__place
+          span.number.number--ten.number--current 6
+          span.number.number--ten.number--next 7
+        span.number__place
+          span.number.number--current.number--single 8
+          span.number.number--next.number--single 9
+  span.transformer__outline.transformer__outline--top
+  span.transformer__outline.transformer__outline--bottom

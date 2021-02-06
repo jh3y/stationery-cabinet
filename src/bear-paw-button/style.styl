@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@699;700&display=swap')
+
 *
   box-sizing border-box
 
@@ -7,7 +8,10 @@
   --pink-light hsl(325, 93%, 95%)
   --pink-dark hsl(326, 78%, 65%)
   --stroke hsl(0, 0%, 60%)
+  --text hsl(0, 0%, 20%)
+  --number hsl(0, 0%, 50%)
   --stroke-active hsl(0, 0%, 5%)
+  --transition 0.2s
 
 body
   display grid
@@ -17,23 +21,11 @@ body
 
 button
   --hovered 0
-  height 100px
   padding 0
   margin 0
   border 0
   appearance none
   background transparent
-  width 250px
-
-img
-  position fixed
-  top 50%
-  left 50%
-  transform translate(-50%, -50%)
-  width 250px
-  height 100px
-  z-index -1
-  opacity 0.35
 
 .like
   font-size 26px
@@ -65,7 +57,7 @@ img
       opacity calc(1 - var(--hovered))
       margin 0
       transform translate(-50%, -50%) translate(0, calc(var(--hovered) * 200%))
-      transition transform 0.2s, opacity 0.2s
+      transition transform var(--transition), opacity var(--transition)
 
   &__number
     font-variation-settings 'wght' 700
@@ -79,7 +71,7 @@ img
     width 34px
     background hsla(0, 100%, 50%, 0.25)
     transform translate(-6px, 0) translate(calc(var(--hovered) * 150%), 0)
-    transition transform 0.2s
+    transition transform var(--transition)
 
   &__heart
     height 100%
@@ -93,6 +85,9 @@ button:hover
 
 .heart
   overflow visible !important
+  height 100%
+  opacity calc(1 - var(--hovered, 0))
+
   &__outline
     stroke var(--stroke-active)
     stroke-width 1.25px
@@ -109,3 +104,141 @@ button:hover
   &__shadow
     opacity 0
     fill var(--pink-dark)
+
+
+.transformer
+  --font-size 32px
+  --border-width 4px
+  --border-radius 10px
+  --padding-v 26px
+  --padding-h 36px
+  --padding-t 10px
+  --padding-b 4px
+  font-size var(--font-size)
+  position relative
+  outline transparent
+
+  *
+    display inline-block
+
+  &__container
+    display inline-flex
+    align-items center
+    justify-content center
+    position relative
+    // overflow hidden
+
+  &__paws
+    height 100%
+    width 80%
+    position absolute
+    border var(--border-width) solid pink
+    border-left 0
+    border-right 0
+    z-index 2
+
+  &__front
+    background hsla(0, 80%, 50%, 0.5)
+    padding var(--padding-v) calc(var(--padding-t) + var(--padding-b)) var(--padding-v) var(--padding-h)
+    border var(--border-width) solid var(--stroke)
+    border-radius var(--border-radius) 0 0 var(--border-radius)
+    border-right 0
+    z-index 2
+
+  &__middle
+    background hsla(210, 80%, 50%, 0.5)
+    padding var(--padding-v) var(--padding-t)
+    border var(--border-width) solid var(--stroke)
+    border-radius 0
+    border-left 0
+    border-right 0
+
+  &__back
+    border var(--border-width) solid var(--stroke)
+    border-radius 0 var(--border-radius) var(--border-radius) 0
+    background hsla(120, 80%, 50%, 0.5)
+    padding var(--padding-v) var(--padding-h) var(--padding-v) var(--padding-b)
+    border-left 0
+    z-index 2
+
+  &__number
+    font-size var(--font-size)
+    line-height var(--font-size)
+    height var(--font-size)
+    color var(--number)
+    transform translate(6px, 0)
+
+  &__text
+    color var(--text)
+    font-size var(--font-size)
+    line-height var(--font-size)
+    opacity calc(1 - var(--hovered, 0))
+    transition transform var(--transition), opacity var(--transition)
+    transform translateY(calc(var(--hovered, 0) * 100%))
+
+  &__outline
+    position absolute
+    height 100%
+    width 100%
+    left 0
+    top 0
+    border-radius var(--border-radius)
+    border var(--border-width) solid var(--stroke)
+    border-left 0
+    border-right 0
+    z-index 3
+    clip-path inset(0 5% 0 5%)
+
+
+  &__feature
+    height var(--font-size)
+    position relative
+    width var(--font-size)
+    transition transform var(--transition)
+    transform translate(-6px, 0) translateX(calc(var(--hovered, 0) * 100%))
+    background hsla(280, 80%, 50%, 0.5)
+
+.number
+  position absolute
+  left 0
+
+  &__place
+    height var(--font-size)
+    display inline-block
+    position relative
+    width 18px
+
+
+.slap
+  position absolute
+  height calc(var(--font-size) * 2)
+  width calc(var(--font-size) * 2)
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  z-index 4
+
+.paw
+  height calc(var(--font-size) * 2)
+  position absolute
+  top 0%
+  left 50%
+  transform translate(-50%, 0%)
+  width var(--font-size)
+
+  &--left
+    background orange
+  &--right
+    z-index 5
+    background white
+
+.bear-paw
+  position absolute
+  height 150%
+  opacity var(--hovered, 0)
+  opacity 1
+  transition var(--transition)
+  overflow visible
+  left 50%
+  top 0
+  transform translate(-50%, -14%)
