@@ -241,9 +241,9 @@ const TRANSFORMER_TL = () =>
     },
   })
     // NOTE:: Remove when not debugging
-    // .set('.transformer__feature', {
-    //   '--hovered': 1,
-    // })
+    .set('.transformer__feature', {
+      '--hovered': 1,
+    })
     // Set the hover states concretely
     .set('.bear-paw', {
       opacity: 1,
