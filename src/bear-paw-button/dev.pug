@@ -13,7 +13,6 @@ button.transformer
         include heart.svg
         .paw.paw--left
           include bear-palm.pug
-    include slap.pug
     .paw.paw--right
       include bear-palm--back.pug
     span.transformer__middle.transformer__segment
@@ -26,5 +25,20 @@ button.transformer
         span.number__place
           span.number.number--current.number--single 8
           span.number.number--next.number--single 9
+  include slap.pug
   span.transformer__outline.transformer__outline--top
   span.transformer__outline.transformer__outline--bottom
+  - let w = 0
+  while w < 8
+    include wiggle.pug
+    - w++
+  - let d = 0
+  while d < 5
+    .dashed__container
+      svg.dashed(viewBox="-0.25 -0.25 0.5 30")
+        defs
+          clipPath#lineClip
+            rect(height="31" width="1" fill="red" x="-0.5" y="-0.5")
+        g.dashed__wrapper(clip-path="url(#lineClip)")
+          path.dashed__line(d="M 0 0, L 0 30" stroke-linecap="round" stroke-dasharray="2" stroke="black" stroke-width="0.75")
+    - d++
