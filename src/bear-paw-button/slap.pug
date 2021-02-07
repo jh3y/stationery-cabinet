@@ -1,4 +1,8 @@
 svg.slap(xmlns='http://www.w3.org/2000/svg' viewbox='0 0 50.271 50.271')
   g(fill='none' stroke-linecap='round' transform='translate(-53.239 -117.668)')
-    circle(cx='78.374' cy='142.804' r='12.172' stroke='#f55' stroke-linejoin='round' stroke-width='25.928')
-    path(stroke='#000' stroke-width='2.117' d='M78.374 137.592v10.423')
+    circle.slap__circle(cx='78.374' cy='142.804' r='12.172' stroke='#f55' stroke-linejoin='round' stroke-width='25.928')
+    - let l = 0
+    while l < 3
+      g.slap__line
+        path(stroke='#000' stroke-width='2.117' stroke-dasharray="11" d='M78.374 137.592v10.423')
+      - l++
