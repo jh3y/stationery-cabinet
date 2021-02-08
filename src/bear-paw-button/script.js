@@ -184,12 +184,12 @@ const CELEBRATE_TL = () =>
     .timeline({
       repeatRefresh: true,
       onStart: () => {
-        gsap.set(['.wiggle', '.dashed__container'], {
+        gsap.set(['.wiggle', '.dashed__container', '.burst'], {
           display: 'block',
         })
       },
       onComplete: () => {
-        gsap.set(['.wiggle', '.dashed__container'], {
+        gsap.set(['.wiggle', '.dashed__container', '.burst'], {
           display: 'none',
         })
       },
@@ -199,6 +199,10 @@ const CELEBRATE_TL = () =>
     })
     .set('.dashed', {
       yPercent: 0,
+    })
+    .set('.burst', {
+      '--rotate': () => Math.random() * 360,
+      '--translate': () => Math.random() * 100 + 180,
     })
     .set(['.wiggle', '.dashed__container'], {
       rotate: () => Math.random() * 360,
@@ -222,13 +226,26 @@ const CELEBRATE_TL = () =>
       yPercent: 'random(20, 100)',
     })
     .fromTo(
-      '.wiggle__line',
+      ['.wiggle__line'],
       {
         strokeDashoffset: -32,
       },
       {
+        delay: () => Math.random(),
         yPercent: '+=50',
         duration: 0.5,
+        strokeDashoffset: 32,
+      },
+      0
+    )
+    .fromTo(
+      '.burst__line path',
+      {
+        strokeDashoffset: -32,
+      },
+      {
+        delay: () => Math.random() * 0.5,
+        yPercent: `-=50`,
         strokeDashoffset: 32,
       },
       0
@@ -240,11 +257,11 @@ const TRANSFORMER_TL = () =>
       TRANSFORMER.removeAttribute('disabled')
     },
   })
-    // NOTE:: Remove when not debugging
+    // Set the hover states concretely
     .set('.transformer__feature', {
+      // Setting xPercent is only going to work on desktop
       '--hovered': 1,
     })
-    // Set the hover states concretely
     .set('.bear-paw', {
       opacity: 1,
     })
