@@ -132,15 +132,14 @@ button:hover
   &__outline
     position absolute
     height 100%
-    width 100%
-    left 0
+    width 90%
+    left 50%
     top 0
-    border-radius var(--border-radius)
     border var(--border-width) solid var(--stroke)
     border-left 0
     border-right 0
-    z-index 3
-    clip-path inset(0 5% 0 5%)
+    z-index 10
+    transform translate3d(-50%, 0, 0)
 
 
   &__feature
@@ -224,3 +223,42 @@ button:hover
     position absolute
     transform translate(-50%, -50%)
     z-index 11
+
+.geo
+  height 100%
+  // Keep CodePen happy
+  overflow visible !important
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+  &__wrap
+    display none
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    z-index 12
+    height 20px
+    width 20px
+
+.burst
+  display none
+  height 30px
+  width 30px
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%) rotate(calc(var(--rotate, 0) * 1deg)) translateY(calc(var(--translate, 0) * -1px))
+  z-index 12
+
+  &__line
+    position absolute
+    height 30px
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) rotate(calc((-45 + (var(--index) * 30)) * 1deg))
+    transform-origin 50% 100%
+    overflow visible !important
+    z-index 12
