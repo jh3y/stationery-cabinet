@@ -63,8 +63,8 @@ const RIGHT_PAW_TL = () =>
       },
       {
         ease: 'power1.out',
-        delay: 0.1,
-        duration: 0.15,
+        delay: 0.15,
+        duration: 0.35,
         xPercent: 0,
         yPercent: 0,
       },
@@ -72,9 +72,7 @@ const RIGHT_PAW_TL = () =>
   })
 
 const RESIZE_TL = () =>
-  timeline({
-    delay: 1,
-  })
+  timeline({})
     .set('.bear-paw', {
       opacity: 1,
     })
@@ -273,14 +271,19 @@ const TRANSFORMER_TL = () =>
     // This means the heart and the paw track movement
     .add(LEFT_PAW_TL(), 0.25)
     .add(RIGHT_PAW_TL(), '<')
-    .add(SLAP_TL(), '>-0.25')
+    .add(SLAP_TL(), '>-0.5')
     .add(CELEBRATE_TL(), '<')
-    .add(RESIZE_TL())
+    .add(RESIZE_TL(), '<+0.5')
 
 const RESET_TL = timeline({
   paused: true,
+  onComplete: () => {
+    gsap.set(['.transformer__heart', '.paw--left', '.bear-paw'], {
+      clearProps: 'all',
+    })
+  },
 })
-  .set(['.transformer__feature', '.transformer__text', '.paw', '.bear-paw'], {
+  .set(['.transformer__feature', '.transformer__text'], {
     clearProps: 'all',
   })
   .to('.transformer__front', {
@@ -318,6 +321,22 @@ const RESET_TL = timeline({
       yPercent: -100,
       duration,
       opacity: 0,
+    },
+    0
+  )
+  .to(
+    '.paw--left',
+    {
+      opacity: 1,
+      duration,
+    },
+    0
+  )
+  .to(
+    '.transformer__heart',
+    {
+      opacity: 0,
+      duration,
     },
     0
   )
