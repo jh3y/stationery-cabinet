@@ -432,6 +432,7 @@ const RESET_TL = timeline({
   )
 
 TRANSFORMER.addEventListener('pointerdown', ({ x, y }) => {
+  if (TRANSFORMER.hasAttribute('disabled')) return
   if (TRANSFORMER.getAttribute('aria-pressed') === 'true') {
     TRANSFORMER.setAttribute('aria-pressed', false)
     RESET_TL.restart()
