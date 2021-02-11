@@ -35,31 +35,27 @@ const CONFIG = {
   },
 }
 
-gsap
+// What we can do is tween this timeline
+const TL = gsap
   .timeline({
-    repeat: -1,
+    paused: true,
   })
   .to('.stick', {
     ...CONFIG,
   })
-  .to(
-    '.stick',
-    {
-      ...CONFIG,
-    },
-    '>-1'
-  )
-  .to(
-    '.stick',
-    {
-      ...CONFIG,
-    },
-    '>-1'
-  )
-  .to(
-    '.stick',
-    {
-      ...CONFIG,
-    },
-    '>-1'
-  )
+
+for (let i = 0; i < 11; i++) {
+  TL.to('.stick', { ...CONFIG }, '>-1')
+}
+gsap.fromTo(
+  TL,
+  {
+    totalTime: 6,
+  },
+  {
+    repeat: -1,
+    totalTime: 11,
+    duration: 5,
+    ease: 'none',
+  }
+)
