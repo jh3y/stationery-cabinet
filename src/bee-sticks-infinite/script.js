@@ -35,7 +35,7 @@ const CONFIG = {
   },
 }
 
-// What we can do is tween this timeline
+// Actual timeline to tween
 const TL = gsap
   .timeline({
     paused: true,
@@ -44,9 +44,11 @@ const TL = gsap
     ...CONFIG,
   })
 
+// Pad out the timeline with extra tweens
 for (let i = 0; i < 11; i++) {
   TL.to('.stick', { ...CONFIG }, '>-1')
 }
+// Tween the playhead from and to a "safe" loop spot
 gsap.fromTo(
   TL,
   {
