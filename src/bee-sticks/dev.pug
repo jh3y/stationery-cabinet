@@ -1,0 +1,8 @@
+//- It's a 24 by 24 grid
+- const AMOUNT = 24 * 24
+.sticks
+  - let s = 0
+  while s < AMOUNT
+    - const ID = s % 2 - (Math.floor(s / 24) % 2) ? 'red' : 'green'
+    .stick(class=`stick--${ID}`)
+    - s++
