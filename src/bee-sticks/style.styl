@@ -1,0 +1,35 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  background hsl(37, 39%, 78%)
+
+.sticks
+  display grid
+  height 240px
+  width 240px
+  place-content center
+  grid-template-columns repeat(24, 10px)
+  grid-template-rows repeat(24, 10px)
+  grid-gap 14px
+
+.stick
+  position relative
+  &:after
+    width 26px
+    height 6px
+    content ''
+    position absolute
+    top 50%
+    left 50%
+    background var(--bg)
+    transform translate(-50%, -50%) rotate(calc(var(--r, 0) * 1deg))
+  &--red
+    --r -90
+    --bg hsl(1, 76%, 42%)
+  &--green
+    --bg hsl(98, 28%, 47%)
+    --r 0
