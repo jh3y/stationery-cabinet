@@ -1,0 +1,191 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+:root
+  --state paused
+
+#start:checked ~ .stopwatch__face
+#pause:checked ~ .stopwatch__face
+  .ms--tens
+    --name ms-tens
+  .ms--singles
+    --name ms-singles
+  .s--tens
+    --name s-tens
+  .s--singles
+    --name s-singles
+  .m--tens
+    --name m-tens
+  .m--singles
+    --name m-singles
+
+#start:checked ~ .stopwatch__face
+  --state running
+#pause:checked ~ .stopwatch__face
+  --state paused
+
+@property --ms-tens
+  initial-value 0
+  inherits false
+  syntax '<integer>'
+
+@property --ms-singles
+  initial-value 0
+  inherits false
+  syntax '<integer>'
+
+@property --s-tens
+  initial-value 0
+  inherits false
+  syntax '<integer>'
+
+@property --s-singles
+  initial-value 0
+  inherits false
+  syntax '<integer>'
+
+@property --m-tens
+  initial-value 0
+  inherits false
+  syntax '<integer>'
+
+@property --m-singles
+  initial-value 0
+  inherits false
+  syntax '<integer>'
+
+body
+  min-height 100vh
+  display grid
+  background hsl(0, 0%, 5%)
+  place-items center
+
+.stopwatch
+  height 100px
+  width 200px
+  background hsl(0, 10%, 40%)
+
+  &__face
+    display grid
+    grid-template-columns repeat(6, 1fr)
+
+.digit
+  font-size 2rem
+  font-family sans-serif
+
+.ms
+  position relative
+  font-variant-numeric tabular-nums
+  text-align center
+  color transparent
+
+  &:after
+    font-variant-numeric tabular-nums
+    position absolute
+    top 0%
+    left 50%
+    color red
+    transform translate(-50%, 0)
+    width 100%
+    padding-right 2px
+    display inline-block
+
+  &--tens
+    counter-reset ms-tens var(--ms-tens)
+    animation var(--name, none) 1s infinite steps(10) var(--state)
+
+    &:after
+      content counter(ms-tens)
+
+  &--singles
+    counter-reset ms-singles var(--ms-singles)
+    animation var(--name, none) 0.1s infinite steps(10) var(--state)
+
+    &:after
+      content counter(ms-singles)
+.s
+  position relative
+  font-variant-numeric tabular-nums
+  text-align center
+  color transparent
+
+  &:after
+    font-variant-numeric tabular-nums
+    position absolute
+    top 0%
+    left 50%
+    color blue
+    transform translate(-50%, 0)
+    width 100%
+    padding-right 2px
+    display inline-block
+
+  &--tens
+    counter-reset s-tens var(--s-tens)
+    animation var(--name, none) 60s infinite steps(6) var(--state)
+
+    &:after
+      content counter(s-tens)
+
+  &--singles
+    counter-reset s-singles var(--s-singles)
+    animation var(--name, none) 10s infinite steps(10) var(--state)
+
+    &:after
+      content counter(s-singles)
+.m
+  position relative
+  font-variant-numeric tabular-nums
+  text-align center
+  color transparent
+
+  &:after
+    font-variant-numeric tabular-nums
+    position absolute
+    top 0%
+    left 50%
+    color orange
+    transform translate(-50%, 0)
+    width 100%
+    padding-right 2px
+    display inline-block
+
+  &--tens
+    counter-reset m-tens var(--m-tens)
+    animation var(--name, none) 3600s infinite steps(6) var(--state)
+
+    &:after
+      content counter(m-tens)
+
+  &--singles
+    counter-reset m-singles var(--m-singles)
+    animation var(--name, none) 600s infinite steps(10) var(--state)
+
+    &:after
+      content counter(m-singles)
+
+@keyframes ms-tens
+  to
+    --ms-tens 10
+
+@keyframes ms-singles
+  to
+    --ms-singles 10
+
+@keyframes s-tens
+  to
+    --s-tens 6
+
+@keyframes s-singles
+  to
+    --s-singles 10
+
+@keyframes m-tens
+  to
+    --m-tens 6
+
+@keyframes m-singles
+  to
+    --m-singles 10

@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@800&display=swap')
+
+*
+  box-sizing border-box
+
+body
+  font-family 'Nunito', sans-serif
+  min-height 100vh
+  text-transform uppercase
+  overflow hidden
+  background hsl(0, 10%, 10%)
+
+h1
+  --stroke hsl(0, 0%, 50%)
+  margin 0
+  white-space nowrap
+  font-size clamp(2rem, 10vmin, 5rem)
+  line-height 0.8
+  color transparent
+
+[aria-hidden]
+  -webkit-text-stroke 2px var(--stroke)
+  opacity 0
+
+
+.char
+  -webkit-text-stroke 2px var(--stroke)
+
+.text-grid
+  display grid
+  grid-gap 0 4vmin
+  grid-template-columns repeat(3, auto)
+  position fixed
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
