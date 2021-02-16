@@ -1,0 +1,16 @@
+form.stopwatch
+  input#start(type="checkbox")
+  label(for="start") Play
+  input#pause(type="checkbox")
+  label(for="pause") Pause
+  button#reset(type="reset") Reset
+  label(for="start")
+    label(for="pause")
+      span Test
+  .stopwatch__face
+    .digit.m.m--tens 2
+    .digit.m.m--singles 4
+    .digit.second.s.s--tens 5
+    .digit.second.s.s--singles 5
+    .digit.digit--small.ms.ms--tens 0
+    .digit.digit--small.ms.ms--singles 0
