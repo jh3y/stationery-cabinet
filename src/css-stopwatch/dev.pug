@@ -1,16 +1,25 @@
 form.stopwatch
   input#start(type="checkbox")
-  label(for="start") Play
   input#pause(type="checkbox")
-  label(for="pause") Pause
-  button#reset(type="reset") Reset
-  label(for="start")
-    label(for="pause")
-      span Test
-  .stopwatch__face
-    .digit.m.m--tens 2
-    .digit.m.m--singles 4
-    .digit.second.s.s--tens 5
-    .digit.second.s.s--singles 5
-    .digit.digit--small.ms.ms--tens 0
-    .digit.digit--small.ms.ms--singles 0
+  label.stopwatch__pause(for="pause")
+    span Pause
+  label.stopwatch__start(for="start")
+    span Start
+  button#reset.stopwatch__reset(type="reset")
+    span Reset
+  .stopwatch__restart.stopwatch__control
+    .reset-button
+  .stopwatch__stop-start.stopwatch__control
+    .start-button
+  .stopwatch__shadows
+  .stopwatch__content
+    img.stopwatch__branding(src="https://assets.codepen.io/605876/avatar.png")
+    .stopwatch__face
+      .digit.m.m--tens 0
+      .digit.m.m--singles 0
+      span :
+      .digit.second.s.s--tens 0
+      .digit.second.s.s--singles 0
+      span .
+      .digit.digit--small.ms.ms--tens 0
+      .digit.digit--small.ms.ms--singles 0

@@ -1,13 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap')
+
 *
 *:after
 *:before
   box-sizing border-box
+  user-select none
 
+// By default the play state is paused
 :root
   --state paused
+  --bg hsl(280, 50%, 90%)
+  --digit hsl(90, 50%, 90%)
+  --face hsl(90, 50%, 5%)
+  --content hsl(0, 0%, 40%)
+  --shadow hsla(0, 0%, 0%, 0.25)
+  --glare hsla(0, 0%, 100%, 0.2)
+  --watch-bg hsl(210, 80%, 50%)
+  --watch-bg--light hsl(210, 80%, 90%)
+  --watch-bg--dark hsl(210, 80%, 20%)
+  --stroke hsl(0, 0%, 15%)
+  --start hsl(10, 80%, 40%)
+  --start-two hsl(10, 80%, 60%)
+  --restart hsl(0, 0%, 70%)
+  --restart-two hsl(0, 0%, 90%)
 
-#start:checked ~ .stopwatch__face
-#pause:checked ~ .stopwatch__face
+// Trick to stop/start the stopwatch
+// If neither are checked the animation-name is "none"
+// And that resets the counters to their initial value
+#start:checked ~ .stopwatch__content
+#pause:checked ~ .stopwatch__content
   .ms--tens
     --name ms-tens
   .ms--singles
@@ -21,11 +42,27 @@
   .m--singles
     --name m-singles
 
-#start:checked ~ .stopwatch__face
+// What handles the playback. When "Start" is checked,
+// the play state is running. Then we can use "Pause" to
+// toggle the play start of the animations.
+#start:checked ~ .stopwatch__content
   --state running
-#pause:checked ~ .stopwatch__face
+#pause:checked ~ .stopwatch__content
   --state paused
+// Trick to hide the start button
+#start:checked ~ .stopwatch__start
+  z-index -1
 
+.stopwatch__start:active ~ .stopwatch__stop-start
+.stopwatch__pause:active ~ .stopwatch__stop-start
+  --y 25
+.stopwatch__reset:active ~ .stopwatch__restart
+  --y 15
+
+// The properties for animating each digit
+// We should be able to declare these all as a chain
+// But the syntax listed at: https://web.dev/at-property/#multiple-declarations
+// doesn't work for me.
 @property --ms-tens
   initial-value 0
   inherits false
@@ -59,113 +96,276 @@
 body
   min-height 100vh
   display grid
-  background hsl(0, 0%, 5%)
+  font-family 'Orbitron', sans-serif
+  background var(--bg)
   place-items center
 
+form
+  margin 0
+
+button
+  appearance none
+  border 0
+  outline transparent
+  background none
+
+label span
+button span
+[type="checkbox"]
+  position absolute
+  width 1px
+  height 1px
+  padding 0
+  margin -1px
+  overflow hidden
+  clip rect(0, 0, 0, 0)
+  white-space nowrap
+  border-width 0
+
+label
+button
+  cursor pointer
+
+.reset-button
+  width 100%
+  height 50%
+  position absolute
+  top 10%
+  left 50%
+  transform translate(-50%, 0)
+  border 0.5vmin solid var(--stroke)
+  border-radius 1vmin
+  background var(--restart)
+  overflow hidden
+
+  &:after
+    height 100%
+    width 100%
+    position absolute
+    top 0
+    left 0
+    background repeating-linear-gradient(90deg, transparent 0 18%, var(--stroke) 18% 22%) 50% 0 / 100% 30% no-repeat,
+               repeating-linear-gradient(90deg, transparent 0 18%, var(--stroke) 18% 22%) 50% 100% / 100% 30% no-repeat
+    content ''
+
+  &:before
+    content ''
+    height 100%
+    width 100%
+    border-radius 1vmin
+    background var(--restart-two)
+    position absolute
+    bottom 100%
+    left 0
+    transform translate(-20%, 45%)
+
+.start-button
+  width 100%
+  height 60%
+  position absolute
+  bottom 0
+  border 0.5vmin solid var(--stroke)
+  border-radius 1vmin
+  background var(--start)
+  overflow hidden
+
+  &:after
+    content ''
+    height 100%
+    width 100%
+    border-radius 1vmin
+    background var(--start-two)
+    position absolute
+    bottom 100%
+    left 0
+    transform translate(-20%, 35%)
+
 .stopwatch
-  height 100px
-  width 200px
-  background hsl(0, 10%, 40%)
+  height 45vmin
+  width 45vmin
+  background-color var(--watch-bg)
+  border-radius 50%
+  border 0.5vmin solid var(--stroke)
+  position relative
+
+  &__pause
+  &__start
+  &__reset
+  &__control
+    --size min(48px, 10vmin)
+    height var(--size)
+    width var(--size)
+    position absolute
+    top 50%
+    left 50%
+    transition transform 0.05s
+    transform translate(-50%, -50%) rotate(var(--rotation, 0deg)) translate(0, -25vmin) translateY(calc(var(--y, 0) * 1%))
+    z-index 10
+
+  &__control
+    z-index -1
+
+  &__restart:before
+    content ''
+    position absolute
+    bottom 0
+    left 50%
+    transform translate(-50%, 0)
+    width 60%
+    height 75%
+    border 0.5vmin solid var(--stroke)
+    background linear-gradient(90deg, var(--restart-two) 0 80%, transparent 81%) 50% 50% / 100% 100% no-repeat
+    background-color var(--restart)
+    z-index -1
+
+  &__start
+  &__pause
+  &__stop-start
+    --rotation 40deg
+
+  &__shadows
+    height 100%
+    width 100%
+    border-radius 100%
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    overflow hidden
+
+    &:after
+      content ''
+      position absolute
+      height 100%
+      width 106%
+      top 50%
+      left 50%
+      border-radius 50%
+      transform translate(-50%, -50%) translate(0, 2%)
+      box-shadow 0 0 0 5vmin var(--watch-bg--light)
+
+    &:before
+      content ''
+      position absolute
+      height 100%
+      width 100%
+      top 50%
+      left 50%
+      border-radius 50%
+      transform translate(-50%, -50%) translate(0, -2%)
+      box-shadow 0 0 0 5vmin var(--watch-bg--dark)
+
+  &__content
+    height 40vmin
+    border 0.5vmin solid var(--stroke)
+    width 40vmin
+    background-color var(--content)
+    border-radius 50%
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    overflow hidden
+
+    &:before
+      box-shadow 0 0 0 5vmin var(--shadow)
+      border-radius 50%
+      content ''
+      position absolute
+      top 50%
+      left 50%
+      height 100%
+      width 100%
+      transform translate(-50%, -50%) translate(0, 2%)
+
+    &:after
+      content ''
+      position absolute
+      top 50%
+      left 50%
+      height 100%
+      width 100%
+      transform translate(-50%, -50%) rotate(-50deg)
+      background linear-gradient(transparent 0 15%, var(--glare) 16% 35%, transparent 36% 40%, var(--glare) 41% 45%, transparent 46%)
+
+  &__branding
+    height 7vmin
+    position absolute
+    left 50%
+    top 75%
+    transform translate(-50%, 0)
+    opacity 0.5
+    filter saturate(0)
 
   &__face
-    display grid
-    grid-template-columns repeat(6, 1fr)
+    color var(--digit)
+    display flex
+    font-size 6vmin
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    padding 1.75vmin
+    border-radius 1vmin
+    background var(--face)
 
 .digit
-  font-size 2rem
-  font-family sans-serif
+  position relative
+  color transparent
+  counter-reset var(--counter-name) var(--counter-variable)
+  animation var(--name, none) var(--duration, 1s) infinite steps(var(--steps)) var(--state)
+
+  &:after
+    content counter(var(--counter-name))
+    font-variant tabular-nums
+    color var(--digit)
+    position absolute
+    bottom 0
+    right 0
 
 .ms
-  position relative
-  font-variant-numeric tabular-nums
-  text-align center
-  color transparent
-
-  &:after
-    font-variant-numeric tabular-nums
-    position absolute
-    top 0%
-    left 50%
-    color red
-    transform translate(-50%, 0)
-    width 100%
-    padding-right 2px
-    display inline-block
+  font-size 4vmin
+  transform translate(0, -6%)
 
   &--tens
-    counter-reset ms-tens var(--ms-tens)
-    animation var(--name, none) 1s infinite steps(10) var(--state)
-
-    &:after
-      content counter(ms-tens)
+    --duration 1s
+    --steps 10
+    --counter-name ms-tens
+    --counter-variable var(--ms-tens)
 
   &--singles
-    counter-reset ms-singles var(--ms-singles)
-    animation var(--name, none) 0.1s infinite steps(10) var(--state)
+    --duration 0.1s
+    --steps 10
+    --counter-name ms-singles
+    --counter-variable var(--ms-singles)
 
-    &:after
-      content counter(ms-singles)
 .s
-  position relative
-  font-variant-numeric tabular-nums
-  text-align center
-  color transparent
-
-  &:after
-    font-variant-numeric tabular-nums
-    position absolute
-    top 0%
-    left 50%
-    color blue
-    transform translate(-50%, 0)
-    width 100%
-    padding-right 2px
-    display inline-block
-
   &--tens
-    counter-reset s-tens var(--s-tens)
-    animation var(--name, none) 60s infinite steps(6) var(--state)
-
-    &:after
-      content counter(s-tens)
+    --duration 60s
+    --steps 6
+    --counter-name s-tens
+    --counter-variable var(--s-tens)
 
   &--singles
-    counter-reset s-singles var(--s-singles)
-    animation var(--name, none) 10s infinite steps(10) var(--state)
+    --duration 10s
+    --steps 10
+    --counter-name s-singles
+    --counter-variable var(--s-singles)
 
-    &:after
-      content counter(s-singles)
 .m
-  position relative
-  font-variant-numeric tabular-nums
-  text-align center
-  color transparent
-
-  &:after
-    font-variant-numeric tabular-nums
-    position absolute
-    top 0%
-    left 50%
-    color orange
-    transform translate(-50%, 0)
-    width 100%
-    padding-right 2px
-    display inline-block
-
   &--tens
-    counter-reset m-tens var(--m-tens)
-    animation var(--name, none) 3600s infinite steps(6) var(--state)
-
-    &:after
-      content counter(m-tens)
+    --duration 3600s
+    --steps 6
+    --counter-name m-tens
+    --counter-variable var(--m-tens)
 
   &--singles
-    counter-reset m-singles var(--m-singles)
-    animation var(--name, none) 600s infinite steps(10) var(--state)
+    --duration 600s
+    --steps 10
+    --counter-name m-singles
+    --counter-variable var(--m-singles)
 
-    &:after
-      content counter(m-singles)
-
+// The different animations requires for each digit
 @keyframes ms-tens
   to
     --ms-tens 10
