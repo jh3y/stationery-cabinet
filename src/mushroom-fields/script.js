@@ -3,7 +3,7 @@ import gsap from 'https://cdn.skypack.dev/gsap'
 // 100 x to 57.75 y is the ratio for movement
 const COUNT = 5
 const grid = [COUNT, COUNT]
-const MULTIPLIER = 50
+const MULTIPLIER = 42
 const CONFIG = {
   base: -(COUNT * MULTIPLIER),
   amount: 2 * (COUNT * MULTIPLIER),
@@ -33,27 +33,47 @@ gsap.set('.shroom', {
   },
 })
 
-const duration = 0.2
+const duration = 1
 const DISTRO = gsap.utils.distribute({
-  amount: 0.6,
+  amount: 1,
   base: 0,
   grid,
-  from: 'center',
+  from: 'edges',
 })
 
 const WRAPS = gsap.utils.toArray('.shroom__wrap')
 
-const TL = gsap.timeline({ repeat: -1 })
-
-for (let m = 0; m < WRAPS.length; m++) {
-  const SHROOM = WRAPS[m]
-  TL.add(
-    gsap.to(SHROOM, {
-      yPercent: -25,
-      yoyo: true,
-      repeat: 1,
-      duration,
-    }),
-    DISTRO(m, SHROOM, WRAPS)
-  )
+const JUMP = () => {
+  const TL = gsap.timeline()
+  for (let m = 0; m < WRAPS.length; m++) {
+    const SHROOM = WRAPS[m]
+    TL.add(
+      gsap.to(SHROOM, {
+        yPercent: -25,
+        duration: duration,
+        yoyo: true,
+        repeat: 1,
+      }),
+      DISTRO(m, SHROOM, WRAPS)
+    )
+  }
+  return TL
 }
+
+const PADDED = gsap.timeline()
+PADDED.add(JUMP())
+  .add(JUMP(), '>-1')
+  .add(JUMP(), '>-1')
+
+gsap.fromTo(
+  PADDED,
+  {
+    totalTime: 1,
+  },
+  {
+    repeat: -1,
+    duration: 1,
+    totalTime: 5,
+    ease: 'none',
+  }
+)
