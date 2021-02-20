@@ -1,6 +1,5 @@
 import gsap from 'https://cdn.skypack.dev/gsap'
 
-// 100 x to 57.75 y is the ratio for movement
 const COUNT = 5
 const grid = [COUNT, COUNT]
 const MULTIPLIER = 42
@@ -47,13 +46,43 @@ const JUMP = () => {
   const TL = gsap.timeline()
   for (let m = 0; m < WRAPS.length; m++) {
     const SHROOM = WRAPS[m]
+    gsap.set(SHROOM, { transformOrigin: '50% 100%' })
     TL.add(
-      gsap.to(SHROOM, {
-        yPercent: -25,
-        duration: duration,
-        yoyo: true,
-        repeat: 1,
-      }),
+      gsap
+        .timeline()
+        .to(SHROOM, {
+          yPercent: -25,
+          duration: duration,
+          yoyo: true,
+          repeat: 1,
+        })
+        .to(
+          SHROOM,
+          {
+            scaleY: 0.9,
+            scaleX: 1.1,
+            duration: 0.25,
+          },
+          '>-0.2'
+        )
+        .to(
+          SHROOM,
+          {
+            scaleY: 1,
+            scaleX: 1,
+            duration: 0.25,
+          },
+          0
+        )
+        .to(
+          SHROOM,
+          {
+            scaleY: 1.1,
+            scaleX: 0.9,
+            duration: 0.25,
+          },
+          '>'
+        ),
       DISTRO(m, SHROOM, WRAPS)
     )
   }
@@ -77,3 +106,4 @@ gsap.fromTo(
     ease: 'none',
   }
 )
+gsap.set('.mushroom-field', { display: 'block' })
