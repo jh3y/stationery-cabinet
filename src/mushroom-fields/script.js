@@ -33,7 +33,7 @@ gsap.set('.shroom', {
 })
 
 const duration = 1
-const DISTRO = gsap.utils.distribute({
+const JUMP_DISTRO = gsap.utils.distribute({
   amount: 1,
   base: 0,
   grid,
@@ -47,49 +47,47 @@ const JUMP = () => {
   for (let m = 0; m < WRAPS.length; m++) {
     const SHROOM = WRAPS[m]
     gsap.set(SHROOM, { transformOrigin: '50% 100%' })
-    TL.add(
-      gsap
-        .timeline()
-        .to(SHROOM, {
-          yPercent: -25,
-          duration: duration,
-          yoyo: true,
-          repeat: 1,
-        })
-        .to(
-          SHROOM,
-          {
-            scaleY: 0.9,
-            scaleX: 1.1,
-            duration: 0.25,
-          },
-          '>-0.2'
-        )
-        .to(
-          SHROOM,
-          {
-            scaleY: 1,
-            scaleX: 1,
-            duration: 0.25,
-          },
-          0
-        )
-        .to(
-          SHROOM,
-          {
-            scaleY: 1.1,
-            scaleX: 0.9,
-            duration: 0.25,
-          },
-          '>'
-        ),
-      DISTRO(m, SHROOM, WRAPS)
-    )
+    const JUMP_TL = gsap
+      .timeline()
+      .to(SHROOM, {
+        yPercent: -25,
+        duration: duration,
+        yoyo: true,
+        repeat: 1,
+      })
+      .to(
+        SHROOM,
+        {
+          scaleY: 0.9,
+          scaleX: 1.1,
+          duration: 0.25,
+        },
+        '>-0.2'
+      )
+      .to(
+        SHROOM,
+        {
+          scaleY: 1,
+          scaleX: 1,
+          duration: 0.25,
+        },
+        0
+      )
+      .to(
+        SHROOM,
+        {
+          scaleY: 1.1,
+          scaleX: 0.9,
+          duration: 0.25,
+        },
+        '>'
+      )
+    TL.add(JUMP_TL, JUMP_DISTRO(m, SHROOM, WRAPS))
   }
   return TL
 }
 
-const PADDED = gsap.timeline()
+const PADDED = gsap.timeline({ repeat: -1 })
 PADDED.add(JUMP())
   .add(JUMP(), '>-1')
   .add(JUMP(), '>-1')
