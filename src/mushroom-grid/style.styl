@@ -1,5 +1,6 @@
 *
   box-sizing border-box
+  transform-style preserve-3d
 
 :root
   --stroke hsl(0, 0%, 10%)
@@ -12,17 +13,24 @@ body
   min-height 100vh
   display grid
   place-items center
-  background hsla(90, 50%, 80%, 1)
+  background hsla(90, 0%, 15%, 1)
 
-.mushroom-field
-  height 8vmin
-  overflow visible !important
+.shroom__field
+  opacity 0
+  display grid
+  grid-template-columns repeat(var(--count), auto)
+  grid-template-rows repeat(var(--count), auto)
+  transform rotateX(-32deg) rotateY(-32deg) rotateX(90deg)
 
 .shroom
   --brim 'hsl(%s, 80%, 40%)' % var(--hue)
   --left 'hsl(%s, 80%, 50%)' % var(--hue)
   --right 'hsl(%s, 80%, 70%)' % var(--hue)
   --top 'hsl(%s, 80%, 60%)' % var(--hue)
+  overflow visible !important
+  transform rotateX(-90deg) rotateY(32deg) rotateX(32deg)
+  height 8vmin
+
   &__head
     &--brim
       fill var(--brim)

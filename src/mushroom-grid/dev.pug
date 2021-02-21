@@ -1,0 +1,19 @@
+- const COUNT = 5
+- const SHROOMS = COUNT * COUNT
+.shroom__field(style=`--count: ${COUNT}`)
+  - let s = 0
+  while s < SHROOMS
+    svg.shroom(xmlns='http://www.w3.org/2000/svg' viewbox='0 0 19.317 21.265')
+      g.shroom__body(stroke-linecap='round' stroke-linejoin='round')
+        path.shroom__body.shroom__body--dark(stroke-width='.265' d='M3.596 12.632v5l6.063 3.5v-5z')
+        path.shroom__eyes(stroke-width='.265' d='M4.462 14.132l.866.5v3l-.866-.5zM7.927 16.132v3l.866.5v-3z')
+        path.shroom__body.shroom__body--light(stroke-width='.265' d='M9.659 16.132l6.062-3.5v5l-6.062 3.5z')
+        path.shroom__head--top(stroke-width='.265' d='M15.72 12.632l-6.061-3.5-6.063 3.5 6.063 3.5z')
+        path.shroom__head--brim(stroke-width='.265' d='M.998 13.132l-.866-1.5 9.527 5.5v1zM9.659 17.132l9.526-5.5-.866 1.5-8.66 5z')
+        path.shroom__head--left(stroke-width='.265' d='M1.864 4.632l-1.732 7 9.527 5.5v-8z')
+        path.shroom__head--top(stroke-width='.265' d='M1.864 4.632L9.66.132l7.794 4.5-7.794 4.5z')
+        path.shroom__head--right(stroke-width='.265' d='M17.453 4.632l1.732 7-9.526 5.5v-8z')
+        path.shroom__spot(stroke-width='.26458' d='M14.855 7.132l-2.598 1.5-.866 3.5 1.732 2 2.598-1.5.866-3.5z')
+        path.shroom__spot(stroke-width='.265' d='M7.06 8.632l-2.598-1.5-1.732 2 .866 3.5 2.598 1.5 1.733-2z')
+        path.shroom__spot(stroke-width='.305' d='M9.659 1.363l2.997 1.73v2.309L9.66 7.132 6.66 5.402V3.094z')
+    - s++
