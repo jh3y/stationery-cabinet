@@ -1,0 +1,272 @@
+*
+*:after
+*:before
+  box-sizing border-box
+  transform-style preserve-3d
+  will-change transform
+
+:root
+  --bg hsl(210, 32%, 80%)
+  --hover 0.05
+  --default 0.01
+  --limit 0.9
+  --height 30
+  --width 20
+  --depth 15
+  --frame 1
+  --handle hsl(0, 0%, 80%)
+  --hue 10
+  --saturation 0%
+  --drawer-one hsl(0, 0%, 98%)
+  --drawer-two hsl(0, 0%, 90%)
+  --drawer-three hsl(0, 0%, 95%)
+  --unit-one 'hsl(%s, %s, 50%)' % (var(--hue) var(--saturation))
+  --unit-two 'hsl(%s, %s, 40%)' % (var(--hue) var(--saturation))
+  --unit-three 'hsl(%s, %s, 20%)' % (var(--hue) var(--saturation))
+  --unit-four 'hsl(%s, %s, 15%)' % (var(--hue) var(--saturation))
+  --transition 0.2s
+
+body
+  background var(--bg)
+  display grid
+  place-items center
+  min-height 100vh
+  transform scale(1.5)
+
+.chest
+  height calc(var(--height) * 1vmin)
+  transform translate3d(0, 0, 50vmin) rotateX(-32deg) rotateY(40deg)
+  width calc(var(--width) * 1vmin)
+
+  &__panel
+    position absolute
+
+    &--back
+      background var(--unit-two)
+
+    &--back
+    &--front
+      height 100%
+      width 100%
+      transform translate3d(0, 0, calc(var(--depth) * var(--coefficient)))
+
+    &--front-frame
+      height 100%
+      width 100%
+      border calc(var(--frame) * 1vmin) solid var(--unit-one)
+      border-bottom-width calc(var(--frame) * 2vmin)
+      transform translate3d(0, 0, 0)
+
+      &:after
+      &:before
+        content ''
+        background var(--unit-one)
+        height calc(var(--frame) * 1.5vmin)
+        width calc(var(--width) * 1vmin)
+        position absolute
+        transform translate(-50%, -50%)
+        left 50%
+
+      &:after
+        top calc(100 / 3 * 1.01%)
+
+      &:before
+        // Tiny little adjustment to cover the hole.
+        top calc(100 / 3 * 2.01%)
+
+    &--front
+      --coefficient 0.5vmin
+    &--back
+      --coefficient -0.5vmin
+
+    &--left
+    &--right
+      height 100%
+      left 50%
+      width calc(var(--depth) * 1vmin)
+      background var(--unit-three)
+      transform translate(-50%, 0) rotateY(90deg) translate3d(0, 0, calc(var(--width) * var(--coefficient)))
+
+    &--right
+      width calc((var(--depth) * 1vmin) + 2px)
+      --coefficient 0.5vmin
+
+    &--left
+      --coefficient -0.5vmin
+
+    &--top
+    &--bottom
+      height calc(var(--depth) * 1vmin)
+      width calc(var(--width) * 1vmin)
+      background var(--unit-two)
+
+    &--top
+      top 0
+      width calc((var(--width) * 1vmin) + 0.1vmin)
+      height calc((var(--depth) * 1vmin) + 0.1vmin)
+      left 50%
+      transform translate(-50%, -50%) rotateX(-90deg)
+
+    &--bottom
+      bottom 0
+      transform translate(0, 50%) rotateX(-90deg)
+
+  &__drawer
+    --drawer-height calc((var(--height) - (5 * var(--frame))) / 3)
+    position absolute
+    top var(--top, 0)
+    left 50%
+    height calc(var(--drawer-height) * 1vmin)
+    width calc((var(--width) - (2 * var(--frame))) * 1vmin)
+    transform translate3d(-50%, 0, calc((var(--depth) * 0.5vmin) + 0.01vmin))
+
+    &[data-position="1"]
+      --index 1
+      --top calc(var(--frame) * 1vmin)
+    &[data-position="2"]
+      --index 2
+      --top calc(((2 * var(--frame)) + var(--drawer-height)) * 1vmin)
+    &[data-position="3"]
+      --index 3
+      --top calc(((3 * var(--frame)) + (2 * var(--drawer-height))) * 1vmin)
+
+.drawer
+  &__structure
+    height 100%
+    width 100%
+    position absolute
+    top 0
+    left 0
+
+  &__panel
+    position absolute
+
+    &--left
+    &--right
+      width calc(var(--depth) * 1vmin)
+      height 65%
+      background var(--drawer-two)
+      bottom 1%
+
+    &--left
+      // left calc((var(--frame) * 1vmin) + 1px)
+      left 0
+      transform-origin 0 50%
+      transform rotateY(90deg)
+
+    &--right
+      right calc((var(--frame) * 1vmin) + 1px)
+      right 0
+      transform-origin 100% 50%
+      transform rotateY(-90deg)
+
+    &--front
+      height calc((var(--drawer-height) + (0.6 * var(--frame))) * 1vmin)
+      width calc((var(--width) - (0.6 * var(--frame))) * 1vmin)
+      top 50%
+      left 50%
+      transform translate3d(-50%, -50%, 1px)
+      background var(--unit-four)
+
+    &--bottom
+    &--back
+      width calc(100% - (2vmin * var(--frame)))
+      width 100%
+
+    &--bottom
+      height calc(var(--depth) * 1vmin)
+      background var(--drawer-three)
+      bottom 5%
+      left 50%
+      transform-origin 50% 100%
+      transform translate(-50%, 0) rotateX(90deg)
+
+    &--back
+      height 65%
+      background var(--drawer-one)
+      bottom 1%
+      left 50%
+      transform translate3d(-50%, 0, calc(var(--depth) * -1vmin))
+      text-align center
+      line-height calc(var(--drawer-height) * 0.65vmin)
+      font-size 3vmin
+      font-family sans-serif
+      font-weight bold
+
+.letter
+  color 'hsl(%s, 80%, 50%)' % var(--hue)
+  display inline-block
+  animation wave calc(var(--open) * 1s) calc(var(--delay) * -0.1s) infinite ease-in-out
+
+  &:nth-of-type(1)
+    --hue 15
+    --delay 0
+  &:nth-of-type(2)
+    --hue 35
+    --delay 1
+  &:nth-of-type(3)
+    --hue 45
+    --delay 2
+  &:nth-of-type(4)
+    --hue 90
+    --delay 3
+  &:nth-of-type(5)
+    --hue 180
+    --delay 4
+  &:nth-of-type(6)
+    --hue 260
+    --delay 5
+  &:nth-of-type(7)
+    --hue 320
+    --delay 6
+
+@keyframes wave
+  0%, 100%
+    transform translate3d(0, 10%, 1px)
+  50%
+    transform translate3d(0, -10%, 1px)
+
+details
+  position absolute
+  height 100%
+  width 100%
+  top 0
+  left 0
+  cursor pointer
+  outline transparent
+
+
+// Responsible for opening/closing
+details
+  &:hover:not([open])
+  &:hover:not([open]) + .drawer__structure
+    --open var(--hover)
+
+details
+.drawer__structure
+  transition transform var(--transition)
+
+  &[open]
+  &[open] + .drawer__structure
+    --open var(--limit)
+
+  transform translate3d(0, 0, calc((var(--open, var(--default)) * var(--depth)) * 1vmin))
+
+summary
+  outline transparent
+  height 100%
+  width 100%
+
+  &::-webkit-details-marker
+    display none
+
+  &:after
+    content ''
+    position absolute
+    background linear-gradient(var(--handle), var(--handle)) 50% 15% / 40% 8% no-repeat, transparent
+    height 110%
+    width 110%
+    top 50%
+    left 50%
+    transform translate3d(-50%, -50%, 0.5vmin)
+

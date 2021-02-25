@@ -1,0 +1,26 @@
+mixin drawer(position)
+  .chest__drawer.drawer(data-position=position)
+    details
+      summary
+    .drawer__structure
+      .drawer__panel.drawer__panel--back
+        block
+      .drawer__panel.drawer__panel--bottom
+      .drawer__panel.drawer__panel--right
+      .drawer__panel.drawer__panel--left
+      .drawer__panel.drawer__panel--front
+.chest
+  .chest__panel.chest__panel--back
+  .chest__panel.chest__panel--top
+  .chest__panel.chest__panel--bottom
+  .chest__panel.chest__panel--right
+  .chest__panel.chest__panel--front
+    .chest__panel.chest__panel--front-frame
+  .chest__panel.chest__panel--left
+  +drawer(1)
+    span CSS
+  +drawer(2)
+    span is
+  +drawer(3)
+    - for (const letter of "Awesome".split(''))
+      span.letter= letter
