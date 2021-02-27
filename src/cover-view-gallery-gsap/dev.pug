@@ -1,0 +1,40 @@
+-
+  const PICS = [
+    'https://images.unsplash.com/photo-1542662565-7e4b66bae529?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=282&q=80',
+    'https://images.unsplash.com/photo-1525153537143-f88592837fb1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=332&q=80',
+    'https://images.unsplash.com/photo-1477346611705-65d1883cee1e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80',
+    'https://images.unsplash.com/photo-1507400492013-162706c8c05e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=309&q=80',
+    'https://images.unsplash.com/photo-1436891620584-47fd0e565afb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80',
+    'https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80'
+  ]
+  const TITLES = ['Mountain', 'Stars', 'Skies', 'Water', 'Trips']
+  const TYPE = ['Guide', 'Planner', 'Discuss']
+mixin cardContent(idx, reflection)
+  .card__content.bg-gray-800.overflow-hidden.relative.h-full.w-full.rounded-md.font-sans
+    img.card__image.transform.absolute.h-full.w-full.inset-0.transform.scale-110(src=PICS[idx % PICS.length])
+    .card__details.absolute.inset-0.pt-52.flex.items-center.justify-center.flex-col
+      .card__type.text-gray-300.top-0.uppercase.text-xs.p-0.w-full.text-center= TYPE[Math.floor(Math.random() * TYPE.length)]
+      h2.card__title.p-2.text-white.font-black.text-xl.text-center.w-full.pb-12= TITLES[idx % TITLES.length]
+  .card__overlay.z-50.absolute.h-full.w-full.inset-0(class=`${reflection ? 'card__overlay--reflection' : ''}`)
+
+mixin card(idx)
+  li.gallery__card.card.w-56.h-72.absolute
+    .card__card.h-full.w-full
+      +cardContent(idx, false)
+    .card__reflection.absolute.h-full.w-full.top-8.left-0.rounded-md.overflow-hidden(aria-hidden="true")
+      +cardContent(idx, true)
+.gallery.w-screen.h-screen.absolute
+  ul.gallery__content.w-56.h-72.transform.absolute.top-50.left-50(class="top-1/2 left-1/2 -translate-y-2/4 -translate-x-2/4")
+    - let c = 0
+    while c < 10
+      +card(c)
+      - c++
+  .gallery__actions
+    button.gallery__prev.outline-none.absolute.z-10.rounded-full.transition.left-8.transform-gpu.opacity-50(class="top-1/2 -translate-y-1/2 hover:opacity-100")
+      span.sr-only Prev
+      svg.h-12.w-12.fill-current.text-white(viewBox="0 0 256 512" title="Previous")
+        path(d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z")
+    button.gallery__next.outline-none.absolute.z-10.rounded-full.right-8.transform-gpu.transition.opacity-50(class="top-1/2 -translate-y-1/2 hover:opacity-100")
+      span.sr-only Next
+      svg.h-12.w-12.fill-current.text-white(viewBox="0 0 256 512" title="Next")
+        path(d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z")
