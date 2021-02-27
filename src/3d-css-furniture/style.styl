@@ -1,0 +1,418 @@
+*
+*:after
+*:before
+  box-sizing border-box
+  transform-style preserve-3d
+
+@property --spin
+  initial-value 0deg
+  inherits false
+  syntax '<angle>'
+
+:root
+  --bg hsl(120, 30%, 80%)
+  --width 30
+  --height 54
+  --backboard hsl(45, 40%, 70%)
+  --depth 20
+  --rx -20
+  --ry 38
+  --thickness 1
+  --hue 0
+  --saturation 0%
+  --unit-one 'hsl(%s, %s, 60%)' % (var(--hue) var(--saturation))
+  --unit-two 'hsl(%s, %s, 50%)' % (var(--hue) var(--saturation))
+  --unit-three 'hsl(%s, %s, 40%)' % (var(--hue) var(--saturation))
+  --unit-four 'hsl(%s, %s, 30%)' % (var(--hue) var(--saturation))
+  --shelf-one hsl(0, 0%, 90%)
+  --shelf-two hsl(0, 0%, 85%)
+  --shelf-three hsl(0, 0%, 80%)
+  --rail-one hsl(0, 0%, 90%)
+  --rail-two hsl(0, 0%, 80%)
+  --rail-three hsl(0, 0%, 100%)
+  --handle hsl(0, 0%, 90%)
+  --open 0
+
+body
+  font-weight bold
+  font-family sans-serif
+
+// Cuboid utility class
+.cuboid
+  width 100%
+  height 100%
+  position relative
+  // 1 is the top and go t, r, b, l, f, b
+
+  &__side:nth-of-type(1)
+    height calc(var(--thickness) * 1vmin)
+    width 100%
+    position absolute
+    top 0
+    transform translate(0, -50%) rotateX(90deg)
+
+  &__side:nth-of-type(2)
+    height 100%
+    width calc(var(--thickness) * 1vmin)
+    position absolute
+    top 50%
+    right 0
+    transform translate(50%, -50%) rotateY(90deg)
+
+  &__side:nth-of-type(3)
+    width 100%
+    height calc(var(--thickness) * 1vmin)
+    position absolute
+    bottom 0
+    transform translate(0%, 50%) rotateX(90deg)
+
+  &__side:nth-of-type(4)
+    height 100%
+    width calc(var(--thickness) * 1vmin)
+    position absolute
+    left 0
+    top 50%
+    transform translate(-50%, -50%) rotateY(90deg)
+
+  &__side:nth-of-type(5)
+    height 100%
+    width 100%
+    transform translate3d(0, 0, calc(var(--thickness) * 0.5vmin))
+    position absolute
+    top 0
+    left 0
+
+  &__side:nth-of-type(6)
+    height 100%
+    width 100%
+    transform translate3d(0, 0, calc(var(--thickness) * -0.5vmin)) rotateY(180deg)
+    position absolute
+    top 0
+    left 0
+
+
+body
+  background-color var(--bg)
+  min-height 100vh
+  display grid
+  place-items center
+
+.wardrobe
+  animation spin 10s infinite linear
+  height calc(var(--height) * 1vmin)
+  width calc(var(--width) * 1vmin)
+  transform translate3d(-50%, -50%, 50vmin) rotateX(calc(var(--rx) * 1deg)) rotateY(calc(var(--ry) * 1deg))
+  // transform translate3d(-50%, -50%, 50vmin) rotateX(calc(var(--rx) * 1deg)) rotateY(var(--spin))
+  position absolute
+  top 50%
+  left 50%
+
+  // @keyframes spin
+  //   to
+  //     --spin 360deg
+
+  &__panel
+    position absolute
+
+    &--top
+    &--bottom
+      height calc(var(--depth) * 1vmin)
+      width calc((var(--width) + 1) * 1vmin)
+      left 50%
+      transform translate(-50%, calc(50% * var(--coefficient))) rotateX(90deg)
+
+    &--top
+      --coefficient -1
+      top 0
+
+    &--bottom
+      --coefficient 1
+      bottom 4%
+
+    &--left
+    &--right
+      height calc(100% - 4% - 1vmin)
+      width calc(var(--depth) * 1vmin)
+      top 0.5vmin
+      transform translate(calc(50% * var(--coefficient)), 0) rotateY(calc(90deg * var(--coefficient)))
+
+    &--left
+      --coefficient -1
+      left 0
+
+    &--right
+      --coefficient 1
+      right 0
+
+    &--back
+    &--front
+      height 96%
+      width calc(var(--width) * 1vmin)
+      transform translate3d(0, 0, calc((var(--coefficient) * var(--depth)) * 1vmin))
+
+    &--back
+      --coefficient -0.5
+      background var(--backboard)
+      transform translate3d(0, 0, calc(((var(--coefficient) * var(--depth)) * 1vmin) - 1px))
+
+    &--front
+      --coefficient 0.5
+      display flex
+
+  &__leg
+    --size calc(var(--depth) * 0.2vmin)
+    height var(--size)
+    width var(--size)
+    position absolute
+    transform translate3d(0, 0, calc((var(--height) * 0.02) * -1vmin))
+    --thickness calc(var(--height) * 0.04)
+
+    &--ne
+      top 1px
+      left 1px
+
+    &--nw
+      top 1px
+      right 1px
+
+    &--se
+      bottom 1px
+      left 1px
+
+    &--sw
+      bottom 1px
+      right 1px
+
+  &__rail
+    height calc(var(--thickness) * 1vmin)
+    width 100%
+    top 15%
+    position absolute
+
+  &__shelf
+    height calc(var(--depth) * 0.75vmin)
+    width 100%
+    top 65%
+    position absolute
+    transform rotateX(90deg) translate(0, (calc(var(--depth) * -0.12vmin)))
+
+  &__door
+    position absolute
+    width calc(50% + 0.5vmin)
+    height calc(100% + 0.5vmin)
+    top -0.25vmin
+
+    &--left
+      left -0.5vmin
+      --origin 0 50%
+      --coefficient -1
+
+    &--right
+      right -0.5vmin
+      --origin 100% 50%
+      --coefficient 1
+
+details
+  position relative
+  height 100%
+  width 100%
+  z-index 2
+  transform translate3d(0, 0, 0.5vmin)
+
+  &:hover:not([open]) ~.door
+    --open 0.05
+
+summary
+  height 100%
+  position absolute
+  top 0
+  left 0
+  z-index 2
+  width 100%
+  cursor pointer
+  opacity 1
+  outline transparent
+
+  &::-webkit-details-marker
+    display none
+
+  &:after
+    content ''
+    position absolute
+    top 0
+    left 0
+    height 100%
+    width 100%
+    transform-origin var(--origin)
+    transition transform 0.2s
+    transform rotateY(calc((var(--open) * (115 * var(--coefficient))) * 1deg)) translate3d(0, 0, 0.5vmin)
+
+[open]
+[open] ~ .door
+  --open 1
+
+.door
+  height 100%
+  width 100%
+  position absolute
+  pointer-events none
+  top 0
+  left 0
+  transition transform 0.2s
+  transform rotateY(calc((var(--open) * (120 * var(--coefficient))) * 1deg))
+  transform-origin var(--origin)
+
+
+.door-cuboid
+  transform translate3d(0, 0, 0.5vmin)
+
+.rail
+  div
+    background var(--rail-one)
+
+    &:nth-of-type(1)
+      background var(--rail-two)
+    &:nth-of-type(4)
+      background var(--rail-three)
+    &:nth-of-type(5)
+      background var(--rail-one)
+
+.shelf
+  div
+    background var(--shelf-one)
+
+    &:nth-of-type(3)
+      background var(--shelf-two)
+    &:nth-of-type(4)
+      background var(--shelf-three)
+    &:nth-of-type(5)
+      background var(--shelf-one)
+
+.leg
+.door-cuboid
+.panel-cuboid
+  & > div
+    background var(--unit-one)
+
+    &:nth-of-type(3)
+      background var(--unit-one)
+    &:nth-of-type(4)
+      background var(--unit-three)
+    &:nth-of-type(5)
+      background var(--unit-two)
+
+.door-cuboid
+  & > div
+    &:nth-of-type(1)
+      background var(--unit-four)
+
+.panel-cuboid
+  &--bottom
+    div
+      &:nth-of-type(5)
+        background var(--unit-three)
+
+  &--left
+    div
+      &:nth-of-type(5)
+        background var(--unit-three)
+
+  &--right
+    div
+      &:nth-of-type(6)
+        background var(--unit-four)
+
+.door-cuboid
+
+  div:nth-of-type(5):after
+    content ''
+    height 24%
+    width 8%
+    background var(--handle)
+    position absolute
+    top 50%
+    right 5%
+    transform translate(0, -50%)
+
+  &--left
+    div
+      &:nth-of-type(5):after
+        right 5%
+
+  &--right
+    div
+      &:nth-of-type(5):after
+        left 5%
+      &:nth-of-type(6)
+        background var(--unit-one)
+
+img
+  position absolute
+  height 8%
+  transform rotate(34deg)
+  bottom 5%
+  left 10%
+  filter saturate(0.5)
+
+.css
+  display grid
+  place-items center
+  font-size 6vmin
+  color hsl(0, 0%, 10%)
+
+  span
+    display block
+    text-align right
+    width 100%
+    padding-right 10%
+
+
+.is
+  display grid
+  place-items center
+  font-size 6vmin
+  color hsl(0, 0%, 98%)
+  padding-top 70%
+
+.awesome
+  font-size 5vmin
+  position absolute
+  display flex
+  flex-direction column
+  align-items center
+  top 50%
+  left 50%
+  transform translate(-50%, -55%)
+
+  span
+    animation sway 1s calc(var(--index) * -0.1s) infinite ease-in-out
+    color 'hsl(%s, 80%, 100%)' % var(--hue, 0)
+    text-transform uppercase
+
+    &:nth-of-type(1)
+      --index 0
+      --hue 15
+    &:nth-of-type(2)
+      --index 1
+      --hue 35
+    &:nth-of-type(3)
+      --index 2
+      --hue 50
+    &:nth-of-type(4)
+      --index 3
+      --hue 90
+    &:nth-of-type(5)
+      --index 4
+      --hue 180
+    &:nth-of-type(6)
+      --index 5
+      --hue 280
+    &:nth-of-type(7)
+      --index 6
+      --hue 320
+
+@keyframes sway
+  0%, 100%
+    transform translate(-25%, 0)
+  50%
+    transform translate(25%, 0)

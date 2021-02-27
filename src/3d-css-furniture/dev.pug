@@ -1,0 +1,64 @@
+mixin cuboid()
+  .cuboid(class!=attributes.class)
+    - let s = 0
+    while s < 6
+      .cuboid__side
+      - s++
+
+.wardrobe
+  .wardrobe__rail
+    +cuboid()(class="rail")
+  .wardrobe__shelf
+    .cuboid.shelf
+      .cuboid__side
+      .cuboid__side
+      .cuboid__side
+      .cuboid__side
+      .cuboid__side.css
+        span CSS
+      .cuboid__side
+  .wardrobe__panel.wardrobe__panel--top
+    +cuboid()(class="panel-cuboid panel-cuboid--top")
+  .wardrobe__panel.wardrobe__panel--right
+    .cuboid.panel-cuboid.panel-cuboid--right
+      .cuboid__side
+      .cuboid__side
+      .cuboid__side
+      .cuboid__side
+      .cuboid__side
+      .cuboid__side.is
+        span is
+  .wardrobe__panel.wardrobe__panel--bottom
+    .wardrobe__leg.wardrobe__leg--ne
+      +cuboid(class="leg")
+    .wardrobe__leg.wardrobe__leg--nw
+      +cuboid(class="leg")
+    .wardrobe__leg.wardrobe__leg--se
+      +cuboid(class="leg")
+    .wardrobe__leg.wardrobe__leg--sw
+      +cuboid(class="leg")
+    +cuboid()(class="panel-cuboid panel-cuboid--bottom")
+  .wardrobe__panel.wardrobe__panel--left
+    +cuboid()(class="panel-cuboid panel-cuboid--left")
+  .wardrobe__panel.wardrobe__panel--front
+    .wardrobe__door.wardrobe__door--left
+      details
+        summary
+      .door.door--left
+        +cuboid()(class="door-cuboid door-cuboid--left")
+    .wardrobe__door.wardrobe__door--right
+      details
+        summary
+      .door.door--right
+        .cuboid.door-cuboid.door-cuboid--right
+          .cuboid__side
+          .cuboid__side
+          .cuboid__side
+          .cuboid__side
+          .cuboid__side
+          .cuboid__side
+            .awesome
+              - for (const letter of 'Awesome'.split(''))
+                span= letter
+            img(src="https://assets.codepen.io/605876/avatar.png")
+  .wardrobe__panel.wardrobe__panel--back
