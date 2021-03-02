@@ -1,0 +1,41 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  background hsl(0, 0%, 10%)
+  color hsl(0, 0%, 100%)
+  font-weight bold
+  font-family sans-serif
+
+canvas
+  max-width 100%
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+.controls
+  padding 2rem
+  font-size 1.25rem
+  backdrop-filter blur(2px)
+  background hsla(0, 0%, 0%, 0.35)
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  display flex
+  flex-direction column
+
+  label
+    padding-bottom 0.25rem
+
+  & > div
+    display flex
+    flex-direction column
+
+    & + div
+      margin-top 1rem
+
+  button
+    margin-top 1rem
