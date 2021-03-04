@@ -15,7 +15,7 @@ const setColor = () => {
   gsap.set(document.documentElement, {
     '--hue': hue,
   })
-  COLOR = `hsl(${hue}, 70%, 52%)`
+  COLOR = `hsl(${hue}, 65%, 80%)`
 }
 const CHARS = gsap.utils.toArray('.text-grid__main .char')
 const STAGGER = 0.025
@@ -116,8 +116,7 @@ const REVEAL = () =>
           repeatDelay: gsap.utils.random(5, 10),
         })
         .to(FLICKER, {
-          // Think of the keyframes duration as a percentage of 1.
-          opacity: 0.2,
+          opacity: 0.3,
           yoyo: true,
           duration: 0.5,
           repeatDelay: 0.1,
