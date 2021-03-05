@@ -3,17 +3,16 @@
 
 body
   min-height 100vh
-  width 100vw
-  height 200vh
-  overflow-x hidden
+  background hsl(46, 80%, 50%)
+  height: 200vh
 
 .scene
   height 100vh
   width 100vw
-  display flex
   align-items center
   justify-content center
   position fixed
+  display none
 
 .cowboy
   height 50vmin
@@ -23,11 +22,39 @@ body
   left 50%
   transform translate(-50%, -50%)
 
+  &__hat
+    &--main
+      fill hsl(40, 80%, 30%)
+    &--brim
+      fill hsl(45, 80%, 20%)
+
+  &__brow
+    stroke hsl(0, 0%, 5%)
+
+  &__pupil
+    fill hsl(0, 0%, 100%)
+
+  &__eye-main
+    fill hsl(0, 0%, 5%)
+
+  &__lip
+    stroke hsl(0, 0%, 5%)
+
+  &__tongue
+    fill hsl(10, 100%, 50%)
+
+  &__mouth
+    fill hsl(0, 0%, 0%)
+
+  &__teeth
+    fill hsl(0, 0%, 100%)
+
   &__face
     height 100%
     width 100%
 
   &__stache
+    fill hsl(0, 0%, 5%)
     position absolute
     top 50%
     left 50%

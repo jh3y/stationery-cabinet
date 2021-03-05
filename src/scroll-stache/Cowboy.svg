@@ -1,14 +1,25 @@
 <svg class="cowboy__face" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 520 507">
-  <circle cx="208.263" cy="289.236" r="15.737" fill="#000"/>
-  <circle cx="208.263" cy="282.083" r="4.292" fill="#fff"/>
-  <path stroke="#000" stroke-linecap="round" stroke-width="8" d="M188 259.149c16.066-8.398 25.074-7.996 41.14 0M188 292.307c16.066-8.398 25.074-7.996 41.14 0"/>
-  <circle cx="307.123" cy="289.236" r="16.877" fill="#000"/>
-  <circle cx="307.123" cy="281.565" r="4.603" fill="#fff"/>
-  <path stroke="#000" stroke-linecap="round" stroke-width="8" d="M286.86 259.157c16.066-8.398 25.074-7.996 41.14 0M286.86 292.307c16.066-8.398 25.074-7.996 41.14 0"/>
-  <path fill="#664E0F" d="M161.5 1.519C169.511-3.99 235 11.019 261 18c38-6.981 86.262-20.975 94.5-16.481 16.5 9 45.5 207 45.5 207H114s31.5-196 47.5-207z"/>
-  <path fill="#7C5A26" d="M7.5 96.5c20-6 1.5 65.781 223.5 79.5 222 13.719 259.5-75 283.5-74s-37 99-93.5 115-259 16-337-10S-12.5 102.5 7.5 96.5z"/>
-  <path fill="#000" d="M331 364c0 29.823-29.459 69-69.5 69S187 393.823 187 364c0 0 34.459 15 74.5 15s69.5-15 69.5-15z"/>
-  <path stroke="#000" stroke-linecap="round" stroke-width="6" d="M343 355s-35.23 22-82.5 22-87.5-22-87.5-22"/>
-  <path fill="#fff" d="M179 344h158v55H179z" opacity=".5"/>
-  <circle cx="270" cy="436" r="26" fill="red"/>
+  <defs>
+    <clipPath id="mouth">
+      <path d="M331 364c0 29.823-29.459 69-69.5 69S187 393.823 187 364c0 0 34.459 15 74.5 15s69.5-15 69.5-15z"/>
+    </clipPath>
+  </defs>
+  <g class="cowboy__eye">
+    <circle class="cowboy__eye-main" cx="208.263" cy="289.236" r="15.737" />
+    <circle class="cowboy__pupil" cx="208.263" cy="282.083" r="4.292"/>
+  </g>
+  <path class="cowboy__brow" d="M188 292.307C204.066 283.909 213.074 284.311 229.14 292.307" stroke-width="8" stroke-linecap="round"/>
+  <g class="cowboy__eye">
+    <circle class="cowboy__eye-main" cx="307.123" cy="289.236" r="16.877" />
+    <circle class="cowboy__pupil" cx="307.123" cy="281.565" r="4.603"/>
+  </g>
+  <path class="cowboy__brow" d="M286.86 292.307C302.926 283.909 311.934 284.311 328 292.307" stroke-width="8" stroke-linecap="round"/>
+  <path class="cowboy__hat--main" d="M161.5 1.519C169.511-3.99 235 11.019 261 18c38-6.981 86.262-20.975 94.5-16.481 16.5 9 45.5 207 45.5 207H114s31.5-196 47.5-207z"/>
+  <path class="cowboy__hat--brim" d="M7.5 96.5c20-6 1.5 65.781 223.5 79.5 222 13.719 259.5-75 283.5-74s-37 99-93.5 115-259 16-337-10S-12.5 102.5 7.5 96.5z"/>
+  <path class="cowboy__mouth"  d="M331 364c0 29.823-29.459 69-69.5 69S187 393.823 187 364c0 0 34.459 15 74.5 15s69.5-15 69.5-15z"/>
+  <path class="cowboy__lip" stroke-linecap="round" stroke-width="6" d="M343 355s-35.23 22-82.5 22-87.5-22-87.5-22"/>
+  <g clip-path="url(#mouth)">
+    <path class="cowboy__teeth" d="M179 344h158v55H179z" />
+    <circle class="cowboy__tongue" cx="270" cy="436" r="26"/>
+  </g>
 </svg>
