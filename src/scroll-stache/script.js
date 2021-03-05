@@ -24,7 +24,6 @@ const CONFIG = {
   LTWO: 9,
   QTWO1: 8,
   QTHREE3: 7,
-
   CTWO1: 14,
   // CTWO1: 14,
   CTWO2: 7,
@@ -35,6 +34,11 @@ const CONFIG = {
   // CTHREE1: 15,
   CTHREE2: 14,
   // CTHREE1: 15,
+}
+
+let POINTER = {
+  x: 0,
+  y: 0,
 }
 
 const getPath = () =>
@@ -55,17 +59,62 @@ const getPath = () =>
 
 const pathSet = gsap.quickSetter('.stache__path', 'attr')
 
-const updateStache = () => {
+const BOUNDS = 50
+
+const update = () => {
+  const xPercent = gsap.utils.mapRange(
+    0,
+    window.innerWidth,
+    -BOUNDS,
+    BOUNDS,
+    POINTER.x
+  )
+  const yPercent = gsap.utils.mapRange(
+    0,
+    window.innerHeight,
+    -BOUNDS,
+    BOUNDS,
+    POINTER.y
+  )
+  gsap.set('.cowboy__pupil', { xPercent, yPercent })
   pathSet({ d: getPath() })
 }
 
-ticker.add(updateStache)
+ticker.add(update)
 
-// const STACHE_TL =
-gsap
-  .timeline({
-    repeat: -1,
+gsap.set('.cowboy__brow', {
+  yPercent: -500,
+})
+
+gsap.set('.cowboy__eye', {
+  transformOrigin: '50% 50%',
+})
+
+// let blinkTween
+const BLINK = () => {
+  const delay = gsap.utils.random(1, 5)
+  gsap.to('.cowboy__eye', {
+    delay,
+    scaleY: 0.1,
+    repeat: 3,
     yoyo: true,
+    duration: 0.05,
+    onComplete: () => {
+      BLINK()
+    },
+  })
+}
+BLINK()
+
+document.addEventListener('pointermove', ({ x, y }) => {
+  POINTER = { x, y }
+})
+
+const STACHE_TL = gsap
+  .timeline({
+    paused: true,
+    // repeat: -1,
+    // yoyo: true,
   })
   .to(CONFIG, {
     M2: 6,
@@ -91,13 +140,9 @@ gsap
   .to(
     CONFIG,
     {
-      // CTWO1: 15,
       CTWO1: 14,
-      // CTWO2: 14,
       CTWO2: 6,
-      // CTWO3: 10,
       CTWO3: 6,
-      // CTHREE1: 14,
       CTHREE1: 15,
       CTHREE2: 15,
       duration: 1,
@@ -108,29 +153,30 @@ gsap
   )
   .timeScale(3)
 
-// const SCRUB = gsap.to(STACHE_TL, {
-//   totalTime: 0,
-//   duration: 0.5,
-//   ease: 'power3',
-//   paused: true,
-// })
+const SCRUB = gsap.to(STACHE_TL, {
+  totalTime: 0,
+  duration: 0.5,
+  ease: 'power3',
+  paused: true,
+})
 
-// document.documentElement.scrollTop = 2
-// ScrollTrigger.create({
-//   start: 1,
-//   end: 'bottom bottom',
-//   horizontal: false,
-//   trigger: 'body',
-//   scrub: 0.1,
-//   onLeaveBack: () => {
-//     console.info('leave back')
-//     document.body.scrollTop = document.documentElement.scrollTop =
-//       document.body.scrollHeight - 2
-//   },
-//   onLeave: () =>
-//     (document.body.scrollTop = document.documentElement.scrollTop = 2),
-//   onUpdate: self => {
-//     SCRUB.vars.totalTime = self.progress * STACHE_TL.duration()
-//     SCRUB.invalidate().restart()
-//   },
-// })
+document.documentElement.scrollTop = 2
+ScrollTrigger.create({
+  start: 1,
+  end: 'bottom bottom',
+  horizontal: false,
+  trigger: 'body',
+  scrub: 0.1,
+  onLeaveBack: () => {
+    document.body.scrollTop = document.documentElement.scrollTop =
+      document.body.scrollHeight - 2
+  },
+  onLeave: () =>
+    (document.body.scrollTop = document.documentElement.scrollTop = 2),
+  onUpdate: self => {
+    SCRUB.vars.totalTime = self.progress * STACHE_TL.duration()
+    SCRUB.invalidate().restart()
+  },
+})
+
+gsap.set('.scene', { display: 'flex' })
