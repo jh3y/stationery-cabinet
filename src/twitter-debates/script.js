@@ -65,7 +65,7 @@ const ANGER_TL = gsap
     // yoyo: true,
     // repeat: -1,
   })
-  .from(['#mouth', '.domo__mouth'], {
+  .from(['#mouth-clip', '.domo__mouth'], {
     scaleY: 0.4,
     duration,
   })

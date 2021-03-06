@@ -1,0 +1,56 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  background hsl(10, 70%, 90%)
+
+#app
+  display flex
+  flex-direction column
+  align-items center
+  justify-content center
+
+.retro
+  --dark-blue #11269C
+  --soft-pink #FFC4CA
+  --pink #FF596A
+  --white #FFFFFF
+  --body #C4C4C4
+  height 30vmin
+  overflow visible !important
+
+button
+  box-sizing border-box
+  border 0 solid
+  font-family inherit
+  font-size 100%
+  margin 0
+  overflow visible
+  outline transparent
+  background-image none
+  padding 0
+  line-height inherit
+  --bg-opacity 1
+  background-color #ff94db
+  border-width 1px
+  cursor pointer
+  font-weight 900
+  height 3rem
+  margin-top 1rem
+  padding-left 1rem
+  padding-right 1rem
+  box-shadow .25rem .25rem currentColor
+  --text-opacity 1
+  color #11269C
+  text-transform uppercase
+  width 16rem
+  font-family 'Source Code Pro', monospace
+
+  &:hover
+    background #FFDBE7
+
+  &:active
+    box-shadow 0 0 currentColor
