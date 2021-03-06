@@ -25,7 +25,7 @@
   </g>
   <defs>
     <clipPath id="mouth">
-      <rect width="250" height="240" x="172" y="155" rx="20"/>
+      <rect id="mouth-clip" width="250" height="240" x="172" y="155" rx="20"/>
     </clipPath>
     <linearGradient id="paint0_linear" x1="559.002" x2="457.69" y1="482.14" y2="277.885" gradientUnits="userSpaceOnUse">
       <stop stop-color="#603D2A"/>
