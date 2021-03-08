@@ -1,0 +1,23 @@
+*
+  box-sizing border-box
+
+// 91, 100%, 52%
+// 328, 100%, 54%
+// 271, 76%, 53%
+
+:root
+  --hue 328
+
+body
+
+  display grid
+  place-items center
+  min-height 100vh
+  background hsl(0, 0%, 10%)
+
+.squares
+  height 300px
+  width 300px
+  overflow visible
+  stroke 'hsl(%s, 100%, 54%)' % var(--hue)
+  filter 'drop-shadow(0 -1px 1px hsl(0, 10%, 0%)) drop-shadow(0 0 4px hsl(%s, 100%, 54%, 0.5)) brightness(1.2)' % var(--hue)
