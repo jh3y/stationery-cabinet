@@ -1,0 +1,80 @@
+<svg class="bulbs" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 679 483">
+  <g class="bulb">
+    <path class="bulb__chord" stroke="#C4C4C4" stroke-width="3" d="M339 411V11"/>
+    <g class="bulb__bulb">
+      <path stroke="none" stroke-width="3" d="M339 411V11"/>
+      <circle class="bulb__glass" cx="339" cy="453" r="29" stroke="#000" stroke-width="2"/>
+      <circle class="bulb__flash" cx="339" cy="453" r="30" fill="#FAFF13"/>
+      <path class="bulb__glare" d="M363.977 456.827C364.667 452.176 364.106 447.425 362.352 443.062C360.599 438.699 357.716 434.881 354 432" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="bulb__filament" stroke="#000" stroke-width="2" d="M339 437v13.5M343 437v13.5M347 420v24M335 437v13.5M331 420v24"/>
+      <g clip-path="url(#clip0)">
+        <rect class="bulb__holder" width="40" height="34" x="319" y="394" fill="#C4C4C4" rx="4"/>
+        <rect class="bulb__holder-shine" width="20" height="34" x="346" y="394" fill="#F7F7F7"/>
+      </g>
+      <rect class="bulb__holder-outline" width="38" height="32" x="320" y="395" stroke="#000" stroke-width="2" rx="3"/>
+    </g>
+  </g>
+  <g class="bulb">
+    <g class="bulb__bulb">
+      <path class="bulb__fake-chord" stroke="red" stroke-width="3" d="M339 411V11"/>
+      <circle class="bulb__glass" cx="339" cy="453" r="29" stroke="#000" stroke-width="2"/>
+      <circle class="bulb__flash" cx="339" cy="453" r="30" fill="#FAFF13"/>
+      <path class="bulb__glare" d="M363.977 456.827C364.667 452.176 364.106 447.425 362.352 443.062C360.599 438.699 357.716 434.881 354 432" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="bulb__filament" stroke="#000" stroke-width="2" d="M339 437v13.5M343 437v13.5M347 420v24M335 437v13.5M331 420v24"/>
+      <g clip-path="url(#clip0)">
+        <rect class="bulb__holder" width="40" height="34" x="319" y="394" fill="#C4C4C4" rx="4"/>
+        <rect class="bulb__holder-shine" width="20" height="34" x="346" y="394" fill="#F7F7F7"/>
+      </g>
+      <rect class="bulb__holder-outline" width="38" height="32" x="320" y="395" stroke="#000" stroke-width="2" rx="3"/>
+    </g>
+  </g>
+  <g class="bulb">
+    <g class="bulb__bulb">
+      <path class="bulb__fake-chord" stroke="red" stroke-width="3" d="M339 411V11"/>
+      <circle class="bulb__glass" cx="339" cy="453" r="29" stroke="#000" stroke-width="2"/>
+      <circle class="bulb__flash" cx="339" cy="453" r="30" fill="#FAFF13"/>
+      <path class="bulb__glare" d="M363.977 456.827C364.667 452.176 364.106 447.425 362.352 443.062C360.599 438.699 357.716 434.881 354 432" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="bulb__filament" stroke="#000" stroke-width="2" d="M339 437v13.5M343 437v13.5M347 420v24M335 437v13.5M331 420v24"/>
+      <g clip-path="url(#clip0)">
+        <rect class="bulb__holder" width="40" height="34" x="319" y="394" fill="#C4C4C4" rx="4"/>
+        <rect class="bulb__holder-shine" width="20" height="34" x="346" y="394" fill="#F7F7F7"/>
+      </g>
+      <rect class="bulb__holder-outline" width="38" height="32" x="320" y="395" stroke="#000" stroke-width="2" rx="3"/>
+    </g>
+  </g>
+  <g class="bulb">
+    <g class="bulb__bulb">
+      <path class="bulb__fake-chord" stroke="red" stroke-width="3" d="M339 411V11"/>
+      <circle class="bulb__glass" cx="339" cy="453" r="29" stroke="#000" stroke-width="2"/>
+      <circle class="bulb__flash" cx="339" cy="453" r="30" fill="#FAFF13"/>
+      <path class="bulb__glare" d="M363.977 456.827C364.667 452.176 364.106 447.425 362.352 443.062C360.599 438.699 357.716 434.881 354 432" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="bulb__filament" stroke="#000" stroke-width="2" d="M339 437v13.5M343 437v13.5M347 420v24M335 437v13.5M331 420v24"/>
+      <g clip-path="url(#clip0)">
+        <rect class="bulb__holder" width="40" height="34" x="319" y="394" fill="#C4C4C4" rx="4"/>
+        <rect class="bulb__holder-shine" width="20" height="34" x="346" y="394" fill="#F7F7F7"/>
+      </g>
+      <rect class="bulb__holder-outline" width="38" height="32" x="320" y="395" stroke="#000" stroke-width="2" rx="3"/>
+    </g>
+  </g>
+  <g class="bulb">
+    <path class="bulb__chord" stroke="#C4C4C4" stroke-width="3" d="M339 411V11"/>
+    <g class="bulb__bulb">
+      <path stroke="none" stroke-width="3" d="M339 411V11"/>
+      <circle class="bulb__glass" cx="339" cy="453" r="29" stroke="#000" stroke-width="2"/>
+      <circle class="bulb__flash" cx="339" cy="453" r="30" fill="#FAFF13"/>
+      <path class="bulb__glare" d="M363.977 456.827C364.667 452.176 364.106 447.425 362.352 443.062C360.599 438.699 357.716 434.881 354 432" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="bulb__filament" stroke="#000" stroke-width="2" d="M339 437v13.5M343 437v13.5M347 420v24M335 437v13.5M331 420v24"/>
+      <g clip-path="url(#clip0)">
+        <rect class="bulb__holder" width="40" height="34" x="319" y="394" fill="#C4C4C4" rx="4"/>
+        <rect class="bulb__holder-shine" width="20" height="34" x="346" y="394" fill="#F7F7F7"/>
+      </g>
+      <rect class="bulb__holder-outline" width="38" height="32" x="320" y="395" stroke="#000" stroke-width="2" rx="3"/>
+    </g>
+  </g>
+  <path class="bulbs__ceiling" stroke="#000" stroke-width="4" d="M109 12h460"/>
+  <defs>
+    <clipPath id="clip0">
+      <rect width="40" height="34" x="319" y="394" rx="4"/>
+    </clipPath>
+  </defs>
+</svg>

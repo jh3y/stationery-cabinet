@@ -1,0 +1,7 @@
+<svg class="lines" viewBox="0 0 248 218" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path class="actual-string" d="M124 13L124 193" stroke="hsl(0, 0%, 70%)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <g class="string-and-ball">
+    <path class="string" d="M124 13L124 193" stroke="hsl(0, 0%, 70%)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle class="ball" cx="124" cy="193" r="25" fill="hsl(90, 80%, 70%)"/>
+  </g>
+</svg>

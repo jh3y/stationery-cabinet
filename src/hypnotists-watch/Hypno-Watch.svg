@@ -1,0 +1,34 @@
+<svg class="pocket-watch" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 383 334">
+  <g class="pocket-watch__group">
+    <g class="pocket-watch__watch">
+      <rect width="6" height="12" x="188" y="247" fill="#C4C4C4" rx="2"/>
+      <path stroke="#B3B3B3" stroke-width="2" d="M198 246c0 1.272-.685 2.499-1.943 3.443-1.259.944-3.043 1.557-5.057 1.557-2.014 0-3.798-.613-5.057-1.557-1.258-.944-1.943-2.171-1.943-3.443 0-1.272.685-2.499 1.943-3.443 1.259-.944 3.043-1.557 5.057-1.557 2.014 0 3.798.613 5.057 1.557 1.258.944 1.943 2.171 1.943 3.443z"/>
+      <rect width="20" height="5" x="181" y="256" fill="#A9A6A6" rx="2"/>
+      <circle cx="191" cy="296" r="38" fill="#B8B8B8"/>
+      <circle cx="191" cy="296" r="36" fill="#BEBEBE"/>
+      <circle cx="191" cy="296" r="25" fill="#B5B5B5"/>
+      <path stroke="#F1F1F1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M207 325.132A30.501 30.501 0 00219.629 312"/>
+      <path stroke="#F4F4F4" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M183.213 263.904a33.998 33.998 0 00-25.106 24.491"/>
+    </g>
+    <path class="pocket-watch__chain pocket-watch__chain--invisible" stroke="#AFAFAF" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M191 19.5V243"/>
+  </g>
+  <path class="pocket-watch__chain pocket-watch__chain--morpher" stroke="#AFAFAF" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M191 19.5V243"/>
+  <!-- <rect width="6" height="12" x="73.811" y="214.521" fill="#C4C4C4" rx="2" transform="rotate(30 73.81 214.521)"/>
+  <path stroke="#B3B3B3" stroke-width="2" d="M82.971 218.655c-.636 1.101-1.842 1.821-3.404 2.01-1.562.188-3.414-.173-5.158-1.18-1.744-1.007-2.983-2.43-3.6-3.877-.619-1.447-.598-2.852.038-3.953s1.842-1.822 3.404-2.01c1.562-.188 3.414.173 5.158 1.18 1.744 1.006 2.983 2.43 3.6 3.877.618 1.446.598 2.852-.038 3.953z"/>
+  <rect width="20" height="5" x="63.249" y="218.815" fill="#A9A6A6" rx="2" transform="rotate(30 63.249 218.815)"/>
+  <circle cx="51.909" cy="258.456" r="38" fill="#B8B8B8" transform="rotate(30 51.909 258.456)"/>
+  <circle cx="51.909" cy="258.456" r="36" fill="#BEBEBE" transform="rotate(30 51.909 258.456)"/>
+  <circle cx="51.909" cy="258.456" r="25" fill="#B5B5B5" transform="rotate(30 51.909 258.456)"/>
+  <path stroke="#F1F1F1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M51.2 291.685a30.504 30.504 0 0017.502-5.058"/>
+  <path stroke="#F4F4F4" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M61.213 226.766a34.001 34.001 0 00-33.987 8.657"/> -->
+  <!-- <path stroke="#AFAFAF" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M190.159 19C179.503 68.34 117.5 193 78.409 212.557"/> -->
+  <!-- <rect width="6" height="12" fill="#C4C4C4" rx="2" transform="scale(-1 1) rotate(30 -554.43 -467.955)"/>
+  <path stroke="#B3B3B3" stroke-width="2" d="M299.097 218.655c.636 1.101 1.842 1.821 3.404 2.01 1.562.188 3.414-.173 5.158-1.18 1.744-1.007 2.983-2.43 3.601-3.877.618-1.447.597-2.852-.039-3.953s-1.842-1.822-3.404-2.01c-1.562-.188-3.414.173-5.158 1.18-1.744 1.006-2.983 2.43-3.601 3.877-.618 1.446-.597 2.852.039 3.953z"/>
+  <rect width="20" height="5" fill="#A9A6A6" rx="2" transform="scale(-1 1) rotate(30 -567.724 -485.517)"/>
+  <circle r="38" fill="#B8B8B8" transform="scale(-1 1) rotate(30 -647.365 -486.857)"/>
+  <circle r="36" fill="#BEBEBE" transform="scale(-1 1) rotate(30 -647.365 -486.857)"/>
+  <circle r="25" fill="#B5B5B5" transform="scale(-1 1) rotate(30 -647.365 -486.857)"/>
+  <path stroke="#F1F1F1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M330.868 291.685a30.505 30.505 0 01-17.503-5.058"/>
+  <path stroke="#F4F4F4" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M320.855 226.766a34.001 34.001 0 0133.987 8.657"/> -->
+  <!-- <path stroke="#AFAFAF" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M191.909 19c10.656 49.34 72.659 174 111.75 193.557"/> -->
+</svg>
