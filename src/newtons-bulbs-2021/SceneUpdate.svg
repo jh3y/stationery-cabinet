@@ -1,0 +1,22 @@
+<svg width="679" height="483" viewBox="0 0 679 483" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g class="bulb">
+    <path d="M339 411L339 11" stroke="#C4C4C4" stroke-width="3"/>
+    <circle cx="339" cy="453" r="29" stroke="black" stroke-width="2"/>
+    <circle cx="339" cy="453" r="30" fill="#FAFF13"/>
+    <path d="M339 437V450.5" stroke="black" stroke-width="2"/>
+    <path d="M343 437V450.5" stroke="black" stroke-width="2"/>
+    <path d="M347 420L347 444" stroke="black" stroke-width="2"/>
+    <path d="M335 437V450.5" stroke="black" stroke-width="2"/>
+    <path d="M331 420L331 444" stroke="black" stroke-width="2"/>
+    <g clip-path="url(#clip0)">
+    <rect x="319" y="394" width="40" height="34" rx="4" fill="#C4C4C4"/>
+    <rect x="345" y="377" width="30" height="65" fill="#F7F7F7"/>
+    </g>
+    <rect x="320" y="395" width="38" height="32" rx="3" stroke="black" stroke-width="2"/>
+  </g>
+<path d="M109 12H569" stroke="black" stroke-width="4"/>
+<defs>
+<clipPath id="clip0">
+</clipPath>
+</defs>
+</svg>
