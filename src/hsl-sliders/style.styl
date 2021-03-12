@@ -1,0 +1,139 @@
+*
+  box-sizing border-box
+
+:root
+  --accent 'hsl(0, 0%, %s)' % calc(( 15 + (var(--dark, 0) * 82)) * 1%)
+  --thumb 48px
+  --dark-grad hsla(0, 0%, 0%, 0.4)
+  --light-grad hsla(0, 0%, 100%, 0.4)
+  --border hsl(0, 0%, 25%)
+  --thumb-border 'hsl(0, 0%, %s)' % calc((25 + (var(--dark, 0) * 65)) * 1%)
+
+body
+  min-height 100vh
+  background 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation, 0) * 1%) calc(var(--lightness, 0) * 1%))
+
+.hsl
+  color var(--accent)
+
+.toast
+  --toast-bg 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation, 0) * 1%) calc((var(--lightness, 0) - 10) * 1%))
+  position fixed
+  top 1rem
+  left 50%
+  transform translate(-50%, 0)
+  animation fadeOut 0.5s 1.5s forwards
+  color var(--accent)
+  background var(--toast-bg)
+
+@keyframes fadeOut
+  to
+    opacity 0
+
+.content
+  display none
+
+svg
+  fill var(--accent)
+
+.slider-track
+  position absolute
+  top calc(var(--thumb) * 0.5)
+  left 50%
+  transform translate(-50%, 0)
+  bottom calc(var(--thumb) * 0.5)
+  border-radius 8px
+
+  &:after
+    content ''
+    position absolute
+    height 100%
+    width 20px
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    background linear-gradient(90deg, var(--light-grad), var(--dark-grad))
+    border-radius 10px
+    border 2px solid var(--border)
+
+  &:before
+    content ''
+    position absolute
+    height 100%
+    width 40px
+    top 50%
+    left 50%
+    height calc(100% + 20px)
+    transform translate(-50%, -50%)
+    background linear-gradient(90deg, var(--dark-grad), var(--light-grad))
+    z-index -1
+    border-radius 20px
+
+  &--hue:after
+    background linear-gradient(90deg, var(--light-grad), var(--dark-grad)),
+      linear-gradient(0deg, red, orange, yellow, green, indigo, blue, violet)
+  &--saturation:after
+    --base 'hsl(%s, 0%, 50%)' % var(--hue)
+    --saturated 'hsl(%s, 100%, 50%)' % var(--hue)
+    background linear-gradient(90deg, var(--light-grad), var(--dark-grad)),
+      linear-gradient(0deg, var(--base), var(--saturated))
+  &--lightness:after
+    --current 'hsl(%s, %s, 50%)' % (var(--hue) calc(var(--saturation, 0) * 1%))
+    background linear-gradient(90deg, var(--light-grad), var(--dark-grad)),
+      linear-gradient(0deg, hsl(0, 0%, 0%), var(--current), hsl(0, 0%, 100%))
+
+input[type="range"]
+  --height 48px
+
+  appearance none
+  -webkit-appearance none
+  outline transparent
+  position absolute
+  top 50%
+  left 50%
+  cursor grab
+  transform translate(-50%, -50%) rotate(-90deg)
+  overflow visible
+  background transparent
+
+  &:active
+    cursor grabbing
+
+  &::-webkit-slider-thumb
+    -webkit-appearance none
+    appearance none
+    width var(--thumb)
+    height var(--thumb)
+    border-radius 50%
+    border 4px solid var(--thumb-border)
+
+  &::-moz-range-thumb
+    box-sizing border-box
+    width var(--thumb)
+    height var(--thumb)
+    border-radius 50%
+    border 4px solid var(--thumb-border)
+
+#hue
+  --current-color 'hsl(%s, 100%, 50%)' % var(--hue, 0)
+  &::-webkit-slider-thumb
+    background linear-gradient(0deg, var(--dark-grad), var(--light-grad)), var(--current-color)
+
+  &::-moz-range-thumb
+    background linear-gradient(0deg, var(--dark-grad), var(--light-grad)), var(--current-color)
+
+#saturation
+  --current-color 'hsl(%s, 100%, 50%)' % var(--hue)
+  --desaturated 'hsl(%s, 0%, 50%)' % var(--hue)
+  --saturated 'hsl(%s, %s, 50%)' % (var(--hue) calc(var(--saturation, 0) * 1%))
+  &::-webkit-slider-thumb
+    background linear-gradient(0deg, var(--dark-grad), var(--light-grad)), var(--saturated)
+  &::-moz-range-thumb
+    background linear-gradient(0deg, var(--dark-grad), var(--light-grad)), var(--saturated)
+
+#lightness
+  --current-color 'hsl(%s, %s, %s)' % (var(--hue) calc(var(--saturation, 0) * 1%) calc(var(--lightness, 0) * 1%))
+  &::-webkit-slider-thumb
+    background linear-gradient(0deg, var(--dark-grad), var(--light-grad)), var(--current-color)
+  &::-moz-range-thumb
+    background linear-gradient(0deg, var(--dark-grad), var(--light-grad)), var(--current-color)
