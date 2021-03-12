@@ -1,0 +1,23 @@
+.content.min-h-screen.min-w-screen.items-center.justify-center
+  .controls.grid.grid-cols-5.gap-y-5
+    .control.flex.flex-col.items-center.w-20.h-44.relative.col-start-2
+      label.sr-only(for="hue") Hue
+      .slider-track.slider-track--hue
+      input#hue.h-3.w-44(type="range" min="0" max="360" step="1" title="Hue")
+    .control.flex.flex-col.items-center.w-20.h-44.relative
+      label.sr-only(for="saturation") Saturation
+      .slider-track.slider-track--saturation
+      input#saturation.h-3.w-44(type="range" min="0" max="100" step="1" title="Saturation")
+    .control.flex.flex-col.items-center.w-20.h-44.relative
+      label.sr-only(for="lightness") Lightness
+      .slider-track.slider-track--lightness
+      input#lightness.h-3.w-44(type="range" min="0" max="100" step="1" title="Lightness")
+    label.hsl.col-span-full.grid.grid-cols-5.font-bold.text-2xl
+      span.text-right hsl(
+      span.label-hue.text-center(title="Hue") 100%
+      span.label-saturation.text-center(title="Saturation") 100%
+      span.label-lightness.text-center(title="Lightness") 100%
+      span.text-left )
+  button#copy.h-12.w-12.fixed.bottom-4.right-4.flex.items-center.justify-center.rounded-full.outline-none(title="Copy HSL")
+    svg(class="h-3/4" viewBox="0 0 448 512" title="Copy HSL")
+      path(d="M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 25.121 56 56 56h168zm0-344V0H152c-13.255 0-24 10.745-24 24v368c0 13.255 10.745 24 24 24h272c13.255 0 24-10.745 24-24V128H344c-13.2 0-24-10.8-24-24zm120.971-31.029L375.029 7.029A24 24 0 0 0 358.059 0H352v96h96v-6.059a24 24 0 0 0-7.029-16.97z")
