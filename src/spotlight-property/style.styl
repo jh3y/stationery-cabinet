@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@800')
+
+@property --spotlight-x
+  initial-value 0
+  inherits false
+  syntax '<integer>'
+
+@property --spotlight-y
+  initial-value 0
+  inherits false
+  syntax '<integer>'
+
+@property --alpha
+  initial-value 1
+  inherits false
+  syntax '<integer>'
+
+:root
+  --padding 6vmin 10vmin
+  --vertical 5.5s
+  --horizontal 2.6s
+  --size clamp(2rem, 50vmin, 4rem)
+  --flicker 0s
+  --bg hsl(0, 0%, 8%)
+  --light 'hsla(45, 80%, 90%, %s)' % var(--alpha)
+  --text hsl(0, 0%, 10%)
+
+  @media(max-height 600px)
+    --padding 12vmin 20vmin
+
+  @media(min-width 768px)
+    --size clamp(5rem, 50vmin, 15rem)
+
+*
+*:after
+*:before
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  background var(--bg)
+
+h1
+  --light 'hsla(45, 80%, 90%, %s)' % var(--alpha)
+  font-family 'Open Sans', sans-serif
+  font-size clamp(1rem, 40vmin, var(--upper, 3rem))
+  text-transform uppercase
+  padding var(--padding)
+  margin 0
+  background radial-gradient(var(--light), transparent 65%) calc(var(--spotlight-x) * 1%) calc(var(--spotlight-y) * 1%) / 10vmin 10vmin no-repeat
+  background-size var(--size) var(--size)
+  background-color var(--text)
+  animation spotlight-v var(--vertical) infinite, spotlight-h var(--horizontal) infinite alternate linear, flicker var(--flicker) infinite
+  -webkit-background-clip text
+  background-clip text
+  color transparent
+
+  &:after
+    content "Spotlight"
+    text-transform uppercase
+    position absolute
+    padding var(--padding)
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) translateY(calc((-50 + var(--spotlight-y, 0)) * -0.05%))
+    filter blur(12px)
+    color hsl(0, 0%, 8%)
+    z-index -1
+    animation spotlight-v var(--vertical) infinite
+
+  @media(min-width 768px)
+    --upper 10rem
+
+.dummy
+.spotlight
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+.dummy
+.spotlight
+  --light 'hsla(45, 80%, 90%, %s)' % var(--alpha)
+  background radial-gradient(var(--light), transparent 65%) calc(var(--spotlight-x) * 1%) calc(var(--spotlight-y) * 1%) / 10vmin 10vmin no-repeat
+  background-size var(--size) var(--size)
+  animation spotlight-v var(--vertical) infinite, spotlight-h var(--horizontal) infinite alternate linear, flicker var(--flicker) infinite
+
+.dummy h1
+  color transparent
+  background none
+
+@keyframes spotlight-h
+  0%
+    --spotlight-x 0
+  100%
+    --spotlight-x 100
+@keyframes spotlight-v
+  12.5%
+  37.5%
+  62.5%
+  87.5%
+    --spotlight-y 0
+  0%
+  25%
+  50%
+  75%
+  100%
+    --spotlight-y 100
+
+@keyframes flicker
+  0%
+  19.999%
+  22%
+  62.999%
+  64%
+  64.999%
+  72%
+  100%
+    --alpha 1
+  20%
+  21.999%
+  63%
+  63.999%
+  65%
+  71.999%
+    --alpha 0
