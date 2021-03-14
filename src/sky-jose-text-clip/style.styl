@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap')
+
+*
+*:after
+*:before
+  box-sizing border-box
+  transform-style preserve-3d
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  font-family 'Poppins', sans-serif
+  background hsl(280, 80%, 4%)
+  perspective 800px
+
+img
+  height 100%
+  width 100%
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+:root
+  --ratio 0.97
+  --height 50vmin
+  --text-color hsl(210, 80%, 10%)
+  --stroke hsl(0, 0%, 95%)
+  --frame hsl(220, 80%, 35%)
+
+.frame
+  background var(--frame)
+  height var(--height)
+  width calc(var(--ratio) * var(--height))
+  position relative
+  border 2vmin solid hsl(45, 40%, 50%)
+  transform rotateX(calc(var(--ry) * 1deg)) rotateY(calc(var(--rx) * 1deg))
+
+h1
+  text-transform uppercase
+  font-size 10vmin
+  -webkit-text-stroke 0.5vmin var(--stroke)
+  position absolute
+  bottom -5%
+  left 50%
+  line-height 0.8
+  transform translate(-50%, 0)
+  margin 0
+  background 'url("https://assets.codepen.io/605876/ToyFace--ArtistHeadshot_1.png?width=1920&format=auto") 50% 105% / %s %s' % (calc(var(--ratio) * var(--height)) var(--height))
+  background-color var(--text-color)
+  background-repeat no-repeat
+  color transparent
+  -webkit-background-clip text
+  background-clip text
