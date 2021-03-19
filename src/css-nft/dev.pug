@@ -1,0 +1,43 @@
+mixin cuboid()
+  .cuboid(class!=attributes.class)
+    - let s = 0
+    while s < 6
+      .cuboid__side
+      - s++
+
+.scene
+  .nft
+    .nft__rim
+      .nft__rim-segment
+        +cuboid()(class="rim-segment rim-segment--one")
+      .nft__rim-segment
+        +cuboid()(class="rim-segment rim-segment--two")
+      .nft__rim-segment
+        +cuboid()(class="rim-segment rim-segment--three")
+      .nft__rim-segment
+        +cuboid()(class="rim-segment rim-segment--four")
+      .nft__rim-segment
+        +cuboid()(class="rim-segment rim-segment--five")
+      .nft__rim-segment
+        +cuboid()(class="rim-segment rim-segment--six")
+    .nft__n
+      .nft__n-segment
+        +cuboid()(class="n-segment n-segment--one")
+      .nft__n-segment
+        +cuboid()(class="n-segment n-segment--two")
+      .nft__n-segment
+        +cuboid()(class="n-segment n-segment--three")
+    .nft__f
+      .nft__f-segment
+        +cuboid()(class="f-segment f-segment--one")
+      .nft__f-segment
+        +cuboid()(class="f-segment f-segment--two")
+      .nft__f-segment
+        +cuboid()(class="f-segment f-segment--three")
+      .nft__f-segment
+        +cuboid()(class="f-segment f-segment--four")
+    .nft__t
+      .nft__t-segment
+        +cuboid()(class="t-segment t-segment--one")
+      .nft__t-segment
+        +cuboid()(class="t-segment t-segment--two")
