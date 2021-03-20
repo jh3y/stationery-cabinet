@@ -1,0 +1,785 @@
+*
+*:after
+*:before
+  box-sizing border-box
+  transform-style preserve-3d
+
+:root
+  --size 50vmin
+  --shade-one hsl(192, 95%, 56%)
+  --shade-two hsl(192, 78%, 52%)
+  --shade-three hsl(192, 73%, 47%)
+  --shade-four hsl(192, 74%, 42%)
+  --shade-five hsl(192, 74%, 37%)
+  --shade-six hsl(192, 73%, 32%)
+  --shade-seven hsl(192, 73%, 28%)
+  --shade-eight hsl(192, 74%, 23%)
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  background hsl(0, 0%, 6%)
+
+.scene
+  position fixed
+  height var(--size)
+  width var(--size)
+  top 50%
+  left 50%
+  transform translate3d(-50%, -50%, -50vmin) rotateX(-24deg) rotateY(32deg) rotateX(90deg) rotateZ(0deg)
+  animation rotate 5s infinite linear
+
+.scene__wrapper
+  filter drop-shadow(0 0 1vmin var(--shade-one)) brightness(1.05)
+  position fixed
+  height 100vh
+  width 100vw
+
+  &--reflection
+    filter drop-shadow(0 0 1vmin var(--shade-one)) blur(10px)
+    opacity 0.75
+
+@keyframes rotate
+  to
+    transform translate3d(-50%, -50%, -50vmin) rotateX(-24deg) rotateY(32deg) rotateX(90deg) rotateZ(-360deg)
+
+img
+  position fixed
+  bottom 1rem
+  right 1rem
+  height 5vmin
+
+.cuboid
+  width 100%
+  height 100%
+  position relative
+  // 1 is the top and go t, r, b, l, f, b
+
+  &__side:nth-of-type(1)
+    height calc(var(--thickness) * 1vmin)
+    width 100%
+    position absolute
+    top 0
+    transform translate(0, -50%) rotateX(90deg)
+
+  &__side:nth-of-type(2)
+    height 100%
+    width calc(var(--thickness) * 1vmin)
+    position absolute
+    top 50%
+    right 0
+    transform translate(50%, -50%) rotateY(90deg)
+
+  &__side:nth-of-type(3)
+    width 100%
+    height calc(var(--thickness) * 1vmin)
+    position absolute
+    bottom 0
+    transform translate(0%, 50%) rotateX(90deg)
+
+  &__side:nth-of-type(4)
+    height 100%
+    width calc(var(--thickness) * 1vmin)
+    position absolute
+    left 0
+    top 50%
+    transform translate(-50%, -50%) rotateY(90deg)
+
+  &__side:nth-of-type(5)
+    height 100%
+    width 100%
+    transform translate3d(0, 0, calc(var(--thickness) * 0.5vmin))
+    position absolute
+    top 0
+    left 0
+
+  &__side:nth-of-type(6)
+    height 100%
+    width 100%
+    transform translate3d(0, 0, calc(var(--thickness) * -0.5vmin)) rotateY(180deg)
+    position absolute
+    top 0
+    left 0
+
+.nft
+  height 100%
+  width 100%
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%) rotateY(calc(var(--rotateY, 0) * 1deg)) rotateX(calc(var(--rotateX, 0) * 1deg)) rotateX(-90deg)
+
+  &__reflection
+    height 100%
+    width 100%
+    position absolute
+    top 50%
+    left 50%
+    transform-origin 50% 50%
+    transform translate(-50%, -50%) rotateY(180deg) rotateZ(180deg) translate3d(0%, 0%, calc(var(--size) * 1.05))
+
+  &__rim
+    height 100%
+    width 86%
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+
+    &-segment
+      height 50%
+      width 6%
+      position absolute
+
+      &:nth-of-type(1)
+        top 25%
+        left -0.45%
+        width 6.5%
+
+      &:nth-of-type(2)
+        top 25%
+        right -0.45%
+        width 6.5%
+
+      &:nth-of-type(3)
+        top 0%
+        left 50%
+        transform translate(0%, 0%) rotate(60deg)
+        transform-origin 0 0
+
+      &:nth-of-type(4)
+        top 0%
+        right 50%
+        transform translate(0%, 0%) rotate(-60deg)
+        transform-origin 100% 0
+
+      &:nth-of-type(5)
+        bottom 0%
+        left 50%
+        transform translate(0%, 0%) rotate(-60deg)
+        transform-origin 0% 100%
+
+      &:nth-of-type(6)
+        bottom 0%
+        right 50%
+        transform translate(0%, 0%) rotate(60deg)
+        transform-origin 100% 100%
+
+  &__n
+    height 56.5%
+    width 16.5%
+    position absolute
+    top 22.5%
+    left 16.5%
+
+    &-segment
+      position absolute
+
+      &:nth-of-type(1)
+        top 14%
+        height 74%
+        width 30%
+
+      &:nth-of-type(2)
+        top 14%
+        right 70%
+        height 80.25%
+        width 32%
+        transform-origin 100% 0
+        transform rotate(-14.65deg)
+
+      &:nth-of-type(3)
+        top 0%
+        right 0
+        height 100%
+        width 32%
+
+  &__f
+    left 50%
+    position absolute
+    top 11%
+    width 32%
+    height 74%
+    transform translate(-50%, 0%)
+
+    &-segment
+      position absolute
+
+      &:nth-of-type(1)
+        left 11%
+        top 11%
+        height 89%
+        width 16%
+
+      &:nth-of-type(2)
+        left 26%
+        top 48.5%
+        height 8.5%
+        width 60%
+
+      &:nth-of-type(3)
+        left 50%
+        top 0%
+        height 8%
+        width 58%
+        transform-origin 0 0
+        transform rotate(32deg)
+
+      &:nth-of-type(4)
+        right 50%
+        top 0%
+        height 8%
+        width 46.5%
+        transform-origin 100% 0
+        transform rotate(-33deg)
+
+  &__t
+    position absolute
+    top 22%
+    left 65.5%
+    height 55%
+    width 20%
+
+    &-segment
+      position absolute
+
+      &:nth-of-type(1)
+        width 130%
+        top 10%
+        left 50%
+        height 10%
+        transform translate(-50%, 0%) rotate(32deg)
+
+      &:nth-of-type(2)
+        width 28%
+        top 13%
+        left 50%
+        height 87%
+        transform translate(-50%, 0%)
+
+
+// Cuboid styling
+.t-segment
+  --thickness 4
+
+.t-segment--one
+  left 11%
+  width 90%
+
+  div
+    background var(--shade-two)
+
+    &:nth-of-type(2)
+      background transparent
+      &:after
+        content ''
+        position absolute
+        height 118%
+        bottom 0
+        width 100%
+        transform-origin 50% 100%
+        transform rotateX(32deg)
+        background var(--shade-eight)
+
+    &:nth-of-type(3)
+      background var(--shade-six)
+
+    &:nth-of-type(4)
+      background var(--shade-three)
+
+    &:nth-of-type(1)
+      background transparent
+      &:after
+        content ''
+        height 100%
+        width 86%
+        position absolute
+        background var(--shade-six)
+
+    &:nth-of-type(5)
+      overflow hidden
+      background transparent
+      &:after
+        content ''
+        position absolute
+        height 600%
+        width 150%
+        right 14%
+        background var(--shade-two)
+        transform-origin 100% 0
+        transform rotate(-32deg) translate(0, -50%)
+
+    &:nth-of-type(6)
+      overflow hidden
+      background transparent
+      &:after
+        content ''
+        position absolute
+        height 600%
+        width 150%
+        left 14%
+        background var(--shade-two)
+        transform-origin 0% 0
+        transform rotate(32deg) translate(0, -50%)
+
+.t-segment--two
+  div
+    background var(--shade-two)
+
+    &:nth-of-type(3)
+      background transparent
+      &:after
+        content ''
+        position absolute
+        height 100%
+        width 118%
+        background var(--shade-six)
+        transform-origin 0 50%
+        transform rotateY(-31deg)
+
+    &:nth-of-type(4)
+      background var(--shade-one)
+
+    &:nth-of-type(2)
+      background linear-gradient(var(--shade-eight) 0 50%, transparent 50%)
+      &:after
+        content ''
+        height 93%
+        width 100%
+        background var(--shade-eight)
+        position absolute
+
+    &:nth-of-type(5)
+      background linear-gradient(var(--shade-two) 0 50%, transparent 50%)
+      overflow hidden
+      &:after
+        content ''
+        height 93%
+        width 400%
+        left 0
+        bottom 0
+        background var(--shade-two)
+        position absolute
+        transform-origin 0 100%
+        transform rotate(-30deg)
+
+    &:nth-of-type(6)
+      background linear-gradient(var(--shade-two) 0 50%, transparent 50%)
+      overflow hidden
+      &:after
+        content ''
+        height 93%
+        width 400%
+        right 0
+        bottom 0
+        background var(--shade-two)
+        position absolute
+        transform-origin 100% 100%
+        transform rotate(30deg)
+
+.f-segment
+  --thickness 4
+
+.f-segment--one
+  div
+    &:nth-of-type(2)
+      background var(--shade-eight)
+    &:nth-of-type(3)
+      background transparent
+      &:after
+        content ''
+        position absolute
+        height 100%
+        width 118%
+        right 0
+        background var(--shade-six)
+        transform-origin 100% 50%
+        transform rotateY(30deg)
+
+    &:nth-of-type(4)
+      background transparent
+      &:after
+        content ''
+        height 95.5%
+        width 100%
+        background var(--shade-one)
+        position absolute
+
+    &:nth-of-type(5)
+      background linear-gradient(var(--shade-two) 0 80%, transparent 80%)
+      overflow hidden
+      &:after
+        content ''
+        height 93%
+        width 400%
+        right 0
+        bottom 0
+        background var(--shade-two)
+        position absolute
+        transform-origin 100% 100%
+        transform rotate(30deg)
+
+    &:nth-of-type(6)
+      background linear-gradient(var(--shade-two) 0 80%, transparent 80%)
+      overflow hidden
+      &:after
+        content ''
+        height 93%
+        width 400%
+        left 0
+        bottom 0
+        background var(--shade-two)
+        position absolute
+        transform-origin 0% 100%
+        transform rotate(-30deg)
+
+.f-segment--two
+  div
+    background var(--shade-two)
+
+    &:nth-of-type(3)
+      background var(--shade-six)
+
+    &:nth-of-type(1)
+      background var(--shade-six)
+
+    &:nth-of-type(2)
+      background var(--shade-eight)
+
+.f-segment--three
+  div
+    background var(--shade-two)
+
+    &:nth-of-type(2)
+      background var(--shade-eight)
+
+    &:nth-of-type(1)
+    &:nth-of-type(3)
+      background var(--shade-six)
+
+.f-segment--four
+  div
+    background var(--shade-two)
+
+    &:nth-of-type(1)
+      background var(--shade-six)
+    &:nth-of-type(3)
+      background var(--shade-eight)
+
+.n-segment
+  --thickness 4
+
+.n-segment--one
+  div
+    background var(--shade-two)
+
+    &:nth-of-type(1)
+      background transparent
+
+      &:after
+        content ''
+        position absolute
+        top 0
+        right 0
+        height 100%
+        width 112%
+        background var(--shade-six)
+        transform-origin 100% 50%
+        transform rotateY(-28deg)
+
+    &:nth-of-type(2)
+      background var(--shade-eight)
+
+    &:nth-of-type(3)
+      background transparent
+
+      &:after
+        content ''
+        position absolute
+        top 0
+        right 0
+        height 100%
+        width 114%
+        background var(--shade-six)
+        transform-origin 100% 50%
+        transform rotateY(32deg)
+
+    &:nth-of-type(4)
+      background transparent
+
+      &:after
+        content ''
+        position absolute
+        top 6.15%
+        left 0
+        height 86.65%
+        width 100%
+        background var(--shade-one)
+
+    &:nth-of-type(5)
+      background linear-gradient(transparent 0 18%, var(--shade-two) 18% 82%, transparent 82%)
+      overflow hidden
+
+      &:before
+        content ''
+        position absolute
+        height 50%
+        width 200%
+        right 0
+        top 0
+        transform-origin 100% 0
+        transform rotate(-28deg)
+        background var(--shade-two)
+
+      &:after
+        content ''
+        position absolute
+        height 50%
+        width 200%
+        right 0
+        bottom 0
+        transform-origin 100% 100%
+        transform rotate(32deg)
+        background var(--shade-two)
+
+    &:nth-of-type(6)
+      background linear-gradient(transparent 0 18%, var(--shade-two) 18% 82%, transparent 82%)
+      overflow hidden
+
+      &:before
+        content ''
+        position absolute
+        height 50%
+        width 200%
+        left 0
+        top 0
+        transform-origin 0 0
+        transform rotate(28deg)
+        background var(--shade-two)
+
+      &:after
+        content ''
+        position absolute
+        height 50%
+        width 200%
+        left 0
+        bottom 0
+        transform-origin 0% 100%
+        transform rotate(-32deg)
+        background var(--shade-two)
+
+.n-segment--three
+  div
+    background var(--shade-two)
+
+    &:nth-of-type(1)
+      background transparent
+
+      &:after
+        content ''
+        position absolute
+        top 0
+        right 0
+        height 100%
+        width 118%
+        background var(--shade-six)
+        transform-origin 100% 50%
+        transform rotateY(-32deg)
+
+    &:nth-of-type(2)
+      background var(--shade-eight)
+
+    &:nth-of-type(3)
+      background transparent
+
+      &:after
+        content ''
+        position absolute
+        top 0
+        right 0
+        height 100%
+        width 118%
+        background var(--shade-six)
+        transform-origin 100% 50%
+        transform rotateY(32deg)
+
+    &:nth-of-type(4)
+      background transparent
+
+      &:after
+        content ''
+        position absolute
+        top 6%
+        left 0
+        height 88%
+        width 100%
+        background var(--shade-one)
+
+    &:nth-of-type(5)
+      background linear-gradient(transparent 0 18%, var(--shade-two) 18% 82%, transparent 82%)
+      overflow hidden
+
+      &:before
+        content ''
+        position absolute
+        height 50%
+        width 200%
+        right 0
+        top 0
+        transform-origin 100% 0
+        transform rotate(-32deg)
+        background var(--shade-two)
+
+      &:after
+        content ''
+        position absolute
+        height 50%
+        width 200%
+        right 0
+        bottom 0
+        transform-origin 100% 100%
+        transform rotate(32deg)
+        background var(--shade-two)
+
+    &:nth-of-type(6)
+      background linear-gradient(transparent 0 18%, var(--shade-two) 18% 82%, transparent 82%)
+      overflow hidden
+
+      &:before
+        content ''
+        position absolute
+        height 50%
+        width 200%
+        left 0
+        top 0
+        transform-origin 0 0
+        transform rotate(32deg)
+        background var(--shade-two)
+
+      &:after
+        content ''
+        position absolute
+        height 50%
+        width 200%
+        left 0
+        bottom 0
+        transform-origin 0% 100%
+        transform rotate(-32deg)
+        background var(--shade-two)
+
+.n-segment--two
+  --thickness 4
+  div
+    background var(--shade-two)
+
+    &:nth-of-type(4)
+      background transparent
+      &:after
+        content ''
+        position absolute
+        height 90%
+        bottom 0
+        left 0
+        width 100%
+        background var(--shade-one)
+
+    &:nth-of-type(1)
+      background transparent
+      &:after
+        content ''
+        position absolute
+        height 100%
+        width 105%
+        right 0
+        top 0
+        transform-origin 100% 50%
+        transform rotateY(-13deg)
+        background var(--shade-six)
+
+    &:nth-of-type(5)
+      background linear-gradient(transparent 0 10%, var(--shade-two) 10%)
+      overflow hidden
+      &:after
+        content ''
+        position absolute
+        height 50%
+        width 200%
+        right 0
+        top 0
+        transform-origin 100% 0%
+        transform rotate(-13deg)
+        background var(--shade-two)
+
+    &:nth-of-type(6)
+      background linear-gradient(transparent 0 10%, var(--shade-two) 10%)
+      overflow hidden
+      &:after
+        content ''
+        position absolute
+        height 50%
+        width 200%
+        left 0
+        top 0
+        transform-origin 0% 0%
+        transform rotate(13deg)
+        background var(--shade-two)
+
+    &:nth-of-type(2)
+      background var(--shade-eight)
+
+.rim-segment
+  --thickness 4
+
+.rim-segment--one
+  div
+    background-color var(--shade-two)
+
+    &:nth-of-type(4)
+      background-color var(--shade-one)
+    &:nth-of-type(2)
+      background-color var(--shade-eight)
+.rim-segment--two
+  div
+    background-color var(--shade-two)
+
+    &:nth-of-type(4)
+      background-color var(--shade-one)
+    &:nth-of-type(2)
+      background-color var(--shade-eight)
+
+.rim-segment--three
+  div
+    background-color var(--shade-two)
+
+    &:nth-of-type(4)
+      background-color var(--shade-one)
+    &:nth-of-type(2)
+      background-color var(--shade-eight)
+
+.rim-segment--four
+  div
+    background-color var(--shade-two)
+
+    &:nth-of-type(4)
+      background-color var(--shade-one)
+    &:nth-of-type(2)
+      background-color var(--shade-eight)
+
+.rim-segment--five
+  div
+    background-color var(--shade-two)
+
+    &:nth-of-type(4)
+      background-color var(--shade-one)
+    &:nth-of-type(2)
+      background-color var(--shade-eight)
+
+.rim-segment--six
+  div
+    background-color var(--shade-two)
+
+    &:nth-of-type(4)
+      background-color var(--shade-one)
+    &:nth-of-type(2)
+      background-color var(--shade-eight)
