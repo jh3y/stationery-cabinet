@@ -1,0 +1,43 @@
+mixin cuboid()
+  .cuboid(class!=attributes.class)
+    - let s = 0
+    while s < 6
+      .cuboid__side
+      - s++
+
+input(type="radio" name="fan" id="zero")
+input(type="radio" name="fan" id="one" checked="true")
+input(type="radio" name="fan" id="two")
+input(type="radio" name="fan" id="three")
+
+.scene
+  .fan
+    .fan__base
+      +cuboid()(class="base")
+    .fan__controls
+      label.fan__control(for="zero")
+        +cuboid()(class="control")
+      label.fan__control(for="one")
+        +cuboid()(class="control")
+      label.fan__control(for="two")
+        +cuboid()(class="control")
+      label.fan__control(for="three")
+        +cuboid()(class="control")
+    .fan__spine
+      +cuboid()(class="spine")
+    .fan__head
+      .fan__rotater
+        +cuboid()(class="rotater")
+        .fan__stalk
+          +cuboid()(class="stalk")
+      //- Use this as the ring
+      .fan__barrel
+        +cuboid()(class="barrel")
+      .fan__housing
+        .fan__housing-rear
+        .fan__blades
+          .fan__blade
+          .fan__blade
+          .fan__blade
+        .fan__housing-front
+          img(src="https://assets.codepen.io/605876/avatar.png")
