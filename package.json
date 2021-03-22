@@ -31,16 +31,6 @@
     "url": "https://github.com/jh3y/pen-case/issues"
   },
   "homepage": "https://github.com/jh3y/pen-case",
-  "scripts": {
-    "precommit": "lint-staged"
-  },
-  "lint-staged": {
-    "src/**/*.{js,json}": [
-      "eslint",
-      "prettier --write",
-      "git add"
-    ]
-  },
   "dependencies": {
     "babel-eslint": "10.x",
     "babel-preset-env": "^1.6.1",

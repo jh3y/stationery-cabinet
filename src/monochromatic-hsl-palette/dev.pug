@@ -1,0 +1,19 @@
+.result
+  pre
+    code.language-css
+  .palette
+    - let s = 0
+    while s < 8
+      .palette__shade(style=`--index: ${s}`)
+      - s++
+#hue
+#saturation
+#lightness
+//- label.sr-only Hue
+//- input#hue(type="range" min="0" max="360" step="1" value="0")
+//- label.sr-only Saturation
+//- input#saturation(type="range" min="0" max="100" step="1" value="0")
+//- label Lightness
+//- input#hue(type="range" min="0" max="360" step="1" value="0")
+//- label Upper Lightness
+//- input#hue(type="range" min="0" max="360" step="1" value="0")
