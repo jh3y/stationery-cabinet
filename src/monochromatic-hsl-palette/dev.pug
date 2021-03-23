@@ -4,11 +4,16 @@
   .palette
     - let s = 0
     while s < 8
-      .palette__shade(style=`--index: ${s}`)
+      .palette__shade(style=`--shade: var(--shade-${s + 1});`)
       - s++
-#hue
-#saturation
-#lightness
+style#update
+.controls
+  label hue
+  #hue
+  label saturation
+  #saturation
+  label lightness
+  #lightness
 //- label.sr-only Hue
 //- input#hue(type="range" min="0" max="360" step="1" value="0")
 //- label.sr-only Saturation
