@@ -1,0 +1,53 @@
+*
+  box-sizing border-box
+
+body
+  display grid
+  place-items center
+  min-height 100vh
+  padding 0
+  margin 0
+  overflow-y hidden
+
+.controls
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  z-index 200
+  display flex
+  justify-content space-between
+  width 500px
+  max-width 90vw
+
+button
+  height 48px
+  width 48px
+  border-radius 50%
+
+.boxes
+  height 100vh
+  width 100%
+  overflow hidden
+  position absolute
+  transform-style preserve-3d
+  perspective 1200px
+
+.box
+  transform-style preserve-3d
+  -webkit-box-reflect below 1vmin linear-gradient(transparent 0 50%, white 100%)
+  position absolute
+  top 50%
+  left 50%
+  height 25vmin
+  width 25vmin
+  display grid
+  place-items center
+  font-size 5vmin
+  font-family sans-serif
+
+  &:nth-of-type(odd)
+    background hsl(10, 80%, 50%)
+
+  &:nth-of-type(even)
+    background hsl(210, 80%, 50%)
