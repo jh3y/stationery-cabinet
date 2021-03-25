@@ -25,11 +25,12 @@ SHIFTS.forEach((BOX, index) => {
   const BOX_TL = gsap
     .timeline()
     .set(BOX, {
-      xPercent: 200,
+      xPercent: 250,
       rotateY: -50,
       opacity: 0,
       scale: 0.5,
     })
+    // Opacity && Scale
     .to(
       BOX,
       {
@@ -42,8 +43,18 @@ SHIFTS.forEach((BOX, index) => {
     .to(
       BOX,
       {
+        opacity: 0,
+        scale: 0.5,
+        duration: 0.1,
+      },
+      0.9
+    )
+    // Panning
+    .to(
+      BOX,
+      {
         xPercent: 50,
-        duration: 0.25,
+        duration: 0.35,
         ease: 'none',
       },
       0
@@ -61,24 +72,6 @@ SHIFTS.forEach((BOX, index) => {
     .to(
       BOX,
       {
-        rotateY: 0,
-        duration: 0.5,
-        ease: 'power4.in',
-      },
-      0
-    )
-    .to(
-      BOX,
-      {
-        rotateY: 50,
-        duration: 0.5,
-        ease: 'power4.out',
-      },
-      0.5
-    )
-    .to(
-      BOX,
-      {
         xPercent: -150,
         duration: 0.15,
         z: 0,
@@ -89,31 +82,26 @@ SHIFTS.forEach((BOX, index) => {
     .to(
       BOX,
       {
-        xPercent: -250,
-        duration: 0.25,
+        xPercent: -350,
+        duration: 0.35,
         ease: 'none',
       },
       0.65
     )
-    .to(
+    // Rotations
+    .fromTo(
       BOX,
       {
-        opacity: 0,
-        scale: 0.5,
-        duration: 0.1,
+        rotateY: -50,
       },
-      0.9
+      {
+        rotateY: 50,
+        immediateRender: false,
+        duration: 1,
+        ease: 'power4.inOut',
+      },
+      0
     )
-    // .to(
-    //   BOX,
-    //   {
-    //     rotateY: 0,
-    //     ease: 'none',
-    //     duration: 0.25,
-    //     immediateRender: false,
-    //   },
-    //   0.25
-    // )
     .fromTo(
       BOX,
       {
