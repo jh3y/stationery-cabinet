@@ -5,7 +5,6 @@ gsap.registerPlugin(ScrollTrigger)
 
 gsap.set('.box', {
   yPercent: -50,
-  xPercent: 500,
 })
 
 const STAGGER = 0.1
@@ -50,43 +49,18 @@ SHIFTS.forEach((BOX, index) => {
       0.9
     )
     // Panning
-    .to(
+    .fromTo(
       BOX,
       {
-        xPercent: 50,
-        duration: 0.35,
-        ease: 'none',
+        xPercent: 250,
       },
-      0
-    )
-    .to(
-      BOX,
-      {
-        xPercent: -50,
-        duration: 0.15,
-        z: 100,
-        ease: 'none',
-      },
-      0.35
-    )
-    .to(
-      BOX,
-      {
-        xPercent: -150,
-        duration: 0.15,
-        z: 0,
-        ease: 'none',
-      },
-      0.5
-    )
-    .to(
-      BOX,
       {
         xPercent: -350,
-        duration: 0.35,
-        ease: 'none',
+        duration: 1,
+        immediateRender: false,
+        ease: 'power1.inOut',
       },
-      0.65
+      0
     )
     // Rotations
     .fromTo(
@@ -101,6 +75,18 @@ SHIFTS.forEach((BOX, index) => {
         ease: 'power4.inOut',
       },
       0
+    )
+    // Scale && Z
+    .to(
+      BOX,
+      {
+        z: 100,
+        scale: 1.25,
+        duration: 0.1,
+        repeat: 1,
+        yoyo: true,
+      },
+      0.4
     )
     .fromTo(
       BOX,
@@ -207,9 +193,63 @@ const NEXT = () => scrollToPosition(SCRUB.vars.position - 1 / BOXES.length)
 const PREV = () => scrollToPosition(SCRUB.vars.position + 1 / BOXES.length)
 
 document.addEventListener('keydown', event => {
-  if (event.keyCode === 37 || event.keyCode === 65) NEXT()
-  if (event.keyCode === 39 || event.keyCode === 68) PREV()
+  if (event.code === 'ArrowLeft' || event.code === 'KeyA') NEXT()
+  if (event.code === 'ArrowRight' || event.code === 'KeyD') PREV()
 })
+
+document.querySelector('.boxes').addEventListener('click', e => {
+  const BOX = e.target.closest('.box')
+  if (BOX) {
+    // Get the current index
+    const IDX = gsap.utils.wrap(0, 10, Math.floor(SCRUB.vars.position * 10))
+    const TARGET = BOXES.indexOf(BOX)
+    // Can only hit three values
+    // -0.2, -0.1, 0, 0.1, 0.2
+    // Base it on the current index and then the positions around it.
+    // In most cases the bump will be TARGET - IDX
+    let bump = TARGET - IDX
+    // If we're in the top half and need to wrap around
+    if (IDX >= BOXES.length - 2 && TARGET < IDX && TARGET < 2) bump = 2
+    if (IDX >= BOXES.length - 1 && TARGET === 0) bump = 1
+    // If we're in the lowers and need to wrap back
+    if (IDX <= 2 && TARGET > IDX && TARGET >= BOXES.length - 2) bump = -2
+    if (IDX < 1 && TARGET === BOXES.length - 1) bump = -1
+    if (Math.abs(bump) <= 2)
+      scrollToPosition(SCRUB.vars.position + (1 / BOXES.length) * bump)
+  }
+})
+
+window.BOXES = BOXES
 
 document.querySelector('.next').addEventListener('click', NEXT)
 document.querySelector('.prev').addEventListener('click', PREV)
+
+// Dragging
+let startX = 0
+let startOffset = 0
+
+const onPointerMove = e => {
+  e.preventDefault()
+  SCRUB.vars.position = startOffset + (startX - e.pageX) * 0.001
+  SCRUB.invalidate().restart() // same thing as we do in the ScrollTrigger's onUpdate
+}
+
+const onPointerUp = e => {
+  document.removeEventListener('pointermove', onPointerMove)
+  document.removeEventListener('pointerup', onPointerUp)
+  document.removeEventListener('pointercancel', onPointerUp)
+  scrollToPosition(SCRUB.vars.position)
+}
+
+// when the user presses on anything except buttons, start a drag...
+document.addEventListener('pointerdown', e => {
+  if (e.target.tagName.toLowerCase() !== 'button') {
+    document.addEventListener('pointermove', onPointerMove)
+    document.addEventListener('pointerup', onPointerUp)
+    document.addEventListener('pointercancel', onPointerUp)
+    startX = e.pageX
+    startOffset = SCRUB.vars.position
+  }
+})
+
+gsap.set('.box', { display: 'block' })

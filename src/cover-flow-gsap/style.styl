@@ -1,6 +1,10 @@
 *
   box-sizing border-box
 
+:root
+  --bg hsl(0, 0%, 10%)
+  --min-size 200px
+
 body
   display grid
   place-items center
@@ -8,22 +12,97 @@ body
   padding 0
   margin 0
   overflow-y hidden
-  background hsl(0, 0%, 10%)
+  background var(--bg)
+
 .controls
   position absolute
   top 50%
   left 50%
-  transform translate(-50%, -50%)
+  transform translate(-50%, -50%) scale(1.5)
   z-index 200
   display flex
   justify-content space-between
-  width 500px
-  max-width 90vw
+  min-height var(--min-size)
+  min-width var(--min-size)
+  height 20vmin
+  width 20vmin
 
 button
   height 48px
   width 48px
   border-radius 50%
+  position absolute
+  top 100%
+  outline transparent
+  cursor pointer
+  background none
+  appearance none
+  border 0
+  transition transform 0.1s
+  transform translate(0, calc(var(--y, 0)))
+
+
+  &:before
+    border 2px solid hsl(0, 0%, 90%)
+    background linear-gradient(hsla(0, 0%, 80%, 0.65), hsl(0, 0%, 0%)) hsl(0, 0%, 0%)
+    content ''
+    box-sizing border-box
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    height 80%
+    width 80%
+    border-radius 50%
+
+  &:active:before
+    background linear-gradient(hsl(0, 0%, 0%), hsla(0, 0%, 80%, 0.65)) hsl(0, 0%, 0%)
+
+  &:nth-of-type(1)
+    right 100%
+
+  &:nth-of-type(2)
+    left 100%
+
+button span
+  position absolute
+  width 1px
+  height 1px
+  padding 0
+  margin -1px
+  overflow hidden
+  clip rect(0, 0, 0, 0)
+  white-space nowrap
+  border-width 0
+
+button:hover
+  --y -5%
+
+
+button svg
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%) rotate(0deg) translate(2%, 0)
+  height 30%
+  fill hsl(0, 0%, 90%)
+
+button:nth-of-type(1) svg
+  transform translate(-50%, -50%) rotate(180deg) translate(2%, 0)
+
+.scroll-icon
+  height 30px
+  position fixed
+  top 1rem
+  right 1rem
+  color hsl(0, 0%, 90%)
+  animation action 4s infinite
+
+@keyframes action
+  0%, 25%, 50%, 100%
+    transform translate(0, 0)
+  12.5%, 37.5%
+    transform translate(0, 25%)
 
 .boxes
   height 100vh
@@ -31,23 +110,63 @@ button
   overflow hidden
   position absolute
   transform-style preserve-3d
-  perspective 1200px
+  perspective 800px
+  touch-action none
 
 .box
   transform-style preserve-3d
-  -webkit-box-reflect below 1vmin linear-gradient(transparent 0 50%, white 100%)
   position absolute
   top 50%
   left 50%
-  height 25vmin
-  width 25vmin
-  display grid
-  place-items center
-  font-size 5vmin
-  font-family sans-serif
+  height 20vmin
+  width 20vmin
+  min-height var(--min-size)
+  min-width var(--min-size)
+  display none
+
+  &:after
+    content ''
+    position absolute
+    top 50%
+    left 50%
+    height 100%
+    width 100%
+    background-image var(--src)
+    background-size cover
+    transform translate(-50%, -50%) rotate(180deg) translate(0, -100%) translate(0, -0.5vmin)
+    opacity 0.75
+
+  &:before
+    content ''
+    position absolute
+    top 50%
+    left 50%
+    height 100%
+    width 100%
+    background linear-gradient(var(--bg) 50%, transparent)
+    transform translate(-50%, -50%) rotate(180deg) translate(0, -100%) translate(0, -0.5vmin) scale(1.01)
+    z-index 2
+
+
+  img
+    position absolute
+    height 100%
+    width 100%
+    top 0
+    left 0
+    object-fit cover
+
 
   &:nth-of-type(odd)
     background hsl(90, 80%, 70%)
 
   &:nth-of-type(even)
     background hsl(90, 80%, 40%)
+
+@supports(-webkit-box-reflect: below)
+  .box
+    -webkit-box-reflect below 0.5vmin linear-gradient(transparent 0 50%, white 100%)
+
+    &:after
+    &:before
+      display none

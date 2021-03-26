@@ -1,9 +1,33 @@
+-
+  const COVERS = [
+    "https://i.scdn.co/image/ab67616d00001e020ecc8c4fd215d9eb83cbfdb3",
+    "https://i.scdn.co/image/ab67616d00001e02d9194aa18fa4c9362b47464f",
+    "https://i.scdn.co/image/ab67616d00001e02a7ea08ab3914c5fb2084a8ac",
+    "https://i.scdn.co/image/ab67616d00001e0213ca80c3035333e5a6fcea59",
+    "https://i.scdn.co/image/ab67616d00001e02df04e6071763615d44643725",
+    "https://i.scdn.co/image/ab67616d00001e0239c7302c04f8d06f60e14403",
+    "https://i.scdn.co/image/ab67616d00001e021c0bcf8b536295438d26c70d",
+    "https://i.scdn.co/image/ab67616d00001e029bbd79106e510d13a9a5ec33",
+    "https://i.scdn.co/image/ab67616d00001e021d97ca7376f835055f828139",
+    "https://i.scdn.co/image/ab67706c0000bebb30677d72001e25584b0fbb37",
+  ]
+
 .boxes
   - const COUNT = 10
   - let b = 0
   while b < COUNT
-    .box= b + 1
+    .box(style=`--src: url(${COVERS[b]})`)
+      span= b + 1
+      img(src=COVERS[b])
     - b++
   .controls
-    button.next Prev
-    button.prev Next
+    button.next
+      span Previous album
+      svg(viewBox="0 0 448 512" width="100" title="Previous Album")
+        path(d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z")
+    button.prev
+      span Next album
+      svg(viewBox="0 0 448 512" width="100" title="Next Album")
+        path(d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z")
+svg.scroll-icon(viewBox="0 0 24 24")
+  path(fill="currentColor" d="M20 6H23L19 2L15 6H18V18H15L19 22L23 18H20V6M9 3.09C11.83 3.57 14 6.04 14 9H9V3.09M14 11V15C14 18.3 11.3 21 8 21S2 18.3 2 15V11H14M7 9H2C2 6.04 4.17 3.57 7 3.09V9Z")
