@@ -1,0 +1,30 @@
+<svg width="574" height="707" viewBox="0 0 574 707" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<rect x="526" y="328" width="41" height="53" rx="9" fill="#C4C4C4"/>
+<rect x="168" width="238" height="707" rx="12" fill="#C4C4C4"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M168 608.916V169.084C203.384 149.897 243.92 139 287 139C330.08 139 370.616 149.897 406 169.084V608.916C370.616 628.103 330.08 639 287 639C243.92 639 203.384 628.103 168 608.916Z" fill="#999999"/>
+<circle cx="287" cy="354" r="249" fill="#D1D1D1" stroke="white" stroke-width="2"/>
+<circle cx="287" cy="354" r="207.5" fill="#797979" stroke="#4F4F4F" stroke-width="5"/>
+<circle cx="287" cy="354" r="207.5" fill="#797979" stroke="#4F4F4F" stroke-width="5"/>
+<path d="M285 176H289V191H285V176Z" fill="black"/>
+<path d="M374.268 198.847L377.732 200.847L370.232 213.838L366.768 211.838L374.268 198.847Z" fill="black"/>
+<path d="M440.153 263.268L442.153 266.732L429.162 274.232L427.162 270.768L440.153 263.268Z" fill="black"/>
+<path d="M465 352L465 356L450 356L450 352L465 352Z" fill="black"/>
+<path d="M442.153 441.268L440.153 444.732L427.162 437.232L429.162 433.768L442.153 441.268Z" fill="black"/>
+<path d="M377.732 507.153L374.268 509.153L366.768 496.162L370.232 494.162L377.732 507.153Z" fill="black"/>
+<path d="M289 532L285 532L285 517L289 517L289 532Z" fill="black"/>
+<path d="M199.732 509.153L196.268 507.153L203.768 494.162L207.232 496.162L199.732 509.153Z" fill="black"/>
+<path d="M133.847 444.732L131.847 441.268L144.838 433.768L146.838 437.232L133.847 444.732Z" fill="black"/>
+<path d="M109 356L109 352L124 352L124 356L109 356Z" fill="black"/>
+<path d="M131.847 266.732L133.847 263.268L146.838 270.768L144.838 274.232L131.847 266.732Z" fill="black"/>
+<path d="M196.268 200.847L199.732 198.847L207.232 211.838L203.768 213.838L196.268 200.847Z" fill="black"/>
+<rect x="267" y="234" width="40" height="40" fill="url(#pattern0)"/>
+<rect x="283" y="245" width="8" height="109" rx="4" fill="#202020"/>
+<rect x="281" y="263" width="12" height="91" rx="6" fill="#202020"/>
+<circle cx="287" cy="354" r="12" fill="black"/>
+<defs>
+<pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image0" transform="scale(0.00333333)"/>
+</pattern>
+<image id="image0" width="300" height="300" xlink:href="https://assets.codepen.io/605876/watch-branding-bear.png"/>
+</defs>
+</svg>
