@@ -1,7 +1,9 @@
 import gsap from 'https://cdn.skypack.dev/gsap'
 import ScrollTrigger from 'https://cdn.skypack.dev/gsap/ScrollTrigger'
+import Draggable from 'https://cdn.skypack.dev/gsap/Draggable'
 
 gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(Draggable)
 
 gsap.set('.box', {
   yPercent: -50,
@@ -200,22 +202,21 @@ document.addEventListener('keydown', event => {
 document.querySelector('.boxes').addEventListener('click', e => {
   const BOX = e.target.closest('.box')
   if (BOX) {
-    // Get the current index
-    const IDX = gsap.utils.wrap(0, 10, Math.floor(SCRUB.vars.position * 10))
-    const TARGET = BOXES.indexOf(BOX)
-    // Can only hit three values
-    // -0.2, -0.1, 0, 0.1, 0.2
-    // Base it on the current index and then the positions around it.
-    // In most cases the bump will be TARGET - IDX
-    let bump = TARGET - IDX
-    // If we're in the top half and need to wrap around
-    if (IDX >= BOXES.length - 2 && TARGET < IDX && TARGET < 2) bump = 2
-    if (IDX >= BOXES.length - 1 && TARGET === 0) bump = 1
-    // If we're in the lowers and need to wrap back
-    if (IDX <= 2 && TARGET > IDX && TARGET >= BOXES.length - 2) bump = -2
-    if (IDX < 1 && TARGET === BOXES.length - 1) bump = -1
-    if (Math.abs(bump) <= 2)
-      scrollToPosition(SCRUB.vars.position + (1 / BOXES.length) * bump)
+    let TARGET = BOXES.indexOf(BOX)
+    let CURRENT = gsap.utils.wrap(
+      0,
+      BOXES.length,
+      Math.floor(BOXES.length * SCRUB.vars.position)
+    )
+    let BUMP = TARGET - CURRENT
+    if (TARGET > CURRENT && TARGET - CURRENT > BOXES.length * 0.5) {
+      BUMP = (BOXES.length - BUMP) * -1
+    }
+    if (CURRENT > TARGET && CURRENT - TARGET > BOXES.length * 0.5) {
+      BUMP = BOXES.length + BUMP
+    }
+    // console.info({ CURRENT, TARGET, BUMP })
+    scrollToPosition(SCRUB.vars.position + BUMP / 10)
   }
 })
 
@@ -253,3 +254,18 @@ document.addEventListener('pointerdown', e => {
 })
 
 gsap.set('.box', { display: 'block' })
+
+// Draggable.create('.drag-proxy', {
+//   type: 'x',
+//   trigger: '.box',
+//   onPress() {
+//     this.startOffset = SCRUB.vars.position
+//   },
+//   onDrag() {
+//     SCRUB.vars.position = this.startOffset + (this.startX - this.x) * 0.001
+//     SCRUB.invalidate().restart() // same thing as we do in the ScrollTrigger's onUpdate
+//   },
+//   onDragEnd() {
+//     scrollToPosition(SCRUB.vars.position)
+//   },
+// })
