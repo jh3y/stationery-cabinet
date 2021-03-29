@@ -215,8 +215,7 @@ document.querySelector('.boxes').addEventListener('click', e => {
     if (CURRENT > TARGET && CURRENT - TARGET > BOXES.length * 0.5) {
       BUMP = BOXES.length + BUMP
     }
-    // console.info({ CURRENT, TARGET, BUMP })
-    scrollToPosition(SCRUB.vars.position + BUMP / 10)
+    scrollToPosition(SCRUB.vars.position + BUMP * (1 / BOXES.length))
   }
 })
 
@@ -226,46 +225,50 @@ document.querySelector('.next').addEventListener('click', NEXT)
 document.querySelector('.prev').addEventListener('click', PREV)
 
 // Dragging
-let startX = 0
-let startOffset = 0
+// let startX = 0
+// let startOffset = 0
 
-const onPointerMove = e => {
-  e.preventDefault()
-  SCRUB.vars.position = startOffset + (startX - e.pageX) * 0.001
-  SCRUB.invalidate().restart() // same thing as we do in the ScrollTrigger's onUpdate
-}
+// const onPointerMove = e => {
+//   e.preventDefault()
+//   SCRUB.vars.position = startOffset + (startX - e.pageX) * 0.001
+//   SCRUB.invalidate().restart() // same thing as we do in the ScrollTrigger's onUpdate
+// }
 
-const onPointerUp = e => {
-  document.removeEventListener('pointermove', onPointerMove)
-  document.removeEventListener('pointerup', onPointerUp)
-  document.removeEventListener('pointercancel', onPointerUp)
-  scrollToPosition(SCRUB.vars.position)
-}
+// const onPointerUp = e => {
+//   document.removeEventListener('pointermove', onPointerMove)
+//   document.removeEventListener('pointerup', onPointerUp)
+//   document.removeEventListener('pointercancel', onPointerUp)
+//   scrollToPosition(SCRUB.vars.position)
+// }
 
-// when the user presses on anything except buttons, start a drag...
-document.addEventListener('pointerdown', e => {
-  if (e.target.tagName.toLowerCase() !== 'button') {
-    document.addEventListener('pointermove', onPointerMove)
-    document.addEventListener('pointerup', onPointerUp)
-    document.addEventListener('pointercancel', onPointerUp)
-    startX = e.pageX
-    startOffset = SCRUB.vars.position
-  }
-})
+// // when the user presses on anything except buttons, start a drag...
+// document.addEventListener('pointerdown', e => {
+//   if (e.target.tagName.toLowerCase() !== 'button') {
+//     document.addEventListener('pointermove', onPointerMove)
+//     document.addEventListener('pointerup', onPointerUp)
+//     document.addEventListener('pointercancel', onPointerUp)
+//     startX = e.pageX
+//     startOffset = SCRUB.vars.position
+//   }
+// })
 
 gsap.set('.box', { display: 'block' })
 
-// Draggable.create('.drag-proxy', {
-//   type: 'x',
-//   trigger: '.box',
-//   onPress() {
-//     this.startOffset = SCRUB.vars.position
-//   },
-//   onDrag() {
-//     SCRUB.vars.position = this.startOffset + (this.startX - this.x) * 0.001
-//     SCRUB.invalidate().restart() // same thing as we do in the ScrollTrigger's onUpdate
-//   },
-//   onDragEnd() {
-//     scrollToPosition(SCRUB.vars.position)
-//   },
-// })
+gsap.set('button', {
+  z: 200,
+})
+
+Draggable.create('.drag-proxy', {
+  type: 'x',
+  trigger: '.box',
+  onPress() {
+    this.startOffset = SCRUB.vars.position
+  },
+  onDrag() {
+    SCRUB.vars.position = this.startOffset + (this.startX - this.x) * 0.001
+    SCRUB.invalidate().restart() // same thing as we do in the ScrollTrigger's onUpdate
+  },
+  onDragEnd() {
+    scrollToPosition(SCRUB.vars.position)
+  },
+})

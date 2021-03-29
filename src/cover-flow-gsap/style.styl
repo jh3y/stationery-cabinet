@@ -20,23 +20,22 @@ body
 
 .controls
   position absolute
-  top 50%
+  top calc(50% + clamp(var(--min-size), 20vmin, 20vmin))
   left 50%
   transform translate(-50%, -50%) scale(1.5)
-  z-index 200
   display flex
   justify-content space-between
-  min-height var(--min-size)
   min-width var(--min-size)
-  height 20vmin
+  height 44px
   width 20vmin
+  z-index 300
 
 button
   height 48px
   width 48px
   border-radius 50%
   position absolute
-  top 100%
+  top 0%
   outline transparent
   cursor pointer
   background none

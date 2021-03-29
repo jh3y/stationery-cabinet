@@ -1,0 +1,58 @@
+mixin cuboid()
+  .cuboid(class!=attributes.class)
+    - let s = 0
+    while s < 6
+      .cuboid__side
+      - s++
+
+mixin container(amounts)
+  .cuboid.cuboid--container
+    .cuboid__side(style=`--cols: ${amounts[0][1]}; --rows: ${amounts[0][0]};`)
+      - let f = 0
+        while f < amounts[0][0] * amounts[0][1]
+          .container(style=`--hue: ${Math.random() * 360};`)
+          - f++
+    .cuboid__side
+    .cuboid__side
+    .cuboid__side(style=`--cols: ${amounts[1][0]}; --rows: ${amounts[1][1]};`)
+      - let b = 0
+        while b < amounts[1][0] * amounts[1][1]
+          .container(style=`--hue: ${Math.random() * 360};`)
+          - b++
+    .cuboid__side(style=`--cols: ${amounts[2][1]}; --rows: ${amounts[2][0]};`)
+      - let g = 0
+      while g < amounts[2][0] * amounts[2][1]
+        .container(style=`--hue: ${Math.random() * 360};`)
+        - g++
+    .cuboid__side
+.scene
+  .canal
+  .boat
+    label
+      | EVERBEAR
+      img(src="https://assets.codepen.io/605876/avatar.png")
+    .boat__body
+      +cuboid()(class="cuboid--body")
+    .boat__container.boat__container--back
+      +container([[20, 4], [20, 8], [8, 4]])
+    .boat__container.boat__container--middle
+      +container([[20, 12], [20, 8], [8, 12]])
+    .boat__container.boat__container--front
+      +container([[20, 8], [20, 8], [8, 8]])
+    .boat__tower.boat__tower--back
+      +cuboid()(class="cuboid--tower cuboid--tower-back")
+    .boat__tower.boat__tower--front
+      +cuboid()(class="cuboid--tower cuboid--tower-front")
+  .skiff__container
+    .skiff
+      .skiff__body
+        +cuboid()(class="cuboid--skiff-body")
+      .skiff__cabin
+        +cuboid()(class="cuboid--skiff-cabin")
+      .skiff__hold
+        +cuboid()(class="cuboid--skiff-hold")
+      .skiff__motor
+        +cuboid()(class="cuboid--skiff-motor")
+
+
+
