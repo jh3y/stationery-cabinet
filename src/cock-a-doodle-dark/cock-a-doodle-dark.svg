@@ -1,0 +1,102 @@
+<svg class="scene" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- <g clip-path="url(#backdrop-clip)"> -->
+  <g>
+    <circle class="scene__backdrop" cx="300" cy="300" r="300" fill="#2E4241"/>
+    <g class="scene__shooter-hold">
+      <path class="scene__shooter" fill-rule="evenodd" clip-rule="evenodd" d="M305.97 243.608L300 363l-5.97-119.392a6 6 0 1111.94 0z" fill="url(#shooting-star-paint)"/>
+    </g>
+    <g class="scene__moon moon">
+      <path class="moon__body" d="M456 300c0 86.156-69.844 156-156 156s-156-69.844-156-156 69.844-156 156-156c16.178 0 31.78 2.463 46.453 7.033C409.923 170.804 456 230.021 456 300z" fill="#C4C4C4"/>
+      <circle class="moon__crater moon__crater--dark" cx="207.092" cy="318.026" r="16.412" transform="rotate(6.943 207.092 318.026)" fill="#888"/>
+      <circle class="moon__crater moon__crater--dark" cx="319.866" cy="391.278" r="22.88" transform="rotate(-98.782 319.866 391.278)" fill="#888"/>
+      <circle class="moon__crater moon__crater--dark" cx="375.378" cy="243.744" r="22.88" transform="rotate(-35.273 375.378 243.744)" fill="#888"/>
+      <circle class="moon__crater moon__crater--dark" cx="382.321" cy="289.814" r="32.587" transform="rotate(25.737 382.321 289.814)" fill="#888"/>
+      <path class="moon__crater moon__crater--light" fill-rule="evenodd" clip-rule="evenodd" d="M207.582 301.551c8.219 1.754 13.883 9.529 12.847 18.031-1.034 8.494-8.384 14.678-16.773 14.422-8.219-1.754-13.882-9.528-12.847-18.031 1.034-8.494 8.384-14.678 16.773-14.422z" fill="#AEAEAE"/>
+      <path class="moon__crater moon__crater--light" fill-rule="evenodd" clip-rule="evenodd" d="M297.571 396.833c-.745-11.687 7.546-22.219 19.344-24.041 11.793-1.822 22.872 5.71 25.693 17.071.746 11.688-7.546 22.219-19.343 24.041-11.793 1.822-22.872-5.71-25.694-17.071z" fill="#AEAEAE"/>
+      <path class="moon__crater moon__crater--light" fill-rule="evenodd" clip-rule="evenodd" d="M360.462 226.268c10.128-5.88 23.252-3.157 30.145 6.589 6.891 9.742 5.092 23.018-3.817 30.611-10.129 5.88-23.252 3.157-30.146-6.589-6.891-9.742-5.092-23.018 3.818-30.611z" fill="#AEAEAE"/>
+      <path class="moon__crater moon__crater--light" fill-rule="evenodd" clip-rule="evenodd" d="M393.804 259.173c14.311 8.56 19.974 26.786 12.592 42.098-7.381 15.312-25.167 22.234-40.778 16.37-14.311-8.56-19.974-26.786-12.592-42.098 7.381-15.312 25.167-22.234 40.778-16.37z" fill="#AEAEAE"/>
+    </g>
+    <!-- <circle cx="319.866" cy="391.278" r="22.88" transform="rotate(-98.782 319.866 391.278)" fill="#AEAEAE"/> -->
+    <!-- <path fill-rule="evenodd" clip-rule="evenodd" d="M297.571 396.833c-.745-11.687 7.546-22.219 19.344-24.041 11.793-1.822 22.872 5.71 25.693 17.071.746 11.688-7.546 22.219-19.343 24.041-11.793 1.822-22.872-5.71-25.694-17.071z" fill="#AEAEAE"/> -->
+    <!-- <circle cx="375.378" cy="243.744" r="22.88" transform="rotate(-35.273 375.378 243.744)" fill="#AEAEAE"/> -->
+    <!-- <path fill-rule="evenodd" clip-rule="evenodd" d="M360.462 226.268c10.128-5.88 23.252-3.157 30.145 6.589 6.891 9.742 5.092 23.018-3.817 30.611-10.129 5.88-23.252 3.157-30.146-6.589-6.891-9.742-5.092-23.018 3.818-30.611z" fill="#AEAEAE"/> -->
+    <!-- <circle cx="382.321" cy="289.814" r="32.587" transform="rotate(25.737 382.321 289.814)" fill="#AEAEAE"/> -->
+    <!-- <path fill-rule="evenodd" clip-rule="evenodd" d="M393.804 259.173c14.311 8.56 19.974 26.786 12.592 42.098-7.381 15.312-25.167 22.234-40.778 16.37-14.311-8.56-19.974-26.786-12.592-42.098 7.381-15.312 25.167-22.234 40.778-16.37z" fill="#AEAEAE"/> -->
+    <!-- <circle cx="207.092" cy="318.026" r="16.412" transform="rotate(6.943 207.092 318.026)" fill="#AEAEAE"/> -->
+    <!-- <path fill-rule="evenodd" clip-rule="evenodd" d="M207.582 301.551c8.219 1.754 13.883 9.529 12.847 18.031-1.034 8.494-8.384 14.678-16.773 14.422-8.219-1.754-13.882-9.528-12.847-18.031 1.034-8.494 8.384-14.678 16.773-14.422z" fill="#AEAEAE"/> -->
+
+    <g class="scene__stars">
+      <circle class="star star--shower" cx="132" cy="170" r="5" fill="#fff"/>
+      <circle class="star star--shower" cx="189" cy="107" r="5" fill="#fff"/>
+      <circle class="star star--shower" cx="512" cy="217" r="5" fill="#fff"/>
+    </g>
+    <g class="scene__sun sun">
+      <g class="sun__ray-holder">
+        <path class="sun__ray" d="M282 263h37.778l-10 74.963H292L282 263z" fill="#F3C82F"/>
+      </g>
+      <g class="sun__ray-holder">
+        <path class="sun__ray" d="M282 263h37.778l-10 74.963H292L282 263z" fill="#F3C82F"/>
+      </g>
+      <g class="sun__ray-holder">
+        <path class="sun__ray" d="M282 263h37.778l-10 74.963H292L282 263z" fill="#F3C82F"/>
+      </g>
+      <g class="sun__ray-holder">
+        <path class="sun__ray" d="M282 263h37.778l-10 74.963H292L282 263z" fill="#F3C82F"/>
+      </g>
+      <g class="sun__ray-holder">
+        <path class="sun__ray" d="M282 263h37.778l-10 74.963H292L282 263z" fill="#F3C82F"/>
+      </g>
+      <g class="sun__ray-holder">
+        <path class="sun__ray" d="M282 263h37.778l-10 74.963H292L282 263z" fill="#F3C82F"/>
+      </g>
+      <g class="sun__ray-holder">
+        <path class="sun__ray" d="M282 263h37.778l-10 74.963H292L282 263z" fill="#F3C82F"/>
+      </g>
+      <g class="sun__ray-holder">
+        <path class="sun__ray" d="M282 263h37.778l-10 74.963H292L282 263z" fill="#F3C82F"/>
+      </g>
+      <path class="sun__body" d="M300 171.626c71.46 0 129.389 57.475 129.389 128.374S371.46 428.374 300 428.374c-71.46 0-129.389-57.475-129.389-128.374 0-13.313 2.043-26.152 5.834-38.227 16.398-52.23 65.514-90.147 123.555-90.147z" fill="#FFE486"/>
+    </g>
+    <!-- <path fill="#F3C82F" d="M479.444 318.741V281.26H555v37.481z"/>
+    <path fill="#F3C82F" d="M281.111 47h37.778v74.963h-37.778z"/> -->
+    <!-- <path fill="#F3C82F" d="M280.167 478.037h37.778V553h-37.778z"/>
+    <path fill="#F3C82F" d="M45 318.741V281.26h75.556v37.481z"/>
+    <path fill="#F3C82F" d="M440.243 187.361l-26.713-26.503 53.426-53.007 26.713 26.503z"/>
+    <path fill="#F3C82F" d="M132.376 491.487l-26.713-26.503 53.426-53.007 26.713 26.503z"/>
+    <path fill="#F3C82F" d="M106.331 134.354l26.713-26.503 53.426 53.006-26.713 26.504z"/>
+    <path fill="#F3C82F" d="M106.331 134.354l26.713-26.503 53.426 53.006-26.713 26.504z"/>
+    <path fill="#F3C82F" d="M413.53 439.143l26.713-26.503 53.426 53.006-26.713 26.504z"/> -->
+    <g class="scene__hills">
+      <path class="hill" d="M217 599c0 92.232 135.954 21 228.185 21C537.417 620 658 654.232 658 562s-52.768-147-145-147-296 91.768-296 184z" fill="#83E95F"/>
+      <path class="hill" d="M335.837 630c0 92.232-104.954 0-197.185 0-92.232 0-160.815 38.232-160.815-54S46.42 422 138.652 422c92.231 0 197.185 115.768 197.185 208z" fill="#4CA32E"/>
+    </g>
+    <circle class="scene__border" cx="300" cy="300" r="295" stroke="#000" stroke-width="10"/>
+    <g class="cockerel scene__cockerel">
+      <g class="cockerel__comb">
+        <path d="M572 278H443c-71.245 0-146 4-146 4 0-71.245 74.755-133 146-133s129 57.755 129 129z" fill="#FF0809"/>
+        <path d="M488.608 409.325l-91.216-91.217-91.217-91.216c50.377-50.378 111.947-61.77 162.325-11.392 50.378 50.378 70.486 143.448 20.108 193.825z" fill="#FF0809"/>
+        <path d="M550.911 339.19l-124.605-33.388-124.604-33.387C320.141 203.597 342.183 165.64 411 184.08c68.817 18.439 158.35 86.293 139.911 155.11z" fill="#FF0809"/>
+        <path d="M471.5 440.464C471.5 509.5 441.614 539 414 539s-50-29.5-50-98.536C364 371.429 346.886 288 374.5 288s97 83.429 97 152.464z" fill="#FF0809"/>
+      </g>
+      <path class="cockerel__wattle" d="M281.523 438.333C281.523 478.65 257 519 199.5 525.5s-133-64-108-110.5 78-56.667 138.023-56.667c60.023 0 52 39.683 52 80z" fill="#EE0505"/>
+      <path class="cockerel__beak cockerel__beak--left" d="M229.179 109.498l122 128.5-57 40.5-65-169z" fill="#FFF628"/>
+      <path class="cockerel__beak cockerel__beak--right" d="M370.179 60.498L328.5 286.5l-69.321-26.502 111-199.5z" fill="#FFF628"/>
+      <path class="cockerel__body" d="M393 391.035L400 300c0-55.228-44.772-100-100-100s-100 44.772-100 100c0 40.445 24.011 75.283 58.557 91.035C189.801 436.766 76 573.312 76 621c-3 101.5 59.935 159.5 124 159.5s147.5 15 168-48.5c1.21-14.408 4-82.5 9.5-164L393 391.035z" fill="#C4C4C4"/>
+      <circle class="cockerel__eye" cx="300" cy="300" r="26" fill="#000"/>
+      <g class="scene__shout">
+        <path d="M238.742 64.158l22.861 31.08-35.907-17.55 13.046-13.53z" fill="#FF3D00"/>
+        <path d="M285.62 20.866l3.226 55.18-24.394-51.55 21.168-3.63z" fill="#FF3D00"/>
+        <path d="M347.038 54.649l-28.904 25.555 14.259-37.335 14.645 11.78z" fill="#FF3D00"/>
+      </g>
+    </g>
+  </g>
+  <defs>
+    <linearGradient id="shooting-star-paint" x1="300" y1="237" x2="300" y2="363" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff"/>
+      <stop offset="1" stop-color="#C4C4C4" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="backdrop-clip">
+      <circle cx="300" cy="300" r="300"/>
+    </clipPath>
+  </defs>
+</svg>

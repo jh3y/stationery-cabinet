@@ -1,0 +1,72 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+:root
+  --size calc(6 * 48px)
+
+  // @media(prefers-color-scheme: dark)
+  //   --on 0
+
+  // @media(prefers-color-scheme: light)
+  //   --on 1
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  background 'hsl(210, 50%, %s)' % calc((20 + (var(--on, 0) * 75)) * 1%)
+
+button
+  height var(--size)
+  width var(--size)
+  padding 0
+  appearance none
+  border 0
+  background none
+  cursor pointer
+  outline transparent
+
+span
+  display none
+  position absolute
+  width 1px
+  height 1px
+  padding 0
+  margin -1px
+  overflow hidden
+  clip rect(0, 0, 0, 0)
+  white-space nowrap
+  border-width 0
+
+[aria-pressed="true"]
+  span:nth-of-type(1)
+    display none
+  span:nth-of-type(2)
+    display inline-block
+[aria-pressed="false"]
+  span:nth-of-type(1)
+    display inline-block
+  span:nth-of-type(2)
+    display none
+
+.scene
+  height 100%
+  width 100%
+  overflow visible !important
+  display none
+
+  &__backdrop
+    fill 'hsl(207, 88%, %s)' % calc((22 + (var(--on, 0) * 60)) * 1%)
+
+  &__border
+    stroke red
+
+.hill
+  fill 'hsl(90, 80%, %s)' % calc((var(--base-lightness, 30) + (var(--on, 0) * 30)) * 1%)
+
+  &:nth-of-type(1)
+    --base-lightness 10
+  &:nth-of-type(2)
+    --base-lightness 20

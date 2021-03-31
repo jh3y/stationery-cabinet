@@ -1,0 +1,14 @@
+button(aria-pressed="false")
+  //- Auxiliary labels
+  span Turn the lights on
+  span Turn the lights off
+  include ./cock-a-doodle-dark.svg
+noscript
+  style.
+    @media(prefers-color-scheme: dark) {
+      :root { --on: 0; }
+    }
+
+    @media(prefers-color-scheme: light) {
+      :root { --on: 1; }
+    }
