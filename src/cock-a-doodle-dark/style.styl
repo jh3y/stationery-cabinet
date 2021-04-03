@@ -5,6 +5,16 @@
 
 :root
   --size calc(6 * 48px)
+  --sun hsl(40, 90%, 70%)
+  --sun-ray--even: hsl(40, 90%, 65%)
+  --sun-ray--odd: hsl(40, 90%, 75%)
+  --eye hsl(0, 0%, 10%)
+  --accent hsl(10, 80%, 55%)
+  --beak-left hsl(45, 80%, 50%)
+  --beak-right hsl(45, 80%, 60%)
+  --body hsl(0, 0%, 90%)
+  --hill-one hsl(96, 50%, 50%)
+  --hill-two hsl(106, 50%, 40%)
 
   // @media(prefers-color-scheme: dark)
   //   --on 0
@@ -14,8 +24,9 @@
 
 body
   min-height 100vh
-  display grid
-  place-items center
+  display flex
+  align-items center
+  justify-content center
   background 'hsl(210, 50%, %s)' % calc((20 + (var(--on, 0) * 75)) * 1%)
 
 button
@@ -51,6 +62,41 @@ span
   span:nth-of-type(2)
     display none
 
+.cockerel
+  &__eye
+    fill var(--eye)
+
+  &__body
+    fill var(--body)
+
+  &__beak--left
+    fill var(--beak-left)
+
+  &__beak--right
+    fill var(--beak-right)
+
+  &__comb path
+  &__wattle
+    fill var(--accent)
+
+.hill
+  &:nth-of-type(1)
+    fill var(--hill-one)
+  &:nth-of-type(2)
+    fill var(--hill-two)
+
+.sun
+  fill var(--sun)
+
+  &__ray-holder
+    &:nth-of-type(even)
+      --fill var(--sun-ray--even)
+    &:nth-of-type(odd)
+      --fill var(--sun-ray--odd)
+
+  &__ray
+    fill var(--fill)
+
 .scene
   height 100%
   width 100%
@@ -61,7 +107,7 @@ span
     fill 'hsl(207, 88%, %s)' % calc((22 + (var(--on, 0) * 60)) * 1%)
 
   &__border
-    stroke red
+    stroke 'hsl(0, 0%, %s)' % calc((80 - (var(--on, 0) * 20)) * 1%)
 
 .hill
   fill 'hsl(90, 80%, %s)' % calc((var(--base-lightness, 30) + (var(--on, 0) * 30)) * 1%)
@@ -70,3 +116,35 @@ span
     --base-lightness 10
   &:nth-of-type(2)
     --base-lightness 20
+
+label
+  height 44px
+  width 44px
+  position fixed
+  bottom 1rem
+  right 1rem
+  cursor pointer
+
+  & > svg
+    position absolute
+    height 100%
+    width 100%
+    top 0
+    left 0
+
+  path
+    fill 'hsl(210, 40%, %s)' % calc((80 - (var(--on, 0) * 60)) * 1%)
+
+  svg:nth-of-type(1)
+    display none
+
+[type='checkbox']
+  // opacity 0
+  height 0
+  width 0
+
+:checked ~ label
+  svg:nth-of-type(1)
+    display block
+  svg:nth-of-type(2)
+    display none

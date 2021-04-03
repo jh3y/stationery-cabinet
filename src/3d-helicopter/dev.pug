@@ -1,0 +1,41 @@
+mixin cuboid()
+  .cuboid(class!=attributes.class)
+    - let s = 0
+    while s < 6
+      .cuboid__side
+      - s++
+.scene
+  .helicopter__tilter
+    .helicopter__wrapper
+      .helicopter
+        .helicopter__rotor
+          +cuboid()(class="cuboid--rotor")
+        .helicopter__cockpit
+          +cuboid()(class="cuboid--cockpit")
+          .helicopter__chair
+            .helicopter__chair-back
+              +cuboid()(class="cuboid--chair")
+            .helicopter__chair-bottom
+              +cuboid()(class="cuboid--chair")
+          .helicopter__dashboard
+            +cuboid()(class="cuboid--dashboard")
+        .helicopter__tail
+          +cuboid()(class="cuboid--tail")
+        .helicopter__fin
+          +cuboid()(class="cuboid--fin")
+          .helicopter__triblade
+        .helicopter__stabilizer
+          +cuboid()(class="cuboid--stabilizer")
+        .helicopter__skids
+          .helicopter__skid--left.helicopter__skid
+            +cuboid()(class="cuboid--skid")
+          .helicopter__skid--right.helicopter__skid
+            +cuboid()(class="cuboid--skid")
+        .helicopter__wing
+          +cuboid()(class="cuboid--wing")
+        .helicopter__launchers
+          .helicopter__launcher.helicopter__launcher--left
+            +cuboid()(class="cuboid--launcher")
+          .helicopter__launcher.helicopter__launcher--right
+            +cuboid()(class="cuboid--launcher")
+        .helicopter__blades
