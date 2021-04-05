@@ -68,3 +68,62 @@ document.addEventListener('pointerup', () => {
 //   .name('Rotate Y (deg)')
 //   .onChange(UPDATE)
 // UPDATE()
+
+// Dark Mode
+const THEMES = (window.THEMES = {
+  LIGHT: 'LIGHT',
+  DARK: 'DARK',
+  KEY: 'THEME',
+})
+
+window.LIGHT_QUERY = window.matchMedia('(prefers-color-scheme: light)') // Mode enums
+
+window.__setTheme = theme => {
+  window.__THEME = theme
+  window.localStorage.setItem(THEMES.KEY, theme)
+} // Need to check the box based on different criteria.
+// Check if mode is Light and preference is dark or no preference.
+
+const stored = localStorage.getItem(THEMES.KEY)
+
+if (stored) {
+  window.__THEME = stored
+  window.__setTheme(stored)
+} else {
+  if (window.LIGHT_QUERY.matches) {
+    window.__THEME = THEMES.LIGHT
+  } else {
+    window.__THEME = THEMES.DARK
+  }
+
+  window.__setTheme(window.__THEME)
+}
+
+window.INITIAL_THEME =
+  (window.__THEME && window.__THEME === THEMES.LIGHT) ||
+  (window.localStorage.getItem(THEMES.KEY) &&
+    window.localStorage.getItem(THEMES.KEY) === THEMES.LIGHT)
+
+const BUTTON = document.querySelector('button')
+
+gsap.set(BUTTON, {
+  attr: {
+    'aria-pressed': window.__THEME === THEMES.DARK ? 'false' : 'true',
+  },
+})
+gsap.set('html', {
+  '--on': window.__THEME === THEMES.DARK ? 0 : 1,
+})
+
+BUTTON.addEventListener('click', () => {
+  const NEW_THEME = window.__THEME === THEMES.DARK ? THEMES.LIGHT : THEMES.DARK
+  window.__setTheme(NEW_THEME)
+  gsap.set('button', {
+    attr: {
+      'aria-pressed': NEW_THEME === THEMES.DARK ? 'false' : 'true',
+    },
+  })
+  gsap.set('html', {
+    '--on': window.__THEME === THEMES.DARK ? 0 : 1,
+  })
+})
