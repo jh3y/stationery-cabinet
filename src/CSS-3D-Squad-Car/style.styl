@@ -1,0 +1,706 @@
+.cuboid
+  width 100%
+  height 100%
+  position relative
+  // 1 is the top and go t, r, b, l, f, b
+
+  &__side:nth-of-type(1)
+    height calc(var(--thickness) * 1vmin)
+    width 100%
+    position absolute
+    top 0
+    transform translate(0, -50%) rotateX(90deg)
+
+  &__side:nth-of-type(2)
+    height 100%
+    width calc(var(--thickness) * 1vmin)
+    position absolute
+    top 50%
+    right 0
+    transform translate(50%, -50%) rotateY(90deg)
+
+  &__side:nth-of-type(3)
+    width 100%
+    height calc(var(--thickness) * 1vmin)
+    position absolute
+    bottom 0
+    transform translate(0%, 50%) rotateX(90deg)
+
+  &__side:nth-of-type(4)
+    height 100%
+    width calc(var(--thickness) * 1vmin)
+    position absolute
+    left 0
+    top 50%
+    transform translate(-50%, -50%) rotateY(90deg)
+
+  &__side:nth-of-type(5)
+    height 100%
+    width 100%
+    transform translate3d(0, 0, calc(var(--thickness) * 0.5vmin))
+    position absolute
+    top 0
+    left 0
+
+  &__side:nth-of-type(6)
+    height 100%
+    width 100%
+    transform translate3d(0, 0, calc(var(--thickness) * -0.5vmin)) rotateY(180deg)
+    position absolute
+    top 0
+    left 0
+
+*
+*:after
+*:before
+  box-sizing border-box
+  transform-style preserve-3d
+  transition background 0.1s ease
+
+body
+  min-height 100vh
+  display grid
+  background var(--bg)
+  place-items center
+  touch-action none
+
+:root
+  --base-size 1vmin
+  --base-height calc(45 * 0.65)
+  --base-width calc(75 * 0.65)
+  --speed 0.4s
+  --bg 'hsl(210, 80%, %s)' % calc((15 + (var(--on, 0) * 75)) * 1%)
+  --width calc(var(--base-width) * var(--base-size))
+  --height calc(var(--base-height) * var(--base-size))
+  --road-one 'hsl(0, 0%, %s)' % calc((40 + (var(--on, 0) * 35)) * 1%)
+  --road-two 'hsl(0, 0%, %s)' % calc((30 + (var(--on, 0) * 35)) * 1%)
+  --road-three 'hsl(0, 0%, %s)' % calc((20 + (var(--on, 0) * 35)) * 1%)
+  --road-four 'hsl(0, 0%, %s)' % calc((10 + (var(--on, 0) * 35)) * 1%)
+  --road-marking-one 'hsl(0, 0%, %s)' % calc((85 + (var(--on, 0) * 15)) * 1%)
+  --road-marking-two 'hsl(0, 0%, %s)' % calc((80 + (var(--on, 0) * 15)) * 1%)
+  --road-marking-three 'hsl(0, 0%, %s)' % calc((75 + (var(--on, 0) * 15)) * 1%)
+  --white-one 'hsl(0, 0%, %s)' % calc((85 + (var(--on, 0) * 10)) * 1%)
+  --white-two 'hsl(0, 0%, %s)' % calc((80 + (var(--on, 0) * 10)) * 1%)
+  --white-three 'hsl(0, 0%, %s)' % calc((75 + (var(--on, 0) * 10)) * 1%)
+  --white-four 'hsl(0, 0%, %s)' % calc((70 + (var(--on, 0) * 10)) * 1%)
+  --glass-one 'hsl(210, 80%, %s)' % calc((85 + (var(--on, 0) * 10)) * 1%)
+  --glass-two 'hsl(210, 80%, %s)' % calc((80 + (var(--on, 0) * 10)) * 1%)
+  --glass-three 'hsl(210, 80%, %s)' % calc((75 + (var(--on, 0) * 10)) * 1%)
+  --glass-four 'hsl(210, 80%, %s)' % calc((70 + (var(--on, 0) * 10)) * 1%)
+  --bumper-one 'hsl(0, 0%, %s)' % calc((80 + (var(--on, 0) * 10)) * 1%)
+  --bumper-two 'hsl(0, 0%, %s)' % calc((75 + (var(--on, 0) * 10)) * 1%)
+  --bumper-three 'hsl(0, 0%, %s)' % calc((70 + (var(--on, 0) * 10)) * 1%)
+  --bumper-four 'hsl(0, 0%, %s)' % calc((65 + (var(--on, 0) * 10)) * 1%)
+  --wheel-one 'hsl(0, 0%, %s)' % calc((15 + (var(--on, 0) * 10)) * 1%)
+  --wheel-two 'hsl(0, 0%, %s)' % calc((10 + (var(--on, 0) * 10)) * 1%)
+  --wheel-three 'hsl(0, 0%, %s)' % calc((5 + (var(--on, 0) * 10)) * 1%)
+  --wheel-four 'hsl(0, 0%, %s)' % calc((0 + (var(--on, 0) * 10)) * 1%)
+  --white-four 'hsl(0, 0%, %s)' % calc((70 + (var(--on, 0) * 10)) * 1%)
+  --black-one 'hsl(0, 0%, %s)' % calc((20 + (var(--on, 0) * 10)) * 1%)
+  --black-two 'hsl(0, 0%, %s)' % calc((15 + (var(--on, 0) * 10)) * 1%)
+  --black-three 'hsl(0, 0%, %s)' % calc((10 + (var(--on, 0) * 10)) * 1%)
+  --black-four 'hsl(0, 0%, %s)' % calc((5 + (var(--on, 0) * 10)) * 1%)
+  --hub 'hsl(0, 0%, %s)' % calc((65 + (var(--on, 0) * 25)) * 1%)
+  --glare hsla(0, 0%, 100%, 0.25)
+  --siren-red hsla(5, 90%, 50%, 0.25)
+  --siren-blue hsla(205, 90%, 50%, 0.25)
+  --lamp 'hsl(45, 90%, 90%, %s)' % calc(0.75 - calc(var(--on, 0) * 0.75))
+  --headlight 'hsl(45, 90%, 100%, %s)' % calc(1 - calc(var(--on, 0) * 0.5))
+  --indicator 'hsl(35, 90%, 50%, %s)' % calc(1 - calc(var(--on, 0) * 0.5))
+  --taillight 'hsl(0, 90%, 50%, %s)' % calc(1 - calc(var(--on, 0) * 0.5))
+  --shift calc(var(--height) * 0.1)
+  --bob calc(var(--width) * 0.08)
+  --bob-speed 2s
+  --shift-speed 5s
+
+.scene
+  position fixed
+  height var(--height)
+  width var(--width)
+  top 50%
+  left 50%
+  transform translate3d(-50%, -50%, 100vmin)
+  transform translate3d(-50%, -65%, 100vmin) rotateX(-24deg) rotateY(44deg) rotateX(calc(var(--rotate-x, 0) * 1deg)) rotateY(calc(var(--rotate-y, 0) * 1deg))
+
+.road
+  position absolute
+  bottom 0
+  width 100%
+  height 20%
+  transform translate3d(0, 1px, 0)
+
+.car
+  position absolute
+  height 100%
+  width 100%
+  animation bob var(--bob-speed) infinite linear alternate
+
+  @keyframes bob
+    0%
+      transform translate(calc(var(--bob) * -0.5))
+    100%
+      transform translate(calc(var(--bob) * 1.5))
+
+  &__bob
+    position absolute
+    left 50%
+    bottom 20%
+    height 50%
+    width 50%
+    transform translate3d(-50%, 0%, 0vmin)
+    animation shift var(--shift-speed) infinite linear alternate
+
+    @keyframes shift
+      0%
+        transform translate3d(-50%, 0%, calc(var(--shift) * -1))
+      100%
+        transform translate3d(-50%, 0%, calc(var(--shift) * 1))
+
+  & > *
+    position absolute
+
+  &__shadow
+    width 100%
+    height calc(var(--height) * 0.4)
+    background hsla(0, 0%, 0%, 0.5)
+    bottom 0
+    transform translate(0, 50%) rotateX(90deg) translate3d(0, 0, 1px) scale(1.05, 1.1)
+
+  &__headlights
+    width 25%
+    height calc(var(--height) * 0.5)
+    bottom 0%
+    left 0
+    transform translate(-125%, 50%) rotateX(90deg) translate3d(0, 0, 1px)
+    position relative
+
+    &:after
+    &:before
+      content ''
+      position absolute
+      height 50%
+      width 100%
+      background var(--lamp)
+      border-radius 50%
+      filter blur(10px)
+
+    &:after
+      top 0
+
+    &:before
+      bottom 0
+
+
+  &__wheel
+    height calc(var(--height) * 0.13)
+    width calc(var(--height) * 0.13)
+    bottom 0
+
+    &--f
+      left 10%
+
+    &--r
+      right 10%
+
+    &--osf
+    &--osr
+      transform translate3d(0, 0, calc(var(--height) * 0.2))
+    &--nsf
+    &--nsr
+      transform translate3d(0, 0, calc(var(--height) * -0.2))
+
+  &__body
+    &--bottom
+      bottom 5%
+      width 100%
+      height 40%
+
+    &--top
+      bottom 44.5%
+      width 60%
+      height 40%
+      left 22%
+
+  &__siren
+    bottom 85%
+    height calc(var(--height) * 0.0725)
+    width calc(var(--height) * 0.0725)
+    left 50%
+
+    & > *
+      position absolute
+      top 0
+      left 0
+
+  &__mirrors
+    width 5%
+    height 13%
+    left 24%
+    bottom 40%
+
+  &__mirror
+    height 100%
+    position absolute
+    width 100%
+
+    &--left
+      transform translate3d(0, 0, calc((var(--height) * 0.2325) + 2px))
+    &--right
+      transform translate3d(0, 0, calc((var(--height) * -0.2325) - 2px))
+
+  &__bumper
+    height calc(var(--height) * 0.05)
+    width calc(var(--height) * 0.05)
+    bottom 4%
+
+    &--front
+      left 0
+      transform translate(-40%, 0)
+    &--rear
+      right 0
+      transform translate(40%, 0)
+
+
+
+.body
+  --thickness calc(var(--base-height) * 0.4)
+
+  &--top
+    div
+      background var(--white-two)
+
+      &:nth-of-type(1)
+        // background-color var(--white-one)
+        background linear-gradient(90deg, transparent 0 20%, var(--white-one) 20% 80%, transparent 80% 100%)
+
+      &:nth-of-type(2)
+        background transparent
+
+        &:after
+          content ''
+          position absolute
+          width 100%
+          height 112%
+          background var(--white-two)
+          bottom 0
+          left 50%
+          transform translate(-50%, 0) rotateX(27deg)
+          transform-origin 50% 100%
+
+        &:before
+          content ''
+          position absolute
+          width 100%
+          height 112%
+          background linear-gradient(55deg, transparent 0 30%, var(--glare) 30% 40%, transparent 40% 45%, var(--glare) 45% 50%, transparent 50% 100%), var(--glass-two)
+          bottom 0
+          left 50%
+          transform translate(-50%, 0) rotateX(27deg) translate3d(0, 0, 1px)
+          transform-origin 50% 100%
+          --clip inset(10% 10% 10% 10%)
+          -webkit-clip-path var(--clip)
+          clip-path var(--clip)
+
+      &:nth-of-type(3)
+        background var(--white-four)
+
+      &:nth-of-type(4)
+        background-color transparent
+
+        &:after
+          content ''
+          position absolute
+          width 100%
+          height 112%
+          background var(--white-two)
+          bottom 0
+          left 50%
+          transform translate(-50%, 0) rotateX(-27deg)
+          transform-origin 50% 100%
+
+        &:before
+          content ''
+          position absolute
+          width 100%
+          height 112%
+          background linear-gradient(55deg, transparent 0 30%, var(--glare) 30% 40%, transparent 40% 45%, var(--glare) 45% 50%, transparent 50% 100%), var(--glass-two)
+          bottom 0
+          left 50%
+          transform translate(-50%, 0) rotateX(-27deg) translate3d(0, 0, -1px)
+          transform-origin 50% 100%
+          --clip inset(10% 10% 10% 10%)
+          -webkit-clip-path var(--clip)
+          clip-path var(--clip)
+
+      &:nth-of-type(5)
+        background var(--white-three)
+        --clip polygon(0 100%, 20% 0, 80% 0, 100% 100%)
+        -webkit-clip-path var(--clip)
+        clip-path var(--clip)
+
+        &:after
+          content ''
+          background linear-gradient(var(--white-three), var(--white-three)) 65% 50% / 8% 100% no-repeat
+          background-color var(--glass-three)
+          position absolute
+          height 90%
+          width 90%
+          bottom 0
+          left 50%
+          transform translate(-50%, 0)
+          --clip polygon(0 100%, 20% 0, 80% 0, 100% 100%)
+          -webkit-clip-path var(--clip)
+          clip-path var(--clip)
+
+      &:nth-of-type(6)
+        background var(--white-four)
+        --clip polygon(0 100%, 20% 0, 80% 0, 100% 100%)
+        -webkit-clip-path var(--clip)
+        clip-path var(--clip)
+
+        &:after
+          content ''
+          background linear-gradient(var(--white-four), var(--white-four)) 35% 50% / 8% 100% no-repeat
+          background-color var(--glass-four)
+          position absolute
+          height 90%
+          width 90%
+          bottom 0
+          left 50%
+          transform translate(-50%, 0)
+          --clip polygon(0 100%, 20% 0, 80% 0, 100% 100%)
+          -webkit-clip-path var(--clip)
+          clip-path var(--clip)
+
+
+  &--bottom
+    div
+      background var(--black-two)
+
+      &:nth-of-type(1)
+        background linear-gradient(90deg, var(--black-one) 0 22%, var(--white-one) 22% 82%, var(--black-one) 82% 100%)
+        background-color var(--black-one)
+
+        &:after
+          content ''
+          background var(--black-one)
+          position absolute
+          top 50%
+          left 50%
+          height 99%
+          width 101%
+          transform translate3d(-50%, -50%, -1px)
+
+        &:before
+          content '382'
+          font-family sans-serif
+          font-weight bold
+          height 30%
+          width 40%
+          text-align center
+          overflow hidden
+          position absolute
+          font-size calc(var(--height) * 0.1)
+          color var(--white-one)
+          right 0
+          bottom 50%
+          transform translate3d(50%, 50%, 2px) rotate(-90deg) translate(0, -50%)
+
+      &:nth-of-type(2)
+        background linear-gradient(var(--indicator), var(--indicator)) 95% 50% / 5% 25% no-repeat,
+          linear-gradient(var(--indicator), var(--indicator)) 5% 50% / 5% 25% no-repeat,
+          linear-gradient(var(--taillight), var(--taillight)) 10% 50% / 15% 25% no-repeat,
+          linear-gradient(var(--taillight), var(--taillight)) 90% 50% / 15% 25% no-repeat
+        background-color var(--black-two)
+
+      &:nth-of-type(3)
+        background-color var(--black-four)
+
+      &:nth-of-type(4)
+        background repeating-linear-gradient(transparent 0 20%, var(--black-four) 20% 40%) 50% 50% / 25% 25% no-repeat,
+          linear-gradient(var(--bumper-one), var(--bumper-one)) 50% 50% / 35% 25% no-repeat,
+          linear-gradient(var(--indicator), var(--indicator)) 95% 50% / 5% 25% no-repeat,
+          linear-gradient(var(--indicator), var(--indicator)) 5% 50% / 5% 25% no-repeat,
+          linear-gradient(var(--headlight), var(--headlight)) 10% 50% / 15% 25% no-repeat,
+          linear-gradient(var(--headlight), var(--headlight)) 90% 50% / 15% 25% no-repeat
+        background-color var(--black-two)
+
+      &:nth-of-type(5)
+        background linear-gradient(90deg, var(--black-three) 0 22%, var(--white-three) 22% 82%, var(--black-three) 82% 100%)
+        background-color var(--black-three)
+
+        &:after
+          content ''
+          height 75%
+          width 35%
+          background url(https://assets.codepen.io/605876/bear--gold-badge--large.png)
+          background-repeat no-repeat
+          background-size contain
+          position absolute
+          left 35%
+          top 50%
+          transform translate(0, -50%)
+
+      &:nth-of-type(6)
+        background linear-gradient(90deg, var(--black-four) 0 18%, var(--white-four) 18% 78%, var(--black-four) 78% 100%)
+        background-color var(--black-four)
+
+        &:after
+          content ''
+          height 75%
+          width 35%
+          background url(https://assets.codepen.io/605876/bear--gold-badge--large.png)
+          background-repeat no-repeat
+          background-size contain
+          position absolute
+          left 45%
+          top 50%
+          transform translate(0, -50%)
+
+.scene__road
+  --thickness calc(var(--base-height))
+
+  & > div
+
+    &:nth-of-type(1)
+      background-color var(--road-one)
+
+    &:nth-of-type(2)
+      background var(--road-two)
+
+    &:nth-of-type(3)
+      background var(--road-four)
+
+    &:nth-of-type(4)
+      background-color var(--road-two)
+
+    &:nth-of-type(5)
+      background var(--road-three)
+    &:nth-of-type(6)
+      background var(--road-four)
+
+.siren--red
+  --thickness calc(var(--base-height) * 0.1)
+  --alpha 0.25
+  transform translate3d(0, 0, calc(var(--height) * -0.075))
+  --siren-red 'hsla(5, 90%, 50%, %s)' % var(--alpha)
+  animation flash var(--siren) infinite
+  div
+    background var(--siren-red)
+.siren--blue
+  --alpha 0.25
+  --thickness calc(var(--base-height) * 0.1)
+  --siren-blue 'hsla(210, 90%, 50%, %s)' % var(--alpha)
+  transform translate3d(0, 0, calc(var(--height) * 0.075))
+  animation flash var(--siren) infinite reverse
+  div
+    background var(--siren-blue)
+
+.siren--middle
+  --thickness calc(var(--base-height) * 0.05)
+  transform translate3d(0, 0, 0)
+
+  div
+    background var(--white-one)
+
+    &:nth-of-type(1)
+      background var(--white-one)
+    &:nth-of-type(2)
+      background var(--white-two)
+    &:nth-of-type(3)
+      background var(--white-three)
+    &:nth-of-type(4)
+    &:nth-of-type(5)
+      background var(--white-four)
+    &:nth-of-type(6)
+      background var(--white-three)
+
+.wheel
+  --thickness calc(var(--base-height) * 0.05)
+
+  div
+    background var(--wheel-four)
+
+    &:nth-of-type(1)
+      background var(--wheel-one)
+    &:nth-of-type(2)
+      background var(--wheel-two)
+    &:nth-of-type(3)
+      background var(--wheel-three)
+    &:nth-of-type(4)
+      background var(--wheel-four)
+    &:nth-of-type(5)
+      background linear-gradient(var(--hub), var(--hub)) 50% 50% / 35% 35% no-repeat
+      background-color var(--wheel-four)
+    &:nth-of-type(6)
+      background linear-gradient(var(--hub), var(--hub)) 50% 50% / 35% 35% no-repeat
+      background-color var(--wheel-three)
+
+.bumper
+  --thickness calc(var(--base-height) * 0.45)
+
+  div
+    background var(--bumper-one)
+
+    &:nth-of-type(1)
+      background var(--bumper-one)
+    &:nth-of-type(2)
+      background var(--bumper-two)
+    &:nth-of-type(3)
+      background var(--bumper-three)
+    &:nth-of-type(4)
+    &:nth-of-type(5)
+      background var(--bumper-four)
+    &:nth-of-type(6)
+      background var(--bumper-three)
+
+.mirror
+  --thickness calc(var(--base-height) * 0.075)
+
+  div
+    background var(--black-two)
+
+    &:nth-of-type(1)
+      background-color var(--black-one)
+
+    &:nth-of-type(2)
+      background linear-gradient(var(--white-one), var(--white-one)) 50% 50% / 75% 75% no-repeat
+      background-color var(--black-two)
+
+    &:nth-of-type(3)
+      background var(--black-four)
+
+    &:nth-of-type(4)
+      background-color var(--black-two)
+
+    &:nth-of-type(5)
+      background var(--black-three)
+    &:nth-of-type(6)
+      background var(--black-four)
+
+.road__markings
+  height 100%
+  width 100%
+  overflow hidden
+
+  &--bottom
+    transform translate3d(0, 0, -1px)
+    &:after
+      content ''
+      position absolute
+      height 100%
+      width calc(var(--width) * 2)
+      background repeating-linear-gradient(270deg, var(--road-marking-three) 0 10%, transparent 10% 15%) 0 50% / 100% 5% no-repeat
+      bottom 0
+      left 50%
+      transform translate3d(-50%, 0, 0)
+      animation roll-bottom var(--speed) infinite linear
+
+  &--front
+    transform translate3d(0, 0, -1px)
+    &:after
+      content ''
+      position absolute
+      height calc(var(--base-height) * 1vmin)
+      width calc(var(--width) * 2)
+      background repeating-linear-gradient(270deg, var(--road-marking-two) 0 10%, transparent 10% 15%) 0 50% / 100% 5% no-repeat
+      top 0%
+      left 50%
+      transform translate(-50%, -50%) rotate(-90deg) translate3d(-35%, 0, -1px)
+      animation roll-front var(--speed) infinite linear
+
+      @keyframes roll-front
+        to
+          transform translate(-50%, -50%) rotate(-90deg) translate3d(-20%, 0, -1px)
+  &--back
+    transform translate3d(0, 0, 1px)
+    &:after
+      content ''
+      position absolute
+      height calc(var(--base-height) * 1vmin)
+      width calc(var(--width) * 2)
+      background repeating-linear-gradient(270deg, var(--road-marking-two) 0 10%, transparent 10% 15%) 0 50% / 100% 5% no-repeat
+      top 0%
+      left 50%
+      transform translate(-50%, -50%) rotate(-90deg) translate3d(-35%, 0, 1px)
+      animation roll-back var(--speed) infinite linear
+
+      @keyframes roll-back
+        to
+          transform translate(-50%, -50%) rotate(-90deg) translate3d(-50%, 0, 1px)
+  &--top
+    transform translate3d(0, 0, 1px)
+    &:after
+      content ''
+      position absolute
+      height 100%
+      width calc(var(--width) * 2)
+      background repeating-linear-gradient(270deg, var(--road-marking-one) 0 10%, transparent 10% 15%) 0 50% / 100% 5% no-repeat
+      bottom 0
+      left 50%
+      transform translate3d(-50%, 0, 1px)
+      animation roll-top var(--speed) infinite linear
+
+    @keyframes roll-top
+      to
+        transform translate3d(-35%, 0, 1px)
+
+@keyframes roll-bottom
+  to
+    transform translate3d(-65%, 0, 0)
+
+@keyframes flash
+  50%
+    --alpha 1
+
+.controls
+  position fixed
+  bottom 1rem
+  right 1rem
+  display flex
+  flex-direction column
+
+  & > * + *
+    margin-top 1rem
+button
+  height 48px
+  width 48px
+  cursor pointer
+  transform translate3d(0, 0, 150vmin)
+  appearance none
+  border 0
+  background transparent
+  outline transparent
+
+  & > svg
+    position absolute
+    height 100%
+    width 100%
+    top 0
+    left 0
+
+  path
+    fill 'hsl(210, 80%, %s)' % calc((90 - (var(--on, 0) * 75)) * 1%)
+
+  svg:nth-of-type(1)
+  span:nth-of-type(1)
+    display none
+
+  span
+    position absolute
+    width 1px
+    height 1px
+    padding 0
+    margin -1px
+    overflow hidden
+    clip rect(0, 0, 0, 0)
+    white-space nowrap
+    border-width 0
+
+[aria-pressed="true"]
+  svg:nth-of-type(1)
+  span:nth-of-type(1)
+    display block
+  svg:nth-of-type(2)
+  span:nth-of-type(2)
+    display none
