@@ -23,6 +23,21 @@ const usePersistentState = (key, initialValue) => {
   return [state, setState]
 }
 
+const useAudio = src => {
+  const [audio, setAudio] = useState(null)
+  useEffect(() => {
+    setAudio(new Audio(src))
+  }, [src])
+  return {
+    play: () => audio.play(),
+    pause: () => audio.pause(),
+    stop: () => {
+      audio.pause()
+      audio.currentTime = 0
+    },
+  }
+}
+
 const Board = ({ children }) => <main>{children}</main>
 
 const Score = ({ value }) => <span>{`Score: ${value}`}</span>
@@ -32,13 +47,13 @@ const HighScore = ({ value }) => <span>{`Hi Score: ${value}`}</span>
 const Result = ({ value }) => <span>{`Result: ${value}`}</span>
 
 const Mole = ({ onWhack, speed, delay, points, pointsMin = 10 }) => {
+  const { play } = useAudio('https://assets.codepen.io/605876/pop.mp3')
   const [whacked, setWhacked] = useState(false)
   const pointsRef = useRef(points)
   const buttonRef = useRef(null)
   const bobRef = useRef(null)
 
   useEffect(() => {
-    console.info('mounting')
     bobRef.current = gsap.to(buttonRef.current, {
       yPercent: -100,
       duration: speed,
@@ -53,7 +68,6 @@ const Mole = ({ onWhack, speed, delay, points, pointsMin = 10 }) => {
       },
     })
     return () => {
-      console.info('unmounting')
       bobRef.current.kill()
     }
   }, [delay, pointsMin, speed])
@@ -78,6 +92,7 @@ const Mole = ({ onWhack, speed, delay, points, pointsMin = 10 }) => {
   }, [whacked])
 
   const whack = () => {
+    play()
     setWhacked(true)
     onWhack(pointsRef.current)
   }
@@ -123,10 +138,15 @@ const Game = () => {
   const [moles, setMoles] = useState(generateMoles())
   const [playing, setPlaying] = useState(false)
   const [finished, setFinished] = useState(false)
+  const [newHighScore, setNewHighScore] = useState(false)
   const [score, setScore] = useState(0)
   const [highScore, setHighScore] = usePersistentState('whac-high-score', 0)
 
   const onWhack = points => {
+    if (score + points > highScore) {
+      setNewHighScore(true)
+      setHighScore(score + points)
+    }
     setScore(score + points)
   }
 
@@ -138,6 +158,7 @@ const Game = () => {
 
   const startGame = () => {
     setScore(0)
+    setNewHighScore(false)
     setMoles(generateMoles())
     setPlaying(true)
     setFinished(false)
@@ -173,6 +194,7 @@ const Game = () => {
         {finished && (
           <Fragment>
             <Result value={score} />
+            {newHighScore && <span>NEW</span>}
             <HighScore value={highScore} />
             <button onClick={startGame}>Start Again</button>
           </Fragment>

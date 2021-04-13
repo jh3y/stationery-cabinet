@@ -1,0 +1,105 @@
+-
+  const ITEMS = [
+    {
+      id: 'a',
+      src: "https://source.unsplash.com/ezSFnAFi9hY/500x500",
+      alt: "cut citrus fruits.",
+      txt: "Lorem Ipsum",
+    },
+    {
+      id: 'b',
+      src: "https://source.unsplash.com/TIGDsyy0TK4/500x500",
+      alt: "sliced mango.",
+      txt: "Dolor Sit",
+    },
+    {
+      id: 'c',
+      src: "https://source.unsplash.com/TdDtTu2rv4s/500x500",
+      alt: "a bunch of blueberries.",
+      txt: "Amet Consectetur",
+    },
+    {
+      id: 'd',
+      src: "https://source.unsplash.com/eudGUrDdBB0/500x500",
+      alt: "a pineapple sitting on a table.",
+      txt: "Adipiscing Elit",
+    },
+    {
+      id: 'e',
+      src: "https://source.unsplash.com/eJH4f1rlG7g/500x500",
+      alt: "frozen raspberries.",
+      txt: " Nunc Tortor",
+    },
+    {
+      id: 'f',
+      src: "https://source.unsplash.com/24RUrLSW1HI/500x500",
+      alt: "a sliced strawberry.",
+      txt: "Metus Mollis",
+    },
+    {
+      id: 'g',
+      src: "https://source.unsplash.com/h5yMpgOI5nI/500x500",
+      alt: "an arrangement of assorted sliced fruits.",
+      txt: "Congue Sagittis",
+    },
+    {
+      id: 'h',
+      src: "https://source.unsplash.com/2TYrR2IB72s/500x500",
+      alt: "sliced watermelons.",
+      txt: "Vestibulum Et",
+    },
+    {
+      id: 'i',
+      src: "https://source.unsplash.com/1cWZgnBhZRs/500x500",
+      alt: "grapefruits, lemons, and pomegranates.",
+      txt: "Donec Eget",
+    },
+    {
+      id: 'j',
+      src: "https://source.unsplash.com/9aOswReDKPo/500x500",
+      alt: "half of an avocado.",
+      txt: "Maecenas et Justo",
+    },
+    {
+      id: 'k',
+      src: "https://source.unsplash.com/Nl7eLS8E2Ss/500x500",
+      alt: "half of a lime.",
+      txt: "Malesuada Quam",
+    },
+    {
+      id: 'l',
+      src: "https://source.unsplash.com/3HhXWJzG5Ko/500x500",
+      alt: "a single cherry with stem.",
+      txt: "Ultricies Sollicitudin",
+    },
+    {
+      id: 'm',
+      src: "https://source.unsplash.com/fczCr7MdE7U/500x500",
+      alt: "a bunch of bananas.",
+      txt: "Gravida Nibh",
+    },
+    {
+      id: 'n',
+      src: "https://source.unsplash.com/uI900SItAyY/500x500",
+      alt: "three pears.",
+      txt: "Pellentesque Sapien",
+    },
+    {
+      id: 'o',
+      src: "https://source.unsplash.com/0AynZdszfz0/500x500",
+      alt: "a basket full of peaches next to a plate with sliced peaches.",
+      txt: "Suspendisse Vel",
+    },
+    {
+      id: 'p',
+      src: "https://source.unsplash.com/C6JhUKs9q8M/500x500",
+      alt: "a bowl of avocados.",
+      txt: "Mauris Consectetur",
+    },
+  ]
+ul
+  for item in ITEMS
+    li(class=item.id)
+      img(src=item.src alt=item.alt)
+      span= item.txt
+.drag-proxy

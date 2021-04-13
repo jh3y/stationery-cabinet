@@ -67,21 +67,25 @@ body
   --height calc(32 * var(--base-size))
 
   --shirt-hue 180
-  --s-1 'hsl(%s, 77%, 39%)' % var(--shirt-hue)
-  --s-2 'hsl(%s, 78%, 35%)' % var(--shirt-hue)
-  --s-3 'hsl(%s, 77%, 37%)' % var(--shirt-hue)
-  --s-4 'hsl(%s, 78%, 34%)' % var(--shirt-hue)
-  --s-5 'hsl(%s, 84%, 23%)' % var(--shirt-hue)
+  --s-1 'hsl(%s, 100%, 39%)' % var(--shirt-hue)
+  --s-2 'hsl(%s, 100%, 35%)' % var(--shirt-hue)
+  --s-3 'hsl(%s, 100%, 37%)' % var(--shirt-hue)
+  --s-4 'hsl(%s, 100%, 34%)' % var(--shirt-hue)
+  --s-5 'hsl(%s, 100%, 27%)' % var(--shirt-hue)
+  --s-6 'hsl(%s, 100%, 25%)' % var(--shirt-hue)
+  --s-7 'hsl(%s, 100%, 21%)' % var(--shirt-hue)
 
 
-  --trouser-hue 210
+  --trouser-hue 246
   --t-1 'hsl(%s, 47%, 44%)' % var(--trouser-hue)
   --t-2 'hsl(%s, 47%, 36%)' % var(--trouser-hue)
   --t-3 'hsl(%s, 48%, 30%)' % var(--trouser-hue)
   --t-4 'hsl(%s, 55%, 54%)' % var(--trouser-hue)
+  --t-5 'hsl(%s, 55%, 24%)' % var(--trouser-hue)
 
   --c-1 hsl(0, 0%, 42%)
   --c-2 hsl(0, 0%, 25%)
+  --c-3 hsl(0, 0%, 5%)
 
   --base-hue 100
 
@@ -129,12 +133,6 @@ body
   --z-41 'hsl(%s, 38%, 10%)' % calc(var(--base-hue) - 6)
   --z-42 'hsl(%s, 38%, 15%)' % calc(var(--base-hue) - 6)
 
-  --trouser-one hsl(244, 47%, 39%)
-  --trouser-two hsl(244, 47%, 32%)
-  --trouser-three hsl(244, 47%, 26%)
-  --shoe-one hsl(0, 0%, 60%)
-  --shoe-two hsl(0, 0%, 50%)
-  --shoe-three hsl(0, 0%, 40%)
   --feature hsl(0, 0%, 10%)
 
   --zombie-face linear-gradient(var(--z-1), var(--z-1)) 0 0 / 2vmin 2vmin,
@@ -317,14 +315,110 @@ body
     linear-gradient(var(--z-7), var(--z-7)) 6vmin 12vmin / 2vmin 6vmin,
     var(--z-8)
 
+  --zombie-arm-back linear-gradient(var(--z-7), var(--z-7)) 2vmin 12vmin / 4vmin 2vmin,
+    linear-gradient(var(--s-2), var(--s-2)) 0 0 / 8vmin 8vmin,
+    linear-gradient(var(--z-7), var(--z-7)) 0 18vmin / 2vmin 6vmin,
+    linear-gradient(var(--z-7), var(--z-7)) 4vmin 18vmin / 2vmin 6vmin,
+    var(--z-23)
+
   --zombie-arm-inside linear-gradient(var(--s-5), var(--s-5)) 6vmin 2vmin / 2vmin 2vmin,
     linear-gradient(var(--s-5), var(--s-5)) 2vmin 2vmin / 4vmin 6vmin,
-    linear-gradient(var(--s-2), var(--s-2)) 0 0 / 8vmin 8vmin,
+    linear-gradient(var(--s-1), var(--s-1)) 0 0 / 8vmin 8vmin,
     linear-gradient(var(--z-42), var(--z-42)) 0 20vmin / 2vmin 4vmin,
     linear-gradient(var(--z-42), var(--z-42)) 4vmin 20vmin / 2vmin 2vmin,
     linear-gradient(var(--z-42), var(--z-42)) 6vmin 14vmin / 2vmin 4vmin,
     linear-gradient(var(--z-42), var(--z-42)) 2vmin 10vmin / 2vmin 6vmin,
     var(--z-27)
+
+  --shoulder linear-gradient(var(--s-2), var(--s-2)) 0 0 / 2vmin 2vmin,
+    linear-gradient(var(--s-1), var(--s-1)) 6vmin 0 / 2vmin 2vmin,
+    linear-gradient(var(--s-1), var(--s-1)) 0 6vmin / 2vmin 2vmin,
+    linear-gradient(var(--s-1), var(--s-1)) 6vmin 6vmin / 2vmin 2vmin,
+    var(--s-3)
+
+  --trouser-front linear-gradient(var(--t-2), var(--t-2)) 2vmin 12vmin / 4vmin 2vmin,
+    linear-gradient(var(--c-1), var(--c-1)) 0 20vmin / 8vmin 4vmin,
+    var(--t-1)
+
+  --trouser-inside linear-gradient(var(--t-4), var(--t-4)) 2vmin 0 / 2vmin 4vmin,
+    linear-gradient(var(--c-2), var(--c-2)) 4vmin 18vmin / 4vmin 6vmin,
+    linear-gradient(var(--c-2), var(--c-2)) 0 20vmin / 8vmin 4vmin,
+    linear-gradient(var(--t-5), var(--t-5)) 2vmin 16vmin / 2vmin 4vmin,
+    linear-gradient(var(--t-5), var(--t-5)) 4vmin 12vmin / 2vmin 4vmin,
+    linear-gradient(var(--t-5), var(--t-5)) 2vmin 2vmin / 2vmin 10vmin,
+    var(--t-3)
+
+  --trouser-right linear-gradient(var(--t-3), var(--t-3)) 2vmin 0 / 2vmin 4vmin,
+    linear-gradient(var(--t-3), var(--t-3)) 4vmin 2vmin / 2vmin 14vmin,
+    linear-gradient(var(--t-3), var(--t-3)) 2vmin 2vmin / 4vmin 2vmin,
+    linear-gradient(var(--c-2), var(--c-2)) 0 20vmin / 8vmin 4vmin,
+    linear-gradient(var(--c-2), var(--c-2)) 4vmin 18vmin / 4vmin 6vmin,
+    var(--t-2)
+
+  --trouser-back linear-gradient(var(--t-2), var(--t-2)) 0 10vmin / 8vmin 4vmin,
+    linear-gradient(var(--c-1), var(--c-1)) 0 18vmin / 8vmin 6vmin,
+    var(--t-1)
+
+  --shirt-front linear-gradient(var(--t-2), var(--t-2)) 10vmin 20vmin / 2vmin 2vmin,
+    linear-gradient(var(--t-2), var(--t-2)) 12vmin 22vmin / 2vmin 2vmin,
+    linear-gradient(var(--z-24), var(--z-24)) 4vmin 0 / 2vmin 2vmin,
+    linear-gradient(var(--z-20), var(--z-20)) 6vmin 0 / 2vmin 2vmin,
+    linear-gradient(var(--z-2), var(--z-2)) 4vmin 0 / 8vmin 2vmin,
+    linear-gradient(var(--z-2), var(--z-2)) 6vmin 0 / 4vmin 4vmin,
+    linear-gradient(var(--s-4), var(--s-4)) 0 0 / 16vmin 2vmin,
+    linear-gradient(var(--s-4), var(--s-4)) 4vmin 2vmin / 8vmin 2vmin,
+    linear-gradient(var(--s-3), var(--s-3)) 0 0 / 16vmin 4vmin,
+    linear-gradient(var(--s-2), var(--s-2)) 14vmin 8vmin / 2vmin 16vmin,
+    linear-gradient(var(--s-2), var(--s-2)) 12vmin 8vmin / 4vmin 2vmin,
+    linear-gradient(var(--s-2), var(--s-2)) 0vmin 8vmin / 2vmin 8vmin,
+    linear-gradient(var(--s-2), var(--s-2)) 0vmin 8vmin / 4vmin 4vmin,
+    linear-gradient(var(--s-2), var(--s-2)) 0vmin 18vmin / 6vmin 2vmin,
+    linear-gradient(var(--s-2), var(--s-2)) 6vmin 12vmin / 2vmin 6vmin,
+    linear-gradient(var(--s-2), var(--s-2)) 8vmin 6vmin / 2vmin 8vmin,
+    linear-gradient(var(--s-2), var(--s-2)) 6vmin 4vmin / 4vmin 4vmin,
+    linear-gradient(var(--s-3), var(--s-3)) 12vmin 10vmin / 2vmin 6vmin,
+    linear-gradient(var(--s-3), var(--s-3)) 6vmin 10vmin / 4vmin 8vmin,
+    linear-gradient(var(--s-3), var(--s-3)) 6vmin 18vmin / 2vmin 2vmin,
+    linear-gradient(var(--s-3), var(--s-3)) 10vmin 18vmin / 2vmin 2vmin,
+    linear-gradient(var(--s-1), var(--s-1)) 12vmin 20vmin / 4vmin 2vmin,
+    linear-gradient(var(--s-1), var(--s-1)) 0 0 / 16vmin 20vmin,
+    var(--t-1)
+
+  --shirt-back linear-gradient(var(--t-2), var(--t-2)) 0 20vmin / 2vmin 2vmin,
+    linear-gradient(var(--t-2), var(--t-2)) 14vmin 20vmin / 2vmin 2vmin,
+    linear-gradient(var(--s-3), var(--s-3)) 0 0 / 4vmin 4vmin,
+    linear-gradient(var(--s-3), var(--s-3)) 0 0 / 2vmin 8vmin,
+    linear-gradient(var(--s-2), var(--s-2)) 14vmin 0 / 2vmin 2vmin,
+    linear-gradient(var(--s-3), var(--s-3)) 0 18vmin / 2vmin 2vmin,
+    linear-gradient(var(--s-4), var(--s-4)) 10vmin 18vmin / 6vmin 2vmin,
+    linear-gradient(var(--s-4), var(--s-4)) 2vmin 12vmin / 4vmin 4vmin,
+    linear-gradient(var(--s-4), var(--s-4)) 4vmin 6vmin / 2vmin 10vmin,
+    linear-gradient(var(--s-4), var(--s-4)) 10vmin 6vmin / 2vmin 10vmin,
+    linear-gradient(var(--s-4), var(--s-4)) 10vmin 10vmin / 4vmin 2vmin,
+    linear-gradient(var(--s-3), var(--s-3)) 4vmin 6vmin / 4vmin 6vmin,
+    linear-gradient(var(--s-3), var(--s-3)) 10vmin 8vmin / 4vmin 6vmin,
+    linear-gradient(var(--s-3), var(--s-3)) 8vmin 12vmin / 4vmin 4vmin,
+    linear-gradient(var(--s-3), var(--s-3)) 2vmin 10vmin / 2vmin 2vmin,
+    linear-gradient(var(--s-4), var(--s-4)) 4vmin 18vmin / 4vmin 4vmin,
+    linear-gradient(var(--s-4), var(--s-4)) 6vmin 18vmin / 2vmin 6vmin,
+    linear-gradient(var(--s-3), var(--s-3)) 8vmin 0 / 8vmin 2vmin,
+    linear-gradient(var(--s-1), var(--s-1)) 8vmin 18vmin / 2vmin 4vmin,
+    linear-gradient(var(--s-3), var(--s-3)) 14vmin 0 / 2vmin 4vmin,
+    linear-gradient(var(--s-1), var(--s-1)) 0 0 / 16vmin 20vmin,
+    var(--t-1)
+
+  --shirt-side linear-gradient(var(--t-3), var(--t-3)) 0vmin 20vmin / 2vmin 2vmin,
+    linear-gradient(var(--t-3), var(--t-3)) 4vmin 20vmin / 2vmin 4vmin,
+    linear-gradient(var(--s-2), var(--s-2)) 0 0 / 8vmin 4vmin,
+    linear-gradient(var(--s-7), var(--s-7)) 2vmin 0 / 4vmin 14vmin,
+    linear-gradient(var(--s-7), var(--s-7)) 0 6vmin / 2vmin 4vmin,
+    linear-gradient(var(--s-7), var(--s-7)) 6vmin 6vmin / 2vmin 2vmin,
+    linear-gradient(var(--s-7), var(--s-7)) 6vmin 10vmin / 2vmin 2vmin,
+    linear-gradient(var(--s-5), var(--s-5)) 2vmin 0 / 4vmin 18vmin,
+    linear-gradient(var(--s-5), var(--s-5)) 2vmin 0 / 2vmin 20vmin,
+    linear-gradient(var(--s-6), var(--s-6)) 0 0 / 8vmin 14vmin,
+    linear-gradient(var(--s-2), var(--s-2)) 0 0 / 8vmin 20vmin,
+    var(--t-2)
 
 .scene
   position fixed
@@ -336,7 +430,6 @@ body
 .zombie
   height var(--height)
   width var(--width)
-  // background hsla(10, 80%, 70%, 0.5)
   position relative
 
   & > *
@@ -345,7 +438,6 @@ body
   &__head
     height calc(8 * var(--base-size))
     width calc(8 * var(--base-size))
-    background hsla(280, 80%, 70%, 0.5)
     top 0
     left 50%
     transform translate(-50%, 0)
@@ -353,10 +445,9 @@ body
   &__arm
     height calc(12 * var(--base-size))
     width calc(4 * var(--base-size))
-    background hsla(210, 80%, 70%, 0.5)
     top calc(8 * var(--base-size))
     transform-origin 50% calc(2 * var(--base-size))
-    transform rotateX(90deg)
+    // transform rotateX(90deg)
 
     &--left
       left 0
@@ -367,7 +458,6 @@ body
   &__torso
     height calc(12 * var(--base-size))
     width calc(8 * var(--base-size))
-    background hsla(100, 80%, 70%, 0.5)
     top calc(8 * var(--base-size))
     left 50%
     transform translate(-50%, 0)
@@ -375,10 +465,8 @@ body
   &__leg
     height calc(12 * var(--base-size))
     width calc(4 * var(--base-size))
-    background hsla(140, 80%, 70%, 0.5)
     top calc(20 * var(--base-size))
     transform-origin 50% calc(2 * var(--base-size))
-
 
     &--left
       left calc(4 * var(--base-size))
@@ -401,10 +489,8 @@ body
   div
     background green
     &:nth-of-type(1)
-      background linear-gradient(var(--shirt-two), var(--shirt-two)) 0% 0% / 25% 25%,
-                linear-gradient(var(--shirt-three), var(--shirt-three)) 25% 50% / 50% 25% no-repeat
+      background var(--shoulder)
       background-repeat no-repeat
-      background-color var(--shirt-one)
     &:nth-of-type(2)
       background var(--zombie-arm-right)
       background-repeat no-repeat
@@ -422,8 +508,15 @@ body
     &:nth-of-type(5)
       background var(--zombie-arm-top)
       background-repeat no-repeat
-    &:nth-of-type(6)
-      background green
+
+    &:nth-of-type(6):after
+      content ''
+      height 100%
+      width 100%
+      position absolute
+      background var(--zombie-arm-back)
+      background-repeat no-repeat
+
 
 .cuboid-arm--left div:nth-of-type(4)
   background var(--zombie-arm-right)
@@ -435,6 +528,8 @@ body
 
 .cuboid-arm--left div:nth-of-type(3):after
   transform rotateY(180deg) translate3d(0, 0, 1px)
+.cuboid-arm--left div:nth-of-type(6):after
+  transform rotateY(180deg) translate3d(0, 0, -1px)
 
 .cuboid-head
   --thickness 16
@@ -472,11 +567,50 @@ body
   --thickness 8
 
   div
-    background purple
+
+    &:nth-of-type(1)
+      background var(--s-1)
+    &:nth-of-type(2)
+      background var(--shirt-side)
+      background-repeat no-repeat
+    &:nth-of-type(3)
+      background var(--t-2)
+    &:nth-of-type(4)
+      background var(--shirt-side)
+      background-repeat no-repeat
+    &:nth-of-type(5)
+      background var(--shirt-front)
+      background-repeat no-repeat
+    &:nth-of-type(6)
+      background var(--shirt-back)
+      background-repeat no-repeat
 
 .cuboid-leg
   --thickness 8
 
   div
-    background orange
 
+    &:nth-of-type(1)
+      background var(--t-4)
+    &:nth-of-type(2)
+      background var(--trouser-right)
+      background-repeat no-repeat
+    &:nth-of-type(3)
+      background var(--c-3)
+    &:nth-of-type(4)
+      background var(--trouser-inside)
+      background-repeat no-repeat
+    &:nth-of-type(5)
+      background var(--trouser-front)
+      background-repeat no-repeat
+    &:nth-of-type(6)
+      background var(--trouser-back)
+      background-repeat no-repeat
+
+.cuboid-leg--left div:nth-of-type(4)
+  background var(--trouser-right)
+  background-repeat no-repeat
+
+.cuboid-leg--left div:nth-of-type(2)
+  background var(--trouser-inside)
+  background-repeat no-repeat

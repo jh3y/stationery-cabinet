@@ -1,0 +1,60 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+body
+  min-height 100vh
+  overflow hidden
+
+.grid
+
+  display grid
+  width 100vw
+  height 100vh
+  background hsl(0, 0%, 10%)
+  grid-template-columns repeat(2, 1fr)
+  grid-template-rows repeat(2, 1fr)
+  grid-gap 2vmin
+  position absolute
+  top 0
+  left 0
+
+  &__container
+    height 100vh
+    width 100vw
+    position fixed
+    top 0
+    left 0
+
+  // &__item
+  //   background hsl(280, 80%, 80%)
+
+.grid--right .grid__item:nth-of-type(2)
+.grid--left .grid__item:nth-of-type(1)
+  grid-row span 2
+
+li
+ul
+  list-style-type none
+
+ul
+  padding 0
+  margin 0
+
+
+
+img
+  height 100%
+  width 100%
+  position absolute
+  object-fit cover
+
+span
+  font-weight bold
+  color black
+  background white
+  position absolute
+  display inline-block
+  right 1rem
+  bottom 1rem
