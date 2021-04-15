@@ -20,12 +20,17 @@ const LOOP = gsap.timeline({
   ease: 'none',
 })
 
+const X_START = 200
+const X_FINISH = -300
+const Y_START = -150
+const Y_FINISH = 150
+
 const BEHAVIORS = new Array(BOXES.length)
   .fill()
   .map(() => [
     gsap.utils.random(-360, 360),
     gsap.utils.random(-360, 360),
-    gsap.utils.random(-250, 250),
+    gsap.utils.random(Y_START, Y_FINISH),
     gsap.utils.random(-360, 360),
   ])
 
@@ -48,17 +53,15 @@ const HUES = [
   'hsl(90, 15%, 80%)',
 ]
 
-const SHIFTS = [...BOXES, ...BOXES, ...BOXES]
-
-SHIFTS.forEach((BOX, index) => {
-  const BOX_TL = gsap
+const getScatterTL = (BOX, index) =>
+  gsap
     .timeline()
     .set(BOX, {
       xPercent: 250,
-      yPercent: () => BEHAVIORS[index % BOXES.length][2],
       opacity: 0,
       filter: 'grayscale(1)',
       scale: 0.1,
+      yPercent: () => BEHAVIORS[index % BOXES.length][2],
       rotateX: () => BEHAVIORS[index % BOXES.length][0],
       rotateY: () => BEHAVIORS[index % BOXES.length][1],
     })
@@ -66,10 +69,19 @@ SHIFTS.forEach((BOX, index) => {
       BOX,
       {
         opacity: 1,
-        scale: 1,
+        scale: 0.5,
         duration: 0.1,
       },
       0
+    )
+    .to(
+      BOX,
+      {
+        opacity: 0,
+        scale: 0.1,
+        duration: 0.1,
+      },
+      0.9
     )
     .to(
       BOX,
@@ -80,15 +92,6 @@ SHIFTS.forEach((BOX, index) => {
         duration: 0.1,
       },
       0.4
-    )
-    .to(
-      BOX,
-      {
-        opacity: 0,
-        scale: 0.5,
-        duration: 0.1,
-      },
-      0.9
     )
     .fromTo(
       BOX,
@@ -111,10 +114,10 @@ SHIFTS.forEach((BOX, index) => {
     .fromTo(
       BOX,
       {
-        xPercent: 250,
+        xPercent: X_START,
       },
       {
-        xPercent: -350,
+        xPercent: X_FINISH,
         duration: 1,
         immediateRender: false,
         ease: 'power1.inOut',
@@ -144,7 +147,7 @@ SHIFTS.forEach((BOX, index) => {
       BOX,
       {
         z: 100,
-        scale: 2,
+        scale: 1,
         duration: 0.1,
         repeat: 1,
         yoyo: true,
@@ -166,6 +169,348 @@ SHIFTS.forEach((BOX, index) => {
       },
       0
     )
+const getStraightTL = (BOX, index) =>
+  gsap
+    .timeline()
+    .set(BOX, {
+      xPercent: 250,
+      opacity: 0,
+      filter: 'grayscale(1)',
+      scale: 0.1,
+    })
+    .to(
+      BOX,
+      {
+        opacity: 1,
+        scale: 0.5,
+        duration: 0.1,
+      },
+      0
+    )
+    .to(
+      BOX,
+      {
+        opacity: 0,
+        scale: 0.1,
+        duration: 0.1,
+      },
+      0.9
+    )
+    .to(
+      BOX,
+      {
+        filter: 'grayScale(0)',
+        repeat: 1,
+        yoyo: true,
+        duration: 0.1,
+      },
+      0.4
+    )
+    // Panning
+    .fromTo(
+      BOX,
+      {
+        xPercent: X_START,
+      },
+      {
+        xPercent: X_FINISH,
+        duration: 1,
+        immediateRender: false,
+        ease: 'power1.inOut',
+      },
+      0
+    )
+    // Scale && Z
+    .to(
+      BOX,
+      {
+        z: 100,
+        scale: 1,
+        duration: 0.1,
+        repeat: 1,
+        yoyo: true,
+      },
+      0.4
+    )
+    .fromTo(
+      BOX,
+      {
+        zIndex: 1,
+      },
+      {
+        zIndex: BOXES.length,
+        repeat: 1,
+        yoyo: true,
+        ease: 'none',
+        duration: 0.5,
+        immediateRender: false,
+      },
+      0
+    )
+const getRotatingTL = (BOX, index) =>
+  gsap
+    .timeline()
+    .set(BOX, {
+      xPercent: 250,
+      opacity: 0,
+      filter: 'grayscale(1)',
+      scale: 0.1,
+      rotate: 360,
+    })
+    .to(
+      BOX,
+      {
+        opacity: 1,
+        scale: 0.5,
+        duration: 0.1,
+      },
+      0
+    )
+    .to(
+      BOX,
+      {
+        opacity: 0,
+        scale: 0.1,
+        duration: 0.1,
+      },
+      0.9
+    )
+    .to(
+      BOX,
+      {
+        filter: 'grayScale(0)',
+        repeat: 1,
+        yoyo: true,
+        duration: 0.1,
+      },
+      0.4
+    )
+    // Panning
+    .fromTo(
+      BOX,
+      {
+        xPercent: X_START,
+        rotate: 360,
+      },
+      {
+        xPercent: X_FINISH,
+        duration: 1,
+        immediateRender: false,
+        ease: 'power1.inOut',
+        rotate: -360,
+      },
+      0
+    )
+    // Scale && Z
+    .to(
+      BOX,
+      {
+        z: 100,
+        scale: 1,
+        duration: 0.1,
+        repeat: 1,
+        yoyo: true,
+      },
+      0.4
+    )
+    .fromTo(
+      BOX,
+      {
+        zIndex: 1,
+      },
+      {
+        zIndex: BOXES.length,
+        repeat: 1,
+        yoyo: true,
+        ease: 'none',
+        duration: 0.5,
+        immediateRender: false,
+      },
+      0
+    )
+const getDiagonalTL = (BOX, index) =>
+  gsap
+    .timeline()
+    .set(BOX, {
+      xPercent: 250,
+      yPercent: -250,
+      opacity: 0,
+      filter: 'grayscale(1)',
+      scale: 0.1,
+      rotate: 360,
+    })
+    .to(
+      BOX,
+      {
+        opacity: 1,
+        scale: 0.5,
+        duration: 0.1,
+      },
+      0
+    )
+    .to(
+      BOX,
+      {
+        opacity: 0,
+        scale: 0.1,
+        duration: 0.1,
+      },
+      0.9
+    )
+    .to(
+      BOX,
+      {
+        filter: 'grayScale(0)',
+        repeat: 1,
+        yoyo: true,
+        duration: 0.1,
+      },
+      0.4
+    )
+    // Panning
+    .fromTo(
+      BOX,
+      {
+        xPercent: X_START,
+        yPercent: -150,
+      },
+      {
+        xPercent: X_FINISH,
+        duration: 1,
+        yPercent: 50,
+        immediateRender: false,
+        ease: 'power1.inOut',
+      },
+      0
+    )
+    // Scale && Z
+    .to(
+      BOX,
+      {
+        z: 100,
+        scale: 1,
+        duration: 0.1,
+        repeat: 1,
+        yoyo: true,
+      },
+      0.4
+    )
+    .fromTo(
+      BOX,
+      {
+        zIndex: 1,
+      },
+      {
+        zIndex: BOXES.length,
+        repeat: 1,
+        yoyo: true,
+        ease: 'none',
+        duration: 0.5,
+        immediateRender: false,
+      },
+      0
+    )
+const getDiagonalEaseTL = (BOX, index) =>
+  gsap
+    .timeline()
+    .set(BOX, {
+      xPercent: 250,
+      yPercent: -250,
+      opacity: 0,
+      filter: 'grayscale(1)',
+      scale: 0.1,
+      rotate: 360,
+    })
+    .to(
+      BOX,
+      {
+        opacity: 1,
+        scale: 0.5,
+        duration: 0.1,
+      },
+      0
+    )
+    .to(
+      BOX,
+      {
+        opacity: 0,
+        scale: 0.1,
+        duration: 0.1,
+      },
+      0.9
+    )
+    .to(
+      BOX,
+      {
+        filter: 'grayScale(0)',
+        repeat: 1,
+        yoyo: true,
+        duration: 0.1,
+      },
+      0.4
+    )
+    // Panning
+    .fromTo(
+      BOX,
+      {
+        xPercent: X_START,
+      },
+      {
+        xPercent: X_FINISH,
+        duration: 1,
+        immediateRender: false,
+        ease: 'power1.inOut',
+      },
+      0
+    )
+    .fromTo(
+      BOX,
+      {
+        yPercent: -150,
+      },
+      {
+        yPercent: 50,
+        ease: 'elastic.inOut',
+        duration: 1,
+        immediateRender: false,
+      },
+      0
+    )
+    // Scale && Z
+    .to(
+      BOX,
+      {
+        z: 100,
+        scale: 1,
+        duration: 0.1,
+        repeat: 1,
+        yoyo: true,
+      },
+      0.4
+    )
+    .fromTo(
+      BOX,
+      {
+        zIndex: 1,
+      },
+      {
+        zIndex: BOXES.length,
+        repeat: 1,
+        yoyo: true,
+        ease: 'none',
+        duration: 0.5,
+        immediateRender: false,
+      },
+      0
+    )
+
+const SHIFTS = [...BOXES, ...BOXES, ...BOXES]
+SHIFTS.forEach((BOX, index) => {
+  // const BOX_TL = getScatterTL(BOX, index)
+  // const BOX_TL = getStraightTL(BOX, index)
+  // const BOX_TL = getRotatingTL(BOX, index)
+  const BOX_TL = getDiagonalTL(BOX, index)
+  // const BOX_TL = getDiagonalEaseTL(BOX, index)
   LOOP.add(BOX_TL, index * STAGGER)
 })
 
@@ -247,13 +592,12 @@ const scrollToPosition = position => {
   if (PROGRESS >= 1 || PROGRESS < 0) return WRAP(Math.floor(PROGRESS), SCROLL)
   gsap.to(document.documentElement, {
     '--bg': HUES[PROGRESS * BOXES.length],
-    duration: 0.1,
   })
   TRIGGER.scroll(SCROLL)
 }
 
 gsap.set(document.documentElement, {
-  '--bg': HUES[0]
+  '--bg': HUES[0],
 })
 
 ScrollTrigger.addEventListener('scrollEnd', () =>
