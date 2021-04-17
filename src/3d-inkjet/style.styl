@@ -64,7 +64,7 @@
   --width calc(var(--base-size) * 1.4vmin)
   --base-hue 200
   --accent-hue 35
-  --bg 'hsl(%s 80% 34%)' % var(--base-hue)
+  --bg 'hsl(%s 80% 24%)' % 230
   --shoot-speed 1.5
   --load-speed 2
   --print-speed 1
@@ -76,7 +76,7 @@
   --p-5 'hsl(%s, 50%, 76%)' % var(--base-hue)
   --p-6 'hsl(%s, 50%, 72%)' % var(--base-hue)
   --p-7 'hsl(%s, 50%, 68%)' % var(--base-hue)
-  --p-8 'hsl(%s, 50%, 50%)' % var(--base-hue)
+  --p-8 'hsl(%s, 50%, 20%)' % var(--base-hue)
   --t-1 hsl(0, 0%, 40%)
   --t-2 hsl(0, 0%, 36%)
   --t-3 hsl(0, 0%, 32%)
@@ -426,7 +426,7 @@ body
     &:nth-of-type(3)
       background var(--p-8)
     &:nth-of-type(4)
-      background linear-gradient(var(--p-3), var(--p-3)) 50% 0% / 50% 100% no-repeat
+      background linear-gradient(var(--p-4), var(--p-4)) 50% 0% / 50% 100% no-repeat
       background-color var(--p-2)
 
       &:after
