@@ -8,8 +8,10 @@ mixin wheel(pos)
             - let s = 0
             while s < 5
               .truck__wheel-spoke(style=`--s: ${s++}`)
+label(for='terrain')
+  span Level of Terrain
+  span (Enter Value > 5)
 input#terrain(type='number', min='0', max='5', value='0')
-label(for='terrain') Level of Terrain
 
 .truck(style=`--truck-hue: ${Math.floor(Math.random() * 360)}`)
   .truck__body-wrapper

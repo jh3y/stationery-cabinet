@@ -216,7 +216,8 @@ const getStraightTL = (BOX, index) =>
         xPercent: X_FINISH,
         duration: 1,
         immediateRender: false,
-        ease: 'power1.inOut',
+        // ease: 'power1.inOut',
+        ease: 'bounce.inOut(2)',
       },
       0
     )
@@ -509,8 +510,8 @@ SHIFTS.forEach((BOX, index) => {
   // const BOX_TL = getScatterTL(BOX, index)
   // const BOX_TL = getStraightTL(BOX, index)
   // const BOX_TL = getRotatingTL(BOX, index)
-  const BOX_TL = getDiagonalTL(BOX, index)
-  // const BOX_TL = getDiagonalEaseTL(BOX, index)
+  // const BOX_TL = getDiagonalTL(BOX, index)
+  const BOX_TL = getDiagonalEaseTL(BOX, index)
   LOOP.add(BOX_TL, index * STAGGER)
 })
 
