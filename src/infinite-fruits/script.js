@@ -508,10 +508,10 @@ const getDiagonalEaseTL = (BOX, index) =>
 const SHIFTS = [...BOXES, ...BOXES, ...BOXES]
 SHIFTS.forEach((BOX, index) => {
   // const BOX_TL = getScatterTL(BOX, index)
-  // const BOX_TL = getStraightTL(BOX, index)
+  const BOX_TL = getStraightTL(BOX, index)
   // const BOX_TL = getRotatingTL(BOX, index)
   // const BOX_TL = getDiagonalTL(BOX, index)
-  const BOX_TL = getDiagonalEaseTL(BOX, index)
+  // const BOX_TL = getDiagonalEaseTL(BOX, index)
   LOOP.add(BOX_TL, index * STAGGER)
 })
 
