@@ -1,0 +1,57 @@
+mixin cuboid()
+  .cuboid(class!=attributes.class)
+    - let s = 0
+    while s < 6
+      .cuboid__side
+      - s++
+.scene
+  .printer
+    .printer__side.printer__side--left
+      +cuboid()(class="cuboid--side")
+    .printer__side.printer__side--right
+      .cuboid.cuboid--side
+        .cuboid__side
+        .cuboid__side
+        .cuboid__side
+        .cuboid__side
+          .light.progress-light
+          .light.standby-light
+          button.print-button
+            .button
+              +cuboid()(class="cuboid--button")
+        .cuboid__side
+        .cuboid__side
+
+    .printer__tray.printer__tray--bottom
+      +cuboid()(class="cuboid--tray")
+    .printer__tray.printer__tray--top
+      +cuboid()(class="cuboid--tray")
+    .printer__top
+      .cuboid.cuboid--top
+        .cuboid__side
+        .cuboid__side
+        .cuboid__side
+        .cuboid__side
+          .screen
+            .screen__preview
+              img.screen__preview-img
+        .cuboid__side
+        .cuboid__side
+    .printer__back
+      +cuboid()(class="cuboid--back")
+    .paper-stack.paper-stack--bottom
+      +cuboid()(class="cuboid--paper")
+    .paper-stack.paper-stack--top
+      .cuboid.cuboid--paper
+        .cuboid__side
+          .paper
+            .paper__flyer
+        .cuboid__side
+        .cuboid__side
+        .cuboid__side
+        .cuboid__side
+        .cuboid__side
+form.customer-form
+  label(for="print") Print URL
+  input#print(type='url' required placeholder="URL for Printing")
+  input(type="submit" value="Print")

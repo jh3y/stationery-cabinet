@@ -1,0 +1,170 @@
+*
+*:after
+*:before
+  box-sizing border-box
+  transform-style preserve-3d
+
+:root
+  --speed 5
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  overflow hidden
+  background hsl(0, 0%, 10%)
+
+label
+  position fixed
+  top 50%
+  left 50%
+  height 100vh
+  width 100vw
+  transform translate3d(-50%, -50%, 100vmin)
+  color transparent
+  cursor pointer
+
+form
+  margin 0
+
+[for="on"]
+  display block
+
+[for="off"]
+  display none
+
+#on:checked ~ .lamp
+#on:checked ~ .backdrop
+  --state running
+  --lit 1
+
+#on:checked ~ .lamp .lamp__top
+  background url(https://assets.codepen.io/605876/star-blanket--light.svg) 0 0 / 20% 20% repeat
+
+#on:checked ~ [for="off"]
+  display block
+
+#on:checked ~ [for="on"]
+  display none
+
+#off:checked ~ .lamp
+#off:checked ~ .backdrop
+  --state paused
+  --lit 0
+
+//140 x 160 45 base
+[type="radio"]
+  position absolute
+  width 1px
+  height 1px
+  padding 0
+  margin -1px
+  overflow hidden
+  clip rect(0, 0, 0, 0)
+  white-space nowrap
+  border-width 0
+
+.backdrop
+  --b-1 'hsl(45, 40%, %s)' % calc((6 + (var(--lit, 0) * 8)) * 1%)
+  --b-2 'hsl(45, 40%, %s)' % calc((8 + (var(--lit, 0) * 4)) * 1%)
+  --b-3 'hsl(0, 0%, %s)' % calc((0 + (var(--lit, 0) * 8)) * 1%)
+  --b-4 'hsl(45, 30%, %s)' % calc((10 + (var(--lit, 0) * 6)) * 1%)
+  --b-5 'hsl(45, 30%, %s)' % calc((12 + (var(--lit, 0) * 8)) * 1%)
+
+  height 100vh
+  width 100vw
+  background linear-gradient(var(--b-1) 0, var(--b-2) 61.5%, var(--b-3), var(--b-4) 62.5%, var(--b-5) 100%)
+  position fixed
+  top 50%
+  left 50%
+  z-index -1
+  transition background 0.1s
+  transform translate3d(-50%, -50%, -70vmin)
+
+.lamp
+  --height 30vmin
+  height var(--height)
+  width calc(var(--height) * 0.875)
+  position relative
+  perspective 800px
+
+  --lamp-one 'hsla(40, 90%, 98%, %s)' % var(--lit, 0)
+  --lamp-two 'hsla(40, 50%, 50%, %s)' % var(--lit, 0)
+  --lamp-three 'hsla(40, 30%, 20%, %s)' % var(--lit, 0)
+
+  --o-1 hsl(0, 0%, 12%)
+  --o-2 hsl(0, 0%, 18%)
+  --o-3 hsl(0, 0%, 8%)
+
+  --l-1 'hsla(45, 40%, 82%, %s)' % calc(0.25 * var(--lit, 0))
+  --l-2 'hsla(45, 40%, 98%, %s)' % calc(0.25 * var(--lit, 0))
+  --l-3 'hsla(45, 40%, 72%, %s)' % calc(0.25 * var(--lit, 0))
+
+  --lid-1 hsl(210, 10%, 8%)
+  --lid-2 hsl(210, 10%, 12%)
+  --lid-3 hsl(210, 10%, 4%)
+
+  &__top
+    position absolute
+    top 8%
+    left 50%
+    transform translate(-50%, 0)
+    height 64%
+    width 80%
+    background url(https://assets.codepen.io/605876/star-blanket--dark.svg) 0 0 / 20% 20% repeat
+    animation roll calc(var(--speed, 0) * 1s) infinite linear var(--state, paused)
+
+    &:after
+      content ''
+      z-index -1
+      height 100%
+      width 100%
+      background linear-gradient(90deg, var(--l-1) 0 5%, var(--l-2) 15% 25%, var(--l-3) 35% 55%, var(--l-1)) 0 0 / 100% 100% no-repeat,
+                radial-gradient(circle at 50% 100%, var(--lamp-one), var(--lamp-two), var(--lamp-three)) 50% 50% / 100% 100% no-repeat,
+                linear-gradient(90deg, var(--o-1) 0 5%, var(--o-2) 15% 25%, var(--o-3) 35% 55%, var(--o-1)) 0 0 / 100% 100% no-repeat
+      position absolute
+      transform translate3d(0, 0, -1px)
+
+    &:before
+      content ''
+      height 8%
+      width 100%
+      bottom 100%
+      position absolute
+      background linear-gradient(90deg, var(--lid-1) 0 10%, var(--lid-2) 15% 25%, var(--lid-3) 35% 55%, var(--lid-1)) 0 0 / 100% 100% no-repeat
+      z-index 2
+      border-radius 5% 5% 0 0 / 60% 60% 0 0
+
+  &__base
+    height 28%
+    width 100%
+    position absolute
+    bottom 0
+    left 0
+    background linear-gradient(104deg, var(--lid-1) 0 10%, var(--lid-2) 15% 25%, var(--lid-3) 35% 55%, var(--lid-1)) 0 0 / 100% 100% no-repeat
+    clip-path polygon(0 100%, 100% 100%, 90% 0, 10% 0)
+    -webkit-clip-path polygon(0 100%, 100% 100%, 90% 0, 10% 0)
+
+  &__light
+    width 200vw
+    height 200vh
+    position absolute
+    bottom 0
+    left 50%
+    z-index -1
+    opacity var(--lit, 0)
+    transition opacity 0.1s
+    transform translate3d(-50%, 0, -50vmin) rotateX(14deg)
+
+    &:after
+      content ''
+      position absolute
+      background url(https://assets.codepen.io/605876/star-blanket--light.svg) 0 0 / 10% 10%
+      animation roll calc(var(--speed, 0) * 1s) infinite linear reverse var(--state, paused)
+      height 100%
+      width 100%
+      filter blur(12px)
+
+@keyframes roll
+  to
+    background-position -100% 0
