@@ -273,7 +273,7 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background: hsl(0, 0%, 98%);
+  background: 'hsl(%s, 50%, 98%)' % var(--hue, 0);
   overflow-x: hidden;
   overflow-y: scroll;
 }
@@ -283,7 +283,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: hsl(0, 0%, 98%);
   padding: 2rem;
 }
 
@@ -338,11 +337,11 @@ label {
   display: grid;
   grid-template-rows: repeat(var(--shades, 8), 1fr);
   height: 100%;
-  background: linear-gradient(var(--shade-1), var(--bg));
+  background: linear-gradient(var(--color-1), var(--bg));
 }
 
 .palette__shade {
-  background: var(--shade, var(--shade-one));
+  background: var(--color, var(--color-one));
   width: 41px;
 }
 
@@ -357,14 +356,14 @@ label {
     left: 50%;
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    background: var(--shade-2);
+    background: 'hsl(%s, 25%, 50%)' % var(--hue, 0);
     height: 24px;
     width: 24px;
-    border: '2px solid hsl(%s, 80%, 50%)' % var(--hue, 0)
+    border: '2px solid hsl(%s, 25%, 50%)' % var(--hue, 0)
   }
 
   &:active {
-    border: '2px solid hsl(%s, 80%, 50%)' % var(--hue, 0);
+    border: '2px solid hsl(%s, 25%, 50%)' % var(--hue, 0);
   }
 }
 
