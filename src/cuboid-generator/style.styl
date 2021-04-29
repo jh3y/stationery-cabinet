@@ -34,10 +34,10 @@ pre[class*="language-"] {
 pre[class*="language-"] {
   padding: 2rem;
   margin: 0;
-  overflow: auto;
+  overflow-y: scroll;
   outline: transparent;
   height: 100%;
-  max-height: 50vmin;
+  max-height: 40vmin;
 }
 
 :not(pre) > code[class*="language-"],
@@ -230,7 +230,9 @@ div.code-toolbar > .toolbar a {
   cursor: pointer;
 }
 
-div.code-toolbar > .toolbar button {
+div.code-toolbar > .toolbar button,
+.toggle-button,
+.codepen-button {
   background: none;
   border: 0;
   color: inherit;
@@ -244,7 +246,8 @@ div.code-toolbar > .toolbar button {
 }
 
 div.code-toolbar > .toolbar a,
-div.code-toolbar > .toolbar button {
+div.code-toolbar > .toolbar button,
+.toggle-button {
   color: #bbb;
   font-size: 1rem;
   padding: 0.5rem;
@@ -260,9 +263,79 @@ div.code-toolbar > .toolbar a:focus,
 div.code-toolbar > .toolbar button:hover,
 div.code-toolbar > .toolbar button:focus,
 div.code-toolbar > .toolbar span:hover,
-div.code-toolbar > .toolbar span:focus {
+div.code-toolbar > .toolbar span:focus,
+.toggle-button:focus,
+.toggle-button:hover {
   background: hsl(0, 0%, 40%);
   text-decoration: none;
+}
+
+.toggle-button {
+  position: absolute;
+  top: 0.3rem;
+  right: 1.2rem;
+  z-index: 5;
+  width: 7rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.codepen-button {
+  height: 44px;
+  width: 44px;
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.codepen-button svg {
+  fill: hsl(0, 0%, 60%);
+  transition: fill 0.1s;
+}
+
+.codepen-button:hover {
+  transform: translateY(-5%);
+}
+
+.codepen-button:hover svg {
+  fill: hsl(0, 0%, 30%);
+}
+
+.codepen-button:active {
+  transform: translateY(5%);
+}
+
+.codepen-button:active svg {
+  fill: hsl(0, 0%, 10%);
+}
+
+form {
+  z-index: 5;
+  margin: 0;
+  position: absolute;
+  right: 0.3rem;
+  bottom: 0.3em;
+}
+
+.codepen-button {
+  right: 14rem;
+  z-index: 10;
+}
+
+div.code-toolbar > .toolbar {
+  right: 8.6em;
 }
 
 * {
@@ -276,7 +349,7 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background: 'hsl(%s, 50%, 98%)' % var(--hue, 0);
+  background: 'hsl(%s, 50%, 95%)' % var(--hue, 0);
   overflow-x: hidden;
   overflow-y: scroll;
 }
@@ -302,7 +375,7 @@ body {
   height calc(var(--height) * 1vmin)
   width calc(var(--width) * 1vmin)
   position absolute
-  transform rotateZ(calc(var(--starting-rotation, 0) * 1deg)) translate3d(calc(var(--x, 0) * 1vmin), calc(var(--y, 0) * 1vmin), calc(var(--z, 0) * 1vmin)) rotateX(calc(var(--rotate-cuboid-x, 0) * 1deg)) rotateY(calc(var(--rotate-cuboid-y, 0) * 1deg)) rotateZ(calc(var(--rotate-cuboid-z, 0) * 1deg))
+  transform translate3d(0, 0, 100vmin) rotateZ(calc(var(--starting-rotation, 0) * 1deg)) translate3d(calc(var(--x, 0) * 1vmin), calc(var(--y, 0) * 1vmin), calc(var(--z, 0) * 1vmin)) rotateX(calc(var(--rotate-cuboid-x, 0) * 1deg)) rotateY(calc(var(--rotate-cuboid-y, 0) * 1deg)) rotateZ(calc(var(--rotate-cuboid-z, 0) * 1deg))
   transform-style preserve-3d
 
   &__side
@@ -311,34 +384,42 @@ body {
     left 50%
     height 100%
     width 100%
+    border-width calc(var(--wireframe, 0) * 0.5vmin)
+    border-style solid
 
   & > div:nth-of-type(1)
     transform translate3d(-50%, -50%, calc(var(--depth) * 0.5vmin))
-    background 'hsl(%s, 60%, 50%)' % var(--hue, 10)
+    background 'hsla(%s, 60%, 50%, %s)' % (var(--hue, 10) calc(1 - (var(--wireframe, 0) * 0.9)))
+    border-color 'hsl(%s, 60%, 50%)' % var(--hue, 10)
 
   & > div:nth-of-type(2)
     transform  translate3d(-50%, -50%, calc(var(--depth) * -0.5vmin)) rotateY(180deg)
-    background 'hsl(%s, 60%, 35%)' % var(--hue, 10)
+    background 'hsla(%s, 60%, 35%, %s)' % (var(--hue, 10) calc(1 - (var(--wireframe, 0) * 0.9)))
+    border-color 'hsl(%s, 60%, 35%)' % var(--hue, 10)
 
   & > div:nth-of-type(3)
     width calc(var(--depth) * 1vmin)
     transform translate(-50%, -50%) rotateY(90deg) translate3d(0, 0, calc(var(--width) * 0.5vmin))
-    background 'hsl(%s, 60%, 40%)' % var(--hue, 10)
+    background 'hsla(%s, 60%, 40%, %s)' % (var(--hue, 10) calc(1 - (var(--wireframe, 0) * 0.9)))
+    border-color 'hsl(%s, 60%, 40%)' % var(--hue, 10)
 
   & > div:nth-of-type(4)
     width calc(var(--depth) * 1vmin)
     transform translate(-50%, -50%) rotateY(-90deg) translate3d(0, 0, calc(var(--width) * 0.5vmin))
-    background 'hsl(%s, 60%, 60%)' % var(--hue, 10)
+    background 'hsla(%s, 60%, 60%, %s)' % (var(--hue, 10) calc(1 - (var(--wireframe, 0) * 0.9)))
+    border-color 'hsl(%s, 60%, 60%)' % var(--hue, 10)
 
   & > div:nth-of-type(5)
     height calc(var(--depth) * 1vmin)
     transform translate(-50%, -50%) rotateX(90deg) translate3d(0, 0, calc(var(--height) * 0.5vmin))
-    background 'hsl(%s, 60%, 70%)' % var(--hue, 10)
+    background 'hsla(%s, 60%, 70%, %s)' % (var(--hue, 10) calc(1 - (var(--wireframe, 0) * 0.9)))
+    border-color 'hsl(%s, 60%, 70%)' % var(--hue, 10)
 
   & > div:nth-of-type(6)
     height calc(var(--depth) * 1vmin)
     transform translate(-50%, -50%) rotateX(-90deg) translate3d(0, 0, calc(var(--height) * 0.5vmin))
-    background 'hsl(%s, 60%, 20%)' % var(--hue, 10)
+    background 'hsla(%s, 60%, 20%, %s)' % (var(--hue, 10) calc(1 - (var(--wireframe, 0) * 0.9)))
+    border-color 'hsl(%s, 60%, 20%)' % var(--hue, 10)
 
 .result__result
   display grid
@@ -346,8 +427,16 @@ body {
   min-width 40vmin
   min-height 40vmin
 
+.result
+  background white
+
 [type="range"] {
   width: 200px;
+}
+
+.code-blocks,
+.code-toolbar {
+  height: 100%;
 }
 
 label {
@@ -365,11 +454,12 @@ label {
   width: 50%;
   max-width: 400px;
   padding: 2rem;
+  margin: 2rem auto 0;
 }
 
 .result {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 470px auto;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 2rem 3rem -2rem hsl(0, 0%, 10%);
