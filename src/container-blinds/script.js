@@ -1,3 +1,3 @@
-import { cqfill } from "https://cdn.skypack.dev/cqfill";
+import { cqfill } from 'https://cdn.skypack.dev/cqfill'
 
-cqfill();
+cqfill()

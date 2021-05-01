@@ -8,7 +8,7 @@ $size = 300
   --height $size * 1px
   --width calc(0.6 * var(--height))
   --glass hsla(210, 90%, 90%, 0.5)
-  --shimmer hsla(210, 90%, 100%, 0.95)
+  --shimmer hsla(210, 90%, 100%, 0.5)
   --w-1 hsl(86, 18%, 32%)
   --w-2 hsl(83, 12%, 21%)
   --f-1 hsl(35, 44%, 10%)
@@ -28,7 +28,6 @@ body
   justify-content center
   overflow hidden
   background hsla(45, 100%, 80%, 0.5)
-
 
 .cuboid
   width 100%
@@ -88,8 +87,26 @@ body
 
 
 .scene
-  transform rotateX(-24deg) rotateY(32deg)
+  transform translate3d(0, 0, 100vmin) rotateX(-24deg) rotateY(32deg) rotateY(calc(var(--rotate-y, 0) * 1deg))
   // transform rotateX(0) rotateY(0)
+
+.outside
+  height var(--height)
+  width var(--width)
+  transform translate3d(-50%, -50%, -10px)
+  position absolute
+  top 50%
+  left 50%
+  padding 1rem
+  padding-top 3rem
+
+  &__block
+    text-transform uppercase
+    font-family sans-serif
+    font-weight bold
+    font-size 1.75rem
+    color hsla(210, 10%, 80%, 0.65)
+    filter blur(1px)
 
 .window
   height var(--height)
@@ -103,15 +120,26 @@ body
             var(--glass)
   position relative
 
-  &__cord
-    height 94%
+  &__cord-half
+    height 50%
     width 2%
     background hsl(0, 0%, 98%)
     right 10%
     position absolute
     top 0
     transform translate3d(0, 0, 20px)
-  &__cord--back
+
+  &__cord-resizer
+    height 44%
+    width 2%
+    background hsl(0, 0%, 98%)
+    right 10%
+    position absolute
+    top 50%
+    transform-origin 50% 0
+    transform translate3d(0, 0, 20px) scaleY(var(--open))
+
+  &__back-cord
     height 94%
     width 2%
     background hsl(0, 0%, 88%)
@@ -119,6 +147,92 @@ body
     position absolute
     top 0
     transform translate3d(0, 0, 18px)
+
+  &__cord-handle
+    position absolute
+    bottom 0
+    right 10%
+    transform translate3d(20%, -10%, 18px)
+    height 20px
+    width 16px
+    clip-path polygon(0 100%, 100% 100%, 80% 0, 20% 0)
+    -webkit-clip-path polygon(0 100%, 100% 100%, 80% 0, 20% 0)
+    pointer-events none
+    background var(--b-3)
+
+    &:after
+      clip-path polygon(0 100%, 100% 100%, 80% 0, 20% 0)
+      -webkit-clip-path polygon(0 100%, 100% 100%, 80% 0, 20% 0)
+      content ''
+      position absolute
+      top 0
+      left 0
+      height 100%
+      width 100%
+      background var(--b-2)
+      transform scale(0.75)
+
+  &__cord-mover
+    position absolute
+    top 50%
+    right 10%
+    transform translate3d(30%, -10%, 22px) translate(0, calc((120 * var(--open, 0)) * 1px))
+    height 20px
+    width 16px
+    clip-path polygon(0 100%, 100% 100%, 80% 0, 20% 0)
+    -webkit-clip-path polygon(0 100%, 100% 100%, 80% 0, 20% 0)
+    pointer-events none
+    background var(--b-3)
+
+    &:after
+      clip-path polygon(0 100%, 100% 100%, 80% 0, 20% 0)
+      -webkit-clip-path polygon(0 100%, 100% 100%, 80% 0, 20% 0)
+      content ''
+      position absolute
+      top 0
+      left 0
+      height 100%
+      width 100%
+      background var(--b-2)
+      transform scale(0.75)
+
+  &__cord
+    width calc(var(--height) * 0.5)
+    height 44px
+    background transparent
+    position absolute
+    left 90%
+    top 50%
+    transform-origin 0 50%
+    transform translate3d(0, 0, 24px) rotateY(0deg) rotateX(0deg) rotate(90deg) translate(-16%, 10%)
+    appearance none
+    -webkit-appearance none
+    outline transparent
+    cursor grab
+
+    &:hover
+      --alpha 0.6
+
+    &:active
+      cursor grabbing
+      --alpha 0
+
+    &::-webkit-slider-thumb
+      -webkit-appearance none
+      appearance none
+      width 44px
+      height 44px
+      transition background 0.1s
+      background 'hsla(210, 80%, 90%, %s)' % var(--alpha, 0)
+      border-radius 50%
+
+    &::-moz-range-thumb
+      box-sizing border-box
+      transition background 0.1s
+      width 44px
+      height 44px
+      background 'hsla(210, 80%, 90%, %s)' % var(--alpha, 0)
+      border-radius 50%
 
 .frame
   position absolute
@@ -164,7 +278,7 @@ body
   // opacity 0.5
 
   &--top
-    bottom calc(50% + (var(--height) * 0.5))
+    bottom calc(50% + (var(--height) * 0.51))
     left 50%
     transform translate3d(-50%, 0, 10px)
     background var(--w-1)
@@ -176,12 +290,12 @@ body
     background var(--w-2)
 
   &--left
-    right calc(50% + (var(--width) * 0.5))
+    right calc(50% + (var(--width) * 0.6))
     top 50%
     transform translate3d(0, -50%, 10px)
 
   &--right
-    left calc(50% + (var(--width) * 0.5))
+    left calc(50% + (var(--width) * 0.6))
     top 50%
     transform translate3d(0, -50%, 10px)
 
@@ -192,19 +306,14 @@ body
   position absolute
   top 50%
   left 50%
-  transform translate3d(-50%, -50%, 10px)
+  transform translate3d(-50%, -50%, 11px)
 
   &__blinds
-    --open 0
     width calc(0.99 * var(--width))
     height calc(0.99 * var(--height))
-    // background 'hsl(%s, 80%, 50%)' % var(--hue, 10)
     position fixed
     left 0
     top 0
-    transform-origin 50% 0
-    // transform translate(0, -50%) scaleY(calc(1 - (var(--open, 0) * 0.9)))
-    transform translate(0, -50%)
 
 .blind
   width 100%
@@ -217,122 +326,24 @@ body
 .peter
 .peter__hat
   overflow visible !important
-  position absolute
-  top 0
-  left 0
-  height 120px
-  width 120px
+  position fixed
+  top 50%
+  left 50%
+  height calc(var(--height) * 0.5)
+  width calc(var(--height) * 0.5)
   transition transform 0.1s ease
-  transform translate3d(calc(var(--width) * 0.9), calc(var(--height) * -0.6), 100px) rotateY(-32deg) rotateX(24deg) scale(var(--peter, 0))
+  transform translate3d(calc(var(--width) * 0.9), calc(var(--height) * -0.6), 1000vmin) scale(var(--peter, 0))
 
 .peter__hat
-  transition transform 0.1s 0.1s ease, opacity 0.1s ease
+  transition transform 0.1s ease, opacity 0.1s ease
   opacity var(--thug, 0)
-  transform translate3d(calc(var(--width) * 0.9), calc(var(--height) * -0.6), 101px) rotateY(-32deg) rotateX(24deg) translate(0, calc((-80 + (80 * var(--thug, 0))) * 1px))
+  transform translate3d(calc(var(--width) * 0.9), calc(var(--height) * -0.6), 1001vmin) translate(0, calc((-50 + (50 * var(--thug, 0))) * 1%))
 
 .peter__border
   stroke hsl(0, 0%, 70%)
 
 .peter__backdrop
   fill hsl(120, 40%, 80%)
-
-.cord
-  contain layout inline-size
-  --css-contain layout inline-size
-  position absolute
-  top 50%
-  left 0
-
-  &__string
-    height calc(var(--height) * 0.45)
-    width calc(var(--width) * 0.02)
-    background hsl(0, 0%, 98%)
-    position fixed
-    top 0
-    left 0
-    transform-origin 50% 0
-    transform translate3d(calc(var(--width) * 0.9), 0, 5px) translate(-50%, 0) scaleY(clamp(0.2, var(--cord, 0), 1))
-
-  &__handle
-    position absolute
-    bottom 0
-    left 50%
-    transform translate(-54%, 10%) scale(0.5) scaleX(0.5)
-    height 20px
-    width 16px
-    clip-path polygon(0 100%, 100% 100%, 80% 0, 20% 0)
-    -webkit-clip-path polygon(0 100%, 100% 100%, 80% 0, 20% 0)
-    pointer-events none
-    background var(--b-3)
-
-    &:after
-      clip-path polygon(0 100%, 100% 100%, 80% 0, 20% 0)
-      -webkit-clip-path polygon(0 100%, 100% 100%, 80% 0, 20% 0)
-      content ''
-      position absolute
-      top 0
-      left 0
-      height 100%
-      width 100%
-      background var(--b-2)
-      transform scale(0.75)
-
-  &__thumb
-    min-height 15px
-    width 10px
-    resize vertical
-    overflow hidden
-    transform-origin 100% 0
-    transform translate3d(calc(var(--width) - 150%), 0, 20px) scale(2) scaleX(2)
-    max-height calc((0.99 * var(--height)) * 0.25)
-
-.cord__thumb:hover
-  background hsla(210, 50%, 50%, 0.25)
-.cord__thumb:active
-  background hsla(210, 50%, 50%, 0)
-
-::-webkit-resizer
-  display block
-  appearance none
-  box-sizing border-box
-  height 44px !important
-  width 44px !important
-
-
-$steps = 10
-$cStart = 50
-$cEnd = 90
-$cSize = $cEnd - $cStart
-$sStart = 50
-$sEnd = 94
-$sSize = $sEnd - $sStart
-for $p in 0..$steps
-  $step = $cStart + ($cSize / $steps * $p)
-  $cordStep = $sStart + ($sSize / $steps * $p)
-  $open = $p / $steps
-  $cord = $p / $steps
-  $peter = 0
-  $thug = 0
-  if ($p > $steps * 0.25)
-    $peter = 1
-  if ($p > $steps * 0.85)
-    $thug = 1
-
-  @container (min-height: {$step}px)
-    .blinds__blinds
-      --open $open
-    .peter
-    .peter__hat
-      --peter $peter
-      --thug $thug
-
-  @media --css-container and (min-height: $step * 1px)
-    .blinds__blinds
-      --open $open
-    .peter
-    .peter__hat
-      --thug $thug
-      --peter $peter
 
 .window-frame
 

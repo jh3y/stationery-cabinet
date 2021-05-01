@@ -1,0 +1,48 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+
+.faux-range
+  contain layout size
+  position relative
+
+  &__thumb
+    contain layout inline-size
+    width 15px
+    height 15px
+    background blue
+    position relative
+    place-items center
+    resize both
+    overflow hidden
+
+  &__content
+    position fixed
+    left 200px
+    top 20px
+    height 100px
+    width 100px
+    background purple
+
+.ball
+  height 50%
+  width 50%
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  background yellow
+
+@container(min-width: 50px)
+  .ball
+    background red
+
+@container(min-width: 250px)
+  .ball
+    background green
+
+@container(min-height: 500px)
+  .faux-range__content
+    background green
