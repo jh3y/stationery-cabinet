@@ -97,16 +97,32 @@
       txt: "Mauris Consectetur",
     },
   ]
-.grid.grid--right
-  .grid__item.top-left A
-  .grid__item.right-long B
-  .grid__item.bottom-left C
-.grid.grid--left
-  .grid__item.left-long A
-  .grid__item.top-right B
-  .grid__item.bottom-right C
-ul
-  for item in ITEMS
-    li(class=item.id)
-      img(src=item.src alt=item.alt)
-      span= item.txt
+
+mixin grids()
+  .grid.grid--right(class!=attributes.class)
+    .grid__item.top-left A
+    .grid__item.right-long B
+    .grid__item.bottom-left C
+  .grid.grid--left(class!=attributes.class)
+    .grid__item.left-long A
+    .grid__item.top-right B
+    .grid__item.bottom-right C
+.scene
+  .grid__container
+    +grids()(class="on-screen")
+    +grids()(class="off-screen off-screen--top")
+    +grids()(class="off-screen off-screen--right")
+    +grids()(class="off-screen off-screen--bottom")
+    +grids()(class="off-screen off-screen--left")
+    +grids()(class="off-screen off-screen--top-right")
+
+  ul
+    for item in ITEMS
+      li(class=item.id)
+        if (item.id === 'a')
+          h1 Parks and Fruits
+        img(src=item.src alt=item.alt)
+        span= item.txt
+
+svg.scroll-icon(viewBox="0 0 24 24")
+  path(fill="currentColor" d="M20 6H23L19 2L15 6H18V18H15L19 22L23 18H20V6M9 3.09C11.83 3.57 14 6.04 14 9H9V3.09M14 11V15C14 18.3 11.3 21 8 21S2 18.3 2 15V11H14M7 9H2C2 6.04 4.17 3.57 7 3.09V9Z")
