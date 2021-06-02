@@ -1,0 +1,20 @@
+<svg class="peter__hat" viewBox="0 0 228 237" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <ellipse cx="169.619" cy="60.085" rx="25" ry="2.881" transform="rotate(10.345 169.619 60.085)" fill="#E15555"/>
+    <rect x="97.721" y="46" width="42" height="5" transform="rotate(8.285 97.72 46)" fill="#E15555"/>
+    <path d="M129.22 26.65C106.317 22.978 85.624 33.262 83 49.621l20.735 3.326L106.5 45l22.72 3.5V57l36.72 5.922c2.624-16.36-13.816-32.599-36.72-36.272z" fill="#272727"/>
+    <ellipse cx="128" cy="26" rx="5" ry="2" transform="rotate(8.943 128 26)" fill="#E15555"/>
+  </g>
+  <g class="peter__shades" transform="rotate(6.523 33.947 63)">
+    <rect clip-path="url(#shadeClip)" x="33.947" y="63" width="181" height="25" fill="url(#d)"/>
+  </g>
+  <defs>
+    <clipPath id="shadeClip">
+      <rect x="33.947" y="63" width="181" height="24" fill="url(#d)"/>
+    </clipPath>
+    <pattern id="d" patternContentUnits="objectBoundingBox" width="1" height="1">
+      <use xlink:href="#g" transform="scale(.00286 .02)"/>
+    </pattern>
+    <image id="g" width="350" height="50" xlink:href="https://assets.codepen.io/605876/thug-shades.png?format=auto"/>
+  </defs>
+</svg>

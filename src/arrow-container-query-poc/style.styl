@@ -1,0 +1,53 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+
+.container
+  resize vertical
+  overflow hidden
+  max-height 500px
+  min-height 100px
+  width 100px
+  position relative
+  contain layout size
+
+  &:after
+    content ''
+    background hsl(98, 60%, 60%)
+    position absolute
+    height 24px
+    width 24px
+    bottom 0
+    right 0
+    clip-path polygon(0 100%, 100% 100%, 100% 0)
+    -webkit-clip-path polygon(0 100%, 100% 100%, 100% 0)
+
+.arrow
+  height 100px
+  position absolute
+  top 50%
+  left 0
+  transform translate(0, -50%) rotate(var(--rotate, 0deg))
+  transition transform 0.25s
+
+@container(min-height: 200px)
+  .arrow
+    --rotate 90deg
+@container(min-height: 300px)
+  .arrow
+    --rotate 180deg
+@container(min-height: 400px)
+  .arrow
+    --rotate 270deg
+@container(min-height: 500px)
+  .arrow
+    --rotate 360deg
+
+
+@container(min-height: 200px)
+  .container
+    background red

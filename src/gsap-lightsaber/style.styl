@@ -1,0 +1,36 @@
+*
+  box-sizing border-box
+
+:root
+  --beam-hue 90
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  overflow hidden
+  background hsl(0, 0%, 4%)
+
+.lightsaber
+  width clamp(10px, 4vmin, 44px)
+  position absolute
+  left 50%
+  transform translate(-50%, 0)
+
+  &__drag
+    height 44px
+    width 44px
+
+.beam
+  &__bleed rect
+    fill 'hsl(%s, 90%, 50%)' % var(--beam-hue)
+  &__core rect
+    fill 'hsl(%s, 90%, 95%)' % var(--beam-hue)
+
+.svg-saber
+  position absolute
+  bottom 0
+  transform translate(0, 21.25%)
+  left 0
+  overflow visible !important
+  display none

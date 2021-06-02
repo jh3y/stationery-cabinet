@@ -225,6 +225,7 @@ Draggable.create(SABER_DRAG, {
   },
 })
 
+
 set('.svg-saber', {
-  display: 'block',
+  display: 'block'
 })

@@ -1,0 +1,88 @@
+.cuboid
+  width 100%
+  height 100%
+  position relative
+  // 1 is the top and go t, r, b, l, f, b
+
+  &__side:nth-of-type(1)
+    height calc(var(--thickness) * 1vmin)
+    width 100%
+    position absolute
+    top 0
+    transform translate(0, -50%) rotateX(90deg)
+
+  &__side:nth-of-type(2)
+    height 100%
+    width calc(var(--thickness) * 1vmin)
+    position absolute
+    top 50%
+    right 0
+    transform translate(50%, -50%) rotateY(90deg)
+
+  &__side:nth-of-type(3)
+    width 100%
+    height calc(var(--thickness) * 1vmin)
+    position absolute
+    bottom 0
+    transform translate(0%, 50%) rotateX(90deg)
+
+  &__side:nth-of-type(4)
+    height 100%
+    width calc(var(--thickness) * 1vmin)
+    position absolute
+    left 0
+    top 50%
+    transform translate(-50%, -50%) rotateY(90deg)
+
+  &__side:nth-of-type(5)
+    height 100%
+    width 100%
+    transform translate3d(0, 0, calc(var(--thickness) * 0.5vmin))
+    position absolute
+    top 0
+    left 0
+
+  &__side:nth-of-type(6)
+    height 100%
+    width 100%
+    transform translate3d(0, 0, calc(var(--thickness) * -0.5vmin)) rotateY(180deg)
+    position absolute
+    top 0
+    left 0
+
+
+*
+*:after
+*:before
+  box-sizing border-box
+  transform-style preserve-3d
+  transition background 0.25s
+
+:root
+  --on 1
+  --base-size 20
+  --helicopter-height calc(var(--base-size) * 1vmin)
+  --helicopter-width calc(var(--helicopter-height) * 2)
+  --bg 'hsl(210, 80%, %s)' % (calc((15 + (var(--on, 0) * 75)) * 1%))
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  background var(--bg)
+  overflow hidden
+  touch-action none
+
+.scene
+  position fixed
+  top 50%
+  left 50%
+  transform translate3d(-50%, -50%, 100vmin)
+  transform translate3d(-50%, -50%, 100vmin) rotateX(-24deg) rotateY(44deg) rotateX(calc(var(--rotate-x, 0) * 1deg)) rotateY(calc(var(--rotate-y, 0) * 1deg))
+
+.helicopter
+  height 100%
+  width 100%
+  position absolute
+  top 50%
+  left 50%

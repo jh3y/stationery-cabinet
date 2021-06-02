@@ -1,0 +1,33 @@
+mixin cuboid()
+  .cuboid(class!=attributes.class)
+    - let s = 0
+    while s < 6
+      .cuboid__side
+      - s++
+.scene
+  .window
+    .frame.frame--top
+      +cuboid()(class="window-frame window-frame--top")
+    .frame.frame--right
+      +cuboid()(class="window-frame window-frame--right")
+    .frame.frame--left
+      +cuboid()(class="window-frame window-frame--left")
+    .frame.frame--sill
+      //- +cuboid()(class="window-frame window-frame--sill")
+    .container
+      .peter__container
+        include PeterBoss--optimized.svg
+      .glass
+      .blinds
+        - let b = 0
+        while b < 40
+          .blind(style=`--index: ${b};`)
+          - b++
+      .cord
+        .cord__handle
+      .cord.cord--dummy
+        .cord__handle
+  .wall.wall--top
+  .wall.wall--bottom
+  .wall.wall--right
+  .wall.wall--left
