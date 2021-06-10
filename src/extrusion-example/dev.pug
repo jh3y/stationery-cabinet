@@ -1,0 +1,10 @@
+mixin cuboid()
+  .cuboid(class!=attributes.class)
+    - let s = 0
+    while s < 6
+      .cuboid__side
+      - s++
+
+.scene
+  .extrusion
+    +cuboid()(class="extrusion__cuboid")
