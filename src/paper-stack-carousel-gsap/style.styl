@@ -1,0 +1,32 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  background hsl(0, 0%, 15%)
+
+.stack
+  height 300px
+  width 300px
+  list-style-type none
+  padding 0
+  position relative
+
+  &__item
+    height 100%
+    width 100%
+    background hsl(0, 0%, 5%)
+    border 2px solid hsl(0, 0%, 98%)
+    color hsl(0, 0%, 98%)
+    display flex
+    align-items center
+    justify-content center
+    font-weight bold
+    font-family sans-serif
+    position absolute
+    top 0
+    left 0
