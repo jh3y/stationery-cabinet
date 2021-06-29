@@ -1,0 +1,128 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  background hsl(0, 0%, 10%)
+
+#app
+  display grid
+  grid-template-columns 1fr
+  grid-gap 1rem
+
+.dir-control
+  --borderWidth 2
+  --buttonColor #c7edef
+  --bg hsl(0, 0%, 5%)
+  --backdrop transparent
+  --fontSize 1
+  --horizontalPadding 16
+  --verticalPadding 8
+  background var(--backdrop)
+  border calc(var(--borderWidth) * 1px) solid var(--buttonColor)
+  border-radius 9999px
+  text-align center
+  line-height 24px
+  // box-shadow calc(var(--boxShadowDepth) * 1px) calc(var(--boxShadowDepth) * 1px) 0 #888
+  color var(--textColor, var(--buttonColor))
+  cursor pointer
+  font-size calc(var(--fontSize) * 1rem)
+  font-weight bold
+  font-family sans-serif
+  outline transparent
+  padding calc(var(--verticalPadding) * 1px) calc(var(--horizontalPadding) * 1px)
+  position relative
+  text-decoration none
+  height 60px
+  display flex
+  align-items center
+  justify-content center
+  width 300px
+  transition transform 0.2s
+  transform translate(0, calc(var(--y, 0) * 1%)) scale(var(--scale, 1))
+
+  // &:hover
+  //   box-shadow calc(var(--boxShadowDepth) / 2 * 1px) calc(var(--boxShadowDepth) / 2 * 1px) 0 #888
+
+  &:hover
+    --y -5
+    --scale 1.05
+
+  &:active
+    // box-shadow 0 0 0 #888
+    --y 0
+    --scale 0.95
+
+  span
+    -webkit-clip-path var(--clip)
+    bottom calc(var(--borderWidth) * -1px)
+    clip-path var(--clip)
+    left calc(var(--borderWidth) * -1px)
+    position absolute
+    right calc(var(--borderWidth) * -1px)
+    top calc(var(--borderWidth) * -1px)
+    z-index 1
+
+    &:nth-of-type(1):hover
+    &:nth-of-type(2):hover
+    &:nth-of-type(3):hover
+    &:nth-of-type(4):hover
+      --clip polygon(0 0, 100% 0, 100% 100%, 0 100%)
+      z-index 2
+
+    &:nth-of-type(1):hover ~ b:nth-of-type(1)
+    &:nth-of-type(2):hover ~ b:nth-of-type(2)
+    &:nth-of-type(3):hover ~ b:nth-of-type(3)
+    &:nth-of-type(4):hover ~ b:nth-of-type(4)
+        --clip inset(0 0 0 0)
+
+    &:nth-of-type(1)
+      --clip polygon(0 0, 100% 0, 50% 50%, 50% 50%)
+    &:nth-of-type(2)
+      --clip polygon(100% 0, 100% 100%, 50% 50%)
+    &:nth-of-type(3)
+      --clip polygon(0 100%, 100% 100%, 50% 50%)
+    &:nth-of-type(4)
+      --clip polygon(0 0, 0 100%, 50% 50%)
+
+  b
+    -webkit-clip-path var(--clip)
+    background var(--slideColor, var(--buttonColor))
+    border calc(var(--borderWidth) * 1px) solid var(--buttonColor)
+    bottom calc(var(--borderWidth) * -1px)
+    font-weight bold
+    clip-path var(--clip)
+    color var(--bg, #fafafa)
+    left calc(var(--borderWidth) * -1px)
+    padding calc(var(--verticalPadding) * 1px) calc(var(--horizontalPadding) * 1px)
+    position absolute
+    right calc(var(--borderWidth) * -1px)
+    top calc(var(--borderWidth) * -1px)
+    transition clip-path .25s ease
+    border-radius 9999px
+    display flex
+    align-items center
+    justify-content center
+
+    &:nth-of-type(1)
+      --clip inset(0 0 100% 0)
+    &:nth-of-type(2)
+      --clip inset(0 0 0 100%)
+    &:nth-of-type(3)
+      --clip inset(100% 0 0 0)
+    &:nth-of-type(4)
+      --clip inset(0 100% 0 0)
+
+  &--secondary
+    --buttonColor hsl(0, 0%, 100%)
+    --bg hsl(0, 0%, 5%)
+
+  &--filled
+    --backdrop #c7edef
+    --slideColor hsl(0, 0%, 5%)
+    --textColor hsl(0, 0%, 5%)
+    --bg #c7edef
