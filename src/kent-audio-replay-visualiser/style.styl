@@ -1,0 +1,20 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+
+#app
+  display grid
+  place-items center
+
+  & * + *
+    margin-top 2rem
+
+canvas
+  width 90vw
+  background hsl(0, 0%, 10%)
