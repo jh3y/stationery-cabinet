@@ -40,6 +40,7 @@ const recorderMachine = createMachine(
       audioDevices: [],
       selectedAudioDevice: null,
       audioBlob: null,
+      track: null,
     },
     initial: 'gettingDevices',
     states: {
@@ -56,10 +57,21 @@ const recorderMachine = createMachine(
         },
       },
       ready: {
+        entry: ['cleanSlate'],
         on: {
           changeDevice: 'selecting',
           start: 'recording',
+          track: {
+            target: 'playback',
+            actions: 'assignTrack',
+          },
         },
+      },
+      playback: {
+        on: {
+          restart: { target: 'ready' },
+        },
+        states: {},
       },
       recording: {
         invoke: { src: 'mediaRecorder' },
@@ -164,24 +176,90 @@ const recorderMachine = createMachine(
       }),
       assignAudioBlob: assign({
         audioBlob: (context, event) => event.blob,
+        track: null,
+      }),
+      assignTrack: assign({
+        audioBlob: null,
+        track: (context, event) => event.track,
+      }),
+      cleanSlate: assign({
+        audioBlob: null,
+        track: null,
       }),
     },
   }
 )
 
+const usePersistentState = (key, initialValue) => {
+  const [state, setState] = React.useState(
+    window.localStorage.getItem(key)
+      ? JSON.parse(window.localStorage.getItem(key))
+      : initialValue
+  )
+  React.useEffect(() => {
+    // Stringify so we can read it back
+    window.localStorage.setItem(key, JSON.stringify(state))
+  }, [key, state])
+  return [state, setState]
+}
+
 function CallRecorder({ onRecordingComplete }) {
   const [state, send] = useMachine(recorderMachine, {})
+  const [recordings, setRecordings] = usePersistentState('recordings', {
+    recordings: [],
+  })
   const metadataRef = React.useRef([])
   const playbackRef = React.useRef(null)
-  const { audioBlob } = state.context
+  const { audioBlob, track } = state.context
 
   const audioURL = React.useMemo(() => {
     if (audioBlob) {
       return window.URL.createObjectURL(audioBlob)
+    } else if (track && track.audioBlob) {
+      // Play the base64 directly
+      return track.audioBlob
     } else {
       return null
     }
-  }, [audioBlob])
+  }, [audioBlob, track])
+
+  // console.info('play:', audioURL || playbackURLRef.current)
+
+  const onComplete = () => {
+    let metadata = metadataRef.current
+    if (onRecordingComplete)
+      onRecordingComplete({ audioBlob, metadata: metadataRef.current })
+    metadataRef.current = []
+    if (window.confirm('Save recording?')) {
+      // eslint-disable-next-line
+      ;(async function() {
+        // Convert audio to base64 and save it.
+        const reader = new FileReader()
+        reader.onload = function(e) {
+          const audioSafe = e.target.result
+          // playbackURLRef.current = srcUrl
+          setRecordings({
+            recordings: [
+              ...recordings.recordings,
+              {
+                // TODO:: Record theming so can have different viz.
+                audioBlob: audioSafe,
+                metadata,
+                timestamp: new Date().toUTCString(),
+              },
+            ],
+          })
+        }
+        reader.readAsDataURL(audioBlob)
+        send({ type: 'restart' })
+      })()
+    }
+  }
+
+  const onRestart = () => {
+    metadataRef.current = []
+    send({ type: 'restart' })
+  }
 
   let deviceSelection = null
   if (state.matches('gettingDevices')) {
@@ -231,21 +309,23 @@ function CallRecorder({ onRecordingComplete }) {
     )
     audioPreview = (
       <div>
-        <audio src={audioURL} preload="auto" controls ref={playbackRef} />
+        <audio src={audioURL} controls ref={playbackRef} />
         {/* <StreamVis
           recording={audioBlob}
           playback={playbackRef}
           paused={state.matches("recording.paused")}
         /> */}
-        <button onClick={() => onRecordingComplete(audioBlob)}>Accept</button>
-        <button onClick={() => send({ type: 'restart' })}>Re-record</button>
+        <button onClick={onComplete}>Accept</button>
+        <button onClick={onRestart}>Re-record</button>
       </div>
     )
   }
 
-  // TODO:: Wipe out the metaTrack when we restart or accept the recording.
-  // TODO:: Throw it into localStorage too so we can replay it from a list.
-  console.info(metadataRef.current, 'META')
+  if (state.matches('playback')) {
+    audioPreview = <audio src={audioURL} controls ref={playbackRef} />
+  }
+
+  // console.info(state)
 
   return (
     <div>
@@ -258,6 +338,39 @@ function CallRecorder({ onRecordingComplete }) {
       {deviceSelection}
       {state.matches('ready') ? (
         <button onClick={() => send({ type: 'start' })}>Start</button>
+      ) : null}
+      {state.matches('ready') && recordings.recordings.length > 0 ? (
+        <React.Fragment>
+          <h2>Recordings</h2>
+          <ul>
+            {recordings.recordings.map(recording => (
+              <li key={recording.timestamp}>
+                <button
+                  onClick={() =>
+                    send({
+                      type: 'track',
+                      track: recording,
+                    })
+                  }>
+                  {recording.timestamp}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </React.Fragment>
+      ) : null}
+      {state.matches('playback') && state.context.track ? (
+        <React.Fragment>
+          <h2>Play Track</h2>
+          {audioPreview}
+          <StreamVis
+            replay
+            playback={playbackRef}
+            metadata={state.context.track.metadata}
+          />
+          <span>{state.context.track.timestamp}</span>
+          <button onClick={() => send({ type: 'restart' })}>Back</button>
+        </React.Fragment>
       ) : null}
       {state.matches('recording') && state.context.mediaRecorder ? (
         <StreamVis
@@ -280,11 +393,53 @@ function CallRecorder({ onRecordingComplete }) {
         <div>Processing...</div>
       ) : null}
       {state.matches('done') && (
-        <StreamVis playback={playbackRef} replay={[]} />
+        <React.Fragment>
+          {audioPreview}
+          <StreamVis playback={playbackRef} />
+        </React.Fragment>
       )}
-      {audioPreview}
     </div>
   )
+}
+
+function redraw({ canvas, nodes }) {
+  const canvasCtx = canvas.getContext('2d')
+  let fillStyle = 'red'
+  console.info(canvas, nodes)
+  if (canvasCtx) {
+    fillStyle = canvasCtx.createLinearGradient(
+      canvas.width / 2,
+      0,
+      canvas.width / 2,
+      canvas.height
+    )
+    // Color stop is three colors
+    fillStyle.addColorStop(0, COLOR_THREE)
+    fillStyle.addColorStop(1, COLOR_THREE)
+    fillStyle.addColorStop(0.25, COLOR_TWO)
+    fillStyle.addColorStop(0.75, COLOR_TWO)
+    fillStyle.addColorStop(0.5, COLOR_ONE)
+  }
+
+  function draw() {
+    console.info(new Date().toUTCString())
+    if (!canvasCtx) return
+    const WIDTH = canvas.width
+    const HEIGHT = canvas.height
+    canvasCtx.fillStyle = fillStyle
+    canvasCtx.clearRect(0, 0, WIDTH, HEIGHT)
+    for (let n = 0; n < nodes.current.length; n++) {
+      // const barHeight = nodes[n] % 2 === 0 ? nodes[n] : nodes[n] - 1;
+      canvasCtx.fillRect(
+        nodes.current[n].x,
+        HEIGHT / 2 - Math.max(MIN_BAR_HEIGHT, nodes.current[n].size) / 2,
+        BAR_WIDTH,
+        Math.max(MIN_BAR_HEIGHT, nodes.current[n].size)
+      )
+    }
+  }
+
+  return draw
 }
 
 function visualize({ canvas, stream, nodes, metaTrack, animation }) {
@@ -343,7 +498,8 @@ function visualize({ canvas, stream, nodes, metaTrack, animation }) {
       // Track the metadata by making a big Array of the sizes.
       if (metaTrack) metaTrack.current = [...metaTrack.current, SIZE]
       nodes.current = [...nodes.current, newNode]
-
+      // const INS = animation.time()
+      const INS = nodes.current.length * SHIFT_DELAY
       animation.add(
         gsap
           .timeline({
@@ -375,7 +531,7 @@ function visualize({ canvas, stream, nodes, metaTrack, animation }) {
             0
           ),
         // Add the tween at the current time in the timeline
-        animation.time()
+        INS
       )
       // console.info(animations);
     }
@@ -438,6 +594,8 @@ const StreamVis = ({
    */
   const animRef = React.useRef(gsap.timeline())
 
+  console.info(replay, theme, metadata)
+
   /**
    * Effect handles playback of the GSAP timeline in sync
    * with audio playback controls. Pass an audio tag ref.
@@ -479,7 +637,7 @@ const StreamVis = ({
       canvasRef.current.width = canvasRef.current.offsetWidth
       canvasRef.current.height = canvasRef.current.offsetHeight
     }
-  }, [stream])
+  }, [])
 
   /**
    * Respond to media recording being paused.
@@ -498,8 +656,59 @@ const StreamVis = ({
    */
 
   React.useEffect(() => {
+    if (replay && metadata) {
+      nodesRef.current = []
+      animRef.current = gsap.timeline({
+        paused: true,
+        onStart: () => console.info('STARTING'),
+        onComplete: () => console.info('COMPLETE'),
+      })
+      // For every item in the metadata Array, create a node and it's animation.
+      metadata.forEach((growth, index) => {
+        // Create a new node and timeline that gets added to the main timeline
+        const newNode = {
+          growth: growth,
+          size: 0,
+          x: canvasRef.current.width,
+        }
+
+        nodesRef.current.push(newNode)
+        // Track the metadata by making a big Array of the sizes.
+
+        animRef.current.add(
+          gsap
+            .timeline()
+            .to(newNode, {
+              size: newNode.growth,
+              delay: GROW_DELAY,
+              duration: GROW_SPEED,
+            })
+            .to(
+              newNode,
+              {
+                delay: SHIFT_DELAY,
+                // x: -BAR_WIDTH,
+                // Using -WIDTH should allow us to prefill the canvas if needed.
+                x: `-=${canvasRef.current.width + BAR_WIDTH}`,
+                duration: SHIFT_SPEED,
+                ease: 'none',
+                // onStart: () => {
+                //   // This allows us to create gaps in between the bars by skipping frames.
+                //   // console.info("starting");
+                //   add = true
+                // },
+              },
+              0
+            ),
+          // Add the tween at the current time in the timeline
+          SHIFT_DELAY * index
+        )
+      })
+    }
+  }, [replay, metadata])
+
+  React.useEffect(() => {
     let draw
-    console.info('running effect')
     // Only start the ticker if it isn't a replay
     if (canvasRef.current && stream && !replay) {
       // Don't need to pass in paused as we can only trigger
@@ -511,6 +720,12 @@ const StreamVis = ({
         nodes: nodesRef,
         metaTrack: metadata,
         animation: animRef.current,
+      })
+      gsap.ticker.add(draw)
+    } else if (replay && canvasRef.current) {
+      draw = redraw({
+        canvas: canvasRef.current,
+        nodes: nodesRef,
       })
       gsap.ticker.add(draw)
     }
