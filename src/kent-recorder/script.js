@@ -10,7 +10,8 @@ const { useMachine } = XStateReact
 // Should be able to stream the visualisation back no problem.
 const MIN_BAR_HEIGHT = 4
 const MAX_BAR_HEIGHT = 255
-const SHIFT_SPEED = 8
+const SHIFT_SPEED = 4
+const SHIFT_PER_SECOND = 100
 const SHIFT_DELAY = 0.05
 const GROW_SPEED = 0.5
 const GROW_DELAY = 0.075
@@ -310,11 +311,6 @@ function CallRecorder({ onRecordingComplete }) {
     audioPreview = (
       <div>
         <audio src={audioURL} controls ref={playbackRef} />
-        {/* <StreamVis
-          recording={audioBlob}
-          playback={playbackRef}
-          paused={state.matches("recording.paused")}
-        /> */}
         <button onClick={onComplete}>Accept</button>
         <button onClick={onRestart}>Re-record</button>
       </div>
@@ -324,8 +320,6 @@ function CallRecorder({ onRecordingComplete }) {
   if (state.matches('playback')) {
     audioPreview = <audio src={audioURL} controls ref={playbackRef} />
   }
-
-  // console.info(state)
 
   return (
     <div>
@@ -498,8 +492,10 @@ function visualize({ canvas, stream, nodes, metaTrack, animation }) {
       // Track the metadata by making a big Array of the sizes.
       if (metaTrack) metaTrack.current = [...metaTrack.current, SIZE]
       nodes.current = [...nodes.current, newNode]
+
+      const STEP = SHIFT_DELAY
       // const INS = animation.time()
-      const INS = nodes.current.length * SHIFT_DELAY
+      const INS = nodes.current.length * STEP
       animation.add(
         gsap
           .timeline({
@@ -516,11 +512,11 @@ function visualize({ canvas, stream, nodes, metaTrack, animation }) {
           .to(
             newNode,
             {
-              delay: SHIFT_DELAY,
+              delay: STEP,
               // x: -BAR_WIDTH,
               // Using -WIDTH should allow us to prefill the canvas if needed.
               x: `-=${WIDTH + BAR_WIDTH}`,
-              duration: SHIFT_SPEED,
+              duration: WIDTH / SHIFT_PER_SECOND,
               ease: 'none',
               onStart: () => {
                 // This allows us to create gaps in between the bars by skipping frames.
@@ -594,7 +590,7 @@ const StreamVis = ({
    */
   const animRef = React.useRef(gsap.timeline())
 
-  console.info(replay, theme, metadata)
+  // console.info(replay, theme, metadata)
 
   /**
    * Effect handles playback of the GSAP timeline in sync
@@ -656,7 +652,10 @@ const StreamVis = ({
    */
 
   React.useEffect(() => {
-    if (replay && metadata) {
+    if (replay && metadata && canvasRef.current) {
+
+      const STEP = SHIFT_DELAY
+
       nodesRef.current = []
       animRef.current = gsap.timeline({
         paused: true,
@@ -686,22 +685,17 @@ const StreamVis = ({
             .to(
               newNode,
               {
-                delay: SHIFT_DELAY,
+                delay: STEP,
                 // x: -BAR_WIDTH,
                 // Using -WIDTH should allow us to prefill the canvas if needed.
                 x: `-=${canvasRef.current.width + BAR_WIDTH}`,
-                duration: SHIFT_SPEED,
+                duration: canvasRef.current.width / SHIFT_PER_SECOND,
                 ease: 'none',
-                // onStart: () => {
-                //   // This allows us to create gaps in between the bars by skipping frames.
-                //   // console.info("starting");
-                //   add = true
-                // },
               },
               0
             ),
           // Add the tween at the current time in the timeline
-          SHIFT_DELAY * index
+          STEP * index
         )
       })
     }
