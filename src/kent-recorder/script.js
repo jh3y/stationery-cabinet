@@ -407,38 +407,39 @@ function CallRecorder({ onRecordingComplete }) {
   )
 }
 
-function redraw({ canvas, nodes }) {
-  const canvasCtx = canvas.getContext('2d')
-  let fillStyle = 'red'
-  if (canvasCtx) {
-    fillStyle = canvasCtx.createLinearGradient(
-      canvas.width / 2,
-      0,
-      canvas.width / 2,
-      canvas.height
-    )
-    // Color stop is three colors
-    fillStyle.addColorStop(0, COLOR_THREE)
-    fillStyle.addColorStop(1, COLOR_THREE)
-    fillStyle.addColorStop(0.25, COLOR_TWO)
-    fillStyle.addColorStop(0.75, COLOR_TWO)
-    fillStyle.addColorStop(0.5, COLOR_ONE)
-  }
+const generateGradient = ({ width, height, context, fill }) => {
+  const fillStyle = context.createLinearGradient(
+    width / 2,
+    0,
+    width / 2,
+    height
+  )
+  // Color stop is three colors
+  fillStyle.addColorStop(0, fill.colors[2])
+  fillStyle.addColorStop(1, fill.colors[2])
+  fillStyle.addColorStop(0.35, fill.colors[1])
+  fillStyle.addColorStop(0.65, fill.colors[1])
+  fillStyle.addColorStop(0.5, fill.colors[0])
+  return fillStyle
+}
 
-  // TODO:: Turn off the ticker when we pause/play?? Requires keeping a ref of the draw function
+function redraw({ canvas, nodes, theme }) {
+  const { minBarHeight, barWidth } = theme
+
+  const canvasCtx = canvas.getContext('2d')
+
   function draw() {
     if (!canvasCtx) return
     const WIDTH = canvas.width
     const HEIGHT = canvas.height
-    canvasCtx.fillStyle = fillStyle
+
     canvasCtx.clearRect(0, 0, WIDTH, HEIGHT)
     for (let n = 0; n < nodes.current.length; n++) {
-      // const barHeight = nodes[n] % 2 === 0 ? nodes[n] : nodes[n] - 1;
       canvasCtx.fillRect(
         nodes.current[n].x,
-        HEIGHT / 2 - Math.max(MIN_BAR_HEIGHT, nodes.current[n].size) / 2,
-        BAR_WIDTH,
-        Math.max(MIN_BAR_HEIGHT, nodes.current[n].size)
+        HEIGHT / 2 - Math.max(minBarHeight, nodes.current[n].size) / 2,
+        barWidth,
+        Math.max(minBarHeight, nodes.current[n].size)
       )
     }
   }
@@ -446,7 +447,68 @@ function redraw({ canvas, nodes }) {
   return draw
 }
 
-function visualize({ canvas, stream, nodes, metaTrack, animation, start }) {
+/**
+ * 1. Create a node object
+ * 2. Push it to an Array
+ * 3. Create an insertion point
+ * 4. Add to a timeline
+ */
+
+const addToTimeline = ({
+  timeline,
+  width,
+  nodes,
+  onStart,
+  size,
+  insert,
+  theme,
+}) => {
+  const { shiftDelay, barWidth, growDelay, growSpeed, shiftPerSecond } = theme
+
+  // Generate new node
+  const newNode = {
+    growth: size,
+    size: 0,
+    x: width,
+  }
+
+  // Add it in
+  nodes.push(newNode)
+
+  timeline.add(
+    gsap
+      .timeline()
+      .to(newNode, {
+        size: newNode.growth,
+        delay: growDelay,
+        duration: growSpeed,
+      })
+      .to(
+        newNode,
+        {
+          delay: shiftDelay,
+          x: `-=${width + barWidth}`,
+          duration: width / shiftPerSecond,
+          ease: 'none',
+          onStart,
+        },
+        0
+      ),
+    insert
+  )
+}
+
+function visualize({
+  canvas,
+  stream,
+  nodes,
+  metaTrack,
+  animation,
+  start,
+  theme,
+}) {
+  const { minBarHeight, maxBarHeight, shiftDelay, barWidth } = theme
+
   const audioCtx = new AudioContext()
   const canvasCtx = canvas.getContext('2d')
   let analyser
@@ -454,12 +516,12 @@ function visualize({ canvas, stream, nodes, metaTrack, animation, start }) {
   let source
   let add
   let dataArray
-  let fillStyle = 'hsl(210, 80%, 50%)'
   let padCount = nodes.current.length
 
   // Set the time on the animation
   animation.time(start)
 
+  // Reusable draw function
   function draw() {
     if (!canvasCtx) return
     const WIDTH = canvas.width
@@ -467,7 +529,6 @@ function visualize({ canvas, stream, nodes, metaTrack, animation, start }) {
 
     analyser.getByteTimeDomainData(dataArray)
 
-    canvasCtx.fillStyle = fillStyle
     canvasCtx.clearRect(0, 0, WIDTH, HEIGHT)
 
     if (add) {
@@ -482,163 +543,87 @@ function visualize({ canvas, stream, nodes, metaTrack, animation, start }) {
       const SIZE = Math.floor(
         gsap.utils.mapRange(
           0,
-          MAX_BAR_HEIGHT,
+          maxBarHeight,
           0,
           HEIGHT,
-          Math.max(avg / bufferLength - min, MIN_BAR_HEIGHT)
+          Math.max(avg / bufferLength - min, minBarHeight)
         )
       )
-      // Each time around create a new Node with the new size and tween it's size. THen render all the ndoes.
-      // let newNode
-
       /**
        * Tricky part here is that we need a metadata track as well as an animation
        * object track. One that only cares about sizing and one that cares about
        * animation.
        */
+      addToTimeline({
+        size: SIZE,
+        width: WIDTH,
+        nodes: nodes.current,
+        timeline: animation,
+        insert: start + (nodes.current.length - padCount) * shiftDelay,
+        onStart: () => (add = true),
+        theme,
+      })
 
-      const newNode = {
-        growth: SIZE,
-        size: 0,
-        x: WIDTH,
-      }
       // Track the metadata by making a big Array of the sizes.
       if (metaTrack) metaTrack.current = [...metaTrack.current, SIZE]
-      nodes.current = [...nodes.current, newNode]
-
-      const STEP = SHIFT_DELAY
-      // const INS = animation.time()
-      const INS = start + (nodes.current.length - padCount - 1) * STEP
-      animation.add(
-        gsap
-          .timeline()
-          .to(newNode, {
-            size: newNode.growth,
-            delay: GROW_DELAY,
-            duration: GROW_SPEED,
-          })
-          .to(
-            newNode,
-            {
-              delay: STEP,
-              // x: -BAR_WIDTH,
-              // Using -WIDTH should allow us to prefill the canvas if needed.
-              x: `-=${WIDTH + BAR_WIDTH}`,
-              duration: WIDTH / SHIFT_PER_SECOND,
-              ease: 'none',
-              onStart: () => {
-                // This allows us to create gaps in between the bars by skipping frames.
-                // console.info("starting");
-                add = true
-              },
-            },
-            0
-          ),
-        // Add the tween at the current time in the timeline
-        INS
-      )
-      // console.info(animations);
     }
     for (let n = 0; n < nodes.current.length; n++) {
-      canvasCtx.fillStyle = fillStyle
-      // const barHeight = nodes[n] % 2 === 0 ? nodes[n] : nodes[n] - 1;
       canvasCtx.fillRect(
         nodes.current[n].x,
-        HEIGHT / 2 - Math.max(MIN_BAR_HEIGHT, nodes.current[n].size) / 2,
-        BAR_WIDTH,
-        Math.max(MIN_BAR_HEIGHT, nodes.current[n].size)
+        HEIGHT / 2 - Math.max(minBarHeight, nodes.current[n].size) / 2,
+        barWidth,
+        Math.max(minBarHeight, nodes.current[n].size)
       )
     }
-  }
-
-  if (canvasCtx) {
-    fillStyle = canvasCtx.createLinearGradient(
-      canvas.width / 2,
-      0,
-      canvas.width / 2,
-      canvas.height
-    )
-    // Color stop is three colors
-    fillStyle.addColorStop(0, COLOR_THREE)
-    fillStyle.addColorStop(1, COLOR_THREE)
-    fillStyle.addColorStop(0.25, COLOR_TWO)
-    fillStyle.addColorStop(0.75, COLOR_TWO)
-    fillStyle.addColorStop(0.5, COLOR_ONE)
   }
 
   if (stream) {
     add = true
     source = audioCtx.createMediaStreamSource(stream)
-
     analyser = audioCtx.createAnalyser()
     analyser.fftSize = 2048
     bufferLength = analyser.frequencyBinCount
     dataArray = new Uint8Array(bufferLength)
-
     source.connect(analyser)
-
     return draw
   }
 }
 
-const padTimeline = (canvas, nodes, animation, startPoint) => {
-  const padCount = Math.floor(canvas.current.width / BAR_WIDTH)
+const padTimeline = ({ canvas, nodes, animation, startPoint, theme }) => {
+  const { minBarHeight, shiftPerSecond, shiftDelay, barWidth } = theme
+
+  const padCount = Math.floor(canvas.current.width / barWidth)
 
   for (let p = 0; p < padCount; p++) {
-    const newNode = {
-      growth: MIN_BAR_HEIGHT,
-      size: 0,
-      x: canvas.current.width,
-    }
-
-    nodes.current.push(newNode)
-
-    const INSERT = SHIFT_DELAY * p
-
-    animation.current.add(
-      gsap
-        .timeline()
-        .to(newNode, {
-          size: newNode.growth,
-          delay: GROW_DELAY,
-          duration: GROW_SPEED,
-        })
-        .to(
-          newNode,
-          {
-            delay: SHIFT_DELAY,
-            x: `-=${canvas.current.width + BAR_WIDTH}`,
-            duration: canvas.current.width / SHIFT_PER_SECOND,
-            ease: 'none',
-          },
-          0
-        ),
-      // Add the tween at the current time in the timeline
-      INSERT
-    )
+    addToTimeline({
+      size: minBarHeight,
+      width: canvas.current.width,
+      nodes: nodes.current,
+      timeline: animation.current,
+      insert: shiftDelay * p,
+      onStart: () => {},
+      theme,
+    })
   }
 
   startPoint.current =
-    animation.current.totalDuration() - canvas.current.width / SHIFT_PER_SECOND
+    animation.current.totalDuration() - canvas.current.width / shiftPerSecond
 }
 
-const StreamVis = ({
-  stream,
-  paused,
-  playback,
-  complete,
-  replay,
-  theme,
-  metadata,
-}) => {
+const StreamVis = ({ stream, paused, playback, replay, theme, metadata }) => {
   const canvasRef = React.useRef(null)
   const nodesRef = React.useRef([])
-  let startRef = React.useRef(null)
+  const startRef = React.useRef(null)
+  const drawRef = React.useRef(null)
   /**
    * This is a GSAP timeline that either gets used by the recorder
    * or prefilled with the metadata
    */
   const animRef = React.useRef(gsap.timeline())
+
+  // Destructure the theme
+  const { shiftDelay } = theme
+
   /**
    * Effect handles playback of the GSAP timeline in sync
    * with audio playback controls. Pass an audio tag ref.
@@ -648,10 +633,15 @@ const StreamVis = ({
 
     const updateTime = () => {
       animRef.current.time(startRef.current + playbackControl.currentTime)
-      if (playbackControl.paused) {
+      if (playbackControl.seeking) {
+        animRef.current.play()
+        if (drawRef.current) gsap.ticker.add(drawRef.current)
+      } else if (playbackControl.paused) {
         animRef.current.pause()
+        if (drawRef.current) gsap.ticker.remove(drawRef.current)
       } else {
         animRef.current.play()
+        if (drawRef.current) gsap.ticker.add(drawRef.current)
       }
     }
     if (playback && playback.current) {
@@ -659,12 +649,14 @@ const StreamVis = ({
       playbackControl.addEventListener('play', updateTime)
       playbackControl.addEventListener('pause', updateTime)
       playbackControl.addEventListener('seeking', updateTime)
+      playbackControl.addEventListener('seeked', updateTime)
     }
     return () => {
       if (playbackControl) {
         playbackControl.removeEventListener('play', updateTime)
         playbackControl.removeEventListener('pause', updateTime)
         playbackControl.removeEventListener('seeking', updateTime)
+        playbackControl.removeEventListener('seeked', updateTime)
       }
     }
   }, [playback])
@@ -677,6 +669,18 @@ const StreamVis = ({
       // Set the correct canvas dimensions
       canvasRef.current.width = canvasRef.current.offsetWidth
       canvasRef.current.height = canvasRef.current.offsetHeight
+
+      // Apply the fillStyle to the canvas
+      const canvasCtx = canvasRef.current.getContext('2d')
+      let fillStyle = theme.fill.colors[0]
+      if (canvasCtx)
+        fillStyle = generateGradient({
+          width: canvasRef.current.width,
+          height: canvasRef.current.height,
+          context: canvasCtx,
+          fill: theme.fill,
+        })
+      canvasCtx.fillStyle = fillStyle
     }
   }, [])
 
@@ -686,62 +690,43 @@ const StreamVis = ({
   React.useEffect(() => {
     if (paused && animRef.current) {
       animRef.current.pause()
+      if (drawRef.current) gsap.ticker.remove(drawRef.current)
     } else {
       animRef.current.play()
+      if (drawRef.current) gsap.ticker.add(drawRef.current)
     }
   }, [paused])
 
+  React.useEffect(() => {
+    // pad the start of the timeline to fill out the width
+    padTimeline({
+      canvas: canvasRef,
+      nodes: nodesRef,
+      animation: animRef,
+      startPoint: startRef,
+      theme,
+    })
+  }, [])
+
   /**
    * If the visualisation is a replay, it needs padding.
+   * Need to generate the nodes from metadata and the animation.
    */
   React.useEffect(() => {
     if (replay && metadata && canvasRef.current) {
-      const STEP = SHIFT_DELAY
-
-      nodesRef.current = []
-      animRef.current = gsap.timeline({
-        paused: true,
-      })
-
-      padTimeline(canvasRef, nodesRef, animRef, startRef)
+      animRef.current.pause()
 
       // For every item in the metadata Array, create a node and it's animation.
       metadata.forEach((growth, index) => {
-        // Create a new node and timeline that gets added to the main timeline
-        const newNode = {
-          growth: growth,
-          size: 0,
-          x: canvasRef.current.width,
-        }
-
-        nodesRef.current.push(newNode)
-        // Track the metadata by making a big Array of the sizes.
-        const INSERT = startRef.current + STEP * index
-        // const INSERT = STEP * index
-
-        animRef.current.add(
-          gsap
-            .timeline()
-            .to(newNode, {
-              size: newNode.growth,
-              delay: GROW_DELAY,
-              duration: GROW_SPEED,
-            })
-            .to(
-              newNode,
-              {
-                delay: STEP,
-                // x: -BAR_WIDTH,
-                // Using -WIDTH should allow us to prefill the canvas if needed.
-                x: `-=${canvasRef.current.width + BAR_WIDTH}`,
-                duration: canvasRef.current.width / SHIFT_PER_SECOND,
-                ease: 'none',
-              },
-              0
-            ),
-          // Add the tween at the current time in the timeline
-          INSERT
-        )
+        addToTimeline({
+          size: growth,
+          width: canvasRef.current.width,
+          nodes: nodesRef.current,
+          timeline: animRef.current,
+          insert: startRef.current + shiftDelay * index,
+          onStart: () => {},
+          theme,
+        })
       })
       // This sets the animation timeline forwards to the end of padding.
       animRef.current.time(startRef.current)
@@ -749,35 +734,33 @@ const StreamVis = ({
   }, [replay, metadata])
 
   React.useEffect(() => {
-    let draw
     // Only start the ticker if it isn't a replay
     if (canvasRef.current && stream && !replay) {
-      // Don't need to pass in paused as we can only trigger
-      // new tweens once the previous has completed/removed.
-      animRef.current = gsap.timeline()
-      // TODO:: Need to pad out the start of the timeline and set the start point.
-
-      padTimeline(canvasRef, nodesRef, animRef, startRef)
-
-      draw = visualize({
+      // Generate visualisation function for streaming
+      drawRef.current = visualize({
         canvas: canvasRef.current,
         stream,
         nodes: nodesRef,
         metaTrack: metadata,
         animation: animRef.current,
         start: startRef.current,
+        theme,
       })
-      gsap.ticker.add(draw)
     } else if (replay && canvasRef.current) {
-      draw = redraw({
+      drawRef.current = redraw({
         canvas: canvasRef.current,
         nodes: nodesRef,
+        theme,
       })
-      gsap.ticker.add(draw)
     }
+
+    // Add draw to the ticker – Don't worry about replay because that's
+    // controlled by the playback controls.
+    if (canvasRef.current && stream) gsap.ticker.add(drawRef.current)
+
     return () => {
       if (animRef.current) animRef.current.pause(0)
-      gsap.ticker.remove(draw)
+      gsap.ticker.remove(drawRef.current)
     }
   }, [stream, replay, metadata])
 
@@ -792,6 +775,7 @@ StreamVis.defaultProps = {
     minBarHeight: MIN_BAR_HEIGHT,
     maxBarHeight: MAX_BAR_HEIGHT,
     shiftSpeed: SHIFT_SPEED,
+    shiftPerSecond: SHIFT_PER_SECOND,
     shiftDelay: SHIFT_DELAY,
     growSpeed: GROW_SPEED,
     growDelay: GROW_DELAY,
