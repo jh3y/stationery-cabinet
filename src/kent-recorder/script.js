@@ -535,6 +535,8 @@ function visualize({
       add = false
       let avg = 0
       let min = 0
+      // TODO:: For perf could you hit this in blocks like
+      // dataArray.length / 70 * i and only hit it like 10 times instead of however many.
       for (let i = 0; i < bufferLength; i++) {
         if (!min || dataArray[i] < min) min = dataArray[i]
         avg += dataArray[i]
@@ -610,19 +612,28 @@ const padTimeline = ({ canvas, nodes, animation, startPoint, theme }) => {
     animation.current.totalDuration() - canvas.current.width / shiftPerSecond
 }
 
-const StreamVis = ({ stream, paused, playback, replay, theme, metadata }) => {
+const StreamVis = (props) => {
+  const { stream, paused, playback, replay, theme, metadata } = props
   const canvasRef = React.useRef(null)
   const nodesRef = React.useRef([])
   const startRef = React.useRef(null)
   const drawRef = React.useRef(null)
+
+
   /**
    * This is a GSAP timeline that either gets used by the recorder
    * or prefilled with the metadata
    */
-  const animRef = React.useRef(gsap.timeline())
+  const animRef = React.useRef()
 
   // Destructure the theme
   const { shiftDelay } = theme
+  console.info(metadata)
+  // React.useEffect(() => {
+  //   if (metadata && metadata.current && metdata.current.isArray() && metadata.current.length === 0) {
+  //     metdata.current = []
+  //   }
+  // }, [])
 
   /**
    * Effect handles playback of the GSAP timeline in sync
@@ -635,13 +646,13 @@ const StreamVis = ({ stream, paused, playback, replay, theme, metadata }) => {
       animRef.current.time(startRef.current + playbackControl.currentTime)
       if (playbackControl.seeking) {
         animRef.current.play()
-        if (drawRef.current) gsap.ticker.add(drawRef.current)
+        // if (drawRef.current) gsap.ticker.add(drawRef.current)
       } else if (playbackControl.paused) {
         animRef.current.pause()
-        if (drawRef.current) gsap.ticker.remove(drawRef.current)
+        // if (drawRef.current) gsap.ticker.remove(drawRef.current)
       } else {
         animRef.current.play()
-        if (drawRef.current) gsap.ticker.add(drawRef.current)
+        // if (drawRef.current) gsap.ticker.add(drawRef.current)
       }
     }
     if (playback && playback.current) {
@@ -690,15 +701,16 @@ const StreamVis = ({ stream, paused, playback, replay, theme, metadata }) => {
   React.useEffect(() => {
     if (paused && animRef.current) {
       animRef.current.pause()
-      if (drawRef.current) gsap.ticker.remove(drawRef.current)
-    } else {
+      // if (drawRef.current) gsap.ticker.remove(drawRef.current)
+    } else if (animRef.current) {
       animRef.current.play()
-      if (drawRef.current) gsap.ticker.add(drawRef.current)
+      // if (drawRef.current) gsap.ticker.add(drawRef.current)
     }
   }, [paused])
 
   React.useEffect(() => {
     // pad the start of the timeline to fill out the width
+    animRef.current = gsap.timeline({ paused: replay && metadata })
     padTimeline({
       canvas: canvasRef,
       nodes: nodesRef,
@@ -714,7 +726,6 @@ const StreamVis = ({ stream, paused, playback, replay, theme, metadata }) => {
    */
   React.useEffect(() => {
     if (replay && metadata && canvasRef.current) {
-      animRef.current.pause()
 
       // For every item in the metadata Array, create a node and it's animation.
       metadata.forEach((growth, index) => {
@@ -737,6 +748,7 @@ const StreamVis = ({ stream, paused, playback, replay, theme, metadata }) => {
     // Only start the ticker if it isn't a replay
     if (canvasRef.current && stream && !replay) {
       // Generate visualisation function for streaming
+      console.info('runnig this')
       drawRef.current = visualize({
         canvas: canvasRef.current,
         stream,
@@ -756,7 +768,8 @@ const StreamVis = ({ stream, paused, playback, replay, theme, metadata }) => {
 
     // Add draw to the ticker – Don't worry about replay because that's
     // controlled by the playback controls.
-    if (canvasRef.current && stream) gsap.ticker.add(drawRef.current)
+    // if (canvasRef.current && stream) gsap.ticker.add(drawRef.current)
+    gsap.ticker.add(drawRef.current)
 
     return () => {
       if (animRef.current) animRef.current.pause(0)
