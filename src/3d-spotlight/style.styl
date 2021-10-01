@@ -1,0 +1,93 @@
+*
+*:after
+*:before
+  box-sizing border-box
+  transform-style preserve-3d
+
+:root
+  --bod 8
+  --light 1
+
+  @media(min-width 768px)
+    --bod 6
+
+html
+  cursor none
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  overflow hidden
+  background hsla(0, 0%, 0%, 0.98)
+  cursor none
+
+.scene
+  height 100vh
+  width 100vw
+  position relative
+  perspective 1000vmin
+  transform rotateX(-24deg) rotateY(34deg) rotateY(calc(var(--tilt-x, 0) * 1deg)) rotateX(calc(var(--tilt-y, 0) * 1deg))
+
+.audience
+  height calc(var(--bod, 8) * 7.5vmin)
+  width calc(var(--bod, 8) * 10vmin)
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%) translate3d(0, 0, calc(var(--bod, 8) * 0vmin))
+  display grid
+  grid-template-columns repeat(12, calc(var(--bod, 8) * 0.75vmin))
+  grid-template-rows repeat(12, calc(var(--bod, 8) * 0.58vmin))
+  align-items center
+  justify-content center
+
+.spotlight
+  background hsla(45, 50%, 80%, 0.25)
+  height calc(var(--bod, 8) * 2.5vmin)
+  width calc(var(--bod, 8) * 2.5vmin)
+  filter blur(5px)
+  border-radius 50%
+  position absolute
+  transform translate(-50%, -50%) translate(calc(var(--x, 0) * 1px), calc(var(--y, 0) * 1px)) translate3d(0, 0, calc(12 * 2.25vmin)) scale(var(--light, 0))
+  z-index 3
+  transition transform 0.1s
+
+.emoji
+  --rise 0
+  font-size calc(var(--bod, 8) * 1vmin)
+  width calc(var(--bod, 8) * 1vmin)
+  transform translate(calc(var(--shift, 0) * 1%), 0) translate3d(0, 0, calc(var(--row, 0) * 2.25vmin)) translate(0, calc(var(--rise, 0) * -1vmin))
+  transition transform 0.1s
+
+  &:after
+    border-radius 50%
+    content ''
+    height 100%
+    width 100%
+    background hsla(0, 0%, 0%, 0.75)
+    position absolute
+    filter blur(5px)
+    top 0
+    left 0
+
+  &--chosen
+    --rise 1
+
+  &--chosen:after
+    background hsla(0, 0%, 0%, 0)
+
+
+  &--man
+    &:before
+      content '🙍‍♂️'
+    &.emoji--chosen
+      &:before
+        content '🙆‍♂️'
+
+  &--woman
+    &:before
+      content '🙍‍'
+    &.emoji--chosen
+      &:before
+        content '🙆‍'
