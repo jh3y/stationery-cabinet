@@ -1,0 +1,235 @@
+.cuboid
+  width 100%
+  height 100%
+  position relative
+  // 1 is the top and go t, r, b, l, f, b
+
+  &__side:nth-of-type(1)
+    height calc(var(--thickness) * 1vmin)
+    width 100%
+    position absolute
+    top 0
+    transform translate(0, -50%) rotateX(90deg)
+
+  &__side:nth-of-type(2)
+    height 100%
+    width calc(var(--thickness) * 1vmin)
+    position absolute
+    top 50%
+    right 0
+    transform translate(50%, -50%) rotateY(90deg)
+
+  &__side:nth-of-type(3)
+    width 100%
+    height calc(var(--thickness) * 1vmin)
+    position absolute
+    bottom 0
+    transform translate(0%, 50%) rotateX(90deg)
+
+  &__side:nth-of-type(4)
+    height 100%
+    width calc(var(--thickness) * 1vmin)
+    position absolute
+    left 0
+    top 50%
+    transform translate(-50%, -50%) rotateY(90deg)
+
+  &__side:nth-of-type(5)
+    height 100%
+    width 100%
+    transform translate3d(0, 0, calc(var(--thickness) * 0.5vmin))
+    position absolute
+    top 0
+    left 0
+
+  &__side:nth-of-type(6)
+    height 100%
+    width 100%
+    transform translate3d(0, 0, calc(var(--thickness) * -0.5vmin)) rotateY(180deg)
+    position absolute
+    top 0
+    left 0
+
+*
+*:after
+*:before
+  box-sizing border-box
+  transform-style preserve-3d
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  background var(--bg)
+  overflow hidden
+
+:root
+  --bg hsl(240, 24%, 12%)
+  --speed 6
+  --delay-coefficient -1.2s
+  --b-1 hsl(27, 80%, 52%)
+  --b-2 hsl(27, 80%, 48%)
+  --b-3 hsl(27, 80%, 45%)
+  --b-4 hsl(27, 80%, 40%)
+  --t-1 hsl(35, 10%, 50%)
+  --t-2 hsl(35, 10%, 40%)
+  --t-3 hsl(35, 10%, 30%)
+  --t-4 hsl(35, 10%, 20%)
+
+img
+  opacity 0.25
+  position fixed
+  height 50vmin
+  top 50%
+  left 50%
+  transform translate(-47.25%, -50%)
+
+.scene
+  position fixed
+  top 50%
+  left 50%
+  transform translate3d(-50%, -50%, 100vmin) rotateX(-24deg) rotateY(34deg) rotateX(calc(var(--rotate-x, 0) * 1deg)) rotateY(calc(var(--rotate-y, 0) * 1deg))
+
+.stacked
+  height 50vmin
+  width 33vmin
+  position fixed
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+  &__tray
+    position absolute
+    bottom 9%
+    left 50%
+    height 15vmin
+    width 33vmin
+    transform translate(-50%, 0%)
+
+  &__stack
+    position absolute
+    bottom 23.5%
+    left 50%
+    height 7.5%
+    width 55%
+    transform translate(-50%, 0)
+
+  &__block
+    height 100%
+    width 100%
+    position absolute
+    animation stack calc(var(--speed, 0) * 1s) calc(var(--delay, 0) * var(--delay-coefficient)) infinite ease-in reverse
+
+.tray
+  &__side
+    position absolute
+
+    &--bottom
+      bottom 0
+      left 0
+      right 0
+      height 24%
+
+      .cuboid div:nth-of-type(1):after
+        content ''
+        height 24vmin
+        width 50%
+        position absolute
+        background radial-gradient(hsla(0, 0%, 25%, 0.3) 75%, transparent)
+        filter blur(1vmin)
+        top 50%
+        left 50%
+        animation strong calc(var(--delay-coefficient) * -1) infinite
+        transform translate(-50%, -50%)
+
+        @keyframes strong
+          0%, 100%
+            opacity 0.5
+          50%
+            opacity 1
+
+    &--left
+      left 0
+      width 11%
+      height 100%
+
+    &--right
+      right 0
+      width 11%
+      height 100%
+
+.block
+  animation drop calc(var(--speed, 0) * 1s) calc(var(--delay, 0) * var(--delay-coefficient)) infinite ease-out reverse
+  transform-origin 75% 50%
+  height 100%
+  width 100%
+  position absolute
+
+.cuboid--block div
+    animation fade calc(var(--speed, 0) * 1s) calc(var(--delay, 0) * var(--delay-coefficient)) infinite ease-in-out
+
+@keyframes stack
+  to
+    transform translate(58%, 0)
+@keyframes drop
+  to
+    transform translate(0, -560%) rotate(54deg)
+
+@keyframes fade
+  0%, 100%
+    opacity 0
+  10%, 90%
+    opacity 1
+
+.cuboid
+  &--tray
+    --thickness 33
+    div
+      &:nth-of-type(1)
+        background var(--t-1)
+      &:nth-of-type(2)
+        background var(--t-2)
+      &:nth-of-type(3)
+        background var(--t-2)
+      &:nth-of-type(4)
+        background var(--t-4)
+      &:nth-of-type(5)
+        background var(--t-3)
+      &:nth-of-type(6)
+        background var(--t-2)
+
+  &--block
+    --thickness 24
+
+    div
+      &:nth-of-type(1)
+        background var(--b-1)
+
+        &:after
+          content ''
+          position absolute
+          top 0
+          right 0
+          bottom 0
+          left 0
+          background radial-gradient(hsla(35, 80%, 20%, 0.4) 75%, transparent)
+          filter blur(1vmin)
+          animation fadeOver calc(var(--speed, 0) * 1s) calc(var(--delay, 0) * var(--delay-coefficient)) infinite ease-in-out
+
+          @keyframes fadeOver
+            0%, 20%, 100%
+              opacity 0
+            30%, 90%
+              opacity 1
+
+
+      &:nth-of-type(2)
+        background var(--b-2)
+      &:nth-of-type(3)
+        background var(--b-4)
+      &:nth-of-type(4)
+        background var(--b-2)
+      &:nth-of-type(5)
+        background var(--b-3)
+      &:nth-of-type(6)
+        background var(--b-2)
