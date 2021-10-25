@@ -1,0 +1,30 @@
+mixin cuboid()
+  .cuboid(class!=attributes.class)
+    - let s = 0
+    while s < 6
+      .cuboid__side
+      - s++
+
+mixin block(delay)
+  .stacked__block(style=`--delay: ${delay}; --index: ${delay};`)
+    .block
+      +cuboid()(class="cuboid--block")
+
+//- img(src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fassets.wired.com%2Fphotos%2Fw_1904%2Fwp-content%2Fuploads%2F2016%2F07%2Fso-logo-s.jpg&f=1&nofb=1")
+//- input#overflow(type="checkbox")
+//- label(for="overflow")
+.scene
+  .stacked__wrapper
+    .stacked
+      .stacked__tray.tray
+        .tray__side.tray__side--bottom
+          +cuboid()(class="cuboid--tray")
+        .tray__side.tray__side--left
+          +cuboid()(class="cuboid--tray")
+        .tray__side.tray__side--right
+          +cuboid()(class="cuboid--tray")
+      .stacked__stack.stack
+        - let b = 0
+        while b < 20
+          +block(b)
+          - b++
