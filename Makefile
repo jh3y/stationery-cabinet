@@ -12,7 +12,7 @@ DEPLOY_DIR = tmp
 SRC_BASE = src
 
 SCRIPT_FILE = script.js
-TS_FILE = script.ts
+TS_FILE = script.tsx
 STYLE_FILE = style.styl
 MARKUP_FILE = index.pug
 README_FILE = README.md
@@ -28,7 +28,6 @@ BOILERPLATE_STYLE = boilerplate/style.boilerplate.styl
 SCRIPT_DEST = $(OUTPUT_DIR)/script.js
 
 POSTCSS_OPTS = --use autoprefixer $(OUTPUT_DIR)/style.css -d $(OUTPUT_DIR)
-
 
 SCRIPT_SRC = $(SRC_BASE)/$(PEN)/$(SCRIPT_FILE)
 TS_SRC = $(SRC_BASE)/$(PEN)/$(TS_FILE)
@@ -63,10 +62,10 @@ watch-script: checkForPen compile-script ## watch for script changes and compile
 
 compile-typescript: checkForPen ## compiles typescript
 	mkdir -pv $(OUTPUT_DIR)
-	$(TSC) $(TS_SRC) --outFile $(SCRIPT_DEST) --target ES6 --experimentalDecorators
+	$(TSC) $(TS_SRC) --outdir $(OUTPUT_DIR) --jsx react --target esnext
 
 watch-typescript: checkForPen compile-typescript ## watch for typescript changes and compile
-	$(TSC) $(TS_SRC) --watch --outFile $(SCRIPT_DEST) --target ES6 --experimentalDecorators
+	$(TSC) $(TS_SRC) --watch --outdir $(OUTPUT_DIR) --jsx react --target esnext
 
 compile-style: checkForPen ## compiles styles
 	$(STYLUS) $(STYLE_SRC) -o $(OUTPUT_DIR) && $(POSTCSS) $(POSTCSS_OPTS)
@@ -122,4 +121,12 @@ create: checkForPen ## creates new source for pens by passing PEN variable
 	cat $(BOILERPLATE_DEV_MARKUP) > $(MARKUP_SRC)
 	cat $(BOILERPLATE_MARKUP) > $(MARKUP_DEV_SRC)
 	cat $(BOILERPLATE_SCRIPT) > $(SCRIPT_SRC)
+	cat $(BOILERPLATE_STYLE) > $(STYLE_SRC)
+
+create-ts: checkForPen ## creates new source for pens by passing PEN variable
+	mkdir -pv $(SRC_BASE)/$(PEN)
+	cat $(BOILERPLATE_README) > $(README_SRC)
+	cat $(BOILERPLATE_DEV_MARKUP) > $(MARKUP_SRC)
+	cat $(BOILERPLATE_MARKUP) > $(MARKUP_DEV_SRC)
+	cat $(BOILERPLATE_SCRIPT) > $(TS_SRC)
 	cat $(BOILERPLATE_STYLE) > $(STYLE_SRC)
