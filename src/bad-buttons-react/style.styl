@@ -1,0 +1,80 @@
+*
+  box-sizing border-box
+
+body
+  display grid
+  min-height 100vh
+  place-items center
+  background hsl(210, 60%, 85%)
+
+#app
+  width 100%
+  place-items center
+  display grid
+  grid-template-columns repeat(auto-fit, calc(var(--proximity, 50) * 2px))
+  grid-auto-rows calc(var(--proximity, 50) * 2px)
+  justify-content center
+  grid-gap 10px
+
+.bad-button
+  position relative
+  display grid
+  place-items center
+
+  &__button
+    transition transform 0.1s, box-shadow 0.1s, background 0.1s
+    transform translate(calc((var(--x, 0) * var(--proximity, 50)) * 1px), calc((var(--y, 0) * var(--proximity, 50)) * 1px)) translateY(calc(var(--raise, 0) * -2px))
+
+  &[data-debug]:before
+    content ''
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    border-radius 50%
+    background hsla(210, 80%, 50%, 0.25)
+    height calc(var(--proximity, 50) * 2px)
+    width calc(var(--proximity, 50) * 2px)
+    z-index -1
+
+.button
+  border none
+  font-family sans-serif
+  font-weight bold
+  padding 10px 20px
+  border-radius 6px
+  box-shadow 2px 4px 10px -4px var(--shadow)
+  color hsl(0, 0%, 98%)
+  background var(--bg)
+
+  &:hover
+    --raise 1
+    --lightness 50
+    box-shadow 2px 4px 8px -2px var(--shadow)
+
+  &:active
+    --raise -1
+    --lightness 30
+    box-shadow 0px 0px 6px -4px var(--shadow)
+
+  &--subscribe
+    --bg 'hsl(94, 50%, %s)' % calc(var(--lightness, 40) * 1%)
+    --shadow hsl(94, 50%, 20%, 0.75)
+    display flex
+
+  &--unsubscribe
+    --bg 'hsl(14, 60%, %s)' % calc(var(--lightness, 40) * 1%)
+    --shadow hsl(14, 60%, 20%, 0.75)
+
+.button:is(:hover,:active) .thumb
+  animation none
+
+.thumb
+  display block
+  animation thumb 2s infinite
+  transform-origin 50% 75%
+  margin-left 4px
+
+@keyframes thumb
+  50%
+    transform rotate(-16deg) scale(1.15)
