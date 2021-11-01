@@ -1,0 +1,70 @@
+*
+  box-sizing border-box
+
+body
+  display flex
+  align-items center
+  justify-content center
+  background 'hsl(280, 50%, %s)' % calc(var(--light, 10) * 1%)
+  min-height 100vh
+  overflow hidden
+
+h1
+  margin 0
+  position fixed
+  bottom 1rem
+  right 1rem
+  color hsl(280, 50%, 30%)
+  font-family sans-serif
+  font-size 2rem
+  user-select none
+
+.ghost
+  height 25vmin
+  overflow visible !important
+  // &__ghost
+  //   display none
+  &__cheeks
+    fill hsl(0, 80%, 85%)
+  &__pupil
+    fill hsl(0, 0%, 100%)
+  &__body
+    fill hsla(0, 0%, 100%, 1)
+  &__teeth
+    fill hsl(0, 0%, 100%)
+  &__brow
+    fill hsla(0, 0%, 100%, 1)
+    stroke hsl(0, 0%, 10%)
+  &__tongue
+    fill hsl(0, 80%, 50%)
+
+  &__teeth
+  &__brow
+    stroke none
+  //   display none
+
+.sweet-bowl
+  &__opening
+    fill hsl(30, 80%, 30%)
+  &__body
+    fill hsl(30, 80%, 50%)
+  &__groove
+    stroke hsl(35, 80%, 40%)
+  &__eye
+  &__mouth
+    fill hsl(0, 0%, 10%)
+  &__tongue
+    fill hsl(0, 80%, 50%)
+
+.sweet
+  display none
+  &--lolly
+    path
+      fill hsl(0, 0%, 95%)
+    circle
+      fill 'hsl(%s, 70%, 50%)' % var(--hue, 0)
+  &--sweet
+    path
+      fill 'hsl(%s, 70%, 20%)' % var(--hue, 0)
+    circle
+      fill 'hsl(%s, 70%, 50%)' % var(--hue, 0)
