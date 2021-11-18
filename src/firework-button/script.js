@@ -15,7 +15,7 @@ const DRAW = ({ CONTEXT, CANVAS, RENDER }) => () => {
 }
 
 const DEFAULT_CONFIG = {
-  // Spread, sizes, colors, how many there are, etc.
+  // Spread (amount, angle, etc.), sizes, colors, how many there are, etc.
   // Callbacks. On Fire, on Burst, on End?
 }
 
