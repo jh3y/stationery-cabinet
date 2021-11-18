@@ -1,0 +1,435 @@
+*
+*:after
+*:before
+  box-sizing border-box
+  transform-style preserve-3d
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  perspective 100vmin
+
+:root
+  --packaged 0
+  --steps 23
+
+input
+[for='package']
+  position fixed
+  top 0
+  left 0
+
+[for='one']
+  position fixed
+  top 0
+  right 0
+
+#one:checked ~ .scene .package__wrapper
+  --height 30
+  --width 20
+  --depth 30
+
+#package:checked ~ .scene
+  --packaged 1
+  // Annoyingly we can't do a trick where we use the number of steps and reverse the order.
+  /**
+    * Handles all the steps of packaging up the box. Quite long winded.
+    * 1. Start with package rotated so that all sides are flat
+    * 2. Extra Side
+    * 3. Then Tabbed Side
+    * 4. Then Flipped Side and Tab
+    * 5. Then go through the bottom flaps in order
+    * 6. Tilt the box up.
+    * 7. Close the top.
+  */
+
+  .package__side--extra
+    --step 0
+
+  .package__side--tabbed
+    --step 1
+
+  .package__side--tabbed:after
+    --step 2
+
+  .package__side--flipped
+    --step 2
+
+  // Bottom Flaps before the flip
+  .package__side--extra > .package__flap--bottom
+    --step 3
+  .package__side--tabbed > .package__flap--bottom
+    --step 4
+  .package__side--main > .package__flap--bottom
+    --step 5
+  .package__side--flipped > .package__flap--bottom
+    --step 6
+
+  // Tape
+  .package__tape--bottom
+    --step 7
+
+  // Move the package upright
+  .package__wrapper
+    --step 8
+  .package
+  .package__shadow
+    --step 9
+
+  // Load the content
+  .package__icon--html
+    --step 10
+  .package__icon--css
+    --step 11
+  .package__icon--js
+    --step 12
+
+  // Top Flaps Last after a little gap for the content
+  .package__side--extra > .package__flap--top
+    --step 16
+  .package__side--tabbed > .package__flap--top
+    --step 17
+  .package__side--main > .package__flap--top
+    --step 18
+  .package__side--flipped > .package__flap--top
+    --step 19
+
+  // Then tape the top
+  .package__tape--top
+    --step 20
+
+  .package__branding
+  .package__label
+  .package__branding--shadow
+  .package__label--shadow
+    --step 21
+
+  .package__label:after
+    --step 22
+  .package__label:before
+    --step 23
+
+  .package
+  .package__wrapper
+  .package__flap
+  .package__flap--top
+  .package__flap--bottom
+  .package__side
+  .package__side:after
+  .package__icon
+  .package__tape--top
+  .package__tape--bottom
+  .package__branding
+  .package__label
+  .package__label:after
+  .package__label:before
+  .package__shadow
+  .package__label--shadow
+  .package__branding--shadow
+    transition transform calc(var(--speed, 0.2) * 1s) calc((var(--step, 1) * var(--delay, 1)) * 1s), opacity 0.1s calc((var(--step, 1) * var(--delay, 1)) * 1s), height calc(var(--speed, 0.2) * 1s), width calc(var(--speed, 0.2) * 1s)
+
+.scene
+  transform rotateX(-24deg) rotateY(-32deg) rotateX(90deg)
+
+
+.package
+.package__wrapper
+.package__flap
+.package__flap--top
+.package__flap--bottom
+.package__side
+.package__side:after
+.package__icon
+.package__tape--top
+.package__tape--bottom
+.package__branding
+.package__label
+.package__label:after
+.package__label:before
+.package__shadow
+.package__label--shadow
+.package__branding--shadow
+  --delay 0.2
+  --speed 0.2
+  transition transform calc(var(--speed, 0.2) * 1s) calc((var(--step, 1) * var(--delay, 1)) * 1s), opacity 0.1s calc(((var(--step, 1) * var(--delay, 1)) + (var(--speed) - 0.1)) * 1s), height calc(var(--speed, 0.2) * 1s), width calc(var(--speed, 0.2) * 1s)
+
+
+// Transition steps for closing
+.package__side--extra
+  --step 23
+
+.package__side--tabbed
+  --step 22
+
+.package__side--tabbed:after
+  --step 21
+
+.package__side--flipped
+  --step 20
+
+// Bottom Flaps before the flip
+.package__side--extra > .package__flap--bottom
+  --step 19
+.package__side--tabbed > .package__flap--bottom
+  --step 18
+.package__side--main > .package__flap--bottom
+  --step 17
+.package__side--flipped > .package__flap--bottom
+  --step 16
+
+// Tape
+.package__tape--bottom
+  --step 15
+
+// Move the package upright
+.package__wrapper
+  --step 14
+.package
+.package__shadow
+  --step 13
+
+// Load the content
+.package__icon--html
+  --step 8
+.package__icon--css
+  --step 7
+.package__icon--js
+  --step 6
+
+// Top Flaps Last after a little gap for the content
+.package__side--extra > .package__flap--top
+  --step 5
+.package__side--tabbed > .package__flap--top
+  --step 4
+.package__side--main > .package__flap--top
+  --step 3
+.package__side--flipped > .package__flap--top
+  --step 2
+
+// Then tape the top
+.package__tape--top
+  --step 1
+
+.package__branding
+.package__label
+.package__label--shadow
+.package__branding--shadow
+  --step 0
+
+// Don't need to erase these. Just move the label.
+.package__label:after
+  --step 5
+.package__label:before
+  --step 5
+
+
+.package
+  height calc(var(--depth) * 1vmin)
+  width calc(var(--width) * 1vmin)
+  background hsla(280, 80%, 50%, 0.3)
+  transform-origin 50% 0
+  transform rotateX(calc((1 - var(--packaged, 0)) * 90deg))
+
+  &__shadow
+    background black
+    position absolute
+    height 100%
+    width 100%
+    transform-origin 50% 0
+    transform scaleY(var(--packaged))
+
+  &__tape
+    background brown
+    height 50%
+    width 94%
+    left 50%
+    position absolute
+    transform-origin 0 50%
+    transform translate3d(-50%, var(--offset-y), 2px) scaleX(var(--packaged, 0))
+
+    &--bottom
+      --offset-y 50%
+      bottom 100%
+    &--top
+      --offset-y -50%
+      top 100%
+
+  &__direction
+    display inline-flex
+    align-items center
+    font-family sans-serif
+    font-weight bold
+    transform rotate(180deg)
+    position absolute
+    top 0
+    right 0
+    padding 5%
+    justify-content flex-end
+    color hsl(0, 0%, 10%)
+    backface-visibility hidden
+    -webkit-backface-visibility hidden
+
+    svg
+      fill currentColor
+      width 8%
+      min-width 2vmin
+
+  &__wrapper
+    --height 20
+    --width 30
+    --depth 20
+    background hsla(210, 80%, 50%, 0.3)
+    transform translate3d(0, calc(((1 - var(--packaged, 0)) * var(--height)) * 1vmin), calc(var(--height) * -0.5vmin))
+
+  &__label
+    height 20%
+    width 30%
+    background white
+    position absolute
+    right 10%
+    bottom 20%
+    border-radius 5%
+    opacity var(--packaged)
+    -webkit-backface-visibility hidden
+    backface-visibility hidden
+    transform rotate(180deg) translate3d(0, 0, calc((1 - (var(--packaged, 0))) * 5vmin))
+
+    &--shadow
+      transform rotate(180deg) translate3d(0, 0, 0) scale(var(--packaged))
+      background hsl(0, 0%, 10%)
+
+    &:after
+    &:before
+      content ''
+      position absolute
+      height 20%
+      width var(--line-length, 70%)
+      top var(--line, 20%)
+      left 10%
+      background hsl(0, 0%, 10%)
+      transform-origin 0 50%
+      transform scaleX(var(--packaged, 0))
+
+    &:before
+      --line 50%
+      --line-length 40%
+
+  &__branding
+    height 30%
+    position absolute
+    bottom 10%
+    left 10%
+    transform rotate(-160deg) translate3d(0, 0, calc((1 - (var(--packaged, 0))) * 5vmin))
+    opacity var(--packaged)
+    -webkit-backface-visibility hidden
+    backface-visibility hidden
+
+    &--shadow
+      transform rotate(-160deg) translate3d(0, 0, 0) scale(var(--packaged))
+      filter brightness(0)
+      opacity var(--packaged)
+
+  &__icon
+    --speed 1
+    position absolute
+    top 50%
+    left 50%
+    height 40%
+    transform translate(-50%, -50%) translate3d(calc(var(--x, 0) * 1%), calc((var(--y, 0) - (var(--packaged,0) * var(--y, 0))) * 1%), calc(var(--z, 0) * 1vmin))
+    opacity var(--packaged)
+
+    &--js
+      --x 60
+      --y -420
+      --z 2
+      fill #F7DF1E
+    &--html
+      --x 0
+      --y -300
+      --z 1
+      fill #E34F26
+    &--css
+      --x -50
+      --y -380
+      --z 3
+      fill #1572B6
+
+  &__content
+    width calc(min(var(--height), var(--width)) * 1vmin)
+    height calc(var(--height) * 1vmin)
+    background hsla(280, 80%, 50%, 0.5)
+    position absolute
+    left 50%
+    bottom 50%
+    transform-origin 50% 100%
+    transform translate(-50%, 0) rotateX(-90deg) rotateY(45deg)
+
+  &__flap
+    width 100%
+    height 50%
+    background hsla(0, 80%, 50%, 0.35)
+    position absolute
+    left 0
+
+    &--bottom
+      transform-origin 50% 100%
+      bottom 100%
+      transform rotateX(calc(var(--packaged, 0) * 90deg))
+
+    &--top
+      top 100%
+      transform-origin 50% 0%
+      transform rotateX(calc(var(--packaged, 0) * -90deg))
+
+
+  &__side
+    background 'hsla(%s, 30%, 30%, 0.3)' % var(--hue, 0)
+    height calc(var(--height) * 1vmin)
+    position absolute
+    top 50%
+
+    &--main
+      --hue 2
+      left 50%
+      transform translate(-50%, -50%) rotateX(90deg) rotateY(0deg) translate3d(0, 0, calc(var(--depth) * 0.5vmin)) translate(0, 50%)
+      width calc(var(--width) * 1vmin)
+
+    &--tabbed
+      --hue 90
+      top 0
+      left 100%
+      width calc(var(--depth) * 1vmin)
+      transform-origin 0% 50%
+      transform rotateY(calc(var(--packaged, 0) * 90deg))
+
+      &:after
+        content ''
+        position absolute
+        left 99.5%
+        top 0
+        height 100%
+        width 10%
+        background red
+        $clip = polygon(0 0%, 100% 20%, 100% 80%, 0 100%)
+        clip-path $clip
+        -webkit-clip-path $clip
+        transform-origin 0% 50%
+        transform rotateY(calc(var(--packaged, 0) * 91deg))
+
+    &--extra
+      --hue 120
+      right 100%
+      top 0
+      width calc(var(--depth) * 1vmin)
+      transform-origin 100% 50%
+      transform rotateY(calc(var(--packaged, 0) * -90deg))
+
+    &--flipped
+      --hue 320
+      background blue
+      top 0
+      right 100%
+      width calc(var(--width) * 1vmin)
+      transform-origin 100% 50%
+      transform rotateY(calc(var(--packaged, 0) * -90deg))
