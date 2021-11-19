@@ -5,30 +5,127 @@
   transform-style preserve-3d
 
 body
+  background hsl(180, 20%, 92%)
   min-height 100vh
   display grid
   place-items center
   perspective 100vmin
+  overflow hidden
 
 :root
   --packaged 0
   --steps 23
+  --delay 0.2
+  --speed 0.2
+  // Colors
+  --face-1 hsl(28, 41%, 57%)
+  --face-2 hsl(29, 58%, 66%)
+  --face-3 hsl(30, 69%, 70%)
+  --face-4 hsl(31, 82%, 74%)
+  --face-5 hsl(30, 72%, 70%)
+  --face-6 hsl(21, 75%, 28%)
+  --tape hsl(26, 37%, 51%)
+
+.close
+.open
+  position fixed
+  height 100vh
+  width 100vw
+  z-index 2
+  transform scale(1) translate3d(0, 0, 50vmin)
+  transition transform 0s calc(((var(--steps) + 2) * var(--delay)) * 1s)
+
+.open
+  transform scale(0) translate3d(0, 0, 50vmin)
+  transition transform 0s 0s
+
+#package:checked ~ .close
+  transition transform 0s 0s
+  transform scale(0) translate3d(0, 0, 50vmin)
+
+#package:checked ~ .open
+  transition transform 0s calc(((var(--steps) + 2) * var(--delay)) * 1s)
+  transform scale(1) translate3d(0, 0, 50vmin)
 
 input
-[for='package']
   position fixed
   top 0
   left 0
+  width 1px
+  height 1px
+  padding 0
+  margin -1px
+  overflow hidden
+  clip rect(0, 0, 0, 0)
+  white-space nowrap
+  border-width 0
 
 [for='one']
+[for='two']
+[for='three']
+[for='four']
   position fixed
-  top 0
-  right 0
+  top var(--top)
+  right 1rem
+  z-index 3
+
+[for='one']
+  --top 1rem
+[for='two']
+  --top calc(1rem + 49px)
+[for='three']
+  --top calc(1rem + 98px)
+[for='four']
+  --top calc(1rem + 147px)
+
+#one:checked ~ .one
+#two:checked ~ .two
+#three:checked ~ .three
+#four:checked ~ .four
+  border-color hsl(10, 80%, 50%)
+
+.size-label
+  font-family sans-serif
+  font-weight bold
+  color hsl(0, 0%, 15%)
+  height 44px
+  width 44px
+  display grid
+  place-items center
+  background hsl(0, 0%, 99%)
+  border-radius 50%
+  cursor pointer
+  border 4px solid hsl(180, 20%, 62%)
+  transform translate(0, calc(var(--y, 0) * 1%)) scale(var(--scale, 1))
+  transition transform 0.1s
+
+  &:hover
+    --y -5
+
+  &:active
+    --y 2
+    --scale 0.9
 
 #one:checked ~ .scene .package__wrapper
+  --height 10
+  --width 20
+  --depth 20
+#two:checked ~ .scene .package__wrapper
+  --height 20
+  --width 20
+  --depth 20
+#three:checked ~ .scene .package__wrapper
+  --height 20
+  --width 30
+  --depth 20
+#four:checked ~ .scene .package__wrapper
   --height 30
   --width 20
   --depth 30
+
+#package:checked ~ .scene
+  .package__side--main > .package__flap--top:before
+    --bg-step 9
 
 #package:checked ~ .scene
   --packaged 1
@@ -110,28 +207,8 @@ input
   .package__label:before
     --step 23
 
-  .package
-  .package__wrapper
-  .package__flap
-  .package__flap--top
-  .package__flap--bottom
-  .package__side
-  .package__side:after
-  .package__icon
-  .package__tape--top
-  .package__tape--bottom
-  .package__branding
-  .package__label
-  .package__label:after
-  .package__label:before
-  .package__shadow
-  .package__label--shadow
-  .package__branding--shadow
-    transition transform calc(var(--speed, 0.2) * 1s) calc((var(--step, 1) * var(--delay, 1)) * 1s), opacity 0.1s calc((var(--step, 1) * var(--delay, 1)) * 1s), height calc(var(--speed, 0.2) * 1s), width calc(var(--speed, 0.2) * 1s)
-
 .scene
   transform rotateX(-24deg) rotateY(-32deg) rotateX(90deg)
-
 
 .package
 .package__wrapper
@@ -152,7 +229,8 @@ input
 .package__branding--shadow
   --delay 0.2
   --speed 0.2
-  transition transform calc(var(--speed, 0.2) * 1s) calc((var(--step, 1) * var(--delay, 1)) * 1s), opacity 0.1s calc(((var(--step, 1) * var(--delay, 1)) + (var(--speed) - 0.1)) * 1s), height calc(var(--speed, 0.2) * 1s), width calc(var(--speed, 0.2) * 1s)
+  transition transform calc(var(--speed, 0.2) * 1s) calc((var(--step, 1) * var(--delay, 1)) * 1s), opacity 0.1s calc(((var(--step, 1) * var(--delay, 1)) + ((var(--speed) - 0.1) * (1 - var(--packaged)))) * 1s), height calc(var(--speed, 0.2) * 1s), width calc(var(--speed, 0.2) * 1s)
+  transition-timing-function ease-in-out
 
 
 // Transition steps for closing
@@ -227,21 +305,24 @@ input
 .package
   height calc(var(--depth) * 1vmin)
   width calc(var(--width) * 1vmin)
-  background hsla(280, 80%, 50%, 0.3)
+  // background hsla(280, 80%, 50%, 0.3)
   transform-origin 50% 0
   transform rotateX(calc((1 - var(--packaged, 0)) * 90deg))
 
   &__shadow
-    background black
+    background hsl(0, 0%, 35%)
+    opacity 0.75
     position absolute
-    height 100%
-    width 100%
+    height 99%
+    width 99%
+    top 0
+    left 50%
     transform-origin 50% 0
-    transform scaleY(var(--packaged))
+    transform translate(-50%, 0) scaleY(var(--packaged))
 
   &__tape
-    background brown
-    height 50%
+    background var(--tape)
+    height min(4vmin, 50%)
     width 94%
     left 50%
     position absolute
@@ -260,7 +341,8 @@ input
     align-items center
     font-family sans-serif
     font-weight bold
-    transform rotate(180deg)
+    font-size 1.75vmin
+    transform rotate(180deg) translate3d(0, 0, 1px)
     position absolute
     top 0
     right 0
@@ -276,16 +358,16 @@ input
       min-width 2vmin
 
   &__wrapper
-    --height 20
-    --width 30
-    --depth 20
-    background hsla(210, 80%, 50%, 0.3)
+    // --height 20
+    // --width 30
+    // --depth 20
+    // background hsla(210, 80%, 50%, 0.3)
     transform translate3d(0, calc(((1 - var(--packaged, 0)) * var(--height)) * 1vmin), calc(var(--height) * -0.5vmin))
 
   &__label
     height 20%
     width 30%
-    background white
+    background hsl(0, 0%, 98%)
     position absolute
     right 10%
     bottom 20%
@@ -335,30 +417,30 @@ input
     position absolute
     top 50%
     left 50%
-    height 40%
-    transform translate(-50%, -50%) translate3d(calc(var(--x, 0) * 1%), calc((var(--y, 0) - (var(--packaged,0) * var(--y, 0))) * 1%), calc(var(--z, 0) * 1vmin))
+    width 40%
+    transform translate(-50%, -50%) translate3d(calc(var(--x, 0) * 1%), calc((((1 - var(--packaged,0)) * (var(--y, 0) * (max(var(--height), var(--depth), var(--width)))))) * -1vmin), calc(var(--z, 0) * 1vmin))
     opacity var(--packaged)
 
     &--js
       --x 60
-      --y -420
-      --z 2
+      --y 1.4
+      --z 0
       fill #F7DF1E
     &--html
       --x 0
-      --y -300
-      --z 1
+      --y 1.6
+      --z -3
       fill #E34F26
     &--css
       --x -50
-      --y -380
+      --y 1.2
       --z 3
       fill #1572B6
 
   &__content
     width calc(min(var(--height), var(--width)) * 1vmin)
     height calc(var(--height) * 1vmin)
-    background hsla(280, 80%, 50%, 0.5)
+    // background hsla(280, 80%, 50%, 0.5)
     position absolute
     left 50%
     bottom 50%
@@ -366,21 +448,21 @@ input
     transform translate(-50%, 0) rotateX(-90deg) rotateY(45deg)
 
   &__flap
-    width 100%
-    height 50%
-    background hsla(0, 80%, 50%, 0.35)
+    width 99.5%
+    height 49.5%
+    background var(--face-4)
     position absolute
-    left 0
+    left 50%
 
     &--bottom
       transform-origin 50% 100%
       bottom 100%
-      transform rotateX(calc(var(--packaged, 0) * 90deg))
+      transform translate(-50%, 0) rotateX(calc(var(--packaged, 0) * 90deg))
 
     &--top
       top 100%
       transform-origin 50% 0%
-      transform rotateX(calc(var(--packaged, 0) * -90deg))
+      transform translate(-50%, 0) rotateX(calc(var(--packaged, 0) * -90deg))
 
 
   &__side
@@ -389,19 +471,61 @@ input
     position absolute
     top 50%
 
+    &--main > .package__flap--top:before
+      --bg-step 13
+      content ''
+      height 100%
+      width 100%
+      position absolute
+      transform rotateY(180deg)
+      backface-visibility hidden
+      -webkit-backface-visibility hidden
+      background var(--face-2)
+      opacity var(--packaged)
+      transition opacity calc(var(--speed, 0.2) * 1s) calc((var(--bg-step, 1) * var(--delay, 1)) * 1s)
+      transition-timing-function ease-in-out
+
+    &--extra
+    &--tabbed
+      & > .package__flap--top
+        top 99%
+      & > .package__flap--bottom
+        bottom 99%
+
+    &--extra > .package__flap.package__flap--top
+      background hsl(32, 76%, 70%)
+    &--extra > .package__flap.package__flap--bottom
+      background hsl(32, 76%, 74%)
+    &--tabbed > .package__flap.package__flap--bottom
+      background hsl(32, 72%, 72%)
+    &--flipped > .package__flap.package__flap--bottom
+      background hsl(32, 78%, 76%)
+    &--main > .package__flap.package__flap--top
+      background hsl(32, 78%, 72%)
+
     &--main
       --hue 2
+      background var(--face-5)
       left 50%
       transform translate(-50%, -50%) rotateX(90deg) rotateY(0deg) translate3d(0, 0, calc(var(--depth) * 0.5vmin)) translate(0, 50%)
       width calc(var(--width) * 1vmin)
+
+
+      & > .package__flap
+        height calc(var(--depth) * 0.495vmin)
 
     &--tabbed
       --hue 90
       top 0
       left 100%
+      background var(--face-2)
       width calc(var(--depth) * 1vmin)
       transform-origin 0% 50%
       transform rotateY(calc(var(--packaged, 0) * 90deg))
+
+      & > .package__flap
+        height calc(var(--width) * 0.495vmin)
+        background var(--face-3)
 
       &:after
         content ''
@@ -410,7 +534,7 @@ input
         top 0
         height 100%
         width 10%
-        background red
+        background var(--face-3)
         $clip = polygon(0 0%, 100% 20%, 100% 80%, 0 100%)
         clip-path $clip
         -webkit-clip-path $clip
@@ -421,15 +545,24 @@ input
       --hue 120
       right 100%
       top 0
+      background var(--face-2)
       width calc(var(--depth) * 1vmin)
       transform-origin 100% 50%
       transform rotateY(calc(var(--packaged, 0) * -90deg))
 
+      & > .package__flap
+        height calc(var(--width) * 0.495vmin)
+        background var(--face-3)
+
     &--flipped
       --hue 320
-      background blue
+      background var(--face-3)
       top 0
       right 100%
       width calc(var(--width) * 1vmin)
       transform-origin 100% 50%
       transform rotateY(calc(var(--packaged, 0) * -90deg))
+
+      & > .package__flap
+        height calc(var(--depth) * 0.495vmin)
+        background var(--face-4)
