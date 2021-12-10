@@ -47,7 +47,7 @@ input[type='file']
   border-width 0
 
 .screenshot
-  height calc(var(--size) * 1.65vmin)
+  height calc((var(--height, 1) * var(--size)) * 1.65vmin)
   width calc(var(--size) * 1.65vmin)
   display grid
   place-items center
