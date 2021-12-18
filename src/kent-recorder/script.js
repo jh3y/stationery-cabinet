@@ -204,6 +204,24 @@ const usePersistentState = (key, initialValue) => {
   return [state, setState]
 }
 
+function convertURIToBinary(dataURI) {
+  let BASE64_MARKER = ';base64,';
+  let base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+  let base64 = dataURI.substring(base64Index);
+  let raw = window.atob(base64);
+  let rawLength = raw.length;
+  let arr = new Uint8Array(new ArrayBuffer(rawLength));
+
+  for (let i = 0; i < rawLength; i++) {
+    arr[i] = raw.charCodeAt(i);
+  }
+  let blob = new Blob([arr], {
+    type: 'audio/mp3'
+  });
+  let blobUrl = URL.createObjectURL(blob);
+  return blobUrl
+}
+
 function CallRecorder({ onRecordingComplete }) {
   const [state, send] = useMachine(recorderMachine, {})
   const [recordings, setRecordings] = usePersistentState('recordings', {
@@ -215,8 +233,11 @@ function CallRecorder({ onRecordingComplete }) {
 
   const audioURL = React.useMemo(() => {
     if (audioBlob) {
+      console.info(audioBlob, 'BLOBBY')
       return window.URL.createObjectURL(audioBlob)
     } else if (track && track.audioBlob) {
+      console.info(track.audioBlob, convertURIToBinary(track.audioBlob), 'TRACKY')
+      return convertURIToBinary(track.audioBlob)
       return track.audioBlob
     } else {
       return null
@@ -311,7 +332,7 @@ function CallRecorder({ onRecordingComplete }) {
     )
     audioPreview = (
       <div>
-        <audio src={audioURL} controls ref={playbackRef} />
+        <audio src={audioURL} controls ref={playbackRef} preload="auto" autobuffer="true" />
         <button onClick={onComplete}>Accept</button>
         <button onClick={onRestart}>Re-record</button>
       </div>
@@ -319,7 +340,7 @@ function CallRecorder({ onRecordingComplete }) {
   }
 
   if (state.matches('playback')) {
-    audioPreview = <audio src={audioURL} controls ref={playbackRef} />
+    audioPreview = <audio src={audioURL} controls ref={playbackRef} preload="auto" autobuffer="true" />
   }
 
   return (
@@ -628,13 +649,6 @@ const StreamVis = (props) => {
 
   // Destructure the theme
   const { shiftDelay } = theme
-  console.info(metadata)
-  // React.useEffect(() => {
-  //   if (metadata && metadata.current && metdata.current.isArray() && metadata.current.length === 0) {
-  //     metdata.current = []
-  //   }
-  // }, [])
-
   /**
    * Effect handles playback of the GSAP timeline in sync
    * with audio playback controls. Pass an audio tag ref.
@@ -748,7 +762,6 @@ const StreamVis = (props) => {
     // Only start the ticker if it isn't a replay
     if (canvasRef.current && stream && !replay) {
       // Generate visualisation function for streaming
-      console.info('runnig this')
       drawRef.current = visualize({
         canvas: canvasRef.current,
         stream,
