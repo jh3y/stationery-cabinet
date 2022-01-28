@@ -1,0 +1,30 @@
+mixin cuboid()
+  .cuboid(class!=attributes.class)
+    if block
+      block
+    - let s = 0
+    while s < 6
+      .cuboid__side
+      - s++
+mixin number(segments, cubed = true)
+  .number.year__digit(class!=`year__digit--${attributes.class} number--${attributes.class}`)
+    - let i = 0
+    while i < parseInt(segments, 10)
+      .number__segment(class=`number__segment--${i % 2 === 0 ? 'horizontal' : 'vertical'}`)
+        if cubed
+          +cuboid().number__cuboid
+      - i++
+h1.instruction Tap
+input#toggle(type="checkbox")
+label(for="toggle")
+.scene
+  .year
+    +number(5).two
+    +number(4).zero
+    +number(5).two
+    +number(5).morph.number--two.year__digit--two
+  .year.year--shadow
+    +number(5, false).two
+    +number(4, false).zero
+    +number(5, false).two
+    +number(5, false).morph.number--two.year__digit--two

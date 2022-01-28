@@ -1,0 +1,246 @@
+
+*
+*:after
+*:before
+  box-sizing border-box
+  transform-style preserve-3d
+
+
+@property --jump
+  initial-value 0%
+  syntax '<percentage>'
+  inherits false
+
+@property --spin
+  initial-value 0deg
+  syntax '<angle>'
+  inherits false
+
+@property --hue
+  initial-value 0
+  syntax '<number>'
+  inherits false
+
+body
+  display grid
+  place-items center
+  min-height 100vh
+  background var(--bg)
+  overflow hidden
+
+:root
+  --bg hsl(210, 30%, 10%)
+  --height 16
+  --width 20
+  --speed 5
+  --horseSpeed 2
+  --horseSize 5
+  --base-depth 10
+  --pillar-depth 4
+  --pillar hsl(0, 0%, 55%)
+  --window hsl(45, 80%, 95%)
+  --sill hsl(45, 80%, 50%)
+  --lights hsl(0, 0%, 100%)
+  --primary hsl(280, 80%, 60%)
+  --secondary hsl(0, 0%, 98%)
+  --base-coefficient 0.75vmin
+  --base-height 20
+  --base-hole 0.6vmin
+  --base-stripe 3.9
+
+.carousel
+  height calc(var(--height) * 1vmin)
+  width calc(var(--width) * 1vmin)
+  transform translate(-50%, -50%) rotateX(-15deg) rotateY(40deg)
+  position absolute
+  top 50%
+  left 50%
+
+  &__core
+    bottom -10%
+    height 110%
+    left 50%
+    position absolute
+    transform translate(-50%, 0)
+
+    width calc(var(--width) * 0.2vmin)
+
+    div
+      background var(--pillar)
+      height 100%
+      left 50%
+      position absolute
+      top 50%
+      transform translate(-50%, -50%) rotateY(calc(((-360 / var(--sides)) * var(--side)) * 1deg)) translate3d(0, 0, calc((var(--width) * 0.4) * 0.75vmin)) rotateY(180deg)
+      width 100%
+      filter brightness(0.9)
+
+      &:nth-of-type(even)
+        filter brightness(1)
+        &:after
+          background var(--window)
+          border 2px solid var(--sill)
+          border-radius 35% 35% 0 0
+          content ''
+          height 20%
+          left 50%
+          position absolute
+          top 50%
+          transform translate(-50%, 0%)
+          width 60%
+
+  &__light
+    width 15%
+    height 15%
+    position absolute
+    background 'hsl(%s, 90%, 80%)' % var(--hue, 0)
+    filter blur(10px), brightness(1.1)
+    top 50%
+    left 50%
+    border-radius 50%
+    transform translate(-50%, -50%)
+    animation party calc(var(--party-speed, 1) * 1s) calc(var(--delay, 1) * -1s) infinite linear
+
+  &__lightring
+    position absolute
+    top 100%
+    left 50%
+    background hsl(45, 90%, 90%)
+    border-radius 50%
+    filter blur(4vmin)
+    height calc(var(--width) * 2.3vmin)
+    width calc(var(--width) * 2.3vmin)
+    transform translate(-50%, -50%) rotateX(90deg) translate3d(0, 0, calc(var(--height) * -0.1vmin))
+
+  &__horses
+    animation spin calc(var(--speed) * 1s) infinite linear
+    height 100%
+    left 50%
+    position absolute
+    top 50%
+    transform translate(-50%, -50%) rotateY(var(--spin))
+    width 100%
+    z-index 5
+
+  &__horse
+    --depth calc(var(--width) * var(--depth-coefficient))
+    animation jump calc(var(--horseSpeed) * 1s) calc((var(--horseSpeed) * var(--delay)) * 1s) infinite linear both
+    font-size calc(var(--horseSize) * 1vmin)
+    left 50%
+    position absolute
+    top 50%
+    transform translate(-50%, var(--jump)) rotateY(calc(((-360 / var(--horses)) * var(--horse)) * 1deg)) translate3d(0, 0, calc(var(--depth) * 1vmin)) rotateY(180deg)
+
+    &:nth-of-type(even)
+      --depth calc(var(--width) * var(--depth-coefficient))
+
+  &__base
+    animation spin calc(var(--speed) * 1s) infinite linear
+    left 50%
+    position absolute
+    top 100%
+    transform translate(-50%, -50%) rotateY(var(--spin))
+    height 20%
+
+    &-side
+      --bg var(--primary)
+      height calc(var(--base-depth) * 1vmin)
+      left 50%
+      position absolute
+      top 0
+      transform translate(-50%, 0) rotateY(calc(((-360 / var(--sides)) * var(--side)) * 1deg)) rotateX(90deg) translate3d(0, calc(var(--width) * var(--base-hole)), 0)
+      transform-origin 50% 0%
+      width calc(var(--width) * 0.35vmin)
+
+      &:nth-of-type(even)
+        --bg var(--secondary)
+
+  &__side
+    height 100%
+    width 100%
+    background var(--bg)
+    position absolute
+
+    &--top
+      $clip = polygon(23% 0, 77% 0, 100% 100%, 0 100%)
+      -webkit-clip-path $clip
+      clip-path $clip
+      filter brightness(1.2)
+
+    &--inner
+      display block
+      height calc(var(--height) * 0.2vmin)
+      background var(--bg)
+      filter brightness(0.8)
+      top 0
+      left 50%
+      transform-origin 50% 0
+      transform translate(-50%, 0) rotateX(-90deg)
+
+    &--outer
+      display block
+      height calc(var(--height) * 0.2vmin)
+      background var(--bg)
+      filter brightness(1)
+      top 100%
+      left 50%
+      transform-origin 50% 0
+      transform translate(-50%, 0) rotateX(-90deg)
+
+  &__hat
+    animation spin calc(var(--speed) * 1s) infinite linear
+    bottom 100%
+    height 150%
+    left 50%
+    position absolute
+    transform translate(-50%, 40%) rotateY(var(--spin))
+    width 500%
+
+    &-segment
+      --bg var(--primary)
+      height 110%
+      width calc(var(--width) * 0.43vmin)
+      left 50%
+      position absolute
+      top 0
+      transform translate(-50%, 0) rotateY(calc(((-360 / var(--sides)) * var(--side)) * 1deg)) rotateX(65deg)
+      transform-origin top center
+
+      &:nth-of-type(even)
+        --bg var(--secondary)
+
+  &__segment
+    &--main
+      $clip = polygon(50% 0, 100% 100%, 0 100%)
+      background var(--bg)
+      filter brightness(1.2)
+      -webkit-clip-path $clip
+      clip-path $clip
+      height 100%
+      width 100%
+
+    &--dress
+      $clip = inset(50% 0 0 0)
+      filter brightness(0.75)
+      background var(--bg)
+      height 30%
+      position absolute
+      top 100%
+      left 50%
+      border-radius 50%
+      width 100%
+      transform translate(-50%, -50%) rotateX(-65deg)
+      -webkit-clip-path $clip
+      clip-path $clip
+
+@keyframes spin
+  to
+    --spin 360deg
+
+@keyframes jump
+  50%
+    --jump -50%
+
+@keyframes party
+  to
+    --hue 359

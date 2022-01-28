@@ -1,0 +1,469 @@
+/* PrismJS 1.23.0
+https://prismjs.com/download.html#themes=prism-tomorrow&languages=css+css-extras&plugins=line-numbers+inline-color+toolbar+copy-to-clipboard */
+/**
+ * prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML
+ * Based on https://github.com/chriskempson/tomorrow-theme
+ * @author Rose Pritchard
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #ccc;
+  background: none;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 1em;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: 3rem 2rem;
+  margin: 0;
+  overflow-y: scroll;
+  outline: transparent;
+  height: 100%;
+  max-height: 40vmin;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background: #2d2d2d;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+}
+
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #999;
+}
+
+.token.punctuation {
+  color: #ccc;
+}
+
+.token.tag,
+.token.attr-name,
+.token.namespace,
+.token.deleted {
+  color: #e2777a;
+}
+
+.token.function-name {
+  color: #6196cc;
+}
+
+.token.boolean,
+.token.number,
+.token.function {
+  color: #f08d49;
+}
+
+.token.property,
+.token.class-name,
+.token.constant,
+.token.symbol {
+  color: #f8c555;
+}
+
+.token.selector,
+.token.important,
+.token.atrule,
+.token.keyword,
+.token.builtin {
+  color: #cc99cd;
+}
+
+.token.string,
+.token.char,
+.token.attr-value,
+.token.regex,
+.token.variable {
+  color: #7ec699;
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+  color: #67cdcc;
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.inserted {
+  color: green;
+}
+
+pre[class*="language-"].line-numbers {
+  position: relative;
+  padding-left: 3.8em;
+  counter-reset: linenumber;
+}
+
+pre[class*="language-"].line-numbers > code {
+  position: relative;
+  white-space: inherit;
+}
+
+.line-numbers .line-numbers-rows {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  font-size: 100%;
+  left: -3.8em;
+  width: 3em; /* works for line-numbers below 1000 lines */
+  letter-spacing: -1px;
+  border-right: 1px solid #999;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+}
+
+  .line-numbers-rows > span {
+    display: block;
+    counter-increment: linenumber;
+  }
+
+    .line-numbers-rows > span:before {
+      content: counter(linenumber);
+      color: #999;
+      display: block;
+      padding-right: 0.8em;
+      text-align: right;
+    }
+
+span.inline-color-wrapper {
+  /*
+   * The background image is the following SVG inline in base 64:
+   *
+   * <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2 2">
+   *     <path fill="gray" d="M0 0h2v2H0z"/>
+   *     <path fill="white" d="M0 0h1v1H0zM1 1h1v1H1z"/>
+   * </svg>
+   *
+   * SVG-inlining explained:
+   * https://stackoverflow.com/a/21626701/7595472
+   */
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyIDIiPjxwYXRoIGZpbGw9ImdyYXkiIGQ9Ik0wIDBoMnYySDB6Ii8+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0wIDBoMXYxSDB6TTEgMWgxdjFIMXoiLz48L3N2Zz4=");
+  /* This is to prevent visual glitches where one pixel from the repeating pattern could be seen. */
+  background-position: center;
+  background-size: 110%;
+
+  display: inline-block;
+  height: 1.333ch;
+  width: 1.333ch;
+  margin: 0 .333ch;
+  box-sizing: border-box;
+  border: 1px solid white;
+  outline: 1px solid rgba(0,0,0,.5);
+  overflow: hidden;
+}
+
+span.inline-color {
+  display: block;
+  /* To prevent visual glitches again */
+  height: 120%;
+  width: 120%;
+}
+
+div.code-toolbar {
+  position: relative;
+}
+
+div.code-toolbar > .toolbar {
+  position: absolute;
+  top: .3em;
+  right: 1.2em;
+  opacity: 1;
+}
+
+div.code-toolbar:hover > .toolbar {
+  opacity: 1;
+}
+
+/* Separate line b/c rules are thrown out if selector is invalid.
+   IE11 and old Edge versions don't support :focus-within. */
+div.code-toolbar:focus-within > .toolbar {
+  opacity: 1;
+}
+
+div.code-toolbar > .toolbar .toolbar-item {
+  display: inline-block;
+}
+
+div.code-toolbar > .toolbar a {
+  cursor: pointer;
+}
+
+div.code-toolbar > .toolbar button,
+.toggle-button,
+.codepen-button {
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  padding: 0;
+  -webkit-user-select: none; /* for button */
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+div.code-toolbar > .toolbar a,
+div.code-toolbar > .toolbar button,
+.toggle-button {
+  color: #bbb;
+  font-size: 1rem;
+  padding: 0.5rem;
+  font-family: sans-serif;
+  background: hsl(0, 0%, 25%);
+  border-radius: .5em;
+  outline: transparent;
+  cursor: pointer;
+}
+
+div.code-toolbar > .toolbar a:hover,
+div.code-toolbar > .toolbar a:focus,
+div.code-toolbar > .toolbar button:hover,
+div.code-toolbar > .toolbar button:focus,
+div.code-toolbar > .toolbar span:hover,
+div.code-toolbar > .toolbar span:focus,
+.toggle-button:focus,
+.toggle-button:hover {
+  background: hsl(0, 0%, 40%);
+  text-decoration: none;
+}
+
+.toggle-button {
+  position: absolute;
+  top: 0.3rem;
+  right: 1.2rem;
+  z-index: 5;
+  width: 7rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+div.code-toolbar > .toolbar {
+  right: 8.6em;
+}
+
+* {
+  box-sizing: border-box;
+  transform-style: preserve-3d;
+}
+
+.code-blocks,
+.code-toolbar {
+  height: 100%;
+  width: 100%;
+}
+
+:root {
+  --shadow-color: hsla(285deg,17%,56%, 0.36);
+  --shadow-elevation-high:
+    0.3px 0.5px 0.7px var(--shadow-color),
+    1.5px 2.9px 3.7px -0.4px var(--shadow-color),
+    2.7px 5.4px 6.8px -0.7px var(--shadow-color),
+    4.5px 8.9px 11.2px -1.1px var(--shadow-color),
+    7.1px 14.3px 18px -1.4px var(--shadow-color),
+    11.2px 22.3px 28.1px -1.8px var(--shadow-color),
+    17px 33.9px 42.7px -2.1px var(--shadow-color),
+    25px 50px 62.9px -2.5px var(--shadow-color);
+}
+
+body {
+  background-image: linear-gradient(
+    235deg,
+    hsl(240deg 100% 90%) 0%,
+    hsl(260deg 100% 89%) 10%,
+    hsl(279deg 100% 89%) 20%,
+    hsl(298deg 100% 88%) 29%,
+    hsl(318deg 100% 87%) 39%,
+    hsl(337deg 100% 87%) 49%,
+    hsl(357deg 100% 86%) 59%,
+    hsl(17deg 100% 86%) 71%,
+    hsl(36deg 100% 85%) 84%,
+    hsl(55deg 100% 85%) 100%
+  );
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  overflow: hidden;
+  // overflow-y: scroll;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.controls
+  padding 1rem
+  display grid
+  place-items center
+
+select
+  padding 1rem
+  border-radius 5%
+  font-family sans-serif
+  font-weight bold
+
+.result__result
+  display grid
+  place-items center
+  min-width 40vmin
+  min-height 40vmin
+  grid-auto-flow column
+  position relative
+
+  &--outside
+    justify-content center
+
+.result
+  background white
+
+  &__code
+    display flex
+
+.result {
+  display: grid;
+  grid-template-columns: 470px auto;
+  border-radius: 10px;
+  box-shadow: var(--shadow-elevation-high);
+}
+
+.result__result--inside .cheez {
+  height: 25vmin;
+  position: absolute;
+  top: calc(var(--y, 0) * 1%);
+  left: calc(var(--x, 0) * 1%);
+  transform: translate(-50%, -50%) scale(0) rotate(calc(var(--r, 0) * 1deg));
+  animation: say-cheez 1s forwards;
+}
+
+@keyframes say-cheez {
+  90% {
+    transform: translate(-50%, -50%) scale(1) rotate(calc(var(--r, 0) * -1deg));
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1) rotate(calc(var(--r, 0) * -1deg));
+    opacity: 0;
+  }
+}
+
+.🐱
+.🍔
+  font-size 10vmin
+
+  &:before
+    display inline-block
+    content var(--content)
+    // top 50%
+    // left 50%
+    // transform translate(-50%, -50%)
+
+.🐱:before
+  --content "🐱"
+.🍔:before
+  --content "🍔"
+
+.result__result--nope .🐱:before
+  --content "😿"
+
+.result__result--distant .🐱:has(~ .🍔):before
+  --content "😾"
+
+.result__result--outside .🐱:has(+ .🍔):before
+  --content "🙀"
+  animation anticipate 0.1s infinite
+
+.🐱:has(.🍔):before
+  --content "😻"
+  animation satisfied steps(1, end) 2s both, gobble 0.2s 10 linear both
+
+.🐱 .🍔:before
+  animation eat 2s steps(10) forwards
+
+
+.result__result--inside *
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+
+.result__result--inside .🍔
+  transform translate(-50%, -35%)
+
+@keyframes gobble
+  0%,
+  100%
+    transform translate(0, 0) scale(1)
+  50%
+    transform translate(0, -5%) scale(1.1)
+
+@keyframes satisfied
+  to
+    content "😺"
+
+@keyframes eat
+  0%
+    clip-path inset(0 0 0 0)
+  100%
+    clip-path inset(100% 0 0 0)
+
+@keyframes anticipate
+  50%
+    transform translate(0, -5%)

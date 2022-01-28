@@ -1,0 +1,275 @@
+*
+*:after
+*:before
+  box-sizing border-box
+  transform-style preserve-3d
+
+@property --saturation
+  initial-value 0%
+  inherits false
+  syntax '<percentage>'
+
+@property --lightness
+  initial-value 50%
+  inherits false
+  syntax '<percentage>'
+
+:root
+  --rotate-x -8
+  --rotate-y 0
+  --font-size 25
+  --toggled 1
+  --blur-x 1.4
+  --blur-y 1.8
+  --transition 0.25
+  --bg-lightness 98
+  --bg 'hsl(0, 0%, %s)' % calc(var(--bg-lightness) * 1%)
+  --shadow hsl(0, 0%, 30%)
+  --duration 3
+  --angle 14
+  --base-lightness 40
+  --color-stop-one calc(var(--font-size) * 0.05vmin)
+  --color-stop-two calc(var(--font-size) * 0.1vmin)
+  --hue-one 280
+  --hue-two 210
+  --hue-three 320
+  --hue-four 160
+
+  @media(prefers-reduced-motion)
+    --duration 0
+    --transition 2
+
+  @media(prefers-color-scheme: dark)
+    --bg-lightness 5
+    --shadow hsl(0, 0%, 0%)
+    --base-lightness 80
+
+// Theming
+.number:nth-of-type(1)
+  --hue var(--hue-one)
+  --move-x calc(var(--font-size) * 1vmin)
+  --move-y calc(var(--font-size) * 1vmin)
+.number:nth-of-type(2)
+  --hue var(--hue-two)
+  --move-x calc(var(--font-size) * -1vmin)
+  --move-y calc(var(--font-size) * -1vmin)
+.number:nth-of-type(3)
+  --hue var(--hue-three)
+  --move-x calc(var(--font-size) * 1vmin)
+  --move-y calc(var(--font-size) * 1vmin)
+.number:nth-of-type(4)
+  --hue var(--hue-four)
+  --move-x calc(var(--font-size) * -1vmin)
+  --move-y calc(var(--font-size) * -1vmin)
+
+#toggle:checked ~ .scene
+  --toggled 0
+
+#toggle
+  position fixed
+  top 0
+  left 0
+
+.cuboid
+  width 100%
+  height 100%
+  position relative
+  // 1 is the top and go t, r, back, l, f, b
+
+  &__side
+    filter brightness(var(--b, 1))
+    position absolute
+
+  &__side:nth-of-type(1)
+    --b 1.1
+    height calc(var(--depth, 20) * 1vmin)
+    width 100%
+    top 0
+    transform translate(0, -50%) rotateX(90deg)
+
+  &__side:nth-of-type(2)
+    --b 0.9
+    height 100%
+    width calc(var(--depth, 20) * 1vmin)
+    top 50%
+    right 0
+    transform translate(50%, -50%) rotateY(90deg)
+
+  &__side:nth-of-type(3)
+    --b 0.5
+    width 100%
+    height calc(var(--depth, 20) * 1vmin)
+    bottom 0
+    transform translate(0%, 50%) rotateX(90deg)
+
+  &__side:nth-of-type(4)
+    --b 1
+    height 100%
+    width calc(var(--depth, 20) * 1vmin)
+    left 0
+    top 50%
+    transform translate(-50%, -50%) rotateY(90deg)
+
+  &__side:nth-of-type(5)
+    --b 0.8
+    height 100%
+    width 100%
+    transform translate3d(0, 0, calc(var(--depth, 20) * 0.5vmin))
+    top 0
+    left 0
+
+  &__side:nth-of-type(6)
+    --b 1.2
+    height 100%
+    width 100%
+    transform translate3d(0, 0, calc(var(--depth, 20) * -0.5vmin)) rotateY(180deg)
+    top 0
+    left 0
+
+label
+  position fixed
+  top 0
+  left 0
+  height 100vh
+  width 100vw
+  z-index 2
+  cursor pointer
+
+input
+  position absolute
+  width 1px
+  height 1px
+  padding 0
+  margin -1px
+  overflow hidden
+  clip rect(0, 0, 0, 0)
+  white-space nowrap
+  border-width 0
+
+.scene
+  --lightness calc((50 - (var(--toggled) * 25)) * 1%)
+  position fixed
+  top 50%
+  left 50%
+  transition --lightness calc(var(--transition) * 1s)
+  transform translate3d(-50%, -50%, 100vmin) rotateX(-24deg) rotateY(-24deg) rotateY(calc(var(--rotate-x, 0) * 1deg)) rotateX(calc(var(--rotate-y, 0) * 1deg))
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  overflow hidden
+  background var(--bg)
+  cursor pointer
+
+.year
+  height calc(var(--font-size) * 1vmin)
+  width calc(var(--font-size) * 3vmin)
+  position absolute
+  display grid
+  grid-template-columns repeat(4, 1fr)
+  grid-gap calc((var(--font-size) / 15) * 3vmin)
+  transform translate(-50%, -50%)
+  top 50%
+  left 50%
+
+.number
+  position relative
+
+  &__segment
+    position absolute
+    height calc(var(--height, 0) * 1%)
+    width calc(var(--width, 0) * 1%)
+    top calc(var(--top, 0) * 1%)
+    left calc(var(--left, 0) * 1%)
+    transition transform calc(var(--transition) * 1s)
+
+    &--horizontal
+      --height 20
+      --width 100
+
+    &--vertical
+      --height 60
+      --width calc(100 / 3)
+
+.number--two
+  // Doesn't require adjustment
+  // .number__segment:nth-of-type(1)
+  .number__segment:nth-of-type(2)
+    --left calc((100 / 3) * 2)
+  .number__segment:nth-of-type(3)
+  .number__segment:nth-of-type(4)
+    --top calc((100 / 5) * 2)
+  .number__segment:nth-of-type(5)
+    --top calc((100 / 5) * 4)
+
+.number--zero
+  // Doesn't need touching
+  // .number__segment:nth-of-type(1)
+  .number__segment:nth-of-type(2)
+    --left calc((100 / 3) * 2)
+  .number__segment:nth-of-type(3)
+    --top calc((100 / 5) * 4)
+  .number__segment:nth-of-type(2)
+  .number__segment:nth-of-type(4)
+    --height 100
+
+.number__cuboid
+  --depth calc((var(--font-size) / 5))
+
+  .cuboid__side
+    --saturation calc((100 - (var(--toggled) * 100)) * 1%)
+    --lightness calc((100 - (var(--toggled, 0) * var(--base-lightness))) * 1%)
+    --toggled-light calc(((100 - (var(--toggled, 0) * var(--base-lightness))) - (((1 - var(--toggled, 0)) * 50))) * 1%)
+    --primary 'hsl(%s, %s, %s)' % (var(--hue, 10) var(--saturation) var(--toggled-light))
+    --secondary 'hsl(0, 0%, %s)' % var(--lightness)
+    --background 'repeating-linear-gradient(%s, %s %s, %s %s)' % (calc(var(--angle, 35) * 1deg) var(--primary) var(--color-stop-one) var(--secondary) var(--color-stop-two))
+    background var(--background)
+    transition background calc(var(--transition) * 1s), --saturation calc(var(--transition) * 1s), --lightness calc(var(--transition) * 1s)
+    animation bg-move calc(var(--duration, 1) * 1s) infinite linear
+
+.number--zero .number__segment:nth-of-type(3) .cuboid .cuboid__side:nth-of-type(3):after
+.number--two .number__segment:last-of-type .cuboid .cuboid__side:nth-of-type(3):after
+  content ''
+  position absolute
+  height 100%
+  width 100%
+  top 50%
+  left 50%
+  background var(--background)
+  transition transform calc(var(--transition) * 1s)
+  animation bg-move calc(var(--duration, 1) * 1s) infinite linear
+  --scale-x calc(var(--blur-x) - (var(--toggled, 0) * (var(--blur-x) - 1)))
+  --scale-y calc(var(--blur-y) - (var(--toggled, 0) * (var(--blur-y) - 1)))
+  transform translate(-50%, -50%) scale(var(--scale-x), var(--scale-y))
+  filter blur(10px)
+
+@keyframes bg-move
+  to
+    background-position var(--move-x) var(--move-y)
+
+.year--shadow
+  transform translate3d(-50%, -50%, calc((var(--font-size) / 10) * -1vmin)) rotateX(90deg) translate3d(0, 0, -1px)
+  transform-origin 50% 100%
+  .number__segment
+    background var(--shadow)
+
+.number--morph
+  .number__segment:nth-of-type(1)
+  .number__segment:nth-of-type(3)
+  .number__segment:nth-of-type(5)
+    transform scaleX(calc(1 - ((2 / 3) * var(--toggled, 0))))
+    transform-origin 100% 50%
+  .number__segment:nth-of-type(4)
+    transform translate(calc(var(--toggled, 0) * 200%), 0)
+
+.instruction
+  position fixed
+  bottom 1rem
+  right 1rem
+  font-family sans-serif
+  margin 0
+  color hsl(0, 0%, 20%)
+
+  @media(prefers-color-scheme: light)
+    color hsl(0, 0%, 80%)

@@ -1,0 +1,24 @@
+- const horses = 10
+- const segments = 20
+- const core = 10
+.carousel
+  .carousel__lightring
+  .carousel__horses(style=`--horses: ${horses}`)
+    - for(let h = 0; h < horses * 2; h++)
+      .carousel__horse(style=`--horse: ${h}; --delay: ${h > 9 ? -0.5 : 0}; --depth-coefficient: ${h > 9 ? 0.75 : 1}`) 🎠
+  .carousel__base(style=`--sides: ${segments}`)
+    - for (let s = 0; s < segments; s++)
+      .carousel__base-side(style=`--side: ${s}; --delay: ${s > 9 ? -0.5 : 0};`)
+        .carousel__side.carousel__side--top
+        .carousel__side.carousel__side--inner
+        .carousel__side.carousel__side--outer
+          .carousel__light
+  .carousel__core(style=`--sides: ${core}`)
+    - for(let o = 0; o < core; o++)
+      div(style=`--side: ${o}`)
+  .carousel__hat(style=`--sides: ${segments};`)
+    - for(let c = 0; c < segments; c++)
+      .carousel__hat-segment(style=`--side: ${c}; --delay: ${c > 9 ? -0.5 : 0};`)
+        .carousel__segment.carousel__segment--main
+        .carousel__segment.carousel__segment--dress
+          .carousel__light

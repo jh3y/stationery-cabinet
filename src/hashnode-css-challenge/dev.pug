@@ -1,0 +1,57 @@
+//- Configuration
+- const SIZE = 40
+- const DEPTH = 6
+
+mixin cuboid()
+  .cuboid(class!=attributes.class)
+    if block
+      block
+    - let s = 0
+    while s < 6
+      .cuboid__side
+      - s++
+mixin cylinder(radius = 10, sides = 10, cut = [5, 10], top = true, bottom = true)
+  - const innerAngle = (((sides - 2) * 180) / sides) * 0.5
+  - const cosAngle = Math.cos(innerAngle * (Math.PI / 180))
+  - const side =  2 * radius * Math.cos(innerAngle * (Math.PI / 180))
+  - const projection = Math.sqrt(Math.pow(radius, 2) - Math.pow(side / 2, 2))
+  //- Use the cut to determine how many sides get rendered and from what point
+
+  .cylinder(style=`--side: ${side}; --sides: ${sides}; --radius: ${radius}; --projection: ${projection};`, class!=attributes.class)
+    if top
+      .cylinder__end.cylinder__segment.cylinder__end--top
+    if bottom
+      .cylinder__end.cylinder__segment.cylinder__end--bottom
+    - const [start, end] = cut
+    - let i = start
+    while i < end
+      .cylinder__side.cylinder__segment(style=`--index: ${i};`)
+      - i++
+
+- const CORNER_SIDES = 45
+- const CORE_RADIUS = SIZE * 0.195
+.scene(style=`--size: ${SIZE}; --depth: ${DEPTH};`)
+  - const MSG = 'What are you waiting for?   •   '
+  - const CHARS = MSG.split('')
+  .word-ring(style=`--char-count: ${CHARS.length};`)
+    - for(let c = 0; c < CHARS.length; c++)
+      - const char = CHARS[c]
+      span.word-ring__char(data-char=char === ' ' ? 'space' : char style=`--index: ${c}`)= char
+
+
+  a.hashnode-portal(href="https://hashnode.com" target="_blank" rel="noreferrer noopener")
+    .cuboid__wrapper
+      +cylinder(CORE_RADIUS, 24, [0, 24], false, false).hashnode__core
+      +cylinder(SIZE * 0.28, CORNER_SIDES, [0, CORNER_SIDES * 0.25], false, false).hashnode__corner.hashnode__corner--one
+      +cylinder(SIZE * 0.28, CORNER_SIDES, [CORNER_SIDES * 0.25, CORNER_SIDES * 0.5 + 1], false, false).hashnode__corner.hashnode__corner--two
+      +cylinder(SIZE * 0.28, CORNER_SIDES, [CORNER_SIDES * 0.5, CORNER_SIDES * 0.75 + 1], false, false).hashnode__corner.hashnode__corner--three
+      +cylinder(SIZE * 0.28, CORNER_SIDES, [CORNER_SIDES * 0.75, CORNER_SIDES], false, false).hashnode__corner.hashnode__corner--four
+      .cuboid.hashnode-portal__placeholder
+        .cuboid__side
+          .hashnode
+        .cuboid__side
+        .cuboid__side
+          .hashnode
+        .cuboid__side
+        .cuboid__side
+        .cuboid__side

@@ -1,0 +1,38 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+
+.ranger
+  display flex
+  flex-direction column
+
+  &__digits
+    display flex
+    justify-content center
+    gap 0.5vmin
+    align-items center
+
+  &__digit
+    height 5vmin
+    aspect-ratio 1 / 1
+    display inline-block
+    background red
+    position relative
+
+    & > span
+      height 100%
+      width 100%
+      display inline-flex
+      align-items center
+      justify-content center
+      position absolute
+      bottom 100%
+      left 0
+      font-size 4vmin
+      font-weight bold

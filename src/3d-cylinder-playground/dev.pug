@@ -1,0 +1,17 @@
+mixin cylinder(radius = 10, sides = 10, cut = [5, 10])
+  - const innerAngle = (((sides - 2) * 180) / sides) * 0.5
+  - const cosAngle = Math.cos(innerAngle * (Math.PI / 180))
+  - const side =  2 * radius * Math.cos(innerAngle * (Math.PI / 180))
+  - const projection = Math.sqrt(Math.pow(radius, 2) - Math.pow(side / 2, 2))
+  //- Use the cut to determine how many sides get rendered and from what point
+
+  .cylinder(style=`--side: ${side}; --sides: ${sides}; --radius: ${radius}; --projection: ${projection};`)
+    .cylinder__end.cylinder__segment
+    .cylinder__end.cylinder__segment
+    - const [start, end] = cut
+    - let i = start
+    while i < end
+      .cylinder__side.cylinder__segment(style=`--index: ${i};`)
+      - i++
+.scene
+  +cylinder(20, 30, [0, 30])
