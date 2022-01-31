@@ -7,23 +7,50 @@ body
   min-height 100vh
   display grid
   place-items center
+  overflow hidden
+
+:root
+  --track hsl(0, 0%, 65%)
+  --thumb-default hsl(260, 80%, 80%)
+  --thumb-hover hsl(260, 80%, 85%)
+  --thumb-active hsl(260, 80%, 70%)
+  --thumb var(--thumb-default)
+  --text hsl(0, 0%, 15%)
+  --thumb-border 'max(%s, 5px)' % 0.5vmin
+  --thumb-size 'max(%s, 44px)' % 5vmin
+  --track-width 'max(%s, 200%)' % 300px
+  --track-height 'max(%s, 1rem)' % 2vmin
+  --offset 'max(%s, 1rem)' % 2vmin
+  --font-size 'max(%s, 6rem)' % 12vmin
+
+.sr-only
+  position absolute
+  width 1px
+  height 1px
+  padding 0
+  margin -1px
+  overflow hidden
+  clip rect(0, 0, 0, 0)
+  white-space nowrap
+  border-width 0
 
 .ranger
   display flex
   flex-direction column
+  position relative
 
   &__digits
     display flex
     justify-content center
-    gap 0.5vmin
+    gap 0.1vmin
     align-items center
 
   &__digit
-    height 5vmin
-    aspect-ratio 1 / 1
-    display inline-block
-    background red
+    height var(--font-size)
+    width calc(var(--font-size) * 0.66)
+    display inline-flex
     position relative
+    overflow hidden
 
     & > span
       height 100%
@@ -34,5 +61,60 @@ body
       position absolute
       bottom 100%
       left 0
-      font-size 4vmin
+      font-size var(--font-size)
       font-weight bold
+      color var(--text)
+      font-family sans-serif
+
+  &__slider
+    appearance none
+    width var(--track-width)
+    height var(--track-height)
+    background var(--track)
+    position absolute
+    left 50%
+    top 150%
+    transform translate(-50%, 0)
+    border-radius calc(var(--track-height) * 0.5)
+    outline-color var(--thumb)
+    outline-offset var(--offset)
+
+    @media(max-width: 768px)
+      max-width 300px
+
+    &:hover
+      --thumb-scale 1.1
+      --thumb var(--thumb-hover)
+      --cursor -webkit-grab
+
+    &:active
+      --thumb-scale 0.9
+      --thumb var(--thumb-active)
+      --cursor -webkit-grabbing
+
+    &::-webkit-slider-thumb
+      appearance none
+      border-radius 50%
+      width var(--thumb-size)
+      height var(--thumb-size)
+      background var(--thumb, var(--thumb-default))
+      cursor pointer
+      cursor var(--cursor, pointer)
+      border-style solid
+      border-width var(--thumb-border)
+      border-color var(--text)
+      transition transform 0.1s ease-out, background 0.1s ease-out
+      transform scale(var(--thumb-scale, 1))
+
+    &::-moz-range-thumb
+      border-radius 50%
+      width var(--thumb-size)
+      height var(--thumb-size)
+      background var(--thumb, var(--thumb-default))
+      cursor pointer
+      cursor var(--cursor, pointer)
+      border-style solid
+      border-width var(--thumb-border)
+      border-color var(--text)
+      transition transform 0.1s ease-out, background 0.1s ease-out
+      transform scale(var(--thumb-scale, 1))
