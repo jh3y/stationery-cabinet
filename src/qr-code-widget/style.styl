@@ -1,0 +1,22 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+:root
+  --bg hsl(0, 0%, 98%)
+
+body
+#app    
+  background var(--bg)
+  min-height 100vh
+  display flex
+  align-items center
+  justify-content center
+  
+  @media(prefers-color-scheme: dark)
+    --bg hsl(0, 0%, 15%)
+  
+.qr-code
+  height 45vmin
+  width 45vmin

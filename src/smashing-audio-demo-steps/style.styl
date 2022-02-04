@@ -1,0 +1,107 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  flex-gap: 1rem;
+  gap: 1rem;
+  background: hsl(0, 0%, 20%);
+}
+
+canvas {
+  height: 200px;
+  width 300px;
+  background: hsl(0, 0%, 10%);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.controls {
+  position: relative;
+}
+
+.record,
+.stop {
+  border-radius: 50%;
+  border: 4px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0;
+  height: 48px;
+  width: 48px;
+  background: none;
+  position: relative;
+  overflow: hidden;
+  transform: translate(calc(var(--x, 0) * 1%), calc(var(--y, 0) * 1%)) scale(var(--scale, 1));
+  transition: transform 0.1s;
+}
+
+.record {
+  color: hsl(10, 80%, 50%);
+}
+
+.record svg {
+  transform: scale(calc(5 - (var(--active, 0) * 4)));
+  transform-origin: 20% 50%;
+  transition: transform 0.1s;
+}
+
+.record,
+.stop {
+  &:hover {
+    --scale: 1.1;
+  }
+  &:active {
+    --scale: 0.9;
+  }
+}
+
+.stop {
+  display: none;
+  position: absolute;
+  left: 125%;
+  border: none;
+  background: none;
+  top: 50%;
+  --y: -50;
+  color: hsl(0, 0%, 100%);
+}
+
+.stop svg
+.record svg {
+  height: 65%;
+  fill: currentColor;
+}
+
+.reveal {
+  cursor: pointer;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  height: 48px;
+  width: 48px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  background: none;
+  border: none;
+}
+
+.reveal svg {
+  width: 100%;
+  fill: hsl(0, 0%, 6%);
+}
+
+.reveal[aria-pressed="true"] svg:nth-of-type(1),
+.reveal svg:nth-of-type(2) {
+  display: none;
+}
+
+.reveal[aria-pressed="true"] svg:nth-of-type(2) {
+  display: block;
+}
