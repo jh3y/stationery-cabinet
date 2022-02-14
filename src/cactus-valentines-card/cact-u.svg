@@ -1,0 +1,123 @@
+<svg class="cact-u cactus" viewBox="0 0 246 375" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <ellipse class="cact-u__shadow cactus__shadow" cx="109.637" cy="370" rx="52.15" ry="5" fill="black"/>
+  <g class="cact-u__cactus">
+    <g class="cact-u__arms">
+      <g class="cact-u__arm">
+        <path class="cact-u--primary" d="M32.625 152C22.891 152 7 167.039 7 176.955V213.045C7 222.961 14.891 231 24.625 231C34.359 231 42.25 222.961 42.25 213.045V193.909C42.25 190.595 44.9363 187.909 48.25 187.909H83.375C93.109 187.909 101 179.871 101 169.955C101 160.039 93.109 152 83.375 152H32.625Z" fill="#B6E37E"/>
+        <mask id="mask0_1_119" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="28" y="175" width="94" height="79">
+          <path d="M45.625 175C35.891 175 28 183.039 28 192.955V236.045C28 245.961 35.891 254 45.625 254C55.359 254 63.25 245.961 63.25 236.045V210.909H104.375C114.109 210.909 122 202.871 122 192.955C122 183.039 114.109 175 104.375 175H45.625Z" fill="#C4C4C4"/>
+        </mask>
+        <g mask="url(#mask0_1_119)">
+          <path class="cact-u--secondary" d="M24.625 152C14.891 152 7 160.039 7 169.955V213.045C7 222.961 14.891 231 24.625 231C34.359 231 42.25 222.961 42.25 213.045V187.909H83.375C93.109 187.909 101 179.871 101 169.955C101 160.039 93.109 152 83.375 152H24.625Z" fill="#54991E"/>
+        </g>
+        <path class="cactus--stroke" d="M9 173.955C9 166.807 11.7449 161.905 15.7013 158.745C19.7208 155.534 25.1532 154 30.625 154H83.375C91.9697 154 99 161.108 99 169.955C99 178.801 91.9697 185.909 83.375 185.909H48.25C43.8317 185.909 40.25 189.491 40.25 193.909V213.045C40.25 221.892 33.2197 229 24.625 229C16.0303 229 9 221.892 9 213.045V173.955Z" stroke="black" stroke-width="4"/>
+        <line class="cactus--stroke" x1="25.5298" y1="148.265" x2="29.2649" y2="159.47" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <line class="cactus--stroke" x1="9.7735" y1="158.445" x2="15.4453" y2="162.227" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <line class="cactus--stroke" x1="2.56307" y1="176.804" x2="9.8039" y2="179.437" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <line class="cactus--stroke" x1="4.13741" y1="198.148" x2="14.1476" y2="198.863" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <line class="cactus--stroke" x1="5.61357" y1="220.239" x2="13.2389" y2="215.386" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <line class="cactus--stroke" x1="21.8407" y1="224.148" x2="21.1475" y2="233.159" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <line class="cactus--stroke" x1="35.5997" y1="212.886" x2="41.8858" y2="215.4" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <line class="cactus--stroke" x1="35.6154" y1="197.923" x2="43.9231" y2="201.385" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <line class="cactus--stroke" x1="47.2627" y1="180.697" x2="48.6971" y2="190.737" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <line class="cactus--stroke" x1="48.7181" y1="147.247" x2="47.2468" y2="158.282" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      </g>
+      <g class="cact-u__wave">
+        <path class="cact-u--primary" d="M186.75 193C196.484 193 222 167.007 222 157.091V131.955C222 122.039 214.109 114 204.375 114C194.641 114 186.75 122.039 186.75 131.955L186.75 151.091C186.75 154.405 184.064 157.091 180.75 157.091L145.625 157.091C135.891 157.091 128 165.129 128 175.045C128 184.961 135.891 193 145.625 193L186.75 193Z" fill="#B6E37E"/>
+        <mask id="mask1_1_119" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="150" y="96" width="96" height="122">
+          <path d="M228.375 218C238.109 218 246 209.351 246 198.682L246 152.318C246 141.649 239.734 96 230 96C211.818 96 212.37 96 212.488 143.457C212.502 149.32 211.719 155.184 210.177 160.841L209.719 162.522C207.228 171.66 198.929 178 189.458 178L157 178C147.266 178 152 188.013 152 198.682C152 209.351 159.891 218 169.625 218L228.375 218Z" fill="#C4C4C4"/>
+        </mask>
+        <g mask="url(#mask1_1_119)">
+          <path class="cact-u--secondary" d="M189.5 193C201.5 193 222 167.007 222 157.091V131.955C222 122.039 214.109 114 204.375 114C194.641 114 186.75 122.039 186.75 131.955L186.75 157.091L145.625 157.091C135.891 157.091 128 165.129 128 175.045C128 184.961 135.891 193 145.625 193H189.5Z" fill="#54991E"/>
+        </g>
+        <path class="cactus--stroke" d="M220 157.091C220 164.242 216.492 172.781 210.839 179.56C205.182 186.344 197.693 191 190 191L145.625 191C137.03 191 130 183.892 130 175.045C130 166.199 137.03 159.091 145.625 159.091L180.75 159.091C185.168 159.091 188.75 155.509 188.75 151.091L188.75 131.955C188.75 123.108 195.78 116 204.375 116C212.97 116 220 123.108 220 131.955L220 157.091Z" stroke="black" stroke-width="4"/>
+        <line class="cactus--stroke" x1="176.129" y1="152.863" x2="176.863" y2="163.871" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <line class="cactus--stroke" x1="184.353" y1="143.431" x2="190.431" y2="144.647" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <line class="cactus--stroke" x1="185.774" y1="125.445" x2="191.445" y2="129.227" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <line class="cactus--stroke" x1="204" y1="109" x2="204" y2="117" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <line class="cactus--stroke" x1="224.463" y1="128.375" x2="214.375" y2="130.537" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <line class="cactus--stroke" x1="213.697" y1="149.737" x2="223.737" y2="148.303" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <line class="cactus--stroke" x1="214.683" y1="168.106" x2="221.106" y2="171.317" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <line class="cactus--stroke" x1="204.817" y1="179.256" x2="212.256" y2="188.183" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <line class="cactus--stroke" x1="194.247" y1="186.718" x2="195.718" y2="197.753" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <line class="cactus--stroke" x1="181" y1="187" x2="181" y2="200" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      </g>
+    </g>
+    <g class="cact-u__body">
+      <rect class="cact-u--secondary" x="59" y="13" width="105" height="346" rx="52.5" fill="#6ECE23" stroke="black" stroke-width="4"/>
+      <mask id="mask2_1_119" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="43" y="12" width="109" height="350">
+        <rect x="43" y="12" width="109" height="350" rx="54.5" fill="#3A911B"/>
+      </mask>
+      <g mask="url(#mask2_1_119)">
+        <rect class="cact-u--primary" x="56" y="12" width="109" height="350" rx="54.5" fill="#8FEC6E"/>
+      </g>
+      <rect class="cactus--stroke" x="58" y="12" width="105" height="346" rx="52.5" stroke="black" stroke-width="4"/>
+      <line class="cactus--stroke" x1="171.378" y1="64.3171" x2="158.317" y2="66.622" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="163.378" y1="38.3171" x2="150.317" y2="40.622" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="124.455" y1="4.42536" x2="121.425" y2="16.5448" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="108.425" y1="16.8296" x2="103.83" y2="4.57491" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="115" y1="15" x2="115" y2="2" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="66.4702" y1="44.2649" x2="55.2649" y2="40.5298" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="63.5522" y1="60.4171" x2="52.4171" y2="57.4478" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="62.7914" y1="81.7669" x2="48.7669" y2="80.2086" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="63" y1="100" x2="52" y2="100" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="92.8039" y1="105.563" x2="85.5631" y2="108.196" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="95.346" y1="80.9778" x2="85.9778" y2="76.654" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="98.2146" y1="52.5085" x2="93.5085" y2="45.7854" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="124.735" y1="52.4702" x2="127.47" y2="44.2649" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="136.386" y1="80.2389" x2="141.239" y2="72.6136" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="97.3864" y1="155.239" x2="102.239" y2="147.614" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="142.341" y1="174.51" x2="148.51" y2="172.659" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="136.6" y1="201.886" x2="142.886" y2="204.4" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="82.2627" y1="183.303" x2="92.3029" y2="184.737" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="88.3508" y1="218.807" x2="83.8066" y2="224.649" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="136.47" y1="224.265" x2="128.265" y2="221.53" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="76.7911" y1="137.811" x2="82.8109" y2="137.209" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="104.386" y1="209.239" x2="109.239" y2="201.614" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="63" y1="119" x2="53" y2="119" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="62.8626" y1="136.852" x2="52.8524" y2="136.137" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="63.8791" y1="164.871" x2="51.8713" y2="164.121" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="63" y1="198" x2="53" y2="198" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="63.3029" y1="220.263" x2="53.2627" y2="221.697" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="98.1735" y1="19.1047" x2="87.1047" y2="8.82649" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="82.1735" y1="27.1047" x2="71.1047" y2="16.8265" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="146.686" y1="14.744" x2="139.744" y2="26.314" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="171.378" y1="93.3171" x2="158.317" y2="95.622" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="172.646" y1="129.483" x2="159.483" y2="133.354" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="171.121" y1="167.114" x2="158.114" y2="167.879" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="171.121" y1="203.114" x2="158.114" y2="203.879" stroke="black" stroke-width="4" stroke-linecap="round"/>
+      <line class="cactus--stroke" x1="172.121" y1="224.114" x2="159.114" y2="224.879" stroke="black" stroke-width="4" stroke-linecap="round"/>
+    </g>
+    <g class="cact-u__face">
+      <g class="cact-u__eyes">
+        <circle class="cactus--fill" cx="129" cy="109" r="5" fill="black"/>
+        <circle class="cactus--fill" cx="148" cy="109" r="5" fill="black"/>
+      </g>
+      <path class="cactus--stroke" d="M146 132C146 136.418 143.971 140 139 140C134.029 140 132 136.418 132 132" stroke="black" stroke-width="4" stroke-linecap="round"/>
+    </g>
+  </g>
+  <g class="cact-u__pot pot">
+    <path class="pot__secondary" d="M57.9829 258.571H162.223C167.446 258.571 171.572 263.003 171.2 268.212L164.247 365.641C163.911 370.351 159.991 374 155.27 374H64.9367C60.2148 374 56.2957 370.351 55.9595 365.641L49.0057 268.212C48.6339 263.003 52.76 258.571 57.9829 258.571Z" fill="#C4C4C4" stroke="black" stroke-width="2"/>
+    <mask id="mask3_1_119" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="47" y="257" width="123" height="118">
+      <path d="M47.9902 268.268C47.5866 262.485 52.169 257.571 57.9659 257.571H159.447C165.244 257.571 169.826 262.485 169.422 268.268L162.623 365.696C162.257 370.936 157.9 375 152.647 375H64.7652C59.5125 375 55.1551 370.936 54.7895 365.696L47.9902 268.268Z" fill="#C4C4C4"/>
+    </mask>
+    <g mask="url(#mask3_1_119)">
+      <path class="pot__primary" d="M23.8151 268.756C23.3753 262.952 27.9659 258 33.7865 258H145.213C151.034 258 155.625 262.952 155.185 268.756L147.834 365.756C147.439 370.97 143.092 375 137.862 375H41.1375C35.9078 375 31.5613 370.97 31.1661 365.756L23.8151 268.756Z" fill="#D91313"/>
+    </g>
+    <path class="cactus--stroke" d="M57.9829 259.571H162.223C166.866 259.571 170.534 263.51 170.203 268.141L163.249 365.57C162.95 369.756 159.467 373 155.27 373H64.9367C60.7394 373 57.2558 369.756 56.957 365.57L50.0032 268.141C49.6727 263.51 53.3403 259.571 57.9829 259.571Z" stroke="black" stroke-width="4"/>
+    <path class="pot__secondary" d="M39.7938 248C39.7938 242.477 44.2709 238 49.7938 238H169.481C175.004 238 179.481 242.477 179.481 248V275.95C179.481 281.473 175.004 285.95 169.481 285.95H49.7938C44.2709 285.95 39.7938 281.473 39.7938 275.95V248Z" fill="#C4C4C4"/>
+    <mask id="mask4_1_119" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="39" y="238" width="147" height="48">
+      <path d="M39.7938 248C39.7938 242.477 44.2709 238 49.7938 238H176C181.523 238 186 242.477 186 248V275.95C186 281.473 181.523 285.95 176 285.95H49.7938C44.2709 285.95 39.7938 281.473 39.7938 275.95V248Z" fill="#E56565"/>
+    </mask>
+    <g mask="url(#mask4_1_119)">
+      <rect class="pot__primary" x="-34" y="238" width="196" height="48" rx="10" fill="#E56565"/>
+    </g>
+    <path class="cactus--stroke" d="M47 240H172.275C176.693 240 180.275 243.582 180.275 248V275.95C180.275 280.368 176.693 283.95 172.275 283.95H47C42.5817 283.95 39 280.368 39 275.95V248C39 243.582 42.5817 240 47 240Z" stroke="black" stroke-width="4"/>
+  </g>
+  <g class="cactus__shakes cact-u__shakes">
+    <path class="cactus--stroke" d="M226 119.5C226 111.768 219.732 105.5 212 105.5" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="cactus--stroke" d="M195.406 105.034C187.678 105.27 181.604 111.727 181.84 119.455" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="cactus--stroke" d="M230 112C228.5 106 224.5 102.5 219 101" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="cactus--stroke" d="M187.788 101.265C181.836 102.948 178.46 107.053 177.128 112.596" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

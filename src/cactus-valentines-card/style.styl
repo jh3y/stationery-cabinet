@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Chelsea+Market&display=swap')
+*
+*:after
+*:before
+  box-sizing border-box
+  touch-action none
+  transform-style preserve-3d
+
+:root
+  --bg hsl(130, 100%, 90%)
+  --card hsl(0, 0%, 98%)
+  --inner hsl(0, 100%, 94%)
+  --width 30
+  --text hsl(0, 0%, 15%)
+  --pot-primary hsl(19, 91%, 65%)
+  --pot-secondary hsl(20, 52%, 50%)
+  --cact-i-primary hsl(91, 50%, 60%)
+  --cact-i-secondary hsl(74, 33%, 50%)
+  --cact-u-primary hsl(80, 54%, 70%)
+  --cact-u-secondary hsl(91, 23%, 47%)
+
+body
+  background var(--bg)
+  min-height 100vh
+  display grid
+  place-items center
+
+.scene
+  perspective 100vmax
+  transform translate3d(0, 0, 100vmax)
+
+.cactus
+  width 110%
+  margin-bottom 0.75rem
+  overflow visible !important
+
+  &__divider
+    width 100%
+
+  &--fill
+    fill var(--text)
+
+  &--stroke
+    stroke var(--text)
+
+.pot
+  &__primary
+    fill var(--pot-primary)
+  &__secondary
+    fill var(--pot-secondary)
+
+.cact-i
+  &--primary
+    fill var(--cact-i-primary)
+  &--secondary
+    fill var(--cact-i-secondary)
+
+.cact-u
+  &--primary
+    fill var(--cact-u-primary)
+  &--secondary
+    fill var(--cact-u-secondary)
+
+.card
+  display none
+  --open 0
+  width 'max(300px, %s)' % calc(var(--width) * 1vmin)
+  aspect-ratio 120 / 170
+  transform-style preserve-3d
+  position relative
+  transform rotateX(calc(var(--y, 0) * -1deg)) rotateY(calc(var(--x, 0) * 1deg)) rotateY(calc(var(--flipped, 0) * 180deg))
+
+  &--flipped
+    --flipped 1
+
+  &--open
+    --open 1
+
+  &__front
+    transform rotateY(
+      calc(
+        ((var(--open) * 160) + 5) * -1deg)
+    )
+    transition transform 0.25s
+
+    &--sleeve
+      height 100%
+      width 100%
+      transform rotateY(180deg)
+      filter brightness(0.96)
+
+  &__back
+    transform rotateY(5deg)
+
+  &__back--back
+    position relative
+
+  &__logo
+    width 25%
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+
+  &__barcode
+    height 10%
+    width 25%
+    background repeating-linear-gradient(90deg, var(--text) 0 0.4vmin, transparent 0.4vmin 1vmin, var(--text) 1vmin 1.2vmin, transparent 1.2vmin 1.3vmin, var(--text) 1.3vmin 1.35vmin)
+    position absolute
+    bottom 1rem
+    right 1rem
+
+  &__segment
+    height 100%
+    position absolute
+    width 100%
+    top 0
+    transform-origin 0 50%
+    left 0
+
+
+    & > div
+      height 100%
+      position absolute
+      top 0
+      left 0
+      width 100%
+      display grid
+      place-items center
+
+      &:nth-of-type(2)
+        transform rotateY(180deg)
+
+.illustration
+  overflow hidden
+  background var(--card)
+
+  &__cactu
+    aspect-ratio 1 / 2
+    width 21%
+    position absolute
+    top 11%
+    left 16%
+
+  &__divider
+    position absolute
+    top 48%
+    width 74%
+    left 50%
+    transform translate(-50%, 0)
+
+  &__cacti
+    aspect-ratio 1 / 2
+    width 21%
+    position absolute
+    top 11%
+    right 16%
+
+  &__cactus
+    aspect-ratio 1 / 1.4
+    width 34%
+    position absolute
+    bottom 11%
+    left 50%
+    transform translate(-50%, 0)
+
+  &__segment
+    display flex
+    flex-direction column
+    align-items center
+    justify-content center
+
+  &__label
+    text-transform uppercase
+    font-weight bold
+    font-family sans-serif
+    text-align center
+    display inline-block
+    font-size 1.25rem
+    font-family 'Chelsea Market', cursive
+    position relative
+    color var(--text)
+
+    span
+      white-space nowrap
+      position relative
+      text-align center
+
+    span:after
+      content ''
+      position absolute
+      top 104%
+      height 4px
+      background var(--text)
+      width 110%
+      transform translate(-50%, 0)
+      left 50%
+
+.illustration
+.card__front--sleeve
+.card__back--front
+.card__back--back
+  -webkit-backface-visibility hidden
+  backface-visibility hidden
+
+.card__back--back
+  background var(--card)
+
+.card__message
+  height 80%
+  width 80%
+  border-radius 10%
+  background var(--card)
+  font-family 'Nanum Pen Script', cursive
+  display flex
+  align-items center
+  justify-content center
+  font-size clamp(1rem, 5vmin, 1.5rem)
+  flex-direction column
+
+.card__front--sleeve
+.card__back--front
+  --img url('https://assets.codepen.io/605876/heart.svg')
+  background-image var(--img)
+  background-size 40px 40px
+  background-position calc(var(--x, 0) * 1px) calc(var(--y, 0) * 1px)
+  background-color var(--inner)
+
+.card__back--front
+  filter brightness(0.98)
+
+.instruction
+  opacity 0
+  position fixed
+  bottom 1rem
+  right 1rem
+  font-size 2rem
+  font-family 'Chelsea Market', cursive
+  color var(--bg)
+  filter brightness(0.65)
