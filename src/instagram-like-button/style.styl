@@ -1,0 +1,87 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  
+:root
+  --size 48 * 2
+  --backdrop hsl(150, 2%, 87%)
+  --heart-empty hsl(221, 14%, 57%)
+  --pink hsl(339, 80%, 48%)
+  --backdrop-hover hsl(339, 80%, 94%)
+  --text hsl(0, 0%, 100%)
+  --speed 0.1s
+
+.like-button
+  height calc(var(--size) * 1px)
+  width calc(var(--size) * 1px)
+  border-radius 12.5%
+  border 0
+  position relative
+  background var(--backdrop)
+  transition background var(--speed)
+  cursor pointer
+  transform scale(var(--scale, 1))
+  transition transform var(--speed)
+  transform-style preserve-3d
+  
+  &__icon
+    position absolute
+    height 50%
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    fill var(--heart, var(--heart-empty))
+    transition fill var(--speed)
+    
+  &__ring
+    height 50%
+    width 50%
+    position absolute
+    top 50%
+    left 50%
+    border-radius 50%
+    border 0.5vmin solid var(--pink)
+    transform translate3d(-50%, -50%, -1px) scale(1)
+    z-index -1
+    
+  &__count
+    background var(--count, var(--heart-empty))
+    color var(--text)
+    position absolute
+    z-index 4
+    padding 4px 4px
+    font-family sans-serif
+    min-width 50%
+    border-radius 1rem
+    font-size 1.25rem
+    top 50%
+    left 50%
+    transform translate3d(-50%, -50%, -1px)
+    z-index -1
+    
+  &:hover
+  &--active    
+    --heart var(--pink)
+    --backdrop var(--backdrop-hover)
+  &--active
+    --count var(--pink)
+  &:active
+    --scale 0.9
+
+.sr-only    
+  position absolute
+  width 1px
+  height 1px
+  padding 0
+  margin -1px
+  overflow hidden
+  clip rect(0, 0, 0, 0)
+  white-space nowrap
+  border-width 0
+  
