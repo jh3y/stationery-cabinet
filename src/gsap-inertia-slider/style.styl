@@ -1,0 +1,75 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+:root
+  --track-width 300px
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  
+.slider
+  position relative
+  padding 0 16px
+  
+  &__input
+    width var(--track-width)
+
+  &__proxy
+    height 48px
+    width 48px
+    position absolute
+    top 50%
+    left 0
+    transform translate(-50%, -50%)
+    z-index 2
+    
+  &__label
+    position absolute
+    bottom 150%
+    font-family sans-serif
+    font-weight bold
+    font-size 1.25rem
+    left 50%
+    transform translate(-50%, 0)
+    opacity var(--opacity, 0)
+    transition opacity 0.2s
+    
+button
+  height 48px
+  width 48px
+  position fixed
+  top 1rem
+  right 1rem
+  appearance none
+  border 0
+  background none
+  transform scale(var(--scale, 1))
+  transition transform 0.2s
+  
+  &:hover
+    --scale 1.1
+    
+  &:active
+    --scale 0.9
+  
+  &[aria-pressed="false"]
+    svg:nth-of-type(1)
+      display block
+    svg:nth-of-type(2)
+      display none
+  &[aria-pressed="true"]
+    svg:nth-of-type(1)
+      display none
+    svg:nth-of-type(2)
+      display block
+
+  svg
+    width 100%
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
