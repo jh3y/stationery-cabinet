@@ -1,0 +1,218 @@
+*
+*:after
+*:before
+  box-sizing border-box
+  transform-style preserve-3d
+  transition all 0.2s
+
+@property --x
+  syntax '<length-percentage>'
+  inherits false
+  initial-value 0%
+
+@property --sx
+  syntax '<length-percentage>'
+  inherits false
+  initial-value 0%
+
+@property --sz
+  syntax '<length>'
+  inherits false
+  initial-value 0
+  
+@property --z
+  syntax '<length>'
+  inherits true
+  initial-value 0
+
+@property --r
+  syntax '<angle>'
+  inherits false
+  initial-value 0deg
+
+@property --rs
+  syntax '<angle>'
+  inherits false
+  initial-value 0deg
+  
+@property --opacity
+  syntax '<number>'
+  inherits false
+  initial-value 0
+  
+@property --speed
+  syntax '<time>'
+  inherits true
+  initial-value 1.75s
+
+:root
+  --border-width 2vmin
+  --depth 12vmin
+  --stack-height 6vmin
+  --scene-size 16vmin
+  --ring-size calc(var(--scene-size) * 0.8)
+  --plane radial-gradient(hsla(0, 0%, 0%, 0.1) 50%, transparent 65%)
+  --ring-shadow hsla(0, 0%, 0%, 0.5)
+  --hue-one 320
+  --hue-two 210
+  --blur 6px
+  --bg hsl(0, 0%, 98%)
+  --ring-filter brightness(1) drop-shadow(0 0 0 var(--accent))
+  
+  @media(prefers-color-scheme dark)
+    --bg hsl(0, 0%, 15%)
+    --ring-shadow 'hsla(%s, 90%, 40%, 1)' % var(--hue-one)
+    --plane 'radial-gradient(hsla(%s, 90%, 60%, 0.1) 50%, transparent 65%)' % var(--hue-one)
+    --ring-filter brightness(1.75) drop-shadow(0 0 1vmin var(--accent))
+
+body
+  background var(--bg)
+  min-height 100vh
+  display grid
+  place-items center
+  overflow hidden
+  
+.scene
+  height var(--scene-size)
+  width var(--scene-size)
+  transform translate3d(var(--sx), 0, var(--sz))
+  animation step-down var(--speed) infinite linear
+  
+  &__shadow
+    position absolute
+    top 0
+    left 100%
+    height 100%
+    width 100%
+    opacity var(--opacity)
+    animation fade-in var(--speed) infinite linear
+    background var(--plane)
+    transform scale(1.25)
+    filter blur(var(--blur))
+
+.plane
+  height 100%
+  width 100%
+  transform translate3d(0, 0, var(--depth))
+  position relative
+  
+  &__shadow
+    content ''
+    height 100%
+    width 100%
+    position absolute
+    top 50%
+    left 50%
+    background var(--plane)
+    filter blur(var(--blur))
+    transform translate(-50%, -50%) scale(1.25)
+    opacity var(--opacity)
+    animation fade-out var(--speed) infinite linear  
+
+.scene__shadow
+.plane__shadow    
+  &:after
+    content ''
+    height var(--ring-size)
+    width var(--ring-size)
+    position absolute
+    top 50%
+    left 50%
+    border var(--border-width) solid var(--ring-shadow)
+    border-radius 50%
+    transform translate(-50%, -50%) scale(0.8)
+      
+.container
+  transform translate3d(0, 0, 100vmin) rotateX(-24deg) rotateY(35deg) rotateX(90deg) translate3d(0, 0, calc(var(--depth) * -1.5)) rotate(var(--rs))
+  animation rotate-scene calc(var(--speed) * 10) infinite linear
+  
+.ring
+  --origin-z calc(var(--stack-height) - (var(--stack-height) / var(--ring-count)) * var(--index))
+  --hue var(--hue-one)
+  --accent 'hsl(%s 90% 50%)' % var(--hue)
+  --ring-filter brightness(1) drop-shadow(0 0 0 var(--accent))
+  height var(--ring-size)
+  width var(--ring-size)
+  border-radius 50%
+  border var(--border-width) solid var(--accent)
+  position absolute
+  top 50%
+  left 50%
+  transform translate3d(-50%, -50%, var(--origin-z)) translate3d(var(--x), 0, var(--z)) rotateY(var(--r))
+  transform-origin 110% 50%
+  animation-name var(--name)
+  animation-duration var(--speed)
+  animation-iteration-count infinite
+  animation-timing-function cubic-bezier(.25,0,1,1)
+  filter var(--ring-filter)
+  
+  &:nth-of-type(odd)
+    --hue var(--hue-two)
+    
+  @media(prefers-color-scheme dark)
+    --ring-filter brightness(2) drop-shadow(0 0 calc(var(--border-width) * 0.5) var(--accent))
+
+
+// STYLUS GENERATED KEYFRAMES BE HERE...
+$ring-count = 13
+$animation-window = 50
+$animation-step = $animation-window / $ring-count
+// Need to generate the keyframes here.
+// This would be a great use case for animation-repeat-delay instead of padding out
+// keyframes. We would be able to reuse dynamic delays with the same keyframes.
+
+// Need to generate keyframes based on ring-count and given a set window within the keyframes.
+// For example; 50% of the window for 10 rings.
+
+for $ring in (0..$ring-count)
+  // Generate a set of keyframes based on the ring index
+  // index is the ring
+  $start = $animation-step * ($ring + 1)
+  @keyframes spring-{$ring} {
+    // In here is where we need to generate the keyframe steps based on ring count and window.
+    0%, {$start * 1%} {
+      --z 0
+      --x 0%
+      --r 0deg
+    }
+    // Flip without falling
+    {($start + ($animation-window * 0.75)) * 1%} {
+      --r 180deg
+      --x 5%
+      --z 0
+    }
+    // Fall until cut off point
+    {($start + $animation-window) * 1%}, 100% {
+      --z calc((var(--depth) + var(--origin-z) - (var(--stack-height) - ((var(--stack-height) - (var(--stack-height) / var(--ring-count)) * (var(--index) + 1))))) * -1) 
+      --x 5%
+      --r 180deg
+    }
+  }
+  
+@keyframes fade-in {
+  {$animation-window * 1%}, 0% {
+    --opacity 0
+  }
+  {($animation-step + $animation-window) * 1%}, 100% {
+    --opacity 1
+  }
+}
+
+@keyframes fade-out {
+  {(($animation-step * ($ring-count + 1))) * 1%}, 0% {
+    --opacity 1
+  }
+  {((($animation-step * ($ring-count + 1))) + ($animation-window * 0.375)) * 1%}, 100% {
+    --opacity 0
+  }
+} 
+    
+@keyframes step-down
+  100%
+    --sx -100%
+    --sz var(--depth)
+  
+    
+@keyframes rotate-scene
+  to
+    --rs 360deg
