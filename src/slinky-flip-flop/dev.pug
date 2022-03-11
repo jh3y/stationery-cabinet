@@ -1,1 +1,11 @@
-#app
+- const RING_COUNT = 21
+.container
+  .flipper
+    .scene
+      .scene__shadow
+      .plane(style=`--ring-count: ${RING_COUNT}`)
+        .plane__shadow
+        - let rings = 0
+        while rings < RING_COUNT
+          .ring(style=`--index: ${rings}; --name: spring-${rings}`)
+          - rings++
