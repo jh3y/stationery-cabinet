@@ -1,0 +1,73 @@
+- const VARIANTS = ['panda', 'plain', 'default', 'dark', 'polar']
+
+.boppin-bears
+  - let b = 0
+  while (b < VARIANTS.length)
+    img.boppin-bears__bear.boppin-bear(src=`https://assets.codepen.io/605876/boppin-bear--${VARIANTS[b]}.png` style=`--index: ${b};`)
+    - b++
+
+input(type='range', min="0", max="7", value="0")
+
+h1 No delay
+h1 Delay
+h1 Negative Delay
+h1 Staggered
+h1 Staggered w/ Negative Delay
+h1 Reverse Stagger
+h1 Reverse Stagger w/ Negative Delay
+h1 User Defined Delay
+p Animate simulataneously with no delay
+p Animate simulataneously with a delay
+p Animate simulataneously with a negative delay
+p Use a variable to create a stagger. The variable represents a bears' index
+p Use an offset to make the delays negative so that the elements retain stagger but don't stagger in
+p Use the total amount of bears to reverse the stagger
+p Use a negative coefficient to create a stagger in the opposite direction
+p Set custom delays with custom property scope
+pre
+  code.language-css.
+    .bear {
+      animation-delay: 0s;
+    }
+pre
+  code.language-css.
+    .bear {
+      animation-delay: 1s;
+    }
+pre
+  code.language-css.
+    .bear {
+      animation-delay: -0.5s;
+    }
+pre
+  code.language-css.
+    .bear {
+      animation-delay: calc(var(--index) * 0.1s);
+    }
+pre
+  code.language-css.
+    .bear {
+      /* 5 is the number of bears */
+      animation-delay: calc((var(--index) - 5) * 0.1s);
+    }
+pre
+  code.language-css.
+    .bear {
+      animation-delay: calc((5 - var(--index)) * 0.1s);
+    }
+pre
+  code.language-css.
+    .bear {
+      animation-delay: calc(var(--index) * -0.1s);
+    }
+pre
+  code.language-css.
+    .bear {
+      animation-delay: calc(var(--delay) * -0.1s);
+    }
+    .bear:nth-of-type(even) {
+      --delay: 2;
+    }
+    .bear:nth-of-type(odd) {
+      --delay: 1;
+    }

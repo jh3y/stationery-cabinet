@@ -1,0 +1,64 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+:root
+  --hue 285
+  --bg hsl(0, 0%, 98%)
+
+
+body
+  background var(--bg)
+  min-height 100vh
+  display grid
+  place-items center
+  accent-color 'hsl(%s, 50%, 50%)' % var(--hue)
+  
+#app
+  display flex
+  align-items center
+  flex-direction column
+  justify-content center
+  display none
+
+
+#app > * + *
+  margin-top 2rem
+ 
+.sr-only
+  position absolute
+  width 1px
+  height 1px
+  padding 0
+  margin -1px
+  overflow hidden
+  clip rect(0, 0, 0, 0)
+  white-space nowrap
+  border-width 0
+  
+svg
+  width 300px
+  overflow visible !important
+  
+.progress
+  --backdrop hsl(0, 0%, 85%)
+  --value 'hsl(%s, 80%, 50%)' % var(--hue)
+  --shadow 'hsla(%s, 70%, 50%, 0.25)' % var(--hue)
+  --bubble 'hsla(%s, 70%, 50%, %s)' % (var(--hue) var(--alpha, 0.75))
+  --shine 'hsl(%s, 100%, 92%)' % var(--hue)
+  display none
+  
+  
+  &__shine
+    stroke var(--shine)
+    &--mini
+      stroke var(--shine)
+  &__value
+    stroke var(--value)
+  &__bubble
+    stroke var(--bubble)
+    &--mini
+      fill var(--bubble)
+  &__backdrop
+    stroke var(--backdrop)
