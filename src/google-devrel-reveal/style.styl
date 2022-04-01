@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap')
+
+*
+*:after
+*:before
+  box-sizing border-box
+
+.propellor
+  transform-style preserve-3d
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  background hsl(0, 0%, 84%)
+
+svg
+  overflow visible !important
+
+h1
+  position absolute
+  display grid
+  align-items center
+  top 50%
+  left 50%
+  text-align center
+  font-size 6vmin
+  transform translate(-50%, 14vmin)
+  font-family 'Roboto', sans-serif
+
+.dino
+  height 35vmin
+  
+.bear-wrapper
+  height 20vmin
+  position relative
+  
+.bear-cap-wrapper
+  perspective 500vmin
+  height 100%
+  position relative
