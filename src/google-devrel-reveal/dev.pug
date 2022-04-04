@@ -1,9 +1,18 @@
-.bear-wrapper
-	include noogle-bear--optimized.svg
-	.bear-cap-wrapper
-		include bear-cap.svg
-		include propellor.svg
-include dino--optimized.svg
-h1
-	span I'm joining
-	span Google
+.scene
+  .bear-wrapper
+    include noogle-bear--optimized.svg
+    .bear-cap-wrapper
+      include bear-cap.svg
+      include propellor.svg
+  include dino--optimized.svg
+  h1
+    span I'm joining
+    span Google
+  .button-hole.button-hole--restart
+    button.restart(title="Restart")
+      svg(viewBox="0 0 24 24")
+        path(d="M8,5.14V19.14L19,12.14L8,5.14Z")
+.button-hole.button-hole--play
+  button.play(title="Play")
+    svg(viewBox="0 0 24 24")
+      path(d="M8,5.14V19.14L19,12.14L8,5.14Z")

@@ -13,6 +13,7 @@ body
   display grid
   place-items center
   background hsl(0, 0%, 84%)
+  overflow hidden
 
 svg
   overflow visible !important
@@ -28,8 +29,11 @@ h1
   transform translate(-50%, 14vmin)
   font-family 'Roboto', sans-serif
 
+.scene
+  display none
+
 .dino
-  height 35vmin
+  height 65vmin
   
 .bear-wrapper
   height 20vmin
@@ -39,3 +43,64 @@ h1
   perspective 500vmin
   height 100%
   position relative
+
+.button-hole
+  background hsl(0, 100%, 20%)
+  clip-path inset(-50% 0 0 0)
+  
+  svg
+    fill hsl(0, 0%, 98%)
+  
+  &--play
+    height 15vmin
+    width 15vmin
+    
+  
+  &--restart
+    height 48px
+    width 48px
+    position fixed
+    top 1rem
+    right 1rem
+  
+  button
+    --lightness 50%
+    --bg 'hsl(0, 100%, %s)' % var(--lightness)
+    --inner 0
+    --outer 8px
+    --translate -10%
+    height 100%
+    width 100%
+    border 0
+    background var(--bg)
+    cursor pointer
+    transform translate(0, var(--translate))
+    transition transform .1s
+    
+    &:hover
+      --lightness 60%
+      --translate -20%
+    
+    &:active
+      --lightness 40%
+      --translate 20%
+    
+h1 > span:nth-of-type(2)
+  --color-one #ea4335
+  --color-two #4285f4
+  --color-three #34a853
+  --color-four #fbbc05
+  display block
+  background conic-gradient(from calc((var(--mask-rotate, 0) + 15) * 1deg) at 49% 55%, var(--color-one) 0 90deg, var(--color-two) 90deg 180deg, var(--color-three) 180deg 270deg, var(--color-four) 270deg 360deg)
+  position relative
+  -webkit-background-clip text
+  background-clip text
+  color transparent
+  text-align center
+  $mask = conic-gradient(
+    transparent 0deg,
+    black 0deg calc(var(--mask, 0) * 1deg),
+    transparent calc(var(--mask, 0) * 1deg)
+  )
+  -webkit-mask $mask
+  mask $mask
