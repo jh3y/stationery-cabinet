@@ -1,0 +1,8 @@
+- const RING_COUNT = 10;
+.container
+  .scene
+    .plane(style=`--ring-count: ${RING_COUNT}`)
+      - let rings = 0;
+      while rings < RING_COUNT
+        .ring(style=`--index: ${rings};`)
+        - rings++;

@@ -1,0 +1,197 @@
+*
+  box-sizing border-box
+  transform-style preserve-3d
+
+:root
+  --size 20vmin
+  --show 1
+  --hide 1
+  --folded 0
+  --jiggle-delay 0.5
+  --jiggle-speed 0.6
+  --jiggle-elevation 10%
+  --jiggle-rotation 20deg
+  --fold-delay 2
+  --fold-speed 0.2
+  --wiggle-speed 0.75
+  --wiggle-delay 3.35
+  --wiggle-elevation 0%
+  --wiggle-translation 1%
+  --wiggle-rotation 1deg
+
+body
+  display grid
+  place-items center
+  min-height 100vh
+  transform-origin 50% 50%
+  overflow hidden
+  font-family sans-serif
+  background hsl(0, 0%, 98%)
+
+[data-wigglin="true"]
+  animation wiggle-wiggle calc(var(--wiggle-speed) * 0.5s) calc(var(--wiggle-delay) * 1s) 2 ease-in-out
+  
+button.start
+  padding 8px 16px
+  border-radius 6px
+  font-weight bold
+  color hsl(0, 0%, 15%)
+  transform-origin 50% 50%
+  transform rotate(var(--rotate, 0deg)) scale(var(--scale, 1))
+  transition transform 0.1s ease
+  font-size 1.25rem
+
+  &:hover
+    --elevate -10%
+    --rotate -5deg
+    
+  &:active
+    --rotate 0deg
+    --elevate 0
+    --scale 0.9
+
+button.restart
+  position fixed
+  top 1rem
+  right 1rem
+  height 48px
+  aspect-ratio 1
+  border-radius 50%
+  transform scale(var(--scale, 1))
+  transition transform 0.1s ease
+  
+  
+  &:hover
+    --scale 1.1
+    
+  &:active
+    --scale 0.9
+  
+  svg
+    fill hsl(0, 0%, 15%)
+  
+body[data-wigglin="true"]
+  --show-button 0
+  
+body[data-wigglin="true"] .money
+  animation show calc(var(--show) * 1s) calc(var(--hide) * 1s) both, jiggle-jiggle calc(var(--jiggle-speed) * 1s) calc((var(--jiggle-delay) + var(--hide) + var(--show)) * 1s) ease-in-out
+  
+.money
+  // 6.14 inches, and the width is 2.61 
+  display flex
+  height var(--size)
+  aspect-ratio 6.14 / 2.61
+  position fixed
+  top 50%
+  left 50%
+  transform translate(-50%, -50%) scale(0)
+  z-index -1
+  perspective 100vmax
+  
+[data-wigglin="true"] .money
+  --fold-basis 180
+  --folded 1
+  
+.money__slide
+  display flex
+  flex 1
+
+.money__half
+  flex 1
+  display flex
+  
+.money__quarter
+  flex 1
+  background blue
+  
+
+.money__segment
+  background var(--image)
+  background-size 400% 100%
+  height 100%
+  width 100%
+  position absolute
+  background-position var(--position, 0%) 0
+  // backface-visibility hidden
+  
+  &--front
+    --image url("https://assets.codepen.io/605876/bill--front.jpeg")
+    
+  &--back
+    --image url("https://assets.codepen.io/605876/bill--back.jpeg")
+    transform rotateY(180deg) translateZ(1px)
+    
+.money__segment--one
+  --position 0
+.money__segment--two
+  --position calc((100 / 3) * 1%);
+.money__segment--three
+  --position calc((100 / 3) * 2%);
+.money__segment--four
+  --position 100%
+  
+[data-wigglin]
+  .money__slide
+    transition transform calc(var(--fold-speed) * 1s) calc(var(--slide-delay) * 1s)
+    
+  .money__half:first-of-type
+    transition transform calc(var(--fold-speed) * 1s) calc(var(--fold-delay) * 1s)
+  
+  .money__half:first-of-type .money__quarter:first-of-type
+    transition transform calc(var(--fold-speed) * 1s) calc((var(--fold-delay) + var(--fold-speed)) * 1s)
+  
+  .money__half:last-of-type .money__quarter:last-of-type 
+    transition transform calc(var(--fold-speed) * 1s) calc((var(--fold-delay) + var(--fold-speed) + (var(--fold-speed) * 0.1)) * 1s)
+
+
+.money__slide
+  transform translateX(calc(var(--folded) * (var(--slide-coefficient) * var(--slide))))
+  
+  &--negative
+    --slide 25%
+    --slide-coefficient -1
+    --slide-delay var(--fold-delay)
+  &--positive
+    --slide 12.5%
+    --slide-coefficient 1
+    --slide-delay calc(var(--fold-delay) + var(--fold-speed))
+
+.money__half:first-of-type
+  --rotation calc(((var(--fold-basis, 0) - 0) * var(--folded)))
+  transform-origin 100% 50%
+  transform rotateY(calc(var(--rotation) * 1deg))
+  
+  
+.money__half:first-of-type .money__quarter:first-of-type
+  --rotation calc((((var(--fold-basis, 0) - 5) * -1) * var(--folded)))
+  transform-origin 100% 50%
+  background orange
+  transform rotateY(calc(var(--rotation) * 1deg))
+  
+.money__half:last-of-type .money__quarter:last-of-type
+  --rotation calc((((var(--fold-basis, 0) - 10) * -1) * var(--folded)))
+  transform-origin 0% 50%
+  background green
+  transform rotateY(calc(var(--rotation) * 1deg))
+
+@keyframes jiggle-jiggle
+  0%, 50%, 100%
+    transform translate(-50%, -50%) scale(1) translateY(0) rotate(0)
+    
+  25%
+    transform translate(-50%, -50%) scale(1) translateY(var(--jiggle-elevation)) rotate(calc(var(--jiggle-rotation) * -1))
+  
+  75%
+    transform translate(-50%, -50%) scale(1) translateY(var(--jiggle-elevation)) rotate(var(--jiggle-rotation))
+  
+@keyframes show
+  to
+    transform translate(-50%, -50%) scale(1)
+    
+@keyframes wiggle-wiggle
+  0%, 50%, 100%
+    transform translate(0, 0) rotate(0)
+  25%
+    transform translate(calc(var(--wiggle-translation) * -1), var(--wiggle-elevation)) rotate(var(--wiggle-rotation))
+  75%
+    transform translate(var(--wiggle-translation), var(--wiggle-elevation)) rotate(calc(var(--wiggle-rotation) * -1))

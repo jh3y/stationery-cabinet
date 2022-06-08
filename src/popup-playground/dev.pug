@@ -1,0 +1,71 @@
+main
+	h1 <code>popup</code> Playground
+	article
+		h2 Basic Use
+		p.
+			<code>popup</code> has three different modes. You create a popup using the <code>togglepopup</code> attribute pointing at the <code>id</code> of the element being used as a <code>popup</code>. The element being used as a <code>popup</code> defines its behavior through the <code>popup</code> attribute.
+		.playground
+			h3 <code>popup</code>
+			button(togglepopup="pop") Toggle that pop
+
+			.my-pop#pop(popup="popup")
+				h4 Basic yoooo
+
+			h3 <code>hint</code>
+			button(togglepopup="pophintone") Toggle that hint
+
+			.my-pop#pophintone(popup="hint")
+				h4 Hint yoooo
+
+			button(togglepopup="pophinttwo") Toggle that hint
+
+			.my-pop#pophinttwo(popup="hint")
+				h4 Hint yoooo
+
+			button(togglepopup="pophintthree") Toggle that hint
+
+			.my-pop#pophintthree(popup="hint")
+				h4 Hint yoooo
+
+			h3 <code>async</code>
+			button(togglepopup="popasync") Toggle that async
+
+			.my-pop#popasync(popup="async")
+				h4 Async yooo
+
+			button(togglepopup="popasynctwo") Toggle this async
+
+			.my-pop#popasynctwo(popup="async")
+				h4 Async hoo
+		p.
+			In addition, you can also have a <code>popup</code> initially open with the <code>defaultopen</code> attribute.
+		.playground
+			h3 <code>defaultopen</code>
+			p Not sure if this one is working. It should be showing...
+			.my-pop#popopen(popup="popup" defaultopen)
+				h4 <del>Initially</del>Default yo
+		p.
+			Wanna open it with JS? Grab the element and you'll get access to <code>showPopup</code> and <code>hidePopup</code> where the fun begins.
+		.playground
+			h3 <code>JavaScript Triggered</code>
+			<button id="trigger">Open a JS Popup</button>
+			<button id="closer">Close a JS Popup</button>
+			.my-pop#popjavascript(popup="popup")
+				h4 JS Yooo
+	article
+		h2 TODO
+		h3 One <code>popup</code> closes another
+		h3 One <code>popup</code> that contains a help screen overlay
+		h3 When and when not to trigger "Light Dismiss"
+		h3 Play with <code>popup</code> descendant popups for the Toast perhaps? No... This is what `hint` is for.
+		h3 Async popup gives you complete control and only opens/closes on timer or explicitly
+		h3 Close things with Escape but you could likely create your own with a triggered event?
+		h3 `entertoplayer` and `exittoplayer` events? Would these tie into hints? Dismiss off an element? Attach a listener perhaps?
+		h3 How does the `anchor` attribute work? On the element, it should anchor too? The popup points at an idref?
+		p.
+			Wanna anchor the ship?
+		.playground
+			h3 <code>Anchor the Pop</code>
+			<button togglepopup="popanchor" id="anchor">Anchored Pop Yoooo</button>
+			.my-pop#popanchor(popup="popup" anchor="anchor")
+				h4 HMS Popup		

@@ -1,0 +1,281 @@
+@font-face {
+  font-family: Cyber;
+  src: url("https://assets.codepen.io/605876/Blender-Pro-Bold.otf");
+  font-display: swap;
+}
+
+*
+  box-sizing border-box
+
+:root
+  --size 300px
+  --piece-size calc(var(--size) / 3)
+  --line hsl(0, 0%, 90%)
+  --bg hsl(210, 50%, 5%)
+  --naught hsl(50, 99%, 50%)
+  --naught-alpha hsla(50, 99%, 50%, 0.5)
+  --cross hsl(212, 90%, 59%)
+  --cross-alpha hsla(212, 90%, 59%, 0.5)
+  --draw-speed 0.15
+  --color hsl(0, 10%, 15%)
+  --show-naught 0
+  --show-cross 0
+  --show-draw 0
+  --show-it calc(var(--show-naught) + var(--show-cross) + var(--show-draw))
+    
+  @media(min-width 768px)
+    --size 50vmin
+    
+  @media(max-height 500px)
+    --size 300px
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  margin 0
+  overflow hidden
+  background var(--bg)
+  color var(--color)
+  font-family 'Cyber', sans-serif
+  text-transform uppercase
+
+svg
+  filter drop-shadow(0 -0.25vmin 0.25vmin hsl(0, 10%, 0%)) drop-shadow(0 0 0.5vmin var(--alpha)) drop-shadow(0 0 1vmin var(--alpha)) drop-shadow(0 0 5vmin var(--stroke)) brightness(1.2)
+  stroke var(--stroke)
+  position absolute
+  
+  circle
+  path
+    animation draw calc(var(--draw-speed) * 1s) calc(var(--delay, 0) * 1s) ease-in both
+
+@keyframes draw
+  to
+    stroke-dashoffset 0
+  
+.board
+  display grid
+  place-items center
+  position relative
+
+.game__result
+  position absolute
+  width 100vmax
+  aspect-ratio 1
+  transform translate(-50%, -50%)
+  top 50%
+  left 50%
+
+label
+  display block
+  position absolute
+  height var(--piece-size)
+  aspect-ratio 1
+  cursor pointer
+  
+  &:hover .ghost
+    opacity 0.5
+
+.ghost
+  opacity 0
+  transition opacity calc(var(--draw-speed) * 1s)
+
+.o
+  --alpha var(--naught-alpha)
+  --stroke var(--naught)
+  transform rotateX(180deg)
+
+.x
+  --alpha var(--cross-alpha)
+  --stroke var(--cross)
+
+  path:nth-of-type(2)
+    --delay var(--draw-speed)
+
+.board
+  height var(--size)
+  aspect-ratio 1
+  grid-template-columns repeat(3, 1fr)
+  grid-template-rows repeat(3, 1fr)
+  position fixed
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  
+  &__x
+  &__o
+    display none
+    position absolute
+    inset 0
+    z-index 3
+
+  &__line
+    --stroke var(--line)
+    --alpha hsla(0, 0%, 90%, 0.5)
+    width calc(var(--size) * 0.05)
+    height var(--size)
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) rotate(calc(var(--rotate) * -90deg)) translate(calc(var(--shift) * ((var(--size) / 3) * 0.5)), 0)
+
+  &__cell
+    height var(--piece-size)
+    width var(--piece-size)
+    position relative
+
+input
+button
+  position absolute
+
+button
+  bottom 25%
+  background transparent
+  border 0
+  padding 0
+  left 50%
+  height clamp(48px, 5vmin, 3rem)
+  aspect-ratio 1
+  outline transparent
+  cursor pointer
+  transform translate(-50%, calc((250 - (250 * var(--show-it))) * 1%)) scale(var(--show-it))
+  transition transform calc(var(--draw-speed) * 1s), opacity calc(var(--draw-speed) * 1s)
+  opacity var(--show-it)
+  position fixed
+  z-index 999
+
+  &:hover
+    transform translate(-50%, -4%)
+  &:active
+    transform translate(-50%, 2%) scale(0.8)
+
+.reset
+  height 100%
+  fill var(--line)
+  position static
+
+input
+  position fixed
+  left 100%
+  pointer-events none
+  opacity 0
+
+.result
+  backdrop-filter blur(25px)
+  z-index 10
+  opacity var(--show-it)
+  transition opacity calc(var(--draw-speed) * 1s), transform calc(var(--draw-speed) * 1s)
+  transform translate(-50%, -50%) translateY(calc((250 - (250 * var(--show-it))) * 1%)) scale(var(--show-it))
+
+  &__content
+    height 40%
+    aspect-ratio 1
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    position absolute
+    border-radius 15%
+    background hsla(210, 30%, 20%, 0.8)
+    color hsl(0, 0%, 100%)
+    align-items center
+    display flex
+    justify-content center
+    flex-direction column
+    font-weight bold
+    font-size 2rem
+    box-shadow 0 3vmin 2.5vmin -2.5vmin hsl(0, 0%, 0%)
+    opacity var(--opacity, 0)
+    
+    &--naught
+      --opacity var(--show-naught)
+    &--cross
+      --opacity var(--show-cross)
+    &--draw
+      --opacity var(--show-draw)
+
+  &__winner
+    position static
+    height calc(var(--size) / 3)
+
+.zzz
+  --stroke hsl(210, 80%, 50%)
+  fill var(--stroke)
+
+@keyframes fadeIn
+  from
+    opacity 0
+
+@keyframes flyIn
+  from
+    opacity 0
+    transform translate(-50%, 250%) scale(0)
+    
+.board__cell:has(.o-check:checked) .o
+.board__cell:has(.x-check:checked) .x
+  display block
+
+.board__cell:has(.o-check:checked) label
+.board__cell:has(.x-check:checked) label
+  display none
+
+.board:has(#x-0:checked) .board__cell:has([for="x-0"]) .board__x
+.board:has(#x-1:checked) .board__cell:has([for="x-1"]) .board__x
+.board:has(#x-2:checked) .board__cell:has([for="x-2"]) .board__x
+.board:has(#x-3:checked) .board__cell:has([for="x-3"]) .board__x
+.board:has(#x-4:checked) .board__cell:has([for="x-4"]) .board__x
+.board:has(#x-5:checked) .board__cell:has([for="x-5"]) .board__x
+.board:has(#x-6:checked) .board__cell:has([for="x-6"]) .board__x
+.board:has(#x-7:checked) .board__cell:has([for="x-7"]) .board__x
+.board:has(#x-8:checked) .board__cell:has([for="x-8"]) .board__x
+.board:has(#o-0:checked) .board__cell:has([for="o-0"]) .board__o
+.board:has(#o-1:checked) .board__cell:has([for="o-1"]) .board__o
+.board:has(#o-2:checked) .board__cell:has([for="o-2"]) .board__o
+.board:has(#o-3:checked) .board__cell:has([for="o-3"]) .board__o
+.board:has(#o-4:checked) .board__cell:has([for="o-4"]) .board__o
+.board:has(#o-5:checked) .board__cell:has([for="o-5"]) .board__o
+.board:has(#o-6:checked) .board__cell:has([for="o-6"]) .board__o
+.board:has(#o-7:checked) .board__cell:has([for="o-7"]) .board__o
+.board:has(#o-8:checked) .board__cell:has([for="o-8"]) .board__o
+  display block
+  
+[for*="x"]
+  z-index calc(1 + var(--turn))
+[for*="o"]
+  z-index 1
+
+.board:has(:checked)
+.board:has(:checked ~ :checked ~ :checked)
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked)
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)
+  --turn 1
+  
+.board:has(:checked ~ :checked)
+.board:has(:checked ~ :checked ~ :checked ~ :checked)
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)  
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)  
+  --turn 0
+
+// Winning combos
+:root:has(#x-0:checked ~ #x-1:checked ~ #x-2:checked)
+:root:has(#x-0:checked ~ #x-1:checked ~ #x-2:checked)
+:root:has(#x-3:checked ~ #x-4:checked ~ #x-5:checked)
+:root:has(#x-6:checked ~ #x-7:checked ~ #x-8:checked)
+:root:has(#x-0:checked ~ #x-3:checked ~ #x-6:checked)
+:root:has(#x-1:checked ~ #x-4:checked ~ #x-7:checked)
+:root:has(#x-2:checked ~ #x-5:checked ~ #x-8:checked)
+:root:has(#x-0:checked ~ #x-4:checked ~ #x-8:checked)
+:root:has(#x-2:checked ~ #x-4:checked ~ #x-6:checked)
+  --show-cross 1
+  --show-draw 0
+:root:has(#o-0:checked ~ #o-1:checked ~ #o-2:checked)
+:root:has(#o-3:checked ~ #o-4:checked ~ #o-5:checked)
+:root:has(#o-6:checked ~ #o-7:checked ~ #o-8:checked)
+:root:has(#o-0:checked ~ #o-3:checked ~ #o-6:checked)
+:root:has(#o-1:checked ~ #o-4:checked ~ #o-7:checked)
+:root:has(#o-2:checked ~ #o-5:checked ~ #o-8:checked)
+:root:has(#o-0:checked ~ #o-4:checked ~ #o-8:checked)
+:root:has(#o-2:checked ~ #o-4:checked ~ #o-6:checked)
+  --show-naught 1
+  --show-draw 0
+
+:root:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)
+  --show-draw 1

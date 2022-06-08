@@ -1,0 +1,44 @@
+- const randomInRange = (min, max) => Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1) + Math.ceil(min))
+- const COLORS = ['var(--red-3)', 'var(--green-3)', 'var(--blue-3)', 'var(--yellow-3)']
+- const COUNT = 10
+
+img.backdrop(src="https://assets.codepen.io/605876/desert-sky-backdrop-tadeu-jnr--edited.jpg")
+.stan-pen
+  include ./bishi-stan.svg
+.timer
+  .digit.second.s.s--tens 0
+  .digit.second.s.s--singles 0
+  span .
+  .digit.digit--small.ms.ms--tens 0
+  .digit.digit--small.ms.ms--singles 0
+form
+  .deck
+    - let i = 0
+    while i < COUNT
+      - const x = randomInRange(20, 80)
+      - const y = randomInRange(60, 80)
+      - const tx = [randomInRange(-200, 200), randomInRange(-200, 200), randomInRange(-200, 200), randomInRange(-200, 200)]
+      - const ty = [randomInRange(-100, 100), randomInRange(-100, 100), randomInRange(-100, 100), randomInRange(-100, 100)]
+      - const speed = randomInRange(1, 5)
+      .turn(class=i%2===0 ? 'bashi' : 'bishi' style=`--x: ${x}; --y: ${y}; --color: ${COLORS[Math.floor(Math.random() * COLORS.length)]}; --speed: ${speed}; --x0: ${tx[0]}; --x1: ${tx[1]}; --x2: ${tx[2]}; --x3: ${tx[3]}; --y0: ${ty[0]}; --y1: ${ty[1]}; --y2: ${ty[2]}; --y3: ${ty[3]};`)
+        label(for=`turn--${i}`)
+          .cuboid
+            .cuboid
+              .cuboid__side
+              .cuboid__side
+              .cuboid__side
+              .cuboid__side
+              .cuboid__side
+              .cuboid__side
+            .cuboid__side
+            .cuboid__side
+            .cuboid__side
+            .cuboid__side
+            .cuboid__side
+            .cuboid__side
+        input(type="checkbox" id=`turn--${i}`)
+      - i++
+  .start-game
+    input#start-game(type="checkbox")
+    label(for="start-game") Start Game
+  button(type="reset" title="Reset Board") Reset

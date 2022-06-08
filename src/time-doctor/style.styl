@@ -1,0 +1,52 @@
+*
+  box-sizing border-box
+  
+body
+  display flex
+  flex-direction column
+  margin 0
+  font-family 'Google Sans', sans-serif
+  min-height 100vh
+  align-items center
+  
+h1, h2, h3, h4, h5, p
+  margin 0
+  
+footer
+  font-weight bold
+  padding 1rem
+  
+article
+  display grid
+  grid-template-columns repeat(auto-fit, minmax(5rem, 25vw))
+  width 100%
+  grid-gap 1rem
+  justify-content center
+  
+section
+  background red
+  aspect-ratio 1
+  display grid
+  place-items center
+
+.box
+  height 50%
+  aspect-ratio 1
+  background blue
+  animation slide 1s, scale 0.25s, rotate 1s
+  
+@keyframes slide
+  from
+    transform translateX(-250%)
+    
+@keyframes scale
+  from
+    transform scale(0)
+    
+@keyframes rotate
+  to
+    transform rotate(360deg)
+    
+// TimeDoctory things
+[data-time-doctor]
+  animation-play-state paused

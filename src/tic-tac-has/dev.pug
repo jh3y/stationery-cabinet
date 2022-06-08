@@ -1,0 +1,50 @@
+//- mixin confetti()
+  - let c = 0
+    while c < 10
+      .confetti(style=`--rotation: ${(Math.random() * 180) - 90}; --travel: ${Math.random() * -100};`) 🎉
+      - c++
+mixin cross()
+  svg(style!=attributes.style class!=attributes.class viewBox="0 0 100 100")
+    path.cross(d="M 80 20 L 20 80" fill="none" stroke-width="10" stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="100")
+    path.cross(d="M 20 20 L 80 80" fill="none" stroke-width="10" stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="100")
+mixin naught()
+  svg(class!=attributes.class style!=attributes.style viewBox="0 0 100 100")
+    circle(cx="50" cy="50" r="30" fill="none" stroke-width="10" stroke-linecap="round" stroke-dasharray="200" stroke-dashoffset="200")
+form.game
+  .board
+    - const DELAYS = [0.75, 0.5, 1, 0.25]
+    - for (let l = 0; l < 4; l++)
+      - const rotate = l % 2
+      - const shift = 2 % (l + 1) ? 1 : -1
+      - const delay = DELAYS[l]
+      svg.board__line(viewBox="0 0 10 300" style=`--rotate: ${rotate}; --shift: ${shift}; --delay: ${delay};`)
+        path(d="M 5 5 L 5 295" stroke-width="10" stroke-linecap="round" stroke-dasharray="300" stroke-dashoffset="300")
+    - for (let i = 0; i < 9; i++)
+      input(type="checkbox" class='x-check' id=`x-${i}`)
+      input(type="checkbox" class='o-check' id=`o-${i}`)
+    - for (let i = 0; i < 9; i++)
+      .board__cell
+        label(for=`x-${i}`)
+          +cross()(class="x ghost")
+        label(for=`o-${i}`)
+          +naught()(class="o ghost")
+        +cross()(class="x board__x")
+          path.cross(d="M 80 20 L 20 80" fill="none" stroke-width="10" stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="100")
+          path.cross(d="M 20 20 L 80 80" fill="none" stroke-width="10" stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="100")
+        +naught()(class="o board__o")
+  
+  .game__result.result
+    .result__content.result__content--cross
+      .result__title Winner!
+      +cross()(class="x result__winner")
+    .result__content.result__content--naught
+      .result__title Winner!
+      +naught()(class="o result__winner")
+    .result__content.result__content--draw
+      .result__title Draw...
+      svg.zzz.result__winner(viewBox="0 0 24 24")
+        path(d="M23,12H17V10L20.39,6H17V4H23V6L19.62,10H23V12M15,16H9V14L12.39,10H9V8H15V10L11.62,14H15V16M7,20H1V18L4.39,14H1V12H7V14L3.62,18H7V20Z")
+  
+  button(type="reset" title="Reset Board")
+    svg.reset(viewBox="0 0 24 24")
+      path(d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z")

@@ -1,0 +1,41 @@
+:root
+  --border-width 1.2vmin
+  --depth 20vmin
+  --stack-height 6vmin
+  --scene-size 20vmin
+  --ring-size calc(var(--scene-size) * 0.6)
+  --plane radial-gradient(hsla(0, 0%, 0%, 0.1) 50%, transparent 65%)
+  --ring-shadow hsla(0, 0%, 0%, 0.5)
+  --hue-one 320
+  --hue-two 210
+  --blur 10px
+  --speed 1.2s
+  --bg hsl(0, 0%, 98%)
+  --ring-filter brightness(1) drop-shadow(0 0 0 var(--accent))
+
+*
+  box-sizing border-box
+  transform-style preserve-3d
+  
+body
+  display grid
+  place-items center
+  min-height 100vh
+  
+.container
+  height var(--scene-size)
+  width var(--scene-size)
+  transform translate3d(0, 0, 100vmin) rotateX(-24deg) rotateY(32deg) rotateX(90deg) translate3d(0, 0, calc((var(--depth) + var(--stack-height)) * -1)) rotate(0deg)
+ 
+.scene
+.plane
+  height 100%
+  width 100%
+  position relative
+  
+.scene
+  background hsla(280, 80%, 50%, 0.25)
+
+.plane
+  background hsla(200, 80%, 50%, 0.25)
+  transform translate3d(0, 0, var(--depth))

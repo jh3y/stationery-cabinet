@@ -1,0 +1,373 @@
+@import "https://unpkg.com/open-props";
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+@property --depth
+  initial-value 0
+  inherits true
+  syntax '<length>'
+  
+@property --tx
+  initial-value 0
+  inherits true
+  syntax '<length-percentage>'
+
+@property --ty
+  initial-value 0
+  inherits true
+  syntax '<length-percentage>'
+
+.cuboid {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.cuboid
+  .cuboid
+    height 100%
+    width 100%
+    position absolute
+    top 0
+    left 0
+    transform translateZ(var(--elevation, -10vmin))
+    transition transform 0.2s
+    
+    .cuboid__side
+      background-color currentColor
+      
+@keyframes wiggle
+  0%, 100%
+    --tx 0%
+  25%
+    --tx calc(var(--x0) * 1%)
+    --ty calc(var(--y0) * 1%)
+  50%
+    --tx calc(var(--x1) * 1%) 
+    --ty calc(var(--y1) * 1%) 
+  75%
+    --tx calc(var(--x2) * 1%)
+    --ty calc(var(--y2) * 1%)
+
+label:hover .cuboid .cuboid
+  --elevation 1vmin
+  
+label:active .cuboid .cuboid
+  --elevation -4vmin
+  
+
+
+.cuboid__side {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  filter: brightness(var(--brightness, 1));
+}
+/* T, R, B, L, F, B */
+.cuboid__side:nth-of-type(1) {
+  --brightness: 0.8;
+  top: 0;
+  height: var(--depth, 50vmin);
+  transform: translateY(-50%) rotateX(-90deg);
+}
+.cuboid__side:nth-of-type(2) {
+  --brightness: 0.6;
+  top: 50%;
+  right: 0;
+  width: var(--depth, 50vmin);
+  transform: translate(50%, -50%) rotateY(90deg);
+}
+.cuboid__side:nth-of-type(3) {
+  --brightness: 1.3;
+  bottom: 0;
+  height: var(--depth, 50vmin);
+  transform: translateY(50%) rotateX(90deg);
+}
+.cuboid__side:nth-of-type(4) {
+  --brightness: 0.6;
+  top: 50%;
+  width: var(--depth, 50vmin);
+  transform: translate(-50%, -50%) rotateY(90deg);
+}
+.cuboid__side:nth-of-type(5) {
+  --brightness: 0.75;
+  transform: translateZ(calc(var(--depth, 50vmin) / -2));
+}
+.cuboid__side:nth-of-type(6) {
+  --brightness: 1;
+  transform: translateZ(calc(var(--depth, 50vmin) / 2)) rotateY(180deg);
+}
+
+
+// Need some properties for keeping the time...
+@property --ms-tens
+  initial-value 0
+  inherits false
+  syntax '<integer>'
+
+@property --ms-singles
+  initial-value 0
+  inherits false
+  syntax '<integer>'
+
+@property --s-tens
+  initial-value 0
+  inherits false
+  syntax '<integer>'
+
+@property --s-singles
+  initial-value 0
+  inherits false
+  syntax '<integer>'
+
+.digit
+  position relative
+  color transparent
+  font-family 'Orbitron', sans-serif
+  counter-reset var(--counter-name) var(--counter-variable)
+  animation var(--name, none) var(--duration, 1s) infinite steps(var(--steps)) var(--state)
+
+  &:after
+    content counter(var(--counter-name))
+    font-variant tabular-nums
+    color var(--digit)
+    position absolute
+    bottom 0
+    right 0
+
+.ms
+  font-size 4vmin
+  transform translate(0, -6%)
+
+  &--tens
+    --duration 1s
+    --steps 10
+    --counter-name ms-tens
+    --counter-variable var(--ms-tens)
+
+  &--singles
+    --duration 0.1s
+    --steps 10
+    --counter-name ms-singles
+    --counter-variable var(--ms-singles)
+
+.s
+  &--tens
+    --duration 60s
+    --steps 6
+    --counter-name s-tens
+    --counter-variable var(--s-tens)
+
+  &--singles
+    --duration 10s
+    --steps 10
+    --counter-name s-singles
+    --counter-variable var(--s-singles)
+
+// The different animations requires for each digit
+@keyframes ms-tens
+  to
+    --ms-tens 10
+
+@keyframes ms-singles
+  to
+    --ms-singles 10
+
+@keyframes s-tens
+  to
+    --s-tens 6
+
+@keyframes s-singles
+  to
+    --s-singles 10
+    
+:root:has(#start-game:checked)
+  --state running
+
+  .ms--tens
+    --name ms-tens
+  .ms--singles
+    --name ms-singles
+  .s--tens
+    --name s-tens
+  .s--singles
+    --name s-singles
+  .m--tens
+    --name m-tens
+  .m--singles
+    --name m-singles
+    
+
+
+// What handles the playback. When "Start" is checked,
+// the play state is running. Then we can use "Pause" to
+// toggle the play start of the animations.
+// #start:checked ~ .stopwatch__content
+//   --state running
+// #pause:checked ~ .stopwatch__content
+//   --state paused
+
+.stan-pen {
+  width: 80vmin;
+  aspect-ratio: 701 / 742;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateY(0%) rotateY(0deg);
+}
+
+.stan {
+  height: 100%;
+  width: 100%;
+}
+
+.stan path {
+  fill: var(--gray-9);
+  fill: hsl(0, 0%, 5%);
+}
+
+path.stan__star {
+  fill: var(--yellow-5);
+}
+
+* {
+  box-sizing: border-box;
+  transform-style: preserve-3d;
+}
+
+:root {
+  --hue: 210;
+  --digit: red;
+  --state: paused;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+.backdrop {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  z-index: -1;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+}
+
+.timer {
+  color: var(--digit);
+  display: flex;
+  font-size: 6vmin;
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+  padding: 1.75vmin;
+  border-radius: 1vmin;
+  background: var(--gray-9);
+}
+
+form {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  margin: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.deck {
+  background: var(--gray-6);
+  position: absolute;
+  height: 50%;
+  width: 100%;
+  bottom: 0;
+  left: 50%;
+  transform: translate3d(-50%, 0, 100vmin) rotateX(-16deg) rotateY(-24deg) rotateX(90deg);
+}
+
+.deck:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--gray-6);
+  transform-origin: 50% 0;
+  transform: translateZ(0px) scale(5);
+  z-index: -1;
+}
+
+.turn {
+  --depth: 10vmin;
+  color: var(--color);
+  height: 10vmin;
+  position: relative;
+  aspect-ratio: 1;
+  position: absolute;
+  top: calc(var(--y, 50) * 1%);
+  left: calc(var(--x, 50) * 1%); 
+  transform: translate(-50%, -50%) translate(var(--tx), var(--ty));
+  animation: wiggle calc(var(--speed, 0) * 1s) infinite var(--state, paused);
+}
+
+[type="checkbox"] {
+  opacity: 0;
+}
+
+[for] {
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 4vmin;
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+}
+
+
+/* Chromium Bug */
+/* :is(.turn) {
+  display: none;
+}
+
+:is(.turn:first-of-type) {
+  display: block;
+}
+
+:is(.turn:has(:checked), .turn:first-of-type:has(:checked)) {
+  display: none;
+}
+
+:is(.turn:has(:checked) + .turn:not(.turn:has(:checked))) {
+  display: block;
+} */
+
+:is(.turn) {
+  pointer-events: none;
+}
+
+:root:has(#start-game:checked) .turn:first-of-type:not(:has(:checked)) {
+  --elevation: 0;
+  pointer-events: all;
+}
+
+:is(.turn:has(:checked), .turn:first-of-type:has(:checked)) {
+  z-index: -1;
+  pointer-events: none;
+}
+
+:is(.turn:has(:checked) + .turn:not(.turn:has(:checked))) {
+  --elevation: 0;
+  pointer-events: all;
+}
+
+
+:root:has(#turn--9:checked) {
+  --state: paused;
+}
