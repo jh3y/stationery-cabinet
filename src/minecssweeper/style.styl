@@ -1,0 +1,40 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+
+form {
+  margin: 0;
+  position: relative;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), 5vmin);
+  grid-template-rows: repeat(var(--rows), 5vmin);
+  grid-gap: 1vmin;
+}
+
+.board__cell {
+  display: grid;
+  place-items: center;
+  background: 'hsl(var(--hue, 210) 80% 50% / 0.2)' % '';
+  font-weight: bold;
+}
+
+.board__controls {
+  position: absolute;
+  bottom: 110%;
+  min-height: 5vmin;
+  min-width: 5vmin;
+  background: red;
+}
+
+:root:has(#group--0:checked) .board__cell-group--0 {
+  background: red !important;
+}

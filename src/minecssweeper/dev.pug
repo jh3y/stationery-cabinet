@@ -1,0 +1,131 @@
+-
+  const GET_RANDOM = (min, max) => Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1) + Math.ceil(min))
+  const COLUMNS = 10
+  const ROWS = 10
+  const CELL_COUNT = COLUMNS * ROWS
+  const MINE_COUNT = 8
+  const MINE_INDEXES = []
+  const ZEROS = []
+  const ZERO_GROUPS = []
+
+  const ADD_INDEX = () => {
+    const INDEX = GET_RANDOM(0, CELL_COUNT)
+    if (MINE_INDEXES.indexOf(INDEX) === -1) {
+      return INDEX
+    } else return ADD_INDEX()
+  }
+
+  for (let m = 0; m < MINE_COUNT; m++) {
+    MINE_INDEXES[m] = ADD_INDEX()
+  }
+
+  const GET_SURROUNDINGS = INDEX => {
+    const COLUMN = INDEX % COLUMNS
+    const TL = INDEX - (COLUMNS + 1)
+    const TC = INDEX - COLUMNS
+    const TR = INDEX - (COLUMNS - 1)
+    const L = INDEX - 1
+    const R = INDEX + 1
+    const BL = INDEX + (COLUMNS - 1)
+    const BC = INDEX + COLUMNS
+    const BR = INDEX + (COLUMNS + 1)
+
+    let SURROUNDINGS = [
+      TC, BC
+    ]
+    
+    if (COLUMN !== 0) SURROUNDINGS.push(TL, L, BL)
+    if (COLUMN !== COLUMNS - 1) SURROUNDINGS.push(TR, R, BR)
+    
+    return SURROUNDINGS.filter(s => s >= 0)
+  }
+
+
+  const GET_BOMB_COUNT = index => {
+    let count = 0
+    for (const SURROUNDING of GET_SURROUNDINGS(index)) {
+      if (MINE_INDEXES.indexOf(SURROUNDING) !== -1) count++
+    }
+    return count
+  }
+
+  const GAME_BOARD = new Array(CELL_COUNT).fill(0).map((_,i) => {
+    const COUNT = MINE_INDEXES.indexOf(i) !== -1 ? 'X' : GET_BOMB_COUNT(i)
+    if (COUNT === 0) ZEROS.push(i)
+    return COUNT
+  })
+
+  const PUSH_TO_GROUP = (INDEX, GROUP, ZEROS) => {
+    GROUP.push(INDEX)
+    for (const SURROUNDING of GET_SURROUNDINGS(INDEX)) {
+      if (ZEROS.indexOf(SURROUNDING) !== -1 && GROUP.indexOf(SURROUNDING) === -1) PUSH_TO_GROUP(SURROUNDING, GROUP, ZEROS)
+    }
+  }
+
+  const PAD_GROUPS = GROUPS => {
+    for (const GROUP of GROUPS) {
+      for (const POS of [...GROUP]) {
+        for (const SURROUNDING of GET_SURROUNDINGS(POS)) {
+          if (GROUP.indexOf(SURROUNDING) === -1 && GAME_BOARD[SURROUNDING] !== 'X') GROUP.push(SURROUNDING)
+        }
+      }
+    }
+  }
+
+  const GROUP_ZEROS = () => {
+    for (let o = 0; o < ZEROS.length; o++) {
+      if (ZERO_GROUPS.filter(group => group.indexOf(ZEROS[o]) !== -1).length === 0) {
+        const ZERO_GROUP = []
+        PUSH_TO_GROUP(ZEROS[o], ZERO_GROUP, ZEROS)
+        ZERO_GROUPS.push(ZERO_GROUP)
+      }
+    }
+    PAD_GROUPS(ZERO_GROUPS)
+  }
+
+  GROUP_ZEROS()
+
+form
+  .board(style=`--rows: ${ROWS}; --columns: ${COLUMNS};`)
+    .board__controls
+      - let created = []
+      - let c = 0
+      while c < CELL_COUNT
+        - let forId = `cell--${c}`
+        -
+          if (ZEROS.indexOf(c) !== -1) {
+            let idx = 0
+            for (let z = 0; z < ZERO_GROUPS.length; z++) {
+              if (ZERO_GROUPS[z].indexOf(c) !== -1) idx = z
+            }
+            forId = `group--${idx}`
+          }
+
+
+        if created.indexOf(forId) === -1
+          input(type="checkbox" id=forId)
+        -
+          if(created.indexOf(forId) === -1) created.push(forId)
+        - c++
+    - let i = 0
+    while i < CELL_COUNT
+      - const COUNT = GAME_BOARD[i]
+      - let hue
+      - let forId = i
+      - let CLASS_NAME = `board__cell--${COUNT}`
+      -
+        if (COUNT === 'X') CLASS_NAME += ' board__cell--exploder'
+        let group
+        for (let g = 0; g < ZERO_GROUPS.length; g++) {
+          const GROUP = ZERO_GROUPS[g]
+          if (GROUP.indexOf(i) !== -1) {
+            hue = 360 / ZERO_GROUPS.length * g
+            CLASS_NAME += ` board__cell-group--${g}`
+            forId = `group--${g}`
+          }
+        }
+
+      .board__cell(class=CLASS_NAME style=`${hue !== undefined ? `--hue: ${hue};` : ''}`)
+        span=COUNT === 0 ? '' : COUNT
+        label(for=forId)
+      - i++
