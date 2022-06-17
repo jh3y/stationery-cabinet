@@ -6,6 +6,7 @@ body {
   display: grid;
   place-items: center;
   min-height: 100vh;
+  background: 'hsl(var(--hue, 210) 80% 80% / 0.5)' % '';
 }
 
 form {
@@ -23,18 +24,78 @@ form {
 .board__cell {
   display: grid;
   place-items: center;
-  background: 'hsl(var(--hue, 210) 80% 50% / 0.2)' % '';
+  color: 'hsl(var(--hue, 210) 50% 50% / 1)' % '';
   font-weight: bold;
+  position: relative;
+  font-family: sans-serif;
 }
 
-.board__controls {
+.board__group-controls {
   position: absolute;
-  bottom: 110%;
+  top: 110%;
   min-height: 5vmin;
   min-width: 5vmin;
-  background: red;
+  background: blue;
 }
 
-:root:has(#group--0:checked) .board__cell-group--0 {
-  background: red !important;
+.board__flag-toggle {
+  position: absolute;
+  top: 110%;
+  right: 0;
+  min-height: 5vmin;
+  min-width: 5vmin;
+}
+
+.board__cell label {
+  background: grey;
+}
+
+.board__cell {
+  background: lightgray;
+}
+
+.board__cell :where(label, span) {
+  position: absolute;
+  inset: 0;
+  display: inline-block;
+  display: grid;
+  place-items: center;
+}
+
+:root:has(#flag-toggle:checked) {
+  --flagging: 1;
+}
+:root:has(#flag-toggle:not(:checked)) .board__cell:has(:checked[id*="flag"]) label {
+  pointer-events: none;
+}
+:root:has(#flag-toggle:checked) .board__cell:has(:checked[id*="flag"]) [for*="flag"],
+:root:has(#flag-toggle:not(:checked)) .board__cell:has(:checked[id*="flag"]) [for*="flag"] {
+  display: block;
+}
+
+.board__cell:has(:checked:not([id*="flag"])) label {
+  display: none;
+}
+
+.board__cell:has(:checked[id*="flag"]) label[for*="flag"] {
+  --flagging: 1;
+  background: blue;
+}
+
+:root:has([id*="bomb"]:checked) {
+  --hue: 0;
+  --show-fail: 1;
+}
+
+label {
+  opacity: calc(1 - var(--show-fail, 0));
+  z-index: 1;
+}
+
+label[for*="flag"] {
+  background: purple;
+}
+label[for*="flag"],
+label[for*="defuse"] {
+  z-index: calc(1 + var(--flagging, 0));
 }

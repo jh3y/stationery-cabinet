@@ -1,12 +1,13 @@
 -
   const GET_RANDOM = (min, max) => Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1) + Math.ceil(min))
-  const COLUMNS = 10
-  const ROWS = 10
+  const COLUMNS = 9
+  const ROWS = 9
   const CELL_COUNT = COLUMNS * ROWS
   const MINE_COUNT = 8
   const MINE_INDEXES = []
   const ZEROS = []
   const ZERO_GROUPS = []
+  let highestCount = 1
 
   const ADD_INDEX = () => {
     const INDEX = GET_RANDOM(0, CELL_COUNT)
@@ -46,6 +47,7 @@
     for (const SURROUNDING of GET_SURROUNDINGS(index)) {
       if (MINE_INDEXES.indexOf(SURROUNDING) !== -1) count++
     }
+    if (count > highestCount) highestCount = count
     return count
   }
 
@@ -86,12 +88,19 @@
   GROUP_ZEROS()
 
 form
+  - let defusers = []
+  - let created = []
+  - let prompted = []
   .board(style=`--rows: ${ROWS}; --columns: ${COLUMNS};`)
-    .board__controls
-      - let created = []
+    .board__flag-toggle
+      input(type="checkbox" id="flag-toggle")
+      label(for="flag-toggle")
+    .board__group-controls
+      button(type="reset") Reset Board
       - let c = 0
       while c < CELL_COUNT
-        - let forId = `cell--${c}`
+        - const COUNT = GAME_BOARD[c]
+        - let forId
         -
           if (ZEROS.indexOf(c) !== -1) {
             let idx = 0
@@ -100,32 +109,83 @@ form
             }
             forId = `group--${idx}`
           }
-
-
-        if created.indexOf(forId) === -1
+        if forId && created.indexOf(forId) === -1
           input(type="checkbox" id=forId)
-        -
-          if(created.indexOf(forId) === -1) created.push(forId)
+          - created.push(forId)
         - c++
+      - let d = 0
+      while d < CELL_COUNT
+        - const COUNT = GAME_BOARD[d]
+        - let forId
+        -
+          if (COUNT !== 'X' && COUNT !== 0 && ZERO_GROUPS.filter(g => g.indexOf(d) !== -1).length === 0)
+            forId = `prompt--${d}`
+        if forId && (COUNT !== 'X' && COUNT !== 0)
+          input(type="checkbox" id=forId)
+          - prompted.push(forId)
+        - d++
     - let i = 0
     while i < CELL_COUNT
       - const COUNT = GAME_BOARD[i]
-      - let hue
-      - let forId = i
+      - let hue = 0
+      - let forId
       - let CLASS_NAME = `board__cell--${COUNT}`
       -
-        if (COUNT === 'X') CLASS_NAME += ' board__cell--exploder'
+        if (COUNT === 'X') {
+          CLASS_NAME += ' board__cell--exploder'
+        }
+        if (COUNT !== 'X' && COUNT !== 0 && ZERO_GROUPS.filter(g => g.indexOf(i) !== -1).length === 0) {
+          forId = `prompt--${i}`
+        }
         let group
         for (let g = 0; g < ZERO_GROUPS.length; g++) {
           const GROUP = ZERO_GROUPS[g]
           if (GROUP.indexOf(i) !== -1) {
-            hue = 360 / ZERO_GROUPS.length * g
+            hue = (180 / highestCount) * COUNT
             CLASS_NAME += ` board__cell-group--${g}`
-            forId = `group--${g}`
+            if (COUNT === 0) forId = `group--${g}`
           }
         }
 
-      .board__cell(class=CLASS_NAME style=`${hue !== undefined ? `--hue: ${hue};` : ''}`)
+      // Needs a flag, a bomb if required, or a prompt
+      .board__cell(class=CLASS_NAME style=`--hue: ${hue};`)
         span=COUNT === 0 ? '' : COUNT
-        label(for=forId)
+        input(type="checkbox" id=`flag--${i}`)
+        label(for=`flag--${i}`)
+        
+        // Every cell gonna need a flag if not COUNT X
+        if COUNT !== 'X' && forId
+          label(for=forId)
+        if (!forId)
+          input(type="checkbox" id=`placeholder--${i}`)
+          label(for=`placeholder--${i}`)
+        if COUNT === 'X'
+          input(type="checkbox" id=`bomb--${i}`)
+          label(for=`bomb--${i}`)
       - i++
+-
+  let GROUPINGS = ''
+  for (let g = 0; g < ZERO_GROUPS.length; g++) {
+    GROUPINGS += `:root:has(#group--${g}:checked) .board__cell-group--${g} label,`
+
+  }
+  for (let p = 0; p < prompted.length; p++) {
+    GROUPINGS += `:root:has(#${prompted[p]}:checked) .board__cell:has([for=${prompted[p]}]) label ${p === prompted.length - 1 ? ' {' : ','}`
+  }
+  GROUPINGS += 'display: none; }'
+
+  let VICTORY_DANCE = ':root:has('
+
+  for (let a = 0; a < ZERO_GROUPS.length; a++) {
+    VICTORY_DANCE += `#${created[a]}:checked ~`
+  }
+
+  for (let b = 0; b < prompted.length; b++) {
+    VICTORY_DANCE += `#${prompted[b]}:checked ${b === prompted.length - 1 ? '' : '~'}`
+  }
+
+  VICTORY_DANCE += ') { --hue: 140; --show-win: 1; }'
+
+  STYLES = `${GROUPINGS} ${VICTORY_DANCE}`
+
+style= STYLES
