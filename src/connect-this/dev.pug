@@ -1,1 +1,27 @@
-h1 New Awesome Pen!
+- const COLUMNS = 7
+- const CELLS = 6
+- const DISCS = COLUMNS * CELLS
+form
+  .board
+    .board__controls
+      - let s = 1
+      while s < DISCS + 1
+        input(type='checkbox' id=`s-${s}`)
+        input(type='checkbox' id=`p-${s}`)
+        - s++
+      button(type="reset") Reset
+    - let c = 0
+    while c < COLUMNS
+      .board__column
+        - let i = CELLS
+        while i > 0
+          - const INDEX = c * CELLS + i
+          .board__cell(class=`move-${INDEX}`)
+            .board__labels
+              label(for=`s-${INDEX}`)
+              label(for=`p-${INDEX}`)
+            .board__discs
+              .board__disc.board__disc--primary
+              .board__disc.board__disc--secondary
+          - i--
+        - c++

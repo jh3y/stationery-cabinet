@@ -1,14 +1,418 @@
-*
-  box-sizing border-box
-  animation  fadeIn .5s
+* {
+  box-sizing: border-box;
+}
 
-body
-  background-color #e74c3c
-  color            #fafafa
-  text-align       center
+:root {
+  --cell-size: 10vmin;
+}
 
-@keyframes fadeIn
-  from
-    opacity 0
-  to
-    opacity 1
+body {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  background: 'hsl(var(--winner, 210) 80% 50% / 0.8)' % '';
+}
+
+form {
+  display: grid;
+  place-items: center;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(7, var(--cell-size));
+  grid-auto-flow: column;
+  grid-gap: 0 1vmin;
+}
+
+.board__column {
+  display: grid;
+  grid-template-rows: repeat(6, var(--cell-size));
+  aspect-ratio: 1 / 6;
+  grid-gap: 1vmin 0;
+  position: relative;
+  clip-path: inset(-11vmin 0 0 0);
+}
+
+.board__cell {
+  background: hsl(10 80% 50%);
+  aspect-ratio: 1;
+}
+
+.board__labels {
+  position: absolute;
+  top: -11vmin;
+  left: 0;
+  bottom: 0;
+  background: 'hsl(280 80% 50% / 0.02)' % '';
+  cursor: pointer;
+  z-index: 2;
+}
+
+.board__labels:after {
+  content: counter(turn, lower-roman);
+  font-size: 1px;
+  letter-spacing: 10vmin;
+}
+
+label {
+  height: 100%;
+  width: 10vmin;
+  position: absolute;
+}
+
+[for*="s"] {
+  left: 0;
+}
+
+[for*="p"] {
+  right: 0;
+}
+
+/* [for*="s"] {
+  flex: 1 1 0;
+}
+
+[for*="s"]:before {
+  content: counter(turn, lower-roman);
+  letter-spacing: 1vmin;
+  font-size: 1px;
+  max-width: 10vmin;
+} */
+
+.board__discs {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.board__disc--primary {
+  background: green;
+}
+
+.board__disc--secondary {
+  background: blue;
+}
+
+.board__disc {
+  position: absolute;
+  inset: 0;
+  display: none;
+}
+
+/* Lengthy way to show/hide moves... */
+/* 
+Two choices here... .cell:has(:checked) label { display: none; }
+Or...  This....
+
+But, with the former, how do you detect a win. You can't do .board:has(.move-1:has(:checked) ~ .move-2:has(:checked)) for performance reasons. I don't want to break the markup either. This seems like the most verbose way of doing it with retaining the markup.
+*/
+:has(#s-1:checked) .move-1 .board__disc--secondary,
+:has(#p-1:checked) .move-1 .board__disc--primary,
+:has(#s-2:checked) .move-2 .board__disc--secondary,
+:has(#p-2:checked) .move-2 .board__disc--primary,
+:has(#s-3:checked) .move-3 .board__disc--secondary,
+:has(#p-3:checked) .move-3 .board__disc--primary,
+:has(#s-4:checked) .move-4 .board__disc--secondary,
+:has(#p-4:checked) .move-4 .board__disc--primary,
+:has(#s-5:checked) .move-5 .board__disc--secondary,
+:has(#p-5:checked) .move-5 .board__disc--primary,
+:has(#s-6:checked) .move-6 .board__disc--secondary,
+:has(#p-6:checked) .move-6 .board__disc--primary,
+:has(#s-7:checked) .move-7 .board__disc--secondary,
+:has(#p-7:checked) .move-7 .board__disc--primary,
+:has(#s-8:checked) .move-8 .board__disc--secondary,
+:has(#p-8:checked) .move-8 .board__disc--primary,
+:has(#s-9:checked) .move-9 .board__disc--secondary,
+:has(#p-9:checked) .move-9 .board__disc--primary,
+:has(#s-10:checked) .move-10 .board__disc--secondary,
+:has(#p-10:checked) .move-10 .board__disc--primary,
+:has(#s-11:checked) .move-11 .board__disc--secondary,
+:has(#p-11:checked) .move-11 .board__disc--primary,
+:has(#s-12:checked) .move-12 .board__disc--secondary,
+:has(#p-12:checked) .move-12 .board__disc--primary,
+:has(#s-13:checked) .move-13 .board__disc--secondary,
+:has(#p-13:checked) .move-13 .board__disc--primary,
+:has(#s-14:checked) .move-14 .board__disc--secondary,
+:has(#p-14:checked) .move-14 .board__disc--primary,
+:has(#s-15:checked) .move-15 .board__disc--secondary,
+:has(#p-15:checked) .move-15 .board__disc--primary,
+:has(#s-16:checked) .move-16 .board__disc--secondary,
+:has(#p-16:checked) .move-16 .board__disc--primary,
+:has(#s-17:checked) .move-17 .board__disc--secondary,
+:has(#p-17:checked) .move-17 .board__disc--primary,
+:has(#s-18:checked) .move-18 .board__disc--secondary,
+:has(#p-18:checked) .move-18 .board__disc--primary,
+:has(#s-19:checked) .move-19 .board__disc--secondary,
+:has(#p-19:checked) .move-19 .board__disc--primary,
+:has(#s-20:checked) .move-20 .board__disc--secondary,
+:has(#p-20:checked) .move-20 .board__disc--primary,
+:has(#s-21:checked) .move-21 .board__disc--secondary,
+:has(#p-21:checked) .move-21 .board__disc--primary,
+:has(#s-22:checked) .move-22 .board__disc--secondary,
+:has(#p-22:checked) .move-22 .board__disc--primary,
+:has(#s-23:checked) .move-23 .board__disc--secondary,
+:has(#p-23:checked) .move-23 .board__disc--primary,
+:has(#s-24:checked) .move-24 .board__disc--secondary,
+:has(#p-24:checked) .move-24 .board__disc--primary,
+:has(#s-25:checked) .move-25 .board__disc--secondary,
+:has(#p-25:checked) .move-25 .board__disc--primary,
+:has(#s-26:checked) .move-26 .board__disc--secondary,
+:has(#p-26:checked) .move-26 .board__disc--primary,
+:has(#s-27:checked) .move-27 .board__disc--secondary,
+:has(#p-27:checked) .move-27 .board__disc--primary,
+:has(#s-28:checked) .move-28 .board__disc--secondary,
+:has(#p-28:checked) .move-28 .board__disc--primary,
+:has(#s-29:checked) .move-29 .board__disc--secondary,
+:has(#p-29:checked) .move-29 .board__disc--primary,
+:has(#s-30:checked) .move-30 .board__disc--secondary,
+:has(#p-30:checked) .move-30 .board__disc--primary,
+:has(#s-31:checked) .move-31 .board__disc--secondary,
+:has(#p-31:checked) .move-31 .board__disc--primary,
+:has(#s-32:checked) .move-32 .board__disc--secondary,
+:has(#p-32:checked) .move-32 .board__disc--primary,
+:has(#s-33:checked) .move-33 .board__disc--secondary,
+:has(#p-33:checked) .move-33 .board__disc--primary,
+:has(#s-34:checked) .move-34 .board__disc--secondary,
+:has(#p-34:checked) .move-34 .board__disc--primary,
+:has(#s-35:checked) .move-35 .board__disc--secondary,
+:has(#p-35:checked) .move-35 .board__disc--primary,
+:has(#s-36:checked) .move-36 .board__disc--secondary,
+:has(#p-36:checked) .move-36 .board__disc--primary,
+:has(#s-37:checked) .move-37 .board__disc--secondary,
+:has(#p-37:checked) .move-37 .board__disc--primary,
+:has(#s-38:checked) .move-38 .board__disc--secondary,
+:has(#p-38:checked) .move-38 .board__disc--primary,
+:has(#s-39:checked) .move-39 .board__disc--secondary,
+:has(#p-39:checked) .move-39 .board__disc--primary,
+:has(#s-40:checked) .move-40 .board__disc--secondary,
+:has(#p-40:checked) .move-40 .board__disc--primary,
+:has(#s-41:checked) .move-41 .board__disc--secondary,
+:has(#p-41:checked) .move-41 .board__disc--primary,
+:has(#s-42:checked) .move-42 .board__disc--secondary,
+:has(#p-42:checked) .move-42 .board__disc--primary {
+  display: block;
+}
+:has(#s-1:checked, #p-1:checked) .move-1 .board__labels,
+:has(#s-2:checked, #p-2:checked) .move-2 .board__labels,
+:has(#s-3:checked, #p-3:checked) .move-3 .board__labels,
+:has(#s-4:checked, #p-4:checked) .move-4 .board__labels,
+:has(#s-5:checked, #p-5:checked) .move-5 .board__labels,
+:has(#s-6:checked, #p-6:checked) .move-6 .board__labels,
+:has(#s-7:checked, #p-7:checked) .move-7 .board__labels,
+:has(#s-8:checked, #p-8:checked) .move-8 .board__labels,
+:has(#s-9:checked, #p-9:checked) .move-9 .board__labels,
+:has(#s-10:checked, #p-10:checked) .move-10 .board__labels,
+:has(#s-11:checked, #p-11:checked) .move-11 .board__labels,
+:has(#s-12:checked, #p-12:checked) .move-12 .board__labels,
+:has(#s-13:checked, #p-13:checked) .move-13 .board__labels,
+:has(#s-14:checked, #p-14:checked) .move-14 .board__labels,
+:has(#s-15:checked, #p-15:checked) .move-15 .board__labels,
+:has(#s-16:checked, #p-16:checked) .move-16 .board__labels,
+:has(#s-17:checked, #p-17:checked) .move-17 .board__labels,
+:has(#s-18:checked, #p-18:checked) .move-18 .board__labels,
+:has(#s-19:checked, #p-19:checked) .move-19 .board__labels,
+:has(#s-20:checked, #p-20:checked) .move-20 .board__labels,
+:has(#s-21:checked, #p-21:checked) .move-21 .board__labels,
+:has(#s-22:checked, #p-22:checked) .move-22 .board__labels,
+:has(#s-23:checked, #p-23:checked) .move-23 .board__labels,
+:has(#s-24:checked, #p-24:checked) .move-24 .board__labels,
+:has(#s-25:checked, #p-25:checked) .move-25 .board__labels,
+:has(#s-26:checked, #p-26:checked) .move-26 .board__labels,
+:has(#s-27:checked, #p-27:checked) .move-27 .board__labels,
+:has(#s-28:checked, #p-28:checked) .move-28 .board__labels,
+:has(#s-29:checked, #p-29:checked) .move-29 .board__labels,
+:has(#s-30:checked, #p-30:checked) .move-30 .board__labels,
+:has(#s-31:checked, #p-31:checked) .move-31 .board__labels,
+:has(#s-32:checked, #p-32:checked) .move-32 .board__labels,
+:has(#s-33:checked, #p-33:checked) .move-33 .board__labels,
+:has(#s-34:checked, #p-34:checked) .move-34 .board__labels,
+:has(#s-35:checked, #p-35:checked) .move-35 .board__labels,
+:has(#s-36:checked, #p-36:checked) .move-36 .board__labels,
+:has(#s-37:checked, #p-37:checked) .move-37 .board__labels,
+:has(#s-38:checked, #p-38:checked) .move-38 .board__labels,
+:has(#s-39:checked, #p-39:checked) .move-39 .board__labels,
+:has(#s-40:checked, #p-40:checked) .move-40 .board__labels,
+:has(#s-41:checked, #p-41:checked) .move-41 .board__labels,
+:has(#s-42:checked, #p-42:checked) .move-42 .board__labels {
+  display: none;
+}
+
+body {
+  counter-reset: turn 1;
+}
+
+[id*="p"]:checked {
+  counter-increment: turn 2;
+}
+
+[id*="s"]:checked {
+  counter-increment: turn -2;
+}
+
+/* @property --turn {
+  inherits: true;
+  initial-value: 0;
+  syntax: '<integer>';
+}
+
+body {
+  counter-reset: turn var(--turn);
+}
+
+[id*="p"]:checked {
+  counter-increment: turn -1;
+}
+[id*="s"]:checked {
+  counter-increment: turn 1;
+}
+
+[id*="s"] {
+  --coefficient: calc(counter(turn));
+  transform: scale(calc(1 + var(--coefficient)));
+}
+
+.board:after {
+  content: counter(turn);
+  font-size: 2rem;
+} */
+
+.board:after {
+  content: counter(turn, lower-roman);
+  font-size: 2rem;
+}
+
+/* NO */
+/* .board:has(:checked)
+.board:has(:checked ~ :checked ~ :checked)
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked)
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)  
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)  
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)  
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)  
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)  
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)
+.board:has(:checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked ~ :checked)
+  --turn 1
+ */
+
+
+/* Detecting winners */
+/* Column Winner */
+:root:has(
+  [id*="s"]:checked
+  + input +
+  [id*="s"]:checked
+  + input +
+  [id*="s"]:checked
+  + input +
+  [id*="s"]:checked
+) {
+  --winner: 280;
+}
+
+:root:has(
+  [id*="p"]:checked
+  + input +
+  [id*="p"]:checked
+  + input +
+  [id*="p"]:checked
+  + input +
+  [id*="p"]:checked
+) {
+  --winner: 320;
+}
+
+/* Row Winner */
+
+:root:has(
+  [id*="p"]:checked
+  + input + input + input + input + input + input + input + input + input + input + input +     
+  [id*="p"]:checked
+  + input + input + input + input + input + input + input + input + input + input + input +
+  [id*="p"]:checked
+  + input + input + input + input + input + input + input + input + input + input + input +
+  [id*="p"]:checked
+) {
+  --winner: 140;
+}
+
+:root:has(
+  [id*="s"]:checked
+  + input + input + input + input + input + input + input + input + input + input + input +     
+  [id*="s"]:checked
+  + input + input + input + input + input + input + input + input + input + input + input +
+  [id*="s"]:checked
+  + input + input + input + input + input + input + input + input + input + input + input +
+  [id*="s"]:checked
+) {
+  --winner: 60;
+}
+
+/* Diagonal Winner */
+:root:has(
+  [id*="s"]:checked
+  + input + input + input + input + input + input + input + input + input + input + input + input + input +  
+  [id*="s"]:checked
+  + input + input + input + input + input + input + input + input + input + input + input + input + input +
+  [id*="s"]:checked
+  + input + input + input + input + input + input + input + input + input + input + input + input + input +
+  [id*="s"]:checked
+) {
+  --winner: 80;
+}
+
+:root:has(
+  [id*="s"]:checked
+  + input + input + input + input + input + input + input + input + input +
+  [id*="s"]:checked
+  + input + input + input + input + input + input + input + input + input +
+  [id*="s"]:checked
+  + input + input + input + input + input + input + input + input + input +
+  [id*="s"]:checked
+) {
+  --winner: 80;
+}
+
+:root:has(
+  [id*="p"]:checked
+  + input + input + input + input + input + input + input + input + input + input + input + input + input +
+  [id*="p"]:checked
+  + input + input + input + input + input + input + input + input + input + input + input + input + input +
+  [id*="p"]:checked
+  + input + input + input + input + input + input + input + input + input + input + input + input + input +
+  [id*="p"]:checked
+) {
+  --winner: 290;
+}
+
+:root:has(
+  [id*="p"]:checked
+  + input + input + input + input + input + input + input + input + input +
+  [id*="p"]:checked
+  + input + input + input + input + input + input + input + input + input +
+  [id*="p"]:checked
+  + input + input + input + input + input + input + input + input + input +
+  [id*="p"]:checked
+) {
+  --winner: 290;
+}
+
+
+/* input:nth-of-type(2):checked ~ .column > input:nth-of-type(2):checked ~ .column > input:nth-of-type(2):checked ~ .column > input:nth-of-type(2):checked ~ .column::after,
+input:nth-of-type(4):checked ~ .column > input:nth-of-type(4):checked ~ .column > input:nth-of-type(4):checked ~ .column > input:nth-of-type(4):checked ~ .column::after,
+input:nth-of-type(6):checked ~ .column > input:nth-of-type(6):checked ~ .column > input:nth-of-type(6):checked ~ .column > input:nth-of-type(6):checked ~ .column::after,
+input:nth-of-type(8):checked ~ .column > input:nth-of-type(8):checked ~ .column > input:nth-of-type(8):checked ~ .column > input:nth-of-type(8):checked ~ .column::after,
+input:nth-of-type(10):checked ~ .column > input:nth-of-type(10):checked ~ .column > input:nth-of-type(10):checked ~ .column > input:nth-of-type(10):checked ~ .column::after,
+input:nth-of-type(12):checked ~ .column > input:nth-of-type(12):checked ~ .column > input:nth-of-type(12):checked ~ .column > input:nth-of-type(12):checked ~ .column::after, */

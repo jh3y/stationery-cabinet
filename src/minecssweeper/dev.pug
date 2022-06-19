@@ -87,16 +87,64 @@
 
   GROUP_ZEROS()
 
-form
+form.game(style=`--columns: ${COLUMNS}; --rows: ${ROWS}; --mine-count: ${MINE_COUNT};`)
   - let defusers = []
   - let created = []
   - let prompted = []
+  // - let fakes = 0
+  // while fakes < 50
+  //   input(type="checkbox" id=`fakes--${fakes}`)
+  //   label(for=`fakes--${fakes}`)= fakes
+  //   - fakes++
+  .screen
+    .dialog
+      .dialog__content.dialog__content--intro
+        h1 MineCSSweeper
+        p.
+          An old classic! Try and open all the cells without tripping a mine.
+        label.faux-button(for="start-game") Start Game
+        input#start-game(type="checkbox")
+      .dialog__content.dialog__content--lose
+        h1 Uh Oh!
+        p Looks like you tripped a mine!
+        button.faux-button(type="reset" title="Reset Board") Replay
+      .dialog__content.dialog__content--win
+        h1 Well Done!
+        .timer
+          .digit.second.m.m--tens 0
+          .digit.second.m.m--singles 0
+          span :
+          .digit.second.s.s--tens 0
+          .digit.second.s.s--singles 0
+          span .
+          .digit.digit--small.ms.ms--tens 0
+          .digit.digit--small.ms.ms--singles 0
+        button.faux-button(type="reset" title="Reset Board") Replay
+  .board__flag-toggle.toggle
+    input(type="checkbox" id="flag-toggle")
+    .toggle__thumb
+    label.toggle__control(for="flag-toggle")
+  .game__controls
+    .flag-controls
+      .flag-counter
+        span= `⛳️: `
+        span.mine-count= MINE_COUNT
+    .timer-container
+      .timer.game-timer
+        .digit.second.m.m--tens 0
+        .digit.second.m.m--singles 0
+        span :
+        .digit.second.s.s--tens 0
+        .digit.second.s.s--singles 0
+        span .
+        .digit.digit--small.ms.ms--tens 0
+        .digit.digit--small.ms.ms--singles 0
+    .game-state-controls
+      button.game-reset.faux-button(type="reset" title="Reset")
+        svg(class="reset" viewBox="0 0 24 24")
+          path(d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z")
   .board(style=`--rows: ${ROWS}; --columns: ${COLUMNS};`)
-    .board__flag-toggle
-      input(type="checkbox" id="flag-toggle")
-      label(for="flag-toggle")
     .board__group-controls
-      button(type="reset") Reset Board
       - let c = 0
       while c < CELL_COUNT
         - const COUNT = GAME_BOARD[c]
@@ -149,13 +197,18 @@ form
 
       // Needs a flag, a bomb if required, or a prompt
       .board__cell(class=CLASS_NAME style=`--hue: ${hue};`)
-        span=COUNT === 0 ? '' : COUNT
+        - 
+          let content = COUNT === 0 ? '' : COUNT
+          if (COUNT === 'X')
+            content = '💣'
+        span=content
         input(type="checkbox" id=`flag--${i}`)
         label(for=`flag--${i}`)
         
         // Every cell gonna need a flag if not COUNT X
         if COUNT !== 'X' && forId
           label(for=forId)
+        // A placeholder will block hitting the flag when you're not meant to.
         if (!forId)
           input(type="checkbox" id=`placeholder--${i}`)
           label(for=`placeholder--${i}`)
@@ -172,7 +225,7 @@ form
   for (let p = 0; p < prompted.length; p++) {
     GROUPINGS += `:root:has(#${prompted[p]}:checked) .board__cell:has([for=${prompted[p]}]) label ${p === prompted.length - 1 ? ' {' : ','}`
   }
-  GROUPINGS += 'display: none; }'
+  GROUPINGS += 'z-index: -1; opacity: 0; }'
 
   let VICTORY_DANCE = ':root:has('
 
@@ -184,8 +237,22 @@ form
     VICTORY_DANCE += `#${prompted[b]}:checked ${b === prompted.length - 1 ? '' : '~'}`
   }
 
-  VICTORY_DANCE += ') { --hue: 140; --show-win: 1; }'
+  VICTORY_DANCE += ') body ' 
 
-  STYLES = `${GROUPINGS} ${VICTORY_DANCE}`
+  const COMBINATION_STYLE = '{ --screen-hide: 0; --show-win: 1; --state: paused; }'
+  const COMBINATION_WIN_HIDE = `
+    :where(.dialog__content--intro, .dialog__content--lose) {
+      --z: -1;
+      --opacity: 0;
+    }
+  `
+  const COMBINATION_WIN_SHOW = `
+    :where(.dialog__content--win) {
+      --z: 2;
+      opacity: 1;
+    }
+  `
+
+  STYLES = `${GROUPINGS} ${VICTORY_DANCE}${COMBINATION_STYLE} ${VICTORY_DANCE}${COMBINATION_WIN_HIDE} ${VICTORY_DANCE}${COMBINATION_WIN_SHOW}`
 
 style= STYLES
