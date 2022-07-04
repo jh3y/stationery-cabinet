@@ -35,7 +35,7 @@ form {
 }
 
 .board__cell {
-  background: hsl(10 80% 50%);
+  background: 'hsl(10 80% 50%)' % '';
   aspect-ratio: 1;
 }
 
@@ -310,102 +310,38 @@ body {
 
 /* Detecting winners */
 /* Column Winner */
-:root:has(
-  [id*="s"]:checked
-  + input +
-  [id*="s"]:checked
-  + input +
-  [id*="s"]:checked
-  + input +
-  [id*="s"]:checked
-) {
+:root:has([id*="s"]:checked + input + [id*="s"]:checked + input + [id*="s"]:checked + input + [id*="s"]:checked) {
   --winner: 280;
 }
 
-:root:has(
-  [id*="p"]:checked
-  + input +
-  [id*="p"]:checked
-  + input +
-  [id*="p"]:checked
-  + input +
-  [id*="p"]:checked
-) {
+:root:has([id*="p"]:checked + input + [id*="p"]:checked + input + [id*="p"]:checked + input + [id*="p"]:checked) {
   --winner: 320;
 }
 
 /* Row Winner */
 
-:root:has(
-  [id*="p"]:checked
-  + input + input + input + input + input + input + input + input + input + input + input +     
-  [id*="p"]:checked
-  + input + input + input + input + input + input + input + input + input + input + input +
-  [id*="p"]:checked
-  + input + input + input + input + input + input + input + input + input + input + input +
-  [id*="p"]:checked
-) {
+:root:has([id*="p"]:checked + input + input + input + input + input + input + input + input + input + input + input + [id*="p"]:checked + input + input + input + input + input + input + input + input + input + input + input + [id*="p"]:checked + input + input + input + input + input + input + input + input + input + input + input + [id*="p"]:checked) {
   --winner: 140;
 }
 
-:root:has(
-  [id*="s"]:checked
-  + input + input + input + input + input + input + input + input + input + input + input +     
-  [id*="s"]:checked
-  + input + input + input + input + input + input + input + input + input + input + input +
-  [id*="s"]:checked
-  + input + input + input + input + input + input + input + input + input + input + input +
-  [id*="s"]:checked
-) {
+:root:has([id*="s"]:checked + input + input + input + input + input + input + input + input + input + input + input + [id*="s"]:checked + input + input + input + input + input + input + input + input + input + input + input + [id*="s"]:checked + input + input + input + input + input + input + input + input + input + input + input + [id*="s"]:checked) {
   --winner: 60;
 }
 
 /* Diagonal Winner */
-:root:has(
-  [id*="s"]:checked
-  + input + input + input + input + input + input + input + input + input + input + input + input + input +  
-  [id*="s"]:checked
-  + input + input + input + input + input + input + input + input + input + input + input + input + input +
-  [id*="s"]:checked
-  + input + input + input + input + input + input + input + input + input + input + input + input + input +
-  [id*="s"]:checked
-) {
+:root:has([id*="s"]:checked + input + input + input + input + input + input + input + input + input + input + input + input + input + [id*="s"]:checked + input + input + input + input + input + input + input + input + input + input + input + input + input + [id*="s"]:checked + input + input + input + input + input + input + input + input + input + input + input + input + input + [id*="s"]:checked) {
   --winner: 80;
 }
 
-:root:has(
-  [id*="s"]:checked
-  + input + input + input + input + input + input + input + input + input +
-  [id*="s"]:checked
-  + input + input + input + input + input + input + input + input + input +
-  [id*="s"]:checked
-  + input + input + input + input + input + input + input + input + input +
-  [id*="s"]:checked
-) {
+:root:has([id*="s"]:checked + input + input + input + input + input + input + input + input + input + [id*="s"]:checked + input + input + input + input + input + input + input + input + input + [id*="s"]:checked + input + input + input + input + input + input + input + input + input + [id*="s"]:checked) {
   --winner: 80;
 }
 
-:root:has(
-  [id*="p"]:checked
-  + input + input + input + input + input + input + input + input + input + input + input + input + input +
-  [id*="p"]:checked
-  + input + input + input + input + input + input + input + input + input + input + input + input + input +
-  [id*="p"]:checked
-  + input + input + input + input + input + input + input + input + input + input + input + input + input +
-  [id*="p"]:checked
-) {
+:root:has([id*="p"]:checked + input + input + input + input + input + input + input + input + input + input + input + input + input + [id*="p"]:checked + input + input + input + input + input + input + input + input + input + input + input + input + input + [id*="p"]:checked + input + input + input + input + input + input + input + input + input + input + input + input + input + [id*="p"]:checked) {
   --winner: 290;
 }
 
-:root:has(
-  [id*="p"]:checked
-  + input + input + input + input + input + input + input + input + input +
-  [id*="p"]:checked
-  + input + input + input + input + input + input + input + input + input +
-  [id*="p"]:checked
-  + input + input + input + input + input + input + input + input + input +
-  [id*="p"]:checked
-) {
+:root:has([id*="p"]:checked + input + input + input + input + input + input + input + input + input + [id*="p"]:checked + input + input + input + input + input + input + input + input + input + [id*="p"]:checked + input + input + input + input + input + input + input + input + input + [id*="p"]:checked) {
   --winner: 290;
 }
 

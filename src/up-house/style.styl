@@ -1,0 +1,1499 @@
+*
+*:after
+  box-sizing border-box
+  transform-style preserve-3d
+  transition --brightness 0.1s ease
+  
+@property --rotate-y {
+  initial-value: 0;
+  syntax: '<number>';
+  inherits: true;
+}
+
+@property --brightness {
+  initial-value: 1;
+  syntax: '<number>';
+  inherits: true;
+}
+
+:root
+  --perspective 800
+  --rotate-x -15
+  --rotate-y -40
+  --house-height 12
+  --scale 0.75
+  --speed 30
+  // colors
+  --shine hsla(0, 0%, 100%, 0.5)
+  --brick hsl(15, 60%, 40%)
+  --pitch-top hsl(20, 50%, 30%)
+  --door hsl(22, 60%, 40%)
+  --pitch-under hsl(198, 65%, 70%)
+  --pitch-back hsl(198, 65%, 40%)
+  --yellow-one hsl(49, 92%, 70%)
+  --yellow-two hsl(49, 92%, 60%)
+  --yellow-three hsl(49, 92%, 50%)
+  --pink-one hsl(357, 65%, 85%)
+  --pink-two hsl(357, 65%, 80%)
+  --pink-three hsl(357, 65%, 75%)
+  --orange-one hsl(26, 93%, 70%)
+  --orange-two hsl(26, 93%, 60%)
+  --orange-three hsl(26, 93%, 50%)
+  --pipe-one hsl(0, 100%, 90%)
+  --pipe-two hsl(0, 100%, 80%)
+  --pipe-three hsl(0, 100%, 70%)
+  --blue-one hsl(198, 62%, 65%)
+  --blue-two hsl(198, 62%, 55%)
+  --blue-three hsl(198, 62%, 45%)
+  --green-one hsl(81, 51%, 60%)
+  --green-two hsl(81, 51%, 50%)
+  --green-three hsl(81, 51%, 40%)
+  --windowsill hsl(0, 0%, 90%)
+  --trim-one hsl(45, 40%, 70%)
+  --trim-two hsl(45, 40%, 60%)
+  --trim-three hsl(45, 40%, 50%)
+  --step-one hsl(45, 40%, 50%)
+  --step-two hsl(45, 40%, 40%)
+  --step-three hsl(45, 40%, 30%)
+  --handrail-one hsl(45, 40%, 90%)
+  --handrail-two hsl(45, 40%, 85%)
+  --handrail-three hsl(45, 40%, 80%)
+  --internal-one hsl(180, 60%, 8%)
+  --internal-two hsl(180, 60%, 15%)
+  --panel-shade hsla(0, 0%, 0%, 0.25)
+
+
+#toggle:checked ~ .scene
+  --brightness 0.4
+  
+[for="toggle"]
+  position fixed
+  top 50%
+  left 50%
+  height 100vmax
+  aspect-ratio 1
+  transform translate3d(-50%, -50%, 300vmin)
+  z-index 10
+
+body
+  min-height 100vh
+  overflow hidden
+  animation rotate-scene 10s infinite linear reverse
+  
+@keyframes rotate-scene
+  0%
+    --rotate-y 0
+  100%
+    --rotate-y 360
+
+.scene
+  perspective calc(var(--perspective, 800) * 1px)
+  transform-style preserve-3d
+  height 100vh
+  width 100vw
+  display flex
+  align-items center
+  justify-content center
+  transform translateZ(100vmin) scale(var(--scale))
+
+.scene:after
+  content ""
+  position absolute
+  inset -200vmax
+  transition background 0.1s ease
+  background 'hsl(210 100% %s)' % calc((95 - ((1 - var(--brightness, 1)) * 130)) * 1%)
+  transform translate3d(0, 0, -200vmin)
+
+.dg.ac 
+  transform translateZ(400vmin)
+
+.house
+  position absolute
+  height 100%
+  width 100%
+  transform translate(10%, 0)
+
+.plane
+  height calc(var(--plane-height, 30) * 1vmin)
+  width calc(var(--plane-width, 25) * 1vmin)
+  transform-style preserve-3d
+  position absolute
+  transform rotateX(calc(var(--rotate-x, -24) * 1deg)) rotateY(calc(var(--rotate-y, -24) * 1deg)) rotateX(90deg) translate3d(0, 0, -30vmin)
+
+.balloon-plane
+  position absolute
+  transform-style preserve-3d
+  transform rotateX(calc(var(--rotate-x, -24) * 1deg)) rotateY(calc(var(--rotate-y, -24) * 1deg)) rotateX(90deg) translate3d(0, 0, -31vmin)
+
+@keyframes rotate
+  from
+    transform rotateX(calc(var(--rotate-x, -24) * 1deg)) rotateY(calc(var(--rotate-y, -24) * 1deg)) rotateX(90deg) translate3d(0, 0, -30vmin) rotateZ(0deg)
+  to
+    transform rotateX(calc(var(--rotate-x, -24) * 1deg)) rotateY(calc(var(--rotate-y, -24) * 1deg)) rotateX(90deg) translate3d(0, 0, -30vmin) rotateZ(360deg)
+
+// This is what makes the CSS variable powered cuboid
+.cuboid
+  --width var(--cuboid-width, 15)
+  --height var(--cuboid-height, 10)
+  --depth var(--cuboid-depth, 4)
+  height calc(var(--depth) * 1vmin)
+  width calc(var(--width) * 1vmin)
+  position absolute
+  transform translate3d(calc(var(--x, 0) * 1vmin), calc(var(--y, 0) * 1vmin), calc(var(--z, 0) * 1vmin)) rotateX(calc(var(--rotate-cuboid-x, 0) * 1deg)) rotateY(calc(var(--rotate-cuboid-y, 0) * 1deg)) rotateZ(calc(var(--rotate-cuboid-z, 0) * 1deg))
+  transform-style preserve-3d
+
+  &__side
+    transform-style preserve-3d
+
+  & > div:nth-of-type(1)
+    height calc(var(--height) * 1vmin)
+    width 100%
+    transform-origin 50% 50%
+    transform rotateX(-90deg)
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%) rotateX(-90deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin))
+
+  & > div:nth-of-type(2)
+    height calc(var(--height) * 1vmin)
+    width 100%
+    transform-origin 50% 50%
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(180deg) translate3d(0, 0, calc((var(--depth) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(3)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--depth) * 1vmin)
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(4)
+    height calc(var(--height) * 1vmin)
+    width calc(var(--depth) * 1vmin)
+    transform translate(-50%, -50%) rotateX(-90deg) rotateY(-90deg) translate3d(0, 0, calc((var(--width) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(5)
+    height calc(var(--depth) * 1vmin)
+    width calc(var(--width) * 1vmin)
+    transform translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * 1vmin))
+    position absolute
+    top 50%
+    left 50%
+
+  & > div:nth-of-type(6)
+    height calc(var(--depth) * 1vmin)
+    width calc(var(--width) * 1vmin)
+    transform translate(-50%, -50%) translate3d(0, 0, calc((var(--height) / 2) * -1vmin)) rotateX(180deg)
+    position absolute
+    top 50%
+    left 50%
+
+// 30 x 25
+.house
+
+  &__mini-pitch
+    --width 10
+    --height 4
+    --depth 6
+    --z 19
+    --y 20
+    --x 9
+
+    div
+      --bg var(--orange-one)
+      background linear-gradient(transparent 90%, var(--panel-shade)) 0 0 / 100% 1vmin, var(--bg)
+      filter brightness(var(--brightness, 1))
+
+      &:nth-of-type(4)
+      &:nth-of-type(5)
+      &:nth-of-type(6)
+        display none
+
+      &:nth-of-type(1)
+        --bg var(--orange-three)
+
+      &:nth-of-type(3):after
+        content ''
+        height 90%
+        width 50%
+        border 0.25vmin solid var(--windowsill)
+        background linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 100% 0.25vmin no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 0.25vmin 100% no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 48% / 100% 0.25vmin no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 100% 0 / 0.25vmin 100% no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 100% / 100% 0.25vmin no-repeat,
+                  linear-gradient(var(--yellow-three) 0 50%, var(--yellow-three) 50%)
+        position absolute
+        bottom 40%
+        left 50%
+        transform translate3d(-50%, 0, 1px)
+
+  &__mini-pitch-top
+    --width 10
+    --height 4
+    --depth 6
+    --z 23
+    --y 20
+    --x 9
+
+    div
+      filter brightness(var(--brightness, 1))
+      --bg var(--orange-one)
+      background linear-gradient(transparent 90%, var(--panel-shade)) 0 0 / 100% 1vmin, var(--bg)
+
+    div:nth-of-type(1)
+    div:nth-of-type(2)
+    div:nth-of-type(4)
+    div:nth-of-type(5)
+    div:nth-of-type(6)
+      display none
+
+    div:nth-of-type(3)
+      $clip = polygon(0 100%, 50% 0, 100% 100%)
+      -webkit-clip-path $clip
+      clip-path $clip
+
+  &__side
+    --width 8
+    --x 5
+    --y -4
+    --depth 4
+    --height 10
+    --z 7
+
+    div
+      --bg var(--pink-one)
+      filter brightness(var(--brightness, 1))
+      background linear-gradient(transparent 90%, var(--panel-shade)) 0 0 / 100% 1vmin, var(--bg)
+
+      &:nth-of-type(1)
+      &:nth-of-type(5)
+      &:nth-of-type(6)
+        background var(--transparent)
+
+      &:nth-of-type(3)
+        --bg var(--pink-three)
+
+      &:nth-of-type(2):after
+        content ''
+        position absolute
+        top 10%
+        left 50%
+        width 50%
+        height 60%
+        transform translate3d(-50%, 0, 1px)
+        border 0.25vmin solid var(--windowsill)
+        background linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 100% 0.5vmin no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 0.5vmin 100% no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 48% / 100% 0.5vmin no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 100% 0 / 0.5vmin 100% no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 100% / 100% 0.5vmin no-repeat,
+                  linear-gradient(var(--internal-one) 0 50%, var(--internal-two) 50%)
+
+
+  &__side-pitch-body
+    --width 8
+    --x 5
+    --y -4
+    --depth 10
+    --height 8
+    --z 17
+
+    div
+      background var(--pink-one)
+      filter brightness(calc(var(--brightness, 1) * var(--b)))
+
+      &:nth-of-type(3)
+        --b 0.5
+
+      &:nth-of-type(2)
+        --b 0.95
+
+      &:nth-of-type(1)
+      &:nth-of-type(5)
+      &:nth-of-type(6)
+      &:nth-of-type(1):after
+      &:nth-of-type(5):after
+      &:nth-of-type(6):after
+        display none
+
+      &:after
+        filter brightness(var(--brightness, 1))
+        content ''
+        background url('https://assets.codepen.io/605876/house-roof-tile--pink.png')
+        position absolute
+        height 100%
+        width 100%
+        left 0
+        top 0
+
+  &__side-pitch-pitch
+    --width 8
+    --x 5
+    --y -4
+    --depth 10
+    --height 10
+    --z 25
+    
+    div
+      filter brightness(var(--brightness, 1))
+
+    div:nth-of-type(2)
+      $clip = polygon(0 100%, 50% 0, 100% 100%)
+      -webkit-clip-path $clip
+      clip-path $clip
+      background var(--pink-one)
+      filter brightness(calc(var(--brightness, 1) * 0.95))
+
+      &:before
+        content ''
+        background url('https://assets.codepen.io/605876/house-roof-tile--pink.png')
+        position absolute
+        height 100%
+        width 100%
+        left 0
+        top 0
+
+    div:nth-of-type(1)
+    div:nth-of-type(3)
+    div:nth-of-type(4)
+    div:nth-of-type(5)
+    div:nth-of-type(6)
+      background transparent
+
+  &__side-trim
+    --width 10
+    --x 4
+    --depth 5
+    --y -5
+    --height 1.5
+    --z 12.25
+
+    div
+      background var(--trim-one)
+      filter brightness(var(--brightness, 1))
+
+      &:nth-of-type(2)
+        background var(--trim-two)
+      &:nth-of-type(3)
+        background var(--trim-three)
+
+  &__main
+    --width 14
+    --depth 29
+    --y 1
+    --height var(--house-height)
+    --z calc((var(--house-height) / 2) + 2)
+
+    div
+      --bg var(--yellow-one)
+      background linear-gradient(transparent 90%, var(--panel-shade)) 0 0 / 100% 1vmin, var(--bg)
+      filter brightness(var(--brightness, 1))
+
+      &:nth-of-type(1):after
+        content ''
+        position absolute
+        height 38%
+        width 20%
+        top 22%
+        left 10%
+        transform translate3d(0, 0, 1px)
+        border 0.25vmin solid var(--windowsill)
+        background linear-gradient(var(--internal-one), var(--internal-two)) 0.25vmin 83%/72% 36% no-repeat,
+                  linear-gradient(var(--internal-one), var(--internal-two)) 0.25vmin 0.25vmin/72% 40% no-repeat,
+                  var(--pink-one)
+
+      &:nth-of-type(2)
+        display none
+      &:nth-of-type(3)
+        --bg var(--orange-three)
+      &:nth-of-type(3):after
+        content ''
+        position absolute
+        bottom 0
+        height 70%
+        width 20%
+        left 28%
+        background radial-gradient(var(--windowsill) 50%, transparent 50%) 94% 50% / 1vmin 1vmin no-repeat, var(--pitch-top)
+        border 0.5vmin solid var(--windowsill)
+        border-bottom 0
+        transform translate3d(0, 0, 1px)
+      &:nth-of-type(3):before
+        content ''
+        position absolute
+        bottom 26%
+        height 36%
+        width 10%
+        left 6%
+        background linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 100% 0.5vmin no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 0.5vmin 100% no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 48% / 100% 0.5vmin no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 100% 0 / 0.5vmin 100% no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 100% / 100% 0.5vmin no-repeat,
+                  linear-gradient(var(--internal-two) 0 50%, var(--internal-one) 50%)
+        border 0.5vmin solid var(--windowsill)
+        transform translate3d(0, 0, 1px)
+      &:nth-of-type(4)
+        --bg var(--blue-one)
+      &:nth-of-type(4):after
+        content ''
+        position absolute
+        bottom 0
+        height 70%
+        width 20%
+        right 31%
+        background radial-gradient(var(--windowsill) 50%, transparent 50%) 94% 50% / 1vmin 1vmin no-repeat, var(--door)
+        border 0.5vmin solid var(--windowsill)
+        border-bottom 0
+        transform translate3d(0, 0, 1px)
+      &:nth-of-type(4):before
+        content ''
+        position absolute
+        bottom 24%
+        height 36%
+        width 24%
+        right 2%
+        background linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 100% 0.5vmin no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 0.5vmin 100% no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 48% 0 / 0.5vmin 100% no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 100% 0 / 0.5vmin 100% no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 100% / 100% 0.5vmin no-repeat,
+                  linear-gradient(var(--yellow-three) 0 50%, var(--internal-one) 50%)
+        border 0.5vmin solid var(--windowsill)
+        transform translate3d(0, 0, 1px)
+
+      &:nth-of-type(5)
+      &:nth-of-type(6)
+        display none
+
+  &__top
+    --width 20
+    --depth 30
+    --height 2
+    --z calc(var(--house-height) + 2)
+
+    div
+      --bg var(--yellow-one)
+      background linear-gradient(transparent 90%, var(--panel-shade)) 0 0 / 100% 1vmin, var(--bg)
+      filter brightness(var(--brightness, 1))
+
+      &:nth-of-type(1):after
+        content ''
+        position absolute
+        bottom 250%
+        left 50%
+        transform translate3d(-50%, 0, 1px)
+        width 15%
+        height 270%
+        background linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 100% 0.5vmin no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 0.5vmin 100% no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 48% / 100% 0.5vmin no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 100% 0 / 0.5vmin 100% no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 100% / 100% 0.5vmin no-repeat,
+                  linear-gradient(var(--yellow-three) 0 50%, var(--internal-one) 50%)
+        border 0.25vmin solid var(--windowsill)
+
+      &:nth-of-type(2)
+      &:nth-of-type(5)
+      &:nth-of-type(6)
+        display none
+      &:nth-of-type(3)
+        --bg var(--blue-two)
+      &:nth-of-type(4)
+        --bg var(--blue-one)
+
+  &__front
+    --width 22
+    --height calc(var(--house-height) + 1)
+    --depth 15
+    --z calc((var(--house-height) / 2) + 2.5)
+    --x -2
+
+    div
+      --bg var(--orange-one)
+      background linear-gradient(transparent 90%, var(--panel-shade)) 0 0 / 100% 1vmin, var(--bg)
+      filter brightness(var(--brightness, 1))
+
+      &:nth-of-type(1)
+        --bg var(--orange-two)
+      &:nth-of-type(2)
+        --bg var(--orange-one)
+
+        &:after
+        &:before
+          content ''
+          position absolute
+          top 34%
+          background linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 100% 0.5vmin no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 0.5vmin 100% no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 48% / 100% 0.5vmin no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 100% 0 / 0.5vmin 100% no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 100% / 100% 0.5vmin no-repeat,
+                  linear-gradient(var(--internal-two) 0 50%, var(--internal-two) 50%)
+          border 0.25vmin solid var(--windowsill)
+          transform translate3d(0, 0, 1px)
+        &:after
+          right 15%
+          height 32%
+          width 10%
+        &:before
+          height 20%
+          left 10%
+          width 15%
+          background linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 100% 0.5vmin no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 0.5vmin 100% no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 100% 0 / 0.5vmin 100% no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 100% / 100% 0.5vmin no-repeat,
+                  linear-gradient(var(--internal-two) 0 50%, var(--internal-two) 50%)
+
+
+      &:nth-of-type(3)
+        --bg var(--orange-three)
+      &:nth-of-type(4)
+        --bg var(--pink-one)
+        
+        &:after
+          content ""
+          position absolute
+          bottom 50%
+          height 100%
+          left 0
+          right 0
+          background var(--pink-one)
+      &:nth-of-type(5)
+      &:nth-of-type(6)
+        display none
+
+  &__front-slant
+    --width 5
+    --depth 16
+    --height 4
+    --z 15
+    --x 20
+    --y -0.5
+
+    div
+      &:nth-of-type(1):after
+      &:nth-of-type(1):before
+        --clip polygon(50% 0, 100% 100%, 0 100%, 0 0)
+        filter brightness(var(--brightness, 1))
+      &:nth-of-type(2):after
+      &:nth-of-type(2):before
+        --clip polygon(100% 0%, 100% 100%, 0 100%, 50% 0)
+        filter brightness(calc(var(--brightness, 1) * 1.2))
+      &:nth-of-type(1):after
+      &:nth-of-type(2):after
+      &:nth-of-type(1):before
+      &:nth-of-type(2):before
+        content ''
+        position absolute
+        top 0
+        left 0
+        width 100%
+        height 100%
+        transform-origin 50% 100%
+        transform rotateX(13deg)
+        background url('https://assets.codepen.io/605876/house-roof-tile--yellow.png')
+        -webkit-clip-path var(--clip)
+        clip-path var(--clip)
+        filter brightness(var(--brightness, 1))
+      &:nth-of-type(1):before
+      &:nth-of-type(2):before
+        background var(--yellow-one)
+        filter brightness(var(--brightness, 1))
+
+
+      &:nth-of-type(3):after
+      &:nth-of-type(3):before
+        content ''
+        background url('https://assets.codepen.io/605876/house-roof-tile--yellow.png')
+        position absolute
+        height 100%
+        width 100%
+        top 0
+        left 0
+        transform-origin 50% 100%
+        transform rotateX(30deg)
+        $clip = polygon(0 100%, 5% 0, 95% 0, 100% 100%)
+        -webkit-clip-path $clip
+        clip-path $clip
+        filter brightness(var(--brightness, 1))
+      &:nth-of-type(3):before
+        background var(--yellow-two)
+
+  &__pitch-main-body
+    --width 25
+    --depth 15
+    --height 8
+    --z 16
+    --x -2
+
+    div
+      --bg var(--yellow-two)
+      background linear-gradient(transparent 90%, var(--panel-shade)) 0 0 / 100% 1vmin, var(--bg)
+      &:nth-of-type(1)
+        --bg var(--orange-two)
+        filter brightness(var(--brightness, 1))
+      &:nth-of-type(2)
+        --bg var(--orange-one)
+        filter brightness(var(--brightness, 1))
+      &:nth-of-type(3)
+        background var(--yellow-two)
+      &:nth-of-type(3):after
+        filter brightness(calc(var(--brightness, 1) * 1.3))
+        content ''
+        position absolute
+        top 0
+        left 0
+        height 100%
+        width 100%
+        background url('https://assets.codepen.io/605876/house-roof-tile--yellow.png')
+      &:nth-of-type(3):before
+      &:nth-of-type(4):before
+        content ''
+        position absolute
+        bottom 75%
+        left 50%
+        height 100%
+        width 30%
+        background black
+        filter brightness(var(--brightness, 1))
+        transform translate3d(-50%, 0, 1px)
+        border 0.25vmin solid var(--windowsill)
+        background linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 100% 0.5vmin no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 0.5vmin 100% no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 48% / 100% 0.5vmin no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 100% 0 / 0.5vmin 100% no-repeat,
+                  linear-gradient(var(--pink-one), var(--pink-one)) 0 100% / 100% 0.5vmin no-repeat,
+                  linear-gradient(var(--bg, var(--yellow-three)) 0 50%, var(--bg, var(--yellow-three)) 50%)
+      &:nth-of-type(4):before
+        --bg var(--internal-one)
+        width 15%
+        bottom 150%
+        height 60%
+      &:nth-of-type(4)
+        --bg transparent
+        
+      &:nth-of-type(5)
+        background var(--yellow-two)
+      &:nth-of-type(6)
+        display none
+
+  &__pitch-main-pitch
+    --width 25
+    --depth 15
+    --height 15
+    --z 27.5
+    --x -2
+
+    div
+      --bg var(--pink-one)
+      background linear-gradient(transparent 90%, var(--panel-shade)) 0 0 / 100% 1vmin, var(--bg)
+      filter brightness(var(--brightness, 1))
+      
+      &:nth-of-type(1)
+      &:nth-of-type(2)
+      &:nth-of-type(5)
+      &:nth-of-type(6)
+        background transparent
+
+      &:nth-of-type(3)
+      &:nth-of-type(4)
+        $clip = polygon(0 100%, 50% 0, 100% 100%)
+        -webkit-clip-path $clip
+        clip-path $clip
+
+      &:nth-of-type(3)
+        --bg var(--yellow-one)
+        filter brightness(calc(var(--brightness, 1) * 1.3))
+
+        &:after
+          content ''
+          position absolute
+          top 0
+          left 0
+          height 100%
+          width 100%
+          background url('https://assets.codepen.io/605876/house-roof-tile--yellow.png')
+          transform translate3d(0, 0, 1px)
+          $clip = polygon(0 100%, 50% 0, 100% 100%)
+          -webkit-clip-path $clip
+          clip-path $clip
+
+  &__pitch-left
+    --width 20
+    --depth 20
+    --height var(--house-height)
+    --z calc(var(--house-height) + (var(--house-height) / 2) + 3)
+    --y 10
+
+    div
+      background transparent
+
+      &:nth-of-type(1)
+        $clip = polygon(0 100%, 50% 0, 100% 100%)
+        -webkit-clip-path $clip
+        clip-path $clip
+        --bg var(--yellow-one)
+        background linear-gradient(transparent 90%, var(--panel-shade)) 0 0 / 100% 1vmin, var(--bg)
+        filter brightness(var(--brightness, 1))        
+
+.pitch
+  position absolute
+
+  &--side
+    height 12vmin
+    width 8vmin
+    left 5vmin
+    top -4vmin
+    transform translate3d(0, 0, 30vmin)
+    filter brightness(var(--brightness, 1))
+
+    .cuboid
+      --depth 10
+      --height 1
+      --width 12.5
+      --y -1
+
+    &-front
+      transform-origin 0% 0%
+      transform translate3d(50%, 0, 30vmin) rotateY(68deg) translate(-0.25vmin, 0)
+
+    &-back
+      transform-origin 100% 0%
+      transform translate3d(-50%, 0, 30vmin) rotateY(-68deg) translate(0.25vmin, 0)
+
+      .cuboid
+        right 0
+
+  &--main
+    height 15vmin
+    width 27vmin
+    left -3vmin
+
+    .cuboid
+      --depth 23
+      --width 27
+      --height 2
+      --z 0.25
+
+    &-left
+      transform-origin 50% 0
+      transform translate3d(0, 50%, 35vmin) rotateX(-67deg) translate(0, -0.5vmin)
+
+      .cuboid
+        top 0
+
+    &-right
+      transform-origin 50% 100%
+      transform translate3d(0, -50%, 35vmin) rotateX(67deg) translate(0, 0.5vmin)
+
+      .cuboid
+        bottom 0
+
+  &--mini
+    height 6vmin
+    width 10vmin
+    top 20vmin
+    transform translate3d(0, 0, 25vmin)
+    left 9vmin
+
+    .cuboid
+      --height 0.5
+      --width 10
+      --depth 6
+
+    &-left
+      transform-origin 50% 0
+      transform translate3d(0.5vmin, 50%, 25vmin) rotateX(-54deg) translate(0, -0.2vmin)
+    &-right
+      transform-origin 50% 100%
+      transform translate3d(0.5vmin, -50%, 25vmin) rotateX(54deg) translate(0, 0.2vmin)
+
+  &--left
+    height 20vmin
+    width 17vmin
+    position absolute
+    transform translate3d(0, 0, 27vmin)
+    top 11vmin
+
+    &-front
+      transform-origin 0% 50%
+      transform translate3d(10vmin, 0, 27vmin) rotateY(50deg) translate(-1vmin, 0)
+    &-back
+      transform-origin 100% 50%
+      transform translate3d(-7vmin, 0, 27vmin) rotateY(-50deg) translate(1vmin, 0)
+
+    .cuboid
+      --width 17
+      --height 1
+      --depth 20
+      --y 0
+      --z 0.5
+
+.bay-window
+  --height 10
+  --width 5
+  --depth 15
+  --x 20
+  --z 7
+
+  div
+
+    &:before
+      --bg var(--green-one)
+      background linear-gradient(transparent 90%, var(--panel-shade)) 0 0 / 100% 1vmin, var(--bg)
+      filter brightness(var(--brightness, 1))      
+
+    &:nth-of-type(3)
+      $clip = inset(0 25% 0 25%)
+      -webkit-clip-path $clip
+      clip-path $clip
+      --bg var(--green-one)
+      filter brightness(var(--brightness, 1))
+      background linear-gradient(transparent 90%, var(--panel-shade)) 0 0 / 100% 1vmin, var(--bg)
+
+    &:nth-of-type(3):after
+      content ''
+      position absolute
+      border 0.5vmin solid var(--windowsill)
+      width 35%
+      height 75%
+      top 15%
+      left 50%
+      filter brightness(var(--brightness, 1))
+      transform translate3d(-50%, 0, 1px)
+      background linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 100% 0.5vmin no-repeat,
+                linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 0.5vmin 100% no-repeat,
+                linear-gradient(var(--pink-one), var(--pink-one)) 0 48% / 100% 0.5vmin no-repeat,
+                linear-gradient(var(--pink-one), var(--pink-one)) 100% 0 / 0.5vmin 100% no-repeat,
+                linear-gradient(var(--pink-one), var(--pink-one)) 0 100% / 100% 0.5vmin no-repeat,
+                linear-gradient(var(--internal-two) 0 50%, var(--internal-two) 50%)
+
+    &:nth-of-type(1)
+    &:nth-of-type(2)
+    &:nth-of-type(5)
+    &:nth-of-type(6)
+      background-color transparent
+      
+
+    &:nth-of-type(1):after
+    &:nth-of-type(2):after
+    &:nth-of-type(1):before
+    &:nth-of-type(2):before
+      content ''
+      position absolute
+      top 0
+      width 126%
+      height 100%
+      filter brightness(var(--brightness, 1))
+    &:nth-of-type(1):after
+    &:nth-of-type(1):before
+      --bg var(--green-three)
+      left 0
+      transform-origin 0 50%
+      transform rotateY(37deg)
+      filter brightness(var(--brightness, 1))
+    &:nth-of-type(2):after
+    &:nth-of-type(2):before
+      --bg var(--green-two)
+      right 0
+      transform-origin 100% 50%
+      transform rotateY(-37deg)
+
+    &:nth-of-type(1):after
+    &:nth-of-type(2):after
+      background linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 100% 0.5vmin no-repeat,
+                linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 0.5vmin 100% no-repeat,
+                linear-gradient(var(--pink-one), var(--pink-one)) 0 48% / 100% 0.5vmin no-repeat,
+                linear-gradient(var(--pink-one), var(--pink-one)) 100% 0 / 0.5vmin 100% no-repeat,
+                linear-gradient(var(--pink-one), var(--pink-one)) 0 100% / 100% 0.5vmin no-repeat,
+                linear-gradient(var(--internal-two) 0 50%, var(--internal-two) 50%)
+      border 0.5vmin solid var(--windowsill)
+      width 80%
+      height 75%
+      top 15%
+      filter brightness(var(--brightness, 1))
+    &:nth-of-type(1):after
+      transform rotateY(37deg) translate3d(25%, 0, 1px)
+      filter brightness(var(--brightness, 1))
+    &:nth-of-type(2):after
+      transform rotateY(-37deg) translate3d(-25%, 0, 1px)
+      filter brightness(var(--brightness, 1))
+
+
+
+.bay-trim
+  --height 1.5
+  --width 6
+  --depth 17
+  --y -1
+  --x 20
+  --z calc((var(--house-height) + 0.25))
+
+  div
+    background var(--trim-one)
+    filter brightness(var(--brightness, 1))
+
+    &:nth-of-type(1)
+      background var(--trim-three)
+    &:nth-of-type(3)
+      background var(--trim-two)
+
+
+
+
+.base
+  &--main
+    --height 2
+    --width 20
+    --depth 30
+    --z 1
+
+    div:after
+      content ''
+      position absolute
+      height 100%
+      width 100%
+      border 0.5vmin solid var(--border, var(--yellow-one))
+      filter brightness(var(--brightness, 1))
+
+    div:nth-of-type(1)
+      --border var(--yellow-two)
+    div:nth-of-type(2)
+    div:nth-of-type(3)
+      --border var(--orange-two)
+    div:nth-of-type(4)
+      --border var(--blue-two)
+    div:nth-of-type(5):after
+    div:nth-of-type(6):after
+      display none
+
+
+  div
+    background var(--trim-two)
+
+    &:before
+      content ''
+      position absolute
+      top 0
+      height 100%
+      width 100%
+      filter brightness(var(--brightness, 1))
+      background url('https://assets.codepen.io/605876/wood-grain.png')
+
+  &--back
+    --depth 15
+    --width 2
+    --height 2
+    --x -2
+    --z 1
+
+    div:nth-of-type(1):after
+    div:nth-of-type(2):after
+    div:nth-of-type(4):after
+      content ''
+      position absolute
+      height 100%
+      width 100%
+      top 0
+      left 0
+      border 0.5vmin solid var(--pink-two)
+      filter brightness(var(--brightness, 1))
+    div:nth-of-type(2):after
+      border-color var(--orange-two)
+      filter brightness(var(--brightness, 1))
+
+  &--front
+    --x 20
+    --z 1
+    --height 2
+    --width 5
+    --depth 15
+
+    div
+      &:nth-of-type(3)
+        $clip = inset(0 25% 0 25%)
+        -webkit-clip-path $clip
+        clip-path $clip
+
+      &:nth-of-type(1)
+      &:nth-of-type(2)
+        background transparent
+      &:nth-of-type(5)
+      &:nth-of-type(6)
+      &:nth-of-type(5):after
+      &:nth-of-type(6):after
+        display none
+
+      &:nth-of-type(1):before
+      &:nth-of-type(1):after
+        content ''
+        position absolute
+        left 0
+        top 0
+        transform-origin 0 50%
+        width 126%
+        height 100%
+        filter brightness(var(--brightness, 1))
+        background url('https://assets.codepen.io/605876/wood-grain.png')
+        transform rotateY(37deg)
+
+      &:nth-of-type(2):before
+      &:nth-of-type(2):after
+        content ''
+        position absolute
+        right 0
+        top 0
+        transform-origin 100% 50%
+        width 126%
+        height 100%
+        background url('https://assets.codepen.io/605876/wood-grain.png')
+        transform rotateY(-37deg)
+        filter brightness(var(--brightness, 1))
+
+      &:nth-of-type(3):after
+        content ''
+        height 100%
+        width 100%
+        position absolute
+        top 0
+        left 0
+      &:nth-of-type(1):after
+      &:nth-of-type(2):after
+      &:nth-of-type(3):after
+        border 0.5vmin solid var(--green-two)
+        filter brightness(var(--brightness, 1))
+
+  &--side
+    --z 1
+    --height 2
+    --width 8
+    --depth 4
+    --y -4
+    --x 5
+
+    div:after
+      content ''
+      position absolute
+      height 100%
+      width 100%
+      top 0
+      left 0
+      border 0.5vmin solid var(--pink-two)
+      filter brightness(var(--brightness, 1))
+
+.chimney
+  --width 6
+  --height 16
+  --depth 4
+  --z 32
+  --x 7
+  --y 13
+
+  div
+    background var(--brick)
+    filter brightness(var(--brightness, 1))
+
+    &:nth-of-type(1)
+      filter brightness(calc(var(--brightness, 1) * 0.5))
+    &:nth-of-type(3)
+      filter brightness(calc(var(--brightness, 1) * 0.75))
+
+    &:nth-of-type(5)
+      border 1vmin solid var(--pitch-top)
+      background #111
+
+      &:after
+        display none
+    &:after
+      content ''
+      position absolute
+      height 100%
+      width 100%
+      top 0
+      left 0
+      background url('https://assets.codepen.io/605876/bricks.png')
+
+.chimney__skirt
+  --width 7
+  --height 1
+  --depth 5
+  --z 37
+  --x 6.5
+  --y 12.5
+
+  div
+    background var(--brick)
+    &:after
+      content ''
+      position absolute
+      height 100%
+      width 100%
+      top 0
+      left 0
+      background url('https://assets.codepen.io/605876/bricks.png')
+      filter brightness(calc(var(--brightness, 1) * 0.5))
+
+.post
+  &--left
+    --depth 1
+    --width 1
+    --height 12
+    --y 29
+    --x 19
+    --z 8
+  &--right
+    --depth 1
+    --width 1
+    --height 12
+    --y 23
+    --x 19
+    --z 8
+  &--back
+    --depth 1
+    --width 1
+    --height 12
+    --y 29
+    --x 14
+    --z 8
+  &--front-top
+    --depth 15
+    --width 1
+    --height 1
+    --y 15
+    --x 19
+    --z 13
+  &--front-side
+    --depth 1
+    --width 6
+    --height 1
+    --y 29
+    --x 14
+    --z 13
+  &--top-support
+    --depth 15
+    --width 0.5
+    --height 0.5
+    --y 15
+    --x 19.5
+    --z 11.5
+  &--top-side-support
+    --depth 0.5
+    --width 5
+    --height 0.5
+    --y 29.5
+    --x 15
+    --z 11.5
+  &--bottom-side-support
+    --depth 0.5
+    --width 5
+    --height 0.5
+    --y 29.5
+    --x 15
+    --z 6
+  &--bottom-support
+    --depth 7
+    --width 0.5
+    --height 0.5
+    --y 23
+    --x 19.5
+    --z 6
+  &--stair
+    --depth 1
+    --width 1
+    --height 4
+    --x 24
+    --y 23
+    --z 2
+  &--handrail
+    --depth 1
+    --height 1
+    --width 6
+    --rotate-cuboid-y 30
+    --x 19
+    --y 23
+    --z 5
+
+  div
+    background var(--handrail-one)
+    filter brightness(var(--brightness, 1))
+    &:nth-of-type(1)
+      background var(--handrail-three)
+      filter brightness(var(--brightness, 1))
+    &:nth-of-type(3)
+      background var(--handrail-two)
+      filter brightness(var(--brightness, 1))
+
+.steps
+  position absolute
+
+  &--front
+    top 15vmin
+    left 20vmin
+    width 5vmin
+    height 8vmin
+
+    & > div:nth-of-type(1)
+      --height 1.5
+      --width calc(5 / 3)
+      --depth 8
+      --z 0.75
+    & > div:nth-of-type(2)
+      --height 1
+      --width calc(5 / 3)
+      --depth 8
+      --z 0.5
+      --x calc(5 / 3)
+    & > div:nth-of-type(3)
+      --height 0.5
+      --width calc(5 / 3)
+      --depth 8
+      --z 0.25
+      --x calc((5 / 3) * 2)
+
+
+
+    & > div div
+        background-color var(--step-one)
+        filter brightness(var(--brightness, 1))
+    & > div div:nth-of-type(1)
+        background-color var(--step-two)
+        filter brightness(var(--brightness, 1))
+    & > div div:nth-of-type(3)
+        background-color var(--step-three)
+        filter brightness(var(--brightness, 1))
+
+  &--back
+    top 15vmin
+    left -2vmin
+    height 8vmin
+    width 2vmin
+
+    & > div
+      --height 1
+      --width 2
+      --depth 8
+      --z 0.5
+
+      div
+        background-color var(--step-three)
+        filter brightness(var(--brightness, 1))
+
+        &:nth-of-type(1)
+          background-color var(--step-two)
+        &:nth-of-type(5)
+          background-color var(--step-one)
+
+.rafter
+  --z 36
+  --x -3
+  --y 6.5
+  --width 27
+  --height 1
+  --depth 2
+
+  div
+    background var(--pitch-top)
+    filter brightness(var(--brightness, 1))
+
+.fence
+  position absolute
+  &--front-top
+    background linear-gradient(transparent 50%, var(--handrail-three) 50%) 0 0 / 100% 1vmin
+    width 1.5vmin
+    height 15vmin
+    top 15vmin
+    left 19vmin
+    transform translate3d(0, 0, 12.5vmin) rotateY(90deg)
+    filter brightness(var(--brightness, 1))
+  &--side-top
+    background linear-gradient(transparent 50%, var(--handrail-three) 50%) 0 0 / 100% 1vmin
+    width 1.5vmin
+    height 6vmin
+    top 27vmin
+    left 19vmin
+    filter brightness(var(--brightness, 1))
+    transform translate3d(0, 0, 12.5vmin) rotateY(90deg) rotateX(90deg) translate(0, -50%)
+  &--side-bottom
+    background linear-gradient(90deg, transparent 50%, var(--handrail-three) 50%) 0 0 / 1vmin 100%
+    width 5vmin
+    height 4vmin
+    top 25.5vmin
+    left 14.5vmin
+    transform-origin 50% 100%
+    filter brightness(var(--brightness, 1))
+    transform translate3d(0, 0, 2vmin) rotateX(-90deg)
+  &--front-bottom
+    background linear-gradient(transparent 50%, var(--handrail-three) 50%) 0 0 / 100% 1vmin
+    width 4vmin
+    height 6vmin
+    top 23.5vmin
+    left 19.5vmin
+    transform-origin 0% 50%
+    filter brightness(var(--brightness, 1))
+    transform translate3d(0, 0, 2vmin) rotateY(-90deg)
+  &--handrail
+    height 8vmin
+    width 5vmin
+    top 23.5vmin
+    left 20vmin
+    filter brightness(var(--brightness, 1))
+    background linear-gradient(90deg, transparent 50%, var(--handrail-three) 50%) 0 0 / 1vmin 100%
+    transform-origin 50% 0
+    transform rotateX(90deg)
+    $clip = polygon(0 0, 0 80%, 100% 40%, 100% 0%)
+    -webkit-clip-path $clip
+    clip-path $clip
+
+.pipe
+  div
+    background-color var(--pipe-one)
+    filter brightness(var(--brightness, 1))
+
+    &:nth-of-type(1)
+      background-color var(--pink-three)
+    &:nth-of-type(4)
+      background-color var(--pink-two)
+
+  &--vertical
+    --depth 0.5
+    --width 0.5
+    --height 18
+    --z 11
+    --x -2.5
+    --y 13
+  &--horizontal
+    --depth 12
+    --width 0.5
+    --height 0.5
+    --z 16
+    --x -2.5
+    --y 2
+    --rotate-cuboid-x -15
+
+.pitch .cuboid
+  div
+    background var(--pitch-under)
+    overflow hidden
+    filter brightness(var(--brightness, 1))
+
+    &:nth-of-type(1)
+    &:nth-of-type(2)
+      background var(--pitch-top)
+
+    &:nth-of-type(6)
+      background var(--pitch-back)
+
+    &:nth-of-type(5)
+      filter brightness(var(--brightness, 1))
+
+    &:nth-of-type(5):after
+      content ''
+      position absolute
+      top 50%
+      left 50%
+      width 200%
+      height 200%
+      transform translate(-50%, -50%) rotate(calc(var(--r, 0) * 1deg))
+      background url('https://assets.codepen.io/605876/house-roof-tile.png')
+
+.pitch--left .cuboid div
+.pitch--side .cuboid div
+  filter brightness(var(--brightness, 1))
+  &:nth-of-type(1)
+  &:nth-of-type(2)
+    background var(--pitch-under)
+  &:nth-of-type(3)
+  &:nth-of-type(4)
+    background var(--pitch-top)
+
+
+.pitch--mini-left
+  --b 0.5
+.pitch--mini-right
+  --r 180
+.pitch--left-front
+  --b 0.75
+  --r -90
+.pitch--left-back
+  --r 90
+.pitch--main-left
+  --b 0.5
+.pitch--main-right
+  --r 180
+  --b 0.75
+.pitch--side-front
+  --b 0.5
+  --r -90
+.pitch--side-back
+  --r 90
+
+.window
+  position absolute
+  background var(--internal)
+
+  &--side
+    width 3.5vmin
+    height 7vmin
+    left 7.25vmin
+    top -4.1vmin
+    transform-origin 50% 0
+    transform rotateX(90deg) translate(0, 17vmin)
+    border 0.25vmin solid var(--windowsill)
+    background linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 100% 0.5vmin no-repeat,
+              linear-gradient(var(--pink-one), var(--pink-one)) 0 0 / 0.5vmin 100% no-repeat,
+              linear-gradient(var(--pink-one), var(--pink-one)) 0 48% / 100% 0.5vmin no-repeat,
+              linear-gradient(var(--pink-one), var(--pink-one)) 100% 0 / 0.5vmin 100% no-repeat,
+              linear-gradient(var(--pink-one), var(--pink-one)) 0 100% / 100% 0.5vmin no-repeat,
+              linear-gradient(var(--yellow-three) 0 50%, var(--yellow-three) 50%)
+
+
+.balloons
+  position absolute
+  top 49%
+  left 42%
+  transform translate3d(-50%, -50%, 40vmin)
+
+
+.balloon__string
+  width 0.25vmin
+  height calc(var(--length) * 1vmin)
+  position absolute
+  background hsla(0, 0%, 25%, 0.25)
+  bottom 50%
+  left 50%
+  transform-origin 50% 100%
+  transform translate(-50%, 0) rotateX(-90deg) rotateY(calc(var(--rotate) * 1deg)) rotateX(calc(var(--tilt) * 1deg))
+
+.balloon
+  height calc(var(--size, 10) * 1.2vmin)
+  width calc(var(--size, 10) * 1vmin)
+  background 'hsla(%s, 90%, 50%, 0.75)' % var(--hue, 0)
+  border-radius 50% 50% 50% 50% / 45% 45% 55% 55%
+  position absolute
+  bottom 50%
+  left 50%
+  transform-origin 50% 100%
+  filter brightness(var(--brightness, 1))
+  transform translate(-50%, 0) rotateX(-90deg) rotateY(calc(var(--rotate) * 1deg)) rotateX(calc(var(--tilt) * 1deg)) translate(0, calc(var(--length) * -1vmin)) rotateY(calc((var(--rotate) + var(--rotate-y)) * -1deg)) rotateX(calc(var(--tilt) * 1deg))
+
+  &:before
+    content ''
+    position absolute
+    width 20%
+    height 30%
+    background blue
+    top 8%
+    left 16%
+    border-radius 50%
+    transform rotate(40deg)
+    background var(--shine)

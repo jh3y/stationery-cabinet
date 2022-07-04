@@ -13,7 +13,7 @@
   --stan-star-rotate: 0;
   --red: hsl(18, 100%, 50%);
   --yellow: hsl(44, 83%, 53%);
-  --green: hsl(130, 52%, 46%);
+  --green: hsl(130, 52%, 46%);  
   --blue: hsl(215, 100%, 53%);
   --screen-hide 0
   --screen-delay 0
@@ -403,6 +403,10 @@ label[for*="defuse"] {
   z-index: var(--z, 2);
 }
 
+p + * {
+  margin-top: var(--size-4);
+}
+
 .faux-button {
   --bg: var(--gray-9);
   box-sizing: border-box;
@@ -418,9 +422,6 @@ label[for*="defuse"] {
   transition: transform 0.1s, background 0.1s;
 }
 
-p + * {
-  margin-top: var(--size-4);
-}
 
 .faux-button:hover {
   --bg: black;

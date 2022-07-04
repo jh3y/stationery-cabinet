@@ -1,0 +1,13 @@
+<svg class="snek" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+<marker id="tail" viewBox="0 0 36 20" refX="35" refY="10" markerUnits="strokeWidth" orient="auto" markerWidth="10" markerHeight="1">
+	<path d="M36 20C36 20 -4.80825e-07 14.5 -8.74228e-07 10C-1.26763e-06 5.5 36 -1.90735e-06 36 -1.90735e-06L36 20Z" fill="#7FF40A"/>
+</marker>
+<marker id="head" viewBox="0 0 46 46" refX="1" refY="26" markerUnits="strokeWidth" orient="auto" markerWidth="2" markerHeight="10">
+	<path class="snek__tongue" d="M13 23.838H46L40.5 26.338L46 28.838H13V23.838Z" fill="#FF0303"/>
+	<path d="M0 16.838C0 16.838 3.5 11.838 14 4.33803C20.6233 -0.3929 35.4385 -0.723473 37 0.838049C39 2.83804 40.6485 11.3588 36 13.838C28.5 17.838 17.6697 19.9298 16.5 27.338C15 36.838 30.5 35.238 26 43.338C21.5 51.438 0 36.838 0 36.838V16.838Z" fill="#7FF40A"/>
+	<circle class="snek__eye snek__eye--white" cx="14" cy="13.838" r="6" fill="white"/>
+	<circle class="snek__eye snek__eye--pupil" cx="14" cy="13.838" r="3" fill="black"/>
+</marker>
+<rect width="500" height="500" fill="white"/>
+<path class="snek__body" marker-start="url(#tail)" marker-end="url(#head)" d="M90 250C90 250 119.801 250 130 250C155.073 250 157.676 250 170 250C187.849 250 189.602 250 210 250C230.398 250 230.876 250 250 250C269.124 250 271.301 250 290 250C308.699 250 298.819 250 330 250C350.823 250 336.201 250 370 250C375.1 250 410 250 410 250" stroke="#7FF40A" stroke-width="20"/>
+</svg>
