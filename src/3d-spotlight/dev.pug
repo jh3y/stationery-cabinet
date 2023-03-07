@@ -1,0 +1,6 @@
+.scene
+  .audience
+    - for (let i = 0; i < 144; i++)
+      - const row = Math.floor(i / 12)
+      .emoji(class=`emoji--${Math.random() > 0.5 ? 'wo' : ''}man` style=`--row: ${row}; --shift: ${row % 2 === 0 ? -20 : 20}`)
+  .spotlight

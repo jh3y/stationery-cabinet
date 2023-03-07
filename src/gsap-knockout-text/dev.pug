@@ -1,0 +1,25 @@
+-
+  const IMAGES = ["https://images.unsplash.com/photo-1485163819542-13adeb5e0068?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&ixid=MnwxfDB8MXxyYW5kb218MHx8Y3liZXJwdW5rfHx8fHx8MTYzNzUxNTg3NA&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=300","https://images.unsplash.com/photo-1602429438534-f437d3836992?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&ixid=MnwxfDB8MXxyYW5kb218MHx8Y3liZXJwdW5rfHx8fHx8MTYzNzUxNTg3NQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=300","https://images.unsplash.com/photo-1533972751724-9135a8410a4c?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&ixid=MnwxfDB8MXxyYW5kb218MHx8Y3liZXJwdW5rfHx8fHx8MTYzNzUxNTg3Nw&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=300","https://images.unsplash.com/photo-1557040135-9dc2a6b60411?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&ixid=MnwxfDB8MXxyYW5kb218MHx8Y3liZXJwdW5rfHx8fHx8MTYzNzUxNTg3OQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=300","https://images.unsplash.com/photo-1608501078713-8e445a709b39?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&ixid=MnwxfDB8MXxyYW5kb218MHx8Y3liZXJwdW5rfHx8fHx8MTYzNzUxNTg4MA&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=300","https://images.unsplash.com/photo-1604769321486-25cdedb935fa?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&ixid=MnwxfDB8MXxyYW5kb218MHx8Y3liZXJwdW5rfHx8fHx8MTYzNzUxNTg4NA&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=300","https://images.unsplash.com/photo-1608501078713-8e445a709b39?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&ixid=MnwxfDB8MXxyYW5kb218MHx8Y3liZXJwdW5rfHx8fHx8MTYzNzUxNTg4NQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=300","https://images.unsplash.com/photo-1600382224527-3ab1474fbb2a?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&ixid=MnwxfDB8MXxyYW5kb218MHx8Y3liZXJwdW5rfHx8fHx8MTYzNzUxNTg4Nw&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=300","https://images.unsplash.com/photo-1611419010196-a360856fc42f?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&ixid=MnwxfDB8MXxyYW5kb218MHx8Y3liZXJwdW5rfHx8fHx8MTYzNzUxNTg4OQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=300","https://images.unsplash.com/photo-1622125124161-07695cf9df9b?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=300&ixid=MnwxfDB8MXxyYW5kb218MHx8Y3liZXJwdW5rfHx8fHx8MTYzNzUxNTg5Mg&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=300"]
+.cybr-sldr
+  ul
+    - for (let l = 0; l < IMAGES.length; l++)
+      li(style=`--clip: url(#${l + 1})`)
+        img(src=IMAGES[l])
+  svg(height="0" width="0")
+    defs
+      - let i = 0
+      while i < IMAGES.length
+        clipPath(id=i + 1)
+          text(class=i + 1 dominant-baseline="middle" text-anchor="middle" x="50%" y="50%" font-size="140px" font-family="Cyber")= i + 1
+        - i++
+  span.cybr-sldr__tag.cybr-btn__tag(aria-hidden) IMG.
+  button.direction-button.direction-button--next.cybr-btn(data-direction='1')
+    | >
+    span(aria-hidden) _
+    span.cybr-btn__glitch(aria-hidden) >_
+    span.cybr-btn__tag(aria-hidden) N3XT
+  button.direction-button.direction-button--prev.cybr-btn(data-direction='-1')
+    | <
+    span(aria-hidden) _
+    span.cybr-btn__glitch(aria-hidden) <_
+    span.cybr-btn__tag(aria-hidden) PR3V

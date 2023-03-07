@@ -1,0 +1,368 @@
+*
+  box-sizing border-box
+  transform-style preserve-3d
+
+$size = 300
+
+:root
+  --height $size * 1px
+  --width calc(0.6 * var(--height))
+  --glass hsla(210, 90%, 90%, 0.5)
+  --shimmer hsla(210, 90%, 100%, 0.95)
+  --w-1 hsl(86, 18%, 32%)
+  --w-2 hsl(83, 12%, 21%)
+  --f-1 hsl(35, 44%, 10%)
+  --f-2 hsl(35, 44%, 15%)
+  --f-3 hsl(35, 44%, 25%)
+  --f-4 hsl(35, 44%, 30%)
+  --i-1 hsl(27, 22%, 28%)
+  --b-1 hsl(83, 15%, 70%)
+  --b-2 hsl(83, 15%, 40%)
+  --b-3 hsl(83, 15%, 20%)
+
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  justify-content center
+  overflow hidden
+  background hsla(45, 100%, 80%, 0.5)
+
+
+.cuboid
+  width 100%
+  height 100%
+  position relative
+  pointer-events none
+  // 1 is the top and go t, r, b, l, f, b
+
+  &__side
+    pointer-events none
+
+  &__side:nth-of-type(1)
+    height calc(var(--thickness) * 1px)
+    width 100%
+    position absolute
+    top 0
+    transform translate(0, -50%) rotateX(90deg)
+
+  &__side:nth-of-type(2)
+    height 100%
+    width calc(var(--thickness) * 1px)
+    position absolute
+    top 50%
+    right 0
+    transform translate(50%, -50%) rotateY(90deg)
+
+  &__side:nth-of-type(3)
+    width 100%
+    height calc(var(--thickness) * 1px)
+    position absolute
+    bottom 0
+    transform translate(0%, 50%) rotateX(90deg)
+
+  &__side:nth-of-type(4)
+    height 100%
+    width calc(var(--thickness) * 1px)
+    position absolute
+    left 0
+    top 50%
+    transform translate(-50%, -50%) rotateY(90deg)
+
+  &__side:nth-of-type(5)
+    height 100%
+    width 100%
+    transform translate3d(0, 0, calc(var(--thickness) * 0.5px))
+    position absolute
+    top 0
+    left 0
+
+  &__side:nth-of-type(6)
+    height 100%
+    width 100%
+    transform translate3d(0, 0, calc(var(--thickness) * -0.5px)) rotateY(180deg)
+    position absolute
+    top 0
+    left 0
+
+
+.scene
+  transform rotateX(-24deg) rotateY(32deg)
+  // transform rotateX(0) rotateY(0)
+
+.window
+  height var(--height)
+  width var(--width)
+  background linear-gradient(var(--i-1), var(--i-1)) 0 0 / 100% 5% no-repeat,
+            linear-gradient(var(--i-1), var(--i-1)) 0 0 / 5% 100% no-repeat,
+            linear-gradient(var(--i-1), var(--i-1)) 100% 0 / 5% 100% no-repeat,
+            linear-gradient(var(--i-1), var(--i-1)) 0 100% / 100% 5% no-repeat,
+            linear-gradient(var(--i-1), var(--i-1)) 0 64% / 100% 8% no-repeat,
+            linear-gradient(130deg, transparent 0 15%, var(--shimmer) 16% 35%, transparent 36% 40%, var(--shimmer) 41% 44%, transparent 45%),
+            var(--glass)
+  position relative
+
+  &__cord
+    height 94%
+    width 2%
+    background hsl(0, 0%, 98%)
+    right 10%
+    position absolute
+    top 0
+    transform translate3d(0, 0, 20px)
+  &__cord--back
+    height 94%
+    width 2%
+    background hsl(0, 0%, 88%)
+    right 12%
+    position absolute
+    top 0
+    transform translate3d(0, 0, 18px)
+
+.frame
+  position absolute
+
+  &--top
+    width 130%
+    height 5%
+    bottom 100%
+    left 50%
+    transform translate(-50%, 0)
+
+  &--left
+    width 10%
+    height 100%
+    right 100%
+    top 0
+
+  &--right
+    width 10%
+    height 100%
+    left 100%
+    top 0
+
+  &--bottom
+    width 120%
+    height 10%
+    left 50%
+    top 105%
+    transform translate(-50%, 0)
+
+  &--sill
+    width 130%
+    height 5%
+    top 100%
+    left 50%
+    transform translate(-50%, 0)
+
+.wall
+  position absolute
+  height 200vmax
+  width 200vmax
+  background linear-gradient(var(--w-1) 51%, var(--f-1) 51% 52%, var(--w-2) 52% 100%), var(--w-1)
+  // opacity 0.5
+
+  &--top
+    bottom calc(50% + (var(--height) * 0.5))
+    left 50%
+    transform translate3d(-50%, 0, 10px)
+    background var(--w-1)
+
+  &--bottom
+    top calc(50% + (var(--height) * 0.5))
+    left 50%
+    transform translate3d(-50%, 0, 10px)
+    background var(--w-2)
+
+  &--left
+    right calc(50% + (var(--width) * 0.5))
+    top 50%
+    transform translate3d(0, -50%, 10px)
+
+  &--right
+    left calc(50% + (var(--width) * 0.5))
+    top 50%
+    transform translate3d(0, -50%, 10px)
+
+
+.blinds
+  height 99%
+  width 99%
+  position absolute
+  top 50%
+  left 50%
+  transform translate3d(-50%, -50%, 10px)
+
+  &__blinds
+    --open 0
+    width calc(0.99 * var(--width))
+    height calc(0.99 * var(--height))
+    // background 'hsl(%s, 80%, 50%)' % var(--hue, 10)
+    position fixed
+    left 0
+    top 0
+    transform-origin 50% 0
+    // transform translate(0, -50%) scaleY(calc(1 - (var(--open, 0) * 0.9)))
+    transform translate(0, -50%)
+
+.blind
+  width 100%
+  // transition transform 0.1s ease
+  height 5%
+  background var(--b-1)
+  border 1px solid var(--b-2)
+  transform translate(0, calc(((-95 * (var(--index, 0))) * var(--open)) * 1%)) rotateX(calc((85 - ((1 - var(--open)) * 83)) * 1deg))
+
+.peter
+.peter__hat
+  overflow visible !important
+  position absolute
+  top 0
+  left 0
+  height 120px
+  width 120px
+  transition transform 0.1s ease
+  transform translate3d(calc(var(--width) * 0.9), calc(var(--height) * -0.6), 100px) rotateY(-32deg) rotateX(24deg) scale(var(--peter, 0))
+
+.peter__hat
+  transition transform 0.1s 0.1s ease, opacity 0.1s ease
+  opacity var(--thug, 0)
+  transform translate3d(calc(var(--width) * 0.9), calc(var(--height) * -0.6), 101px) rotateY(-32deg) rotateX(24deg) translate(0, calc((-80 + (80 * var(--thug, 0))) * 1px))
+
+.peter__border
+  stroke hsl(0, 0%, 70%)
+
+.peter__backdrop
+  fill hsl(120, 40%, 80%)
+
+.cord
+  contain layout inline-size
+  --css-contain layout inline-size
+  position absolute
+  top 50%
+  left 0
+
+  &__string
+    height calc(var(--height) * 0.45)
+    width calc(var(--width) * 0.02)
+    background hsl(0, 0%, 98%)
+    position fixed
+    top 0
+    left 0
+    transform-origin 50% 0
+    transform translate3d(calc(var(--width) * 0.9), 0, 5px) translate(-50%, 0) scaleY(clamp(0.2, var(--cord, 0), 1))
+
+  &__handle
+    position absolute
+    bottom 0
+    left 50%
+    transform translate(-54%, 10%) scale(0.5) scaleX(0.5)
+    height 20px
+    width 16px
+    clip-path polygon(0 100%, 100% 100%, 80% 0, 20% 0)
+    -webkit-clip-path polygon(0 100%, 100% 100%, 80% 0, 20% 0)
+    pointer-events none
+    background var(--b-3)
+
+    &:after
+      clip-path polygon(0 100%, 100% 100%, 80% 0, 20% 0)
+      -webkit-clip-path polygon(0 100%, 100% 100%, 80% 0, 20% 0)
+      content ''
+      position absolute
+      top 0
+      left 0
+      height 100%
+      width 100%
+      background var(--b-2)
+      transform scale(0.75)
+
+  &__thumb
+    min-height 15px
+    width 10px
+    resize vertical
+    overflow hidden
+    transform-origin 100% 0
+    transform translate3d(calc(var(--width) - 150%), 0, 20px) scale(2) scaleX(2)
+    max-height calc((0.99 * var(--height)) * 0.25)
+
+.cord__thumb:hover
+  background hsla(210, 50%, 50%, 0.25)
+.cord__thumb:active
+  background hsla(210, 50%, 50%, 0)
+
+::-webkit-resizer
+  display block
+  appearance none
+  box-sizing border-box
+  height 44px !important
+  width 44px !important
+
+
+$steps = 10
+$cStart = 50
+$cEnd = 90
+$cSize = $cEnd - $cStart
+$sStart = 50
+$sEnd = 94
+$sSize = $sEnd - $sStart
+for $p in 0..$steps
+  $step = $cStart + ($cSize / $steps * $p)
+  $cordStep = $sStart + ($sSize / $steps * $p)
+  $open = $p / $steps
+  $cord = $p / $steps
+  $peter = 0
+  $thug = 0
+  if ($p > $steps * 0.25)
+    $peter = 1
+  if ($p > $steps * 0.85)
+    $thug = 1
+
+  @container (min-height: {$step}px)
+    .blinds__blinds
+      --open $open
+    .peter
+    .peter__hat
+      --peter $peter
+      --thug $thug
+
+  @media --css-container and (min-height: $step * 1px)
+    .blinds__blinds
+      --open $open
+    .peter
+    .peter__hat
+      --thug $thug
+      --peter $peter
+
+.window-frame
+
+  div
+    background var(--f-1)
+
+    &:nth-of-type(1)
+      background var(--f-1)
+    &:nth-of-type(2)
+      background var(--f-2)
+    &:nth-of-type(3)
+      background var(--f-3)
+    &:nth-of-type(4)
+      background var(--f-2)
+    &:nth-of-type(5)
+      background var(--f-3)
+    &:nth-of-type(6)
+      background var(--f-1)
+
+  &--top
+    --thickness 50
+
+  &--right
+    --thickness 40
+
+  &--left
+    --thickness 40
+
+  &--bottom
+    --thickness 40
+
+  &--sill
+    --thickness 60

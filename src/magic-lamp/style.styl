@@ -1,0 +1,81 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+:root
+  --cord 'hsl(210, 10%, %s)' % calc((50 + (var(--on, 0) * 50)) * 1%)
+  --opening 'hsl(50, %s, %s)' % (calc((10 + (var(--on, 0) * 80)) * 1%) calc((20 + (var(--on, 0) * 70)) * 1%))
+  --feature hsl(0, 0%, 4%)
+  --accent 210
+  --tongue hsl(10, 70%, 60%)
+  --base-top 'hsl(%s, 0%, %s)' % (var(--accent) calc((40 + (var(--on, 0) * 40)) * 1%))
+  --base-side 'hsl(%s, 0%, %s)' % (var(--accent) calc((20 + (var(--on, 0) * 40)) * 1%))
+  --post 'hsl(%s, 0%, %s)' % (var(--accent) calc((20 + (var(--on, 0) * 40)) * 1%))
+  --b-1 'hsla(%s, %s, %s, 0.85)' % (45 calc((0 + (var(--on, 0) * 0)) * 1%) calc((50 + (var(--on, 0) * 50)) * 1%))
+  --b-2 'hsla(%s, %s, %s, 0.25)' % (45 calc((0 + (var(--on, 0) * 0)) * 1%) calc((20 + (var(--on, 0) * 30)) * 1%))
+  --b-3 'hsla(%s, %s, %s, 0.5)' % (45 calc((0 + (var(--on, 0) * 0)) * 1%) calc((20 + (var(--on, 0) * 30)) * 1%))
+  --b-4 'hsla(%s, %s, %s, 0.25)' % (45 calc((0 + (var(--on, 0) * 0)) * 1%) calc((20 + (var(--on, 0) * 30)) * 1%))
+  --l-1 'hsla(%s, %s, %s, 0.85)' % (45 calc((0 + (var(--on, 0) * 20)) * 1%) calc((50 + (var(--on, 0) * 50)) * 1%))
+  --l-2 'hsla(%s, %s, %s, 0.85)' % (45 calc((0 + (var(--on, 0) * 20)) * 1%) calc((50 + (var(--on, 0) * 50)) * 1%))
+  --shade-hue 320
+  --t-1 'hsl(%s, %s, %s)' % (var(--shade-hue) calc((0 + (var(--on, 0) * 20)) * 1%) calc((30 + (var(--on, 0) * 60)) * 1%))
+  --t-2 'hsl(%s, %s, %s)' % (var(--shade-hue) calc((0 + (var(--on, 0) * 20)) * 1%) calc((20 + (var(--on, 0) * 35)) * 1%))
+  --t-3 'hsl(%s, %s, %s)' % (var(--shade-hue) calc((0 + (var(--on, 0) * 20)) * 1%) calc((10 + (var(--on, 0) * 20)) * 1%))
+
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  background hsl(210, 30%, 10%)
+
+svg
+  height 40vmin
+  overflow visible !important
+
+.cord
+  stroke var(--cord)
+
+  &--rig
+    display none
+
+.lamp
+  &__tongue
+    fill var(--tongue)
+
+  &__hit
+    cursor pointer
+    opacity 0
+
+  &__feature
+    fill var(--feature)
+
+  &__stroke
+    stroke var(--feature)
+
+  &__mouth
+  &__light
+    opacity var(--on, 0)
+
+.shade
+  &__opening
+    fill var(--opening)
+
+  &__opening-shade
+    opacity calc(1 - var(--on, 0))
+
+.post
+  &__body
+    fill var(--post)
+
+.base
+  &__top
+    fill var(--base-top)
+
+  &__side
+    fill var(--base-side)
+
+.top
+  &__body
+    fill var(--t-3)

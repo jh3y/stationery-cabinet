@@ -1,0 +1,33 @@
+*
+*:after
+*:before
+  box-sizing border-box
+  transform-style preserve-3d
+
+body
+  background hsl(214, 32%, 20%)
+  min-height 100vh
+  display grid
+  place-items center
+  overflow hidden
+
+img
+  height 100%
+  object-fit cover
+  width 100%
+
+.parallax-container
+  height 50vmin
+  width 50vmin
+  perspective 50vmin
+  transform translate3d(0, 0, 50vmin)
+
+.parallax
+  transform rotateX(calc((var(--rx, 0) * var(--range-y, 0)) * 1deg)) rotateY(calc((var(--ry, 0) * var(--range-x, 0)) * 1deg)) rotate(calc((var(--r, 0) * var(--range-x, 0)) * 1deg))
+
+.parallax-item
+  left calc(var(--x, 50) * 1%)
+  top calc(var(--y, 50) * 1%)
+  height calc(var(--height, auto) * 1%)
+  width calc(var(--width, auto) * 1%)
+  transform translate(-50%, -50%) translate3d(calc((var(--mx, 0) * var(--range-x, 0)) * 1%), calc((var(--my, 0) * var(--range-y, 0)) * 1%), calc(var(--mz, 0) * 1vmin)) rotateX(calc((var(--rx, 0) * var(--range-y, 0)) * 1deg)) rotateY(calc((var(--ry, 0) * var(--range-x, 0)) * 1deg)) rotate(calc((var(--r, 0) * var(--range-x, 0)) * 1deg))

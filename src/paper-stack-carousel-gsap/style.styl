@@ -1,0 +1,85 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  background hsl(0, 0%, 15%)
+
+.sr-only
+  position absolute
+  width 1px
+  height 1px
+  padding 0
+  margin -1px
+  overflow hidden
+  clip rect(0, 0, 0, 0)
+  white-space nowrap
+  border-width 0
+
+.stack
+  height 300px
+  width 300px
+  list-style-type none
+  padding 0
+  position relative
+
+  &__item
+    height 100%
+    width 100%
+    background hsl(0, 0%, 5%)
+    border 2px solid hsl(0, 0%, 98%)
+    color hsl(0, 0%, 98%)
+    display flex
+    align-items center
+    justify-content center
+    font-weight bold
+    font-family sans-serif
+    position absolute
+    top 0
+    left 0
+
+  &__container
+    position relative
+
+  &__control
+    position absolute
+    top 50%
+    transform translate(0, -50%)
+    border 0
+    background none
+    appearance none
+    height 48px
+    width 48px
+
+    &:after
+    &:before
+      content ''
+      height 100%
+      width 100%
+      position absolute
+      top 0
+      left 0
+      background-image url("https://assets.codepen.io/605876/chevron.svg")
+      background-size contain
+      background-repeat no-repeat
+
+    &:before
+      opacity 0.25
+
+    &:after
+      clip-path inset(0 0 0 100%)
+      transition clip-path 0.25s ease-in-out
+
+    &:hover:after
+      clip-path inset(0 0 0 0)
+
+    &--next
+      left 110%
+      transform translate(0, -50%) rotate(180deg)
+
+    &--prev
+      right 110%

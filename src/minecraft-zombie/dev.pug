@@ -1,0 +1,21 @@
+mixin cuboid()
+  .cuboid(class!=attributes.class)
+    - let s = 0
+    while s < 6
+      .cuboid__side
+      - s++
+
+.scene
+  .zombie
+    .zombie__head
+      +cuboid()(class="cuboid-head")
+    .zombie__arm.zombie__arm--left
+      +cuboid()(class="cuboid-arm cuboid-arm--left")
+    .zombie__torso
+      +cuboid()(class="cuboid-torso")
+    .zombie__arm.zombie__arm--right
+      +cuboid()(class="cuboid-arm cuboid-arm--right")
+    .zombie__leg.zombie__leg--left
+      +cuboid()(class="cuboid-leg cuboid-leg--left")
+    .zombie__leg.zombie__leg--right
+      +cuboid()(class="cuboid-leg cuboid-leg--right")

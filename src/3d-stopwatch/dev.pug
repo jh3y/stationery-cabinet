@@ -1,0 +1,78 @@
+mixin cuboid()
+  .cuboid(class!=attributes.class)
+    if block
+      block
+    - let s = 0
+    while s < 6
+      .cuboid__side
+      - s++
+.rotater(data-multiplier="-2" style=`--index: 0;`)
+.rotater(data-multiplier="-1" style=`--index: 1;`)
+.rotater(data-multiplier="0" style=`--index: 2;`)
+.rotater(data-multiplier="1" style=`--index: 3;`)
+.rotater(data-multiplier="2" style=`--index: 4;`)
+.scene
+  form.stopwatch
+    input#start(type='checkbox')
+    input#pause(type='checkbox')
+    .stopwatch__chords
+      .stopwatch__chord
+        +cuboid()
+      .stopwatch__chord
+        +cuboid()
+    .stopwatch__back
+    .stopwatch__content
+      img.stopwatch__logo(src="https://assets.codepen.io/605876/Bear+%E2%80%93+2021+.png" alt="new bear logo")
+      .stopwatch__face
+        .digit.m.m--tens 0
+        .digit.m.m--singles 0
+        span :
+        .digit.second.s.s--tens 0
+        .digit.second.s.s--singles 0
+        span .
+        .digit.digit--small.ms.ms--tens 0
+        .digit.digit--small.ms.ms--singles 0
+    .stopwatch__glass
+    .cuboid.stopwatch__body
+      .cuboid__side
+        .stopwatch__body-angle
+          +cuboid.stopwatch__frame
+          button.stopwatch__control.stopwatch__reset(type='reset')
+            .button__placeholder
+              +cuboid.button__container
+                +cuboid.button
+        .stopwatch__body-angle
+          +cuboid.stopwatch__frame
+        .stopwatch__body-angle
+          +cuboid.stopwatch__frame
+          label.stopwatch__control.stopwatch__pause(for="pause")
+            .button__placeholder
+              +cuboid.button__container
+                +cuboid.button
+          label.stopwatch__control.stopwatch__start(for="start")
+            .button__placeholder
+              +cuboid.button__container
+                +cuboid.button
+      .cuboid__side
+        .stopwatch__body-angle
+          +cuboid.stopwatch__frame
+        .stopwatch__body-angle
+          +cuboid.stopwatch__frame
+        .stopwatch__body-angle
+          +cuboid.stopwatch__frame
+      .cuboid__side
+        .stopwatch__body-angle
+          +cuboid.stopwatch__frame
+        .stopwatch__body-angle
+          +cuboid.stopwatch__frame
+        .stopwatch__body-angle
+          +cuboid.stopwatch__frame
+      .cuboid__side
+        .stopwatch__body-angle
+          +cuboid.stopwatch__frame
+        .stopwatch__body-angle
+          +cuboid.stopwatch__frame
+        .stopwatch__body-angle
+          +cuboid.stopwatch__frame
+      .cuboid__side
+      .cuboid__side

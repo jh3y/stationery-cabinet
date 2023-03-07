@@ -274,6 +274,25 @@ body {
   justify-content: center;
   flex-direction: column;
   background: hsl(0, 0%, 98%);
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: hsl(0, 0%, 98%);
+  padding: 2rem;
+}
+
+.scene {
+  display: flex;
+  width: 100vw;
+  align-items: start;
+  justify-content: center;
+  padding-bottom: 3rem;
 }
 
 #hue,
@@ -294,6 +313,13 @@ label {
   grid-template-rows: auto auto auto auto;
   align-items: center;
   grid-gap: 2rem 2rem;
+  width: 50%;
+  max-width: 400px;
+  padding: 2rem;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(0, -50%);
 }
 
 .result {
@@ -302,13 +328,17 @@ label {
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 2rem 3rem -2rem hsl(0, 0%, 10%);
-  margin-bottom: 3rem;
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(0, -116px);
 }
 
 .palette {
   display: grid;
   grid-template-rows: repeat(var(--shades, 8), 1fr);
   height: 100%;
+  background: linear-gradient(var(--shade-1), var(--bg));
 }
 
 .palette__shade {

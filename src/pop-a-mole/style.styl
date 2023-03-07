@@ -1,0 +1,44 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  background linear-gradient(hsl(180, 40%, 90%) 0 52%, hsl(92, 40%, 70%) 50%)
+
+.mole-in-hole
+  height 25vmin
+
+.mole
+  display none
+
+  &__eye
+    fill hsl(0, 0%, 10%)
+
+  &__whiskers
+    stroke hsl(0, 10%, 10%)
+  &__body
+    fill hsl(0, 0%, 75%)
+  &__tummy
+  &__muzzle
+    fill hsl(200, 10%, 96%)
+  &__chin
+    fill hsl(200, 10%, 70%)
+  &__nose
+    fill hsl(10, 80%, 86%)
+
+.cap
+  &__body
+    fill hsl(0, 10%, 10%)
+
+  &__strap
+  &__top
+  &__peak
+    fill hsl(10, 70%, 50%)
+
+.hole
+  &__lip
+    fill hsl(35, 30%, 30%)

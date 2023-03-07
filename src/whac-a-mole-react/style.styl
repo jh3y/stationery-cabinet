@@ -1,0 +1,22 @@
+.moles {
+  display: inline-grid;
+  grid-template-rows: repeat(2, auto);
+  grid-template-columns: repeat(3, auto);
+}
+
+.mole__hole {
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+}
+
+.mole {
+  height: 100%;
+  width: 100%;
+  transform: translate(0, 100%);
+}
+
+.mole__hole:nth-of-type(4),
+.mole__hole:nth-of-type(5) {
+  transform: translate(50%, 0);
+}

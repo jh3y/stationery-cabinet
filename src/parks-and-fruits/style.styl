@@ -1,0 +1,118 @@
+*
+*:after
+*:before
+  box-sizing border-box
+
+body
+  min-height 100vh
+  overflow hidden
+  background hsl(0, 0%, 10%)
+
+.grid
+
+  display grid
+  width 100%
+  height 100%
+  background hsl(0, 0%, 10%)
+  grid-template-columns repeat(2, 1fr)
+  grid-template-rows repeat(2, 1fr)
+  grid-gap 2vmin
+  position absolute
+  top 0
+  left 0
+
+  &__container
+    height 100vh
+    width 100vw
+    position fixed
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+
+  // &__item
+  //   background hsl(280, 80%, 80%)
+
+.grid--right .grid__item:nth-of-type(2)
+.grid--left .grid__item:nth-of-type(1)
+  grid-row span 2
+
+.off-screen
+  &--top
+    transform translate(0, calc(-100% - 2vmin))
+  &--right
+    transform translate(calc(100% + 2vmin), 0)
+  &--bottom
+    transform translate(0, calc(100% + 2vmin))
+  &--left
+    transform translate(calc(-100% - 2vmin))
+  &--top-right
+    transform translate(calc(100% + 2vmin), calc(-100% - 2vmin))
+
+li
+ul
+  list-style-type none
+
+li
+  overflow hidden
+  position absolute
+
+.scene
+  position fixed
+  height 100vh
+  width 100vw
+
+ul
+  padding 0
+  margin 0
+  height 100vh
+  width 100vw
+  position fixed
+
+h1
+  font-size 3rem
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -50%)
+  z-index 3
+  background white
+  padding 1rem
+  border-radius 0.5rem
+  font-family sans-serif
+
+img
+  height 100%
+  width 100%
+  position absolute
+  object-fit cover
+  filter saturate(0.75)
+
+span
+  font-weight bold
+  background white
+  position absolute
+  display inline-block
+  right 2rem
+  bottom 2rem
+  font-size 2rem
+  padding 1rem
+  border-radius 0.5rem
+  font-family sans-serif
+
+.scroll-icon
+  height 48px
+  position fixed
+  top 1rem
+  right 1rem
+  z-index 10
+  color white
+  animation action 4s infinite
+  background black
+  padding 0.5rem
+  border-radius 50%
+
+@keyframes action
+  0%, 25%, 50%, 100%
+    transform translate(0, 0)
+  12.5%, 37.5%
+    transform translate(0, 25%)

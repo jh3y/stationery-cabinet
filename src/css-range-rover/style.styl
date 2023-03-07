@@ -15,22 +15,33 @@ body
 
 label
   position absolute
-  top calc(35% + var(--size) * .5px - 46px)
   font-size 30px
+  top calc(50% + (var(--size) * 0.15px))
+
+  span:nth-of-type(2)
+    font-weight 300
+    font-size 16px
+    position absolute
+    left 102%
+    white-space nowrap
+    bottom 0%
+    transform translate(0, -25%)
+    color hsl(0, 0%, 50%)
 
 input
   font-size 2rem
   position absolute
   width 120px
   padding 10px
-  top calc(35% + var(--size) * .5px)
+  top calc(50% + (var(--size) * 0.15px) + 44px)
   z-index 2
+  text-align center
 
   &:in-range
-    border 5px solid hsl(100, 100%, 50%)
+    border 5px solid hsl(100, 80%, 70%)
 
   &:out-of-range
-    border 5px solid hsl(15, 100%, 50%)
+    border 5px solid hsl(15, 80%, 70%)
     animation shake .1s infinite alternate
 
 @keyframes shake
@@ -54,13 +65,13 @@ input
     transform translate(0, -50%) rotate(-1deg)
 
 :root
-  --bg #eee
+  --bg hsl(0, 0%, 96%)
   --size 300
-  --truck-hue 320
+  --truck-hue 0
   --chrome-hue 58
   --glass-hue 200
   --indicator-hue 40
-  --tail-light-hue 10
+  --tail-light-hue 15
   --trim-width 2
   --plastic-lightness 20
   --coilover-lightness 15
@@ -111,17 +122,20 @@ input:out-of-range ~ .truck
   --wheel-height calc(var(--size) * .12)
   --wheel-width calc(var(--size) * .14)
   height calc(var(--size) * 1px)
-  position relative
+  position absolute
+  top 50%
+  left 50%
   width calc(var(--size) * 1px)
-  transform translate(0, -50%)
+  transform translate(-50%, -90%)
   transform-style preserve-3d
   animation upsydownsy 5s infinite linear
 
+
   @keyframes upsydownsy
     0%, 100%
-      transform translate(0, -50%)
+      transform translate(-50%, -90%)
     50%
-      transform translate(0, -52%)
+      transform translate(-50%, -92%)
 
   &__body-wrapper
     --multiplier 0
