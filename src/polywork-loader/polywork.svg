@@ -1,0 +1,36 @@
+<svg class="polywork" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" fill="none">
+  <g>
+    <g class="polywork__cell">
+      <path class="polywork__color" d="M12.719 36.063V25.01H24.28v4.52a6.544 6.544 0 01-6.544 6.533h-5.018z" fill="#88CFB0"/>
+      <path class="polywork__border" d="M17.714 37h-5.897V24.073h13.366v5.458a7.48 7.48 0 01-7.47 7.47zm-4.035-1.873h4.035a5.608 5.608 0 005.608-5.596v-3.585h-9.643v9.181z" fill="#2F2F3A"/>
+    </g>
+    <g class="polywork__cell">
+      <path class="polywork__color" d="M.937 29.53v-4.52h11.562v11.053h-5.03a6.533 6.533 0 01-6.532-6.532z" fill="#37C2E2"/>
+      <path class="polywork__border" d="M13.378 37H7.469A7.48 7.48 0 010 29.53v-5.457h13.378V37zM1.873 25.946v3.585a5.596 5.596 0 005.596 5.596h4.093v-9.18H1.873z" fill="#2F2F3A"/>
+    </g>
+    <g class="polywork__cell">
+      <path class="polywork__color" d="M12.441 12.974H.937v11.724H12.44V12.974z" fill="#F2994A"/>
+      <path class="polywork__border" d="M13.378 25.635H0V12.037h13.378v13.598zM1.873 23.762h9.69v-9.886h-9.69v9.886z" fill="#2F2F3A"/>
+    </g>
+    <g class="polywork__cell">
+      <path class="polywork__color" d="M.937 12.719v-5.25A6.533 6.533 0 017.469.937h4.972v11.782H.937z" fill="#40BE88"/>
+      <path class="polywork__border" d="M13.378 13.598H0V7.469A7.48 7.48 0 017.47 0h5.908v13.598zM1.873 11.723h9.69v-9.85H7.468a5.596 5.596 0 00-5.596 5.595v4.255z" fill="#2F2F3A"/>
+    </g>
+    <g class="polywork__cell">
+      <path class="polywork__color" d="M24.247.937H12.742V12.66h11.505V.937z" fill="#6776F9"/>
+      <path class="polywork__border" d="M25.183 13.598H11.817V0h13.366v13.598zm-11.562-1.874h9.643v-9.85h-9.585l-.058 9.85z" fill="#2F2F3A"/>
+    </g>
+    <g class="polywork__cell">
+      <path class="polywork__color" d="M24.559 12.719V.937h4.972a6.533 6.533 0 016.532 6.532v5.25H24.56z" fill="#FF7474"/>
+      <path class="polywork__border" d="M37 13.598H23.622V0h5.909A7.48 7.48 0 0137 7.47v6.128zm-11.505-1.874h9.632V7.47a5.596 5.596 0 00-5.596-5.596h-4.036v9.851z" fill="#2F2F3A"/>
+    </g>
+    <g class="polywork__cell">
+      <path class="polywork__color" d="M24.559 24.698V12.974H36.12v5.18a6.534 6.534 0 01-6.533 6.544h-5.03z" fill="#F2C94C"/>
+      <path class="polywork__border" d="M29.53 25.635h-5.908V12.037H37v6.117a7.481 7.481 0 01-7.47 7.48zm-4.035-1.873h4.036a5.608 5.608 0 005.596-5.608v-4.278h-9.632v9.886z" fill="#2F2F3A"/>
+    </g>
+    <g class="polywork__cell">
+      <path class="polywork__color" d="M24.247 12.974H12.742v11.724h11.505V12.974z" fill="#BD83CE"/>
+      <path class="polywork__border" d="M25.183 25.635H11.817V12.037h13.366v13.598zm-11.562-1.873h9.643v-9.886h-9.585l-.058 9.886z" fill="#2F2F3A"/>
+    </g>
+  </g>
+</svg>

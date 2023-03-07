@@ -1,0 +1,133 @@
+*
+  box-sizing border-box
+
+@property --accessory-translation
+  syntax '<percentage>'
+  inherits true
+  initial-value 0%
+
+@property --main-rotation
+  syntax '<angle>'
+  inherits true
+  initial-value 0deg
+
+@property --final-translation
+  syntax '<percentage>'
+  inherits true
+  initial-value 0%
+
+@property --hover-translation
+  syntax '<percentage>'
+  inherits true
+  initial-value 0%
+
+@property --transition
+  syntax '<time>'
+  inherits false
+  initial-value 0.1s
+
+:root
+  --line hsl(0, 0%, 25%)
+  --bg-hover hsl(0, 0%, 92%)
+  --bg hsl(0, 0%, 98%)
+
+@media(prefers-color-scheme dark)
+  :root
+    --bg hsL(0, 0%, 15%)
+    --bg-hover hsl(0, 0%, 25%)
+    --line hsl(0, 0%, 92%)
+
+body
+  min-height 100vh
+  display grid
+  place-items center
+  background var(--bg)
+  transition background var(--transition)
+
+.sr-only
+  position absolute
+  width 1px
+  height 1px
+  padding 0
+  margin -1px
+  overflow hidden
+  clip rect(0, 0, 0, 0)
+  white-space nowrap
+  border-width 0
+
+[aria-pressed] > .sr-only
+  display none
+
+[aria-pressed="false"] > .sr-only
+  &:nth-of-type(1)
+    display block
+
+[aria-pressed="true"] > .sr-only
+  &:nth-of-type(2)
+    display block
+
+.button
+  --size 96px
+  background transparent
+  border 0
+  border-radius 50%
+  cursor pointer
+  height var(--size)
+  padding 0
+  width var(--size)
+  transition background var(--transition)
+
+.button:hover
+  background var(--bg-hover)
+
+.button[aria-pressed="false"]:hover
+  --hover-translation 10%
+
+.button[aria-pressed="true"]
+  --accessory-translation 30%
+  --main-rotation -45deg
+  --final-translation -55%
+
+.button[aria-pressed="true"] .icon span
+  &:nth-of-type(odd)
+    transition --hover-translation var(--transition), --accessory-translation var(--transition), --main-rotation var(--transition) calc(var(--transition) * 2), --final-translation var(--transition) calc(var(--transition) * 3)
+  &:nth-of-type(2)
+    transition --main-rotation var(--transition) var(--transition)
+
+.button[aria-pressed="false"] .icon span
+  &:nth-of-type(odd)
+    transition --hover-translation var(--transition), --accessory-translation var(--transition) calc(var(--transition) * 3), --main-rotation var(--transition) var(--transition), --final-translation var(--transition)
+  &:nth-of-type(2)
+    transition --main-rotation var(--transition) calc(var(--transition) * 2)
+
+.icon
+  height 80%
+  width 85%
+  display inline-flex
+  align-items center
+  justify-content space-between
+  flex-direction column
+  position relative
+
+  & > span
+    height 20%
+    width 100%
+    background var(--line)
+    display inline-block
+    border-radius calc((var(--size) * 0.8) * 0.2)
+    transition background var(--transition)
+
+    &:nth-of-type(1)
+      --coefficient -1
+      align-self flex-start
+
+    &:nth-of-type(2)
+      transform rotate(var(--main-rotation))
+
+    &:nth-of-type(3)
+      --coefficient 1
+      align-self flex-end
+
+    &:nth-of-type(odd)
+      width 60%
+      transform translate(calc(var(--hover-translation) * var(--coefficient))) translate(calc(var(--accessory-translation) * var(--coefficient)), 0) rotate(calc(var(--main-rotation) * -1)) translate(calc(var(--final-translation) * var(--coefficient)))

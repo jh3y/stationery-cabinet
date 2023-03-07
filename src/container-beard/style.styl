@@ -1,0 +1,121 @@
+*
+  box-sizing border-box
+
+body
+  min-height 100vh
+  background hsl(0, 0%, 90%)
+
+.resizable-container
+  min-height 220px
+  max-height 450px
+  width 200px
+  resize vertical
+  overflow hidden
+  position absolute
+  top 50%
+  left 50%
+  transform translate(-50%, -100px)
+  contain layout size
+  --css-contain layout size
+
+  &:active .arrow
+    display none
+
+.arrow
+  position absolute
+  bottom 0
+  right 0
+  width 26px
+  transform translate(-50%, 0) rotate(-45deg) scale(0.75)
+  animation bounce 0.5s infinite linear
+
+  & > path
+    fill hsl(10, 75%, 50%)
+    stroke black
+    stroke-width 20px
+
+.beardy
+  width 200px
+  position absolute
+  top 0%
+  left 50%
+  transform translate(-50%, 0%)
+  overflow visible !important
+
+  &__grow
+    // Take height from 32 to 220
+    height var(--length, 32px)
+    transition height 0.25s
+
+  &__eye
+    transform-origin 50% 110px
+    animation blink 8s infinite linear
+
+  &__brow
+    opacity var(--brow, 0)
+    stroke-width 4px
+
+@keyframes blink
+  0%, 49%, 51%, 53%, 100%
+    transform scaleY(1)
+  50%, 52%
+    transform scaleY(0.1)
+
+@keyframes bounce
+  50%
+    transform translate(-50%, 0) rotate(-45deg) scale(0.75) translate(0, 15%)
+
+@container (min-height: 250px) {
+  .beardy {
+    --length: 50px;
+  }
+}
+@container (min-height: 300px) {
+  .beardy {
+    --length: 100px;
+  }
+}
+@container (min-height: 350px) {
+  .beardy {
+    --length: 150px;
+  }
+}
+@container (min-height: 400px) {
+  .beardy {
+    --length: 200px;
+    --brow: 1;
+  }
+}
+@container (min-height: 450px) {
+  .beardy {
+    --length: 250px;
+    --brow: 1;
+  }
+}
+@media --css-container and (min-height: 250px) {
+  .beardy {
+    --length: 50px;
+  }
+}
+@media --css-container and (min-height: 300px) {
+  .beardy {
+    --length: 100px;
+  }
+}
+@media --css-container and (min-height: 350px) {
+  .beardy {
+    --length: 150px;
+  }
+}
+@media --css-container and (min-height: 400px) {
+  .beardy {
+    --length: 200px;
+    --brow: 1;
+  }
+}
+@media --css-container and (min-height: 450px) {
+  .beardy {
+    --length: 250px;
+    --brow: 1;
+  }
+}
